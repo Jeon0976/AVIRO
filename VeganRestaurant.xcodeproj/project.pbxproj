@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1036DDD9EC1F1BD8A8B92646 /* Pods_VeganRestaurant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8DDAA54973694C85BDE2B54 /* Pods_VeganRestaurant.framework */; };
-		C50367EF2A1791960020C6BB /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = C50367EE2A1791960020C6BB /* API.plist */; };
 		C50367F52A1795D10020C6BB /* MainViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F42A1795D10020C6BB /* MainViewPresenter.swift */; };
 		C50367F82A179D7B0020C6BB /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F72A179D7B0020C6BB /* Config.swift */; };
 		C50367FA2A179EA80020C6BB /* TappedLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F92A179EA80020C6BB /* TappedLocation.swift */; };
@@ -17,11 +16,11 @@
 		C52FA3472A175B20005E70DC /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FA3462A175B20005E70DC /* MainViewController.swift */; };
 		C52FA34C2A175B20005E70DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C52FA34B2A175B20005E70DC /* Assets.xcassets */; };
 		C52FA34F2A175B20005E70DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C52FA34D2A175B20005E70DC /* LaunchScreen.storyboard */; };
+		C5D6E19F2A17B4410042679C /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5D6E19E2A17B4410042679C /* API.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		504A921976A8C86232B4E5E5 /* Pods-VeganRestaurant.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VeganRestaurant.debug.xcconfig"; path = "Target Support Files/Pods-VeganRestaurant/Pods-VeganRestaurant.debug.xcconfig"; sourceTree = "<group>"; };
-		C50367EE2A1791960020C6BB /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = API.plist; sourceTree = "<group>"; };
 		C50367F42A1795D10020C6BB /* MainViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewPresenter.swift; sourceTree = "<group>"; };
 		C50367F72A179D7B0020C6BB /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		C50367F92A179EA80020C6BB /* TappedLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappedLocation.swift; sourceTree = "<group>"; };
@@ -32,6 +31,7 @@
 		C52FA34B2A175B20005E70DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C52FA34E2A175B20005E70DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C52FA3502A175B20005E70DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C5D6E19E2A17B4410042679C /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = API.plist; sourceTree = "<group>"; };
 		CE9C80342B4DE4AD7FF372F7 /* Pods-VeganRestaurant.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VeganRestaurant.release.xcconfig"; path = "Target Support Files/Pods-VeganRestaurant/Pods-VeganRestaurant.release.xcconfig"; sourceTree = "<group>"; };
 		E8DDAA54973694C85BDE2B54 /* Pods_VeganRestaurant.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VeganRestaurant.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -73,7 +73,7 @@
 				C52FA34B2A175B20005E70DC /* Assets.xcassets */,
 				C52FA34D2A175B20005E70DC /* LaunchScreen.storyboard */,
 				C52FA3502A175B20005E70DC /* Info.plist */,
-				C50367EE2A1791960020C6BB /* API.plist */,
+				C5D6E19E2A17B4410042679C /* API.plist */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -217,7 +217,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C52FA34F2A175B20005E70DC /* LaunchScreen.storyboard in Resources */,
-				C50367EF2A1791960020C6BB /* API.plist in Resources */,
+				C5D6E19F2A17B4410042679C /* API.plist in Resources */,
 				C52FA34C2A175B20005E70DC /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
