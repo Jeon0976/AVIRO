@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "72E614C823EA09AB1AAE80D5CD8A4C58"
-               BuildableName = "NMapsGeometry"
-               BlueprintName = "NMapsGeometry"
+               BlueprintIdentifier = "60A7021A5E051B83B2C46602C1AC738A"
+               BuildableName = "Pods_AVIRO.framework"
+               BlueprintName = "Pods-AVIRO"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
