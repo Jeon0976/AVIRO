@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: TableView present custom 
 final class CustomPresentation: UIPresentationController {
     override var frameOfPresentedViewInContainerView: CGRect {
         guard let containerView = containerView else { return .zero }
@@ -34,7 +35,7 @@ class SlideAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.5
     }
-    
+
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let key: UITransitionContextViewControllerKey = isPresentation ? .to : .from
         guard let controller = transitionContext.viewController(forKey: key) else { return }
@@ -54,11 +55,11 @@ class SlideAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         controller.view.frame = initialFrame
         UIView.animate(withDuration: animationDuration, animations: {
             controller.view.frame = finalFrame
-        }) { finished in
+        }, completion: { finished in
             if !self.isPresentation {
                 controller.view.removeFromSuperview()
             }
             transitionContext.completeTransition(finished)
-        }
+        })
     }
 }

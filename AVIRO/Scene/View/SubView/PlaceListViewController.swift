@@ -20,14 +20,17 @@ final class PlaceListViewController: UIViewController {
 }
 
 extension PlaceListViewController: PlaceListProtocol {
+    // MARK: Layout
     func makeLayout() {
         [
             listTableView
-        ].forEach { view.addSubview($0) }
-        
-        listTableView.translatesAutoresizingMaskIntoConstraints = false
-        
+        ].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview($0)
+        }
+                
         NSLayoutConstraint.activate([
+            // listTableView
             listTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             listTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             listTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -35,21 +38,25 @@ extension PlaceListViewController: PlaceListProtocol {
         ])
     }
     
+    // MARK: Attribute
     func makeAttribute() {
-        listTableView.backgroundColor = .white.withAlphaComponent(0.1)
-//        listTableView.layer.cornerRadius = 8
         view.layer.cornerRadius = 8
+
+        // listTableView
+        listTableView.backgroundColor = .white.withAlphaComponent(0.1)
         listTableView.dataSource = presenter
         listTableView.delegate = self
         listTableView.register(PlaceListCell.self, forCellReuseIdentifier: PlaceListCell.identifier)
     }
     
+    // MARK: reloadData
     func reloadTableView() {
         listTableView.reloadData()
     }
 }
 
 extension PlaceListViewController: UITableViewDelegate {
+    // MARK: Scroll 될 때 API 요청을 위한 메서드
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentSize.height
         let contentHeight = scrollView.contentSize.height
@@ -60,6 +67,7 @@ extension PlaceListViewController: UITableViewDelegate {
         }
     }
     
+    // MARK: Item 클릭 될 때
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         dismiss(animated: true)
     }

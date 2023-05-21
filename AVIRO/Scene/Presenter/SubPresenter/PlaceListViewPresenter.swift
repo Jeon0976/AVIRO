@@ -20,7 +20,7 @@ final class PlaceListViewPresenter: NSObject {
     
     var placeList = [PlaceListModel]()
     
-    // MARK: page 추가
+    // page 추가
     var currentPage = 1
     var isEnd = false
     var isLoading = false
@@ -39,6 +39,7 @@ final class PlaceListViewPresenter: NSObject {
     
     // MARK: 스크롤 할 때 데이터 load 함수
     func loadData() {
+        // loding 일 때 api 호출 x
         if isLoading {
             return
         }
@@ -46,9 +47,9 @@ final class PlaceListViewPresenter: NSObject {
         isLoading = true
         currentPage += 1
         
+        // page가 마지막 일때 api 호출 x
         if PageEndingCheck.shared.isend == true {
             CustomAlertController.shared.whenLastLoadPage()
-            print("마지막")
             return
         }
         
@@ -82,10 +83,10 @@ final class PlaceListViewPresenter: NSObject {
                 self?.isLoading = false
             }
         }
-        print(currentPage)
     }
 }
 
+// MARK: TableView DataSource
 extension PlaceListViewPresenter: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         placeList.count

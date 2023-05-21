@@ -67,6 +67,7 @@ extension MainViewPresenter: CLLocationManagerDelegate {
         locationManager.stopUpdatingLocation()
     }
     
+    // MARK: 최초 검색 시 마켓,카페 검색 API 호출
     func findLocation(_ locations: String) {
         QuerySingleTon.shared.query = locations
         requestManager.kakaoMapSearch(query: locations,
