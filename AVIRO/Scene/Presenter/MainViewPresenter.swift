@@ -11,15 +11,16 @@ import CoreLocation
 protocol MainViewProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
-    func showAlert(_ alert: UIAlertController)
     func markingMap()
+    func presentPlaceListView(_ placeLists: [PlaceListModel])
 }
 
 final class MainViewPresenter: NSObject {
     weak var viewController: MainViewProtocol?
     
     private let locationManager = CLLocationManager()
-    
+    private let requestManager = KakaoMapRequestManager()
+
     init(viewController: MainViewProtocol) {
         self.viewController = viewController
     }
@@ -40,7 +41,6 @@ extension MainViewPresenter: CLLocationManagerDelegate {
         case .denied:
             // TODO: 만약 거절했을 시 앞으로 해야할 작업
             print("왜 거절?")
-            makeAlert("왜..?", "너 암것도 모태용~")
         case .notDetermined, .restricted:
             locationManager.requestWhenInUseAuthorization()
         default:
@@ -48,28 +48,48 @@ extension MainViewPresenter: CLLocationManagerDelegate {
         }
     }
     
+    // MARK: 개인 location data 불러오기 작업
+    // 1. viewDidLoad 일때
+    // 2. 위치 확인 데이터 누를 때
     func locationUpdate() {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
     }
     
+    // MARK: 개인 Location Data 불러오고 나서 할 작업
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         
         PersonalLocation.shared.latitude = location.coordinate.latitude
         PersonalLocation.shared.longitude = location.coordinate.longitude
-        
-        locationManager.stopUpdatingLocation()
-        viewController?.markingMap()
-    }
-}
 
-extension MainViewPresenter {
-    func makeAlert(_ title: String, _ message: String?) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let checkAlertAction = UIAlertAction(title: "확인", style: .cancel)
-        alert.addAction(checkAlertAction)
-        
-        viewController?.showAlert(alert)
+        viewController?.markingMap()
+        locationManager.stopUpdatingLocation()
+    }
+    
+    func findLocation(_ locations: String) {
+        QuerySingleTon.shared.query = locations
+        requestManager.kakaoMapSearch(query: locations,
+                                      longitude: PersonalLocation.shared.longitudeString,
+                                      latitude: PersonalLocation.shared.latitudeString,
+                                      page: "1") { model in
+            PageEndingCheck.shared.isend = model.meta.isEnd
+            
+            let placeLists = model.documents.map { location in
+                let placeListCellModel = PlaceListModel(
+                    title: location.name,
+                    category: location.category,
+                    address: location.address,
+                    phone: location.phone,
+                    url: location.url,
+                    x: Double(location.xToLongitude)!,
+                    y: Double(location.yToLatitude)!
+                )
+                return placeListCellModel
+            }
+            DispatchQueue.main.async { [weak self] in
+                self?.viewController?.presentPlaceListView(placeLists)
+            }
+        }
     }
 }

@@ -8,20 +8,16 @@
 import Foundation
 
 struct KakaoMapResponseModel: Decodable {
-    let mata: KakaoMapResponseMetaData
-    let documents: [KakaoMapResponseRestaurantsAndCafes]
+    let meta: KakaoMapResponseMetaData
+    let documents: [RestaurantsAndCafes]
 }
 
 struct KakaoMapResponseMetaData: Decodable {
     let isEnd: Bool
     
     enum CodingKeys: String, CodingKey {
-        case isEnd
+        case isEnd = "is_end"
     }
-}
-
-struct KakaoMapResponseRestaurantsAndCafes: Decodable {
-    let documents: [RestaurantsAndCafes]
 }
 
 struct RestaurantsAndCafes: Decodable {

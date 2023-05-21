@@ -9,8 +9,7 @@
 /* Begin PBXBuildFile section */
 		9F92DF311461667C42958AF4 /* Pods_AVIRO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6EC2A237A0993B3FBEBA044 /* Pods_AVIRO.framework */; };
 		C50367F52A1795D10020C6BB /* MainViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F42A1795D10020C6BB /* MainViewPresenter.swift */; };
-		C50367F82A179D7B0020C6BB /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F72A179D7B0020C6BB /* Config.swift */; };
-		C50367FA2A179EA80020C6BB /* TappedLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F92A179EA80020C6BB /* TappedLocation.swift */; };
+		C50367F82A179D7B0020C6BB /* CustomConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F72A179D7B0020C6BB /* CustomConfiguration.swift */; };
 		C52FA3432A175B20005E70DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FA3422A175B20005E70DC /* AppDelegate.swift */; };
 		C52FA3452A175B20005E70DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FA3442A175B20005E70DC /* SceneDelegate.swift */; };
 		C52FA3472A175B20005E70DC /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FA3462A175B20005E70DC /* MainViewController.swift */; };
@@ -18,6 +17,15 @@
 		C52FA34F2A175B20005E70DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C52FA34D2A175B20005E70DC /* LaunchScreen.storyboard */; };
 		C5351B4D2A19223300116D50 /* KakaoMapRequestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B4C2A19223300116D50 /* KakaoMapRequestAPI.swift */; };
 		C5351B502A19225A00116D50 /* KakaoMapResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B4F2A19225A00116D50 /* KakaoMapResponseModel.swift */; };
+		C5351B542A19A7B100116D50 /* PersonalLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B532A19A7B100116D50 /* PersonalLocation.swift */; };
+		C5351B562A19B67900116D50 /* CustomAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B552A19B67900116D50 /* CustomAlertController.swift */; };
+		C5351B582A19F5DA00116D50 /* PlaceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B572A19F5DA00116D50 /* PlaceListViewController.swift */; };
+		C5351B5C2A19F60200116D50 /* PlaceListViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B5B2A19F60200116D50 /* PlaceListViewPresenter.swift */; };
+		C5351B5E2A19F84800116D50 /* PlaceListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B5D2A19F84800116D50 /* PlaceListCell.swift */; };
+		C5351B602A19F9A700116D50 /* PlaceListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B5F2A19F9A700116D50 /* PlaceListModel.swift */; };
+		C5351B622A1A083400116D50 /* PlaceListCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B612A1A083400116D50 /* PlaceListCellModel.swift */; };
+		C5351B642A1A128400116D50 /* QuerySingleTon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B632A1A128400116D50 /* QuerySingleTon.swift */; };
+		C5351B672A1A154C00116D50 /* PageEndingCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B662A1A154C00116D50 /* PageEndingCheck.swift */; };
 		C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547A8B92A17D8D4004D1339 /* KakaoMapRequestManager.swift */; };
 		C5D6E19F2A17B4410042679C /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5D6E19E2A17B4410042679C /* API.plist */; };
 /* End PBXBuildFile section */
@@ -27,8 +35,7 @@
 		659308CD972FBCCBAC198577 /* Pods-AVIRO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AVIRO.debug.xcconfig"; path = "Target Support Files/Pods-AVIRO/Pods-AVIRO.debug.xcconfig"; sourceTree = "<group>"; };
 		B025D745A335F3AA59B98199 /* Pods-AVIRO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AVIRO.release.xcconfig"; path = "Target Support Files/Pods-AVIRO/Pods-AVIRO.release.xcconfig"; sourceTree = "<group>"; };
 		C50367F42A1795D10020C6BB /* MainViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewPresenter.swift; sourceTree = "<group>"; };
-		C50367F72A179D7B0020C6BB /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		C50367F92A179EA80020C6BB /* TappedLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappedLocation.swift; sourceTree = "<group>"; };
+		C50367F72A179D7B0020C6BB /* CustomConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomConfiguration.swift; sourceTree = "<group>"; };
 		C52FA33F2A175B20005E70DC /* AVIRO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AVIRO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C52FA3422A175B20005E70DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C52FA3442A175B20005E70DC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -39,6 +46,15 @@
 		C5351B4A2A1919F700116D50 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		C5351B4C2A19223300116D50 /* KakaoMapRequestAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapRequestAPI.swift; sourceTree = "<group>"; };
 		C5351B4F2A19225A00116D50 /* KakaoMapResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapResponseModel.swift; sourceTree = "<group>"; };
+		C5351B532A19A7B100116D50 /* PersonalLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalLocation.swift; sourceTree = "<group>"; };
+		C5351B552A19B67900116D50 /* CustomAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertController.swift; sourceTree = "<group>"; };
+		C5351B572A19F5DA00116D50 /* PlaceListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListViewController.swift; sourceTree = "<group>"; };
+		C5351B5B2A19F60200116D50 /* PlaceListViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListViewPresenter.swift; sourceTree = "<group>"; };
+		C5351B5D2A19F84800116D50 /* PlaceListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListCell.swift; sourceTree = "<group>"; };
+		C5351B5F2A19F9A700116D50 /* PlaceListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListModel.swift; sourceTree = "<group>"; };
+		C5351B612A1A083400116D50 /* PlaceListCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListCellModel.swift; sourceTree = "<group>"; };
+		C5351B632A1A128400116D50 /* QuerySingleTon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuerySingleTon.swift; sourceTree = "<group>"; };
+		C5351B662A1A154C00116D50 /* PageEndingCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageEndingCheck.swift; sourceTree = "<group>"; };
 		C547A8B92A17D8D4004D1339 /* KakaoMapRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapRequestManager.swift; sourceTree = "<group>"; };
 		C5D6E19E2A17B4410042679C /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = API.plist; sourceTree = "<group>"; };
 		CE9C80342B4DE4AD7FF372F7 /* Pods-VeganRestaurant.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VeganRestaurant.release.xcconfig"; path = "Target Support Files/Pods-VeganRestaurant/Pods-VeganRestaurant.release.xcconfig"; sourceTree = "<group>"; };
@@ -102,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				C50367F42A1795D10020C6BB /* MainViewPresenter.swift */,
+				C5351B5A2A19F5EE00116D50 /* SubPresenter */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -110,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				C52FA3462A175B20005E70DC /* MainViewController.swift */,
+				C5351B592A19F5DE00116D50 /* SubView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -125,8 +143,10 @@
 		C50367F32A1795BE0020C6BB /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C50367F92A179EA80020C6BB /* TappedLocation.swift */,
+				C5351B652A1A128D00116D50 /* SingleTonModel */,
 				C5351B4F2A19225A00116D50 /* KakaoMapResponseModel.swift */,
+				C5351B5F2A19F9A700116D50 /* PlaceListModel.swift */,
+				C5351B612A1A083400116D50 /* PlaceListCellModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -134,7 +154,8 @@
 		C50367F62A179D6E0020C6BB /* System */ = {
 			isa = PBXGroup;
 			children = (
-				C50367F72A179D7B0020C6BB /* Config.swift */,
+				C50367F72A179D7B0020C6BB /* CustomConfiguration.swift */,
+				C5351B552A19B67900116D50 /* CustomAlertController.swift */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -179,6 +200,33 @@
 			path = KakaoMap;
 			sourceTree = "<group>";
 		};
+		C5351B592A19F5DE00116D50 /* SubView */ = {
+			isa = PBXGroup;
+			children = (
+				C5351B572A19F5DA00116D50 /* PlaceListViewController.swift */,
+				C5351B5D2A19F84800116D50 /* PlaceListCell.swift */,
+			);
+			path = SubView;
+			sourceTree = "<group>";
+		};
+		C5351B5A2A19F5EE00116D50 /* SubPresenter */ = {
+			isa = PBXGroup;
+			children = (
+				C5351B5B2A19F60200116D50 /* PlaceListViewPresenter.swift */,
+			);
+			path = SubPresenter;
+			sourceTree = "<group>";
+		};
+		C5351B652A1A128D00116D50 /* SingleTonModel */ = {
+			isa = PBXGroup;
+			children = (
+				C5351B532A19A7B100116D50 /* PersonalLocation.swift */,
+				C5351B632A1A128400116D50 /* QuerySingleTon.swift */,
+				C5351B662A1A154C00116D50 /* PageEndingCheck.swift */,
+			);
+			path = SingleTonModel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -191,7 +239,7 @@
 				C52FA33C2A175B20005E70DC /* Frameworks */,
 				C52FA33D2A175B20005E70DC /* Resources */,
 				E65714349F2131A11778A40C /* [CP] Embed Pods Frameworks */,
-				C5351B492A19160600116D50 /* SwiftLint */,
+				C5351B492A19160600116D50 /* swiftlint */,
 			);
 			buildRules = (
 			);
@@ -271,8 +319,9 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C5351B492A19160600116D50 /* SwiftLint */ = {
+		C5351B492A19160600116D50 /* swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -280,7 +329,7 @@
 			);
 			inputPaths = (
 			);
-			name = SwiftLint;
+			name = swiftlint;
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -313,15 +362,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5351B582A19F5DA00116D50 /* PlaceListViewController.swift in Sources */,
+				C5351B5E2A19F84800116D50 /* PlaceListCell.swift in Sources */,
 				C52FA3472A175B20005E70DC /* MainViewController.swift in Sources */,
+				C5351B642A1A128400116D50 /* QuerySingleTon.swift in Sources */,
 				C52FA3432A175B20005E70DC /* AppDelegate.swift in Sources */,
 				C5351B502A19225A00116D50 /* KakaoMapResponseModel.swift in Sources */,
-				C50367FA2A179EA80020C6BB /* TappedLocation.swift in Sources */,
 				C5351B4D2A19223300116D50 /* KakaoMapRequestAPI.swift in Sources */,
-				C50367F82A179D7B0020C6BB /* Config.swift in Sources */,
+				C50367F82A179D7B0020C6BB /* CustomConfiguration.swift in Sources */,
+				C5351B562A19B67900116D50 /* CustomAlertController.swift in Sources */,
 				C50367F52A1795D10020C6BB /* MainViewPresenter.swift in Sources */,
+				C5351B622A1A083400116D50 /* PlaceListCellModel.swift in Sources */,
 				C52FA3452A175B20005E70DC /* SceneDelegate.swift in Sources */,
+				C5351B542A19A7B100116D50 /* PersonalLocation.swift in Sources */,
 				C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */,
+				C5351B672A1A154C00116D50 /* PageEndingCheck.swift in Sources */,
+				C5351B5C2A19F60200116D50 /* PlaceListViewPresenter.swift in Sources */,
+				C5351B602A19F9A700116D50 /* PlaceListModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

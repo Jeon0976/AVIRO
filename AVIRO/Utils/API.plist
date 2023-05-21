@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict/>
+<dict>
+	<key>KakaoMapAPI_ Authorization _Key</key>
+	<string>KakaoAK a29374543e1f8c5fdcc063c3cfca8c77</string>
+</dict>
 </plist>
