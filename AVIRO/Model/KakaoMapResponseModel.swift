@@ -28,6 +28,7 @@ struct RestaurantsAndCafes: Decodable {
     let url: String
     let xToLongitude: String
     let yToLatitude: String
+    let distance: String
     
     enum CodingKeys: String, CodingKey {
         case name = "place_name"
@@ -37,5 +38,6 @@ struct RestaurantsAndCafes: Decodable {
         case url = "place_url"
         case xToLongitude = "x"
         case yToLatitude = "y"
+        case distance
     }
 }

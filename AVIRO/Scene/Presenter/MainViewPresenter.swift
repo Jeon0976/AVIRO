@@ -78,6 +78,7 @@ extension MainViewPresenter: CLLocationManagerDelegate {
             let placeLists = model.documents.map { location in
                 let placeListCellModel = PlaceListModel(
                     title: location.name,
+                    distance: location.distance,
                     category: location.category,
                     address: location.address,
                     phone: location.phone,

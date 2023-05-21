@@ -36,6 +36,9 @@ extension PlaceListViewController: PlaceListProtocol {
     }
     
     func makeAttribute() {
+        listTableView.backgroundColor = .white.withAlphaComponent(0.1)
+//        listTableView.layer.cornerRadius = 8
+        view.layer.cornerRadius = 8
         listTableView.dataSource = presenter
         listTableView.delegate = self
         listTableView.register(PlaceListCell.self, forCellReuseIdentifier: PlaceListCell.identifier)
@@ -51,9 +54,13 @@ extension PlaceListViewController: UITableViewDelegate {
         let offsetY = scrollView.contentSize.height
         let contentHeight = scrollView.contentSize.height
         let height = scrollView.frame.size.height
-        
+
         if offsetY > contentHeight - height {
             presenter.loadData()
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        dismiss(animated: true)
     }
 }

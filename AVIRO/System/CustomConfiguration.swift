@@ -8,6 +8,7 @@
 import UIKit
 
 extension UIButton {
+    // MARK: UIButton Image size
     func customImageConfig(_ nomalImage: String, _ selectedImage: String) {
         let config = UIImage.SymbolConfiguration(pointSize: 28, weight: .light)
         self.setImage(UIImage(systemName: nomalImage,
@@ -22,8 +23,21 @@ extension UIButton {
     }
 }
 
-// MARK: Inset
+extension String {
+    // MARK: Text m/k 변환
+    func convertDistanceUnit() -> String {
+        guard let number = Int(self) else { return "" }
+        
+        if number >= 1000 {
+           return "\(number / 1000)k"
+        } else {
+           return "\(number)m"
+        }
+    }
+}
+
 class InsetTextField: UITextField {
+    // MARK: TextField Inset 섫정
     private let commonInsets = UIEdgeInsets(top: 10, left: 15, bottom: 10, right: 15)
     private let clearButtonOffset: CGFloat = 5
     private let clearButtonLeftPadding: CGFloat = 5

@@ -53,13 +53,13 @@ extension MainViewController: MainViewProtocol {
         searchLocationButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            naverMapView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            naverMapView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            naverMapView.topAnchor.constraint(equalTo: view.topAnchor),
+            naverMapView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             naverMapView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             naverMapView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            loadLocationButton.bottomAnchor.constraint(equalTo: naverMapView.bottomAnchor, constant: -16),
+            loadLocationButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             loadLocationButton.trailingAnchor.constraint(equalTo: naverMapView.trailingAnchor, constant: -16),
-            searchTextField.topAnchor.constraint(equalTo: naverMapView.topAnchor, constant: 16),
+            searchTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             searchTextField.leadingAnchor.constraint(equalTo: naverMapView.leadingAnchor, constant: 16),
             searchTextField.trailingAnchor.constraint(equalTo: searchLocationButton.leadingAnchor, constant: -16),
             searchLocationButton.trailingAnchor.constraint(equalTo: naverMapView.trailingAnchor, constant: -16),
@@ -74,9 +74,27 @@ extension MainViewController: MainViewProtocol {
         loadLocationButton.customImageConfig("plus.circle", "plus.circle.fill")
         loadLocationButton.addTarget(self, action: #selector(refreshMyLocation), for: .touchUpInside)
         
-        searchTextField.placeholder = "장소를 입력하세요."
+        let placeholder = "식당을 검색하세요."
+        let placeholderColor = UIColor.gray // Change this to your desired color
+
+        let placeholderAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: placeholderColor
+        ]
+
+        searchTextField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: placeholderAttributes)
+        
+        let clearButton = UIButton(type: .custom)
+        clearButton.setImage(UIImage(systemName: "xmark.circle.fill")?.withTintColor(.black, renderingMode: .alwaysOriginal), for: .normal)
+        clearButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+//        clearButton.addTarget(self, action: #selector(clearField), for: .touchUpInside)
+
+        
+        searchTextField.rightView = clearButton
+        searchTextField.rightViewMode = .whileEditing
+
+        searchTextField.textColor = .black
         searchTextField.backgroundColor = .white
-        searchTextField.clearButtonMode = .always
+        searchTextField.layer.cornerRadius = 8
         searchTextField.delegate = self
         
         searchLocationButton.customImageConfig("magnifyingglass.circle", "magnifyingglass.circle.fill")
@@ -97,7 +115,8 @@ extension MainViewController: MainViewProtocol {
             placeList: placeLists
         )
         viewController.presenter = presenter
-        
+        viewController.transitioningDelegate = self
+        viewController.modalPresentationStyle = .custom
         present(viewController, animated: true)
     }
 }
@@ -113,6 +132,11 @@ extension MainViewController {
         
         presenter.findLocation(searchText)
     }
+    
+//    @objc func clearField() {
+//        print("test")
+//        searchTextField.text = " "
+//    }
 }
 
 // MARK: textField Delegate (키보드 확인 눌렀을 때)
@@ -126,11 +150,40 @@ extension MainViewController: UITextFieldDelegate {
         
         return true
     }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        searchTextField.rightViewMode = .whileEditing
+        return true
+    }
 }
 
+// MARK: 외부 클릭시 키보드 내려감
 extension MainViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        view.endEditing(true)
-        return true
+        if let touchedView = touch.view as? UIButton, touchedView == searchTextField.rightView {
+            searchTextField.text = ""
+            searchTextField.rightViewMode = .never
+              return true
+          }
+          view.endEditing(true)
+          return true
+    }
+}
+
+extension MainViewController: UIViewControllerTransitioningDelegate {
+    func presentationController(
+        forPresented presented: UIViewController,
+        presenting: UIViewController?,
+        source: UIViewController
+    ) -> UIPresentationController? {
+        return CustomPresentation(presentedViewController: presented, presenting: presenting)
+    }
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return SlideAnimator(isPresentation: true)
+    }
+
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return SlideAnimator(isPresentation: false)
     }
 }

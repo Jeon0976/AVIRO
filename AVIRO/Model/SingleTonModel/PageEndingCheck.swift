@@ -7,6 +7,7 @@
 
 import Foundation
 
+// PageEnd Check SingleTon
 final class PageEndingCheck {
     static let shared = PageEndingCheck()
     

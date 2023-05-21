@@ -9,6 +9,7 @@ import Foundation
 
 struct PlaceListModel {
     let title: String
+    let distance: String
     let category: String
     let address: String
     let phone: String

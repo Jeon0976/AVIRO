@@ -11,4 +11,5 @@ struct PlaceListCellModel {
     let title: String
     let category: String
     let address: String
+    let distance: String
 }

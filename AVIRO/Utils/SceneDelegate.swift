@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window?.rootViewController = mainView
         
-        window?.tintColor = .brown
+        window?.tintColor = .black
         
         window?.makeKeyAndVisible()
     }

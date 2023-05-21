@@ -63,6 +63,7 @@ final class PlaceListViewPresenter: NSObject {
             let placeList = model.documents.map { location in
                 let placeListCellModel = PlaceListModel(
                     title: location.name,
+                    distance: location.distance,
                     category: location.category,
                     address: location.address,
                     phone: location.phone,
@@ -78,6 +79,7 @@ final class PlaceListViewPresenter: NSObject {
             DispatchQueue.main.async { [weak self] in
                 self?.placeList.append(contentsOf: placeList)
                 self?.viewController?.reloadTableView()
+                self?.isLoading = false
             }
         }
         print(currentPage)
@@ -98,11 +100,13 @@ extension PlaceListViewPresenter: UITableViewDataSource {
         let title = placeList[indexPath.row].title
         let category = placeList[indexPath.row].category
         let address = placeList[indexPath.row].address
+        let distance = placeList[indexPath.row].distance
         
         let cellData = PlaceListCellModel(
             title: title,
             category: category,
-            address: address
+            address: address,
+            distance: distance
         )
         
         cell?.makeCellData(cellData)
