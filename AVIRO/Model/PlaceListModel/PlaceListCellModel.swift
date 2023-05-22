@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// PlaceListCell에 뿌려질 데이터
 struct PlaceListCellModel {
     let title: String
     let category: String

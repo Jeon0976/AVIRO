@@ -91,10 +91,8 @@ extension MainViewPresenter: CLLocationManagerDelegate {
                 return placeListCellModel
             }
             DispatchQueue.main.async { [weak self] in
-                print(placeLists)
                 self?.viewController?.presentPlaceListView(placeLists)
             }
         }
     }
-    
 }

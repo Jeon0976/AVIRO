@@ -96,6 +96,11 @@ final class PlaceListCell: UITableViewCell {
         category.font = .systemFont(ofSize: 14, weight: .medium)
         
         distance.font = .systemFont(ofSize: 14, weight: .light)
+        
+        title.textColor = .black
+        address.textColor = .black
+        category.textColor = .black
+        distance.textColor = .black
     }
     
     // MARK: cell data 바인딩

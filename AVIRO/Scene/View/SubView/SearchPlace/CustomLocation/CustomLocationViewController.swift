@@ -72,6 +72,33 @@ extension CustomLocationViewController: CustomLocationProtocol {
     
     // MARK: Attribute
     func makeAttribute() {
+        // navigationTitle
+        let view = UIView(
+            frame: CGRect(x: 0, y: 0,
+                          width: (navigationController?.navigationBar.frame.width)!/2,
+                          height: (navigationController?.navigationBar.frame.height)!)
+        )
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 15
+        view.clipsToBounds = true
+        let titleLabel = UILabel()
+        titleLabel.text = "위치를 선택해주세요"
+        titleLabel.textColor = .black
+        titleLabel.font = .systemFont(ofSize: 18, weight: .bold)
+        view.addSubview(titleLabel)
+        
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 12),
+            titleLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -12),
+            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12)
+        ])
+        
+        navigationItem.titleView = view
+
+        // naverMapView
         naverMapView.positionMode = .direction
         naverMapView.touchDelegate = self
         
@@ -82,11 +109,13 @@ extension CustomLocationViewController: CustomLocationProtocol {
         // addressLabel
         addressLabel.font = .systemFont(ofSize: 18, weight: .bold)
         addressLabel.layer.cornerRadius = 8
+        addressLabel.textColor = .black
     }
     
     func showAddress(_ address: String) {
         addressLabel.text = address
     }
+
 }
 
 extension CustomLocationViewController {

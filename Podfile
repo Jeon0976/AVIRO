@@ -5,9 +5,11 @@ target 'AVIRO' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
+# NaverMap
 pod 'NMapsMap'
-pod 'Firebase/Analytics'
 
-  # Pods for VeganRestaurant
+# Firebase
+
+  # Pods for AVIRO
 
 end

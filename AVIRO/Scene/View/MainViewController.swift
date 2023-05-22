@@ -32,7 +32,7 @@ final class MainViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
 
         presenter.locationUpdate()
@@ -46,7 +46,7 @@ final class MainViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+        super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name("selectedPlace"), object: nil)
         
         navigationController?.navigationBar.isHidden = false
@@ -144,8 +144,9 @@ extension MainViewController: MainViewProtocol {
         )
         
         let clearButton = UIButton(type: .custom)
-        clearButton.setImage(UIImage(systemName: "xmark.circle.fill")?.withTintColor(.black, renderingMode: .alwaysOriginal),
-                             for: .normal)
+        clearButton.setImage(
+            UIImage(systemName: "xmark.circle.fill")?.withTintColor(.black, renderingMode: .alwaysOriginal),
+            for: .normal)
         clearButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         
         searchTextField.rightView = clearButton
@@ -190,6 +191,7 @@ extension MainViewController: MainViewProtocol {
         viewController.presenter = presenter
         viewController.transitioningDelegate = self
         viewController.modalPresentationStyle = .custom
+        print(placeLists)
         present(viewController, animated: true)
     }
 }
@@ -200,7 +202,7 @@ extension MainViewController {
         presenter.locationUpdate()
     }
     
-    // MARK: 아이탬이 선택 되었을 때 inroll view present
+    // MARK: PlaceListViewController에서 아이탬이 선택 되었을 때 inroll view present
     @objc func selectedPlace(_ notification: Notification) {
         guard let selectedPlace = notification.userInfo?["selectedPlace"] as? PlaceListModel else { return }
         

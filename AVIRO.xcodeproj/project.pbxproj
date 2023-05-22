@@ -27,7 +27,6 @@
 		C5351B642A1A128400116D50 /* QuerySingleTon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B632A1A128400116D50 /* QuerySingleTon.swift */; };
 		C5351B672A1A154C00116D50 /* PageEndingCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B662A1A154C00116D50 /* PageEndingCheck.swift */; };
 		C5351B692A1A2EAF00116D50 /* CustomPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B682A1A2EAF00116D50 /* CustomPresentation.swift */; };
-		C5351B6B2A1B143200116D50 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5351B6A2A1B143200116D50 /* GoogleService-Info.plist */; };
 		C5351B6D2A1B215D00116D50 /* InrollPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B6C2A1B215D00116D50 /* InrollPlaceViewController.swift */; };
 		C5351B6F2A1B242C00116D50 /* InrollPlacePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B6E2A1B242C00116D50 /* InrollPlacePresenter.swift */; };
 		C5351B712A1B2FED00116D50 /* CustomLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B702A1B2FED00116D50 /* CustomLocationViewController.swift */; };
@@ -35,6 +34,7 @@
 		C5351B7A2A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B792A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift */; };
 		C5351B7D2A1B52B900116D50 /* CustomLocationCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B7C2A1B52B900116D50 /* CustomLocationCellModel.swift */; };
 		C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547A8B92A17D8D4004D1339 /* KakaoMapRequestManager.swift */; };
+		C5538AAF2A1BB81200661DE2 /* VeganModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5538AAE2A1BB81200661DE2 /* VeganModel.swift */; };
 		C5D6E19F2A17B4410042679C /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5D6E19E2A17B4410042679C /* API.plist */; };
 /* End PBXBuildFile section */
 
@@ -64,7 +64,6 @@
 		C5351B632A1A128400116D50 /* QuerySingleTon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuerySingleTon.swift; sourceTree = "<group>"; };
 		C5351B662A1A154C00116D50 /* PageEndingCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageEndingCheck.swift; sourceTree = "<group>"; };
 		C5351B682A1A2EAF00116D50 /* CustomPresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPresentation.swift; sourceTree = "<group>"; };
-		C5351B6A2A1B143200116D50 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C5351B6C2A1B215D00116D50 /* InrollPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewController.swift; sourceTree = "<group>"; };
 		C5351B6E2A1B242C00116D50 /* InrollPlacePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlacePresenter.swift; sourceTree = "<group>"; };
 		C5351B702A1B2FED00116D50 /* CustomLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLocationViewController.swift; sourceTree = "<group>"; };
@@ -72,6 +71,7 @@
 		C5351B792A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapResponseCoordinateModel.swift; sourceTree = "<group>"; };
 		C5351B7C2A1B52B900116D50 /* CustomLocationCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLocationCellModel.swift; sourceTree = "<group>"; };
 		C547A8B92A17D8D4004D1339 /* KakaoMapRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapRequestManager.swift; sourceTree = "<group>"; };
+		C5538AAE2A1BB81200661DE2 /* VeganModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganModel.swift; sourceTree = "<group>"; };
 		C5D6E19E2A17B4410042679C /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = API.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,7 +113,6 @@
 				C52FA34D2A175B20005E70DC /* LaunchScreen.storyboard */,
 				C52FA3502A175B20005E70DC /* Info.plist */,
 				C5D6E19E2A17B4410042679C /* API.plist */,
-				C5351B6A2A1B143200116D50 /* GoogleService-Info.plist */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -160,6 +159,7 @@
 				C5351B652A1A128D00116D50 /* SingleTonModel */,
 				C5351B7B2A1B52A000116D50 /* PlaceListModel */,
 				C5351B7E2A1B52D400116D50 /* CustomLocationModel */,
+				C5538AAE2A1BB81200661DE2 /* VeganModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -397,7 +397,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C52FA34F2A175B20005E70DC /* LaunchScreen.storyboard in Resources */,
-				C5351B6B2A1B143200116D50 /* GoogleService-Info.plist in Resources */,
 				C5D6E19F2A17B4410042679C /* API.plist in Resources */,
 				C52FA34C2A175B20005E70DC /* Assets.xcassets in Resources */,
 			);
@@ -482,6 +481,7 @@
 				C5351B4D2A19223300116D50 /* KakaoMapRequestAPI.swift in Sources */,
 				C50367F82A179D7B0020C6BB /* CustomConfiguration.swift in Sources */,
 				C5351B562A19B67900116D50 /* CustomAlertController.swift in Sources */,
+				C5538AAF2A1BB81200661DE2 /* VeganModel.swift in Sources */,
 				C50367F52A1795D10020C6BB /* MainViewPresenter.swift in Sources */,
 				C5351B622A1A083400116D50 /* PlaceListCellModel.swift in Sources */,
 				C52FA3452A175B20005E70DC /* SceneDelegate.swift in Sources */,
@@ -633,7 +633,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = C4K2HXA435;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AVIRO/Utils/Info.plist;
@@ -648,7 +648,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = SeonghunJeon.AVIRO;
+				PRODUCT_BUNDLE_IDENTIFIER = SeonghunJeon.VeganRestaurant;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -663,7 +663,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = C4K2HXA435;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AVIRO/Utils/Info.plist;
@@ -678,7 +678,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = SeonghunJeon.AVIRO;
+				PRODUCT_BUNDLE_IDENTIFIER = SeonghunJeon.VeganRestaurant;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
