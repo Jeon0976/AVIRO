@@ -26,14 +26,15 @@ final class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         presenter.viewDidLoad()
         presenter.locationAuthorization()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
+
+    override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        navigationController?.navigationBar.isHidden = true
+
         presenter.locationUpdate()
         
         NotificationCenter.default.addObserver(
@@ -44,10 +45,14 @@ final class MainViewController: UIViewController {
         )
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name("selectedPlace"), object: nil)
-
+        
+        navigationController?.navigationBar.isHidden = false
+        
+        // positionMode 싱글톤인가??? 여기서 모드를 꺼야 다음 창에서 나옴
+        naverMapView.positionMode = .disabled
     }
 
 }
@@ -55,7 +60,7 @@ final class MainViewController: UIViewController {
 extension MainViewController: MainViewProtocol {
     // MARK: Layout
     func makeLayout() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .white
         
         [
             naverMapView,
@@ -113,7 +118,6 @@ extension MainViewController: MainViewProtocol {
     // MARK: Attribute
     func makeAttribute() {
         view.addGestureRecognizer(tapGesture)
-        navigationController?.navigationBar.isHidden = true
         tapGesture.delegate = self
 
         // lodeLocationButton
@@ -140,15 +144,9 @@ extension MainViewController: MainViewProtocol {
         )
         
         let clearButton = UIButton(type: .custom)
-        clearButton.setImage(
-            UIImage(systemName: "xmark.circle.fill")?.withTintColor(.black, renderingMode: .alwaysOriginal),
-            for: .normal)
-        clearButton.contentEdgeInsets = UIEdgeInsets(
-            top: 5,
-            left: 5,
-            bottom: 5,
-            right: 5
-        )
+        clearButton.setImage(UIImage(systemName: "xmark.circle.fill")?.withTintColor(.black, renderingMode: .alwaysOriginal),
+                             for: .normal)
+        clearButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         
         searchTextField.rightView = clearButton
         searchTextField.rightViewMode = .whileEditing
@@ -172,10 +170,9 @@ extension MainViewController: MainViewProtocol {
         loadCustomLocationButton.customImageConfig("plus.circle", "plus.circle.fill")
         loadCustomLocationButton.backgroundColor = .white
         loadCustomLocationButton.layer.cornerRadius = 16
-        loadCustomLocationButton.addTarget(
-            self,
-            action: #selector(showCustomLocationView),
-            for: .touchUpInside)
+        loadCustomLocationButton.addTarget(self,
+                                           action: #selector(showCustomLocationView),
+                                           for: .touchUpInside)
     }
     
     // MARK: 내 위치 최신화
@@ -195,13 +192,6 @@ extension MainViewController: MainViewProtocol {
         viewController.modalPresentationStyle = .custom
         present(viewController, animated: true)
     }
-    
-    // MARK: Selected Place Inroll 불러오기
-    func presentInrollPlaceView(_ selectedPlace: PlaceListModel) {
-        let viewController = InrollPlaceViewController()
-        
-        navigationController?.pushViewController(viewController, animated: true)
-    }
 }
 
 extension MainViewController {
@@ -219,11 +209,11 @@ extension MainViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
 
-    
     // MARK: 좌표 커스텀 입력
     @objc func showCustomLocationView() {
         let viewController = CustomLocationViewController()
         
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     // MARK: 1. 돋보기 버튼 눌렀을 때

@@ -13,7 +13,6 @@ final class InrollPlaceViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.isHidden = false
         view.backgroundColor = .brown
     }
 }

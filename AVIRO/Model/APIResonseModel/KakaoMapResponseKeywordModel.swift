@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct KakaoMapResponseModel: Decodable {
+struct KakaoMapResponseKeywordModel: Decodable {
     let meta: KakaoMapResponseMetaData
     let documents: [RestaurantsAndCafes]
 }

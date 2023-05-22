@@ -47,13 +47,13 @@ extension PlaceListViewController: PlaceListProtocol {
     // MARK: Attribute
     func makeAttribute() {
         view.layer.cornerRadius = 16
-        view.backgroundColor = .clear
+        view.backgroundColor = .gray.withAlphaComponent(0.2)
         listTableView.backgroundColor = .clear
         // listTableView
-        listTableView.backgroundColor = .white.withAlphaComponent(0.6)
         listTableView.dataSource = presenter
         listTableView.delegate = self
         listTableView.register(PlaceListCell.self, forCellReuseIdentifier: PlaceListCell.identifier)
+        listTableView.separatorStyle = .none
         
         // cancelButton
         cancelButton.customImageConfig("x.circle.fill", "x.circle")

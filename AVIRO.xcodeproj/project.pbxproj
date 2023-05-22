@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9F92DF311461667C42958AF4 /* Pods_AVIRO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6EC2A237A0993B3FBEBA044 /* Pods_AVIRO.framework */; };
+		A156F24E1DC1F5FA54D44A76 /* Pods_AVIRO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 796022A3066B91147B712BB4 /* Pods_AVIRO.framework */; };
 		C50367F52A1795D10020C6BB /* MainViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F42A1795D10020C6BB /* MainViewPresenter.swift */; };
 		C50367F82A179D7B0020C6BB /* CustomConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F72A179D7B0020C6BB /* CustomConfiguration.swift */; };
 		C52FA3432A175B20005E70DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FA3422A175B20005E70DC /* AppDelegate.swift */; };
@@ -16,7 +16,7 @@
 		C52FA34C2A175B20005E70DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C52FA34B2A175B20005E70DC /* Assets.xcassets */; };
 		C52FA34F2A175B20005E70DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C52FA34D2A175B20005E70DC /* LaunchScreen.storyboard */; };
 		C5351B4D2A19223300116D50 /* KakaoMapRequestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B4C2A19223300116D50 /* KakaoMapRequestAPI.swift */; };
-		C5351B502A19225A00116D50 /* KakaoMapResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B4F2A19225A00116D50 /* KakaoMapResponseModel.swift */; };
+		C5351B502A19225A00116D50 /* KakaoMapResponseKeywordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B4F2A19225A00116D50 /* KakaoMapResponseKeywordModel.swift */; };
 		C5351B542A19A7B100116D50 /* PersonalLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B532A19A7B100116D50 /* PersonalLocation.swift */; };
 		C5351B562A19B67900116D50 /* CustomAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B552A19B67900116D50 /* CustomAlertController.swift */; };
 		C5351B582A19F5DA00116D50 /* PlaceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B572A19F5DA00116D50 /* PlaceListViewController.swift */; };
@@ -31,14 +31,17 @@
 		C5351B6D2A1B215D00116D50 /* InrollPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B6C2A1B215D00116D50 /* InrollPlaceViewController.swift */; };
 		C5351B6F2A1B242C00116D50 /* InrollPlacePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B6E2A1B242C00116D50 /* InrollPlacePresenter.swift */; };
 		C5351B712A1B2FED00116D50 /* CustomLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B702A1B2FED00116D50 /* CustomLocationViewController.swift */; };
+		C5351B752A1B36BA00116D50 /* CustomLocationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B742A1B36BA00116D50 /* CustomLocationPresenter.swift */; };
+		C5351B7A2A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B792A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift */; };
+		C5351B7D2A1B52B900116D50 /* CustomLocationCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B7C2A1B52B900116D50 /* CustomLocationCellModel.swift */; };
 		C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547A8B92A17D8D4004D1339 /* KakaoMapRequestManager.swift */; };
 		C5D6E19F2A17B4410042679C /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5D6E19E2A17B4410042679C /* API.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		504A921976A8C86232B4E5E5 /* Pods-VeganRestaurant.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VeganRestaurant.debug.xcconfig"; path = "Target Support Files/Pods-VeganRestaurant/Pods-VeganRestaurant.debug.xcconfig"; sourceTree = "<group>"; };
-		659308CD972FBCCBAC198577 /* Pods-AVIRO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AVIRO.debug.xcconfig"; path = "Target Support Files/Pods-AVIRO/Pods-AVIRO.debug.xcconfig"; sourceTree = "<group>"; };
-		B025D745A335F3AA59B98199 /* Pods-AVIRO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AVIRO.release.xcconfig"; path = "Target Support Files/Pods-AVIRO/Pods-AVIRO.release.xcconfig"; sourceTree = "<group>"; };
+		4EB01DC761F38F50251EAA43 /* Pods-AVIRO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AVIRO.release.xcconfig"; path = "Target Support Files/Pods-AVIRO/Pods-AVIRO.release.xcconfig"; sourceTree = "<group>"; };
+		796022A3066B91147B712BB4 /* Pods_AVIRO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AVIRO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B57500A8C1EA6C6CFDED2C4C /* Pods-AVIRO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AVIRO.debug.xcconfig"; path = "Target Support Files/Pods-AVIRO/Pods-AVIRO.debug.xcconfig"; sourceTree = "<group>"; };
 		C50367F42A1795D10020C6BB /* MainViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewPresenter.swift; sourceTree = "<group>"; };
 		C50367F72A179D7B0020C6BB /* CustomConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomConfiguration.swift; sourceTree = "<group>"; };
 		C52FA33F2A175B20005E70DC /* AVIRO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AVIRO.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -50,7 +53,7 @@
 		C52FA3502A175B20005E70DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5351B4A2A1919F700116D50 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		C5351B4C2A19223300116D50 /* KakaoMapRequestAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapRequestAPI.swift; sourceTree = "<group>"; };
-		C5351B4F2A19225A00116D50 /* KakaoMapResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapResponseModel.swift; sourceTree = "<group>"; };
+		C5351B4F2A19225A00116D50 /* KakaoMapResponseKeywordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapResponseKeywordModel.swift; sourceTree = "<group>"; };
 		C5351B532A19A7B100116D50 /* PersonalLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalLocation.swift; sourceTree = "<group>"; };
 		C5351B552A19B67900116D50 /* CustomAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertController.swift; sourceTree = "<group>"; };
 		C5351B572A19F5DA00116D50 /* PlaceListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListViewController.swift; sourceTree = "<group>"; };
@@ -65,10 +68,11 @@
 		C5351B6C2A1B215D00116D50 /* InrollPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewController.swift; sourceTree = "<group>"; };
 		C5351B6E2A1B242C00116D50 /* InrollPlacePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlacePresenter.swift; sourceTree = "<group>"; };
 		C5351B702A1B2FED00116D50 /* CustomLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLocationViewController.swift; sourceTree = "<group>"; };
+		C5351B742A1B36BA00116D50 /* CustomLocationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLocationPresenter.swift; sourceTree = "<group>"; };
+		C5351B792A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapResponseCoordinateModel.swift; sourceTree = "<group>"; };
+		C5351B7C2A1B52B900116D50 /* CustomLocationCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLocationCellModel.swift; sourceTree = "<group>"; };
 		C547A8B92A17D8D4004D1339 /* KakaoMapRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapRequestManager.swift; sourceTree = "<group>"; };
 		C5D6E19E2A17B4410042679C /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = API.plist; sourceTree = "<group>"; };
-		CE9C80342B4DE4AD7FF372F7 /* Pods-VeganRestaurant.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VeganRestaurant.release.xcconfig"; path = "Target Support Files/Pods-VeganRestaurant/Pods-VeganRestaurant.release.xcconfig"; sourceTree = "<group>"; };
-		F6EC2A237A0993B3FBEBA044 /* Pods_AVIRO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AVIRO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,17 +80,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F92DF311461667C42958AF4 /* Pods_AVIRO.framework in Frameworks */,
+				A156F24E1DC1F5FA54D44A76 /* Pods_AVIRO.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7FE22D32B09012B7170C095E /* Frameworks */ = {
+		0C3C6AC2BC6B49CCDD2FE9BF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F6EC2A237A0993B3FBEBA044 /* Pods_AVIRO.framework */,
+				796022A3066B91147B712BB4 /* Pods_AVIRO.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -94,10 +98,8 @@
 		BE7C2C07294F8980354FE766 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				504A921976A8C86232B4E5E5 /* Pods-VeganRestaurant.debug.xcconfig */,
-				CE9C80342B4DE4AD7FF372F7 /* Pods-VeganRestaurant.release.xcconfig */,
-				659308CD972FBCCBAC198577 /* Pods-AVIRO.debug.xcconfig */,
-				B025D745A335F3AA59B98199 /* Pods-AVIRO.release.xcconfig */,
+				B57500A8C1EA6C6CFDED2C4C /* Pods-AVIRO.debug.xcconfig */,
+				4EB01DC761F38F50251EAA43 /* Pods-AVIRO.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -154,10 +156,10 @@
 		C50367F32A1795BE0020C6BB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C5351B782A1B437600116D50 /* APIResonseModel */,
 				C5351B652A1A128D00116D50 /* SingleTonModel */,
-				C5351B4F2A19225A00116D50 /* KakaoMapResponseModel.swift */,
-				C5351B5F2A19F9A700116D50 /* PlaceListModel.swift */,
-				C5351B612A1A083400116D50 /* PlaceListCellModel.swift */,
+				C5351B7B2A1B52A000116D50 /* PlaceListModel */,
+				C5351B7E2A1B52D400116D50 /* CustomLocationModel */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -179,7 +181,7 @@
 				C52FA3412A175B20005E70DC /* AVIRO */,
 				C52FA3402A175B20005E70DC /* Products */,
 				BE7C2C07294F8980354FE766 /* Pods */,
-				7FE22D32B09012B7170C095E /* Frameworks */,
+				0C3C6AC2BC6B49CCDD2FE9BF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -215,10 +217,8 @@
 		C5351B592A19F5DE00116D50 /* SubView */ = {
 			isa = PBXGroup;
 			children = (
-				C5351B572A19F5DA00116D50 /* PlaceListViewController.swift */,
-				C5351B5D2A19F84800116D50 /* PlaceListCell.swift */,
-				C5351B702A1B2FED00116D50 /* CustomLocationViewController.swift */,
-				C5351B6C2A1B215D00116D50 /* InrollPlaceViewController.swift */,
+				C5351B772A1B36D100116D50 /* InrollPlace */,
+				C5351B722A1B369000116D50 /* SearchPlace */,
 			);
 			path = SubView;
 			sourceTree = "<group>";
@@ -226,8 +226,8 @@
 		C5351B5A2A19F5EE00116D50 /* SubPresenter */ = {
 			isa = PBXGroup;
 			children = (
-				C5351B5B2A19F60200116D50 /* PlaceListViewPresenter.swift */,
-				C5351B6E2A1B242C00116D50 /* InrollPlacePresenter.swift */,
+				C5351B762A1B36C700116D50 /* InrollPlace */,
+				C5351B732A1B36A300116D50 /* SearchPlace */,
 			);
 			path = SubPresenter;
 			sourceTree = "<group>";
@@ -242,6 +242,99 @@
 			path = SingleTonModel;
 			sourceTree = "<group>";
 		};
+		C5351B722A1B369000116D50 /* SearchPlace */ = {
+			isa = PBXGroup;
+			children = (
+				C5351B7F2A1B537000116D50 /* PlaceList */,
+				C5351B802A1B537B00116D50 /* CustomLocation */,
+			);
+			path = SearchPlace;
+			sourceTree = "<group>";
+		};
+		C5351B732A1B36A300116D50 /* SearchPlace */ = {
+			isa = PBXGroup;
+			children = (
+				C5351B812A1B547C00116D50 /* PlaceList */,
+				C5351B822A1B548100116D50 /* CustomLocation */,
+			);
+			path = SearchPlace;
+			sourceTree = "<group>";
+		};
+		C5351B762A1B36C700116D50 /* InrollPlace */ = {
+			isa = PBXGroup;
+			children = (
+				C5351B6E2A1B242C00116D50 /* InrollPlacePresenter.swift */,
+			);
+			path = InrollPlace;
+			sourceTree = "<group>";
+		};
+		C5351B772A1B36D100116D50 /* InrollPlace */ = {
+			isa = PBXGroup;
+			children = (
+				C5351B6C2A1B215D00116D50 /* InrollPlaceViewController.swift */,
+			);
+			path = InrollPlace;
+			sourceTree = "<group>";
+		};
+		C5351B782A1B437600116D50 /* APIResonseModel */ = {
+			isa = PBXGroup;
+			children = (
+				C5351B4F2A19225A00116D50 /* KakaoMapResponseKeywordModel.swift */,
+				C5351B792A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift */,
+			);
+			path = APIResonseModel;
+			sourceTree = "<group>";
+		};
+		C5351B7B2A1B52A000116D50 /* PlaceListModel */ = {
+			isa = PBXGroup;
+			children = (
+				C5351B5F2A19F9A700116D50 /* PlaceListModel.swift */,
+				C5351B612A1A083400116D50 /* PlaceListCellModel.swift */,
+			);
+			path = PlaceListModel;
+			sourceTree = "<group>";
+		};
+		C5351B7E2A1B52D400116D50 /* CustomLocationModel */ = {
+			isa = PBXGroup;
+			children = (
+				C5351B7C2A1B52B900116D50 /* CustomLocationCellModel.swift */,
+			);
+			path = CustomLocationModel;
+			sourceTree = "<group>";
+		};
+		C5351B7F2A1B537000116D50 /* PlaceList */ = {
+			isa = PBXGroup;
+			children = (
+				C5351B572A19F5DA00116D50 /* PlaceListViewController.swift */,
+				C5351B5D2A19F84800116D50 /* PlaceListCell.swift */,
+			);
+			path = PlaceList;
+			sourceTree = "<group>";
+		};
+		C5351B802A1B537B00116D50 /* CustomLocation */ = {
+			isa = PBXGroup;
+			children = (
+				C5351B702A1B2FED00116D50 /* CustomLocationViewController.swift */,
+			);
+			path = CustomLocation;
+			sourceTree = "<group>";
+		};
+		C5351B812A1B547C00116D50 /* PlaceList */ = {
+			isa = PBXGroup;
+			children = (
+				C5351B5B2A19F60200116D50 /* PlaceListViewPresenter.swift */,
+			);
+			path = PlaceList;
+			sourceTree = "<group>";
+		};
+		C5351B822A1B548100116D50 /* CustomLocation */ = {
+			isa = PBXGroup;
+			children = (
+				C5351B742A1B36BA00116D50 /* CustomLocationPresenter.swift */,
+			);
+			path = CustomLocation;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -249,12 +342,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C52FA3532A175B20005E70DC /* Build configuration list for PBXNativeTarget "AVIRO" */;
 			buildPhases = (
-				200447A92F7EC9C550310E0D /* [CP] Check Pods Manifest.lock */,
+				94D666AE4260592A253C27D2 /* [CP] Check Pods Manifest.lock */,
 				C52FA33B2A175B20005E70DC /* Sources */,
 				C52FA33C2A175B20005E70DC /* Frameworks */,
 				C52FA33D2A175B20005E70DC /* Resources */,
-				E65714349F2131A11778A40C /* [CP] Embed Pods Frameworks */,
 				C5351B492A19160600116D50 /* swiftlint */,
+				C60A8D31733F9A2D78370C5C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -313,7 +406,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		200447A92F7EC9C550310E0D /* [CP] Check Pods Manifest.lock */ = {
+		94D666AE4260592A253C27D2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -354,7 +447,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\n    export PATH=\"$PATH:/opt/homebrew/bin\"\n    if which swiftlint > /dev/null; then\n      swiftlint\n    else\n      echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n    fi\n";
 		};
-		E65714349F2131A11778A40C /* [CP] Embed Pods Frameworks */ = {
+		C60A8D31733F9A2D78370C5C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -383,8 +476,9 @@
 				C5351B6F2A1B242C00116D50 /* InrollPlacePresenter.swift in Sources */,
 				C52FA3472A175B20005E70DC /* MainViewController.swift in Sources */,
 				C5351B642A1A128400116D50 /* QuerySingleTon.swift in Sources */,
+				C5351B7D2A1B52B900116D50 /* CustomLocationCellModel.swift in Sources */,
 				C52FA3432A175B20005E70DC /* AppDelegate.swift in Sources */,
-				C5351B502A19225A00116D50 /* KakaoMapResponseModel.swift in Sources */,
+				C5351B502A19225A00116D50 /* KakaoMapResponseKeywordModel.swift in Sources */,
 				C5351B4D2A19223300116D50 /* KakaoMapRequestAPI.swift in Sources */,
 				C50367F82A179D7B0020C6BB /* CustomConfiguration.swift in Sources */,
 				C5351B562A19B67900116D50 /* CustomAlertController.swift in Sources */,
@@ -392,11 +486,13 @@
 				C5351B622A1A083400116D50 /* PlaceListCellModel.swift in Sources */,
 				C52FA3452A175B20005E70DC /* SceneDelegate.swift in Sources */,
 				C5351B542A19A7B100116D50 /* PersonalLocation.swift in Sources */,
+				C5351B752A1B36BA00116D50 /* CustomLocationPresenter.swift in Sources */,
 				C5351B6D2A1B215D00116D50 /* InrollPlaceViewController.swift in Sources */,
 				C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */,
 				C5351B672A1A154C00116D50 /* PageEndingCheck.swift in Sources */,
 				C5351B5C2A19F60200116D50 /* PlaceListViewPresenter.swift in Sources */,
 				C5351B692A1A2EAF00116D50 /* CustomPresentation.swift in Sources */,
+				C5351B7A2A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift in Sources */,
 				C5351B602A19F9A700116D50 /* PlaceListModel.swift in Sources */,
 				C5351B712A1B2FED00116D50 /* CustomLocationViewController.swift in Sources */,
 			);
@@ -532,7 +628,7 @@
 		};
 		C52FA3542A175B20005E70DC /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 659308CD972FBCCBAC198577 /* Pods-AVIRO.debug.xcconfig */;
+			baseConfigurationReference = B57500A8C1EA6C6CFDED2C4C /* Pods-AVIRO.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -562,7 +658,7 @@
 		};
 		C52FA3552A175B20005E70DC /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B025D745A335F3AA59B98199 /* Pods-AVIRO.release.xcconfig */;
+			baseConfigurationReference = 4EB01DC761F38F50251EAA43 /* Pods-AVIRO.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

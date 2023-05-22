@@ -13,7 +13,6 @@ protocol MainViewProtocol: NSObject {
     func makeAttribute()
     func markingMap()
     func presentPlaceListView(_ placeLists: [PlaceListModel])
-    func presentInrollPlaceView(_ selectedPlace: PlaceListModel)
 }
 
 final class MainViewPresenter: NSObject {
@@ -27,29 +26,17 @@ final class MainViewPresenter: NSObject {
     }
     
     func viewDidLoad() {
+        locationManager.delegate = self
+        
         viewController?.makeLayout()
         viewController?.makeAttribute()
+        
     }
-    
-//    func viewDidAppear() {
-//        NotificationCenter.default.addObserver(
-//            self,
-//            selector: #selector(selectedPlace(_:)),
-//            name: NSNotification.Name("selectedPlace"),
-//            object: nil
-//        )
-//    }
-//
-//    deinit {
-//
-//    }
-    
 }
 
 // MARK: user location 불러오기 관련 작업들
 extension MainViewPresenter: CLLocationManagerDelegate {
     func locationAuthorization() {
-        locationManager.delegate = self
         
         switch locationManager.authorizationStatus {
         case .denied:
@@ -84,7 +71,7 @@ extension MainViewPresenter: CLLocationManagerDelegate {
     // MARK: 최초 검색 시 마켓,카페 검색 API 호출
     func showPlaceListView(_ locations: String) {
         QuerySingleTon.shared.query = locations
-        requestManager.kakaoMapSearch(query: locations,
+        requestManager.kakaoMapKeywordSearch(query: locations,
                                       longitude: PersonalLocation.shared.longitudeString,
                                       latitude: PersonalLocation.shared.latitudeString,
                                       page: "1") { model in
@@ -104,16 +91,10 @@ extension MainViewPresenter: CLLocationManagerDelegate {
                 return placeListCellModel
             }
             DispatchQueue.main.async { [weak self] in
+                print(placeLists)
                 self?.viewController?.presentPlaceListView(placeLists)
             }
         }
     }
-        
-//    // MARK: 아이탬이 선택 되었을 때 inroll view present
-//    @objc func selectedPlace(_ notification: Notification) {
-//        guard let selectedPlace = notification.userInfo?["selectedPlace"] as? PlaceListModel else { return }
-//
-//        viewController?.presentInrollPlaceView(selectedPlace)
-//    }
     
 }

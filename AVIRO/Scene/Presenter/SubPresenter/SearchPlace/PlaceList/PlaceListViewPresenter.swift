@@ -57,7 +57,7 @@ final class PlaceListViewPresenter: NSObject {
         let longitude = PersonalLocation.shared.longitudeString
         let latitude = PersonalLocation.shared.latitudeString
         
-        requestManager.kakaoMapSearch(query: query,
+        requestManager.kakaoMapKeywordSearch(query: query,
                                       longitude: longitude,
                                       latitude: latitude,
                                       page: "\(currentPage)") { model in
@@ -124,6 +124,9 @@ extension PlaceListViewPresenter: UITableViewDataSource {
         )
         
         cell?.makeCellData(cellData)
+        
+        cell?.backgroundColor = .clear
+        cell?.selectionStyle = .none
         
         return cell ?? UITableViewCell()
     }
