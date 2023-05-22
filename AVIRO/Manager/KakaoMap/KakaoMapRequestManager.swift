@@ -49,7 +49,6 @@ final class KakaoMapRequestManager {
             }
             if let data = data {
                 if let searchData = try? JSONDecoder().decode(KakaoMapResponseModel.self, from: data) {
-                    print("Testtest")
                     completionHandler(searchData)
                 }
             }

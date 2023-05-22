@@ -27,6 +27,10 @@
 		C5351B642A1A128400116D50 /* QuerySingleTon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B632A1A128400116D50 /* QuerySingleTon.swift */; };
 		C5351B672A1A154C00116D50 /* PageEndingCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B662A1A154C00116D50 /* PageEndingCheck.swift */; };
 		C5351B692A1A2EAF00116D50 /* CustomPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B682A1A2EAF00116D50 /* CustomPresentation.swift */; };
+		C5351B6B2A1B143200116D50 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5351B6A2A1B143200116D50 /* GoogleService-Info.plist */; };
+		C5351B6D2A1B215D00116D50 /* InrollPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B6C2A1B215D00116D50 /* InrollPlaceViewController.swift */; };
+		C5351B6F2A1B242C00116D50 /* InrollPlacePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B6E2A1B242C00116D50 /* InrollPlacePresenter.swift */; };
+		C5351B712A1B2FED00116D50 /* CustomLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B702A1B2FED00116D50 /* CustomLocationViewController.swift */; };
 		C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547A8B92A17D8D4004D1339 /* KakaoMapRequestManager.swift */; };
 		C5D6E19F2A17B4410042679C /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5D6E19E2A17B4410042679C /* API.plist */; };
 /* End PBXBuildFile section */
@@ -57,6 +61,10 @@
 		C5351B632A1A128400116D50 /* QuerySingleTon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuerySingleTon.swift; sourceTree = "<group>"; };
 		C5351B662A1A154C00116D50 /* PageEndingCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageEndingCheck.swift; sourceTree = "<group>"; };
 		C5351B682A1A2EAF00116D50 /* CustomPresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPresentation.swift; sourceTree = "<group>"; };
+		C5351B6A2A1B143200116D50 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C5351B6C2A1B215D00116D50 /* InrollPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewController.swift; sourceTree = "<group>"; };
+		C5351B6E2A1B242C00116D50 /* InrollPlacePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlacePresenter.swift; sourceTree = "<group>"; };
+		C5351B702A1B2FED00116D50 /* CustomLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLocationViewController.swift; sourceTree = "<group>"; };
 		C547A8B92A17D8D4004D1339 /* KakaoMapRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapRequestManager.swift; sourceTree = "<group>"; };
 		C5D6E19E2A17B4410042679C /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = API.plist; sourceTree = "<group>"; };
 		CE9C80342B4DE4AD7FF372F7 /* Pods-VeganRestaurant.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VeganRestaurant.release.xcconfig"; path = "Target Support Files/Pods-VeganRestaurant/Pods-VeganRestaurant.release.xcconfig"; sourceTree = "<group>"; };
@@ -103,6 +111,7 @@
 				C52FA34D2A175B20005E70DC /* LaunchScreen.storyboard */,
 				C52FA3502A175B20005E70DC /* Info.plist */,
 				C5D6E19E2A17B4410042679C /* API.plist */,
+				C5351B6A2A1B143200116D50 /* GoogleService-Info.plist */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -208,6 +217,8 @@
 			children = (
 				C5351B572A19F5DA00116D50 /* PlaceListViewController.swift */,
 				C5351B5D2A19F84800116D50 /* PlaceListCell.swift */,
+				C5351B702A1B2FED00116D50 /* CustomLocationViewController.swift */,
+				C5351B6C2A1B215D00116D50 /* InrollPlaceViewController.swift */,
 			);
 			path = SubView;
 			sourceTree = "<group>";
@@ -216,6 +227,7 @@
 			isa = PBXGroup;
 			children = (
 				C5351B5B2A19F60200116D50 /* PlaceListViewPresenter.swift */,
+				C5351B6E2A1B242C00116D50 /* InrollPlacePresenter.swift */,
 			);
 			path = SubPresenter;
 			sourceTree = "<group>";
@@ -292,6 +304,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C52FA34F2A175B20005E70DC /* LaunchScreen.storyboard in Resources */,
+				C5351B6B2A1B143200116D50 /* GoogleService-Info.plist in Resources */,
 				C5D6E19F2A17B4410042679C /* API.plist in Resources */,
 				C52FA34C2A175B20005E70DC /* Assets.xcassets in Resources */,
 			);
@@ -367,6 +380,7 @@
 			files = (
 				C5351B582A19F5DA00116D50 /* PlaceListViewController.swift in Sources */,
 				C5351B5E2A19F84800116D50 /* PlaceListCell.swift in Sources */,
+				C5351B6F2A1B242C00116D50 /* InrollPlacePresenter.swift in Sources */,
 				C52FA3472A175B20005E70DC /* MainViewController.swift in Sources */,
 				C5351B642A1A128400116D50 /* QuerySingleTon.swift in Sources */,
 				C52FA3432A175B20005E70DC /* AppDelegate.swift in Sources */,
@@ -378,11 +392,13 @@
 				C5351B622A1A083400116D50 /* PlaceListCellModel.swift in Sources */,
 				C52FA3452A175B20005E70DC /* SceneDelegate.swift in Sources */,
 				C5351B542A19A7B100116D50 /* PersonalLocation.swift in Sources */,
+				C5351B6D2A1B215D00116D50 /* InrollPlaceViewController.swift in Sources */,
 				C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */,
 				C5351B672A1A154C00116D50 /* PageEndingCheck.swift in Sources */,
 				C5351B5C2A19F60200116D50 /* PlaceListViewPresenter.swift in Sources */,
 				C5351B692A1A2EAF00116D50 /* CustomPresentation.swift in Sources */,
 				C5351B602A19F9A700116D50 /* PlaceListModel.swift in Sources */,
+				C5351B712A1B2FED00116D50 /* CustomLocationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,7 +552,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = SeonghunJeon.VeganRestaurant;
+				PRODUCT_BUNDLE_IDENTIFIER = SeonghunJeon.AVIRO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -566,7 +582,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = SeonghunJeon.VeganRestaurant;
+				PRODUCT_BUNDLE_IDENTIFIER = SeonghunJeon.AVIRO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

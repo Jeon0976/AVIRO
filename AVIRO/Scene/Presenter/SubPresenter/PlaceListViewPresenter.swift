@@ -84,6 +84,19 @@ final class PlaceListViewPresenter: NSObject {
             }
         }
     }
+    
+    // MARK: Item 클릭 될 떄
+    func didSelectRowAt(_ indexPath: IndexPath) {
+        let selectedItem = placeList[indexPath.row]
+        
+        let userInfo: [String: Any] = ["selectedPlace": selectedItem]
+        
+        NotificationCenter.default.post(
+            name: NSNotification.Name("selectedPlace"),
+            object: nil,
+            userInfo: userInfo
+        )
+    }
 }
 
 // MARK: TableView DataSource

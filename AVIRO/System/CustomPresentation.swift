@@ -7,21 +7,20 @@
 
 import UIKit
 
-// MARK: TableView present custom 
+// MARK: TableView present custom
 final class CustomPresentation: UIPresentationController {
     override var frameOfPresentedViewInContainerView: CGRect {
         guard let containerView = containerView else { return .zero }
         return CGRect(
-            x: 0,
+            x: 6,
             y: containerView.bounds.height / 3,
-            width: containerView.bounds.width,
+            width: containerView.bounds.width - 2 * 6,
             height: containerView.bounds.height * 2 / 3
         )
     }
 
     override func presentationTransitionWillBegin() {
         containerView?.addSubview(presentedView!)
-        presentedView?.backgroundColor = UIColor.black.withAlphaComponent(0.5)
     }
 }
 

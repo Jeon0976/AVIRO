@@ -13,6 +13,7 @@ protocol MainViewProtocol: NSObject {
     func makeAttribute()
     func markingMap()
     func presentPlaceListView(_ placeLists: [PlaceListModel])
+    func presentInrollPlaceView(_ selectedPlace: PlaceListModel)
 }
 
 final class MainViewPresenter: NSObject {
@@ -29,6 +30,19 @@ final class MainViewPresenter: NSObject {
         viewController?.makeLayout()
         viewController?.makeAttribute()
     }
+    
+//    func viewDidAppear() {
+//        NotificationCenter.default.addObserver(
+//            self,
+//            selector: #selector(selectedPlace(_:)),
+//            name: NSNotification.Name("selectedPlace"),
+//            object: nil
+//        )
+//    }
+//
+//    deinit {
+//
+//    }
     
 }
 
@@ -68,7 +82,7 @@ extension MainViewPresenter: CLLocationManagerDelegate {
     }
     
     // MARK: 최초 검색 시 마켓,카페 검색 API 호출
-    func findLocation(_ locations: String) {
+    func showPlaceListView(_ locations: String) {
         QuerySingleTon.shared.query = locations
         requestManager.kakaoMapSearch(query: locations,
                                       longitude: PersonalLocation.shared.longitudeString,
@@ -94,4 +108,12 @@ extension MainViewPresenter: CLLocationManagerDelegate {
             }
         }
     }
+        
+//    // MARK: 아이탬이 선택 되었을 때 inroll view present
+//    @objc func selectedPlace(_ notification: Notification) {
+//        guard let selectedPlace = notification.userInfo?["selectedPlace"] as? PlaceListModel else { return }
+//
+//        viewController?.presentInrollPlaceView(selectedPlace)
+//    }
+    
 }

@@ -6,6 +6,7 @@ target 'AVIRO' do
   use_frameworks!
 
 pod 'NMapsMap'
+pod 'Firebase/Analytics'
 
   # Pods for VeganRestaurant
 

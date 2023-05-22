@@ -14,10 +14,14 @@ final class MainViewController: UIViewController {
         
     var naverMapView = NMFMapView()
     
+    // 검색 기능 관련
     var searchTextField = InsetTextField()
     var searchLocationButton = UIButton()
-    
+    var loadCustomLocationButton = UIButton()
+
+    // 내 위치 최신화 관련
     var loadLocationButton = UIButton()
+    
     var tapGesture = UITapGestureRecognizer()
     
     override func viewDidLoad() {
@@ -31,21 +35,34 @@ final class MainViewController: UIViewController {
         super.viewDidAppear(animated)
         
         presenter.locationUpdate()
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(selectedPlace(_:)),
+            name: NSNotification.Name("selectedPlace"),
+            object: nil
+        )
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("selectedPlace"), object: nil)
+
     }
 
 }
 
 extension MainViewController: MainViewProtocol {
-    // MARK: layout
+    // MARK: Layout
     func makeLayout() {
         view.backgroundColor = .systemBackground
-        view.addGestureRecognizer(tapGesture)
         
         [
             naverMapView,
             loadLocationButton,
             searchTextField,
-            searchLocationButton
+            searchLocationButton,
+            loadCustomLocationButton
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
@@ -53,32 +70,61 @@ extension MainViewController: MainViewProtocol {
         
         NSLayoutConstraint.activate([
             // naverMapView
-            naverMapView.topAnchor.constraint(equalTo: view.topAnchor),
-            naverMapView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            naverMapView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            naverMapView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            naverMapView.topAnchor.constraint(
+                equalTo: view.topAnchor),
+            naverMapView.bottomAnchor.constraint(
+                equalTo: view.bottomAnchor),
+            naverMapView.leadingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            naverMapView.trailingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             
             // loadLoactionButton
-            loadLocationButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-            loadLocationButton.trailingAnchor.constraint(equalTo: naverMapView.trailingAnchor, constant: -16),
+            loadLocationButton.bottomAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            loadLocationButton.trailingAnchor.constraint(
+                equalTo: naverMapView.trailingAnchor, constant: -16),
             
             // searchTextField
-            searchTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            searchTextField.leadingAnchor.constraint(equalTo: naverMapView.leadingAnchor, constant: 16),
-            searchTextField.trailingAnchor.constraint(equalTo: searchLocationButton.leadingAnchor, constant: -16),
+            searchTextField.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            searchTextField.leadingAnchor.constraint(
+                equalTo: naverMapView.leadingAnchor, constant: 16),
+            searchTextField.trailingAnchor.constraint(
+                equalTo: searchLocationButton.leadingAnchor, constant: -16),
             
             // searchLocationButton
-            searchLocationButton.trailingAnchor.constraint(equalTo: naverMapView.trailingAnchor, constant: -16),
-            searchLocationButton.centerYAnchor.constraint(equalTo: searchTextField.centerYAnchor)
+            searchLocationButton.leadingAnchor.constraint(
+                equalTo: searchTextField.trailingAnchor, constant: -16),
+            searchLocationButton.centerYAnchor.constraint(
+                equalTo: searchTextField.centerYAnchor),
+            
+            // loadCustomLoactionButton
+            loadCustomLocationButton.trailingAnchor.constraint(
+                equalTo: naverMapView.trailingAnchor, constant: -16),
+            loadCustomLocationButton.leadingAnchor.constraint(
+                equalTo: searchLocationButton.trailingAnchor, constant: 16),
+            loadCustomLocationButton.centerYAnchor.constraint(
+                equalTo: searchTextField.centerYAnchor)
         ])
 
     }
     
     // MARK: Attribute
     func makeAttribute() {
+        view.addGestureRecognizer(tapGesture)
+        navigationController?.navigationBar.isHidden = true
+        tapGesture.delegate = self
+
         // lodeLocationButton
-        loadLocationButton.customImageConfig("plus.circle", "plus.circle.fill")
-        loadLocationButton.addTarget(self, action: #selector(refreshMyLocation), for: .touchUpInside)
+        loadLocationButton.customImageConfig("scope", "scope")
+        loadLocationButton.addTarget(
+            self,
+            action: #selector(refreshMyLocation),
+            for: .touchUpInside
+        )
+        loadLocationButton.backgroundColor = .white
+        loadLocationButton.layer.cornerRadius = 16
         
         // searchTextField
         let placeholder = "식당을 검색하세요."
@@ -97,7 +143,12 @@ extension MainViewController: MainViewProtocol {
         clearButton.setImage(
             UIImage(systemName: "xmark.circle.fill")?.withTintColor(.black, renderingMode: .alwaysOriginal),
             for: .normal)
-        clearButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        clearButton.contentEdgeInsets = UIEdgeInsets(
+            top: 5,
+            left: 5,
+            bottom: 5,
+            right: 5
+        )
         
         searchTextField.rightView = clearButton
         searchTextField.rightViewMode = .whileEditing
@@ -106,13 +157,25 @@ extension MainViewController: MainViewProtocol {
         searchTextField.backgroundColor = .white
         searchTextField.layer.cornerRadius = 8
         searchTextField.delegate = self
-        
-        tapGesture.delegate = self
-        
+                
         // searchLocationButton
         searchLocationButton.customImageConfig("magnifyingglass.circle", "magnifyingglass.circle.fill")
-        searchLocationButton.addTarget(self, action: #selector(findLocation), for: .touchUpInside)
+        searchLocationButton.addTarget(
+            self,
+            action: #selector(showPlaceListView),
+            for: .touchUpInside
+        )
+        searchLocationButton.backgroundColor = .white
+        searchLocationButton.layer.cornerRadius = 16
         
+        // loadCustomLocationButton
+        loadCustomLocationButton.customImageConfig("plus.circle", "plus.circle.fill")
+        loadCustomLocationButton.backgroundColor = .white
+        loadCustomLocationButton.layer.cornerRadius = 16
+        loadCustomLocationButton.addTarget(
+            self,
+            action: #selector(showCustomLocationView),
+            for: .touchUpInside)
     }
     
     // MARK: 내 위치 최신화
@@ -120,7 +183,7 @@ extension MainViewController: MainViewProtocol {
         naverMapView.positionMode = .direction
     }
     
-    //  MARK: PlaceListView 불러오기
+    // MARK: PlaceListView 불러오기
     func presentPlaceListView(_ placeLists: [PlaceListModel]) {
         let viewController = PlaceListViewController()
         let presenter = PlaceListViewPresenter(
@@ -132,6 +195,13 @@ extension MainViewController: MainViewProtocol {
         viewController.modalPresentationStyle = .custom
         present(viewController, animated: true)
     }
+    
+    // MARK: Selected Place Inroll 불러오기
+    func presentInrollPlaceView(_ selectedPlace: PlaceListModel) {
+        let viewController = InrollPlaceViewController()
+        
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 }
 
 extension MainViewController {
@@ -140,13 +210,28 @@ extension MainViewController {
         presenter.locationUpdate()
     }
     
-    // MARK: 1. 돋보기 버튼 눌렀을 때
-    @objc func findLocation() {
-        guard let searchText = searchTextField.text else { return }
+    // MARK: 아이탬이 선택 되었을 때 inroll view present
+    @objc func selectedPlace(_ notification: Notification) {
+        guard let selectedPlace = notification.userInfo?["selectedPlace"] as? PlaceListModel else { return }
         
-        presenter.findLocation(searchText)
+        let viewController = InrollPlaceViewController()
+        
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+
+    
+    // MARK: 좌표 커스텀 입력
+    @objc func showCustomLocationView() {
+        let viewController = CustomLocationViewController()
+        
     }
     
+    // MARK: 1. 돋보기 버튼 눌렀을 때
+    @objc func showPlaceListView() {
+        guard let searchText = searchTextField.text else { return }
+        
+        presenter.showPlaceListView(searchText)
+    }
 }
 
 extension MainViewController: UITextFieldDelegate {
@@ -156,7 +241,7 @@ extension MainViewController: UITextFieldDelegate {
         
         guard let searchText = searchTextField.text else { return true }
         
-        presenter.findLocation(searchText)
+        presenter.showPlaceListView(searchText)
         
         return true
     }

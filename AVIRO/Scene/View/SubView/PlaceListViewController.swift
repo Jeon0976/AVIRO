@@ -11,7 +11,8 @@ final class PlaceListViewController: UIViewController {
     lazy var presenter = PlaceListViewPresenter(viewController: self)
     
     var listTableView = UITableView(frame: .zero, style: .insetGrouped)
-    
+    var cancelButton = UIButton()
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,7 +24,8 @@ extension PlaceListViewController: PlaceListProtocol {
     // MARK: Layout
     func makeLayout() {
         [
-            listTableView
+            listTableView,
+            cancelButton
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
@@ -31,27 +33,41 @@ extension PlaceListViewController: PlaceListProtocol {
                 
         NSLayoutConstraint.activate([
             // listTableView
-            listTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            listTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            listTableView.topAnchor.constraint(equalTo: view.topAnchor),
+            listTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             listTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            listTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            listTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            
+            // cancelButton
+            cancelButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            cancelButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
     }
     
     // MARK: Attribute
     func makeAttribute() {
-        view.layer.cornerRadius = 8
-
+        view.layer.cornerRadius = 16
+        view.backgroundColor = .clear
+        listTableView.backgroundColor = .clear
         // listTableView
-        listTableView.backgroundColor = .white.withAlphaComponent(0.1)
+        listTableView.backgroundColor = .white.withAlphaComponent(0.6)
         listTableView.dataSource = presenter
         listTableView.delegate = self
         listTableView.register(PlaceListCell.self, forCellReuseIdentifier: PlaceListCell.identifier)
+        
+        // cancelButton
+        cancelButton.customImageConfig("x.circle.fill", "x.circle")
+        cancelButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
     }
     
     // MARK: reloadData
     func reloadTableView() {
         listTableView.reloadData()
+    }
+    
+    // MARK: Dismiss View
+    @objc func dismissView() {
+        dismiss(animated: true)
     }
 }
 
@@ -70,5 +86,6 @@ extension PlaceListViewController: UITableViewDelegate {
     // MARK: Item 클릭 될 때
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         dismiss(animated: true)
+        presenter.didSelectRowAt(indexPath)
     }
 }

@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let mainView = MainViewController()
         
-        window?.rootViewController = mainView
+        window?.rootViewController = UINavigationController(rootViewController: mainView)
         
         window?.tintColor = .black
         
