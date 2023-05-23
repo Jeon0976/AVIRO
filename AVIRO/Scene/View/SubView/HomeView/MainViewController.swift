@@ -1,5 +1,5 @@
 //
-//  MainViewController.swift
+//  HomeViewController.swift
 //  VeganRestaurant
 //
 //  Created by 전성훈 on 2023/05/19.
@@ -9,13 +9,13 @@ import UIKit
 
 import NMapsMap
 
-final class MainViewController: UIViewController {
-    lazy var presenter = MainViewPresenter(viewController: self)
+final class HomeViewController: UIViewController {
+    lazy var presenter = HomeViewPresenter(viewController: self)
         
     var naverMapView = NMFMapView()
     
     // 검색 기능 관련
-    var searchTextField = InsetTextField()
+    var searchTextField = CustomTextField()
     var searchLocationButton = UIButton()
     var loadCustomLocationButton = UIButton()
 
@@ -57,7 +57,7 @@ final class MainViewController: UIViewController {
 
 }
 
-extension MainViewController: MainViewProtocol {
+extension HomeViewController: HomeViewProtocol {
     // MARK: Layout
     func makeLayout() {
         view.backgroundColor = .white
@@ -143,15 +143,7 @@ extension MainViewController: MainViewProtocol {
             attributes: placeholderAttributes
         )
         
-        let clearButton = UIButton(type: .custom)
-        clearButton.setImage(
-            UIImage(systemName: "xmark.circle.fill")?.withTintColor(.black, renderingMode: .alwaysOriginal),
-            for: .normal)
-        clearButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-        
-        searchTextField.rightView = clearButton
-        searchTextField.rightViewMode = .whileEditing
-
+        searchTextField.customClearButton()
         searchTextField.textColor = .black
         searchTextField.backgroundColor = .white
         searchTextField.layer.cornerRadius = 8
@@ -194,9 +186,20 @@ extension MainViewController: MainViewProtocol {
         print(placeLists)
         present(viewController, animated: true)
     }
+    
+    // 위치 denied 할 때
+    func ifDenied() {
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: 35.153354, lng: 129.118924))
+        naverMapView.moveCamera(cameraUpdate)
+    }
+    
+    // 위치 denied 후 검색할 때
+    func showWarnningAelrt(_ alert: UIAlertController) {
+        present(alert,animated: true)
+    }
 }
 
-extension MainViewController {
+extension HomeViewController {
     // MARK: 내 위치 최신화 버튼 클릭 시
     @objc func refreshMyLocation() {
         presenter.locationUpdate()
@@ -226,7 +229,7 @@ extension MainViewController {
     }
 }
 
-extension MainViewController: UITextFieldDelegate {
+extension HomeViewController: UITextFieldDelegate {
     // MARK: 2.키보드 확인 눌렀을 때
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -245,7 +248,7 @@ extension MainViewController: UITextFieldDelegate {
     }
 }
 
-extension MainViewController: UIGestureRecognizerDelegate {
+extension HomeViewController: UIGestureRecognizerDelegate {
     // MARK: 외부 클릭시 키보드 내려가면서, 키보드 취소버튼 사라짐
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         if let touchedView = touch.view as? UIButton, touchedView == searchTextField.rightView {
@@ -259,7 +262,7 @@ extension MainViewController: UIGestureRecognizerDelegate {
 }
 
 // MARK: Present method custom
-extension MainViewController: UIViewControllerTransitioningDelegate {
+extension HomeViewController: UIViewControllerTransitioningDelegate {
     func presentationController(
         forPresented presented: UIViewController,
         presenting: UIViewController?,

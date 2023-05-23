@@ -18,9 +18,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        let mainView = MainViewController()
+        let viewController = TabBarViewController()
         
-        window?.rootViewController = UINavigationController(rootViewController: mainView)
+        window?.rootViewController = viewController
         
         window?.tintColor = .black
         

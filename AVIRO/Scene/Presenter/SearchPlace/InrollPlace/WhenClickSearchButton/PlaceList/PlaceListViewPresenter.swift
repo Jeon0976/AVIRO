@@ -47,9 +47,9 @@ final class PlaceListViewPresenter: NSObject {
         isLoading = true
         currentPage += 1
         
-        // page가 마지막 일때 api 호출 x
+        // TODO: page가 마지막 일때 api 호출 x
         if PageEndingCheck.shared.isend == true {
-            CustomAlertController.shared.whenLastLoadPage()
+//            CustomAlertController.shared.whenLastLoadPage()
             return
         }
         

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A156F24E1DC1F5FA54D44A76 /* Pods_AVIRO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 796022A3066B91147B712BB4 /* Pods_AVIRO.framework */; };
-		C50367F52A1795D10020C6BB /* MainViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F42A1795D10020C6BB /* MainViewPresenter.swift */; };
+		C50367F52A1795D10020C6BB /* HomeViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */; };
 		C50367F82A179D7B0020C6BB /* CustomConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F72A179D7B0020C6BB /* CustomConfiguration.swift */; };
 		C52FA3432A175B20005E70DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FA3422A175B20005E70DC /* AppDelegate.swift */; };
 		C52FA3452A175B20005E70DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FA3442A175B20005E70DC /* SceneDelegate.swift */; };
@@ -36,13 +36,18 @@
 		C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547A8B92A17D8D4004D1339 /* KakaoMapRequestManager.swift */; };
 		C5538AAF2A1BB81200661DE2 /* VeganModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5538AAE2A1BB81200661DE2 /* VeganModel.swift */; };
 		C5D6E19F2A17B4410042679C /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5D6E19E2A17B4410042679C /* API.plist */; };
+		C5EB50E42A1C685100B29CC1 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50E32A1C685100B29CC1 /* TabBarItem.swift */; };
+		C5EB50E62A1C6FC700B29CC1 /* BookMarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50E52A1C6FC700B29CC1 /* BookMarkViewController.swift */; };
+		C5EB50E82A1C6FD600B29CC1 /* PopularViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50E72A1C6FD600B29CC1 /* PopularViewController.swift */; };
+		C5EB50EA2A1C705900B29CC1 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50E92A1C705900B29CC1 /* MyPageViewController.swift */; };
+		C5EB50EC2A1C72C600B29CC1 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50EB2A1C72C600B29CC1 /* TabBarViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4EB01DC761F38F50251EAA43 /* Pods-AVIRO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AVIRO.release.xcconfig"; path = "Target Support Files/Pods-AVIRO/Pods-AVIRO.release.xcconfig"; sourceTree = "<group>"; };
 		796022A3066B91147B712BB4 /* Pods_AVIRO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AVIRO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B57500A8C1EA6C6CFDED2C4C /* Pods-AVIRO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AVIRO.debug.xcconfig"; path = "Target Support Files/Pods-AVIRO/Pods-AVIRO.debug.xcconfig"; sourceTree = "<group>"; };
-		C50367F42A1795D10020C6BB /* MainViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewPresenter.swift; sourceTree = "<group>"; };
+		C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewPresenter.swift; sourceTree = "<group>"; };
 		C50367F72A179D7B0020C6BB /* CustomConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomConfiguration.swift; sourceTree = "<group>"; };
 		C52FA33F2A175B20005E70DC /* AVIRO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AVIRO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C52FA3422A175B20005E70DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -73,6 +78,11 @@
 		C547A8B92A17D8D4004D1339 /* KakaoMapRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapRequestManager.swift; sourceTree = "<group>"; };
 		C5538AAE2A1BB81200661DE2 /* VeganModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganModel.swift; sourceTree = "<group>"; };
 		C5D6E19E2A17B4410042679C /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = API.plist; sourceTree = "<group>"; };
+		C5EB50E32A1C685100B29CC1 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
+		C5EB50E52A1C6FC700B29CC1 /* BookMarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookMarkViewController.swift; sourceTree = "<group>"; };
+		C5EB50E72A1C6FD600B29CC1 /* PopularViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularViewController.swift; sourceTree = "<group>"; };
+		C5EB50E92A1C705900B29CC1 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		C5EB50EB2A1C72C600B29CC1 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,8 +139,8 @@
 		C50367F02A1795A30020C6BB /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
-				C50367F42A1795D10020C6BB /* MainViewPresenter.swift */,
-				C5351B5A2A19F5EE00116D50 /* SubPresenter */,
+				C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */,
+				C5351B5A2A19F5EE00116D50 /* SearchPlace */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -138,7 +148,7 @@
 		C50367F12A1795AF0020C6BB /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C52FA3462A175B20005E70DC /* MainViewController.swift */,
+				C5EB50EB2A1C72C600B29CC1 /* TabBarViewController.swift */,
 				C5351B592A19F5DE00116D50 /* SubView */,
 			);
 			path = View;
@@ -160,6 +170,7 @@
 				C5351B7B2A1B52A000116D50 /* PlaceListModel */,
 				C5351B7E2A1B52D400116D50 /* CustomLocationModel */,
 				C5538AAE2A1BB81200661DE2 /* VeganModel.swift */,
+				C5EB50E32A1C685100B29CC1 /* TabBarItem.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -217,19 +228,21 @@
 		C5351B592A19F5DE00116D50 /* SubView */ = {
 			isa = PBXGroup;
 			children = (
-				C5351B772A1B36D100116D50 /* InrollPlace */,
+				C5EB50ED2A1C76FC00B29CC1 /* HomeView */,
+				C5EB50EE2A1C770B00B29CC1 /* PopularPlace */,
 				C5351B722A1B369000116D50 /* SearchPlace */,
+				C5EB50EF2A1C771E00B29CC1 /* BookMark */,
+				C5EB50F02A1C772300B29CC1 /* MyPage */,
 			);
 			path = SubView;
 			sourceTree = "<group>";
 		};
-		C5351B5A2A19F5EE00116D50 /* SubPresenter */ = {
+		C5351B5A2A19F5EE00116D50 /* SearchPlace */ = {
 			isa = PBXGroup;
 			children = (
 				C5351B762A1B36C700116D50 /* InrollPlace */,
-				C5351B732A1B36A300116D50 /* SearchPlace */,
 			);
-			path = SubPresenter;
+			path = SearchPlace;
 			sourceTree = "<group>";
 		};
 		C5351B652A1A128D00116D50 /* SingleTonModel */ = {
@@ -245,25 +258,25 @@
 		C5351B722A1B369000116D50 /* SearchPlace */ = {
 			isa = PBXGroup;
 			children = (
-				C5351B7F2A1B537000116D50 /* PlaceList */,
-				C5351B802A1B537B00116D50 /* CustomLocation */,
+				C5351B772A1B36D100116D50 /* InrollPlace */,
 			);
 			path = SearchPlace;
 			sourceTree = "<group>";
 		};
-		C5351B732A1B36A300116D50 /* SearchPlace */ = {
+		C5351B732A1B36A300116D50 /* WhenClickSearchButton */ = {
 			isa = PBXGroup;
 			children = (
 				C5351B812A1B547C00116D50 /* PlaceList */,
 				C5351B822A1B548100116D50 /* CustomLocation */,
 			);
-			path = SearchPlace;
+			path = WhenClickSearchButton;
 			sourceTree = "<group>";
 		};
 		C5351B762A1B36C700116D50 /* InrollPlace */ = {
 			isa = PBXGroup;
 			children = (
 				C5351B6E2A1B242C00116D50 /* InrollPlacePresenter.swift */,
+				C5351B732A1B36A300116D50 /* WhenClickSearchButton */,
 			);
 			path = InrollPlace;
 			sourceTree = "<group>";
@@ -272,6 +285,8 @@
 			isa = PBXGroup;
 			children = (
 				C5351B6C2A1B215D00116D50 /* InrollPlaceViewController.swift */,
+				C5351B802A1B537B00116D50 /* CustomLocation */,
+				C5351B7F2A1B537000116D50 /* PlaceList */,
 			);
 			path = InrollPlace;
 			sourceTree = "<group>";
@@ -333,6 +348,38 @@
 				C5351B742A1B36BA00116D50 /* CustomLocationPresenter.swift */,
 			);
 			path = CustomLocation;
+			sourceTree = "<group>";
+		};
+		C5EB50ED2A1C76FC00B29CC1 /* HomeView */ = {
+			isa = PBXGroup;
+			children = (
+				C52FA3462A175B20005E70DC /* MainViewController.swift */,
+			);
+			path = HomeView;
+			sourceTree = "<group>";
+		};
+		C5EB50EE2A1C770B00B29CC1 /* PopularPlace */ = {
+			isa = PBXGroup;
+			children = (
+				C5EB50E72A1C6FD600B29CC1 /* PopularViewController.swift */,
+			);
+			path = PopularPlace;
+			sourceTree = "<group>";
+		};
+		C5EB50EF2A1C771E00B29CC1 /* BookMark */ = {
+			isa = PBXGroup;
+			children = (
+				C5EB50E52A1C6FC700B29CC1 /* BookMarkViewController.swift */,
+			);
+			path = BookMark;
+			sourceTree = "<group>";
+		};
+		C5EB50F02A1C772300B29CC1 /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				C5EB50E92A1C705900B29CC1 /* MyPageViewController.swift */,
+			);
+			path = MyPage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -474,26 +521,31 @@
 				C5351B5E2A19F84800116D50 /* PlaceListCell.swift in Sources */,
 				C5351B6F2A1B242C00116D50 /* InrollPlacePresenter.swift in Sources */,
 				C52FA3472A175B20005E70DC /* MainViewController.swift in Sources */,
+				C5EB50E82A1C6FD600B29CC1 /* PopularViewController.swift in Sources */,
 				C5351B642A1A128400116D50 /* QuerySingleTon.swift in Sources */,
 				C5351B7D2A1B52B900116D50 /* CustomLocationCellModel.swift in Sources */,
 				C52FA3432A175B20005E70DC /* AppDelegate.swift in Sources */,
 				C5351B502A19225A00116D50 /* KakaoMapResponseKeywordModel.swift in Sources */,
 				C5351B4D2A19223300116D50 /* KakaoMapRequestAPI.swift in Sources */,
 				C50367F82A179D7B0020C6BB /* CustomConfiguration.swift in Sources */,
+				C5EB50E62A1C6FC700B29CC1 /* BookMarkViewController.swift in Sources */,
 				C5351B562A19B67900116D50 /* CustomAlertController.swift in Sources */,
 				C5538AAF2A1BB81200661DE2 /* VeganModel.swift in Sources */,
-				C50367F52A1795D10020C6BB /* MainViewPresenter.swift in Sources */,
+				C50367F52A1795D10020C6BB /* HomeViewPresenter.swift in Sources */,
 				C5351B622A1A083400116D50 /* PlaceListCellModel.swift in Sources */,
 				C52FA3452A175B20005E70DC /* SceneDelegate.swift in Sources */,
 				C5351B542A19A7B100116D50 /* PersonalLocation.swift in Sources */,
+				C5EB50EA2A1C705900B29CC1 /* MyPageViewController.swift in Sources */,
 				C5351B752A1B36BA00116D50 /* CustomLocationPresenter.swift in Sources */,
 				C5351B6D2A1B215D00116D50 /* InrollPlaceViewController.swift in Sources */,
 				C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */,
 				C5351B672A1A154C00116D50 /* PageEndingCheck.swift in Sources */,
 				C5351B5C2A19F60200116D50 /* PlaceListViewPresenter.swift in Sources */,
 				C5351B692A1A2EAF00116D50 /* CustomPresentation.swift in Sources */,
+				C5EB50E42A1C685100B29CC1 /* TabBarItem.swift in Sources */,
 				C5351B7A2A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift in Sources */,
 				C5351B602A19F9A700116D50 /* PlaceListModel.swift in Sources */,
+				C5EB50EC2A1C72C600B29CC1 /* TabBarViewController.swift in Sources */,
 				C5351B712A1B2FED00116D50 /* CustomLocationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

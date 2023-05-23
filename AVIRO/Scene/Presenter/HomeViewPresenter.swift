@@ -1,5 +1,5 @@
 //
-//  MainViewPresenter.swift
+//  HomeViewPresenter.swift
 //  VeganRestaurant
 //
 //  Created by 전성훈 on 2023/05/19.
@@ -8,20 +8,22 @@
 import UIKit
 import CoreLocation
 
-protocol MainViewProtocol: NSObject {
+protocol HomeViewProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
     func markingMap()
     func presentPlaceListView(_ placeLists: [PlaceListModel])
+    func ifDenied()
+    func showWarnningAelrt(_ alert: UIAlertController)
 }
 
-final class MainViewPresenter: NSObject {
-    weak var viewController: MainViewProtocol?
+final class HomeViewPresenter: NSObject {
+    weak var viewController: HomeViewProtocol?
     
     private let locationManager = CLLocationManager()
     private let requestManager = KakaoMapRequestManager()
 
-    init(viewController: MainViewProtocol) {
+    init(viewController: HomeViewProtocol) {
         self.viewController = viewController
     }
     
@@ -35,13 +37,14 @@ final class MainViewPresenter: NSObject {
 }
 
 // MARK: user location 불러오기 관련 작업들
-extension MainViewPresenter: CLLocationManagerDelegate {
+extension HomeViewPresenter: CLLocationManagerDelegate {
     func locationAuthorization() {
         
         switch locationManager.authorizationStatus {
         case .denied:
+            viewController?.ifDenied()
             // TODO: 만약 거절했을 시 앞으로 해야할 작업
-            print("왜 거절?")
+            
         case .notDetermined, .restricted:
             locationManager.requestWhenInUseAuthorization()
         default:
@@ -70,6 +73,11 @@ extension MainViewPresenter: CLLocationManagerDelegate {
     
     // MARK: 최초 검색 시 마켓,카페 검색 API 호출
     func showPlaceListView(_ locations: String) {
+        guard PersonalLocation.shared.latitude != nil else {
+            let alert = CustomAlertController.shared.whenSearchAfterDeniedLocation("검색 불가", "위치를 활성화 해주세요.")
+            viewController?.showWarnningAelrt(alert)
+            return
+        }
         QuerySingleTon.shared.query = locations
         requestManager.kakaoMapKeywordSearch(query: locations,
                                       longitude: PersonalLocation.shared.longitudeString,

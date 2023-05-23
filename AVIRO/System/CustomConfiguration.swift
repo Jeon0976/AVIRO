@@ -36,7 +36,7 @@ extension String {
     }
 }
 
-class InsetTextField: UITextField {
+class CustomTextField: UITextField {
     // MARK: TextField Inset 섫정
     private let commonInsets = UIEdgeInsets(top: 10, left: 15, bottom: 10, right: 15)
     private let clearButtonOffset: CGFloat = 5
@@ -64,5 +64,16 @@ class InsetTextField: UITextField {
         var clearButtonRect = super.clearButtonRect(forBounds: bounds)
         clearButtonRect.origin.x -= clearButtonOffset
         return clearButtonRect
+    }
+    
+    func customClearButton() {
+        let customClearButton = UIButton(type: .custom)
+        customClearButton.setImage(
+            UIImage(systemName: "xmark.circle.fill")?.withTintColor(.black, renderingMode: .alwaysOriginal),
+            for: .normal)
+        customClearButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        
+        self.rightView = customClearButton
+        self.rightViewMode = .whileEditing
     }
 }

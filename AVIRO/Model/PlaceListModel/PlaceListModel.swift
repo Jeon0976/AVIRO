@@ -18,6 +18,3 @@ struct PlaceListModel {
     let x: Double
     let y: Double
 }
-
-
-

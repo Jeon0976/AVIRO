@@ -11,16 +11,18 @@ final class InrollPlaceViewController: UIViewController {
     
     lazy var presenter = InrollPlacePresenter(viewController: self)
     
+    var storeTitleExplanation = UILabel()
+    var storeTitle = UITextField()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .brown
     }
 }
 
 extension InrollPlaceViewController: InrollPlaceProtocol {
     // MARK: Layout
     func makeLayout() {
-        
+        navigationItem.title = "식당 정보"
     }
     
     // MARK: Attribute
