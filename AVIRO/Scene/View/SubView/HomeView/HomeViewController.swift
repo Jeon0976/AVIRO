@@ -15,7 +15,7 @@ final class HomeViewController: UIViewController {
     var naverMapView = NMFMapView()
     
     // 검색 기능 관련
-    var searchTextField = CustomTextField()
+    var searchTextField = InrollTextField()
     var searchLocationButton = UIButton()
     var loadCustomLocationButton = UIButton()
 
@@ -195,7 +195,7 @@ extension HomeViewController: HomeViewProtocol {
     
     // 위치 denied 후 검색할 때
     func showWarnningAelrt(_ alert: UIAlertController) {
-        present(alert,animated: true)
+        present(alert, animated: true)
     }
 }
 

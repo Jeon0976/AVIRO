@@ -5,6 +5,9 @@ disabled_rules:
 function_parameter_count:
 - 8
 
+function_body_length:
+- 100
+
 excluded:
 - Pods
 - Frameworks

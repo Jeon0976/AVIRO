@@ -19,7 +19,23 @@ extension UIButton {
                               withConfiguration: config),
                       for: .highlighted
         )
+    }
+    
+    // MARK: vegan select button
+    func makeVeganSelectButton(_ image: String, _ title: String) {
+        let config = UIImage.SymbolConfiguration(pointSize: 34)
+        self.setImage(UIImage(systemName: image,
+                              withConfiguration: config),
+                      for: .normal)
+        self.setTitle(title, for: .normal)
         
+        self.titleLabel?.textAlignment = .center
+        self.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
+        self.contentVerticalAlignment = .center
+        self.layer.cornerRadius = 8
+        self.layer.borderColor = UIColor.black.cgColor
+        self.layer.borderWidth = 3.0
+        self.backgroundColor = .white
     }
 }
 
@@ -36,12 +52,28 @@ extension String {
     }
 }
 
-class CustomTextField: UITextField {
+class InrollTextField: UITextField {
     // MARK: TextField Inset 섫정
-    private let commonInsets = UIEdgeInsets(top: 10, left: 15, bottom: 10, right: 15)
+    private let commonInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
     private let clearButtonOffset: CGFloat = 5
     private let clearButtonLeftPadding: CGFloat = 5
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        configureBorder()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        configureBorder()
+    }
+
+    private func configureBorder() {
+        self.layer.borderColor = UIColor.black.cgColor
+        self.layer.borderWidth = 1
+        self.layer.cornerRadius = 8
+    }
+
     override open func textRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: commonInsets)
     }
@@ -75,5 +107,25 @@ class CustomTextField: UITextField {
         
         self.rightView = customClearButton
         self.rightViewMode = .whileEditing
+    }
+}
+
+class EdgeInsetLabel: UILabel {
+    var textInsets = UIEdgeInsets.zero {
+        didSet { invalidateIntrinsicContentSize() }
+    }
+
+    override func textRect(forBounds bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {
+        let insetRect = bounds.inset(by: textInsets)
+        let textRect = super.textRect(forBounds: insetRect, limitedToNumberOfLines: numberOfLines)
+        let invertedInsets = UIEdgeInsets(top: -textInsets.top,
+                                          left: -textInsets.left,
+                                          bottom: -textInsets.bottom,
+                                          right: -textInsets.right)
+        return textRect.inset(by: invertedInsets)
+    }
+
+    override func drawText(in rect: CGRect) {
+        super.drawText(in: rect.inset(by: textInsets))
     }
 }

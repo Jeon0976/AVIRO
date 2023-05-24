@@ -23,4 +23,5 @@ final class InrollPlacePresenter: NSObject {
         viewController?.makeLayout()
         viewController?.makeAttribute()
     }
+    
 }
