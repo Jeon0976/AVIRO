@@ -78,7 +78,7 @@ extension HomeViewPresenter: CLLocationManagerDelegate {
             viewController?.showWarnningAelrt(alert)
             return
         }
-        QuerySingleTon.shared.query = locations
+//        QuerySingleTon.shared.query = locations
         requestManager.kakaoMapKeywordSearch(query: locations,
                                       longitude: PersonalLocation.shared.longitudeString,
                                       latitude: PersonalLocation.shared.latitudeString,

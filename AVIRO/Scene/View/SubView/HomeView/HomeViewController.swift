@@ -78,7 +78,7 @@ extension HomeViewController: HomeViewProtocol {
             naverMapView.topAnchor.constraint(
                 equalTo: view.topAnchor),
             naverMapView.bottomAnchor.constraint(
-                equalTo: view.bottomAnchor),
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             naverMapView.leadingAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             naverMapView.trailingAnchor.constraint(

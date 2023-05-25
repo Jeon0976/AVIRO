@@ -37,8 +37,43 @@ final class PlaceListViewPresenter: NSObject {
         viewController?.makeAttribute()
     }
     
+    // MARK: 검색할때 api 호출
+    func searchData(_ query: String) {
+        currentPage = 1
+        let query = query
+        let longitude = PersonalLocation.shared.longitudeString
+        let latitude = PersonalLocation.shared.latitudeString
+        
+        requestManager.kakaoMapKeywordSearch(query: query,
+                                      longitude: longitude,
+                                      latitude: latitude,
+                                      page: "\(currentPage)") { model in
+            let placeList = model.documents.map { location in
+                let placeListCellModel = PlaceListModel(
+                    title: location.name,
+                    distance: location.distance,
+                    category: location.category,
+                    address: location.address,
+                    phone: location.phone,
+                    url: location.url,
+                    x: Double(location.xToLongitude)!,
+                    y: Double(location.yToLatitude)!
+                )
+                return placeListCellModel
+            }
+            
+            PageEndingCheck.shared.isend = model.meta.isEnd
+
+            DispatchQueue.main.async { [weak self] in
+                self?.placeList = placeList
+                self?.viewController?.reloadTableView()
+                self?.isLoading = false
+            }
+        }
+    }
+    
     // MARK: 스크롤 할 때 데이터 load 함수
-    func loadData() {
+    func loadData(_ query: String) {
         // loding 일 때 api 호출 x
         if isLoading {
             return
@@ -49,11 +84,9 @@ final class PlaceListViewPresenter: NSObject {
         
         // TODO: page가 마지막 일때 api 호출 x
         if PageEndingCheck.shared.isend == true {
-//            CustomAlertController.shared.whenLastLoadPage()
             return
         }
-        
-        let query = QuerySingleTon.shared.query!
+        let query = query
         let longitude = PersonalLocation.shared.longitudeString
         let latitude = PersonalLocation.shared.latitudeString
         
@@ -125,7 +158,7 @@ extension PlaceListViewPresenter: UITableViewDataSource {
         
         cell?.makeCellData(cellData)
         
-        cell?.backgroundColor = .clear
+        cell?.backgroundColor = .white
         cell?.selectionStyle = .none
         
         return cell ?? UITableViewCell()

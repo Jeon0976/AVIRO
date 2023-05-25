@@ -20,23 +20,55 @@ extension UIButton {
                       for: .highlighted
         )
     }
-    
-    // MARK: vegan select button
+}
+
+// MARK: Select Vegan Button 설정
+class SelectVeganButton: UIButton {
     func makeVeganSelectButton(_ image: String, _ title: String) {
-        let config = UIImage.SymbolConfiguration(pointSize: 34)
+        let config = UIImage.SymbolConfiguration(pointSize: 48, weight: .light)
+        self.setTitle(title, for: .normal)
+
         self.setImage(UIImage(systemName: image,
                               withConfiguration: config),
                       for: .normal)
-        self.setTitle(title, for: .normal)
         
-        self.titleLabel?.textAlignment = .center
-        self.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
-        self.contentVerticalAlignment = .center
+        self.setTitleColor(.black, for: .normal)
+        self.imageView?.contentMode = .scaleAspectFit
+        self.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
+        self.semanticContentAttribute = .forceLeftToRight
         self.layer.cornerRadius = 8
         self.layer.borderColor = UIColor.black.cgColor
-        self.layer.borderWidth = 3.0
-        self.backgroundColor = .white
+        self.layer.borderWidth = 1.0
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        if let imageView = imageView, let titleLabel = titleLabel {
+            let spacing: CGFloat = 10.0
+            let imageSize = imageView.frame.size
+            let titleSize = titleLabel.bounds.size
+
+            titleEdgeInsets = UIEdgeInsets(top: (spacing + imageSize.height),
+                                            left: -(imageSize.width),
+                                            bottom: 0.0,
+                                            right: 0.0)
+
+            imageEdgeInsets = UIEdgeInsets(top: -(titleSize.height + spacing),
+                                           left: 0.0,
+                                           bottom: 0.0,
+                                           right: -titleSize.width)
+
+            let totalHeight = imageSize.height + titleSize.height + spacing
+            self.contentEdgeInsets = UIEdgeInsets(
+                top: (bounds.size.height - totalHeight) / 2,
+                left: 0,
+                bottom: (bounds.size.height - totalHeight) / 2,
+                right: 0
+            )
+        }
+    }
+
 }
 
 extension String {
@@ -52,8 +84,8 @@ extension String {
     }
 }
 
+// MARK: Inroll TextField 설정
 class InrollTextField: UITextField {
-    // MARK: TextField Inset 섫정
     private let commonInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
     private let clearButtonOffset: CGFloat = 5
     private let clearButtonLeftPadding: CGFloat = 5

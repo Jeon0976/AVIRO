@@ -39,6 +39,7 @@ extension InrollPlaceViewController {
     // MARK: Store Title Attribute
     public func storeTitleReferAttribute() {
         storeTitleExplanation.text = "가게 이름"
+        storeTitleExplanation.textColor = .black
         storeTitleField.placeholder = "눌러서 검색하세요!"
         storeTitleField.delegate = self
     }
@@ -46,28 +47,35 @@ extension InrollPlaceViewController {
     // MARK: Store Location Attribute
     public func storeLocationReferAttribute() {
         storeLocationExplanation.text = "가게 위치"
+        storeLocationExplanation.textColor = .black
         storeLocationField.placeholder = "placeholder 추가 할 내용 있나요?"
     }
     
     // MARK: Store Category Attribute
     public func storeCategoryReferAttribute() {
         storeCategoryExplanation.text = "카테고리"
+        storeCategoryExplanation.textColor = .black
         storeCategoryField.placeholder = "placeholder 추가 할 내용 있나요?"
     }
     
     // MARK: Store Phone Attribute
     public func storePhoneReferAttribute() {
         storePhoneExplanation.text = "전화번호"
+        storePhoneExplanation.textColor = .black
         storePhoneField.placeholder = "placeholder 추가 할 내용 있나요?"
     }
     
     // MARK: Vegan Detail Attribute
     public func veganDetailReferAttribute() {
         veganDetailExplanation.text = "가게 종류"
+        veganDetailExplanation.textColor = .black
         
         allVegan.makeVeganSelectButton("plus.square", "ALL 비건")
         someMenuVegan.makeVeganSelectButton("plus.square", "비건 메뉴 포함")
         ifRequestPossibleVegan.makeVeganSelectButton("plus.square", "요청하면 비건")
+        allVegan.addTarget(self, action: #selector(clickedAllVeganButton), for: .touchUpInside)
+        someMenuVegan.addTarget(self, action: #selector(clickedSomeMenuVeganButton), for: .touchUpInside)
+        ifRequestPossibleVegan.addTarget(self, action: #selector(clickedIfRequestPossibleVebanButton), for: .touchUpInside)
     }
     
     // MARK: vegan Header View

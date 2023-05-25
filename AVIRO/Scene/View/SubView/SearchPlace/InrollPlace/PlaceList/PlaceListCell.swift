@@ -42,6 +42,9 @@ final class PlaceListCell: UITableViewCell {
         
         itemInView.layer.cornerRadius = 16
         itemInView.backgroundColor = .white
+        itemInView.layer.borderColor = UIColor.black.cgColor
+        itemInView.layer.borderWidth = 1
+        itemInView.isUserInteractionEnabled = false
         
         emptyView.backgroundColor = .clear
         
