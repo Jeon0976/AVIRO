@@ -62,3 +62,27 @@ class SlideAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         })
     }
 }
+
+//extension HomeViewController: UIViewControllerTransitioningDelegate {
+//    func presentationController(
+//        forPresented presented: UIViewController,
+//        presenting: UIViewController?,
+//        source: UIViewController
+//    ) -> UIPresentationController? {
+//        return CustomPresentation(presentedViewController: presented, presenting: presenting)
+//    }
+//
+//    func animationController(
+//        forPresented presented: UIViewController,
+//        presenting: UIViewController,
+//        source: UIViewController
+//    ) -> UIViewControllerAnimatedTransitioning? {
+//        return SlideAnimator(isPresentation: true)
+//    }
+//
+//    func animationController(
+//        forDismissed dismissed: UIViewController
+//    ) -> UIViewControllerAnimatedTransitioning? {
+//        return SlideAnimator(isPresentation: false)
+//    }
+//}

@@ -22,6 +22,12 @@ final class InrollPlacePresenter: NSObject {
     
     var storeNomalData: PlaceListModel!
     
+    var veganModel: VeganModel?
+    
+    var allVegan: Bool?
+    var someMenuVegan: Bool?
+    var ifRequestVegan: Bool?
+    
     init(viewController: InrollPlaceProtocol) {
         self.viewController = viewController
     }
@@ -50,5 +56,16 @@ final class InrollPlacePresenter: NSObject {
         }
     }
     
+    func buttonChecked() {
+        
+    }
+    
+    func reportData() {
+//        let veganModel = VeganModel(placeModel: storeNomalData, allVegan: <#T##Bool#>, someMenuVegan: <#T##Bool#>, ifRequestVegan: <#T##Bool#>)
+        notRequestMenu = [NotRequestMenu](repeating: NotRequestMenu(menu: "", price: ""), count: 1)
+        requestMenu = [RequestMenu](repeating: RequestMenu(menu: "", price: "", howToRequest: "", isCheck: false), count: 1)
+        storeNomalData = nil
+        viewController?.reloadTableView(false)
+        viewController?.reloadTableView(true)
+    }
 }
-

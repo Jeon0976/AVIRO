@@ -138,8 +138,56 @@ class InrollTextField: UITextField {
         customClearButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         
         self.rightView = customClearButton
-        self.rightViewMode = .whileEditing
+        self.rightViewMode = .always
     }
+}
+
+class TitleTextField: UITextField {
+    private let commonInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setImage()
+        shadowAndborder()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setImage()
+        shadowAndborder()
+    }
+
+    override open func textRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: commonInsets)
+    }
+    
+    func setImage() {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "Search"), for: .normal)
+
+        let container = UIView(frame: CGRect(x: 0, y: 0, width: button.frame.width + 16, height: button.frame.height))
+        container.addSubview(button)
+        button.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            button.centerYAnchor.constraint(equalTo: container.centerYAnchor),
+            button.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -16)
+        ])
+
+        self.leftView = container
+        self.leftViewMode = .always
+    }
+    
+    func shadowAndborder() {
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOffset = CGSize(width: 2, height: 2)
+        self.layer.shadowRadius = 4
+        self.layer.shadowOpacity = 0.25
+        
+        self.layer.cornerRadius = 16
+
+    }
+    
 }
 
 class EdgeInsetLabel: UILabel {

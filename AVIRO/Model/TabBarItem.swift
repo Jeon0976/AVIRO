@@ -18,7 +18,7 @@ enum TabBarItem: CaseIterable {
         switch self {
         case .home: return "홈"
         case .popular: return "인기가게"
-        case .plus: return ""
+        case .plus: return "제보하기"
         case .bookMark: return "북마크"
         case .myPage: return "마이페이지"
         }
@@ -31,8 +31,8 @@ enum TabBarItem: CaseIterable {
             UIImage(systemName: "house.circle.fill")
         )
         case .popular: return (
-            UIImage(systemName: "star.circle"),
-            UIImage(systemName: "star.circle.fill")
+            UIImage(named: "RecommendStore"),
+            UIImage(named: "RecommendStore")
         )
         case .plus: return (
             UIImage(systemName: "plus.square"),

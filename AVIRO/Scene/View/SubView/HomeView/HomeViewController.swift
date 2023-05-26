@@ -15,15 +15,11 @@ final class HomeViewController: UIViewController {
     var naverMapView = NMFMapView()
     
     // 검색 기능 관련
-    var searchTextField = InrollTextField()
-    var searchLocationButton = UIButton()
-    var loadCustomLocationButton = UIButton()
+    var searchTextField = TitleTextField()
 
     // 내 위치 최신화 관련
     var loadLocationButton = UIButton()
-    
-    var tapGesture = UITapGestureRecognizer()
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -43,6 +39,7 @@ final class HomeViewController: UIViewController {
             name: NSNotification.Name("selectedPlace"),
             object: nil
         )
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -65,9 +62,7 @@ extension HomeViewController: HomeViewProtocol {
         [
             naverMapView,
             loadLocationButton,
-            searchTextField,
-            searchLocationButton,
-            loadCustomLocationButton
+            searchTextField
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
@@ -86,9 +81,9 @@ extension HomeViewController: HomeViewProtocol {
             
             // loadLoactionButton
             loadLocationButton.bottomAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -4),
             loadLocationButton.trailingAnchor.constraint(
-                equalTo: naverMapView.trailingAnchor, constant: -16),
+                equalTo: naverMapView.trailingAnchor, constant: -4),
             
             // searchTextField
             searchTextField.topAnchor.constraint(
@@ -96,76 +91,33 @@ extension HomeViewController: HomeViewProtocol {
             searchTextField.leadingAnchor.constraint(
                 equalTo: naverMapView.leadingAnchor, constant: 16),
             searchTextField.trailingAnchor.constraint(
-                equalTo: searchLocationButton.leadingAnchor, constant: -16),
+                equalTo: naverMapView.trailingAnchor, constant: -16)
             
-            // searchLocationButton
-            searchLocationButton.leadingAnchor.constraint(
-                equalTo: searchTextField.trailingAnchor, constant: -16),
-            searchLocationButton.centerYAnchor.constraint(
-                equalTo: searchTextField.centerYAnchor),
-            
-            // loadCustomLoactionButton
-            loadCustomLocationButton.trailingAnchor.constraint(
-                equalTo: naverMapView.trailingAnchor, constant: -16),
-            loadCustomLocationButton.leadingAnchor.constraint(
-                equalTo: searchLocationButton.trailingAnchor, constant: 16),
-            loadCustomLocationButton.centerYAnchor.constraint(
-                equalTo: searchTextField.centerYAnchor)
         ])
-
+        
     }
     
     // MARK: Attribute
     func makeAttribute() {
-        view.addGestureRecognizer(tapGesture)
-        tapGesture.delegate = self
-
         // lodeLocationButton
-        loadLocationButton.customImageConfig("scope", "scope")
+        loadLocationButton.setImage(UIImage(named: "PersonalLocation"), for: .normal)
         loadLocationButton.addTarget(
             self,
             action: #selector(refreshMyLocation),
             for: .touchUpInside
         )
-        loadLocationButton.backgroundColor = .white
-        loadLocationButton.layer.cornerRadius = 16
         
-        // searchTextField
-        let placeholder = "식당을 검색하세요."
-        let placeholderColor = UIColor.gray
-
+        let placeholderText = "점심으로 비건까스 어떠세요?"
         let placeholderAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: placeholderColor
+            .foregroundColor: UIColor(red: 138/255, green: 133/255, blue: 133/255, alpha: 1),
+            .font: UIFont.systemFont(ofSize: 17)
         ]
-
-        searchTextField.attributedPlaceholder = NSAttributedString(
-            string: placeholder,
-            attributes: placeholderAttributes
-        )
-        
-        searchTextField.customClearButton()
+        let placeholderAttributedString = NSAttributedString(string: placeholderText, attributes: placeholderAttributes)
+        searchTextField.attributedPlaceholder = placeholderAttributedString
         searchTextField.textColor = .black
         searchTextField.backgroundColor = .white
-        searchTextField.layer.cornerRadius = 8
         searchTextField.delegate = self
-                
-        // searchLocationButton
-        searchLocationButton.customImageConfig("magnifyingglass.circle", "magnifyingglass.circle.fill")
-        searchLocationButton.addTarget(
-            self,
-            action: #selector(showPlaceListView),
-            for: .touchUpInside
-        )
-        searchLocationButton.backgroundColor = .white
-        searchLocationButton.layer.cornerRadius = 16
-        
-        // loadCustomLocationButton
-        loadCustomLocationButton.customImageConfig("plus.circle", "plus.circle.fill")
-        loadCustomLocationButton.backgroundColor = .white
-        loadCustomLocationButton.layer.cornerRadius = 16
-        loadCustomLocationButton.addTarget(self,
-                                           action: #selector(showCustomLocationView),
-                                           for: .touchUpInside)
+        searchTextField.textAlignment = .natural
     }
     
     // MARK: 내 위치 최신화
@@ -181,7 +133,6 @@ extension HomeViewController: HomeViewProtocol {
             placeList: placeLists
         )
         viewController.presenter = presenter
-        viewController.transitioningDelegate = self
         viewController.modalPresentationStyle = .custom
         print(placeLists)
         present(viewController, animated: true)
@@ -207,81 +158,21 @@ extension HomeViewController {
     
     // MARK: PlaceListViewController에서 아이탬이 선택 되었을 때 inroll view present
     @objc func selectedPlace(_ notification: Notification) {
-        guard let selectedPlace = notification.userInfo?["selectedPlace"] as? PlaceListModel else { return }
         
         let viewController = InrollPlaceViewController()
         
         navigationController?.pushViewController(viewController, animated: true)
-    }
-
-    // MARK: 좌표 커스텀 입력
-    @objc func showCustomLocationView() {
-        let viewController = CustomLocationViewController()
-        
-        navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    // MARK: 1. 돋보기 버튼 눌렀을 때
-    @objc func showPlaceListView() {
-        guard let searchText = searchTextField.text else { return }
-        
-        presenter.showPlaceListView(searchText)
     }
 }
 
 extension HomeViewController: UITextFieldDelegate {
     // MARK: 2.키보드 확인 눌렀을 때
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
         
         guard let searchText = searchTextField.text else { return true }
         
         presenter.showPlaceListView(searchText)
         
         return true
-    }
-    
-    // MARK: textField 입력 들어갈 때 취소버튼 보여짐
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        searchTextField.rightView?.isHidden = false
-        return true
-    }
-}
-
-extension HomeViewController: UIGestureRecognizerDelegate {
-    // MARK: 외부 클릭시 키보드 내려가면서, 키보드 취소버튼 사라짐
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        if let touchedView = touch.view as? UIButton, touchedView == searchTextField.rightView {
-            searchTextField.text = ""
-            searchTextField.rightView?.isHidden = true
-              return true
-          }
-          view.endEditing(true)
-          return true
-    }
-}
-
-// MARK: Present method custom
-extension HomeViewController: UIViewControllerTransitioningDelegate {
-    func presentationController(
-        forPresented presented: UIViewController,
-        presenting: UIViewController?,
-        source: UIViewController
-    ) -> UIPresentationController? {
-        return CustomPresentation(presentedViewController: presented, presenting: presenting)
-    }
-    
-    func animationController(
-        forPresented presented: UIViewController,
-        presenting: UIViewController,
-        source: UIViewController
-    ) -> UIViewControllerAnimatedTransitioning? {
-        return SlideAnimator(isPresentation: true)
-    }
-
-    func animationController(
-        forDismissed dismissed: UIViewController
-    ) -> UIViewControllerAnimatedTransitioning? {
-        return SlideAnimator(isPresentation: false)
     }
 }

@@ -97,11 +97,22 @@ final class InrollPlaceViewController: UIViewController {
             self,
             selector: #selector(selectedPlace(_:)),
             name: NSNotification.Name("selectedPlace"),
-            object: nil)
+            object: nil
+        )
         
         // 키보드에따른 view 높이 변경
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -113,6 +124,20 @@ final class InrollPlaceViewController: UIViewController {
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name("selectedPlace"), object: nil)
+    }
+    
+    // MARK: refreshData
+    func refreshData() {
+        storeTitleField.text = ""
+        storeLocationField.text = ""
+        storeCategoryField.text = ""
+        storePhoneField.text = ""
+        allVegan.backgroundColor = .white
+        someMenuVegan.backgroundColor = .white
+        ifRequestPossibleVegan.backgroundColor = .white
+        navigationItem.rightBarButtonItem?.isEnabled = false
+        reportStoreButton.isEnabled = false
+        defaultLayout()
     }
 }
 
@@ -217,6 +242,7 @@ extension InrollPlaceViewController: InrollPlaceProtocol {
             
     }
     
+    // MARK: ReloadTableView
     func reloadTableView(_ checkTable: Bool) {
         if checkTable {
             veganMenuTableView.reloadData()
@@ -229,7 +255,20 @@ extension InrollPlaceViewController: InrollPlaceProtocol {
 extension InrollPlaceViewController {
     // MARK: Final Report Function
     @objc func reportStore() {
-    
+        presenter.reportData()
+        refreshData()
+        view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.1, animations: { [weak self] in
+            self?.view.alpha = 0.8
+        }, completion: { [weak self] _ in
+            self?.tabBarController?.selectedIndex = 0
+            let homeViewController = self?.tabBarController?.viewControllers?[0] as? UINavigationController
+            homeViewController?.popToRootViewController(animated: false)
+
+            UIView.animate(withDuration: 0.5) {
+                self?.view.alpha = 1
+            }
+        })
     }
     
     // MARK: ALL 비건 클릭 시
@@ -392,6 +431,7 @@ extension InrollPlaceViewController {
             self?.allAndVeganMenuL.forEach {
                 $0.isActive = false
             }
+            self?.view.layoutIfNeeded()
         })
     }
     
