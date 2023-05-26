@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         NMFAuthManager.shared().clientId = "t99wrbghs7"
-        
+        sleep(1)
         return true
     }
 

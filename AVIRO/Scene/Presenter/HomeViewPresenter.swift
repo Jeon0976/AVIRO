@@ -45,6 +45,12 @@ final class HomeViewPresenter: NSObject {
         
         viewController?.makeMarker(veganData)
     }
+    
+    func pushDetailViewController(_ address: String) {
+        DispatchQueue.global().async {
+//            let data = veganData.filter
+        }
+    }
 }
 
 // MARK: user location 불러오기 관련 작업들

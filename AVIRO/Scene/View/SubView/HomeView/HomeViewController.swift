@@ -36,6 +36,16 @@ final class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
         presenter.loadVeganData()
+        
+        let height = view.frame.height * 0.4
+
+        storeInfoView.frame = CGRect(
+            x: 0,
+            y: view.frame.height,
+            width: view.frame.width ,
+            height: height
+        )
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -134,6 +144,9 @@ extension HomeViewController: HomeViewProtocol {
         searchTextField.textAlignment = .natural
         searchTextField.delegate = self
         
+        // storeInfoView
+        storeInfoView
+        
     }
     
     // MARK: PlaceListView 불러오기
@@ -168,6 +181,8 @@ extension HomeViewController: HomeViewProtocol {
             var markers = [NMFMarker]()
             
             veganList.forEach {
+                let title = $0.placeModel.title
+                let address = $0.placeModel.address
                 let latLng = NMGLatLng(lat: $0.placeModel.y, lng: $0.placeModel.x)
                 let marker = NMFMarker(position: latLng)
                 marker.width = 20
@@ -176,10 +191,13 @@ extension HomeViewController: HomeViewProtocol {
                 // Marker 터치할 때
                 marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
                              if nil != overlay as? NMFMarker {
+                                 let title = title
+                                 let address = address
                                  guard let self = self else { return false }
+                                 storeInfoView.title.text = title
+                                 storeInfoView.address.text = address
                                  let height = view.frame.height * 0.4
-
-                                 UIView.animate(withDuration: 0.5) {
+                                 UIView.animate(withDuration: 0.3) {
                                      self.storeInfoView.frame = CGRect(
                                         x: 0,
                                         y: self.view.frame.height - height,
@@ -198,6 +216,10 @@ extension HomeViewController: HomeViewProtocol {
             }
         }
     }
+    
+    func pushDetailViewController() {
+        
+    }
 }
 
 extension HomeViewController {
@@ -212,14 +234,23 @@ extension HomeViewController {
             let height = view.frame.height * 0.4
             switch swipeGesture.direction {
             case .up:
-                UIView.animate(withDuration: 0.5) {
-
+                UIView.animate(withDuration: 0.3) { [weak self] in
+                    self?.storeInfoView.frame = CGRect(
+                        x: 0,
+                        y: 0,
+                        width: self?.view.frame.width ?? 0,
+                        height: self?.view.frame.height ?? 0
+                    )
+                    self?.presenter.pushDetailViewController(
+                        self?.storeInfoView.address.text ?? ""
+                    )
                 }
             case .down:
-                UIView.animate(withDuration: 0.5) {
-                    self.storeInfoView.frame = CGRect(
+                UIView.animate(withDuration: 0.3) { [weak self] in
+                    self?.storeInfoView.frame = CGRect(
                         x: 0,
-                        y: self.view.frame.height, width: self.view.frame.width,
+                        y: self?.view.frame.height ?? 0,
+                        width: self?.view.frame.width ?? 0,
                         height: height
                     )
                 }
