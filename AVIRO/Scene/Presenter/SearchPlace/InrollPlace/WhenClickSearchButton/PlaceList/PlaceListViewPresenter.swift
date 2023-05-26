@@ -160,7 +160,7 @@ extension PlaceListViewPresenter: UITableViewDataSource {
         
         cell?.backgroundColor = .white
         cell?.selectionStyle = .none
-        
+
         return cell ?? UITableViewCell()
     }
 }

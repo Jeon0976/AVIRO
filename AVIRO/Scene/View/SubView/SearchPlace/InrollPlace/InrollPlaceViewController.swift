@@ -64,6 +64,11 @@ final class InrollPlaceViewController: UIViewController {
     var veganTableViewHeightConstraint: NSLayoutConstraint!
     var requestVeganTableViewHeightConstraint: NSLayoutConstraint!
     
+    var veganTableHeightPlusValue = 70
+    var veganTableHeightPlusValueTotal = 0
+    var requestVeganTableHeightPlusValue = 140
+    var requestVeganTableHeightPlusValueTotal = 0
+    
     // TableView Header View
     var veganMenuExplanation = UILabel()
     var veganMenuExplanationStackView = UIStackView()
@@ -257,6 +262,13 @@ extension InrollPlaceViewController {
     @objc func reportStore() {
         presenter.reportData()
         refreshData()
+        
+        requestVeganTableViewHeightConstraint.constant -= CGFloat(integerLiteral: requestVeganTableHeightPlusValueTotal)
+        veganTableViewHeightConstraint.constant -= CGFloat(integerLiteral: veganTableHeightPlusValueTotal)
+
+        requestVeganTableHeightPlusValueTotal = 0
+        veganTableHeightPlusValueTotal = 0
+        
         view.layoutIfNeeded()
         UIView.animate(withDuration: 0.1, animations: { [weak self] in
             self?.view.alpha = 0.8
@@ -273,13 +285,15 @@ extension InrollPlaceViewController {
     
     // MARK: ALL 비건 클릭 시
     @objc func clickedAllVeganButton() {
-        // ALL 비건 클릭 x
+        // ALL 비건 클릭 on
         if allVegan.backgroundColor != .lightGray {
             showMenuTableView()
             allVegan.backgroundColor = .lightGray
             someMenuVegan.backgroundColor = .white
             ifRequestPossibleVegan.backgroundColor = .white
+            presenter.buttonChecked(true, false, false)
         } else {
+        // ALL 비건 클릭 off
             defaultLayout()
             allVegan.backgroundColor = .white
         }
@@ -439,11 +453,13 @@ extension InrollPlaceViewController {
     @objc func plusCell() {
         if veganMenuTableView.isHidden {
             presenter.plusCell(false)
-            requestVeganTableViewHeightConstraint.constant += 140
+            requestVeganTableHeightPlusValueTotal += 140
+            requestVeganTableViewHeightConstraint.constant += CGFloat(integerLiteral: requestVeganTableHeightPlusValue)
             view.layoutIfNeeded()
         } else {
             presenter.plusCell(true)
-            veganTableViewHeightConstraint.constant += 70
+            veganTableHeightPlusValueTotal += 70
+            veganTableViewHeightConstraint.constant += CGFloat(integerLiteral: veganTableHeightPlusValue)
             view.layoutIfNeeded()
         }
     }
@@ -451,6 +467,8 @@ extension InrollPlaceViewController {
     // MARK: 검색 후 데이터 불러오기 작업
     @objc func selectedPlace(_ notification: Notification) {
         guard let selectedPlace = notification.userInfo?["selectedPlace"] as? PlaceListModel else { return }
+        
+        presenter.storeNomalData = selectedPlace
         
         reportStoreButton.isEnabled = true
         navigationItem.rightBarButtonItem?.isEnabled = true

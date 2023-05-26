@@ -16,6 +16,8 @@ protocol InrollPlaceProtocol: NSObject {
 final class InrollPlacePresenter: NSObject {
     weak var viewController: InrollPlaceProtocol?
     
+    private let userDefaultsManager: UserDefaultsManagerProtocol?
+    
     // tableView Cell 개수 데이터 (최초 데이터)
     var notRequestMenu = [NotRequestMenu](repeating: NotRequestMenu(menu: "", price: ""), count: 1)
     var requestMenu = [RequestMenu](repeating: RequestMenu(menu: "", price: "", howToRequest: "", isCheck: false), count: 1)
@@ -24,12 +26,14 @@ final class InrollPlacePresenter: NSObject {
     
     var veganModel: VeganModel?
     
-    var allVegan: Bool?
-    var someMenuVegan: Bool?
-    var ifRequestVegan: Bool?
+    var allVegan = false
+    var someMenuVegan = false
+    var ifRequestVegan = false
     
-    init(viewController: InrollPlaceProtocol) {
+    init(viewController: InrollPlaceProtocol,
+         userDefaultsManager: UserDefaultsManagerProtocol = UserDefalutsManager()) {
         self.viewController = viewController
+        self.userDefaultsManager = userDefaultsManager
     }
     
     func viewDidLoad() {
@@ -56,15 +60,46 @@ final class InrollPlacePresenter: NSObject {
         }
     }
     
-    func buttonChecked() {
-        
+    func buttonChecked(_ allVegan: Bool, _ someMenuVegan: Bool, _ ifRequestVegan: Bool) {
+        if allVegan {
+            self.allVegan = true
+            self.someMenuVegan = false
+            self.ifRequestVegan = false
+        } else if someMenuVegan && ifRequestVegan == false {
+            self.allVegan = false
+            self.someMenuVegan = true
+            self.ifRequestVegan = false
+        } else if someMenuVegan == false && ifRequestVegan {
+            self.allVegan = false
+            self.someMenuVegan = false
+            self.ifRequestVegan = true
+        } else {
+            self.allVegan = false
+            self.someMenuVegan = true
+            self.ifRequestVegan = true
+        }
     }
     
     func reportData() {
-//        let veganModel = VeganModel(placeModel: storeNomalData, allVegan: <#T##Bool#>, someMenuVegan: <#T##Bool#>, ifRequestVegan: <#T##Bool#>)
+        let veganModel = VeganModel(
+            placeModel: storeNomalData,
+            allVegan: allVegan,
+            someMenuVegan: someMenuVegan,
+            ifRequestVegan: ifRequestVegan,
+            notRequestMenuArray: notRequestMenu,
+            requestMenuArray: requestMenu
+        )
+
+        userDefaultsManager?.setData(veganModel)
+        
         notRequestMenu = [NotRequestMenu](repeating: NotRequestMenu(menu: "", price: ""), count: 1)
         requestMenu = [RequestMenu](repeating: RequestMenu(menu: "", price: "", howToRequest: "", isCheck: false), count: 1)
+        
         storeNomalData = nil
+        allVegan = false
+        someMenuVegan = false
+        ifRequestVegan = false
+        
         viewController?.reloadTableView(false)
         viewController?.reloadTableView(true)
     }

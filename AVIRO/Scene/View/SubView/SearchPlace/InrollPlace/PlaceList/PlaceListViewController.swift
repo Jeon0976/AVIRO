@@ -10,7 +10,7 @@ import UIKit
 final class PlaceListViewController: UIViewController {
     lazy var presenter = PlaceListViewPresenter(viewController: self)
     
-    var listTableView = UITableView(frame: .zero, style: .insetGrouped)
+    var listTableView = UITableView()
     var searchField = InrollTextField()
     
     var tapGesture = UITapGestureRecognizer()
@@ -42,8 +42,8 @@ extension PlaceListViewController: PlaceListProtocol {
             // listTableView
             listTableView.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 5),
             listTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-            listTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            listTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
+            listTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            listTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
     }
     
@@ -60,7 +60,7 @@ extension PlaceListViewController: PlaceListProtocol {
         listTableView.backgroundColor = .white
         listTableView.delegate = self
         listTableView.register(PlaceListCell.self, forCellReuseIdentifier: PlaceListCell.identifier)
-        listTableView.separatorStyle = .none
+        listTableView.separatorStyle = .singleLine
         
         // search Textfield
         

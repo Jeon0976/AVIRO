@@ -43,6 +43,11 @@
 		C5EB50F92A1E71BA00B29CC1 /* VeganMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50F82A1E71BA00B29CC1 /* VeganMenuTableViewCell.swift */; };
 		C5EB50FB2A1E71E900B29CC1 /* IfRequestVeganMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50FA2A1E71E900B29CC1 /* IfRequestVeganMenuTableViewCell.swift */; };
 		C5EB51002A20720300B29CC1 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50FF2A20720300B29CC1 /* UserDefaultsManager.swift */; };
+		C5EB51082A209F6900B29CC1 /* HomeSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB51072A209F6900B29CC1 /* HomeSearchViewController.swift */; };
+		C5EB510B2A209FD300B29CC1 /* HomeSearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB510A2A209FD300B29CC1 /* HomeSearchPresenter.swift */; };
+		C5EB510D2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB510C2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift */; };
+		C5EB510F2A20A89100B29CC1 /* HomeSearchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB510E2A20A89100B29CC1 /* HomeSearchData.swift */; };
+		C5EB51122A20CC7D00B29CC1 /* HomeInfoStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB51112A20CC7D00B29CC1 /* HomeInfoStoreView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,6 +92,11 @@
 		C5EB50F82A1E71BA00B29CC1 /* VeganMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganMenuTableViewCell.swift; sourceTree = "<group>"; };
 		C5EB50FA2A1E71E900B29CC1 /* IfRequestVeganMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IfRequestVeganMenuTableViewCell.swift; sourceTree = "<group>"; };
 		C5EB50FF2A20720300B29CC1 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		C5EB51072A209F6900B29CC1 /* HomeSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchViewController.swift; sourceTree = "<group>"; };
+		C5EB510A2A209FD300B29CC1 /* HomeSearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchPresenter.swift; sourceTree = "<group>"; };
+		C5EB510C2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchViewTableViewCell.swift; sourceTree = "<group>"; };
+		C5EB510E2A20A89100B29CC1 /* HomeSearchData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchData.swift; sourceTree = "<group>"; };
+		C5EB51112A20CC7D00B29CC1 /* HomeInfoStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInfoStoreView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */,
+				C5EB51092A209FC000B29CC1 /* HomeSubPresenter */,
 				C5351B5A2A19F5EE00116D50 /* SearchPlace */,
 			);
 			path = Presenter;
@@ -162,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				C5351B4E2A19223600116D50 /* KakaoMap */,
+				C5EB50FF2A20720300B29CC1 /* UserDefaultsManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -169,13 +181,13 @@
 		C50367F32A1795BE0020C6BB /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C5EB50FE2A2071EE00B29CC1 /* UserDefalutsModel */,
+				C5EB51022A20927400B29CC1 /* HomeReferModel */,
+				C5EB51012A20926800B29CC1 /* UIReferModel */,
 				C5351B782A1B437600116D50 /* APIResonseModel */,
 				C5351B652A1A128D00116D50 /* SingleTonModel */,
 				C5351B7B2A1B52A000116D50 /* PlaceListModel */,
 				C5351B7E2A1B52D400116D50 /* CustomLocationModel */,
 				C5538AAE2A1BB81200661DE2 /* VeganModel.swift */,
-				C5EB50E32A1C685100B29CC1 /* TabBarItem.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -343,6 +355,7 @@
 			isa = PBXGroup;
 			children = (
 				C52FA3462A175B20005E70DC /* HomeViewController.swift */,
+				C5EB51052A209F3F00B29CC1 /* HomeSubView */,
 			);
 			path = HomeView;
 			sourceTree = "<group>";
@@ -380,12 +393,54 @@
 			path = InrollTableView;
 			sourceTree = "<group>";
 		};
-		C5EB50FE2A2071EE00B29CC1 /* UserDefalutsModel */ = {
+		C5EB51012A20926800B29CC1 /* UIReferModel */ = {
 			isa = PBXGroup;
 			children = (
-				C5EB50FF2A20720300B29CC1 /* UserDefaultsManager.swift */,
+				C5EB50E32A1C685100B29CC1 /* TabBarItem.swift */,
 			);
-			path = UserDefalutsModel;
+			path = UIReferModel;
+			sourceTree = "<group>";
+		};
+		C5EB51022A20927400B29CC1 /* HomeReferModel */ = {
+			isa = PBXGroup;
+			children = (
+				C5EB510E2A20A89100B29CC1 /* HomeSearchData.swift */,
+			);
+			path = HomeReferModel;
+			sourceTree = "<group>";
+		};
+		C5EB51052A209F3F00B29CC1 /* HomeSubView */ = {
+			isa = PBXGroup;
+			children = (
+				C5EB51102A20CC6800B29CC1 /* HomeInfoStoreView */,
+				C5EB51062A209F5700B29CC1 /* HomeSearchView */,
+			);
+			path = HomeSubView;
+			sourceTree = "<group>";
+		};
+		C5EB51062A209F5700B29CC1 /* HomeSearchView */ = {
+			isa = PBXGroup;
+			children = (
+				C5EB51072A209F6900B29CC1 /* HomeSearchViewController.swift */,
+				C5EB510C2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift */,
+			);
+			path = HomeSearchView;
+			sourceTree = "<group>";
+		};
+		C5EB51092A209FC000B29CC1 /* HomeSubPresenter */ = {
+			isa = PBXGroup;
+			children = (
+				C5EB510A2A209FD300B29CC1 /* HomeSearchPresenter.swift */,
+			);
+			path = HomeSubPresenter;
+			sourceTree = "<group>";
+		};
+		C5EB51102A20CC6800B29CC1 /* HomeInfoStoreView */ = {
+			isa = PBXGroup;
+			children = (
+				C5EB51112A20CC7D00B29CC1 /* HomeInfoStoreView.swift */,
+			);
+			path = HomeInfoStoreView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -524,6 +579,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5351B582A19F5DA00116D50 /* PlaceListViewController.swift in Sources */,
+				C5EB510B2A209FD300B29CC1 /* HomeSearchPresenter.swift in Sources */,
 				C5EB50F32A1DEC2400B29CC1 /* InrollPlaceLayout.swift in Sources */,
 				C5351B5E2A19F84800116D50 /* PlaceListCell.swift in Sources */,
 				C5351B6F2A1B242C00116D50 /* InrollPlacePresenter.swift in Sources */,
@@ -532,12 +588,15 @@
 				C5EB51002A20720300B29CC1 /* UserDefaultsManager.swift in Sources */,
 				C5351B7D2A1B52B900116D50 /* CustomLocationCellModel.swift in Sources */,
 				C52FA3432A175B20005E70DC /* AppDelegate.swift in Sources */,
+				C5EB510F2A20A89100B29CC1 /* HomeSearchData.swift in Sources */,
 				C5351B502A19225A00116D50 /* KakaoMapResponseKeywordModel.swift in Sources */,
 				C5351B4D2A19223300116D50 /* KakaoMapRequestAPI.swift in Sources */,
 				C50367F82A179D7B0020C6BB /* CustomConfiguration.swift in Sources */,
 				C5EB50E62A1C6FC700B29CC1 /* BookMarkViewController.swift in Sources */,
+				C5EB51082A209F6900B29CC1 /* HomeSearchViewController.swift in Sources */,
 				C5351B562A19B67900116D50 /* CustomAlertController.swift in Sources */,
 				C5538AAF2A1BB81200661DE2 /* VeganModel.swift in Sources */,
+				C5EB510D2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift in Sources */,
 				C50367F52A1795D10020C6BB /* HomeViewPresenter.swift in Sources */,
 				C5351B622A1A083400116D50 /* PlaceListCellModel.swift in Sources */,
 				C52FA3452A175B20005E70DC /* SceneDelegate.swift in Sources */,
@@ -549,6 +608,7 @@
 				C5351B672A1A154C00116D50 /* PageEndingCheck.swift in Sources */,
 				C5351B5C2A19F60200116D50 /* PlaceListViewPresenter.swift in Sources */,
 				C5351B692A1A2EAF00116D50 /* CustomPresentation.swift in Sources */,
+				C5EB51122A20CC7D00B29CC1 /* HomeInfoStoreView.swift in Sources */,
 				C5EB50E42A1C685100B29CC1 /* TabBarItem.swift in Sources */,
 				C5351B7A2A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift in Sources */,
 				C5351B602A19F9A700116D50 /* PlaceListModel.swift in Sources */,

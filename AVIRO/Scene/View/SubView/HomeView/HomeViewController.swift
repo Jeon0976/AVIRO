@@ -19,7 +19,12 @@ final class HomeViewController: UIViewController {
 
     // 내 위치 최신화 관련
     var loadLocationButton = UIButton()
-        
+    
+    // 동적 뷰 관련
+    var storeInfoView = HomeInfoStoreView()
+    var pageUpGesture = UISwipeGestureRecognizer()
+    var pageDownGesture = UISwipeGestureRecognizer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,28 +35,20 @@ final class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
-
+        presenter.loadVeganData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         presenter.locationUpdate()
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(selectedPlace(_:)),
-            name: NSNotification.Name("selectedPlace"),
-            object: nil
-        )
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("selectedPlace"), object: nil)
         
         navigationController?.navigationBar.isHidden = false
-        
-        // positionMode 싱글톤인가??? 여기서 모드를 꺼야 다음 창에서 나옴
-        naverMapView.positionMode = .disabled
     }
-
 }
 
 extension HomeViewController: HomeViewProtocol {
@@ -92,9 +89,26 @@ extension HomeViewController: HomeViewProtocol {
                 equalTo: naverMapView.leadingAnchor, constant: 16),
             searchTextField.trailingAnchor.constraint(
                 equalTo: naverMapView.trailingAnchor, constant: -16)
-            
         ])
         
+        let height = view.frame.height * 0.4
+
+        storeInfoView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: height)
+        
+        view.addSubview(storeInfoView)
+        
+        [
+            pageUpGesture,
+            pageDownGesture
+        ].forEach {
+            storeInfoView.addGestureRecognizer($0)
+        }
+        
+        pageUpGesture.direction = .up
+        pageDownGesture.direction = .down
+        
+        pageUpGesture.addTarget(self, action: #selector(respondToSwipeGesture))
+        pageDownGesture.addTarget(self, action: #selector(respondToSwipeGesture))
     }
     
     // MARK: Attribute
@@ -107,6 +121,7 @@ extension HomeViewController: HomeViewProtocol {
             for: .touchUpInside
         )
         
+        // searchTextField
         let placeholderText = "점심으로 비건까스 어떠세요?"
         let placeholderAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor(red: 138/255, green: 133/255, blue: 133/255, alpha: 1),
@@ -116,13 +131,9 @@ extension HomeViewController: HomeViewProtocol {
         searchTextField.attributedPlaceholder = placeholderAttributedString
         searchTextField.textColor = .black
         searchTextField.backgroundColor = .white
-        searchTextField.delegate = self
         searchTextField.textAlignment = .natural
-    }
-    
-    // MARK: 내 위치 최신화
-    func markingMap() {
-        naverMapView.positionMode = .direction
+        searchTextField.delegate = self
+        
     }
     
     // MARK: PlaceListView 불러오기
@@ -137,16 +148,55 @@ extension HomeViewController: HomeViewProtocol {
         print(placeLists)
         present(viewController, animated: true)
     }
-    
+        
     // 위치 denied 할 때
     func ifDenied() {
+        PersonalLocation.shared.longitude = 129.118924
+        PersonalLocation.shared.latitude = 35.153354
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: 35.153354, lng: 129.118924))
         naverMapView.moveCamera(cameraUpdate)
     }
     
-    // 위치 denied 후 검색할 때
-    func showWarnningAelrt(_ alert: UIAlertController) {
-        present(alert, animated: true)
+    // 위치 승인 되었을 때
+    func requestSuccess() {
+        naverMapView.positionMode = .direction
+    }
+    
+    // MARK: 지도에 마크 표시하기 작업
+    func makeMarker(_ veganList: [VeganModel]) {
+        DispatchQueue.global().async {
+            var markers = [NMFMarker]()
+            
+            veganList.forEach {
+                let latLng = NMGLatLng(lat: $0.placeModel.y, lng: $0.placeModel.x)
+                let marker = NMFMarker(position: latLng)
+                marker.width = 20
+                marker.height = 30
+                markers.append(marker)
+                // Marker 터치할 때
+                marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
+                             if nil != overlay as? NMFMarker {
+                                 guard let self = self else { return false }
+                                 let height = view.frame.height * 0.4
+
+                                 UIView.animate(withDuration: 0.5) {
+                                     self.storeInfoView.frame = CGRect(
+                                        x: 0,
+                                        y: self.view.frame.height - height,
+                                        width: self.view.frame.width,
+                                        height: height
+                                     )
+                                 }
+                             }
+                             return true
+                         }
+            }
+            DispatchQueue.main.async { [weak self] in
+                for marker in markers {
+                    marker.mapView = self?.naverMapView
+                }
+            }
+        }
     }
 }
 
@@ -156,23 +206,35 @@ extension HomeViewController {
         presenter.locationUpdate()
     }
     
-    // MARK: PlaceListViewController에서 아이탬이 선택 되었을 때 inroll view present
-    @objc func selectedPlace(_ notification: Notification) {
-        
-        let viewController = InrollPlaceViewController()
-        
-        navigationController?.pushViewController(viewController, animated: true)
+    // MARK: swipeUp&Down Gesture
+    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            let height = view.frame.height * 0.4
+            switch swipeGesture.direction {
+            case .up:
+                UIView.animate(withDuration: 0.5) {
+
+                }
+            case .down:
+                UIView.animate(withDuration: 0.5) {
+                    self.storeInfoView.frame = CGRect(
+                        x: 0,
+                        y: self.view.frame.height, width: self.view.frame.width,
+                        height: height
+                    )
+                }
+            default:
+                break
+            }
+        }
     }
 }
 
 extension HomeViewController: UITextFieldDelegate {
-    // MARK: 2.키보드 확인 눌렀을 때
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        let viewController = HomeSearchViewController()
+        navigationController?.pushViewController(viewController, animated: true)
         
-        guard let searchText = searchTextField.text else { return true }
-        
-        presenter.showPlaceListView(searchText)
-        
-        return true
+        return false
     }
 }

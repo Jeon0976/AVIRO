@@ -1,22 +1,21 @@
 //
-//  PlaceListCell.swift
+//  HomeSearhViewTableViewCell.swift
 //  AVIRO
 //
-//  Created by 전성훈 on 2023/05/21.
+//  Created by 전성훈 on 2023/05/26.
 //
 
 import UIKit
 
-final class PlaceListCell: UITableViewCell {
-    static let identifier = "PlaceListCell"
+final class HomeSearchViewTableViewCell: UITableViewCell {
+    static let identifier = "HomeSearhViewTableViewCell"
     
     var icon = UIImageView()
     var title = UILabel()
+    var distance = UILabel()
     var address = UILabel()
     var category = UILabel()
-    var distance = UILabel()
     
-    // MARK: 최초 불러드릴 때 작업
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -41,6 +40,7 @@ final class PlaceListCell: UITableViewCell {
             // title
             title.topAnchor.constraint(equalTo: icon.topAnchor),
             title.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 10),
+
             
             // distance
             distance.topAnchor.constraint(equalTo: icon.topAnchor),
@@ -63,7 +63,6 @@ final class PlaceListCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: Attribute
     private func makeAttribute() {
         title.numberOfLines = 0
         title.font = .systemFont(ofSize: 18, weight: .bold)
@@ -80,17 +79,16 @@ final class PlaceListCell: UITableViewCell {
         address.textColor = .black
         category.textColor = .black
         distance.textColor = .black
-        
-        icon.image = UIImage(named: "InrollSearchIcon")
-        icon.contentMode = .scaleAspectFit
     }
     
-    // MARK: cell data 바인딩
-    func makeCellData(_ listData: PlaceListCellModel) {
+    func makeCellData(_ listData: HomeSearchData) {
         makeAttribute()
+        icon.image = UIImage(named: listData.icon)
+        icon.contentMode = .scaleAspectFit
+        
         title.text = listData.title
         address.text = listData.address
         category.text = listData.category
-        distance.text = listData.distance.convertDistanceUnit()
+        distance.text = listData.distance
     }
 }

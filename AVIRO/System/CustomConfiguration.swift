@@ -133,13 +133,14 @@ class InrollTextField: UITextField {
     func customClearButton() {
         let customClearButton = UIButton(type: .custom)
         customClearButton.setImage(
-            UIImage(systemName: "xmark.circle.fill")?.withTintColor(.black, renderingMode: .alwaysOriginal),
+            UIImage(named: "Close"),
             for: .normal)
-        customClearButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        customClearButton.contentEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         
         self.rightView = customClearButton
-        self.rightViewMode = .always
+        self.rightViewMode = .whileEditing
     }
+    
 }
 
 class TitleTextField: UITextField {
@@ -173,9 +174,10 @@ class TitleTextField: UITextField {
             button.centerYAnchor.constraint(equalTo: container.centerYAnchor),
             button.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -16)
         ])
-
+        
         self.leftView = container
         self.leftViewMode = .always
+        self.leftView?.isUserInteractionEnabled = false
     }
     
     func shadowAndborder() {
