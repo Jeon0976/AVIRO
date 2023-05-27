@@ -111,6 +111,15 @@ class HomeInfoStoreView: UIView {
         return stackView
     }()
     
+    let entireView: UIView = {
+        let view = UIView()
+        
+        view.backgroundColor = .white
+        view.alpha = 1
+        
+        return view
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -126,7 +135,7 @@ class HomeInfoStoreView: UIView {
             separator1,
             bookmarkButton,
             separator2,
-            commentButton,
+            commentButton
         ].forEach {
             stackView.addArrangedSubview($0)
         }
@@ -136,7 +145,8 @@ class HomeInfoStoreView: UIView {
             imageView,
             address,
             handleView,
-            stackView
+            stackView,
+            entireView
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             addSubview($0)
@@ -164,7 +174,13 @@ class HomeInfoStoreView: UIView {
             // stackView
             stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            stackView.topAnchor.constraint(equalTo: address.bottomAnchor, constant: 20)
+            stackView.topAnchor.constraint(equalTo: address.bottomAnchor, constant: 20),
+            
+            // entireView
+            entireView.topAnchor.constraint(equalTo: self.topAnchor),
+            entireView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            entireView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            entireView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
     

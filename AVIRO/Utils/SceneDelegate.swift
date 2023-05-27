@@ -21,6 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let viewController = TabBarViewController()
         
         window?.rootViewController = viewController
+        window?.backgroundColor = .white
         
         window?.tintColor = .black
         

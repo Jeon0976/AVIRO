@@ -33,6 +33,8 @@
 		C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547A8B92A17D8D4004D1339 /* KakaoMapRequestManager.swift */; };
 		C5538AAF2A1BB81200661DE2 /* VeganModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5538AAE2A1BB81200661DE2 /* VeganModel.swift */; };
 		C5D6E19F2A17B4410042679C /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5D6E19E2A17B4410042679C /* API.plist */; };
+		C5D7458B2A21CCFB006F9F31 /* DetailMenuTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D7458A2A21CCFB006F9F31 /* DetailMenuTableModel.swift */; };
+		C5D7458D2A2223A6006F9F31 /* CommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D7458C2A2223A6006F9F31 /* CommentModel.swift */; };
 		C5EB50E42A1C685100B29CC1 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50E32A1C685100B29CC1 /* TabBarItem.swift */; };
 		C5EB50E62A1C6FC700B29CC1 /* BookMarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50E52A1C6FC700B29CC1 /* BookMarkViewController.swift */; };
 		C5EB50E82A1C6FD600B29CC1 /* PopularViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50E72A1C6FD600B29CC1 /* PopularViewController.swift */; };
@@ -48,6 +50,12 @@
 		C5EB510D2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB510C2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift */; };
 		C5EB510F2A20A89100B29CC1 /* HomeSearchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB510E2A20A89100B29CC1 /* HomeSearchData.swift */; };
 		C5EB51122A20CC7D00B29CC1 /* HomeInfoStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB51112A20CC7D00B29CC1 /* HomeInfoStoreView.swift */; };
+		C5EB51162A21011C00B29CC1 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB51152A21011C00B29CC1 /* DetailViewController.swift */; };
+		C5EB51182A21016600B29CC1 /* DetailViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB51172A21016600B29CC1 /* DetailViewPresenter.swift */; };
+		C5EB511C2A21188D00B29CC1 /* TopDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB511B2A21188D00B29CC1 /* TopDetailView.swift */; };
+		C5EB511E2A21189B00B29CC1 /* StoreDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB511D2A21189B00B29CC1 /* StoreDetailView.swift */; };
+		C5EB51202A2118AB00B29CC1 /* MenuDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB511F2A2118AB00B29CC1 /* MenuDetailView.swift */; };
+		C5EB51222A2118B200B29CC1 /* CommentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB51212A2118B200B29CC1 /* CommentDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +90,8 @@
 		C547A8B92A17D8D4004D1339 /* KakaoMapRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapRequestManager.swift; sourceTree = "<group>"; };
 		C5538AAE2A1BB81200661DE2 /* VeganModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganModel.swift; sourceTree = "<group>"; };
 		C5D6E19E2A17B4410042679C /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = API.plist; sourceTree = "<group>"; };
+		C5D7458A2A21CCFB006F9F31 /* DetailMenuTableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMenuTableModel.swift; sourceTree = "<group>"; };
+		C5D7458C2A2223A6006F9F31 /* CommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentModel.swift; sourceTree = "<group>"; };
 		C5EB50E32A1C685100B29CC1 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		C5EB50E52A1C6FC700B29CC1 /* BookMarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookMarkViewController.swift; sourceTree = "<group>"; };
 		C5EB50E72A1C6FD600B29CC1 /* PopularViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularViewController.swift; sourceTree = "<group>"; };
@@ -97,6 +107,12 @@
 		C5EB510C2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchViewTableViewCell.swift; sourceTree = "<group>"; };
 		C5EB510E2A20A89100B29CC1 /* HomeSearchData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchData.swift; sourceTree = "<group>"; };
 		C5EB51112A20CC7D00B29CC1 /* HomeInfoStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInfoStoreView.swift; sourceTree = "<group>"; };
+		C5EB51152A21011C00B29CC1 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		C5EB51172A21016600B29CC1 /* DetailViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewPresenter.swift; sourceTree = "<group>"; };
+		C5EB511B2A21188D00B29CC1 /* TopDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopDetailView.swift; sourceTree = "<group>"; };
+		C5EB511D2A21189B00B29CC1 /* StoreDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailView.swift; sourceTree = "<group>"; };
+		C5EB511F2A2118AB00B29CC1 /* MenuDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetailView.swift; sourceTree = "<group>"; };
+		C5EB51212A2118B200B29CC1 /* CommentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -405,6 +421,8 @@
 			isa = PBXGroup;
 			children = (
 				C5EB510E2A20A89100B29CC1 /* HomeSearchData.swift */,
+				C5D7458A2A21CCFB006F9F31 /* DetailMenuTableModel.swift */,
+				C5D7458C2A2223A6006F9F31 /* CommentModel.swift */,
 			);
 			path = HomeReferModel;
 			sourceTree = "<group>";
@@ -414,6 +432,7 @@
 			children = (
 				C5EB51102A20CC6800B29CC1 /* HomeInfoStoreView */,
 				C5EB51062A209F5700B29CC1 /* HomeSearchView */,
+				C5EB51192A2101F200B29CC1 /* DetailView */,
 			);
 			path = HomeSubView;
 			sourceTree = "<group>";
@@ -431,6 +450,7 @@
 			isa = PBXGroup;
 			children = (
 				C5EB510A2A209FD300B29CC1 /* HomeSearchPresenter.swift */,
+				C5EB51172A21016600B29CC1 /* DetailViewPresenter.swift */,
 			);
 			path = HomeSubPresenter;
 			sourceTree = "<group>";
@@ -441,6 +461,26 @@
 				C5EB51112A20CC7D00B29CC1 /* HomeInfoStoreView.swift */,
 			);
 			path = HomeInfoStoreView;
+			sourceTree = "<group>";
+		};
+		C5EB51192A2101F200B29CC1 /* DetailView */ = {
+			isa = PBXGroup;
+			children = (
+				C5EB51152A21011C00B29CC1 /* DetailViewController.swift */,
+				C5EB511B2A21188D00B29CC1 /* TopDetailView.swift */,
+				C5EB511D2A21189B00B29CC1 /* StoreDetailView.swift */,
+				C5EB511F2A2118AB00B29CC1 /* MenuDetailView.swift */,
+				C5EB51212A2118B200B29CC1 /* CommentDetailView.swift */,
+				C5EB511A2A21186900B29CC1 /* CommentDetailView */,
+			);
+			path = DetailView;
+			sourceTree = "<group>";
+		};
+		C5EB511A2A21186900B29CC1 /* CommentDetailView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CommentDetailView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -579,11 +619,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5351B582A19F5DA00116D50 /* PlaceListViewController.swift in Sources */,
+				C5EB51182A21016600B29CC1 /* DetailViewPresenter.swift in Sources */,
 				C5EB510B2A209FD300B29CC1 /* HomeSearchPresenter.swift in Sources */,
 				C5EB50F32A1DEC2400B29CC1 /* InrollPlaceLayout.swift in Sources */,
 				C5351B5E2A19F84800116D50 /* PlaceListCell.swift in Sources */,
 				C5351B6F2A1B242C00116D50 /* InrollPlacePresenter.swift in Sources */,
 				C52FA3472A175B20005E70DC /* HomeViewController.swift in Sources */,
+				C5D7458D2A2223A6006F9F31 /* CommentModel.swift in Sources */,
 				C5EB50E82A1C6FD600B29CC1 /* PopularViewController.swift in Sources */,
 				C5EB51002A20720300B29CC1 /* UserDefaultsManager.swift in Sources */,
 				C5351B7D2A1B52B900116D50 /* CustomLocationCellModel.swift in Sources */,
@@ -591,6 +633,8 @@
 				C5EB510F2A20A89100B29CC1 /* HomeSearchData.swift in Sources */,
 				C5351B502A19225A00116D50 /* KakaoMapResponseKeywordModel.swift in Sources */,
 				C5351B4D2A19223300116D50 /* KakaoMapRequestAPI.swift in Sources */,
+				C5EB511E2A21189B00B29CC1 /* StoreDetailView.swift in Sources */,
+				C5EB51222A2118B200B29CC1 /* CommentDetailView.swift in Sources */,
 				C50367F82A179D7B0020C6BB /* CustomConfiguration.swift in Sources */,
 				C5EB50E62A1C6FC700B29CC1 /* BookMarkViewController.swift in Sources */,
 				C5EB51082A209F6900B29CC1 /* HomeSearchViewController.swift in Sources */,
@@ -607,14 +651,18 @@
 				C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */,
 				C5351B672A1A154C00116D50 /* PageEndingCheck.swift in Sources */,
 				C5351B5C2A19F60200116D50 /* PlaceListViewPresenter.swift in Sources */,
+				C5EB51162A21011C00B29CC1 /* DetailViewController.swift in Sources */,
+				C5EB51202A2118AB00B29CC1 /* MenuDetailView.swift in Sources */,
 				C5351B692A1A2EAF00116D50 /* CustomPresentation.swift in Sources */,
 				C5EB51122A20CC7D00B29CC1 /* HomeInfoStoreView.swift in Sources */,
 				C5EB50E42A1C685100B29CC1 /* TabBarItem.swift in Sources */,
 				C5351B7A2A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift in Sources */,
+				C5D7458B2A21CCFB006F9F31 /* DetailMenuTableModel.swift in Sources */,
 				C5351B602A19F9A700116D50 /* PlaceListModel.swift in Sources */,
 				C5EB50EC2A1C72C600B29CC1 /* TabBarViewController.swift in Sources */,
 				C5EB50F92A1E71BA00B29CC1 /* VeganMenuTableViewCell.swift in Sources */,
 				C5EB50F52A1DEC3900B29CC1 /* InrollPlaceAttribute.swift in Sources */,
+				C5EB511C2A21188D00B29CC1 /* TopDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

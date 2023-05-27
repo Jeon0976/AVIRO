@@ -22,5 +22,7 @@ class TabBarViewController: UITabBarController {
             return viewController
         }
         self.viewControllers = tabBarViewControllers
+        tabBar.isTranslucent = false
+        tabBar.backgroundColor = .white
     }
 }

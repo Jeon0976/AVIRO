@@ -47,7 +47,7 @@ final class PlaceListViewPresenter: NSObject {
         requestManager.kakaoMapKeywordSearch(query: query,
                                       longitude: longitude,
                                       latitude: latitude,
-                                      page: "\(currentPage)") { model in
+                                      page: "\(currentPage)") { [weak self] model in
             let placeList = model.documents.map { location in
                 let placeListCellModel = PlaceListModel(
                     title: location.name,
@@ -64,7 +64,7 @@ final class PlaceListViewPresenter: NSObject {
             
             PageEndingCheck.shared.isend = model.meta.isEnd
 
-            DispatchQueue.main.async { [weak self] in
+            DispatchQueue.main.async { 
                 self?.placeList = placeList
                 self?.viewController?.reloadTableView()
                 self?.isLoading = false
@@ -93,7 +93,7 @@ final class PlaceListViewPresenter: NSObject {
         requestManager.kakaoMapKeywordSearch(query: query,
                                       longitude: longitude,
                                       latitude: latitude,
-                                      page: "\(currentPage)") { model in
+                                      page: "\(currentPage)") { [weak self] model in
             let placeList = model.documents.map { location in
                 let placeListCellModel = PlaceListModel(
                     title: location.name,
@@ -110,7 +110,7 @@ final class PlaceListViewPresenter: NSObject {
             
             PageEndingCheck.shared.isend = model.meta.isEnd
             
-            DispatchQueue.main.async { [weak self] in
+            DispatchQueue.main.async {
                 self?.placeList.append(contentsOf: placeList)
                 self?.viewController?.reloadTableView()
                 self?.isLoading = false

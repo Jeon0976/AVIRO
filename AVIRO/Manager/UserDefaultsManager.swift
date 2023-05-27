@@ -11,8 +11,8 @@ import Foundation
 protocol UserDefaultsManagerProtocol {
     func getData() -> [VeganModel]
     func setData(_ newData: VeganModel)
-//    func editingData(_ newData: VeganModel)
     func deleteData(_ data: VeganModel)
+    func editingData(_ data: VeganModel)
 }
 
 struct UserDefalutsManager: UserDefaultsManagerProtocol {
@@ -43,5 +43,21 @@ struct UserDefalutsManager: UserDefaultsManagerProtocol {
         
         UserDefaults.standard.set(try? PropertyListEncoder().encode(currentDatas), forKey: Key.vegan.rawValue
         )
+    }
+    
+    func editingData(_ data: VeganModel) {
+        var currentDatas: [VeganModel] = getData()
+        
+        currentDatas = currentDatas.map { currentData in
+            if currentData.placeModel == data.placeModel {
+                var newData = currentData
+                newData.comment = data.comment
+                return newData
+            } else {
+                return currentData
+            }
+        }
+        
+        UserDefaults.standard.set(try? PropertyListEncoder().encode(currentDatas), forKey: Key.vegan.rawValue)
     }
 }

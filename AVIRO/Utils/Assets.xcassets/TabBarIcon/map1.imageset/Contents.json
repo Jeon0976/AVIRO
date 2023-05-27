@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "RecommendStore.png",
+      "filename" : "Property 1=map 1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "22.png",
+      "filename" : "Property 1=map 1@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "33.png",
+      "filename" : "Property 1=map 1@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

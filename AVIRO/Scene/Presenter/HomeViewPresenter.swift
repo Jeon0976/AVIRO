@@ -15,6 +15,7 @@ protocol HomeViewProtocol: NSObject {
     func ifDenied()
     func requestSuccess()
     func makeMarker(_ veganList: [VeganModel])
+    func pushDetailViewController(_ veganModel: VeganModel)
 }
 
 final class HomeViewPresenter: NSObject {
@@ -42,13 +43,20 @@ final class HomeViewPresenter: NSObject {
     // MARK: vegan Data 불러오기
     func loadVeganData() {
         guard let veganData = userDefaults?.getData() else { return }
-        
+        self.veganData = veganData
         viewController?.makeMarker(veganData)
     }
     
+    // MARK: pushDetailViewController
     func pushDetailViewController(_ address: String) {
-        DispatchQueue.global().async {
-//            let data = veganData.filter
+        print(address)
+        DispatchQueue.global().async { [weak self] in
+            guard let veganData = self?.veganData else { return }
+            print(veganData)
+            if let data = veganData.first(where: { $0.placeModel.address == address }) {
+                self?.viewController?.pushDetailViewController(data)
+                print(data)
+            }
         }
     }
 }

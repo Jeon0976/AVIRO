@@ -182,6 +182,10 @@ extension InrollPlaceViewController: InrollPlaceProtocol {
         )
         navigationItem.rightBarButtonItem = rightBarButton
         
+        let backItem = UIBarButtonItem()
+        backItem.title = ""
+        navigationItem.backBarButtonItem = backItem
+        
         view.backgroundColor = .white
         view.addGestureRecognizer(tapGesture)
         tapGesture.delegate = self
@@ -288,6 +292,7 @@ extension InrollPlaceViewController {
         // ALL 비건 클릭 on
         if allVegan.backgroundColor != .lightGray {
             showMenuTableView()
+            isPossibleReportButton()
             allVegan.backgroundColor = .lightGray
             someMenuVegan.backgroundColor = .white
             ifRequestPossibleVegan.backgroundColor = .white
@@ -295,6 +300,7 @@ extension InrollPlaceViewController {
         } else {
         // ALL 비건 클릭 off
             defaultLayout()
+            isNegativeReportButton()
             allVegan.backgroundColor = .white
         }
     }
@@ -304,12 +310,14 @@ extension InrollPlaceViewController {
         // 비건 메뉴 포함, 요청하면 비건 둘다 클릭 안 되어있을 때
         if someMenuVegan.backgroundColor != .lightGray && ifRequestPossibleVegan.backgroundColor != .lightGray {
             showMenuTableView()
+            isPossibleReportButton()
             allVegan.backgroundColor = .white
             someMenuVegan.backgroundColor = .lightGray
             ifRequestPossibleVegan.backgroundColor = .white
             // 비건 메뉴 포함만 안 되있고, 요청하면 비건은 눌러져있을 때
         } else if someMenuVegan.backgroundColor != .lightGray && ifRequestPossibleVegan.backgroundColor == .lightGray {
             showHowToRequestVeganMenuTableView()
+            isPossibleReportButton()
             allVegan.backgroundColor = .white
             someMenuVegan.backgroundColor = .lightGray
             ifRequestPossibleVegan.backgroundColor = .lightGray
@@ -321,6 +329,7 @@ extension InrollPlaceViewController {
             // 비건 메뉴만 눌러져 있을 때
         } else {
             defaultLayout()
+            isNegativeReportButton()
             someMenuVegan.backgroundColor = .white
         }
     }
@@ -330,24 +339,28 @@ extension InrollPlaceViewController {
         // 비건 메뉴 포함, 요청하면 비건 둘다 클릭 안 되어있을 때
         if ifRequestPossibleVegan.backgroundColor != .lightGray && someMenuVegan.backgroundColor != .lightGray {
             showHowToRequestVeganMenuTableView()
+            isPossibleReportButton()
             allVegan.backgroundColor = .white
             someMenuVegan.backgroundColor = .white
             ifRequestPossibleVegan.backgroundColor = .lightGray
             // 비건 메뉴 포함만 눌러져 있을 때
         } else if ifRequestPossibleVegan.backgroundColor != .lightGray && someMenuVegan.backgroundColor == .lightGray {
             showHowToRequestVeganMenuTableView()
+            isPossibleReportButton()
             allVegan.backgroundColor = .white
             someMenuVegan.backgroundColor = .lightGray
             ifRequestPossibleVegan.backgroundColor = .lightGray
             // 둘다 눌러져 있을 때
         } else if someMenuVegan.backgroundColor == .lightGray && ifRequestPossibleVegan.backgroundColor == .lightGray {
             showMenuTableView()
+            isPossibleReportButton()
             allVegan.backgroundColor = .white
             someMenuVegan.backgroundColor = .lightGray
             ifRequestPossibleVegan.backgroundColor = .white
             // 혼자만 눌러져 있을 때
         } else {
             defaultLayout()
+            isNegativeReportButton()
             ifRequestPossibleVegan.backgroundColor = .white
         }
     }
@@ -470,12 +483,24 @@ extension InrollPlaceViewController {
         
         presenter.storeNomalData = selectedPlace
         
-        reportStoreButton.isEnabled = true
-        navigationItem.rightBarButtonItem?.isEnabled = true
         storeTitleField.text = selectedPlace.title
         storeLocationField.text = selectedPlace.address
         storeCategoryField.text = selectedPlace.category
         storePhoneField.text = selectedPlace.phone
+    }
+    
+    // MARK: Report 버튼 작업
+    func isPossibleReportButton() {
+        if storeTitleField.text != "" {
+            reportStoreButton.isEnabled = true
+            navigationItem.rightBarButtonItem?.isEnabled = true
+        }
+    }
+    
+    // MARK: Report 버튼 off
+    func isNegativeReportButton() {
+        reportStoreButton.isEnabled = false
+        navigationItem.rightBarButtonItem?.isEnabled = false
     }
 }
 
@@ -623,14 +648,17 @@ extension InrollPlaceViewController: UIGestureRecognizerDelegate {
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
            let keyboardRectangle = keyboardFrame.cgRectValue
-       
+            let tabBarHeight = self.tabBarController?.tabBar.frame.size.height ?? 0
+            
             UIView.animate(
                 withDuration: 0.3,
                 animations: {
-                    self.view.transform = CGAffineTransform(translationX: 0, y: -keyboardRectangle.height)
+                    self.view.transform = CGAffineTransform(translationX: 0, y: -(keyboardRectangle.height - tabBarHeight))
                 }
             )
-        }    }
+        }
+//
+    }
 
     @objc func keyboardWillHide(notification: NSNotification) {
         self.view.transform = .identity

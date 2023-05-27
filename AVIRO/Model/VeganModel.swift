@@ -21,6 +21,8 @@ struct VeganModel: Codable, Equatable {
     
     var notRequestMenuArray: [NotRequestMenu]?
     var requestMenuArray: [RequestMenu]?
+    
+    var comment: [CommentModel]?
 }
 
 struct NotRequestMenu: Codable {

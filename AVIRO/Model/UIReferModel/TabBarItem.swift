@@ -27,24 +27,24 @@ enum TabBarItem: CaseIterable {
     var icon: (default: UIImage?, selected: UIImage?) {
         switch self {
         case .home: return (
-            UIImage(systemName: "house.circle"),
-            UIImage(systemName: "house.circle.fill")
+            UIImage(named: "map1"),
+            UIImage(named: "map2")
         )
         case .popular: return (
-            UIImage(named: "RecommendStore"),
-            UIImage(named: "RecommendStore")
+            UIImage(named: "star1"),
+            UIImage(named: "star2")
         )
         case .plus: return (
-            UIImage(systemName: "plus.square"),
-            UIImage(systemName: "plus.square.fill")
+            UIImage(named: "edit1"),
+            UIImage(named: "edit2")
         )
         case .bookMark: return (
-            UIImage(systemName: "book.closed.circle"),
-            UIImage(systemName: "book.closed.circle.fill")
+            UIImage(named: "bookmark1"),
+            UIImage(named: "bookmark2")
         )
         case .myPage: return (
-            UIImage(systemName: "person.circle"),
-            UIImage(systemName: "person.circle.fill")
+            UIImage(named: "user1"),
+            UIImage(named: "user2")
         )
             
         }

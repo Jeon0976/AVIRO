@@ -42,10 +42,10 @@ final class HomeViewController: UIViewController {
         storeInfoView.frame = CGRect(
             x: 0,
             y: view.frame.height,
-            width: view.frame.width ,
+            width: view.frame.width,
             height: height
         )
-
+        storeInfoView.entireView.alpha = 0
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -123,6 +123,11 @@ extension HomeViewController: HomeViewProtocol {
     
     // MARK: Attribute
     func makeAttribute() {
+        // View, Navigation
+        let backItem = UIBarButtonItem()
+        backItem.title = ""
+        navigationItem.backBarButtonItem = backItem
+        
         // lodeLocationButton
         loadLocationButton.setImage(UIImage(named: "PersonalLocation"), for: .normal)
         loadLocationButton.addTarget(
@@ -143,9 +148,6 @@ extension HomeViewController: HomeViewProtocol {
         searchTextField.backgroundColor = .white
         searchTextField.textAlignment = .natural
         searchTextField.delegate = self
-        
-        // storeInfoView
-        storeInfoView
         
     }
     
@@ -202,7 +204,7 @@ extension HomeViewController: HomeViewProtocol {
                                         x: 0,
                                         y: self.view.frame.height - height,
                                         width: self.view.frame.width,
-                                        height: height
+                                        height: height + 20
                                      )
                                  }
                              }
@@ -216,9 +218,15 @@ extension HomeViewController: HomeViewProtocol {
             }
         }
     }
-    
-    func pushDetailViewController() {
-        
+    // MARK: pushDetailViewController
+    func pushDetailViewController(_ veganModel: VeganModel) {
+        DispatchQueue.main.async { [weak self] in
+            let viewController = DetailViewController()
+            let presenter = DetailViewPresenter(viewController: viewController, veganModel: veganModel)
+            viewController.presenter = presenter
+            
+            self?.navigationController?.pushViewController(viewController, animated: false)
+        }
     }
 }
 
@@ -234,17 +242,19 @@ extension HomeViewController {
             let height = view.frame.height * 0.4
             switch swipeGesture.direction {
             case .up:
-                UIView.animate(withDuration: 0.3) { [weak self] in
+                UIView.animate(withDuration: 0.4, animations: { [weak self] in
                     self?.storeInfoView.frame = CGRect(
                         x: 0,
                         y: 0,
                         width: self?.view.frame.width ?? 0,
                         height: self?.view.frame.height ?? 0
                     )
-                    self?.presenter.pushDetailViewController(
-                        self?.storeInfoView.address.text ?? ""
-                    )
-                }
+                    self?.storeInfoView.entireView.alpha = 1
+                }, completion: { [weak self] _ in
+                    guard let address = self?.storeInfoView.address.text else { return }
+                    print(address)
+                    self?.presenter.pushDetailViewController(address)
+                })
             case .down:
                 UIView.animate(withDuration: 0.3) { [weak self] in
                     self?.storeInfoView.frame = CGRect(

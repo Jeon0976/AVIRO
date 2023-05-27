@@ -211,3 +211,14 @@ class EdgeInsetLabel: UILabel {
         super.drawText(in: rect.inset(by: textInsets))
     }
 }
+
+// MARK: Color Custom
+let ColorsList1 = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 1)
+let ColorsList2 = UIColor(red: 139/255, green: 139/255, blue: 139/255, alpha: 1)
+let ColorsList3 = UIColor(red: 6/255, green: 23/255, blue: 37/255, alpha: 1)
+let ColorsList4 = UIColor(red: 226/255, green: 242/255, blue: 99/255, alpha: 1)
+let ColorsList5 = UIColor(red: 160/255, green: 81/255, blue: 234/255, alpha: 1)
+
+let PonitColor1 = UIColor(red: 174/255, green: 227/255, blue: 23/255, alpha: 1)
+let PonitColor2 = UIColor(red: 160/255, green: 81/255, blue: 234/255, alpha: 1)
+let PonitColor3 = UIColor(red: 70/255, green: 155/255, blue: 255/255, alpha: 1)

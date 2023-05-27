@@ -24,7 +24,7 @@ struct KakaoMapRequestAPI {
     
     // MARK: static query
     // 사용자 기준 거리순 정렬
-    static let sortValue = "distance"
+    static let sortValue = "accuracy"
     // CE7: 카페, FD6: 음식점
     static let categoryValue = "CE7, FD6"
     
