@@ -64,7 +64,7 @@ final class PlaceListViewPresenter: NSObject {
             
             PageEndingCheck.shared.isend = model.meta.isEnd
 
-            DispatchQueue.main.async { 
+            DispatchQueue.main.async {
                 self?.placeList = placeList
                 self?.viewController?.reloadTableView()
                 self?.isLoading = false

@@ -53,7 +53,7 @@ extension PlaceListViewController: PlaceListProtocol {
         tapGesture.cancelsTouchesInView = false
         tapGesture.delegate = self
         view.backgroundColor = .white
-        navigationItem.title = "식당 검색"
+        navigationItem.title = "가게 이름 검색"
         
         // listTableView
         listTableView.dataSource = presenter
@@ -126,6 +126,7 @@ extension PlaceListViewController: UIGestureRecognizerDelegate {
     }
 }
 
+// MARK: 취소 창 없에기
 extension PlaceListViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         searchField.rightView?.isHidden = false

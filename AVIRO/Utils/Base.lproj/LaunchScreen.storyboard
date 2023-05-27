@@ -15,13 +15,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="홈 화면" translatesAutoresizingMaskIntoConstraints="NO" id="Sm4-xy-N7v">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="홈 화면 1" translatesAutoresizingMaskIntoConstraints="NO" id="Sm4-xy-N7v">
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" red="0.88627450980392153" green="0.94901960784313721" blue="0.38823529411764707" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Sm4-xy-N7v" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="IIk-e9-GUa"/>
                             <constraint firstItem="Sm4-xy-N7v" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="J33-C4-Brb"/>
@@ -40,6 +41,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="홈 화면" width="375" height="812"/>
+        <image name="홈 화면 1" width="375" height="812"/>
     </resources>
 </document>

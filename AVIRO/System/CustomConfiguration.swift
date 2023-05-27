@@ -10,15 +10,9 @@ import UIKit
 extension UIButton {
     // MARK: UIButton Image size
     func customImageConfig(_ nomalImage: String, _ selectedImage: String) {
-        let config = UIImage.SymbolConfiguration(pointSize: 28, weight: .light)
-        self.setImage(UIImage(systemName: nomalImage,
-                              withConfiguration: config),
-                    for: .normal
-        )
-        self.setImage(UIImage(systemName: selectedImage,
-                              withConfiguration: config),
-                      for: .highlighted
-        )
+        self.setImage(UIImage(named: "plusButton"), for: .normal)
+        self.setImage(UIImage(named: "plusButton"), for: .highlighted)
+
     }
 }
 
@@ -34,10 +28,10 @@ class SelectVeganButton: UIButton {
         
         self.setTitleColor(.black, for: .normal)
         self.imageView?.contentMode = .scaleAspectFit
-        self.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
+        self.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         self.semanticContentAttribute = .forceLeftToRight
-        self.layer.cornerRadius = 8
-        self.layer.borderColor = UIColor.black.cgColor
+        self.layer.cornerRadius = 10
+        self.layer.borderColor = UIColor.lightGray.cgColor
         self.layer.borderWidth = 1.0
     }
     
@@ -68,7 +62,14 @@ class SelectVeganButton: UIButton {
             )
         }
     }
+}
 
+class ReportButton: UIButton {
+    override var isEnabled: Bool {
+        didSet {
+            backgroundColor = isEnabled ? ColorsList4 : ColorsList1
+        }
+    }
 }
 
 extension String {
@@ -101,9 +102,9 @@ class InrollTextField: UITextField {
     }
 
     private func configureBorder() {
-        self.layer.borderColor = UIColor.black.cgColor
+        self.layer.borderColor = UIColor.lightGray.cgColor
         self.layer.borderWidth = 1
-        self.layer.cornerRadius = 8
+        self.layer.cornerRadius = 15
     }
 
     override open func textRect(forBounds bounds: CGRect) -> CGRect {
@@ -128,6 +129,91 @@ class InrollTextField: UITextField {
         var clearButtonRect = super.clearButtonRect(forBounds: bounds)
         clearButtonRect.origin.x -= clearButtonOffset
         return clearButtonRect
+    }
+    
+    override var isEnabled: Bool {
+        didSet {
+            self.backgroundColor = isEnabled ? .white : ColorsList1
+        }
+    }
+    
+    func customClearButton() {
+        let customClearButton = UIButton(type: .custom)
+        customClearButton.setImage(
+            UIImage(named: "Close"),
+            for: .normal)
+        customClearButton.contentEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        
+        self.rightView = customClearButton
+        self.rightViewMode = .whileEditing
+    }
+    
+}
+
+// MARK: comment TextField 설정
+class CommentsTextField: UITextField {
+    private let commonInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+    private let clearButtonOffset: CGFloat = 5
+    private let clearButtonLeftPadding: CGFloat = 5
+    
+    private let topBorder: CALayer
+
+    override init(frame: CGRect) {
+        self.topBorder = CALayer()
+
+        super.init(frame: frame)
+        
+        topBorder.borderColor = UIColor.lightGray.cgColor
+        topBorder.borderWidth = 1.0
+
+        self.layer.addSublayer(topBorder)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        self.topBorder = CALayer()
+
+        super.init(coder: aDecoder)
+                
+        topBorder.borderColor = UIColor.lightGray.cgColor
+        topBorder.borderWidth = 1.0
+
+        self.layer.addSublayer(topBorder)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        topBorder.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: 1.0)
+    }
+
+    override open func textRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: commonInsets)
+    }
+    
+    // clearButton의 위치와 크기를 고려해 inset 삽입
+    override open func editingRect(forBounds bounds: CGRect) -> CGRect {
+        let clearButtonWidth = clearButtonRect(forBounds: bounds).width
+        let editingInsets = UIEdgeInsets(
+            top: commonInsets.top,
+            left: commonInsets.left,
+            bottom: commonInsets.bottom,
+            right: clearButtonWidth + clearButtonOffset + clearButtonLeftPadding
+        )
+        
+        return bounds.inset(by: editingInsets)
+    }
+    
+    // clearButtonOffset만큼 x축 이동
+    override func clearButtonRect(forBounds bounds: CGRect) -> CGRect {
+        var clearButtonRect = super.clearButtonRect(forBounds: bounds)
+        clearButtonRect.origin.x -= clearButtonOffset
+        return clearButtonRect
+    }
+    
+    override var isEnabled: Bool {
+        didSet {
+            self.backgroundColor = isEnabled ? .white : ColorsList1
+        }
     }
     
     func customClearButton() {
@@ -209,6 +295,25 @@ class EdgeInsetLabel: UILabel {
 
     override func drawText(in rect: CGRect) {
         super.drawText(in: rect.inset(by: textInsets))
+    }
+}
+
+class PaddingLabel: UILabel {
+
+    var topInset: CGFloat = 10.0
+    var bottomInset: CGFloat = 10.0
+    var leftInset: CGFloat = 16.0
+    var rightInset: CGFloat = 16.0
+
+    override func drawText(in rect: CGRect) {
+        let insets = UIEdgeInsets(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
+        super.drawText(in: rect.inset(by: insets))
+    }
+
+    override var intrinsicContentSize: CGSize {
+        let size = super.intrinsicContentSize
+        return CGSize(width: size.width + leftInset + rightInset,
+                      height: size.height + topInset + bottomInset)
     }
 }
 

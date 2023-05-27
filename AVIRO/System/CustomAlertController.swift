@@ -49,4 +49,13 @@ final class CustomAlertController {
     func whenLastLoadPage(_ title: String, _ message: String) {
         
     }
+    
+    // TODO: 글자수 제한
+    func whenOverComments(_ title: String, _ message: String) -> UIAlertController {
+        let alertController = makeAlert(title, message)
+        let action = UIAlertAction(title: "확인", style: .destructive)
+        alertController.addAction(action)
+        
+        return alertController
+    }
 }

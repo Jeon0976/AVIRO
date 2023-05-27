@@ -20,12 +20,16 @@ final class DetailViewController: UIViewController {
     var comment = CommentDetailView()
     
     // 동적 크기
-    var menuHeightConstraint: NSLayoutConstraint!
     var menuHeight: CGFloat!
+    var commentHeight: CGFloat!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()
+        
+        tabBarController?.tabBar.isHidden = true
+        tabBarController?.tabBar.isTranslucent = true
+        tabBarController?.tabBar.backgroundColor = .clear
     }
 }
 
@@ -35,6 +39,7 @@ extension DetailViewController: DetailViewProtocol {
         bindingTopDetailView()
         bindingStoreDetail()
         bindingMenuDetail()
+        bindingComment()
         
         [
             indicator,
@@ -55,7 +60,7 @@ extension DetailViewController: DetailViewProtocol {
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
         [
@@ -96,7 +101,7 @@ extension DetailViewController: DetailViewProtocol {
             comment.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
             comment.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             comment.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32),
-            comment.heightAnchor.constraint(equalToConstant: 500)
+            comment.heightAnchor.constraint(equalToConstant: commentHeight)
         ])
     }
     
@@ -120,6 +125,18 @@ extension DetailViewController: DetailViewProtocol {
         menuDetail.layer.cornerRadius = 16
         comment.layer.cornerRadius = 16
         
+        comment.commentButton.addTarget(self, action: #selector(pushDetailComment), for: .touchUpInside)
+    }
+    
+    @objc func pushDetailComment() {
+        guard let veganModel = presenter.veganModel else { return }
+        
+        let view = CommentsViewController()
+        
+        let presenter = CommentDetailPresenter(viewController: view, veganModel: veganModel)
+        view.presenter = presenter
+        
+        present(view, animated: true)
     }
     
     func showOthers() {
@@ -172,7 +189,7 @@ extension DetailViewController: DetailViewProtocol {
         }
                 
         menuDetail.items = items
-        menuDetail.reloadData()
+        menuDetail.showData()
         
         let titleHeight = menuDetail.heightOfLabel(label: menuDetail.title)
         
@@ -180,4 +197,21 @@ extension DetailViewController: DetailViewProtocol {
     }
     
     // MARK: CommentDetail data binding
+    private func bindingComment() {
+        let titleHeight = comment.heightOfLabel(label: comment.title)
+        comment.commentButton.layoutIfNeeded()
+        let buttonHeight = comment.commentButton.frame.size.height
+
+        guard let veganModel = presenter.veganModel else { return }
+                
+        guard let comments = veganModel.comment else { 
+            commentHeight = titleHeight + buttonHeight + 140
+            return
+        }
+        
+        comment.items = comments
+        comment.showData()
+        
+        commentHeight = comment.tableView.contentSize.height + titleHeight + buttonHeight + 60
+    }
 }

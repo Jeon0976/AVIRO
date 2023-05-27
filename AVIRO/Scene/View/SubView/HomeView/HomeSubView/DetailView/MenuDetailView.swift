@@ -80,7 +80,7 @@ final class MenuDetailView: UIView {
             tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
              
             // noMenuLabel
-            noMenuLabel.topAnchor.constraint(equalTo: self.centerYAnchor),
+            noMenuLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             noMenuLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             
             // noMenuLabel2
@@ -93,7 +93,8 @@ final class MenuDetailView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func reloadData() {
+    func showData() {
+        
         items?.sort(by: {
             if $0.isVean == "비건" && $1.isVean != "비건" {
                 return true

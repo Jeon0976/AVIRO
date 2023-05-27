@@ -92,12 +92,11 @@ final class IfRequestVeganMenuTableViewCell: UITableViewCell {
         requestButton.setTitleColor(.placeholderText, for: .normal)
         requestButton.backgroundColor = .clear
         requestButton.layer.borderWidth = 1
-        requestButton.layer.borderColor = UIColor.black.cgColor
-        requestButton.layer.cornerRadius = 8
+        requestButton.layer.borderColor = UIColor.lightGray.cgColor
+        requestButton.layer.cornerRadius = 15
         requestButton.addTarget(self, action: #selector(requestButtonTapped), for: .touchUpInside)
         
         detailTextField.isEnabled = false
-        detailTextField.backgroundColor = .gray
         detailTextField.textColor = .black
         detailTextField.placeholder = "예. 비빔밥에 달걀 빼주세요."
         
@@ -106,14 +105,12 @@ final class IfRequestVeganMenuTableViewCell: UITableViewCell {
     @objc func requestButtonTapped() {
         if check == false {
             detailTextField.isEnabled = true
-            detailTextField.backgroundColor = .white
             requestButton.setTitle("", for: .normal)
             requestButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
             check = true
         } else {
             detailTextField.text = ""
             detailTextField.isEnabled = false
-            detailTextField.backgroundColor = .gray
             requestButton.setTitle("요청", for: .normal)
             requestButton.setImage(nil, for: .normal)
             check = false

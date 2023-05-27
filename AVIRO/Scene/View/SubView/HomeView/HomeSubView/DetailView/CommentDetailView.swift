@@ -12,7 +12,7 @@ final class CommentDetailView: UIView {
         let label = UILabel()
         label.textColor = .black
         label.font = .systemFont(ofSize: 20, weight: .bold)
-        label.text = "메뉴 정보"
+        label.text = "댓글"
 
         return label
     }()
@@ -21,7 +21,7 @@ final class CommentDetailView: UIView {
         let label = UILabel()
         label.textColor = .lightGray
         label.font = .systemFont(ofSize: 14, weight: .medium)
-        label.text = "0 개"
+        label.text = "0개"
 
         return label
     }()
@@ -30,7 +30,9 @@ final class CommentDetailView: UIView {
        let tableView = UITableView()
         
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 30.0
+        tableView.estimatedRowHeight = 80.0
+        tableView.isScrollEnabled = false
+        tableView.separatorStyle = .none
         
         return tableView
     }()
@@ -55,11 +57,13 @@ final class CommentDetailView: UIView {
     }()
 
     let commentButton: UIButton = {
-        let button = UIButton(configuration: .filled())
+        let button = UIButton()
         button.backgroundColor = ColorsList4
         button.setTitle("나도 댓글 달기", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        
+        button.contentEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        button.layer.cornerRadius = 25
         
         return button
     }()
@@ -75,7 +79,8 @@ final class CommentDetailView: UIView {
             comentCount,
             tableView,
             noCommentLabel,
-            noCommentLabel2
+            noCommentLabel2,
+            commentButton
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             addSubview($0)
@@ -84,42 +89,121 @@ final class CommentDetailView: UIView {
         // tableView
         tableView.dataSource = self
         tableView.delegate = self
-        
+        tableView.register(CommentDetailTableCell.self,
+                           forCellReuseIdentifier: CommentDetailTableCell.identifier
+        )
+        tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: 0)
+        tableViewHeightConstraint?.isActive = true
+                
+        NSLayoutConstraint.activate([
+            // title
+            title.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+            title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            
+            // commentCount
+            comentCount.bottomAnchor.constraint(equalTo: title.bottomAnchor),
+            comentCount.leadingAnchor.constraint(equalTo: title.trailingAnchor, constant: 4),
+            
+            // tableView
+            tableView.topAnchor.constraint(equalTo: self.title.bottomAnchor, constant: 20),
+            tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            
+            // noCommentLabel
+            noCommentLabel.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 20),
+            noCommentLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            
+            // noCommentLabel2
+            noCommentLabel2.topAnchor.constraint(equalTo: noCommentLabel.bottomAnchor, constant: 6),
+            noCommentLabel2.centerXAnchor.constraint(equalTo: noCommentLabel.centerXAnchor),
+            
+            // commentButton
+            commentButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            commentButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            commentButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20)
+        ])
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func buttonTapped() {
+    func showData() {
+        guard var items = items else { return }
         
+        comentCount.text = "\(items.count)개"
+        noCommentLabel.isHidden = true
+        noCommentLabel2.isHidden = true
+        
+        items.sort(by: { $0.date > $1.date })
+        
+        tableView.reloadData()
+        
+        let height = tableView.contentSize.height
+        tableViewHeightConstraint?.constant = height
+        layoutIfNeeded()
+    }
+    
+    func heightOfLabel(label: UILabel) -> CGFloat {
+        let constraintRect = CGSize(width: label.frame.width, height: .greatestFiniteMagnitude)
+        let boundingBox = label.text?.boundingRect(
+            with: constraintRect, options: [.usesLineFragmentOrigin, .usesFontLeading],
+            attributes: [NSAttributedString.Key.font: label.font!],
+            context: nil
+        )
+        
+        return ceil(boundingBox?.height ?? 0)
     }
 }
 
 extension CommentDetailView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
+        guard let items = items else { return 0 }
+        
+        if items.count > 4 {
+            return 4
+        }
+        
+        return items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+        
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: CommentDetailTableCell.identifier,
+            for: indexPath
+        ) as? CommentDetailTableCell
+        
+        guard let items = items else { return UITableViewCell() }
+        let item = items[indexPath.row]
+        
+        cell?.selectionStyle = .none
+        cell?.makeData(item.comment)
+        
+        return cell ?? UITableViewCell()
     }
 }
 
 extension CommentDetailView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 
+        return tableView.rowHeight
     }
 }
-
 
 class CommentDetailTableCell: UITableViewCell {
     static let identifier = "CommentDetailTableCell"
     
-    var comment = UILabel()
+    var comment = PaddingLabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        comment.numberOfLines = 0
+        comment.lineBreakMode = .byWordWrapping
+        comment.layer.cornerRadius = 8
+        comment.textColor = ColorsList3
+        comment.backgroundColor = ColorsList1
+        comment.layer.masksToBounds = true
         
         [
             comment
@@ -129,7 +213,18 @@ class CommentDetailTableCell: UITableViewCell {
         }
         
         NSLayoutConstraint.activate([
-            
-        ])
+              comment.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+              comment.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+              comment.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+              comment.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8)
+          ])
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func makeData(_ text: String) {
+        comment.text = text
     }
 }

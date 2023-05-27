@@ -19,6 +19,7 @@ final class HomeSearchViewController: UIViewController {
         super.viewDidLoad()
         
         presenter.viewDidLoad()
+        
     }
 }
 
@@ -54,6 +55,10 @@ extension HomeSearchViewController: HomeSearchProtocol {
     }
     
     func makeAttribute() {
+        tabBarController?.tabBar.isHidden = true
+        tabBarController?.tabBar.isTranslucent = true
+        tabBarController?.tabBar.backgroundColor = .clear
+        
         // navigation, view
         view.addGestureRecognizer(tapGesture)
         tapGesture.cancelsTouchesInView = false

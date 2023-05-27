@@ -25,6 +25,9 @@ final class HomeViewController: UIViewController {
     var pageUpGesture = UISwipeGestureRecognizer()
     var pageDownGesture = UISwipeGestureRecognizer()
     
+    // 최초 화면 뷰
+    var firstPopupView = HomeFirstPopUpView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -36,7 +39,7 @@ final class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
         presenter.loadVeganData()
-        
+
         let height = view.frame.height * 0.4
 
         storeInfoView.frame = CGRect(
@@ -46,6 +49,12 @@ final class HomeViewController: UIViewController {
             height: height
         )
         storeInfoView.entireView.alpha = 0
+        storeInfoView.imageView.isHidden = false
+        
+        // TabBar Controller
+        tabBarController?.tabBar.isHidden = false
+        tabBarController?.tabBar.isTranslucent = false
+        tabBarController?.tabBar.backgroundColor = .white
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -69,7 +78,8 @@ extension HomeViewController: HomeViewProtocol {
         [
             naverMapView,
             loadLocationButton,
-            searchTextField
+            searchTextField,
+            firstPopupView
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
@@ -98,9 +108,16 @@ extension HomeViewController: HomeViewProtocol {
             searchTextField.leadingAnchor.constraint(
                 equalTo: naverMapView.leadingAnchor, constant: 16),
             searchTextField.trailingAnchor.constraint(
-                equalTo: naverMapView.trailingAnchor, constant: -16)
+                equalTo: naverMapView.trailingAnchor, constant: -16),
+            
+            // firstPopUpView
+            firstPopupView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            firstPopupView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            firstPopupView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            firstPopupView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.3)
         ])
         
+        // storeInfoView
         let height = view.frame.height * 0.4
 
         storeInfoView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: height)
@@ -119,6 +136,10 @@ extension HomeViewController: HomeViewProtocol {
         
         pageUpGesture.addTarget(self, action: #selector(respondToSwipeGesture))
         pageDownGesture.addTarget(self, action: #selector(respondToSwipeGesture))
+        
+        // firstPopUpView
+        firstPopupView.cancelButton.addTarget(self, action: #selector(firstPopupViewDelete), for: .touchUpInside)
+        firstPopupView.reportButton.addTarget(self, action: #selector(firstPopupViewReport), for: .touchUpInside)
     }
     
     // MARK: Attribute
@@ -151,6 +172,19 @@ extension HomeViewController: HomeViewProtocol {
         
     }
     
+    // MARK: firstPopupViewButton
+    @objc func firstPopupViewDelete() {
+        firstPopupView.isHidden = true
+    }
+    
+    @objc func firstPopupViewReport() {
+        tabBarController?.selectedIndex = 2
+        let inrollViewController = InrollPlaceViewController()
+        let navigationController = tabBarController?.viewControllers?[2] as? UINavigationController
+        
+        navigationController?.setViewControllers([inrollViewController], animated: true)
+    }
+    
     // MARK: PlaceListView 불러오기
     func presentPlaceListView(_ placeLists: [PlaceListModel]) {
         let viewController = PlaceListViewController()
@@ -175,6 +209,11 @@ extension HomeViewController: HomeViewProtocol {
     // 위치 승인 되었을 때
     func requestSuccess() {
         naverMapView.positionMode = .direction
+    }
+    
+    // MARK: 처음 화면 PoPUp
+    func firstExecuteView() {
+        
     }
     
     // MARK: 지도에 마크 표시하기 작업
@@ -250,9 +289,9 @@ extension HomeViewController {
                         height: self?.view.frame.height ?? 0
                     )
                     self?.storeInfoView.entireView.alpha = 1
+                    self?.storeInfoView.imageView.isHidden = true
                 }, completion: { [weak self] _ in
                     guard let address = self?.storeInfoView.address.text else { return }
-                    print(address)
                     self?.presenter.pushDetailViewController(address)
                 })
             case .down:
@@ -263,6 +302,7 @@ extension HomeViewController {
                         width: self?.view.frame.width ?? 0,
                         height: height
                     )
+                    self?.storeInfoView.imageView.isHidden = false
                 }
             default:
                 break

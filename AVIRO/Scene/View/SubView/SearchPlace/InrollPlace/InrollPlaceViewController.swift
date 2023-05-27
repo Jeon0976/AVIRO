@@ -82,7 +82,7 @@ final class InrollPlaceViewController: UIViewController {
     // 요청하면 비건을 클릭할 떄
     var howToRequestVeganMenuTableView = UITableView()
     
-    var reportStoreButton = UIButton(configuration: .filled())
+    var reportStoreButton = ReportButton()
     
     var tapGesture = UITapGestureRecognizer()
     
@@ -172,7 +172,7 @@ extension InrollPlaceViewController: InrollPlaceProtocol {
     // MARK: 전체 Attribute
     func makeAttribute() {
         // navigation & view 관련
-        navigationItem.title = "식당 정보"
+        navigationItem.title = "가게 제보하기"
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
         let rightBarButton = UIBarButtonItem(
             title: "제보하기",
@@ -192,6 +192,7 @@ extension InrollPlaceViewController: InrollPlaceProtocol {
         
         // report button & navigaitonRightBarButton
         reportStoreButton.isEnabled = false
+        
         navigationItem.rightBarButtonItem?.isEnabled = false
 
         // required / optional
@@ -221,6 +222,8 @@ extension InrollPlaceViewController: InrollPlaceProtocol {
                                     action: #selector(reportStore),
                                     for: .touchUpInside
         )
+        reportStoreButton.layer.cornerRadius = 20
+        reportStoreButton.setTitleColor(ColorsList3, for: .normal)
         
         veganMenuTableView.isHidden = true
         howToRequestVeganMenuTableView.isHidden = true
@@ -657,7 +660,6 @@ extension InrollPlaceViewController: UIGestureRecognizerDelegate {
                 }
             )
         }
-//
     }
 
     @objc func keyboardWillHide(notification: NSNotification) {

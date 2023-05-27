@@ -19,7 +19,6 @@ class HomeInfoStoreView: UIView {
     
     let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "share")
         
         return imageView
     }()
@@ -161,20 +160,22 @@ class HomeInfoStoreView: UIView {
             
             // imageView
             imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            imageView.topAnchor.constraint(equalTo: handleView.bottomAnchor, constant: 30),
+            imageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
+            imageView.bottomAnchor.constraint(equalTo: title.topAnchor, constant: -30),
+            imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, constant: 60),
             
             // title
             title.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            title.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16),
+            title.bottomAnchor.constraint(equalTo: address.topAnchor, constant: -16),
             
             // address
             address.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            address.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 16),
+            address.bottomAnchor.constraint(equalTo: stackView.topAnchor, constant: -20),
             
             // stackView
             stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            stackView.topAnchor.constraint(equalTo: address.bottomAnchor, constant: 20),
+            stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -50),
             
             // entireView
             entireView.topAnchor.constraint(equalTo: self.topAnchor),

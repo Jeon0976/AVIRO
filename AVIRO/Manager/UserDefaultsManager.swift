@@ -61,3 +61,4 @@ struct UserDefalutsManager: UserDefaultsManagerProtocol {
         UserDefaults.standard.set(try? PropertyListEncoder().encode(currentDatas), forKey: Key.vegan.rawValue)
     }
 }
+

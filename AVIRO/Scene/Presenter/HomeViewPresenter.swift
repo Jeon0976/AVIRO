@@ -38,6 +38,18 @@ final class HomeViewPresenter: NSObject {
         
         viewController?.makeLayout()
         viewController?.makeAttribute()
+        
+        let testPlcae = PlaceListModel(title: "테스트", distance: "361", category: "테스트", address: "테스트", phone: "테스트", url: "태스트", x: 129.11587441203673, y: 34.15129380484894)
+        let test = [CommentModel(comment: "테스트입니다.\n", date: .now),
+                    CommentModel(comment: "사장님께서 흔쾌히 새우 빼고 피자를 만들어주셨어요 :)", date: .now),
+                    CommentModel(comment: "xdxdxdxadxadaxd\n줄바꿈 테스트", date: .now),
+                    CommentModel(comment: "테스트\n테수투", date: .now)
+        ]
+        let not = NotRequestMenu(menu: "", price: "")
+        let requ = RequestMenu(menu: "", price: "", howToRequest: "", isCheck: false)
+        
+        let testData = VeganModel(placeModel: testPlcae, allVegan: true, someMenuVegan: false, ifRequestVegan: false,notRequestMenuArray: [not],requestMenuArray: [requ], comment: test)
+        userDefaults?.setData(testData)
     }
     
     // MARK: vegan Data 불러오기

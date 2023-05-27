@@ -40,7 +40,7 @@ extension InrollPlaceViewController {
     public func storeTitleReferAttribute() {
         storeTitleExplanation.text = "가게 이름"
         storeTitleExplanation.textColor = .black
-        storeTitleField.placeholder = "눌러서 검색하세요!"
+        storeTitleField.placeholder = "가게를 찾아보세요"
         storeTitleField.delegate = self
     }
 
@@ -48,21 +48,18 @@ extension InrollPlaceViewController {
     public func storeLocationReferAttribute() {
         storeLocationExplanation.text = "가게 위치"
         storeLocationExplanation.textColor = .black
-        storeLocationField.placeholder = "placeholder 추가 할 내용 있나요?"
     }
     
     // MARK: Store Category Attribute
     public func storeCategoryReferAttribute() {
         storeCategoryExplanation.text = "카테고리"
         storeCategoryExplanation.textColor = .black
-        storeCategoryField.placeholder = "placeholder 추가 할 내용 있나요?"
     }
     
     // MARK: Store Phone Attribute
     public func storePhoneReferAttribute() {
         storePhoneExplanation.text = "전화번호"
         storePhoneExplanation.textColor = .black
-        storePhoneField.placeholder = "placeholder 추가 할 내용 있나요?"
     }
     
     // MARK: Vegan Detail Attribute
@@ -81,6 +78,6 @@ extension InrollPlaceViewController {
     // MARK: vegan Header View
     public func veganHeaderViewAttribute() {
         veganMenuExplanation.text = "비건 메뉴"
-        veganMenuPlusButton.customImageConfig("plus.circle", "plus.circle.fill")
+        veganMenuPlusButton.customImageConfig("plusButton", "plusButton")
     }
 }
