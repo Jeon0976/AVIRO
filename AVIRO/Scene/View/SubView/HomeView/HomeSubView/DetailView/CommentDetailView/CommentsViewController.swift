@@ -53,6 +53,9 @@ final class CommentsViewController: UIViewController {
 
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        NotificationCenter.default.post(name: Notification.Name("CommentsViewControllerrDismiss"), object: nil)
+
     }
     
 }
@@ -175,9 +178,8 @@ extension CommentsViewController {
     @objc func tappedCommentButton() {
         guard let comment = commentTextField.text else { return }
 
-        print("너야??")
         presenter.uploadData(comment)
-        
+        commentTextField.text = ""
     }
 }
 

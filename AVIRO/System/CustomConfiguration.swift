@@ -18,26 +18,23 @@ extension UIButton {
 
 // MARK: Select Vegan Button 설정
 class SelectVeganButton: UIButton {
-    func makeVeganSelectButton(_ image: String, _ title: String) {
-        let config = UIImage.SymbolConfiguration(pointSize: 48, weight: .light)
+    func makeVeganSelectButton(_ nomal: String, _ title: String) {
         self.setTitle(title, for: .normal)
 
-        self.setImage(UIImage(systemName: image,
-                              withConfiguration: config),
-                      for: .normal)
+        self.setImage(UIImage(named: nomal), for: .normal)
+        self.setTitleColor(ColorsList1, for: .normal)
         
-        self.setTitleColor(.black, for: .normal)
         self.imageView?.contentMode = .scaleAspectFit
-        self.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+        self.titleLabel?.font = .systemFont(ofSize: 16, weight: .heavy)
         self.semanticContentAttribute = .forceLeftToRight
-        self.layer.cornerRadius = 10
-        self.layer.borderColor = UIColor.lightGray.cgColor
-        self.layer.borderWidth = 1.0
+        self.layer.borderColor = ColorsList1.cgColor
+        self.layer.borderWidth = 1
+        self.layer.cornerRadius = 16
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+
         if let imageView = imageView, let titleLabel = titleLabel {
             let spacing: CGFloat = 10.0
             let imageSize = imageView.frame.size
@@ -45,7 +42,7 @@ class SelectVeganButton: UIButton {
 
             titleEdgeInsets = UIEdgeInsets(top: (spacing + imageSize.height),
                                             left: -(imageSize.width),
-                                            bottom: 0.0,
+                                            bottom: 10.0,
                                             right: 0.0)
 
             imageEdgeInsets = UIEdgeInsets(top: -(titleSize.height + spacing),
@@ -102,7 +99,7 @@ class InrollTextField: UITextField {
     }
 
     private func configureBorder() {
-        self.layer.borderColor = UIColor.lightGray.cgColor
+        self.layer.borderColor = ColorsList1.cgColor
         self.layer.borderWidth = 1
         self.layer.cornerRadius = 15
     }

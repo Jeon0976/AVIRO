@@ -17,10 +17,11 @@ class CommentsViewCell: UITableViewCell {
         
         comment.numberOfLines = 0
         comment.lineBreakMode = .byWordWrapping
-        comment.layer.cornerRadius = 8
+        comment.layer.cornerRadius = 15
         comment.textColor = ColorsList3
-        comment.backgroundColor = ColorsList1
+        comment.backgroundColor = UIColor(red: 239/255, green: 240/255, blue: 240/255, alpha: 1)
         comment.layer.masksToBounds = true
+        comment.font = .systemFont(ofSize: 16)
         
         [
             comment

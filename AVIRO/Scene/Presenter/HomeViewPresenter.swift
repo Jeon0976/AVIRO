@@ -26,6 +26,8 @@ final class HomeViewPresenter: NSObject {
 
     var veganData: [VeganModel]?
     
+    var firstLocation = true
+    
     init(viewController: HomeViewProtocol,
          userDefaults: UserDefaultsManagerProtocol = UserDefalutsManager()
     ) {
@@ -39,17 +41,8 @@ final class HomeViewPresenter: NSObject {
         viewController?.makeLayout()
         viewController?.makeAttribute()
         
-        let testPlcae = PlaceListModel(title: "테스트", distance: "361", category: "테스트", address: "테스트", phone: "테스트", url: "태스트", x: 129.11587441203673, y: 34.15129380484894)
-        let test = [CommentModel(comment: "테스트입니다.\n", date: .now),
-                    CommentModel(comment: "사장님께서 흔쾌히 새우 빼고 피자를 만들어주셨어요 :)", date: .now),
-                    CommentModel(comment: "xdxdxdxadxadaxd\n줄바꿈 테스트", date: .now),
-                    CommentModel(comment: "테스트\n테수투", date: .now)
-        ]
-        let not = NotRequestMenu(menu: "", price: "")
-        let requ = RequestMenu(menu: "", price: "", howToRequest: "", isCheck: false)
-        
-        let testData = VeganModel(placeModel: testPlcae, allVegan: true, someMenuVegan: false, ifRequestVegan: false,notRequestMenuArray: [not],requestMenuArray: [requ], comment: test)
-        userDefaults?.setData(testData)
+       let mock = Mock()
+        mock.make()
     }
     
     // MARK: vegan Data 불러오기
@@ -61,13 +54,10 @@ final class HomeViewPresenter: NSObject {
     
     // MARK: pushDetailViewController
     func pushDetailViewController(_ address: String) {
-        print(address)
         DispatchQueue.global().async { [weak self] in
             guard let veganData = self?.veganData else { return }
-            print(veganData)
             if let data = veganData.first(where: { $0.placeModel.address == address }) {
                 self?.viewController?.pushDetailViewController(data)
-                print(data)
             }
         }
     }
@@ -90,7 +80,7 @@ extension HomeViewPresenter: CLLocationManagerDelegate {
     }
     
     // MARK: 개인 location data 불러오기 작업
-    // 1. viewDidLoad 일때
+    // 1. viewWillAppear 일때
     // 2. 위치 확인 데이터 누를 때
     func locationUpdate() {
         if locationManager.authorizationStatus != .authorizedAlways,
@@ -103,6 +93,21 @@ extension HomeViewPresenter: CLLocationManagerDelegate {
         }
     }
     
+    // MARK: first location data 불러오기
+    func firstLocationUpdate() {
+        guard firstLocation else { return }
+        if locationManager.authorizationStatus != .authorizedAlways,
+           locationManager.authorizationStatus != .authorizedWhenInUse {
+            viewController?.ifDenied()
+        } else {
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.startUpdatingLocation()
+            viewController?.requestSuccess()
+        }
+        
+        firstLocation = !firstLocation
+    }
+
     // MARK: 개인 Location Data 불러오고 나서 할 작업
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }

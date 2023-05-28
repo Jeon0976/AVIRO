@@ -30,16 +30,14 @@ final class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        presenter.viewDidLoad()
         presenter.locationAuthorization()
+        presenter.viewDidLoad()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
         presenter.loadVeganData()
-
         let height = view.frame.height * 0.4
 
         storeInfoView.frame = CGRect(
@@ -55,12 +53,13 @@ final class HomeViewController: UIViewController {
         tabBarController?.tabBar.isHidden = false
         tabBarController?.tabBar.isTranslucent = false
         tabBarController?.tabBar.backgroundColor = .white
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        presenter.locationUpdate()
+        presenter.firstLocationUpdate()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -114,7 +113,7 @@ extension HomeViewController: HomeViewProtocol {
             firstPopupView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             firstPopupView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             firstPopupView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            firstPopupView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.3)
+            firstPopupView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.4)
         ])
         
         // storeInfoView
@@ -194,7 +193,6 @@ extension HomeViewController: HomeViewProtocol {
         )
         viewController.presenter = presenter
         viewController.modalPresentationStyle = .custom
-        print(placeLists)
         present(viewController, animated: true)
     }
         
@@ -211,24 +209,27 @@ extension HomeViewController: HomeViewProtocol {
         naverMapView.positionMode = .direction
     }
     
-    // MARK: 처음 화면 PoPUp
-    func firstExecuteView() {
-        
-    }
-    
     // MARK: 지도에 마크 표시하기 작업
     func makeMarker(_ veganList: [VeganModel]) {
         DispatchQueue.global().async {
             var markers = [NMFMarker]()
             
-            veganList.forEach {
-                let title = $0.placeModel.title
-                let address = $0.placeModel.address
-                let latLng = NMGLatLng(lat: $0.placeModel.y, lng: $0.placeModel.x)
+            veganList.forEach { veganModel in
+                
+                let title = veganModel.placeModel.title
+                let address = veganModel.placeModel.address
+                let latLng = NMGLatLng(lat: veganModel.placeModel.y, lng: veganModel.placeModel.x)
                 let marker = NMFMarker(position: latLng)
-                marker.width = 20
+                marker.width = 30
                 marker.height = 30
                 markers.append(marker)
+                if veganModel.allVegan {
+                    marker.iconImage = NMFOverlayImage(name: "allVegan")
+                } else if veganModel.someMenuVegan {
+                    marker.iconImage = NMFOverlayImage(name: "someMenuVegan")
+                } else {
+                    marker.iconImage = NMFOverlayImage(name: "requestVegan")
+                }
                 // Marker 터치할 때
                 marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
                              if nil != overlay as? NMFMarker {
@@ -237,6 +238,26 @@ extension HomeViewController: HomeViewProtocol {
                                  guard let self = self else { return false }
                                  storeInfoView.title.text = title
                                  storeInfoView.address.text = address
+                                 
+                                 if veganModel.allVegan {
+                                     storeInfoView.imageView.image = UIImage(
+                                        named: "HomeInfoVegan")
+                                     storeInfoView.topImageView.image = UIImage(
+                                        named: "HomeInfoVeganTitle")
+                                 } else if veganModel.someMenuVegan {
+                                     storeInfoView.imageView.image = UIImage(
+                                        named: "HomeInfoSomeVegan")
+                                     storeInfoView.topImageView.image = UIImage(
+                                        named: "HomeInfoSomeVeganTItle")
+                                 } else {
+                                     storeInfoView.imageView.image = UIImage(
+                                        named: "HomeInfoRequestVegan")
+                                     storeInfoView.topImageView.image = UIImage(
+                                        named: "HomeInfoRequestVeganTitle")
+                                 }
+                                 storeInfoView.imageView.contentMode = .scaleAspectFit
+                                 storeInfoView.topImageView.contentMode = .scaleAspectFit
+                                 
                                  let height = view.frame.height * 0.4
                                  UIView.animate(withDuration: 0.3) {
                                      self.storeInfoView.frame = CGRect(

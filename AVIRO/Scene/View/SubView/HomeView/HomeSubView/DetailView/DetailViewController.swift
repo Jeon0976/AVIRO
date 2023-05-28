@@ -30,6 +30,37 @@ final class DetailViewController: UIViewController {
         tabBarController?.tabBar.isHidden = true
         tabBarController?.tabBar.isTranslucent = true
         tabBarController?.tabBar.backgroundColor = .clear
+        
+        // MARK: Comment 업데이트 NotificationCenter
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleDismissNotification),
+            name: Notification.Name("CommentsViewControllerrDismiss"),
+            object: nil
+        )
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        bindingTopDetailView()
+        bindingStoreDetail()
+        bindingMenuDetail()
+        bindingComment()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: Notification.Name("CommentsViewControllerrDismiss"),
+            object: nil
+        )
+    }
+    
+    @objc func handleDismissNotification() {
+        guard let data = presenter.veganModel?.comment else { return }
+        comment.tableView.reloadData()
+        comment.comentCount.text = "\(data.count)개"
     }
 }
 
@@ -79,21 +110,21 @@ extension DetailViewController: DetailViewProtocol {
             topDetail.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             topDetail.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             topDetail.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            topDetail.heightAnchor.constraint(equalTo: topDetail.widthAnchor, constant: -60),
+            topDetail.heightAnchor.constraint(equalTo: topDetail.widthAnchor, constant: -90),
 
             // storeDetail
             storeDetail.topAnchor.constraint(equalTo: topDetail.bottomAnchor, constant: 16),
             storeDetail.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
             storeDetail.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
             storeDetail.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32),
-            storeDetail.heightAnchor.constraint(equalTo: storeDetail.widthAnchor, constant: -60),
+            storeDetail.heightAnchor.constraint(equalTo: storeDetail.widthAnchor, constant: -90),
 
             // menuDetail
             menuDetail.topAnchor.constraint(equalTo: storeDetail.bottomAnchor, constant: 16),
             menuDetail.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
             menuDetail.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
             menuDetail.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32),
-            menuDetail.heightAnchor.constraint(equalToConstant: menuHeight),
+            menuDetail.heightAnchor.constraint(equalToConstant: menuHeight + 20),
 
             // comment
             comment.topAnchor.constraint(equalTo: menuDetail.bottomAnchor, constant: 16),
@@ -108,14 +139,13 @@ extension DetailViewController: DetailViewProtocol {
     func makeAttribute() {
         // navigation, view, indicator
         view.backgroundColor = .white
-        indicator.color = .black
+        indicator.color = ColorsList1
         indicator.startAnimating()
         indicator.alpha = 1
         navigationItem.title = presenter.veganModel?.placeModel.title
         navigationItem.backButtonDisplayMode = .generic
         scrollView.isHidden = true
-        scrollView.backgroundColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1)
-        
+        scrollView.backgroundColor = UIColor(red: 239/255, green: 240/255, blue: 240/255, alpha: 1)
         topDetail.backgroundColor = .white
         storeDetail.backgroundColor = .white
         menuDetail.backgroundColor = .white
@@ -140,7 +170,7 @@ extension DetailViewController: DetailViewProtocol {
     }
     
     func showOthers() {
-        UIView.animate(withDuration: 1.5, animations: { [weak self] in
+        UIView.animate(withDuration: 0.7, animations: { [weak self] in
             self?.indicator.alpha = 0
         }, completion: { [weak self] _ in
             self?.scrollView.isHidden = false
@@ -148,8 +178,33 @@ extension DetailViewController: DetailViewProtocol {
     }
     // MARK: TopDetailView data binding
     private func bindingTopDetailView() {
-        topDetail.title.text = presenter.veganModel?.placeModel.title
-        topDetail.address.text = presenter.veganModel?.placeModel.address
+        guard let veganModel = presenter.veganModel else { return }
+        topDetail.title.text = veganModel.placeModel.title
+        topDetail.address.text = veganModel.placeModel.address
+        
+        if veganModel.allVegan {
+            topDetail.imageView.image = UIImage(
+               named: "HomeInfoVegan")
+            topDetail.topImageView.image = UIImage(
+               named: "HomeInfoVeganTitle")
+        } else if veganModel.someMenuVegan {
+            topDetail.imageView.image = UIImage(
+               named: "HomeInfoSomeVegan")
+            topDetail.topImageView.image = UIImage(
+               named: "HomeInfoSomeVeganTItle")
+        } else {
+            topDetail.imageView.image = UIImage(
+               named: "HomeInfoRequestVegan")
+            topDetail.topImageView.image = UIImage(
+               named: "HomeInfoRequestVeganTitle")
+        }
+        topDetail.imageView.contentMode = .scaleAspectFit
+        topDetail.topImageView.contentMode = .scaleAspectFit
+        
+        topDetail.layoutIfNeeded()
+        
+        topDetail.viewHeight = topDetail.frame.size.height
+
     }
     
     // MARK: StoreDetail data binding
@@ -161,11 +216,17 @@ extension DetailViewController: DetailViewProtocol {
     
     // MARK: MenuDetail data binding
     private func bindingMenuDetail() {
-        guard let veganModel = presenter.veganModel else { return }
+        guard let veganModel = presenter.veganModel else {
+            menuDetail.showNoData()
+            return
+        }
         
         var items = [DetailMenuTableModel]()
+        
+        let notRequestMenu = veganModel.notRequestMenuArray?.filter { $0.menu != "" }
+        let requestMenu = veganModel.requestMenuArray?.filter { $0.menu != "" }
 
-        if let notRequestMenu = veganModel.notRequestMenuArray {
+        if let notRequestMenu = notRequestMenu {
             notRequestMenu.forEach {
                 let data = DetailMenuTableModel(
                     title: $0.menu,
@@ -176,7 +237,8 @@ extension DetailViewController: DetailViewProtocol {
                 items.append(data)
             }
         }
-        if let requestMenu = veganModel.requestMenuArray {
+        
+        if let requestMenu = requestMenu {
             requestMenu.forEach {
                 let data = DetailMenuTableModel(
                     title: $0.menu,
@@ -187,13 +249,12 @@ extension DetailViewController: DetailViewProtocol {
                 items.append(data)
             }
         }
-                
-        menuDetail.items = items
-        menuDetail.showData()
+        
+        menuDetail.showData(items)
         
         let titleHeight = menuDetail.heightOfLabel(label: menuDetail.title)
         
-        menuHeight = menuDetail.tableView.contentSize.height + titleHeight + 40
+        menuHeight = menuDetail.tableView.contentSize.height + titleHeight + 100
     }
     
     // MARK: CommentDetail data binding

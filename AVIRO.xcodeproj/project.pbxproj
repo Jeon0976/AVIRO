@@ -39,6 +39,7 @@
 		C5D745912A225DE6006F9F31 /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D745902A225DE6006F9F31 /* CommentsViewController.swift */; };
 		C5D745942A2267C7006F9F31 /* CommentDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D745932A2267C7006F9F31 /* CommentDetailPresenter.swift */; };
 		C5D745962A2277A4006F9F31 /* CommentsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D745952A2277A4006F9F31 /* CommentsViewCell.swift */; };
+		C5D745982A22C203006F9F31 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D745972A22C203006F9F31 /* MockData.swift */; };
 		C5EB50E42A1C685100B29CC1 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50E32A1C685100B29CC1 /* TabBarItem.swift */; };
 		C5EB50E62A1C6FC700B29CC1 /* BookMarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50E52A1C6FC700B29CC1 /* BookMarkViewController.swift */; };
 		C5EB50E82A1C6FD600B29CC1 /* PopularViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50E72A1C6FD600B29CC1 /* PopularViewController.swift */; };
@@ -100,6 +101,7 @@
 		C5D745902A225DE6006F9F31 /* CommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
 		C5D745932A2267C7006F9F31 /* CommentDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDetailPresenter.swift; sourceTree = "<group>"; };
 		C5D745952A2277A4006F9F31 /* CommentsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsViewCell.swift; sourceTree = "<group>"; };
+		C5D745972A22C203006F9F31 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		C5EB50E32A1C685100B29CC1 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		C5EB50E52A1C6FC700B29CC1 /* BookMarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookMarkViewController.swift; sourceTree = "<group>"; };
 		C5EB50E72A1C6FD600B29CC1 /* PopularViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularViewController.swift; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 				C5351B7B2A1B52A000116D50 /* PlaceListModel */,
 				C5351B7E2A1B52D400116D50 /* CustomLocationModel */,
 				C5538AAE2A1BB81200661DE2 /* VeganModel.swift */,
+				C5D745972A22C203006F9F31 /* MockData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -677,6 +680,7 @@
 				C5351B5C2A19F60200116D50 /* PlaceListViewPresenter.swift in Sources */,
 				C5EB51162A21011C00B29CC1 /* DetailViewController.swift in Sources */,
 				C5EB51202A2118AB00B29CC1 /* MenuDetailView.swift in Sources */,
+				C5D745982A22C203006F9F31 /* MockData.swift in Sources */,
 				C5351B692A1A2EAF00116D50 /* CustomPresentation.swift in Sources */,
 				C5EB51122A20CC7D00B29CC1 /* HomeInfoStoreView.swift in Sources */,
 				C5EB50E42A1C685100B29CC1 /* TabBarItem.swift in Sources */,

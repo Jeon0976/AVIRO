@@ -11,8 +11,8 @@ final class StoreDetailView: UIView {
     let storeDetailLabel: UILabel = {
        let label = UILabel()
         label.text = "식당 정보"
-        label.font = .systemFont(ofSize: 20, weight: .bold)
-        label.textColor = .black
+        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.textColor = ColorsList3
         
         return label
     }()
@@ -28,15 +28,15 @@ final class StoreDetailView: UIView {
     
     let addressLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 18)
-        label.textColor = .darkGray
+        label.font = .systemFont(ofSize: 15)
+        label.textColor = ColorsList3
         return label
     }()
     
     let firstSeparator: UIView = {
         let view = UIView()
         
-        view.backgroundColor = .lightGray
+        view.backgroundColor = ColorsList1
         view.layer.cornerRadius = 2.5
         view.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
@@ -55,8 +55,8 @@ final class StoreDetailView: UIView {
     let phoneLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 18)
-        label.textColor = .darkGray
+        label.font = .systemFont(ofSize: 15)
+        label.textColor = ColorsList3
         
         return label
     }()
@@ -64,7 +64,7 @@ final class StoreDetailView: UIView {
     let secondSeparator: UIView = {
         let view = UIView()
         
-        view.backgroundColor = .lightGray
+        view.backgroundColor = ColorsList1
         view.layer.cornerRadius = 2.5
         view.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
@@ -83,8 +83,8 @@ final class StoreDetailView: UIView {
     let categoryLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 18)
-        label.textColor = .darkGray
+        label.font = .systemFont(ofSize: 15)
+        label.textColor = ColorsList3
         
         return label
     }()
@@ -92,7 +92,7 @@ final class StoreDetailView: UIView {
     let thridSeparator: UIView = {
         let view = UIView()
         
-        view.backgroundColor = .lightGray
+        view.backgroundColor = ColorsList1
         view.layer.cornerRadius = 2.5
         view.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
@@ -101,7 +101,7 @@ final class StoreDetailView: UIView {
 
     let requestDelete: UILabel = {
         let label = UILabel()
-        label.textColor = .lightGray
+        label.textColor = ColorsList2
         label.font = .systemFont(ofSize: 14)
         label.text = "식당 정보 오류 및 삭제 요청"
         
@@ -136,7 +136,7 @@ final class StoreDetailView: UIView {
             storeDetailLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             
             // addressIcon
-            addressIcon.topAnchor.constraint(equalTo: storeDetailLabel.bottomAnchor, constant: 40),
+            addressIcon.topAnchor.constraint(equalTo: storeDetailLabel.bottomAnchor, constant: 30),
             addressIcon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30),
             
             // addressLabel
@@ -144,7 +144,7 @@ final class StoreDetailView: UIView {
             addressLabel.leadingAnchor.constraint(equalTo: addressIcon.trailingAnchor, constant: 10),
             
             // firstSeperator
-            firstSeparator.topAnchor.constraint(equalTo: addressIcon.bottomAnchor, constant: 16),
+            firstSeparator.topAnchor.constraint(equalTo: addressIcon.bottomAnchor, constant: 10),
             firstSeparator.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             firstSeparator.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             
@@ -157,7 +157,7 @@ final class StoreDetailView: UIView {
             phoneLabel.leadingAnchor.constraint(equalTo: phoneIcon.trailingAnchor, constant: 10),
             
             // secondSeparator
-            secondSeparator.topAnchor.constraint(equalTo: phoneIcon.bottomAnchor, constant: 16),
+            secondSeparator.topAnchor.constraint(equalTo: phoneIcon.bottomAnchor, constant: 10),
             secondSeparator.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             secondSeparator.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             
@@ -170,12 +170,12 @@ final class StoreDetailView: UIView {
             categoryLabel.leadingAnchor.constraint(equalTo: categoryIcon.trailingAnchor, constant: 10),
             
             // thridSeparator
-            thridSeparator.topAnchor.constraint(equalTo: categoryIcon.bottomAnchor, constant: 16),
+            thridSeparator.topAnchor.constraint(equalTo: categoryIcon.bottomAnchor, constant: 10),
             thridSeparator.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             thridSeparator.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             
             // delete
-            requestDelete.topAnchor.constraint(equalTo: thridSeparator.bottomAnchor, constant: 13),
+            requestDelete.topAnchor.constraint(equalTo: thridSeparator.bottomAnchor, constant: 10),
             requestDelete.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
         ])
     }

@@ -18,7 +18,6 @@ final class TopDetailView: UIView {
     
     let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .lightGray
         return imageView
     }()
     
@@ -28,6 +27,12 @@ final class TopDetailView: UIView {
         label.font = .systemFont(ofSize: 18)
         
         return label
+    }()
+    
+    let topImageView: UIImageView = {
+        let imageView = UIImageView()
+        
+        return imageView
     }()
         
     let shareButton: UIButton = {
@@ -101,6 +106,9 @@ final class TopDetailView: UIView {
         return stackView
     }()
     
+    var viewHeight = CGFloat()
+    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -120,7 +128,8 @@ final class TopDetailView: UIView {
             title,
             imageView,
             address,
-            stackView
+            stackView,
+            topImageView
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             addSubview($0)
@@ -129,23 +138,24 @@ final class TopDetailView: UIView {
         NSLayoutConstraint.activate([
             // imageView
             imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            imageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
-            imageView.bottomAnchor.constraint(equalTo: title.topAnchor, constant: -30),
-            imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, constant: 60),
+            imageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+            
+            // topImageView
+            topImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
+            topImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             
             // title
             title.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            title.bottomAnchor.constraint(equalTo: address.topAnchor, constant: -16),
+            title.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20),
             
             // address
             address.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            address.bottomAnchor.constraint(equalTo: stackView.topAnchor, constant: -20),
+            address.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 10),
             
             // stackView
             stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20)
-            
+            stackView.topAnchor.constraint(equalTo: address.bottomAnchor, constant: 20)
         ])
     }
     

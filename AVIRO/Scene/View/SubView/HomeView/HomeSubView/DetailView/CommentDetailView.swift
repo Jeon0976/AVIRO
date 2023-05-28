@@ -8,16 +8,16 @@
 import UIKit
 
 final class CommentDetailView: UIView {
-    let title: UILabel = {
+    var title: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = .systemFont(ofSize: 20, weight: .bold)
+        label.font = .systemFont(ofSize: 18, weight: .bold)
         label.text = "댓글"
 
         return label
     }()
     
-    let comentCount: UILabel = {
+    var comentCount: UILabel = {
         let label = UILabel()
         label.textColor = .lightGray
         label.font = .systemFont(ofSize: 14, weight: .medium)
@@ -26,7 +26,7 @@ final class CommentDetailView: UIView {
         return label
     }()
     
-    let tableView: UITableView = {
+    var tableView: UITableView = {
        let tableView = UITableView()
         
         tableView.rowHeight = UITableView.automaticDimension
@@ -37,7 +37,7 @@ final class CommentDetailView: UIView {
         return tableView
     }()
     
-    let noCommentLabel: UILabel = {
+    var noCommentLabel: UILabel = {
         let label = UILabel()
        
         label.textColor = .black
@@ -47,7 +47,7 @@ final class CommentDetailView: UIView {
         return label
     }()
     
-    let noCommentLabel2: UILabel = {
+    var noCommentLabel2: UILabel = {
         let label = UILabel()
         label.textColor = .lightGray
         label.font = .systemFont(ofSize: 14)
@@ -56,7 +56,7 @@ final class CommentDetailView: UIView {
         return label
     }()
 
-    let commentButton: UIButton = {
+    var commentButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = ColorsList4
         button.setTitle("나도 댓글 달기", for: .normal)
@@ -200,10 +200,11 @@ class CommentDetailTableCell: UITableViewCell {
         
         comment.numberOfLines = 0
         comment.lineBreakMode = .byWordWrapping
-        comment.layer.cornerRadius = 8
+        comment.layer.cornerRadius = 15
         comment.textColor = ColorsList3
-        comment.backgroundColor = ColorsList1
+        comment.backgroundColor = UIColor(red: 239/255, green: 240/255, blue: 240/255, alpha: 1)
         comment.layer.masksToBounds = true
+        comment.font = .systemFont(ofSize: 16)
         
         [
             comment

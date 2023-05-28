@@ -142,6 +142,16 @@ final class InrollPlaceViewController: UIViewController {
         ifRequestPossibleVegan.backgroundColor = .white
         navigationItem.rightBarButtonItem?.isEnabled = false
         reportStoreButton.isEnabled = false
+        
+        allVegan.setImage(UIImage(named: "올비건No"), for: .normal)
+        allVegan.setTitleColor(ColorsList1, for: .normal)
+        
+        someMenuVegan.setImage(UIImage(named: "썸비건No"), for: .normal)
+        someMenuVegan.setTitleColor(ColorsList1, for: .normal)
+        
+        ifRequestPossibleVegan.setImage(UIImage(named: "요청비건No"), for: .normal)
+        ifRequestPossibleVegan.setTitleColor(ColorsList1, for: .normal)
+        
         defaultLayout()
     }
 }
@@ -173,7 +183,7 @@ extension InrollPlaceViewController: InrollPlaceProtocol {
     func makeAttribute() {
         // navigation & view 관련
         navigationItem.title = "가게 제보하기"
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: ColorsList3]
         let rightBarButton = UIBarButtonItem(
             title: "제보하기",
             style: .plain,
@@ -293,15 +303,27 @@ extension InrollPlaceViewController {
     // MARK: ALL 비건 클릭 시
     @objc func clickedAllVeganButton() {
         // ALL 비건 클릭 on
-        if allVegan.backgroundColor != .lightGray {
+        if allVegan.backgroundColor != ColorsList3 {
+            allVegan.setImage(UIImage(named: "올비건"), for: .normal)
+            allVegan.setTitleColor(ColorsList4, for: .normal)
+            
+            someMenuVegan.setImage(UIImage(named: "썸비건No"), for: .normal)
+            someMenuVegan.setTitleColor(ColorsList1, for: .normal)
+            
+            ifRequestPossibleVegan.setImage(UIImage(named: "요청비건No"), for: .normal)
+            ifRequestPossibleVegan.setTitleColor(ColorsList1, for: .normal)
+            
             showMenuTableView()
             isPossibleReportButton()
-            allVegan.backgroundColor = .lightGray
+            allVegan.backgroundColor = ColorsList3
             someMenuVegan.backgroundColor = .white
             ifRequestPossibleVegan.backgroundColor = .white
             presenter.buttonChecked(true, false, false)
         } else {
         // ALL 비건 클릭 off
+            allVegan.setImage(UIImage(named: "올비건No"), for: .normal)
+            allVegan.setTitleColor(ColorsList1, for: .normal)
+            
             defaultLayout()
             isNegativeReportButton()
             allVegan.backgroundColor = .white
@@ -311,26 +333,59 @@ extension InrollPlaceViewController {
     // MARK: 비건 메뉴 포함 클릭 시
     @objc func clickedSomeMenuVeganButton() {
         // 비건 메뉴 포함, 요청하면 비건 둘다 클릭 안 되어있을 때
-        if someMenuVegan.backgroundColor != .lightGray && ifRequestPossibleVegan.backgroundColor != .lightGray {
+        if someMenuVegan.backgroundColor != ColorsList3 && ifRequestPossibleVegan.backgroundColor != ColorsList3 {
+            allVegan.setImage(UIImage(named: "올비건No"), for: .normal)
+            allVegan.setTitleColor(ColorsList1, for: .normal)
+            
+            someMenuVegan.setImage(UIImage(named: "썸비건"), for: .normal)
+            someMenuVegan.setTitleColor(ColorsList4, for: .normal)
+            
+            ifRequestPossibleVegan.setImage(UIImage(named: "요청비건No"), for: .normal)
+            ifRequestPossibleVegan.setTitleColor(ColorsList1, for: .normal)
+
             showMenuTableView()
             isPossibleReportButton()
             allVegan.backgroundColor = .white
-            someMenuVegan.backgroundColor = .lightGray
+            someMenuVegan.backgroundColor = ColorsList3
             ifRequestPossibleVegan.backgroundColor = .white
+            presenter.buttonChecked(false, true, false)
             // 비건 메뉴 포함만 안 되있고, 요청하면 비건은 눌러져있을 때
-        } else if someMenuVegan.backgroundColor != .lightGray && ifRequestPossibleVegan.backgroundColor == .lightGray {
+        } else if someMenuVegan.backgroundColor != ColorsList3 && ifRequestPossibleVegan.backgroundColor == ColorsList3 {
+            allVegan.setImage(UIImage(named: "올비건No"), for: .normal)
+            allVegan.setTitleColor(ColorsList1, for: .normal)
+            
+            someMenuVegan.setImage(UIImage(named: "썸비건"), for: .normal)
+            someMenuVegan.setTitleColor(ColorsList4, for: .normal)
+            
+            ifRequestPossibleVegan.setImage(UIImage(named: "요청비건"), for: .normal)
+            ifRequestPossibleVegan.setTitleColor(ColorsList4, for: .normal)
+
             showHowToRequestVeganMenuTableView()
             isPossibleReportButton()
             allVegan.backgroundColor = .white
-            someMenuVegan.backgroundColor = .lightGray
-            ifRequestPossibleVegan.backgroundColor = .lightGray
+            someMenuVegan.backgroundColor = ColorsList3
+            ifRequestPossibleVegan.backgroundColor = ColorsList3
+            presenter.buttonChecked(false, true, true)
             // 둘 다 눌러져 있을 때
-        } else if someMenuVegan.backgroundColor == .lightGray && ifRequestPossibleVegan.backgroundColor == .lightGray {
+        } else if someMenuVegan.backgroundColor == ColorsList3 && ifRequestPossibleVegan.backgroundColor == ColorsList3 {
+            allVegan.setImage(UIImage(named: "올비건No"), for: .normal)
+            allVegan.setTitleColor(ColorsList1, for: .normal)
+            
+            someMenuVegan.setImage(UIImage(named: "썸비건No"), for: .normal)
+            someMenuVegan.setTitleColor(ColorsList1, for: .normal)
+            
+            ifRequestPossibleVegan.setImage(UIImage(named: "요청비건"), for: .normal)
+            ifRequestPossibleVegan.setTitleColor(ColorsList4, for: .normal)
+
             allVegan.backgroundColor = .white
             someMenuVegan.backgroundColor = .white
-            ifRequestPossibleVegan.backgroundColor = .lightGray
+            ifRequestPossibleVegan.backgroundColor = ColorsList3
+            presenter.buttonChecked(false, false, true)
             // 비건 메뉴만 눌러져 있을 때
         } else {
+            someMenuVegan.setImage(UIImage(named: "썸비건No"), for: .normal)
+            someMenuVegan.setTitleColor(ColorsList1, for: .normal)
+
             defaultLayout()
             isNegativeReportButton()
             someMenuVegan.backgroundColor = .white
@@ -340,28 +395,64 @@ extension InrollPlaceViewController {
     // MARK: 요청하면 비건 클릭 시
     @objc func clickedIfRequestPossibleVebanButton() {
         // 비건 메뉴 포함, 요청하면 비건 둘다 클릭 안 되어있을 때
-        if ifRequestPossibleVegan.backgroundColor != .lightGray && someMenuVegan.backgroundColor != .lightGray {
+        if ifRequestPossibleVegan.backgroundColor != ColorsList3 && someMenuVegan.backgroundColor != ColorsList3 {
+            allVegan.setImage(UIImage(named: "올비건No"), for: .normal)
+            allVegan.setTitleColor(ColorsList1, for: .normal)
+            
+            someMenuVegan.setImage(UIImage(named: "썸비건No"), for: .normal)
+            someMenuVegan.setTitleColor(ColorsList1, for: .normal)
+            
+            ifRequestPossibleVegan.setImage(UIImage(named: "요청비건"), for: .normal)
+            ifRequestPossibleVegan.setTitleColor(ColorsList4, for: .normal)
+            
             showHowToRequestVeganMenuTableView()
             isPossibleReportButton()
             allVegan.backgroundColor = .white
             someMenuVegan.backgroundColor = .white
-            ifRequestPossibleVegan.backgroundColor = .lightGray
+            ifRequestPossibleVegan.backgroundColor = ColorsList3
+            presenter.buttonChecked(false, false, true)
+
             // 비건 메뉴 포함만 눌러져 있을 때
-        } else if ifRequestPossibleVegan.backgroundColor != .lightGray && someMenuVegan.backgroundColor == .lightGray {
+        } else if ifRequestPossibleVegan.backgroundColor != ColorsList3 && someMenuVegan.backgroundColor == ColorsList3 {
+            allVegan.setImage(UIImage(named: "올비건No"), for: .normal)
+            allVegan.setTitleColor(ColorsList1, for: .normal)
+            
+            someMenuVegan.setImage(UIImage(named: "썸비건"), for: .normal)
+            someMenuVegan.setTitleColor(ColorsList4, for: .normal)
+            
+            ifRequestPossibleVegan.setImage(UIImage(named: "요청비건"), for: .normal)
+            ifRequestPossibleVegan.setTitleColor(ColorsList4, for: .normal)
+            
             showHowToRequestVeganMenuTableView()
             isPossibleReportButton()
             allVegan.backgroundColor = .white
-            someMenuVegan.backgroundColor = .lightGray
-            ifRequestPossibleVegan.backgroundColor = .lightGray
+            someMenuVegan.backgroundColor = ColorsList3
+            ifRequestPossibleVegan.backgroundColor = ColorsList3
+            presenter.buttonChecked(false, true, true)
+
             // 둘다 눌러져 있을 때
-        } else if someMenuVegan.backgroundColor == .lightGray && ifRequestPossibleVegan.backgroundColor == .lightGray {
+        } else if someMenuVegan.backgroundColor == ColorsList3 && ifRequestPossibleVegan.backgroundColor == ColorsList3 {
+            allVegan.setImage(UIImage(named: "올비건No"), for: .normal)
+            allVegan.setTitleColor(ColorsList1, for: .normal)
+            
+            someMenuVegan.setImage(UIImage(named: "썸비건"), for: .normal)
+            someMenuVegan.setTitleColor(ColorsList4, for: .normal)
+            
+            ifRequestPossibleVegan.setImage(UIImage(named: "요청비건No"), for: .normal)
+            ifRequestPossibleVegan.setTitleColor(ColorsList1, for: .normal)
+            
             showMenuTableView()
             isPossibleReportButton()
             allVegan.backgroundColor = .white
-            someMenuVegan.backgroundColor = .lightGray
+            someMenuVegan.backgroundColor = ColorsList3
             ifRequestPossibleVegan.backgroundColor = .white
+            presenter.buttonChecked(false, true, false)
+
             // 혼자만 눌러져 있을 때
         } else {
+            ifRequestPossibleVegan.setImage(UIImage(named: "요청비건No"), for: .normal)
+            ifRequestPossibleVegan.setTitleColor(ColorsList1, for: .normal)
+
             defaultLayout()
             isNegativeReportButton()
             ifRequestPossibleVegan.backgroundColor = .white

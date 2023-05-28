@@ -11,7 +11,7 @@ class HomeInfoStoreView: UIView {
     
     let title: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = ColorsList3
         label.font = .systemFont(ofSize: 20)
         
         return label
@@ -23,9 +23,15 @@ class HomeInfoStoreView: UIView {
         return imageView
     }()
     
+    let topImageView: UIImageView = {
+        let imageView = UIImageView()
+        
+        return imageView
+    }()
+    
     let address: UILabel = {
         let label = UILabel()
-        label.textColor = .lightGray
+        label.textColor = ColorsList2
         label.font = .systemFont(ofSize: 16)
         
         return label
@@ -33,7 +39,7 @@ class HomeInfoStoreView: UIView {
     
     let handleView: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = ColorsList1
         view.layer.cornerRadius = 2.5
         
         return view
@@ -61,7 +67,7 @@ class HomeInfoStoreView: UIView {
 
         button.imageView?.contentMode = .scaleAspectFit
         button.semanticContentAttribute = .forceLeftToRight
-        button.titleLabel?.textColor = .black
+        button.titleLabel?.textColor = ColorsList3
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
         return button
     }()
@@ -75,7 +81,7 @@ class HomeInfoStoreView: UIView {
 
         button.imageView?.contentMode = .scaleAspectFit
         button.semanticContentAttribute = .forceLeftToRight
-        button.titleLabel?.textColor = .black
+        button.titleLabel?.textColor = ColorsList3
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
 
         return button
@@ -83,7 +89,7 @@ class HomeInfoStoreView: UIView {
     
     let separator1: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = ColorsList1
         view.layer.cornerRadius = 2.5
         view.widthAnchor.constraint(equalToConstant: 1).isActive = true
         
@@ -92,7 +98,7 @@ class HomeInfoStoreView: UIView {
     
     let separator2: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = ColorsList1
         view.layer.cornerRadius = 2.5
         view.widthAnchor.constraint(equalToConstant: 1).isActive = true
         
@@ -145,7 +151,8 @@ class HomeInfoStoreView: UIView {
             address,
             handleView,
             stackView,
-            entireView
+            entireView,
+            topImageView
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             addSubview($0)
@@ -158,11 +165,14 @@ class HomeInfoStoreView: UIView {
             handleView.widthAnchor.constraint(equalToConstant: 40),
             handleView.heightAnchor.constraint(equalToConstant: 5),
             
+            // topImageView
+            topImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
+            topImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            
             // imageView
             imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            imageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
-            imageView.bottomAnchor.constraint(equalTo: title.topAnchor, constant: -30),
-            imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, constant: 60),
+            imageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+            imageView.bottomAnchor.constraint(equalTo: title.topAnchor, constant: -20),
             
             // title
             title.centerXAnchor.constraint(equalTo: self.centerXAnchor),
@@ -175,7 +185,7 @@ class HomeInfoStoreView: UIView {
             // stackView
             stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -50),
+            stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -40),
             
             // entireView
             entireView.topAnchor.constraint(equalTo: self.topAnchor),

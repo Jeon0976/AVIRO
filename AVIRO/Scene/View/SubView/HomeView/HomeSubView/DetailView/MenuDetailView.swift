@@ -11,7 +11,7 @@ final class MenuDetailView: UIView {
     let title: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = .systemFont(ofSize: 20, weight: .bold)
+        label.font = .systemFont(ofSize: 18, weight: .bold)
         label.text = "메뉴 정보"
 
         return label
@@ -66,6 +66,7 @@ final class MenuDetailView: UIView {
             DetailMenuTableCell.self,
             forCellReuseIdentifier: DetailMenuTableCell.idendifier
         )
+
         tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: 0)
         tableViewHeightConstraint?.isActive = true
         
@@ -75,48 +76,50 @@ final class MenuDetailView: UIView {
             title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             
             // tableView
-            tableView.topAnchor.constraint(equalTo: self.title.bottomAnchor, constant: 20),
+            tableView.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 20),
             tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
              
             // noMenuLabel
-            noMenuLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            noMenuLabel.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 20),
             noMenuLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             
             // noMenuLabel2
             noMenuLabel2.topAnchor.constraint(equalTo: noMenuLabel.bottomAnchor, constant: 5),
             noMenuLabel2.centerXAnchor.constraint(equalTo: noMenuLabel.centerXAnchor)
         ])
+        
+        noMenuLabel.isHidden = false
+        noMenuLabel2.isHidden = false
+        tableView.isHidden = true
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func showData() {
+    func showNoData() {
+        noMenuLabel.isHidden = false
+        noMenuLabel2.isHidden = false
+        tableView.isHidden = true
+    }
+    
+    func showData(_ items: [DetailMenuTableModel]?) {
+        guard let items = items else {
+            showNoData()
+            return
+        }
         
-        items?.sort(by: {
-            if $0.isVean == "비건" && $1.isVean != "비건" {
-                return true
-            } else {
-                return false
-            }
-        })
-
+        self.items = items
+        
+        noMenuLabel.isHidden = true
+        noMenuLabel2.isHidden = true
+        tableView.isHidden = false
         tableView.reloadData()
         
-        let height = tableView.contentSize.height
-        tableViewHeightConstraint?.constant = height
-        layoutIfNeeded()
-        
-        if items?[0].title == "" {
-            noMenuLabel.isHidden = false
-            noMenuLabel2.isHidden = false
-            tableView.isHidden = true
-        } else {
-            noMenuLabel.isHidden = true
-            noMenuLabel2.isHidden = true
-            tableView.isHidden = false
+        DispatchQueue.main.async {
+            let height = self.tableView.contentSize.height
+            self.tableViewHeightConstraint?.constant = height
         }
     }
     
@@ -131,6 +134,7 @@ final class MenuDetailView: UIView {
         return ceil(boundingBox?.height ?? 0)
     }
 }
+
 
 extension MenuDetailView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -162,6 +166,7 @@ class DetailMenuTableCell: UITableViewCell {
     var title = UILabel()
     var price = UILabel()
     var isVegan = UILabel()
+    var view = UIView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -169,11 +174,13 @@ class DetailMenuTableCell: UITableViewCell {
         [
             title,
             price,
-            isVegan
+            isVegan,
+            view
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview($0)
         }
+        view.backgroundColor = .blue
         
         NSLayoutConstraint.activate([
             // title
@@ -186,9 +193,16 @@ class DetailMenuTableCell: UITableViewCell {
             
             // isVegan
             isVegan.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 5),
-            isVegan.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            isVegan.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
+            isVegan.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
         ])
+        
+        isVegan.font = .systemFont(ofSize: 14)
+        isVegan.textColor = ColorsList5
+        title.textColor = ColorsList3
+        price.textColor = ColorsList3
+        title.font = .systemFont(ofSize: 16)
+        price.font = .systemFont(ofSize: 16)
+        
     }
 
     required init?(coder: NSCoder) {
@@ -197,9 +211,9 @@ class DetailMenuTableCell: UITableViewCell {
 
     func isVeganColorChage(_ change: Bool) {
         if !change {
-            isVegan.textColor = .purple
+            isVegan.textColor = ColorsList5
         } else {
-            isVegan.textColor = .blue
+            isVegan.textColor = PonitColor3
         }
     }
     

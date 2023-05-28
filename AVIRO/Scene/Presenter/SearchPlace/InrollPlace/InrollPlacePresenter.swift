@@ -65,11 +65,11 @@ final class InrollPlacePresenter: NSObject {
             self.allVegan = true
             self.someMenuVegan = false
             self.ifRequestVegan = false
-        } else if someMenuVegan && ifRequestVegan == false {
+        } else if someMenuVegan == true && ifRequestVegan == false {
             self.allVegan = false
             self.someMenuVegan = true
             self.ifRequestVegan = false
-        } else if someMenuVegan == false && ifRequestVegan {
+        } else if someMenuVegan == false && ifRequestVegan == true {
             self.allVegan = false
             self.someMenuVegan = false
             self.ifRequestVegan = true

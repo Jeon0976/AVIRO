@@ -9,7 +9,7 @@ import UIKit
 class HomeFirstPopUpView: UIView {
     let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "bigGiraim")
+        imageView.image = UIImage(named: "bigGilraim")
         imageView.contentMode = .scaleAspectFit
         
         return imageView
@@ -41,10 +41,6 @@ class HomeFirstPopUpView: UIView {
         self.backgroundColor = .white
         self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         self.layer.cornerRadius = 20
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOffset = CGSize(width: -1, height: -1)
-        self.layer.shadowRadius = 4
-        self.layer.shadowOpacity = 0.25
         
         [
             imageView,
@@ -59,6 +55,7 @@ class HomeFirstPopUpView: UIView {
             // imageView
             imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             imageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+            imageView.bottomAnchor.constraint(equalTo: reportButton.topAnchor, constant: -10),
             
             // cancelButton
             cancelButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
