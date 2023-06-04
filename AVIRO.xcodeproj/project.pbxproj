@@ -31,6 +31,7 @@
 		C5351B7A2A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B792A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift */; };
 		C5351B7D2A1B52B900116D50 /* CustomLocationCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B7C2A1B52B900116D50 /* CustomLocationCellModel.swift */; };
 		C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547A8B92A17D8D4004D1339 /* KakaoMapRequestManager.swift */; };
+		C54BC0DB2A2C2D0D00B65439 /* ColorCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54BC0DA2A2C2D0D00B65439 /* ColorCustom.swift */; };
 		C5538AAF2A1BB81200661DE2 /* VeganModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5538AAE2A1BB81200661DE2 /* VeganModel.swift */; };
 		C5D6E19F2A17B4410042679C /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5D6E19E2A17B4410042679C /* API.plist */; };
 		C5D7458B2A21CCFB006F9F31 /* DetailMenuTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D7458A2A21CCFB006F9F31 /* DetailMenuTableModel.swift */; };
@@ -93,6 +94,7 @@
 		C5351B792A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapResponseCoordinateModel.swift; sourceTree = "<group>"; };
 		C5351B7C2A1B52B900116D50 /* CustomLocationCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLocationCellModel.swift; sourceTree = "<group>"; };
 		C547A8B92A17D8D4004D1339 /* KakaoMapRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapRequestManager.swift; sourceTree = "<group>"; };
+		C54BC0DA2A2C2D0D00B65439 /* ColorCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCustom.swift; sourceTree = "<group>"; };
 		C5538AAE2A1BB81200661DE2 /* VeganModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganModel.swift; sourceTree = "<group>"; };
 		C5D6E19E2A17B4410042679C /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = API.plist; sourceTree = "<group>"; };
 		C5D7458A2A21CCFB006F9F31 /* DetailMenuTableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMenuTableModel.swift; sourceTree = "<group>"; };
@@ -222,6 +224,9 @@
 		C50367F62A179D6E0020C6BB /* System */ = {
 			isa = PBXGroup;
 			children = (
+				C54BC0D92A2C2CF900B65439 /* UITextLabel */,
+				C54BC0D82A2C2CEE00B65439 /* UIButton */,
+				C54BC0D72A2C2CE700B65439 /* UIColor */,
 				C50367F72A179D7B0020C6BB /* CustomConfiguration.swift */,
 				C5351B552A19B67900116D50 /* CustomAlertController.swift */,
 				C5351B682A1A2EAF00116D50 /* CustomPresentation.swift */,
@@ -327,8 +332,7 @@
 			isa = PBXGroup;
 			children = (
 				C5351B6C2A1B215D00116D50 /* InrollPlaceViewController.swift */,
-				C5EB50F22A1DEC2400B29CC1 /* InrollPlaceLayout.swift */,
-				C5EB50F42A1DEC3900B29CC1 /* InrollPlaceAttribute.swift */,
+				C54BC0D62A2C27AD00B65439 /* InrollPlaceSeparated */,
 				C5EB50F72A1E718A00B29CC1 /* InrollTableView */,
 				C5351B7F2A1B537000116D50 /* PlaceList */,
 			);
@@ -376,6 +380,37 @@
 				C5351B5B2A19F60200116D50 /* PlaceListViewPresenter.swift */,
 			);
 			path = PlaceList;
+			sourceTree = "<group>";
+		};
+		C54BC0D62A2C27AD00B65439 /* InrollPlaceSeparated */ = {
+			isa = PBXGroup;
+			children = (
+				C5EB50F22A1DEC2400B29CC1 /* InrollPlaceLayout.swift */,
+				C5EB50F42A1DEC3900B29CC1 /* InrollPlaceAttribute.swift */,
+			);
+			path = InrollPlaceSeparated;
+			sourceTree = "<group>";
+		};
+		C54BC0D72A2C2CE700B65439 /* UIColor */ = {
+			isa = PBXGroup;
+			children = (
+				C54BC0DA2A2C2D0D00B65439 /* ColorCustom.swift */,
+			);
+			path = UIColor;
+			sourceTree = "<group>";
+		};
+		C54BC0D82A2C2CEE00B65439 /* UIButton */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UIButton;
+			sourceTree = "<group>";
+		};
+		C54BC0D92A2C2CF900B65439 /* UITextLabel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UITextLabel;
 			sourceTree = "<group>";
 		};
 		C5D745922A22679E006F9F31 /* CommentDetailPresenter */ = {
@@ -652,6 +687,7 @@
 				C5EB50E82A1C6FD600B29CC1 /* PopularViewController.swift in Sources */,
 				C5EB51002A20720300B29CC1 /* UserDefaultsManager.swift in Sources */,
 				C5351B7D2A1B52B900116D50 /* CustomLocationCellModel.swift in Sources */,
+				C54BC0DB2A2C2D0D00B65439 /* ColorCustom.swift in Sources */,
 				C52FA3432A175B20005E70DC /* AppDelegate.swift in Sources */,
 				C5EB510F2A20A89100B29CC1 /* HomeSearchData.swift in Sources */,
 				C5351B502A19225A00116D50 /* KakaoMapResponseKeywordModel.swift in Sources */,

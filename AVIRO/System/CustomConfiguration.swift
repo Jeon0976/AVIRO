@@ -22,12 +22,12 @@ class SelectVeganButton: UIButton {
         self.setTitle(title, for: .normal)
 
         self.setImage(UIImage(named: nomal), for: .normal)
-        self.setTitleColor(ColorsList1, for: .normal)
+        self.setTitleColor(.separateLine, for: .normal)
         
         self.imageView?.contentMode = .scaleAspectFit
         self.titleLabel?.font = .systemFont(ofSize: 16, weight: .heavy)
         self.semanticContentAttribute = .forceLeftToRight
-        self.layer.borderColor = ColorsList1.cgColor
+        self.layer.borderColor = UIColor.separateLine?.cgColor
         self.layer.borderWidth = 1
         self.layer.cornerRadius = 16
     }
@@ -64,7 +64,7 @@ class SelectVeganButton: UIButton {
 class ReportButton: UIButton {
     override var isEnabled: Bool {
         didSet {
-            backgroundColor = isEnabled ? ColorsList4 : ColorsList1
+            backgroundColor = isEnabled ? .plusButton : .separateLine
         }
     }
 }
@@ -91,6 +91,8 @@ class InrollTextField: UITextField {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureBorder()
+        
+        self.textColor = .mainTitle
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -99,7 +101,7 @@ class InrollTextField: UITextField {
     }
 
     private func configureBorder() {
-        self.layer.borderColor = ColorsList1.cgColor
+        self.layer.borderColor = UIColor.separateLine?.cgColor
         self.layer.borderWidth = 1
         self.layer.cornerRadius = 15
     }
@@ -130,7 +132,7 @@ class InrollTextField: UITextField {
     
     override var isEnabled: Bool {
         didSet {
-            self.backgroundColor = isEnabled ? .white : ColorsList1
+            self.backgroundColor = isEnabled ? .white : .separateLine
         }
     }
     
@@ -160,7 +162,7 @@ class CommentsTextField: UITextField {
 
         super.init(frame: frame)
         
-        topBorder.borderColor = UIColor.lightGray.cgColor
+        topBorder.borderColor = UIColor.separateLine?.cgColor
         topBorder.borderWidth = 1.0
 
         self.layer.addSublayer(topBorder)
@@ -168,13 +170,8 @@ class CommentsTextField: UITextField {
 
     required init?(coder aDecoder: NSCoder) {
         self.topBorder = CALayer()
-
+        
         super.init(coder: aDecoder)
-                
-        topBorder.borderColor = UIColor.lightGray.cgColor
-        topBorder.borderWidth = 1.0
-
-        self.layer.addSublayer(topBorder)
     }
     
     override func layoutSubviews() {
@@ -207,12 +204,6 @@ class CommentsTextField: UITextField {
         return clearButtonRect
     }
     
-    override var isEnabled: Bool {
-        didSet {
-            self.backgroundColor = isEnabled ? .white : ColorsList1
-        }
-    }
-    
     func customClearButton() {
         let customClearButton = UIButton(type: .custom)
         customClearButton.setImage(
@@ -223,7 +214,6 @@ class CommentsTextField: UITextField {
         self.rightView = customClearButton
         self.rightViewMode = .whileEditing
     }
-    
 }
 
 class TitleTextField: UITextField {
@@ -314,13 +304,3 @@ class PaddingLabel: UILabel {
     }
 }
 
-// MARK: Color Custom
-let ColorsList1 = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 1)
-let ColorsList2 = UIColor(red: 139/255, green: 139/255, blue: 139/255, alpha: 1)
-let ColorsList3 = UIColor(red: 6/255, green: 23/255, blue: 37/255, alpha: 1)
-let ColorsList4 = UIColor(red: 226/255, green: 242/255, blue: 99/255, alpha: 1)
-let ColorsList5 = UIColor(red: 160/255, green: 81/255, blue: 234/255, alpha: 1)
-
-let PonitColor1 = UIColor(red: 174/255, green: 227/255, blue: 23/255, alpha: 1)
-let PonitColor2 = UIColor(red: 160/255, green: 81/255, blue: 234/255, alpha: 1)
-let PonitColor3 = UIColor(red: 70/255, green: 155/255, blue: 255/255, alpha: 1)

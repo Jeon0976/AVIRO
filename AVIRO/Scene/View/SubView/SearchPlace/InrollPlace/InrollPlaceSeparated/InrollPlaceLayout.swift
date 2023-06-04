@@ -8,6 +8,7 @@
 import UIKit
 
 extension InrollPlaceViewController {
+    // MARK: Store Title Stack View Layout
     public func storeTitleStackViewLayout() {
         [
             storeTitleExplanation,
@@ -41,6 +42,7 @@ extension InrollPlaceViewController {
         ])
     }
     
+    // MARK: Store Location Stack View Layout
     public func storeLocationStackViewLayout() {
         [
             storeLocationExplanation,
@@ -74,6 +76,7 @@ extension InrollPlaceViewController {
         ])
     }
     
+    // MARK: Store Category Stack View Layout
     public func storeCategoryStackviewLayout() {
         [
             storeCategoryExplanation,
@@ -107,6 +110,7 @@ extension InrollPlaceViewController {
         ])
     }
     
+    // MARK: Store Phone Stack View Layout
     public func storePhoneStackviewLayout() {
         [
             storePhoneExplanation,
@@ -140,6 +144,7 @@ extension InrollPlaceViewController {
         ])
     }
     
+    // MARK: Vegan Detail Button Stack View Layout
     public func veganDetailStackViewLayout() {
         [
             veganDetailExplanation,
@@ -192,6 +197,7 @@ extension InrollPlaceViewController {
         ])
     }
     
+    // MARK: Vegan Table Header View Layout
     public func veganTableHeaderViewLayout() {
         [
             veganMenuExplanation,
@@ -202,6 +208,7 @@ extension InrollPlaceViewController {
         }
         
         veganMenuExplanationStackView.axis = .horizontal
+        
         veganMenuExplanationStackView.spacing = 3.0
         
         [
@@ -217,24 +224,9 @@ extension InrollPlaceViewController {
         veganMenuHeaderStackView.distribution = .equalCentering
         
     }
-        
-    // MARK: Total StackView Layout
-    public func stackViewLayout() {
-        [
-            storeTitleStackView,
-            storeLocationStackView,
-            storeCategoryStackView,
-            storePhoneStackView,
-            veganDetailStackView,
-            veganMenuHeaderStackView,
-            veganMenuTableView,
-            howToRequestVeganMenuTableView,
-            reportStoreButton
-        ].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            scrollView.addSubview($0)
-        }
-        
+    
+    // MARK: Dynamic Table View
+    private func dynamicsTableView() {
         // 동적 뷰를 위한 설정
         veganDetailStackViewBottomL = veganDetailStackView.bottomAnchor.constraint(
             equalTo: reportStoreButton.topAnchor,
@@ -285,6 +277,26 @@ extension InrollPlaceViewController {
         ]
         
         veganMenuHeaderStackView.isHidden = true
+    }
+    
+    // MARK: Total StackView Layout
+    public func stackViewLayout() {
+        [
+            storeTitleStackView,
+            storeLocationStackView,
+            storeCategoryStackView,
+            storePhoneStackView,
+            veganDetailStackView,
+            veganMenuHeaderStackView,
+            veganMenuTableView,
+            howToRequestVeganMenuTableView,
+            reportStoreButton
+        ].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            scrollView.addSubview($0)
+        }
+        
+        dynamicsTableView()
         
         NSLayoutConstraint.activate([
             // storeTitleStackView
@@ -347,6 +359,5 @@ extension InrollPlaceViewController {
             reportStoreButton.heightAnchor.constraint(
                 equalTo: storeTitleField.heightAnchor, multiplier: 1)
         ])
-
     }
 }

@@ -94,9 +94,6 @@ final class InrollPlaceViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // MARK: Textfield 편집 종료
-        storeTitleField.resignFirstResponder()
-        
         // MARK: 검색 후 데이터 불러오기
         NotificationCenter.default.addObserver(
             self,
@@ -105,7 +102,7 @@ final class InrollPlaceViewController: UIViewController {
             object: nil
         )
         
-        // 키보드에따른 view 높이 변경
+        // 키보드에 따른 view 높이 변경
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillShow),
@@ -123,6 +120,7 @@ final class InrollPlaceViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
+        // 키보드에 따른 view 높이 변경
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
@@ -244,7 +242,6 @@ extension InrollPlaceViewController: InrollPlaceProtocol {
         )
         
         veganMenuTableView.dataSource = self
-        veganMenuTableView.delegate = self
         veganMenuTableView.tag = 0
         veganMenuTableView.isScrollEnabled = false
         veganMenuTableView.separatorStyle = .none
@@ -255,7 +252,6 @@ extension InrollPlaceViewController: InrollPlaceProtocol {
         )
         
         howToRequestVeganMenuTableView.dataSource = self
-        howToRequestVeganMenuTableView.delegate = self
         howToRequestVeganMenuTableView.tag = 1
         howToRequestVeganMenuTableView.isScrollEnabled = false
         howToRequestVeganMenuTableView.separatorStyle = .none
@@ -609,11 +605,6 @@ extension InrollPlaceViewController: UITextFieldDelegate {
         }
         return true
     }
-}
-
-// MARK: TableViewDelegate
-extension InrollPlaceViewController: UITableViewDelegate {
-   
 }
 
 // MARK: TableView Data Source

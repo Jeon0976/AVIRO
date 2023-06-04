@@ -22,8 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window?.rootViewController = viewController
         window?.backgroundColor = .white
-        
-        window?.tintColor = ColorsList3
+        window?.tintColor = .mainTitle
         
         window?.makeKeyAndVisible()
     }
