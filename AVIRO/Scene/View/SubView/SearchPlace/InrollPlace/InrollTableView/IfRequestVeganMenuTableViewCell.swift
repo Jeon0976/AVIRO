@@ -84,15 +84,15 @@ final class IfRequestVeganMenuTableViewCell: UITableViewCell {
     
     private func makeAttribute() {
         menuTextField.placeholder = "메뉴"
-        menuTextField.textColor = .black
+        menuTextField.textColor = .mainTitle
         priceTextField.placeholder = "가격"
-        priceTextField.textColor = .black
+        priceTextField.textColor = .mainTitle
                 
         requestButton.setTitle("요청", for: .normal)
         requestButton.setTitleColor(.placeholderText, for: .normal)
         requestButton.backgroundColor = .clear
         requestButton.layer.borderWidth = 1
-        requestButton.layer.borderColor = UIColor.lightGray.cgColor
+        requestButton.layer.borderColor = UIColor.separateLine?.cgColor
         requestButton.layer.cornerRadius = 15
         requestButton.addTarget(self, action: #selector(requestButtonTapped), for: .touchUpInside)
         

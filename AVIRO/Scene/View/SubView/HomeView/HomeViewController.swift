@@ -157,16 +157,7 @@ extension HomeViewController: HomeViewProtocol {
         )
         
         // searchTextField
-        let placeholderText = "점심으로 비건까스 어떠세요?"
-        let placeholderAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor(red: 138/255, green: 133/255, blue: 133/255, alpha: 1),
-            .font: UIFont.systemFont(ofSize: 17)
-        ]
-        let placeholderAttributedString = NSAttributedString(string: placeholderText, attributes: placeholderAttributes)
-        searchTextField.attributedPlaceholder = placeholderAttributedString
-        searchTextField.textColor = .black
-        searchTextField.backgroundColor = .white
-        searchTextField.textAlignment = .natural
+        searchTextField.makeCustomPlaceHolder("점심으로 비건까스 어떠세요?")
         searchTextField.delegate = self
         
     }

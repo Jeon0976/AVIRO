@@ -11,7 +11,7 @@ class HomeInfoStoreView: UIView {
     
     let title: UILabel = {
         let label = UILabel()
-        label.textColor = ColorsList3
+        label.textColor = .mainTitle
         label.font = .systemFont(ofSize: 20)
         
         return label
@@ -31,7 +31,7 @@ class HomeInfoStoreView: UIView {
     
     let address: UILabel = {
         let label = UILabel()
-        label.textColor = ColorsList2
+        label.textColor = .subTitle
         label.font = .systemFont(ofSize: 16)
         
         return label
@@ -39,7 +39,7 @@ class HomeInfoStoreView: UIView {
     
     let handleView: UIView = {
         let view = UIView()
-        view.backgroundColor = ColorsList1
+        view.backgroundColor = .separateLine
         view.layer.cornerRadius = 2.5
         
         return view
@@ -50,7 +50,8 @@ class HomeInfoStoreView: UIView {
         
         button.setImage(UIImage(named: "share"), for: .normal)
         button.setTitle("공유하기", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.tintColor = .mainTitle
+        
         button.imageView?.contentMode = .scaleAspectFit
         button.semanticContentAttribute = .forceLeftToRight
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
@@ -63,11 +64,11 @@ class HomeInfoStoreView: UIView {
         
         button.setImage(UIImage(named: "Bookmark"), for: .normal)
         button.setTitle("북마크   ", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.mainTitle, for: .normal)
+        button.tintColor = .mainTitle
 
         button.imageView?.contentMode = .scaleAspectFit
         button.semanticContentAttribute = .forceLeftToRight
-        button.titleLabel?.textColor = ColorsList3
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
         return button
     }()
@@ -77,11 +78,10 @@ class HomeInfoStoreView: UIView {
         
         button.setImage(UIImage(named: "comment"), for: .normal)
         button.setTitle("댓글     ", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.tintColor = .mainTitle
 
         button.imageView?.contentMode = .scaleAspectFit
         button.semanticContentAttribute = .forceLeftToRight
-        button.titleLabel?.textColor = ColorsList3
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
 
         return button
@@ -89,7 +89,7 @@ class HomeInfoStoreView: UIView {
     
     let separator1: UIView = {
         let view = UIView()
-        view.backgroundColor = ColorsList1
+        view.backgroundColor = .separateLine
         view.layer.cornerRadius = 2.5
         view.widthAnchor.constraint(equalToConstant: 1).isActive = true
         
@@ -98,7 +98,7 @@ class HomeInfoStoreView: UIView {
     
     let separator2: UIView = {
         let view = UIView()
-        view.backgroundColor = ColorsList1
+        view.backgroundColor = .separateLine
         view.layer.cornerRadius = 2.5
         view.widthAnchor.constraint(equalToConstant: 1).isActive = true
         

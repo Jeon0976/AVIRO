@@ -118,7 +118,7 @@ extension CommentsViewController: CommentDetailProtocol {
         view.addGestureRecognizer(tapGesture)
         
         // no Comment
-        noCommentLabel1.textColor = .black
+        noCommentLabel1.textColor = .mainTitle
         noCommentLabel1.font = .systemFont(ofSize: 18, weight: .bold)
         noCommentLabel1.text = "아직 댓글이 없어요"
         
@@ -128,7 +128,7 @@ extension CommentsViewController: CommentDetailProtocol {
         
         // comments Title
         commentsTitle.text = "댓글"
-        commentsTitle.textColor = .black
+        commentsTitle.textColor = .mainTitle
         commentsTitle.font = .systemFont(ofSize: 20, weight: .bold)
         
         // comments Count
@@ -140,7 +140,7 @@ extension CommentsViewController: CommentDetailProtocol {
         
         // comment button
         commentButton.setTitle("게시", for: .normal)
-        commentButton.setTitleColor(.black, for: .normal)
+        commentButton.setTitleColor(.mainTitle, for: .normal)
         commentButton.addTarget(self, action: #selector(tappedCommentButton), for: .touchUpInside)
         
         // comments tableView

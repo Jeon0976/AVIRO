@@ -75,10 +75,10 @@ final class HomeSearchViewTableViewCell: UITableViewCell {
         
         distance.font = .systemFont(ofSize: 14, weight: .light)
         
-        title.textColor = .black
-        address.textColor = .black
-        category.textColor = .black
-        distance.textColor = .black
+        title.textColor = .mainTitle
+        address.textColor = .mainTitle
+        category.textColor = .mainTitle
+        distance.textColor = .mainTitle
     }
     
     func makeCellData(_ listData: HomeSearchData) {

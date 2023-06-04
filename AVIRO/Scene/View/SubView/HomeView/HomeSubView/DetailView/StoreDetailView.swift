@@ -12,7 +12,8 @@ final class StoreDetailView: UIView {
        let label = UILabel()
         label.text = "식당 정보"
         label.font = .systemFont(ofSize: 18, weight: .bold)
-        label.textColor = ColorsList3
+        label.textColor = .mainTitle
+        label.numberOfLines = 0
         
         return label
     }()
@@ -29,14 +30,16 @@ final class StoreDetailView: UIView {
     let addressLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 15)
-        label.textColor = ColorsList3
+        label.textColor = .mainTitle
+        label.numberOfLines = 0
+        
         return label
     }()
     
     let firstSeparator: UIView = {
         let view = UIView()
         
-        view.backgroundColor = ColorsList1
+        view.backgroundColor = .separateLine
         view.layer.cornerRadius = 2.5
         view.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
@@ -56,15 +59,16 @@ final class StoreDetailView: UIView {
         let label = UILabel()
         
         label.font = .systemFont(ofSize: 15)
-        label.textColor = ColorsList3
-        
+        label.textColor = .mainTitle
+        label.numberOfLines = 0
+
         return label
     }()
     
     let secondSeparator: UIView = {
         let view = UIView()
         
-        view.backgroundColor = ColorsList1
+        view.backgroundColor = .separateLine
         view.layer.cornerRadius = 2.5
         view.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
@@ -84,15 +88,16 @@ final class StoreDetailView: UIView {
         let label = UILabel()
         
         label.font = .systemFont(ofSize: 15)
-        label.textColor = ColorsList3
-        
+        label.textColor = .mainTitle
+        label.numberOfLines = 0
+
         return label
     }()
     
     let thridSeparator: UIView = {
         let view = UIView()
         
-        view.backgroundColor = ColorsList1
+        view.backgroundColor = .separateLine
         view.layer.cornerRadius = 2.5
         view.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
@@ -101,7 +106,7 @@ final class StoreDetailView: UIView {
 
     let requestDelete: UILabel = {
         let label = UILabel()
-        label.textColor = ColorsList2
+        label.textColor = .subTitle
         label.font = .systemFont(ofSize: 14)
         label.text = "식당 정보 오류 및 삭제 요청"
         

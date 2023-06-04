@@ -11,27 +11,27 @@ extension InrollPlaceViewController {
     // MARK: Requirde & Optional Attribute
     public func requiredAndOptionalAttribute() {
         requiredTitleLabel.text = "(필수)"
-        requiredTitleLabel.textColor = ColorsList1
+        requiredTitleLabel.textColor = .subTitle
         requiredTitleLabel.font = .systemFont(ofSize: 12, weight: .light)
         
         requriedLocationLabel.text = "(필수)"
-        requriedLocationLabel.textColor = ColorsList1
+        requriedLocationLabel.textColor = .subTitle
         requriedLocationLabel.font = .systemFont(ofSize: 12, weight: .light)
         
         requriedCategoryLabel.text = "(필수)"
-        requriedCategoryLabel.textColor = ColorsList1
+        requriedCategoryLabel.textColor = .subTitle
         requriedCategoryLabel.font = .systemFont(ofSize: 12, weight: .light)
         
         optionalPhoneLabel.text = "(선택)"
-        optionalPhoneLabel.textColor = ColorsList1
+        optionalPhoneLabel.textColor = .subTitle
         optionalPhoneLabel.font = .systemFont(ofSize: 12, weight: .light)
         
         requriedDetailLabel.text = "(필수)"
-        requriedDetailLabel.textColor = ColorsList1
+        requriedDetailLabel.textColor = .subTitle
         requriedDetailLabel.font = .systemFont(ofSize: 12, weight: .light)
         
         requriedMenuLabel.text = "(필수)"
-        requriedMenuLabel.textColor = ColorsList1
+        requriedMenuLabel.textColor = .subTitle
         requriedMenuLabel.font = .systemFont(ofSize: 12, weight: .light)
 
     }
@@ -39,7 +39,7 @@ extension InrollPlaceViewController {
     // MARK: Store Title Attribute
     public func storeTitleReferAttribute() {
         storeTitleExplanation.text = "가게 이름"
-        storeTitleExplanation.textColor = .black
+        storeTitleExplanation.textColor = .mainTitle
         storeTitleField.placeholder = "가게를 찾아보세요"
         storeTitleField.delegate = self
     }
@@ -47,25 +47,25 @@ extension InrollPlaceViewController {
     // MARK: Store Location Attribute
     public func storeLocationReferAttribute() {
         storeLocationExplanation.text = "가게 위치"
-        storeLocationExplanation.textColor = .black
+        storeLocationExplanation.textColor = .mainTitle
     }
     
     // MARK: Store Category Attribute
     public func storeCategoryReferAttribute() {
         storeCategoryExplanation.text = "카테고리"
-        storeCategoryExplanation.textColor = .black
+        storeCategoryExplanation.textColor = .mainTitle
     }
     
     // MARK: Store Phone Attribute
     public func storePhoneReferAttribute() {
         storePhoneExplanation.text = "전화번호"
-        storePhoneExplanation.textColor = .black
+        storePhoneExplanation.textColor = .mainTitle
     }
     
     // MARK: Vegan Detail Attribute
     public func veganDetailReferAttribute() {
         veganDetailExplanation.text = "가게 종류"
-        veganDetailExplanation.textColor = .black
+        veganDetailExplanation.textColor = .mainTitle
         
         allVegan.makeVeganSelectButton("올비건No", "ALL 비건")
         someMenuVegan.makeVeganSelectButton("썸비건No", "비건 메뉴 포함")

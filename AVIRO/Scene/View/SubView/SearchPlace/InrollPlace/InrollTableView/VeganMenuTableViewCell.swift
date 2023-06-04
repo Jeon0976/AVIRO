@@ -62,10 +62,10 @@ final class VeganMenuTableViewCell: UITableViewCell {
     
     private func makeAttribute() {
         menuTextField.placeholder = "메뉴"
-        menuTextField.textColor = .black
+        menuTextField.textColor = .mainTitle
         
         priceTextField.placeholder = "가격"
-        priceTextField.textColor = .black
+        priceTextField.textColor = .mainTitle
     }
     
     func dataBinding(_ name: String, _ price: String) {

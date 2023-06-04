@@ -25,9 +25,9 @@ class HomeFirstPopUpView: UIView {
     
     let reportButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = ColorsList4
+        button.backgroundColor = .plusButton
         button.setTitle("비건 식당 제보하러가기", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.mainTitle, for: .normal)
         
         button.contentEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         button.layer.cornerRadius = 28

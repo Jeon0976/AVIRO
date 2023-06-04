@@ -32,6 +32,7 @@
 		C5351B7D2A1B52B900116D50 /* CustomLocationCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B7C2A1B52B900116D50 /* CustomLocationCellModel.swift */; };
 		C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547A8B92A17D8D4004D1339 /* KakaoMapRequestManager.swift */; };
 		C54BC0DB2A2C2D0D00B65439 /* ColorCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54BC0DA2A2C2D0D00B65439 /* ColorCustom.swift */; };
+		C54BC0DD2A2C762C00B65439 /* CommentsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54BC0DC2A2C762C00B65439 /* CommentsLabel.swift */; };
 		C5538AAF2A1BB81200661DE2 /* VeganModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5538AAE2A1BB81200661DE2 /* VeganModel.swift */; };
 		C5D6E19F2A17B4410042679C /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5D6E19E2A17B4410042679C /* API.plist */; };
 		C5D7458B2A21CCFB006F9F31 /* DetailMenuTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D7458A2A21CCFB006F9F31 /* DetailMenuTableModel.swift */; };
@@ -95,6 +96,7 @@
 		C5351B7C2A1B52B900116D50 /* CustomLocationCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLocationCellModel.swift; sourceTree = "<group>"; };
 		C547A8B92A17D8D4004D1339 /* KakaoMapRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapRequestManager.swift; sourceTree = "<group>"; };
 		C54BC0DA2A2C2D0D00B65439 /* ColorCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCustom.swift; sourceTree = "<group>"; };
+		C54BC0DC2A2C762C00B65439 /* CommentsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsLabel.swift; sourceTree = "<group>"; };
 		C5538AAE2A1BB81200661DE2 /* VeganModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganModel.swift; sourceTree = "<group>"; };
 		C5D6E19E2A17B4410042679C /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = API.plist; sourceTree = "<group>"; };
 		C5D7458A2A21CCFB006F9F31 /* DetailMenuTableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMenuTableModel.swift; sourceTree = "<group>"; };
@@ -409,6 +411,7 @@
 		C54BC0D92A2C2CF900B65439 /* UITextLabel */ = {
 			isa = PBXGroup;
 			children = (
+				C54BC0DC2A2C762C00B65439 /* CommentsLabel.swift */,
 			);
 			path = UITextLabel;
 			sourceTree = "<group>";
@@ -696,6 +699,7 @@
 				C5D745962A2277A4006F9F31 /* CommentsViewCell.swift in Sources */,
 				C5EB51222A2118B200B29CC1 /* CommentDetailView.swift in Sources */,
 				C50367F82A179D7B0020C6BB /* CustomConfiguration.swift in Sources */,
+				C54BC0DD2A2C762C00B65439 /* CommentsLabel.swift in Sources */,
 				C5EB50E62A1C6FC700B29CC1 /* BookMarkViewController.swift in Sources */,
 				C5EB51082A209F6900B29CC1 /* HomeSearchViewController.swift in Sources */,
 				C5351B562A19B67900116D50 /* CustomAlertController.swift in Sources */,

@@ -139,13 +139,13 @@ extension DetailViewController: DetailViewProtocol {
     func makeAttribute() {
         // navigation, view, indicator
         view.backgroundColor = .white
-        indicator.color = ColorsList1
+        indicator.color = .separateLine
         indicator.startAnimating()
         indicator.alpha = 1
         navigationItem.title = presenter.veganModel?.placeModel.title
         navigationItem.backButtonDisplayMode = .generic
         scrollView.isHidden = true
-        scrollView.backgroundColor = UIColor(red: 239/255, green: 240/255, blue: 240/255, alpha: 1)
+        scrollView.backgroundColor = .separateLine
         topDetail.backgroundColor = .white
         storeDetail.backgroundColor = .white
         menuDetail.backgroundColor = .white

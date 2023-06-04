@@ -10,7 +10,7 @@ import UIKit
 final class TopDetailView: UIView {
     let title: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .mainTitle
         label.font = .systemFont(ofSize: 25, weight: .bold)
         
         return label
@@ -23,7 +23,7 @@ final class TopDetailView: UIView {
     
     let address: UILabel = {
         let label = UILabel()
-        label.textColor = .lightGray
+        label.textColor = .subTitle
         label.font = .systemFont(ofSize: 18)
         
         return label
@@ -40,7 +40,7 @@ final class TopDetailView: UIView {
         
         button.setImage(UIImage(named: "share"), for: .normal)
         button.setTitle("공유하기", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.mainTitle, for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
         button.semanticContentAttribute = .forceLeftToRight
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
@@ -53,7 +53,7 @@ final class TopDetailView: UIView {
         
         button.setImage(UIImage(named: "Bookmark"), for: .normal)
         button.setTitle("북마크   ", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.mainTitle, for: .normal)
 
         button.imageView?.contentMode = .scaleAspectFit
         button.semanticContentAttribute = .forceLeftToRight
@@ -67,7 +67,7 @@ final class TopDetailView: UIView {
         
         button.setImage(UIImage(named: "comment"), for: .normal)
         button.setTitle("댓글     ", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.mainTitle, for: .normal)
 
         button.imageView?.contentMode = .scaleAspectFit
         button.semanticContentAttribute = .forceLeftToRight
@@ -79,7 +79,7 @@ final class TopDetailView: UIView {
     
     let separator1: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .separateLine
         view.layer.cornerRadius = 2.5
         view.widthAnchor.constraint(equalToConstant: 1).isActive = true
         
@@ -88,7 +88,7 @@ final class TopDetailView: UIView {
     
     let separator2: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .separateLine
         view.layer.cornerRadius = 2.5
         view.widthAnchor.constraint(equalToConstant: 1).isActive = true
         

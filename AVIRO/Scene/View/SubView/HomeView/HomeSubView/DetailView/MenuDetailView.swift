@@ -10,7 +10,7 @@ import UIKit
 final class MenuDetailView: UIView {
     let title: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .mainTitle
         label.font = .systemFont(ofSize: 18, weight: .bold)
         label.text = "메뉴 정보"
 
@@ -28,7 +28,7 @@ final class MenuDetailView: UIView {
     let noMenuLabel: UILabel = {
         let label = UILabel()
        
-        label.textColor = .black
+        label.textColor = .mainTitle
         label.font = .systemFont(ofSize: 18, weight: .bold)
         label.text = "등록된 메뉴가 없어요"
         
@@ -37,7 +37,7 @@ final class MenuDetailView: UIView {
     
     let noMenuLabel2: UILabel = {
         let label = UILabel()
-        label.textColor = .lightGray
+        label.textColor = .subTitle
         label.font = .systemFont(ofSize: 14)
         label.text = "식당 정보 오류 및 삭제 요청을 통해 등록해주세요"
         
@@ -197,9 +197,9 @@ class DetailMenuTableCell: UITableViewCell {
         ])
         
         isVegan.font = .systemFont(ofSize: 14)
-        isVegan.textColor = ColorsList5
-        title.textColor = ColorsList3
-        price.textColor = ColorsList3
+        isVegan.textColor = .allVegan
+        title.textColor = .mainTitle
+        price.textColor = .mainTitle
         title.font = .systemFont(ofSize: 16)
         price.font = .systemFont(ofSize: 16)
         
@@ -211,9 +211,9 @@ class DetailMenuTableCell: UITableViewCell {
 
     func isVeganColorChage(_ change: Bool) {
         if !change {
-            isVegan.textColor = ColorsList5
+            isVegan.textColor = .requestVegan
         } else {
-            isVegan.textColor = PonitColor3
+            isVegan.textColor = .allVegan
         }
     }
     

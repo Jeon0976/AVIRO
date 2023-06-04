@@ -67,9 +67,8 @@ extension HomeSearchViewController: HomeSearchProtocol {
         navigationItem.title = "검색 결과"
         
         // searchText
-        searchTextField.customClearButton()
+        searchTextField.makeCustomClearButton()
         searchTextField.placeholder = "가게 이름을 검색해보세요"
-        searchTextField.textColor = .black
         searchTextField.delegate = self
         searchTextField.rightView?.isHidden = true
         

@@ -10,7 +10,7 @@ import UIKit
 final class CommentDetailView: UIView {
     var title: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .mainTitle
         label.font = .systemFont(ofSize: 18, weight: .bold)
         label.text = "댓글"
 
@@ -19,7 +19,7 @@ final class CommentDetailView: UIView {
     
     var comentCount: UILabel = {
         let label = UILabel()
-        label.textColor = .lightGray
+        label.textColor = .subTitle
         label.font = .systemFont(ofSize: 14, weight: .medium)
         label.text = "0개"
 
@@ -40,7 +40,7 @@ final class CommentDetailView: UIView {
     var noCommentLabel: UILabel = {
         let label = UILabel()
        
-        label.textColor = .black
+        label.textColor = .mainTitle
         label.font = .systemFont(ofSize: 18, weight: .bold)
         label.text = "아직 댓글이 없어요"
         
@@ -49,7 +49,7 @@ final class CommentDetailView: UIView {
     
     var noCommentLabel2: UILabel = {
         let label = UILabel()
-        label.textColor = .lightGray
+        label.textColor = .subTitle
         label.font = .systemFont(ofSize: 14)
         label.text = "영광스러운 첫 댓글을 남겨주세요"
         
@@ -58,9 +58,9 @@ final class CommentDetailView: UIView {
 
     var commentButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = ColorsList4
+        button.backgroundColor = .plusButton
         button.setTitle("나도 댓글 달기", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.mainTitle, for: .normal)
         
         button.contentEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         button.layer.cornerRadius = 25
@@ -160,8 +160,8 @@ extension CommentDetailView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let items = items else { return 0 }
         
-        if items.count > 4 {
-            return 4
+        if items.count > 5 {
+            return 5
         }
         
         return items.count
@@ -193,18 +193,10 @@ extension CommentDetailView: UITableViewDelegate {
 class CommentDetailTableCell: UITableViewCell {
     static let identifier = "CommentDetailTableCell"
     
-    var comment = PaddingLabel()
+    var comment = CommentsLabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        comment.numberOfLines = 0
-        comment.lineBreakMode = .byWordWrapping
-        comment.layer.cornerRadius = 15
-        comment.textColor = ColorsList3
-        comment.backgroundColor = UIColor(red: 239/255, green: 240/255, blue: 240/255, alpha: 1)
-        comment.layer.masksToBounds = true
-        comment.font = .systemFont(ofSize: 16)
         
         [
             comment

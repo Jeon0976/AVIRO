@@ -136,7 +136,7 @@ class InrollTextField: UITextField {
         }
     }
     
-    func customClearButton() {
+    func makeCustomClearButton() {
         let customClearButton = UIButton(type: .custom)
         customClearButton.setImage(
             UIImage(named: "Close"),
@@ -147,6 +147,10 @@ class InrollTextField: UITextField {
         self.rightViewMode = .whileEditing
     }
     
+    func makeCustomPlaceHolder(_ text: String) {
+        let placeholderText = NSAttributedString(string: text, attributes: [.foregroundColor: UIColor.subTitle!])
+        self.attributedPlaceholder = placeholderText
+    }
 }
 
 // MARK: comment TextField 설정
@@ -216,6 +220,7 @@ class CommentsTextField: UITextField {
     }
 }
 
+// MARK: TitleTextField
 class TitleTextField: UITextField {
     private let commonInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
     
@@ -223,6 +228,10 @@ class TitleTextField: UITextField {
         super.init(frame: frame)
         setImage()
         shadowAndborder()
+        
+        self.textColor = .mainTitle
+        self.backgroundColor = .white
+        self.textAlignment = .natural
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -260,9 +269,12 @@ class TitleTextField: UITextField {
         self.layer.shadowOpacity = 0.25
         
         self.layer.cornerRadius = 16
-
     }
     
+    func makeCustomPlaceHolder(_ text: String) {
+        let placeholderText = NSAttributedString(string: text, attributes: [.foregroundColor: UIColor.subTitle!])
+        self.attributedPlaceholder = placeholderText
+    }
 }
 
 class EdgeInsetLabel: UILabel {
@@ -284,23 +296,3 @@ class EdgeInsetLabel: UILabel {
         super.drawText(in: rect.inset(by: textInsets))
     }
 }
-
-class PaddingLabel: UILabel {
-
-    var topInset: CGFloat = 10.0
-    var bottomInset: CGFloat = 10.0
-    var leftInset: CGFloat = 16.0
-    var rightInset: CGFloat = 16.0
-
-    override func drawText(in rect: CGRect) {
-        let insets = UIEdgeInsets(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
-        super.drawText(in: rect.inset(by: insets))
-    }
-
-    override var intrinsicContentSize: CGSize {
-        let size = super.intrinsicContentSize
-        return CGSize(width: size.width + leftInset + rightInset,
-                      height: size.height + topInset + bottomInset)
-    }
-}
-
