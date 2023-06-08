@@ -10,6 +10,7 @@
 		A156F24E1DC1F5FA54D44A76 /* Pods_AVIRO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 796022A3066B91147B712BB4 /* Pods_AVIRO.framework */; };
 		C50367F52A1795D10020C6BB /* HomeViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */; };
 		C50367F82A179D7B0020C6BB /* CustomConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F72A179D7B0020C6BB /* CustomConfiguration.swift */; };
+		C52B61CB2A31F97E001388E3 /* InrollPlaceUserInteractions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52B61CA2A31F97E001388E3 /* InrollPlaceUserInteractions.swift */; };
 		C52FA3432A175B20005E70DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FA3422A175B20005E70DC /* AppDelegate.swift */; };
 		C52FA3452A175B20005E70DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FA3442A175B20005E70DC /* SceneDelegate.swift */; };
 		C52FA3472A175B20005E70DC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FA3462A175B20005E70DC /* HomeViewController.swift */; };
@@ -71,6 +72,7 @@
 		B57500A8C1EA6C6CFDED2C4C /* Pods-AVIRO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AVIRO.debug.xcconfig"; path = "Target Support Files/Pods-AVIRO/Pods-AVIRO.debug.xcconfig"; sourceTree = "<group>"; };
 		C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewPresenter.swift; sourceTree = "<group>"; };
 		C50367F72A179D7B0020C6BB /* CustomConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomConfiguration.swift; sourceTree = "<group>"; };
+		C52B61CA2A31F97E001388E3 /* InrollPlaceUserInteractions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceUserInteractions.swift; sourceTree = "<group>"; };
 		C52FA33F2A175B20005E70DC /* AVIRO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AVIRO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C52FA3422A175B20005E70DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C52FA3442A175B20005E70DC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 			children = (
 				C5EB50F22A1DEC2400B29CC1 /* InrollPlaceLayout.swift */,
 				C5EB50F42A1DEC3900B29CC1 /* InrollPlaceAttribute.swift */,
+				C52B61CA2A31F97E001388E3 /* InrollPlaceUserInteractions.swift */,
 			);
 			path = InrollPlaceSeparated;
 			sourceTree = "<group>";
@@ -721,6 +724,7 @@
 				C5EB51162A21011C00B29CC1 /* DetailViewController.swift in Sources */,
 				C5EB51202A2118AB00B29CC1 /* MenuDetailView.swift in Sources */,
 				C5D745982A22C203006F9F31 /* MockData.swift in Sources */,
+				C52B61CB2A31F97E001388E3 /* InrollPlaceUserInteractions.swift in Sources */,
 				C5351B692A1A2EAF00116D50 /* CustomPresentation.swift in Sources */,
 				C5EB51122A20CC7D00B29CC1 /* HomeInfoStoreView.swift in Sources */,
 				C5EB50E42A1C685100B29CC1 /* TabBarItem.swift in Sources */,

@@ -228,10 +228,12 @@ extension InrollPlaceViewController {
     // MARK: Dynamic Table View
     private func dynamicsTableView() {
         // 동적 뷰를 위한 설정
+        // 최초 및 모든 버튼 비활성화 시 활성화될 layout
         veganDetailStackViewBottomL = veganDetailStackView.bottomAnchor.constraint(
             equalTo: reportStoreButton.topAnchor,
             constant: -32)
-        
+
+        // 어떤 버튼이라도 눌렀을 시 활성화될 layout
         tableHeaderViewL = [
             // Vegan Header View
             veganMenuHeaderStackView.topAnchor.constraint(
@@ -242,11 +244,13 @@ extension InrollPlaceViewController {
                 equalTo: storeTitleStackView.trailingAnchor)
         ]
         
+        //
         veganTableViewHeightConstraint = veganMenuTableView.heightAnchor.constraint(
             equalTo: storeTitleField.heightAnchor, multiplier: 1)
 
-        veganTableViewHeightConstraint.constant = 30
+        veganTableViewHeightConstraint.constant = 15
 
+        // Not Request Vegan Menu Table View의 Layout
         allAndVeganMenuL = [
             veganMenuTableView.topAnchor.constraint(
                 equalTo: veganMenuHeaderStackView.bottomAnchor, constant: 8),
@@ -255,15 +259,16 @@ extension InrollPlaceViewController {
             veganMenuTableView.trailingAnchor.constraint(
                 equalTo: storeTitleStackView.trailingAnchor),
             veganMenuTableView.bottomAnchor.constraint(
-                equalTo: reportStoreButton.topAnchor, constant: -30),
+                equalTo: reportStoreButton.topAnchor, constant: -32),
             veganTableViewHeightConstraint
         ]
         
         requestVeganTableViewHeightConstraint = howToRequestVeganMenuTableView.heightAnchor.constraint(
             equalTo: storeTitleField.heightAnchor, multiplier: 2)
 
-        requestVeganTableViewHeightConstraint.constant = 30
+        requestVeganTableViewHeightConstraint.constant = 25
         
+        // Request Vegan Menu Table View의 Layout
         howToRequestVeganMenuTableViewL = [
             howToRequestVeganMenuTableView.topAnchor.constraint(
                 equalTo: veganMenuHeaderStackView.bottomAnchor, constant: 8),
@@ -272,7 +277,7 @@ extension InrollPlaceViewController {
             howToRequestVeganMenuTableView.trailingAnchor.constraint(
                 equalTo: storeTitleStackView.trailingAnchor),
             howToRequestVeganMenuTableView.bottomAnchor.constraint(
-                equalTo: reportStoreButton.topAnchor, constant: -16),
+                equalTo: reportStoreButton.topAnchor, constant: -32),
             requestVeganTableViewHeightConstraint
         ]
         
@@ -313,7 +318,7 @@ extension InrollPlaceViewController {
             // storeLocationStackView
             storeLocationStackView.topAnchor.constraint(
                 equalTo: storeTitleStackView.bottomAnchor,
-                constant: 30),
+                constant: 32),
             storeLocationStackView.leadingAnchor.constraint(
                 equalTo: storeTitleStackView.leadingAnchor),
             storeLocationStackView.trailingAnchor.constraint(
@@ -322,7 +327,7 @@ extension InrollPlaceViewController {
             // storeCategoryStackView
             storeCategoryStackView.topAnchor.constraint(
                 equalTo: storeLocationStackView.bottomAnchor,
-                constant: 30),
+                constant: 32),
             storeCategoryStackView.leadingAnchor.constraint(
                 equalTo: storeTitleStackView.leadingAnchor),
             storeCategoryStackView.trailingAnchor.constraint(
@@ -331,7 +336,7 @@ extension InrollPlaceViewController {
             // storePhoneStackView
             storePhoneStackView.topAnchor.constraint(
                 equalTo: storeCategoryStackView.bottomAnchor,
-                constant: 30),
+                constant: 32),
             storePhoneStackView.leadingAnchor.constraint(
                 equalTo: storeTitleStackView.leadingAnchor),
             storePhoneStackView.trailingAnchor.constraint(
@@ -340,7 +345,7 @@ extension InrollPlaceViewController {
             // veganDetailStackView
             veganDetailStackView.topAnchor.constraint(
                 equalTo: storePhoneStackView.bottomAnchor,
-                constant: 30),
+                constant: 32),
             veganDetailStackView.leadingAnchor.constraint(
                 equalTo: storeTitleStackView.leadingAnchor),
             veganDetailStackView.trailingAnchor.constraint(
@@ -349,7 +354,7 @@ extension InrollPlaceViewController {
             
             // reportStoreButton
             reportStoreButton.bottomAnchor.constraint(
-                equalTo: scrollView.bottomAnchor, constant: -30),
+                equalTo: scrollView.bottomAnchor, constant: -32),
             reportStoreButton.leadingAnchor.constraint(
                 equalTo: storeTitleStackView.leadingAnchor),
             reportStoreButton.trailingAnchor.constraint(

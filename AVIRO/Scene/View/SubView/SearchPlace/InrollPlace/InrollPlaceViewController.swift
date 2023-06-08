@@ -64,9 +64,7 @@ final class InrollPlaceViewController: UIViewController {
     var veganTableViewHeightConstraint: NSLayoutConstraint!
     var requestVeganTableViewHeightConstraint: NSLayoutConstraint!
     
-    var veganTableHeightPlusValue = 70
     var veganTableHeightPlusValueTotal = 0
-    var requestVeganTableHeightPlusValue = 140
     var requestVeganTableHeightPlusValueTotal = 0
     
     // TableView Header View
@@ -300,29 +298,18 @@ extension InrollPlaceViewController {
     @objc func clickedAllVeganButton() {
         // ALL 비건 클릭 on
         if allVegan.backgroundColor != .mainTitle {
-            allVegan.setImage(UIImage(named: "올비건"), for: .normal)
-            allVegan.setTitleColor(.plusButton, for: .normal)
+            // Extension UserInteraction
+            updateVeganState(.allVeganClicked)
             
-            someMenuVegan.setImage(UIImage(named: "썸비건No"), for: .normal)
-            someMenuVegan.setTitleColor(.separateLine, for: .normal)
-            
-            ifRequestPossibleVegan.setImage(UIImage(named: "요청비건No"), for: .normal)
-            ifRequestPossibleVegan.setTitleColor(.separateLine, for: .normal)
-            
+            // VeganMenuTableView 보여주기
             showMenuTableView()
             isPossibleReportButton()
-            allVegan.backgroundColor = .mainTitle
-            someMenuVegan.backgroundColor = .white
-            ifRequestPossibleVegan.backgroundColor = .white
-            presenter.buttonChecked(true, false, false)
         } else {
         // ALL 비건 클릭 off
-            allVegan.setImage(UIImage(named: "올비건No"), for: .normal)
-            allVegan.setTitleColor(.separateLine, for: .normal)
+            updateVeganState(.offAll)
             
             defaultLayout()
             isNegativeReportButton()
-            allVegan.backgroundColor = .white
         }
     }
     
@@ -330,61 +317,31 @@ extension InrollPlaceViewController {
     @objc func clickedSomeMenuVeganButton() {
         // 비건 메뉴 포함, 요청하면 비건 둘다 클릭 안 되어있을 때
         if someMenuVegan.backgroundColor != .mainTitle && ifRequestPossibleVegan.backgroundColor != .mainTitle {
-            allVegan.setImage(UIImage(named: "올비건No"), for: .normal)
-            allVegan.setTitleColor(.separateLine, for: .normal)
+            // Extensnio UserInteraction
+            updateVeganState(.onlySomeVeganClicked)
             
-            someMenuVegan.setImage(UIImage(named: "썸비건"), for: .normal)
-            someMenuVegan.setTitleColor(.plusButton, for: .normal)
-            
-            ifRequestPossibleVegan.setImage(UIImage(named: "요청비건No"), for: .normal)
-            ifRequestPossibleVegan.setTitleColor(.separateLine, for: .normal)
-
+            // VeganMenuTableView 보여주기
             showMenuTableView()
             isPossibleReportButton()
-            allVegan.backgroundColor = .white
-            someMenuVegan.backgroundColor = .mainTitle
-            ifRequestPossibleVegan.backgroundColor = .white
-            presenter.buttonChecked(false, true, false)
             // 비건 메뉴 포함만 안 되있고, 요청하면 비건은 눌러져있을 때
         } else if someMenuVegan.backgroundColor != .mainTitle && ifRequestPossibleVegan.backgroundColor == .mainTitle {
-            allVegan.setImage(UIImage(named: "올비건No"), for: .normal)
-            allVegan.setTitleColor(.separateLine, for: .normal)
             
-            someMenuVegan.setImage(UIImage(named: "썸비건"), for: .normal)
-            someMenuVegan.setTitleColor(.plusButton, for: .normal)
-            
-            ifRequestPossibleVegan.setImage(UIImage(named: "요청비건"), for: .normal)
-            ifRequestPossibleVegan.setTitleColor(.plusButton, for: .normal)
+            updateVeganState(.someAndReqeustVeganClicked)
 
             showHowToRequestVeganMenuTableView()
             isPossibleReportButton()
-            allVegan.backgroundColor = .white
-            someMenuVegan.backgroundColor = .mainTitle
-            ifRequestPossibleVegan.backgroundColor = .mainTitle
-            presenter.buttonChecked(false, true, true)
+  
             // 둘 다 눌러져 있을 때
         } else if someMenuVegan.backgroundColor == .mainTitle && ifRequestPossibleVegan.backgroundColor == .mainTitle {
-            allVegan.setImage(UIImage(named: "올비건No"), for: .normal)
-            allVegan.setTitleColor(.separateLine, for: .normal)
             
-            someMenuVegan.setImage(UIImage(named: "썸비건No"), for: .normal)
-            someMenuVegan.setTitleColor(.separateLine, for: .normal)
+            updateVeganState(.onlyRequestVeganClicked)
             
-            ifRequestPossibleVegan.setImage(UIImage(named: "요청비건"), for: .normal)
-            ifRequestPossibleVegan.setTitleColor(.plusButton, for: .normal)
-
-            allVegan.backgroundColor = .white
-            someMenuVegan.backgroundColor = .white
-            ifRequestPossibleVegan.backgroundColor = .mainTitle
-            presenter.buttonChecked(false, false, true)
             // 비건 메뉴만 눌러져 있을 때
         } else {
-            someMenuVegan.setImage(UIImage(named: "썸비건No"), for: .normal)
-            someMenuVegan.setTitleColor(.separateLine, for: .normal)
-
+            updateVeganState(.offAll)
+            
             defaultLayout()
             isNegativeReportButton()
-            someMenuVegan.backgroundColor = .white
         }
     }
     
@@ -392,66 +349,31 @@ extension InrollPlaceViewController {
     @objc func clickedIfRequestPossibleVebanButton() {
         // 비건 메뉴 포함, 요청하면 비건 둘다 클릭 안 되어있을 때
         if ifRequestPossibleVegan.backgroundColor != .mainTitle && someMenuVegan.backgroundColor != .mainTitle {
-            allVegan.setImage(UIImage(named: "올비건No"), for: .normal)
-            allVegan.setTitleColor(.separateLine, for: .normal)
-            
-            someMenuVegan.setImage(UIImage(named: "썸비건No"), for: .normal)
-            someMenuVegan.setTitleColor(.separateLine, for: .normal)
-            
-            ifRequestPossibleVegan.setImage(UIImage(named: "요청비건"), for: .normal)
-            ifRequestPossibleVegan.setTitleColor(.plusButton, for: .normal)
+            updateVeganState(.onlyRequestVeganClicked)
             
             showHowToRequestVeganMenuTableView()
             isPossibleReportButton()
-            allVegan.backgroundColor = .white
-            someMenuVegan.backgroundColor = .white
-            ifRequestPossibleVegan.backgroundColor = .mainTitle
-            presenter.buttonChecked(false, false, true)
 
             // 비건 메뉴 포함만 눌러져 있을 때
         } else if ifRequestPossibleVegan.backgroundColor != .mainTitle && someMenuVegan.backgroundColor == .mainTitle {
-            allVegan.setImage(UIImage(named: "올비건No"), for: .normal)
-            allVegan.setTitleColor(.separateLine, for: .normal)
-            
-            someMenuVegan.setImage(UIImage(named: "썸비건"), for: .normal)
-            someMenuVegan.setTitleColor(.plusButton, for: .normal)
-            
-            ifRequestPossibleVegan.setImage(UIImage(named: "요청비건"), for: .normal)
-            ifRequestPossibleVegan.setTitleColor(.plusButton, for: .normal)
+            updateVeganState(.someAndReqeustVeganClicked)
             
             showHowToRequestVeganMenuTableView()
             isPossibleReportButton()
-            allVegan.backgroundColor = .white
-            someMenuVegan.backgroundColor = .mainTitle
-            ifRequestPossibleVegan.backgroundColor = .mainTitle
-            presenter.buttonChecked(false, true, true)
 
             // 둘다 눌러져 있을 때
         } else if someMenuVegan.backgroundColor == .mainTitle && ifRequestPossibleVegan.backgroundColor == .mainTitle {
-            allVegan.setImage(UIImage(named: "올비건No"), for: .normal)
-            allVegan.setTitleColor(.separateLine, for: .normal)
-            
-            someMenuVegan.setImage(UIImage(named: "썸비건"), for: .normal)
-            someMenuVegan.setTitleColor(.plusButton, for: .normal)
-            
-            ifRequestPossibleVegan.setImage(UIImage(named: "요청비건No"), for: .normal)
-            ifRequestPossibleVegan.setTitleColor(.separateLine, for: .normal)
+            updateVeganState(.onlySomeVeganClicked)
             
             showMenuTableView()
             isPossibleReportButton()
-            allVegan.backgroundColor = .white
-            someMenuVegan.backgroundColor = .mainTitle
-            ifRequestPossibleVegan.backgroundColor = .white
-            presenter.buttonChecked(false, true, false)
-
+            
             // 혼자만 눌러져 있을 때
         } else {
-            ifRequestPossibleVegan.setImage(UIImage(named: "요청비건No"), for: .normal)
-            ifRequestPossibleVegan.setTitleColor(.separateLine, for: .normal)
-
+            updateVeganState(.offAll)
+            
             defaultLayout()
             isNegativeReportButton()
-            ifRequestPossibleVegan.backgroundColor = .white
         }
     }
     
@@ -541,12 +463,24 @@ extension InrollPlaceViewController {
     // MARK: 모든걸 off 했을 때
     func defaultLayout() {
         UIView.animate(withDuration: 0.1, animations: { [weak self] in
+            
             self?.veganMenuHeaderStackView.alpha = 0
             self?.howToRequestVeganMenuTableView.alpha = 0
             self?.veganMenuHeaderStackView.alpha = 0
+            
         }, completion: { [weak self] _ in
             self?.veganMenuTableView.isHidden = true
             self?.howToRequestVeganMenuTableView.isHidden = true
+            self?.presenter.notRequestMenu = [NotRequestMenu(menu: "", price: "")]
+            self?.presenter.requestMenu = [RequestMenu(menu: "", price: "", howToRequest: "", isCheck: false)]
+            self?.veganMenuTableView.reloadData()
+            self?.howToRequestVeganMenuTableView.reloadData()
+            
+            self?.requestVeganTableViewHeightConstraint.constant -= CGFloat(integerLiteral: self?.requestVeganTableHeightPlusValueTotal ?? 0)
+            self?.veganTableViewHeightConstraint.constant -= CGFloat(integerLiteral: self?.veganTableHeightPlusValueTotal ?? 0)
+            
+            self?.requestVeganTableHeightPlusValueTotal = 0
+            self?.veganTableHeightPlusValueTotal = 0
             
             self?.veganDetailStackViewBottomL.isActive = true
             
@@ -565,17 +499,17 @@ extension InrollPlaceViewController {
         })
     }
     
-    // MARK: TableView Cell 데이터 추가
+    // MARK: TableView Cell 데이터 입력 창 추가
     @objc func plusCell() {
         if veganMenuTableView.isHidden {
             presenter.plusCell(false)
-            requestVeganTableHeightPlusValueTotal += requestVeganTableHeightPlusValue
-            requestVeganTableViewHeightConstraint.constant += CGFloat(integerLiteral: requestVeganTableHeightPlusValue)
+            requestVeganTableHeightPlusValueTotal += Int(storeTitleField.intrinsicContentSize.height * 2 + 25)
+            requestVeganTableViewHeightConstraint.constant += storeTitleField.intrinsicContentSize.height * 2 + 25
             view.layoutIfNeeded()
         } else {
             presenter.plusCell(true)
-            veganTableHeightPlusValueTotal += veganTableHeightPlusValue
-            veganTableViewHeightConstraint.constant += CGFloat(integerLiteral: veganTableHeightPlusValue)
+            veganTableHeightPlusValueTotal += Int(storeTitleField.intrinsicContentSize.height + 15)
+            veganTableViewHeightConstraint.constant += storeTitleField.intrinsicContentSize.height + 15
             view.layoutIfNeeded()
         }
     }
