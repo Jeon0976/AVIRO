@@ -478,8 +478,14 @@ extension InrollPlaceViewController {
         veganMenuHeaderStackView.alpha = 0
         veganMenuExplanation.text = "비건 메뉴"
         
+        presenter.requestMenu = [RequestMenu(menu: "", price: "", howToRequest: "", isCheck: false)]
         howToRequestVeganMenuTableView.isHidden = true
+        howToRequestVeganMenuTableView.reloadData()
+
+        requestVeganTableViewHeightConstraint.constant -= CGFloat(integerLiteral: requestVeganTableHeightPlusValueTotal)
         
+        requestVeganTableHeightPlusValueTotal = 0
+
         view.layoutIfNeeded()
         
         UIView.animate(withDuration: 0.4) { [weak self] in
@@ -515,6 +521,13 @@ extension InrollPlaceViewController {
         
         veganMenuTableView.isHidden = true
         
+        presenter.notRequestMenu = [NotRequestMenu(menu: "", price: "")]
+        veganMenuTableView.reloadData()
+        
+        veganTableViewHeightConstraint.constant -= CGFloat(integerLiteral: veganTableHeightPlusValueTotal)
+
+        veganTableHeightPlusValueTotal = 0
+
         view.layoutIfNeeded()
         
         UIView.animate(withDuration: 0.4) { [weak self] in
@@ -556,12 +569,12 @@ extension InrollPlaceViewController {
     @objc func plusCell() {
         if veganMenuTableView.isHidden {
             presenter.plusCell(false)
-            requestVeganTableHeightPlusValueTotal += 140
+            requestVeganTableHeightPlusValueTotal += requestVeganTableHeightPlusValue
             requestVeganTableViewHeightConstraint.constant += CGFloat(integerLiteral: requestVeganTableHeightPlusValue)
             view.layoutIfNeeded()
         } else {
             presenter.plusCell(true)
-            veganTableHeightPlusValueTotal += 70
+            veganTableHeightPlusValueTotal += veganTableHeightPlusValue
             veganTableViewHeightConstraint.constant += CGFloat(integerLiteral: veganTableHeightPlusValue)
             view.layoutIfNeeded()
         }
