@@ -77,7 +77,7 @@ extension InrollPlaceViewController {
     
     // MARK: vegan Header View
     public func veganHeaderViewAttribute() {
-        veganMenuExplanation.text = "비건 메뉴"
+        veganMenuExplanation.text = "메뉴 등록하기"
         veganMenuPlusButton.customImageConfig("plusButton", "plusButton")
     }
 }

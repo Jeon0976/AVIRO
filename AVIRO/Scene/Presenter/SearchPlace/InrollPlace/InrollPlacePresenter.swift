@@ -61,23 +61,9 @@ final class InrollPlacePresenter: NSObject {
     }
     
     func buttonChecked(_ allVegan: Bool, _ someMenuVegan: Bool, _ ifRequestVegan: Bool) {
-        if allVegan {
-            self.allVegan = true
-            self.someMenuVegan = false
-            self.ifRequestVegan = false
-        } else if someMenuVegan == true && ifRequestVegan == false {
-            self.allVegan = false
-            self.someMenuVegan = true
-            self.ifRequestVegan = false
-        } else if someMenuVegan == false && ifRequestVegan == true {
-            self.allVegan = false
-            self.someMenuVegan = false
-            self.ifRequestVegan = true
-        } else {
-            self.allVegan = false
-            self.someMenuVegan = true
-            self.ifRequestVegan = true
-        }
+        self.allVegan = allVegan
+        self.someMenuVegan = someMenuVegan
+        self.ifRequestVegan = ifRequestVegan
     }
     
     func reportData() {

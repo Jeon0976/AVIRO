@@ -148,7 +148,7 @@ final class InrollPlaceViewController: UIViewController {
         ifRequestPossibleVegan.setImage(UIImage(named: "요청비건No"), for: .normal)
         ifRequestPossibleVegan.setTitleColor(.separateLine, for: .normal)
         
-        defaultLayout()
+        updateViewChanges(.offAll)
     }
 }
 
@@ -293,210 +293,77 @@ extension InrollPlaceViewController {
             }
         })
     }
-    
     // MARK: ALL 비건 클릭 시
     @objc func clickedAllVeganButton() {
         // ALL 비건 클릭 on
-        if allVegan.backgroundColor != .mainTitle {
-            // Extension UserInteraction
+        if !presenter.allVegan {
             updateVeganState(.allVeganClicked)
+            updateViewChanges(.allVeganClicked)
             
-            // VeganMenuTableView 보여주기
-            showMenuTableView()
             isPossibleReportButton()
         } else {
         // ALL 비건 클릭 off
             updateVeganState(.offAll)
+            updateViewChanges(.offAll)
             
-            defaultLayout()
             isNegativeReportButton()
         }
     }
-    
     // MARK: 비건 메뉴 포함 클릭 시
     @objc func clickedSomeMenuVeganButton() {
         // 비건 메뉴 포함, 요청하면 비건 둘다 클릭 안 되어있을 때
-        if someMenuVegan.backgroundColor != .mainTitle && ifRequestPossibleVegan.backgroundColor != .mainTitle {
-            // Extensnio UserInteraction
+        if !presenter.someMenuVegan && !presenter.ifRequestVegan {
             updateVeganState(.onlySomeVeganClicked)
-            
-            // VeganMenuTableView 보여주기
-            showMenuTableView()
+            updateViewChanges(.onlySomeVeganClicked)
+
             isPossibleReportButton()
             // 비건 메뉴 포함만 안 되있고, 요청하면 비건은 눌러져있을 때
-        } else if someMenuVegan.backgroundColor != .mainTitle && ifRequestPossibleVegan.backgroundColor == .mainTitle {
-            
+        } else if !presenter.someMenuVegan && presenter.ifRequestVegan {
             updateVeganState(.someAndReqeustVeganClicked)
+            updateViewChanges(.someAndReqeustVeganClicked)
 
-            showHowToRequestVeganMenuTableView()
             isPossibleReportButton()
-  
             // 둘 다 눌러져 있을 때
-        } else if someMenuVegan.backgroundColor == .mainTitle && ifRequestPossibleVegan.backgroundColor == .mainTitle {
-            
+        } else if presenter.someMenuVegan && presenter.ifRequestVegan {
             updateVeganState(.onlyRequestVeganClicked)
-            
+            updateViewChanges(.onlyRequestVeganClicked)
+
             // 비건 메뉴만 눌러져 있을 때
         } else {
             updateVeganState(.offAll)
-            
-            defaultLayout()
+            updateViewChanges(.offAll)
+
             isNegativeReportButton()
         }
     }
-    
     // MARK: 요청하면 비건 클릭 시
     @objc func clickedIfRequestPossibleVebanButton() {
         // 비건 메뉴 포함, 요청하면 비건 둘다 클릭 안 되어있을 때
-        if ifRequestPossibleVegan.backgroundColor != .mainTitle && someMenuVegan.backgroundColor != .mainTitle {
+        if !presenter.ifRequestVegan && !presenter.someMenuVegan {
             updateVeganState(.onlyRequestVeganClicked)
-            
-            showHowToRequestVeganMenuTableView()
+            updateViewChanges(.onlyRequestVeganClicked)
+
             isPossibleReportButton()
 
             // 비건 메뉴 포함만 눌러져 있을 때
-        } else if ifRequestPossibleVegan.backgroundColor != .mainTitle && someMenuVegan.backgroundColor == .mainTitle {
+        } else if !presenter.ifRequestVegan && presenter.someMenuVegan {
             updateVeganState(.someAndReqeustVeganClicked)
-            
-            showHowToRequestVeganMenuTableView()
-            isPossibleReportButton()
+            updateViewChanges(.someAndReqeustVeganClicked)
 
-            // 둘다 눌러져 있을 때
-        } else if someMenuVegan.backgroundColor == .mainTitle && ifRequestPossibleVegan.backgroundColor == .mainTitle {
-            updateVeganState(.onlySomeVeganClicked)
-            
-            showMenuTableView()
             isPossibleReportButton()
-            
+            // 둘다 눌러져 있을 때
+        } else if presenter.ifRequestVegan && presenter.someMenuVegan {
+            updateVeganState(.onlySomeVeganClicked)
+            updateViewChanges(.onlySomeVeganClicked)
+
+            isPossibleReportButton()
             // 혼자만 눌러져 있을 때
         } else {
             updateVeganState(.offAll)
-            
-            defaultLayout()
+            updateViewChanges(.offAll)
+
             isNegativeReportButton()
         }
-    }
-    
-    // MARK: ALL or 비건 메뉴 포함 테이블 동적 보여주기
-    func showMenuTableView() {
-        veganDetailStackViewBottomL.isActive = false
-        
-        tableHeaderViewL.forEach {
-            $0.isActive = true
-        }
-        
-        howToRequestVeganMenuTableViewL.forEach {
-            $0.isActive = false
-        }
-        
-        allAndVeganMenuL.forEach {
-            $0.isActive = true
-        }
-        
-        veganMenuTableView.alpha = 0
-        veganMenuTableView.isHidden = false
-        
-        veganMenuHeaderStackView.isHidden = false
-        veganMenuHeaderStackView.alpha = 0
-        veganMenuExplanation.text = "비건 메뉴"
-        
-        presenter.requestMenu = [RequestMenu(menu: "", price: "", howToRequest: "", isCheck: false)]
-        howToRequestVeganMenuTableView.isHidden = true
-        howToRequestVeganMenuTableView.reloadData()
-
-        requestVeganTableViewHeightConstraint.constant -= CGFloat(integerLiteral: requestVeganTableHeightPlusValueTotal)
-        
-        requestVeganTableHeightPlusValueTotal = 0
-
-        view.layoutIfNeeded()
-        
-        UIView.animate(withDuration: 0.4) { [weak self] in
-            self?.veganMenuHeaderStackView.alpha = 1
-            self?.veganMenuTableView.alpha = 1
-        }
-        
-        veganMenuTableView.reloadData()
-    }
-    
-    // MARK: 요청하면 비건 테이블 동적 보여주기
-    func showHowToRequestVeganMenuTableView() {
-        veganDetailStackViewBottomL.isActive = false
-        
-        tableHeaderViewL.forEach {
-            $0.isActive = true
-        }
-        
-        allAndVeganMenuL.forEach {
-            $0.isActive = false
-        }
-        
-        howToRequestVeganMenuTableViewL.forEach {
-            $0.isActive = true
-        }
-        
-        howToRequestVeganMenuTableView.alpha = 0
-        howToRequestVeganMenuTableView.isHidden = false
-        
-        veganMenuHeaderStackView.isHidden = false
-        veganMenuHeaderStackView.alpha = 0
-        veganMenuExplanation.text = "메뉴 등록하기"
-        
-        veganMenuTableView.isHidden = true
-        
-        presenter.notRequestMenu = [NotRequestMenu(menu: "", price: "")]
-        veganMenuTableView.reloadData()
-        
-        veganTableViewHeightConstraint.constant -= CGFloat(integerLiteral: veganTableHeightPlusValueTotal)
-
-        veganTableHeightPlusValueTotal = 0
-
-        view.layoutIfNeeded()
-        
-        UIView.animate(withDuration: 0.4) { [weak self] in
-            self?.veganMenuHeaderStackView.alpha = 1
-            self?.howToRequestVeganMenuTableView.alpha = 1
-        }
-        
-        howToRequestVeganMenuTableView.reloadData()
-    }
-    
-    // MARK: 모든걸 off 했을 때
-    func defaultLayout() {
-        UIView.animate(withDuration: 0.1, animations: { [weak self] in
-            
-            self?.veganMenuHeaderStackView.alpha = 0
-            self?.howToRequestVeganMenuTableView.alpha = 0
-            self?.veganMenuHeaderStackView.alpha = 0
-            
-        }, completion: { [weak self] _ in
-            self?.veganMenuTableView.isHidden = true
-            self?.howToRequestVeganMenuTableView.isHidden = true
-            self?.presenter.notRequestMenu = [NotRequestMenu(menu: "", price: "")]
-            self?.presenter.requestMenu = [RequestMenu(menu: "", price: "", howToRequest: "", isCheck: false)]
-            self?.veganMenuTableView.reloadData()
-            self?.howToRequestVeganMenuTableView.reloadData()
-            
-            self?.requestVeganTableViewHeightConstraint.constant -= CGFloat(integerLiteral: self?.requestVeganTableHeightPlusValueTotal ?? 0)
-            self?.veganTableViewHeightConstraint.constant -= CGFloat(integerLiteral: self?.veganTableHeightPlusValueTotal ?? 0)
-            
-            self?.requestVeganTableHeightPlusValueTotal = 0
-            self?.veganTableHeightPlusValueTotal = 0
-            
-            self?.veganDetailStackViewBottomL.isActive = true
-            
-            self?.tableHeaderViewL.forEach {
-                $0.isActive = false
-            }
-            
-            self?.howToRequestVeganMenuTableViewL.forEach {
-                $0.isActive = false
-            }
-            
-            self?.allAndVeganMenuL.forEach {
-                $0.isActive = false
-            }
-            self?.view.layoutIfNeeded()
-        })
     }
     
     // MARK: TableView Cell 데이터 입력 창 추가
