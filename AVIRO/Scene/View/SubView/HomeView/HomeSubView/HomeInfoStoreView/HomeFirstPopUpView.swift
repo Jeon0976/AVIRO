@@ -38,7 +38,7 @@ class HomeFirstPopUpView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
     
-        self.backgroundColor = .white
+        self.backgroundColor = .lightGray.withAlphaComponent(0.3)
         self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         self.layer.cornerRadius = 20
         

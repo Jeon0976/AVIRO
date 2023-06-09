@@ -138,7 +138,9 @@ extension HomeViewController: HomeViewProtocol {
         
         // firstPopUpView
         firstPopupView.cancelButton.addTarget(self, action: #selector(firstPopupViewDelete), for: .touchUpInside)
-        firstPopupView.reportButton.addTarget(self, action: #selector(firstPopupViewReport), for: .touchUpInside)
+        firstPopupView.reportButton.addTarget(self, action: #selector(firstPopupViewTouchDown(_:)), for: .touchDown)
+        firstPopupView.reportButton.addTarget(self, action: #selector(firstPopupViewReport(_:)), for: .touchDragExit)
+        firstPopupView.reportButton.addTarget(self, action: #selector(firstPopupViewReport(_:)), for: .touchUpInside)
     }
     
     // MARK: Attribute
@@ -167,12 +169,29 @@ extension HomeViewController: HomeViewProtocol {
         firstPopupView.isHidden = true
     }
     
-    @objc func firstPopupViewReport() {
-        tabBarController?.selectedIndex = 2
-        let inrollViewController = InrollPlaceViewController()
-        let navigationController = tabBarController?.viewControllers?[2] as? UINavigationController
+    // MARK: firstPopUpViewButton
+    @objc func firstPopupViewTouchDown(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.1, animations: {
+            sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            sender.layer.opacity = 0.4
+        })
+    }
+    
+    @objc func firstPopupViewReport(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.05, animations: {
+            sender.transform = CGAffineTransform.identity
+            sender.layer.opacity = 1
+
+        }, completion: {  [weak self] _ in
+            self?.firstPopupView.isHidden = true
+
+            self?.tabBarController?.selectedIndex = 2
+            let inrollViewController = InrollPlaceViewController()
+            let navigationController = self?.tabBarController?.viewControllers?[2] as? UINavigationController
+            
+            navigationController?.setViewControllers([inrollViewController], animated: false)
+        })
         
-        navigationController?.setViewControllers([inrollViewController], animated: true)
     }
     
     // MARK: PlaceListView 불러오기

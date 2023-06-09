@@ -51,7 +51,6 @@ class HomeInfoStoreView: UIView {
         button.setImage(UIImage(named: "share"), for: .normal)
         button.setTitle("공유하기", for: .normal)
         button.setTitleColor(.mainTitle, for: .normal)
-        button.tintColor = .mainTitle
         
         button.imageView?.contentMode = .scaleAspectFit
         button.semanticContentAttribute = .forceLeftToRight
@@ -66,7 +65,6 @@ class HomeInfoStoreView: UIView {
         button.setImage(UIImage(named: "Bookmark"), for: .normal)
         button.setTitle("북마크", for: .normal)
         button.setTitleColor(.mainTitle, for: .normal)
-        button.tintColor = .mainTitle
 
         button.imageView?.contentMode = .scaleAspectFit
         button.semanticContentAttribute = .forceLeftToRight
@@ -79,7 +77,7 @@ class HomeInfoStoreView: UIView {
         
         button.setImage(UIImage(named: "comment"), for: .normal)
         button.setTitle("댓글", for: .normal)
-        button.tintColor = .mainTitle
+        button.setTitleColor(.mainTitle, for: .normal)
 
         button.imageView?.contentMode = .scaleAspectFit
         button.semanticContentAttribute = .forceLeftToRight
