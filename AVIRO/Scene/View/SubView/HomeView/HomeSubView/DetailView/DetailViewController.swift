@@ -66,7 +66,7 @@ final class DetailViewController: UIViewController {
 
 extension DetailViewController: DetailViewProtocol {
     func makeLayout() {
-        
+
         bindingTopDetailView()
         bindingStoreDetail()
         bindingMenuDetail()
@@ -79,6 +79,7 @@ extension DetailViewController: DetailViewProtocol {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
+        
         
         NSLayoutConstraint.activate([
             // indicator
@@ -160,7 +161,7 @@ extension DetailViewController: DetailViewProtocol {
     
     @objc func pushDetailComment() {
         guard let veganModel = presenter.veganModel else { return }
-        
+                
         let view = CommentsViewController()
         
         let presenter = CommentDetailPresenter(viewController: view, veganModel: veganModel)

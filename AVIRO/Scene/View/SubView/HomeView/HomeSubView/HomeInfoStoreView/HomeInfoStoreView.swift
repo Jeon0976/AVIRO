@@ -54,8 +54,11 @@ class HomeInfoStoreView: UIView {
         
         button.imageView?.contentMode = .scaleAspectFit
         button.semanticContentAttribute = .forceLeftToRight
-        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
+//        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 10)
 
+        button.contentHorizontalAlignment = .center
+        
         return button
     }()
     
@@ -63,12 +66,16 @@ class HomeInfoStoreView: UIView {
         let button = UIButton()
         
         button.setImage(UIImage(named: "Bookmark"), for: .normal)
-        button.setTitle("북마크", for: .normal)
+        button.setTitle("   북마크", for: .normal)
         button.setTitleColor(.mainTitle, for: .normal)
 
         button.imageView?.contentMode = .scaleAspectFit
         button.semanticContentAttribute = .forceLeftToRight
-        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
+//        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 10)
+
+        button.contentHorizontalAlignment = .center
+
         return button
     }()
     
@@ -76,12 +83,15 @@ class HomeInfoStoreView: UIView {
         let button = UIButton()
         
         button.setImage(UIImage(named: "comment"), for: .normal)
-        button.setTitle("댓글", for: .normal)
+        button.setTitle("    댓글", for: .normal)
         button.setTitleColor(.mainTitle, for: .normal)
 
         button.imageView?.contentMode = .scaleAspectFit
         button.semanticContentAttribute = .forceLeftToRight
-        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
+//        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 10)
+
+        button.contentHorizontalAlignment = .center
 
         return button
     }()
@@ -110,6 +120,7 @@ class HomeInfoStoreView: UIView {
         stackView.axis = .horizontal
         stackView.distribution = .fillProportionally
         stackView.alignment = .fill
+        
         stackView.spacing = 5
         
         return stackView

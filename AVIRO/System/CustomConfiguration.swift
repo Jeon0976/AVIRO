@@ -65,6 +65,7 @@ class ReportButton: UIButton {
     override var isEnabled: Bool {
         didSet {
             backgroundColor = isEnabled ? .plusButton : .separateLine
+            setTitleColor(isEnabled ? .mainTitle : .white, for: .normal)
         }
     }
 }

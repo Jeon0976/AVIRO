@@ -28,6 +28,9 @@ final class HomeViewController: UIViewController {
     // 최초 화면 뷰
     var firstPopupView = HomeFirstPopUpView()
     
+    // MARK: Blur
+    var blurEffectView = UIVisualEffectView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.locationAuthorization()
@@ -74,10 +77,18 @@ extension HomeViewController: HomeViewProtocol {
     func makeLayout() {
         view.backgroundColor = .white
         
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.regular)
+        blurEffectView.effect = blurEffect
+        blurEffectView.frame = view.bounds
+        // 넌 뭐냐
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurEffectView.alpha = 0.5
+        
         [
             naverMapView,
             loadLocationButton,
             searchTextField,
+            blurEffectView,
             firstPopupView
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -139,7 +150,7 @@ extension HomeViewController: HomeViewProtocol {
         // firstPopUpView
         firstPopupView.cancelButton.addTarget(self, action: #selector(firstPopupViewDelete), for: .touchUpInside)
         firstPopupView.reportButton.addTarget(self, action: #selector(firstPopupViewTouchDown(_:)), for: .touchDown)
-        firstPopupView.reportButton.addTarget(self, action: #selector(firstPopupViewReport(_:)), for: .touchDragExit)
+        firstPopupView.reportButton.addTarget(self, action: #selector(firstPopupViewReportOnlyPopUp(_:)), for: .touchDragExit)
         firstPopupView.reportButton.addTarget(self, action: #selector(firstPopupViewReport(_:)), for: .touchUpInside)
     }
     
@@ -167,6 +178,7 @@ extension HomeViewController: HomeViewProtocol {
     // MARK: firstPopupViewButton
     @objc func firstPopupViewDelete() {
         firstPopupView.isHidden = true
+        blurEffectView.isHidden = true
     }
     
     // MARK: firstPopUpViewButton
@@ -177,6 +189,13 @@ extension HomeViewController: HomeViewProtocol {
         })
     }
     
+    @objc func firstPopupViewReportOnlyPopUp(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.05, animations: {
+            sender.transform = CGAffineTransform.identity
+            sender.layer.opacity = 1
+        })
+    }
+    
     @objc func firstPopupViewReport(_ sender: UIButton) {
         UIView.animate(withDuration: 0.05, animations: {
             sender.transform = CGAffineTransform.identity
@@ -184,6 +203,7 @@ extension HomeViewController: HomeViewProtocol {
 
         }, completion: {  [weak self] _ in
             self?.firstPopupView.isHidden = true
+            self?.blurEffectView.isHidden = true
 
             self?.tabBarController?.selectedIndex = 2
             let inrollViewController = InrollPlaceViewController()
@@ -320,7 +340,8 @@ extension HomeViewController {
                         height: self?.view.frame.height ?? 0
                     )
                     self?.storeInfoView.entireView.alpha = 1
-                    self?.storeInfoView.imageView.isHidden = true
+                    self?.storeInfoView.imageView.alpha = 1
+                    self?.storeInfoView.topImageView.alpha = 1
                 }, completion: { [weak self] _ in
                     guard let address = self?.storeInfoView.address.text else { return }
                     self?.presenter.pushDetailViewController(address)

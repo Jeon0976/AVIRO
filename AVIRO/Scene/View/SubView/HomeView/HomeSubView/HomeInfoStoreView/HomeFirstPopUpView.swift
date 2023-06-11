@@ -31,6 +31,7 @@ class HomeFirstPopUpView: UIView {
         
         button.contentEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         button.layer.cornerRadius = 28
+        button.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
         
         return button
     }()
@@ -38,7 +39,7 @@ class HomeFirstPopUpView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
     
-        self.backgroundColor = .lightGray.withAlphaComponent(0.3)
+        self.backgroundColor = .white
         self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         self.layer.cornerRadius = 20
         

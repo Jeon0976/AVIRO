@@ -228,8 +228,9 @@ extension InrollPlaceViewController: InrollPlaceProtocol {
                                     action: #selector(reportStore),
                                     for: .touchUpInside
         )
-        reportStoreButton.layer.cornerRadius = 20
-        reportStoreButton.setTitleColor(.mainTitle, for: .normal)
+        reportStoreButton.layer.cornerRadius = 28
+        
+        reportStoreButton.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
         
         veganMenuTableView.isHidden = true
         howToRequestVeganMenuTableView.isHidden = true

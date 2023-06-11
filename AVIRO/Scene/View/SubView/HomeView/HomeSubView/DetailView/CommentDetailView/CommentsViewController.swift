@@ -112,6 +112,7 @@ extension CommentsViewController: CommentDetailProtocol {
     func makeAttribute() {
         // view & tap
         view.backgroundColor = .white
+        
         tapGesture.cancelsTouchesInView = false
         tapGesture.delegate = self
         tapGesture.addTarget(self, action: #selector(dismissKeyboard))

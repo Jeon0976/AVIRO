@@ -28,6 +28,8 @@ class CommentsViewCell: UITableViewCell {
               comment.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
               comment.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8)
           ])
+        
+        comment.numberOfLines = 0
     }
     
     required init?(coder: NSCoder) {
