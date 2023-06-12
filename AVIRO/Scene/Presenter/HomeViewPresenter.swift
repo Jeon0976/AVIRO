@@ -11,8 +11,9 @@ import CoreLocation
 protocol HomeViewProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
+    func makeGesture()
     func makeSlideView()
-    func presentPlaceListView(_ placeLists: [PlaceListModel])
+//    func presentPlaceListView(_ placeLists: [PlaceListModel])
     func ifDenied()
     func requestSuccess()
     func makeMarker(_ veganList: [VeganModel])
@@ -41,6 +42,7 @@ final class HomeViewPresenter: NSObject {
         
         viewController?.makeLayout()
         viewController?.makeAttribute()
+        viewController?.makeGesture()
         
        let mock = Mock()
         mock.make()

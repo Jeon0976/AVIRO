@@ -113,7 +113,7 @@ extension InrollPlaceViewController {
     }
     
     // MARK: Reset Table
-    private func resetTable() {
+    func resetTable() {
         hideHeaderView()
         hideTableView(veganMenuTableView) { [weak self] in
             self?.hideTableView(self?.howToRequestVeganMenuTableView ?? UITableView()) {

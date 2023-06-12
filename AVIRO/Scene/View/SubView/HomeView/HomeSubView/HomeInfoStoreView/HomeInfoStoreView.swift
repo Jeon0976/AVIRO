@@ -135,6 +135,15 @@ class HomeInfoStoreView: UIView {
         return view
     }()
     
+    let activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        
+        indicator.startAnimating()
+        indicator.alpha = 1
+        
+        return indicator
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
                 
@@ -144,6 +153,13 @@ class HomeInfoStoreView: UIView {
         self.layer.shadowOffset = CGSize(width: -2, height: -2)
         self.layer.shadowRadius = 4
         self.layer.shadowOpacity = 0.25
+        
+        entireView.backgroundColor = .white
+        entireView.layer.cornerRadius = 30
+        entireView.layer.shadowColor = UIColor.black.cgColor
+        entireView.layer.shadowOffset = CGSize(width: -2, height: -2)
+        entireView.layer.shadowRadius = 4
+        entireView.layer.shadowOpacity = 0.25
         
         [
             shareButton,
@@ -161,8 +177,9 @@ class HomeInfoStoreView: UIView {
             address,
             handleView,
             stackView,
+            topImageView,
             entireView,
-            topImageView
+            activityIndicator
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             addSubview($0)
@@ -200,8 +217,13 @@ class HomeInfoStoreView: UIView {
             entireView.topAnchor.constraint(equalTo: self.topAnchor),
             entireView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             entireView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            entireView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            entireView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            
+            // indicator
+            activityIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
+        
     }
     
     required init?(coder: NSCoder) {

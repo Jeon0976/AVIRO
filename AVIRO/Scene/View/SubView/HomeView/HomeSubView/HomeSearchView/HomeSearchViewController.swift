@@ -19,7 +19,6 @@ final class HomeSearchViewController: UIViewController {
         super.viewDidLoad()
         
         presenter.viewDidLoad()
-        
     }
 }
 
@@ -55,16 +54,21 @@ extension HomeSearchViewController: HomeSearchProtocol {
     }
     
     func makeAttribute() {
-        tabBarController?.tabBar.isHidden = true
-        tabBarController?.tabBar.isTranslucent = true
-        tabBarController?.tabBar.backgroundColor = .clear
-        
-        // navigation, view
+        // Navigation, View, TabBar
         view.addGestureRecognizer(tapGesture)
+        
         tapGesture.cancelsTouchesInView = false
         tapGesture.delegate = self
+        
         view.backgroundColor = .white
         navigationItem.title = "검색 결과"
+        
+        navigationController?.navigationBar.isHidden = false
+        
+        // TabBar Controller
+        if let tabBarController = self.tabBarController as? TabBarViewController {
+            tabBarController.hiddenTabBar(true)
+        }
         
         // searchText
         searchTextField.makeCustomClearButton()

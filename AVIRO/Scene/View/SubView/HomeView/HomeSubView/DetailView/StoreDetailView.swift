@@ -139,7 +139,8 @@ final class StoreDetailView: UIView {
             // storeDetailLabel
             storeDetailLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
             storeDetailLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            
+            storeDetailLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+
             // addressIcon
             addressIcon.topAnchor.constraint(equalTo: storeDetailLabel.bottomAnchor, constant: 30),
             addressIcon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30),
@@ -147,6 +148,7 @@ final class StoreDetailView: UIView {
             // addressLabel
             addressLabel.centerYAnchor.constraint(equalTo: addressIcon.centerYAnchor),
             addressLabel.leadingAnchor.constraint(equalTo: addressIcon.trailingAnchor, constant: 10),
+            addressLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             
             // firstSeperator
             firstSeparator.topAnchor.constraint(equalTo: addressIcon.bottomAnchor, constant: 10),
@@ -173,7 +175,8 @@ final class StoreDetailView: UIView {
             // categoryLabel
             categoryLabel.centerYAnchor.constraint(equalTo: categoryIcon.centerYAnchor),
             categoryLabel.leadingAnchor.constraint(equalTo: categoryIcon.trailingAnchor, constant: 10),
-            
+            categoryLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+
             // thridSeparator
             thridSeparator.topAnchor.constraint(equalTo: categoryIcon.bottomAnchor, constant: 10),
             thridSeparator.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),

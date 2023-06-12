@@ -214,7 +214,7 @@
 			isa = PBXGroup;
 			children = (
 				C5EB51022A20927400B29CC1 /* HomeReferModel */,
-				C5EB51012A20926800B29CC1 /* UIReferModel */,
+				C5EB51012A20926800B29CC1 /* TapBarModel */,
 				C5351B782A1B437600116D50 /* APIResonseModel */,
 				C5351B652A1A128D00116D50 /* SingleTonModel */,
 				C5351B7B2A1B52A000116D50 /* PlaceListModel */,
@@ -469,12 +469,12 @@
 			path = InrollTableView;
 			sourceTree = "<group>";
 		};
-		C5EB51012A20926800B29CC1 /* UIReferModel */ = {
+		C5EB51012A20926800B29CC1 /* TapBarModel */ = {
 			isa = PBXGroup;
 			children = (
 				C5EB50E32A1C685100B29CC1 /* TabBarItem.swift */,
 			);
-			path = UIReferModel;
+			path = TapBarModel;
 			sourceTree = "<group>";
 		};
 		C5EB51022A20927400B29CC1 /* HomeReferModel */ = {

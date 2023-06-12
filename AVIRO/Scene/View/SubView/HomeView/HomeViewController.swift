@@ -25,6 +25,7 @@ final class HomeViewController: UIViewController {
     
     // store 뷰 관련
     var storeInfoView = HomeInfoStoreView()
+    var panGesture = UIPanGestureRecognizer()
     var pageUpGesture = UISwipeGestureRecognizer()
     var pageDownGesture = UISwipeGestureRecognizer()
     
@@ -36,21 +37,21 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         presenter.locationAuthorization()
         presenter.viewDidLoad()
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+                
         presenter.viewWillAppear()
         presenter.loadVeganData()
-
+        
         navigationController?.navigationBar.isHidden = true
         
         // TabBar Controller
-        tabBarController?.tabBar.isHidden = false
-        tabBarController?.tabBar.isTranslucent = false
-        tabBarController?.tabBar.backgroundColor = .white
-        
+        if let tabBarController = self.tabBarController as? TabBarViewController {
+            tabBarController.hiddenTabBar(false)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -58,19 +59,11 @@ final class HomeViewController: UIViewController {
         
         presenter.firstLocationUpdate()
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        navigationController?.navigationBar.isHidden = false
-    }
 }
 
 extension HomeViewController: HomeViewProtocol {
     // MARK: Layout
     func makeLayout() {
-        view.backgroundColor = .white
-        
         [
             naverMapView,
             loadLocationButton,
@@ -105,32 +98,31 @@ extension HomeViewController: HomeViewProtocol {
             searchTextField.trailingAnchor.constraint(
                 equalTo: naverMapView.trailingAnchor, constant: -16)
         ])
-        
-        // 제스쳐 설정
-        [
-            pageUpGesture,
-            pageDownGesture
-        ].forEach {
-            storeInfoView.addGestureRecognizer($0)
-        }
-        
-        pageUpGesture.direction = .up
-        pageDownGesture.direction = .down
-        
-        pageUpGesture.addTarget(self, action: #selector(respondToSwipeGesture))
-        pageDownGesture.addTarget(self, action: #selector(respondToSwipeGesture))
-        
     }
     
     // MARK: Attribute
     func makeAttribute() {
-        // View, Navigation
+        // Navigation, View, TabBar
+        view.backgroundColor = .white
+
         let backItem = UIBarButtonItem()
         backItem.title = ""
         navigationItem.backBarButtonItem = backItem
         
         // lodeLocationButton
         loadLocationButton.setImage(UIImage(named: "PersonalLocation"), for: .normal)
+        loadLocationButton.addTarget(
+            self,
+            action: #selector(refreshMyLocationTouchDown),
+            for: .touchDown
+        )
+        
+        loadLocationButton.addTarget(
+            self,
+            action: #selector(refreshMyLocationOnlyPopUp),
+            for: .touchDragExit
+        )
+        
         loadLocationButton.addTarget(
             self,
             action: #selector(refreshMyLocation),
@@ -142,7 +134,65 @@ extension HomeViewController: HomeViewProtocol {
         searchTextField.delegate = self
         
     }
+    // MARK: Gesture 설정
+    func makeGesture() {
+        storeInfoView.addGestureRecognizer(panGesture)
+        panGesture.addTarget(self, action: #selector(panGestureHandler))
+    }
     
+    @objc func panGestureHandler(recognizer: UIPanGestureRecognizer) {
+        let translation = recognizer.translation(in: storeInfoView)
+        let velocity = recognizer.velocity(in: self.view)
+        
+        let minHeight = view.frame.minY
+        let maxHeight = view.frame.maxY
+        
+        let currentHeight = storeInfoView.frame.height
+        
+        if recognizer.state == .changed {
+            let newHeight = currentHeight - translation.y
+            if newHeight >= minHeight && newHeight <= maxHeight {
+                storeInfoView.frame = CGRect(x: 0,
+                                             y: self.view.frame.height - newHeight + 32,
+                                             width: view.frame.width,
+                                             height: newHeight
+                )
+                recognizer.setTranslation(CGPoint.zero, in: self.view)
+                
+                let newAlpha = (newHeight - minHeight) / (maxHeight - minHeight)
+                storeInfoView.entireView.alpha = newAlpha
+                storeInfoView.activityIndicator.alpha = newAlpha
+            }
+        } else if recognizer.state == .ended {
+            UIView.animate(withDuration: 0.3, animations: {
+                if velocity.y >= 0 {
+                    self.storeInfoView.frame = CGRect(x: 0,
+                                                      y: self.view.frame.height,
+                                                      width: self.view.frame.width,
+                                                      height: CGFloat(self.slideViewHeight)
+                    )
+                    self.storeInfoView.entireView.alpha = 0
+                    self.storeInfoView.activityIndicator.alpha = 0
+                    self.view.layoutIfNeeded()
+                } else {
+                    self.storeInfoView.frame = CGRect(x: 0,
+                                                      y: self.view.frame.height - maxHeight + 32,
+                                                      width: self.view.frame.width,
+                                                      height: maxHeight
+                    )
+                    self.storeInfoView.entireView.alpha = 1
+                    self.storeInfoView.activityIndicator.alpha = 1
+                }
+                self.view.layoutIfNeeded()
+            }, completion: { [weak self] _ in
+                if !(velocity.y >= 0) {
+                    guard let address = self?.storeInfoView.address.text else { return }
+                    self?.presenter.pushDetailViewController(address)
+                }
+            })
+        }
+    }
+
     // MARK: SlideView 설정
     func makeSlideView() {
         // first popup view
@@ -160,6 +210,7 @@ extension HomeViewController: HomeViewProtocol {
         // store info view
         storeInfoView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: CGFloat(slideViewHeight))
         storeInfoView.entireView.alpha = 0
+        storeInfoView.activityIndicator.alpha = 0
         
         [
             blurEffectView,
@@ -211,26 +262,9 @@ extension HomeViewController: HomeViewProtocol {
             self?.blurEffectView.isHidden = true
 
             self?.tabBarController?.selectedIndex = 2
-            let inrollViewController = InrollPlaceViewController()
-            let navigationController = self?.tabBarController?.viewControllers?[2] as? UINavigationController
-            
-            navigationController?.setViewControllers([inrollViewController], animated: false)
         })
-        
     }
     
-    // MARK: PlaceListView 불러오기
-    func presentPlaceListView(_ placeLists: [PlaceListModel]) {
-        let viewController = PlaceListViewController()
-        let presenter = PlaceListViewPresenter(
-            viewController: viewController,
-            placeList: placeLists
-        )
-        viewController.presenter = presenter
-        viewController.modalPresentationStyle = .custom
-        present(viewController, animated: true)
-    }
-        
     // 위치 denied 할 때
     func ifDenied() {
         PersonalLocation.shared.longitude = 129.118924
@@ -292,12 +326,14 @@ extension HomeViewController: HomeViewProtocol {
                                  }
                                  storeInfoView.imageView.contentMode = .scaleAspectFit
                                  storeInfoView.topImageView.contentMode = .scaleAspectFit
-                                 
-  
-                                 let height = storeInfoView.frame.height
-                                 
+                                                                  
                                  UIView.animate(withDuration: 0.3) {
-                                     self.storeInfoView.frame = CGRect(x: 0, y: self.view.frame.height - height + 32, width: self.storeInfoView.frame.width, height: CGFloat(self.slideViewHeight))
+                                     self.storeInfoView.frame = CGRect(
+                                        x: 0,
+                                        y: self.view.frame.height - CGFloat(self.slideViewHeight) + 16,
+                                        width: self.view.frame.width,
+                                        height: CGFloat(self.slideViewHeight + 16)
+                                     )
                                  }
                              }
                              return true
@@ -324,8 +360,27 @@ extension HomeViewController: HomeViewProtocol {
 
 extension HomeViewController {
     // MARK: 내 위치 최신화 버튼 클릭 시
-    @objc func refreshMyLocation() {
-        presenter.locationUpdate()
+    @objc func refreshMyLocationTouchDown(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.1, animations: {
+            sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            sender.layer.opacity = 0.4
+        })
+    }
+    
+    @objc func refreshMyLocationOnlyPopUp(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.05, animations: {
+            sender.transform = CGAffineTransform.identity
+            sender.layer.opacity = 1
+        })
+    }
+    
+    @objc func refreshMyLocation(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.05, animations: {
+            sender.transform = CGAffineTransform.identity
+            sender.layer.opacity = 1
+        }, completion: { [weak self] _ in
+            self?.presenter.locationUpdate()
+        })
     }
     
     // MARK: swipeUp&Down Gesture

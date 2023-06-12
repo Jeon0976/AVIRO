@@ -27,10 +27,6 @@ final class DetailViewController: UIViewController {
         super.viewDidLoad()
         presenter.viewDidLoad()
         
-        tabBarController?.tabBar.isHidden = true
-        tabBarController?.tabBar.isTranslucent = true
-        tabBarController?.tabBar.backgroundColor = .clear
-        
         // MARK: Comment 업데이트 NotificationCenter
         NotificationCenter.default.addObserver(
             self,
@@ -79,7 +75,6 @@ extension DetailViewController: DetailViewProtocol {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
-        
         
         NSLayoutConstraint.activate([
             // indicator
@@ -145,6 +140,14 @@ extension DetailViewController: DetailViewProtocol {
         indicator.alpha = 1
         navigationItem.title = presenter.veganModel?.placeModel.title
         navigationItem.backButtonDisplayMode = .generic
+        
+        navigationController?.navigationBar.isHidden = false
+        
+        // TabBar Controller
+        if let tabBarController = self.tabBarController as? TabBarViewController {
+            tabBarController.hiddenTabBar(true)
+        }
+        
         scrollView.isHidden = true
         scrollView.backgroundColor = .separateLine
         topDetail.backgroundColor = .white

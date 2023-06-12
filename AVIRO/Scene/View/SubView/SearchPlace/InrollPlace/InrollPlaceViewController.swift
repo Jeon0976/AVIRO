@@ -126,30 +126,6 @@ final class InrollPlaceViewController: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name("selectedPlace"), object: nil)
     }
-    
-    // MARK: refreshData
-    func refreshData() {
-        storeTitleField.text = ""
-        storeLocationField.text = ""
-        storeCategoryField.text = ""
-        storePhoneField.text = ""
-        allVegan.backgroundColor = .white
-        someMenuVegan.backgroundColor = .white
-        ifRequestPossibleVegan.backgroundColor = .white
-        navigationItem.rightBarButtonItem?.isEnabled = false
-        reportStoreButton.isEnabled = false
-        
-        allVegan.setImage(UIImage(named: "올비건No"), for: .normal)
-        allVegan.setTitleColor(.separateLine, for: .normal)
-        
-        someMenuVegan.setImage(UIImage(named: "썸비건No"), for: .normal)
-        someMenuVegan.setTitleColor(.separateLine, for: .normal)
-        
-        ifRequestPossibleVegan.setImage(UIImage(named: "요청비건No"), for: .normal)
-        ifRequestPossibleVegan.setTitleColor(.separateLine, for: .normal)
-        
-        updateViewChanges(.offAll)
-    }
 }
 
 extension InrollPlaceViewController: InrollPlaceProtocol {
@@ -274,14 +250,8 @@ extension InrollPlaceViewController {
     @objc func reportStore() {
         presenter.reportData()
         refreshData()
-        
-        requestVeganTableViewHeightConstraint.constant -= CGFloat(integerLiteral: requestVeganTableHeightPlusValueTotal)
-        veganTableViewHeightConstraint.constant -= CGFloat(integerLiteral: veganTableHeightPlusValueTotal)
+        resetTable()
 
-        requestVeganTableHeightPlusValueTotal = 0
-        veganTableHeightPlusValueTotal = 0
-        
-        view.layoutIfNeeded()
         UIView.animate(withDuration: 0.1, animations: { [weak self] in
             self?.view.alpha = 0.8
         }, completion: { [weak self] _ in
@@ -294,6 +264,37 @@ extension InrollPlaceViewController {
             }
         })
     }
+    // MARK: refreshData
+    func refreshData() {
+        storeTitleField.text = ""
+        storeLocationField.text = ""
+        storeCategoryField.text = ""
+        storePhoneField.text = ""
+        
+        allVegan.backgroundColor = .white
+        allVegan.layer.borderColor = UIColor.separateLine?.cgColor
+        
+        someMenuVegan.backgroundColor = .white
+        someMenuVegan.layer.borderColor = UIColor.separateLine?.cgColor
+        
+        ifRequestPossibleVegan.backgroundColor = .white
+        ifRequestPossibleVegan.layer.borderColor = UIColor.separateLine?.cgColor
+        
+        navigationItem.rightBarButtonItem?.isEnabled = false
+        reportStoreButton.isEnabled = false
+        
+        allVegan.setImage(UIImage(named: "올비건No"), for: .normal)
+        allVegan.setTitleColor(.separateLine, for: .normal)
+        
+        someMenuVegan.setImage(UIImage(named: "썸비건No"), for: .normal)
+        someMenuVegan.setTitleColor(.separateLine, for: .normal)
+        
+        ifRequestPossibleVegan.setImage(UIImage(named: "요청비건No"), for: .normal)
+        ifRequestPossibleVegan.setTitleColor(.separateLine, for: .normal)
+        
+        updateViewChanges(.offAll)
+    }
+
     // MARK: ALL 비건 클릭 시
     @objc func clickedAllVeganButton() {
         // ALL 비건 클릭 on
