@@ -66,6 +66,14 @@ class HomeFirstPopUpView: UIView {
             reportButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             reportButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
         ])
+        
+        imageView.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        cancelButton.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        reportButton.setContentHuggingPriority(.defaultHigh, for: .vertical)
+
+        imageView.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+        cancelButton.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+        reportButton.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
     }
     
     required init?(coder: NSCoder) {

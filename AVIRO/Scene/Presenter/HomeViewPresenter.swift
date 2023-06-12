@@ -11,6 +11,7 @@ import CoreLocation
 protocol HomeViewProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
+    func makeSlideView()
     func presentPlaceListView(_ placeLists: [PlaceListModel])
     func ifDenied()
     func requestSuccess()
@@ -43,6 +44,10 @@ final class HomeViewPresenter: NSObject {
         
        let mock = Mock()
         mock.make()
+    }
+    
+    func viewWillAppear() {
+        viewController?.makeSlideView()
     }
     
     // MARK: vegan Data 불러오기

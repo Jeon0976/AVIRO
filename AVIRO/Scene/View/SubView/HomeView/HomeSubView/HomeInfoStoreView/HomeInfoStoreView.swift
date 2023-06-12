@@ -137,7 +137,7 @@ class HomeInfoStoreView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+                
         self.backgroundColor = .white
         self.layer.cornerRadius = 30
         self.layer.shadowColor = UIColor.black.cgColor
@@ -167,7 +167,7 @@ class HomeInfoStoreView: UIView {
             $0.translatesAutoresizingMaskIntoConstraints = false
             addSubview($0)
         }
-        
+
         NSLayoutConstraint.activate([
             // handleView
             handleView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
@@ -182,21 +182,20 @@ class HomeInfoStoreView: UIView {
             // imageView
             imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             imageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
-            imageView.bottomAnchor.constraint(equalTo: title.topAnchor, constant: -20),
             
             // title
             title.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            title.bottomAnchor.constraint(equalTo: address.topAnchor, constant: -16),
+            title.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 3),
             
             // address
             address.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            address.bottomAnchor.constraint(equalTo: stackView.topAnchor, constant: -20),
+            address.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 8),
             
             // stackView
             stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -40),
-            
+            stackView.topAnchor.constraint(equalTo: address.bottomAnchor, constant: 20),
+             
             // entireView
             entireView.topAnchor.constraint(equalTo: self.topAnchor),
             entireView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
