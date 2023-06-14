@@ -138,59 +138,6 @@ extension HomeViewController: HomeViewProtocol {
         panGesture.addTarget(self, action: #selector(panGestureHandler))
     }
     
-    @objc func panGestureHandler(recognizer: UIPanGestureRecognizer) {
-        let translation = recognizer.translation(in: storeInfoView)
-        let velocity = recognizer.velocity(in: self.view)
-        
-        let minHeight = view.frame.minY
-        let maxHeight = view.frame.maxY
-        
-        let currentHeight = storeInfoView.frame.height
-        
-        if recognizer.state == .changed {
-            let newHeight = currentHeight - translation.y
-            if newHeight >= minHeight && newHeight <= maxHeight {
-                storeInfoView.frame = CGRect(x: 0,
-                                             y: self.view.frame.height - newHeight + 32,
-                                             width: view.frame.width,
-                                             height: newHeight
-                )
-                recognizer.setTranslation(CGPoint.zero, in: self.view)
-                
-                let newAlpha = (newHeight - minHeight) / (maxHeight - minHeight)
-                storeInfoView.entireView.alpha = newAlpha
-                storeInfoView.activityIndicator.alpha = newAlpha
-            }
-        } else if recognizer.state == .ended {
-            UIView.animate(withDuration: 0.3, animations: {
-                if velocity.y >= 0 {
-                    self.storeInfoView.frame = CGRect(x: 0,
-                                                      y: self.view.frame.height,
-                                                      width: self.view.frame.width,
-                                                      height: StaticLayout.slideViewHeight
-                    )
-                    self.storeInfoView.entireView.alpha = 0
-                    self.storeInfoView.activityIndicator.alpha = 0
-                    self.view.layoutIfNeeded()
-                } else {
-                    self.storeInfoView.frame = CGRect(x: 0,
-                                                      y: self.view.frame.height - maxHeight + 32,
-                                                      width: self.view.frame.width,
-                                                      height: maxHeight
-                    )
-                    self.storeInfoView.entireView.alpha = 1
-                    self.storeInfoView.activityIndicator.alpha = 1
-                }
-                self.view.layoutIfNeeded()
-            }, completion: { [weak self] _ in
-                if !(velocity.y >= 0) {
-                    guard let address = self?.storeInfoView.address.text else { return }
-                    self?.presenter.pushDetailViewController(address)
-                }
-            })
-        }
-    }
-
     // MARK: SlideView 설정
     func makeSlideView() {
         // first popup view
@@ -199,15 +146,22 @@ extension HomeViewController: HomeViewProtocol {
         blurEffectView.frame = view.bounds
         blurEffectView.alpha = 0.6
         
-        firstPopupView.cancelButton.addTarget(self, action: #selector(firstPopupViewDelete), for: .touchUpInside)
-        firstPopupView.reportButton.addTarget(self, action: #selector(firstPopupViewTouchDown(_:)), for: .touchDown)
-        firstPopupView.reportButton.addTarget(self, action: #selector(firstPopupViewReportOnlyPopUp(_:)), for: .touchDragExit)
-        firstPopupView.reportButton.addTarget(self, action: #selector(firstPopupViewReport(_:)), for: .touchUpInside)
-        
-        // store info view
-        storeInfoView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: CGFloat(StaticLayout.slideViewHeight))
-        storeInfoView.entireView.alpha = 0
-        storeInfoView.activityIndicator.alpha = 0
+        firstPopupView.cancelButton.addTarget(self,
+                                              action: #selector(firstPopupViewDelete),
+                                              for: .touchUpInside
+        )
+        firstPopupView.reportButton.addTarget(self,
+                                              action: #selector(firstPopupViewTouchDown(_:)),
+                                              for: .touchDown
+        )
+        firstPopupView.reportButton.addTarget(self,
+                                              action: #selector(firstPopupViewReportOnlyPopUp(_:)),
+                                              for: .touchDragExit
+        )
+        firstPopupView.reportButton.addTarget(self,
+                                              action: #selector(firstPopupViewReport(_:)),
+                                              for: .touchUpInside
+        )
         
         [
             blurEffectView,
@@ -217,8 +171,6 @@ extension HomeViewController: HomeViewProtocol {
             view.addSubview($0)
         }
         
-        view.addSubview(storeInfoView)
-        
         NSLayoutConstraint.activate([
             // firstPopUpView
             firstPopupView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -226,49 +178,19 @@ extension HomeViewController: HomeViewProtocol {
             firstPopupView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             firstPopupView.heightAnchor.constraint(equalToConstant: StaticLayout.firstSlideViewHeight)
         ])
-    }
-    
-    // MARK: firstPopupView Delete Animation
-    @objc func firstPopupViewDelete() {
-        UIView.animate(withDuration: 0.15, animations: {
-            self.blurEffectView.alpha = 0
-            self.firstPopupView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: StaticLayout.firstSlideViewHeight)
-        }, completion: { [weak self] _ in
-            // 왜? hidden처리 안 하면,
-            // marker클릭할 때 firstPopupView도 같이 올라옴??
-            self?.firstPopupView.isHidden = true
-            self?.blurEffectView.isHidden = true
-        })
-    }
-    
-    // MARK: firstPopUpView Report Animation
-    @objc func firstPopupViewTouchDown(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.1, animations: {
-            sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-            sender.layer.opacity = 0.4
-        })
-    }
-    
-    @objc func firstPopupViewReportOnlyPopUp(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.05, animations: {
-            sender.transform = CGAffineTransform.identity
-            sender.layer.opacity = 1
-        })
-    }
-    
-    @objc func firstPopupViewReport(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.05, animations: {
-            sender.transform = CGAffineTransform.identity
-            sender.layer.opacity = 1
+        
+        // store info view
+        storeInfoView.frame = CGRect(x: 0,
+                                     y: self.view.frame.height,
+                                     width: self.view.frame.width,
+                                     height: CGFloat(StaticLayout.slideViewHeight)
+        )
+        storeInfoView.entireView.alpha = 0
+        storeInfoView.activityIndicator.alpha = 0
 
-        }, completion: {  [weak self] _ in
-            self?.firstPopupView.isHidden = true
-            self?.blurEffectView.isHidden = true
-
-            self?.tabBarController?.selectedIndex = 2
-        })
+        view.addSubview(storeInfoView)
     }
-    
+    // MARK: 위치 denided or approval
     // 위치 denied 할 때
     func ifDenied() {
         PersonalLocation.shared.longitude = 129.118924
@@ -297,11 +219,11 @@ extension HomeViewController: HomeViewProtocol {
                 marker.height = 30
                 markers.append(marker)
                 if veganModel.allVegan {
-                    marker.iconImage = NMFOverlayImage(name: "allVegan")
+                    marker.iconImage = NMFOverlayImage(name: StaticImage.allVegan)
                 } else if veganModel.someMenuVegan {
-                    marker.iconImage = NMFOverlayImage(name: "someMenuVegan")
+                    marker.iconImage = NMFOverlayImage(name: StaticImage.someMenuVegan)
                 } else {
-                    marker.iconImage = NMFOverlayImage(name: "requestVegan")
+                    marker.iconImage = NMFOverlayImage(name: StaticImage.requestVegan)
                 }
                 // Marker 터치할 때
                 marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
@@ -314,19 +236,19 @@ extension HomeViewController: HomeViewProtocol {
                                  
                                  if veganModel.allVegan {
                                      storeInfoView.imageView.image = UIImage(
-                                        named: "HomeInfoVegan")
+                                        named: StaticImage.homeInfoVegan)
                                      storeInfoView.topImageView.image = UIImage(
-                                        named: "HomeInfoVeganTitle")
+                                        named: StaticImage.homeInfoVeganTitle)
                                  } else if veganModel.someMenuVegan {
                                      storeInfoView.imageView.image = UIImage(
-                                        named: "HomeInfoSomeVegan")
+                                        named: StaticImage.homeInfoSomeVegan)
                                      storeInfoView.topImageView.image = UIImage(
-                                        named: "HomeInfoSomeVeganTItle")
+                                        named: StaticImage.homeInfoSomeVeganTitle)
                                  } else {
                                      storeInfoView.imageView.image = UIImage(
-                                        named: "HomeInfoRequestVegan")
+                                        named: StaticImage.homeInfoRequestVegan)
                                      storeInfoView.topImageView.image = UIImage(
-                                        named: "HomeInfoRequestVeganTitle")
+                                        named: StaticImage.homeInfoRequestVeganTitle)
                                  }
                                  storeInfoView.imageView.contentMode = .scaleAspectFit
                                  storeInfoView.topImageView.contentMode = .scaleAspectFit
@@ -337,7 +259,8 @@ extension HomeViewController: HomeViewProtocol {
                                         x: 0,
                                         y: self.view.frame.height - StaticLayout.slideViewHeight,
                                         width: self.view.frame.width,
-                                        height: StaticLayout.slideViewHeight + CGFloat(32)
+                                        height: StaticLayout.slideViewHeight + (self.tabBarController?.tabBar.frame.size
+                                            .height ?? 32)
                                      )
                                  }
                              }
@@ -351,6 +274,7 @@ extension HomeViewController: HomeViewProtocol {
             }
         }
     }
+    
     // MARK: pushDetailViewController
     func pushDetailViewController(_ veganModel: VeganModel) {
         DispatchQueue.main.async { [weak self] in
@@ -363,69 +287,11 @@ extension HomeViewController: HomeViewProtocol {
     }
 }
 
-extension HomeViewController {
-    // MARK: 내 위치 최신화 버튼 클릭 시
-    @objc func refreshMyLocationTouchDown(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.1, animations: {
-            sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-            sender.layer.opacity = 0.4
-        })
-    }
-    
-    @objc func refreshMyLocationOnlyPopUp(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.05, animations: {
-            sender.transform = CGAffineTransform.identity
-            sender.layer.opacity = 1
-        })
-    }
-    
-    @objc func refreshMyLocation(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.05, animations: {
-            sender.transform = CGAffineTransform.identity
-            sender.layer.opacity = 1
-        }, completion: { [weak self] _ in
-            self?.presenter.locationUpdate()
-        })
-    }
-    
-    // MARK: swipeUp&Down Gesture
-    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
-        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
-            switch swipeGesture.direction {
-            case .up:
-                UIView.animate(withDuration: 0.4, animations: {
-                    self.storeInfoView.frame = CGRect(
-                        x: 0,
-                        y: 0,
-                        width: self.view.frame.width,
-                        height: self.view.frame.height
-                    )
-                    self.storeInfoView.entireView.alpha = 1
-                }, completion: { [weak self] _ in
-                    guard let address = self?.storeInfoView.address.text else { return }
-                    self?.presenter.pushDetailViewController(address)
-                })
-            case .down:
-                UIView.animate(withDuration: 0.3) {
-                    self.storeInfoView.frame = CGRect(
-                        x: 0,
-                        y: self.view.frame.height,
-                        width: self.view.frame.width,
-                        height: CGFloat(StaticLayout.slideViewHeight)
-                    )
-                }
-            default:
-                break
-            }
-        }
-    }
-}
-
+// MARK: Text Field Delegate
 extension HomeViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         let viewController = HomeSearchViewController()
         navigationController?.pushViewController(viewController, animated: true)
-        
         return false
     }
 }

@@ -27,7 +27,7 @@ struct StaticImage {
     static let map = "map"
     
     // ETC ICon
-    static let bookmark = "bookmark"
+    static let bookmark = "Bookmark"
     static let close = "Close"
     static let comment = "comment"
     static let PersonalLocation = "PersonalLocation"
@@ -37,12 +37,12 @@ struct StaticImage {
     static let bigGilraim = "bigGilraim"
     
     // HomeInfo
-    static let homeInfoRequestVegan = "homeInfoRequestVegan"
-    static let homeInfoRequestVeganTitle = "homeInfoRequestVeganTitle"
-    static let homeInfoSomeVegan = "homeInfoSomeVegan"
-    static let homeInfoSomeVeganTitle = "homeInfoSomeVeganTitle"
-    static let homeInfoVegan = "homeInfoVegan"
-    static let homeInfoVeganTitle = "homeInfoVeganTitle"
+    static let homeInfoRequestVegan = "HomeInfoRequestVegan"
+    static let homeInfoRequestVeganTitle = "HomeInfoRequestVeganTitle"
+    static let homeInfoSomeVegan = "HomeInfoSomeVegan"
+    static let homeInfoSomeVeganTitle = "HomeInfoSomeVeganTitle"
+    static let homeInfoVegan = "HomeInfoVegan"
+    static let homeInfoVeganTitle = "HomeInfoVeganTitle"
     
     // Location Marker
     static let inrollSearchIcon = "InrollSearchIcon"

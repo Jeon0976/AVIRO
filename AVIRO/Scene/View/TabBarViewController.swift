@@ -19,7 +19,7 @@ class TabBarViewController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         let tabBarViewControllers: [UIViewController] = TabBarItem.allCases.map { tabCase in
             let viewController = tabCase.viewController
             viewController.tabBarItem = UITabBarItem(

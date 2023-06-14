@@ -35,6 +35,7 @@
 		C54BC0DB2A2C2D0D00B65439 /* ColorCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54BC0DA2A2C2D0D00B65439 /* ColorCustom.swift */; };
 		C54BC0DD2A2C762C00B65439 /* CommentsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54BC0DC2A2C762C00B65439 /* CommentsLabel.swift */; };
 		C5538AAF2A1BB81200661DE2 /* VeganModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5538AAE2A1BB81200661DE2 /* VeganModel.swift */; };
+		C5A03C122A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A03C112A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift */; };
 		C5A3C3C42A39658A0050AB3D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A3C3C32A39658A0050AB3D /* LoginViewController.swift */; };
 		C5A3C3C62A39659B0050AB3D /* LoginViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A3C3C52A39659B0050AB3D /* LoginViewPresenter.swift */; };
 		C5CAAC452A39A93C008C5FDA /* StaticLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAAC442A39A93C008C5FDA /* StaticLayout.swift */; };
@@ -105,6 +106,7 @@
 		C54BC0DA2A2C2D0D00B65439 /* ColorCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCustom.swift; sourceTree = "<group>"; };
 		C54BC0DC2A2C762C00B65439 /* CommentsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsLabel.swift; sourceTree = "<group>"; };
 		C5538AAE2A1BB81200661DE2 /* VeganModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganModel.swift; sourceTree = "<group>"; };
+		C5A03C112A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerActionAndAnimation.swift; sourceTree = "<group>"; };
 		C5A3C3C32A39658A0050AB3D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C5A3C3C52A39659B0050AB3D /* LoginViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewPresenter.swift; sourceTree = "<group>"; };
 		C5CAAC442A39A93C008C5FDA /* StaticLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticLayout.swift; sourceTree = "<group>"; };
@@ -349,7 +351,9 @@
 			isa = PBXGroup;
 			children = (
 				C5351B6C2A1B215D00116D50 /* InrollPlaceViewController.swift */,
-				C54BC0D62A2C27AD00B65439 /* InrollPlaceSeparated */,
+				C5EB50F22A1DEC2400B29CC1 /* InrollPlaceLayout.swift */,
+				C5EB50F42A1DEC3900B29CC1 /* InrollPlaceAttribute.swift */,
+				C52B61CA2A31F97E001388E3 /* InrollPlaceUserInteractions.swift */,
 				C5EB50F72A1E718A00B29CC1 /* InrollTableView */,
 				C5351B7F2A1B537000116D50 /* PlaceList */,
 			);
@@ -399,16 +403,6 @@
 			path = PlaceList;
 			sourceTree = "<group>";
 		};
-		C54BC0D62A2C27AD00B65439 /* InrollPlaceSeparated */ = {
-			isa = PBXGroup;
-			children = (
-				C5EB50F22A1DEC2400B29CC1 /* InrollPlaceLayout.swift */,
-				C5EB50F42A1DEC3900B29CC1 /* InrollPlaceAttribute.swift */,
-				C52B61CA2A31F97E001388E3 /* InrollPlaceUserInteractions.swift */,
-			);
-			path = InrollPlaceSeparated;
-			sourceTree = "<group>";
-		};
 		C54BC0D72A2C2CE700B65439 /* UIColor */ = {
 			isa = PBXGroup;
 			children = (
@@ -454,6 +448,8 @@
 			isa = PBXGroup;
 			children = (
 				C52FA3462A175B20005E70DC /* HomeViewController.swift */,
+				C5A03C112A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift */,
+				C5EB51102A20CC6800B29CC1 /* HomeInfoStoreView */,
 				C5EB51052A209F3F00B29CC1 /* HomeSubView */,
 			);
 			path = HomeView;
@@ -513,7 +509,6 @@
 		C5EB51052A209F3F00B29CC1 /* HomeSubView */ = {
 			isa = PBXGroup;
 			children = (
-				C5EB51102A20CC6800B29CC1 /* HomeInfoStoreView */,
 				C5EB51062A209F5700B29CC1 /* HomeSearchView */,
 				C5EB51192A2101F200B29CC1 /* DetailView */,
 			);
@@ -762,6 +757,7 @@
 				C5EB50EC2A1C72C600B29CC1 /* TabBarViewController.swift in Sources */,
 				C5EB50F92A1E71BA00B29CC1 /* VeganMenuTableViewCell.swift in Sources */,
 				C5EB50F52A1DEC3900B29CC1 /* InrollPlaceAttribute.swift in Sources */,
+				C5A03C122A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift in Sources */,
 				C5EB511C2A21188D00B29CC1 /* TopDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
