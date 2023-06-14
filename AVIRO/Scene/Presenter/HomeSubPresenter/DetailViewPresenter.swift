@@ -11,6 +11,7 @@ protocol DetailViewProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
     func showOthers()
+    func updateComment(_ model: VeganModel?)
 }
 
 final class DetailViewPresenter {
@@ -28,5 +29,10 @@ final class DetailViewPresenter {
         viewController?.makeLayout()
         viewController?.makeAttribute()
         viewController?.showOthers()
+    }
+    
+    func reloadVeganModel(_ model: VeganModel) {
+        veganModel = model
+        viewController?.updateComment(veganModel)
     }
 }

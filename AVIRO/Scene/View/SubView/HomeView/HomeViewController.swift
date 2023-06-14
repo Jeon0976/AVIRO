@@ -20,9 +20,6 @@ final class HomeViewController: UIViewController {
     // 내 위치 최신화 관련
     var loadLocationButton = UIButton()
     
-    // home slide view 높이
-    var slideViewHeight = 280
-    
     // store 뷰 관련
     var storeInfoView = HomeInfoStoreView()
     var panGesture = UIPanGestureRecognizer()
@@ -58,6 +55,7 @@ final class HomeViewController: UIViewController {
         super.viewDidAppear(animated)
         
         presenter.firstLocationUpdate()
+        print(view.frame)
     }
 }
 
@@ -86,17 +84,17 @@ extension HomeViewController: HomeViewProtocol {
             
             // loadLoactionButton
             loadLocationButton.bottomAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -4),
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: StaticLayout.minusLocationInset),
             loadLocationButton.trailingAnchor.constraint(
-                equalTo: naverMapView.trailingAnchor, constant: -4),
+                equalTo: naverMapView.trailingAnchor, constant: StaticLayout.minusLocationInset),
             
             // searchTextField
             searchTextField.topAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+                equalTo: view.safeAreaLayoutGuide.topAnchor, constant: StaticLayout.leadingTopInset),
             searchTextField.leadingAnchor.constraint(
-                equalTo: naverMapView.leadingAnchor, constant: 16),
+                equalTo: naverMapView.leadingAnchor, constant: StaticLayout.leadingTopInset),
             searchTextField.trailingAnchor.constraint(
-                equalTo: naverMapView.trailingAnchor, constant: -16)
+                equalTo: naverMapView.trailingAnchor, constant: StaticLayout.trailingBottomInset)
         ])
     }
     
@@ -110,7 +108,7 @@ extension HomeViewController: HomeViewProtocol {
         navigationItem.backBarButtonItem = backItem
         
         // lodeLocationButton
-        loadLocationButton.setImage(UIImage(named: "PersonalLocation"), for: .normal)
+        loadLocationButton.setImage(UIImage(named: StaticImage.PersonalLocation), for: .normal)
         loadLocationButton.addTarget(
             self,
             action: #selector(refreshMyLocationTouchDown),
@@ -130,7 +128,7 @@ extension HomeViewController: HomeViewProtocol {
         )
         
         // searchTextField
-        searchTextField.makeCustomPlaceHolder("점심으로 비건까스 어떠세요?")
+        searchTextField.makeCustomPlaceHolder(StaticStringValue.searchPlaceHolder)
         searchTextField.delegate = self
         
     }
@@ -169,7 +167,7 @@ extension HomeViewController: HomeViewProtocol {
                     self.storeInfoView.frame = CGRect(x: 0,
                                                       y: self.view.frame.height,
                                                       width: self.view.frame.width,
-                                                      height: CGFloat(self.slideViewHeight)
+                                                      height: StaticLayout.slideViewHeight
                     )
                     self.storeInfoView.entireView.alpha = 0
                     self.storeInfoView.activityIndicator.alpha = 0
@@ -199,8 +197,7 @@ extension HomeViewController: HomeViewProtocol {
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
         blurEffectView.effect = blurEffect
         blurEffectView.frame = view.bounds
-//        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        blurEffectView.alpha = 0.5
+        blurEffectView.alpha = 0.6
         
         firstPopupView.cancelButton.addTarget(self, action: #selector(firstPopupViewDelete), for: .touchUpInside)
         firstPopupView.reportButton.addTarget(self, action: #selector(firstPopupViewTouchDown(_:)), for: .touchDown)
@@ -208,7 +205,7 @@ extension HomeViewController: HomeViewProtocol {
         firstPopupView.reportButton.addTarget(self, action: #selector(firstPopupViewReport(_:)), for: .touchUpInside)
         
         // store info view
-        storeInfoView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: CGFloat(slideViewHeight))
+        storeInfoView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: CGFloat(StaticLayout.slideViewHeight))
         storeInfoView.entireView.alpha = 0
         storeInfoView.activityIndicator.alpha = 0
         
@@ -227,17 +224,24 @@ extension HomeViewController: HomeViewProtocol {
             firstPopupView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             firstPopupView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             firstPopupView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            firstPopupView.heightAnchor.constraint(equalToConstant: CGFloat(slideViewHeight))
+            firstPopupView.heightAnchor.constraint(equalToConstant: StaticLayout.firstSlideViewHeight)
         ])
     }
     
-    // MARK: firstPopupViewButton
+    // MARK: firstPopupView Delete Animation
     @objc func firstPopupViewDelete() {
-        firstPopupView.isHidden = true
-        blurEffectView.isHidden = true
+        UIView.animate(withDuration: 0.15, animations: {
+            self.blurEffectView.alpha = 0
+            self.firstPopupView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: StaticLayout.firstSlideViewHeight)
+        }, completion: { [weak self] _ in
+            // 왜? hidden처리 안 하면,
+            // marker클릭할 때 firstPopupView도 같이 올라옴??
+            self?.firstPopupView.isHidden = true
+            self?.blurEffectView.isHidden = true
+        })
     }
     
-    // MARK: firstPopUpViewButton
+    // MARK: firstPopUpView Report Animation
     @objc func firstPopupViewTouchDown(_ sender: UIButton) {
         UIView.animate(withDuration: 0.1, animations: {
             sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
@@ -327,12 +331,13 @@ extension HomeViewController: HomeViewProtocol {
                                  storeInfoView.imageView.contentMode = .scaleAspectFit
                                  storeInfoView.topImageView.contentMode = .scaleAspectFit
                                                                   
-                                 UIView.animate(withDuration: 0.3) {
+                                 UIView.animate(withDuration: 0.15) {
+                                     print(self.view.frame)
                                      self.storeInfoView.frame = CGRect(
                                         x: 0,
-                                        y: self.view.frame.height - CGFloat(self.slideViewHeight) + 16,
+                                        y: self.view.frame.height - StaticLayout.slideViewHeight,
                                         width: self.view.frame.width,
-                                        height: CGFloat(self.slideViewHeight + 16)
+                                        height: StaticLayout.slideViewHeight + CGFloat(32)
                                      )
                                  }
                              }
@@ -406,7 +411,7 @@ extension HomeViewController {
                         x: 0,
                         y: self.view.frame.height,
                         width: self.view.frame.width,
-                        height: CGFloat(self.slideViewHeight)
+                        height: CGFloat(StaticLayout.slideViewHeight)
                     )
                 }
             default:

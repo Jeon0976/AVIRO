@@ -44,19 +44,19 @@ final class DetailViewController: UIViewController {
         bindingMenuDetail()
         bindingComment()
     }
+//
+//    deinit {
+//        NotificationCenter.default.removeObserver(
+//            self,
+//            name: Notification.Name("CommentsViewControllerrDismiss"),
+//            object: nil
+//        )
+//    }
     
-    deinit {
-        NotificationCenter.default.removeObserver(
-            self,
-            name: Notification.Name("CommentsViewControllerrDismiss"),
-            object: nil
-        )
-    }
-    
-    @objc func handleDismissNotification() {
-        guard let data = presenter.veganModel?.comment else { return }
-        comment.tableView.reloadData()
-        comment.comentCount.text = "\(data.count)개"
+    @objc func handleDismissNotification(_ notification: Notification) {
+        if let model = notification.userInfo?["veganModel"] as? VeganModel {
+            presenter.reloadVeganModel(model)
+        }
     }
 }
 
@@ -180,6 +180,15 @@ extension DetailViewController: DetailViewProtocol {
             self?.scrollView.isHidden = false
         })
     }
+    
+    // MARK: UpdateComment
+    func updateComment(_ model: VeganModel?) {
+        guard let data = model?.comment else { return }
+        comment.comentCount.text = "\(data.count)개"
+        comment.items = data
+        comment.tableView.reloadData()
+    }
+    
     // MARK: TopDetailView data binding
     private func bindingTopDetailView() {
         guard let veganModel = presenter.veganModel else { return }

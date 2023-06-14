@@ -18,6 +18,7 @@ final class CommentsViewController: UIViewController {
     var noCommentLabel2 = UILabel()
     
     var commentTextField = CommentsTextField()
+
     var commentButton = UIButton()
     
     var tapGesture = UITapGestureRecognizer()
@@ -53,9 +54,6 @@ final class CommentsViewController: UIViewController {
 
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-        NotificationCenter.default.post(name: Notification.Name("CommentsViewControllerrDismiss"), object: nil)
-
     }
     
 }

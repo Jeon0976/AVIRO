@@ -16,39 +16,36 @@ enum TabBarItem: CaseIterable {
     
     var title: String {
         switch self {
-        case .home: return "홈"
-        case .popular: return "인기가게"
+        case .home: return StaticStringValue.home
+        case .popular: return StaticStringValue.popular
         case .plus: return ""
-        case .bookMark: return "북마크"
-        case .myPage: return "마이페이지"
+        case .bookMark: return StaticStringValue.bookmark
+        case .myPage: return StaticStringValue.myPage
         }
     }
     
     var icon: (default: UIImage?, selected: UIImage?) {
         switch self {
         case .home: return (
-            UIImage(named: "map1"),
-            UIImage(named: "map2")
-        )
+            UIImage(named: StaticImage.map1),
+            UIImage(named: StaticImage.map2)
+            )
         case .popular: return (
-            UIImage(named: "star1"),
-            UIImage(named: "star2")
-        )
+            UIImage(named: StaticImage.star1),
+            UIImage(named: StaticImage.star2)
+            )
         case .plus: return (
             nil,
             nil
-//            UIImage(named: "edit1"),
-//            UIImage(named: "edit2")
-        )
+            )
         case .bookMark: return (
-            UIImage(named: "bookmark1"),
-            UIImage(named: "bookmark2")
-        )
+            UIImage(named: StaticImage.bookmark1),
+            UIImage(named: StaticImage.bookmark2)
+            )
         case .myPage: return (
-            UIImage(named: "user1"),
-            UIImage(named: "user2")
-        )
-            
+            UIImage(named: StaticImage.user1),
+            UIImage(named: StaticImage.user2)
+            )
         }
     }
     

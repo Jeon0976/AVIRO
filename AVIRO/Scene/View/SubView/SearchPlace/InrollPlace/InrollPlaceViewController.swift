@@ -248,21 +248,26 @@ extension InrollPlaceViewController: InrollPlaceProtocol {
 extension InrollPlaceViewController {
     // MARK: Final Report Function
     @objc func reportStore() {
-        presenter.reportData()
+        presenter.reportData(storeTitleField.text ?? "",
+                             storeLocationField.text ?? "",
+                             storeCategoryField.text ?? "",
+                             storePhoneField.text ?? ""
+        )
         refreshData()
         resetTable()
-
-        UIView.animate(withDuration: 0.1, animations: { [weak self] in
-            self?.view.alpha = 0.8
-        }, completion: { [weak self] _ in
-            self?.tabBarController?.selectedIndex = 0
-            let homeViewController = self?.tabBarController?.viewControllers?[0] as? UINavigationController
-            homeViewController?.popToRootViewController(animated: false)
-
-            UIView.animate(withDuration: 0.5) {
-                self?.view.alpha = 1
-            }
-        })
+        
+        tabBarController?.selectedIndex = 0
+//        UIView.animate(withDuration: 0.1, animations: { [weak self] in
+//            self?.view.alpha = 0.8
+//        }, completion: { [weak self] _ in
+//            self?.tabBarController?.selectedIndex = 0
+//            let homeViewController = self?.tabBarController?.viewControllers?[0] as? UINavigationController
+//            homeViewController?.popToRootViewController(animated: false)
+//
+//            UIView.animate(withDuration: 0.5) {
+//                self?.view.alpha = 1
+//            }
+//        })
     }
     // MARK: refreshData
     func refreshData() {
@@ -387,7 +392,7 @@ extension InrollPlaceViewController {
     @objc func selectedPlace(_ notification: Notification) {
         guard let selectedPlace = notification.userInfo?["selectedPlace"] as? PlaceListModel else { return }
         
-        presenter.storeNomalData = selectedPlace
+        presenter.updatePlaceModel(selectedPlace)
         
         storeTitleField.text = selectedPlace.title
         storeLocationField.text = selectedPlace.address

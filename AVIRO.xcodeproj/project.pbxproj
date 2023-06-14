@@ -35,6 +35,11 @@
 		C54BC0DB2A2C2D0D00B65439 /* ColorCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54BC0DA2A2C2D0D00B65439 /* ColorCustom.swift */; };
 		C54BC0DD2A2C762C00B65439 /* CommentsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54BC0DC2A2C762C00B65439 /* CommentsLabel.swift */; };
 		C5538AAF2A1BB81200661DE2 /* VeganModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5538AAE2A1BB81200661DE2 /* VeganModel.swift */; };
+		C5A3C3C42A39658A0050AB3D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A3C3C32A39658A0050AB3D /* LoginViewController.swift */; };
+		C5A3C3C62A39659B0050AB3D /* LoginViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A3C3C52A39659B0050AB3D /* LoginViewPresenter.swift */; };
+		C5CAAC452A39A93C008C5FDA /* StaticLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAAC442A39A93C008C5FDA /* StaticLayout.swift */; };
+		C5CAAC472A39AEFE008C5FDA /* StaticImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAAC462A39AEFE008C5FDA /* StaticImage.swift */; };
+		C5CAAC492A39C6D4008C5FDA /* StaticStringValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAAC482A39C6D4008C5FDA /* StaticStringValue.swift */; };
 		C5D6E19F2A17B4410042679C /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5D6E19E2A17B4410042679C /* API.plist */; };
 		C5D7458B2A21CCFB006F9F31 /* DetailMenuTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D7458A2A21CCFB006F9F31 /* DetailMenuTableModel.swift */; };
 		C5D7458D2A2223A6006F9F31 /* CommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D7458C2A2223A6006F9F31 /* CommentModel.swift */; };
@@ -100,6 +105,11 @@
 		C54BC0DA2A2C2D0D00B65439 /* ColorCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCustom.swift; sourceTree = "<group>"; };
 		C54BC0DC2A2C762C00B65439 /* CommentsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsLabel.swift; sourceTree = "<group>"; };
 		C5538AAE2A1BB81200661DE2 /* VeganModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganModel.swift; sourceTree = "<group>"; };
+		C5A3C3C32A39658A0050AB3D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		C5A3C3C52A39659B0050AB3D /* LoginViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewPresenter.swift; sourceTree = "<group>"; };
+		C5CAAC442A39A93C008C5FDA /* StaticLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticLayout.swift; sourceTree = "<group>"; };
+		C5CAAC462A39AEFE008C5FDA /* StaticImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticImage.swift; sourceTree = "<group>"; };
+		C5CAAC482A39C6D4008C5FDA /* StaticStringValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticStringValue.swift; sourceTree = "<group>"; };
 		C5D6E19E2A17B4410042679C /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = API.plist; sourceTree = "<group>"; };
 		C5D7458A2A21CCFB006F9F31 /* DetailMenuTableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMenuTableModel.swift; sourceTree = "<group>"; };
 		C5D7458C2A2223A6006F9F31 /* CommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentModel.swift; sourceTree = "<group>"; };
@@ -185,6 +195,7 @@
 		C50367F02A1795A30020C6BB /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				C5A3C3C52A39659B0050AB3D /* LoginViewPresenter.swift */,
 				C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */,
 				C5EB51092A209FC000B29CC1 /* HomeSubPresenter */,
 				C5351B5A2A19F5EE00116D50 /* SearchPlace */,
@@ -195,6 +206,7 @@
 		C50367F12A1795AF0020C6BB /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C5A3C3C32A39658A0050AB3D /* LoginViewController.swift */,
 				C5EB50EB2A1C72C600B29CC1 /* TabBarViewController.swift */,
 				C5351B592A19F5DE00116D50 /* SubView */,
 			);
@@ -213,8 +225,8 @@
 		C50367F32A1795BE0020C6BB /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C5EB51022A20927400B29CC1 /* HomeReferModel */,
 				C5EB51012A20926800B29CC1 /* TapBarModel */,
+				C5EB51022A20927400B29CC1 /* HomeReferModel */,
 				C5351B782A1B437600116D50 /* APIResonseModel */,
 				C5351B652A1A128D00116D50 /* SingleTonModel */,
 				C5351B7B2A1B52A000116D50 /* PlaceListModel */,
@@ -225,9 +237,10 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		C50367F62A179D6E0020C6BB /* System */ = {
+		C50367F62A179D6E0020C6BB /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				C5CAAC432A39A92A008C5FDA /* StaticValue */,
 				C54BC0D92A2C2CF900B65439 /* UITextLabel */,
 				C54BC0D82A2C2CEE00B65439 /* UIButton */,
 				C54BC0D72A2C2CE700B65439 /* UIColor */,
@@ -235,7 +248,7 @@
 				C5351B552A19B67900116D50 /* CustomAlertController.swift */,
 				C5351B682A1A2EAF00116D50 /* CustomPresentation.swift */,
 			);
-			path = System;
+			path = Custom;
 			sourceTree = "<group>";
 		};
 		C52FA3362A175B20005E70DC = {
@@ -261,7 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				C50367EC2A1791620020C6BB /* Utils */,
-				C50367F62A179D6E0020C6BB /* System */,
+				C50367F62A179D6E0020C6BB /* Custom */,
 				C50367F32A1795BE0020C6BB /* Model */,
 				C50367F22A1795B90020C6BB /* Manager */,
 				C50367ED2A1791840020C6BB /* Scene */,
@@ -417,6 +430,16 @@
 				C54BC0DC2A2C762C00B65439 /* CommentsLabel.swift */,
 			);
 			path = UITextLabel;
+			sourceTree = "<group>";
+		};
+		C5CAAC432A39A92A008C5FDA /* StaticValue */ = {
+			isa = PBXGroup;
+			children = (
+				C5CAAC442A39A93C008C5FDA /* StaticLayout.swift */,
+				C5CAAC462A39AEFE008C5FDA /* StaticImage.swift */,
+				C5CAAC482A39C6D4008C5FDA /* StaticStringValue.swift */,
+			);
+			path = StaticValue;
 			sourceTree = "<group>";
 		};
 		C5D745922A22679E006F9F31 /* CommentDetailPresenter */ = {
@@ -682,12 +705,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5CAAC492A39C6D4008C5FDA /* StaticStringValue.swift in Sources */,
+				C5A3C3C42A39658A0050AB3D /* LoginViewController.swift in Sources */,
 				C5351B582A19F5DA00116D50 /* PlaceListViewController.swift in Sources */,
 				C5EB51182A21016600B29CC1 /* DetailViewPresenter.swift in Sources */,
 				C5EB510B2A209FD300B29CC1 /* HomeSearchPresenter.swift in Sources */,
 				C5EB50F32A1DEC2400B29CC1 /* InrollPlaceLayout.swift in Sources */,
 				C5351B5E2A19F84800116D50 /* PlaceListCell.swift in Sources */,
 				C5351B6F2A1B242C00116D50 /* InrollPlacePresenter.swift in Sources */,
+				C5CAAC452A39A93C008C5FDA /* StaticLayout.swift in Sources */,
 				C52FA3472A175B20005E70DC /* HomeViewController.swift in Sources */,
 				C5D7458D2A2223A6006F9F31 /* CommentModel.swift in Sources */,
 				C5EB50E82A1C6FD600B29CC1 /* PopularViewController.swift in Sources */,
@@ -708,6 +734,7 @@
 				C5351B562A19B67900116D50 /* CustomAlertController.swift in Sources */,
 				C5D745942A2267C7006F9F31 /* CommentDetailPresenter.swift in Sources */,
 				C5538AAF2A1BB81200661DE2 /* VeganModel.swift in Sources */,
+				C5CAAC472A39AEFE008C5FDA /* StaticImage.swift in Sources */,
 				C5EB510D2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift in Sources */,
 				C50367F52A1795D10020C6BB /* HomeViewPresenter.swift in Sources */,
 				C5351B622A1A083400116D50 /* PlaceListCellModel.swift in Sources */,
@@ -716,6 +743,7 @@
 				C5EB50EA2A1C705900B29CC1 /* MyPageViewController.swift in Sources */,
 				C5EB50FB2A1E71E900B29CC1 /* IfRequestVeganMenuTableViewCell.swift in Sources */,
 				C5D7458F2A224DCE006F9F31 /* HomeFirstPopUpView.swift in Sources */,
+				C5A3C3C62A39659B0050AB3D /* LoginViewPresenter.swift in Sources */,
 				C5351B6D2A1B215D00116D50 /* InrollPlaceViewController.swift in Sources */,
 				C5D745912A225DE6006F9F31 /* CommentsViewController.swift in Sources */,
 				C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */,

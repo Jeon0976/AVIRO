@@ -77,7 +77,11 @@ final class CommentDetailPresenter {
         self.veganModel = veganModel
 
         userDefaluts.editingData(veganModel)
-                
+        
+        let userInfo: [String: Any] = ["veganModel": veganModel]
+        
+        NotificationCenter.default.post(name: Notification.Name("CommentsViewControllerrDismiss"), object: nil, userInfo: userInfo)
+
         viewController?.checkComments()
     }
 }

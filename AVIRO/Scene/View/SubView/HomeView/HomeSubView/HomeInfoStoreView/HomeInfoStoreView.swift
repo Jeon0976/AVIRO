@@ -66,7 +66,7 @@ class HomeInfoStoreView: UIView {
         let button = UIButton()
         
         button.setImage(UIImage(named: "Bookmark"), for: .normal)
-        button.setTitle("   북마크", for: .normal)
+        button.setTitle("북마크   ", for: .normal)
         button.setTitleColor(.mainTitle, for: .normal)
 
         button.imageView?.contentMode = .scaleAspectFit
@@ -83,7 +83,7 @@ class HomeInfoStoreView: UIView {
         let button = UIButton()
         
         button.setImage(UIImage(named: "comment"), for: .normal)
-        button.setTitle("    댓글", for: .normal)
+        button.setTitle("댓글     ", for: .normal)
         button.setTitleColor(.mainTitle, for: .normal)
 
         button.imageView?.contentMode = .scaleAspectFit

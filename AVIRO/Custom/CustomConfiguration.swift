@@ -94,6 +94,7 @@ class InrollTextField: UITextField {
         configureBorder()
         
         self.textColor = .mainTitle
+        self.frame.size.height = 53
     }
 
     required init?(coder aDecoder: NSCoder) {

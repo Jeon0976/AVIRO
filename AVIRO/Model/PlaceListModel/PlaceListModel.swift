@@ -13,12 +13,12 @@ struct PlaceListModel: Codable, Equatable {
         return lhs.title == rhs.title
     }
 
-    let title: String
-    let distance: String
-    let category: String
-    let address: String
-    let phone: String
-    let url: String
+    var title: String
+    var distance: String
+    var category: String
+    var address: String
+    var phone: String
+    var url: String
     let x: Double
     let y: Double
     

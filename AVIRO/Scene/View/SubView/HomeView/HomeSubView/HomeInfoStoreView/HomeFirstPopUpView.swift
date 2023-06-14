@@ -41,7 +41,7 @@ class HomeFirstPopUpView: UIView {
     
         self.backgroundColor = .white
         self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        self.layer.cornerRadius = 20
+        self.layer.cornerRadius = 28
         
         [
             imageView,
@@ -62,9 +62,10 @@ class HomeFirstPopUpView: UIView {
             cancelButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
             cancelButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             
-            reportButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20),
+            reportButton.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16),
             reportButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            reportButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
+            reportButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            reportButton.heightAnchor.constraint(equalToConstant: 53)
         ])
         
         imageView.setContentHuggingPriority(.defaultHigh, for: .vertical)

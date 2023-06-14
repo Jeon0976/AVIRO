@@ -66,7 +66,17 @@ final class InrollPlacePresenter: NSObject {
         self.ifRequestVegan = ifRequestVegan
     }
     
-    func reportData() {
+    func updatePlaceModel(_ model: PlaceListModel) {
+        storeNomalData = model
+    }
+    
+    func reportData(_ title: String, _ address: String, _ category: String, _ phone: String ) {
+        
+        storeNomalData.title = title
+        storeNomalData.address = address
+        storeNomalData.category = category
+        storeNomalData.phone = phone
+        
         let veganModel = VeganModel(
             placeModel: storeNomalData,
             allVegan: allVegan,
