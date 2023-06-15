@@ -10,7 +10,7 @@
 		A156F24E1DC1F5FA54D44A76 /* Pods_AVIRO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 796022A3066B91147B712BB4 /* Pods_AVIRO.framework */; };
 		C50367F52A1795D10020C6BB /* HomeViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */; };
 		C50367F82A179D7B0020C6BB /* CustomConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F72A179D7B0020C6BB /* CustomConfiguration.swift */; };
-		C52B61CB2A31F97E001388E3 /* InrollPlaceUserInteractions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52B61CA2A31F97E001388E3 /* InrollPlaceUserInteractions.swift */; };
+		C52B61CB2A31F97E001388E3 /* InrollPlaceViewUserInteractions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52B61CA2A31F97E001388E3 /* InrollPlaceViewUserInteractions.swift */; };
 		C52FA3432A175B20005E70DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FA3422A175B20005E70DC /* AppDelegate.swift */; };
 		C52FA3452A175B20005E70DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FA3442A175B20005E70DC /* SceneDelegate.swift */; };
 		C52FA3472A175B20005E70DC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FA3462A175B20005E70DC /* HomeViewController.swift */; };
@@ -35,12 +35,15 @@
 		C54BC0DB2A2C2D0D00B65439 /* ColorCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54BC0DA2A2C2D0D00B65439 /* ColorCustom.swift */; };
 		C54BC0DD2A2C762C00B65439 /* CommentsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54BC0DC2A2C762C00B65439 /* CommentsLabel.swift */; };
 		C5538AAF2A1BB81200661DE2 /* VeganModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5538AAE2A1BB81200661DE2 /* VeganModel.swift */; };
+		C596D9842A3B39E500829B17 /* InrollPlaceViewTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C596D9832A3B39E500829B17 /* InrollPlaceViewTableView.swift */; };
+		C596D9862A3B3BFD00829B17 /* InrollPlaceViewActionAndAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C596D9852A3B3BFD00829B17 /* InrollPlaceViewActionAndAnimation.swift */; };
+		C596D9882A3B3C8900829B17 /* InrollPlaceViewNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C596D9872A3B3C8900829B17 /* InrollPlaceViewNotification.swift */; };
 		C5A03C122A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A03C112A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift */; };
 		C5A3C3C42A39658A0050AB3D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A3C3C32A39658A0050AB3D /* LoginViewController.swift */; };
 		C5A3C3C62A39659B0050AB3D /* LoginViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A3C3C52A39659B0050AB3D /* LoginViewPresenter.swift */; };
-		C5CAAC452A39A93C008C5FDA /* StaticLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAAC442A39A93C008C5FDA /* StaticLayout.swift */; };
-		C5CAAC472A39AEFE008C5FDA /* StaticImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAAC462A39AEFE008C5FDA /* StaticImage.swift */; };
-		C5CAAC492A39C6D4008C5FDA /* StaticStringValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAAC482A39C6D4008C5FDA /* StaticStringValue.swift */; };
+		C5CAAC452A39A93C008C5FDA /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAAC442A39A93C008C5FDA /* Layout.swift */; };
+		C5CAAC472A39AEFE008C5FDA /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAAC462A39AEFE008C5FDA /* Image.swift */; };
+		C5CAAC492A39C6D4008C5FDA /* StringValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAAC482A39C6D4008C5FDA /* StringValue.swift */; };
 		C5D6E19F2A17B4410042679C /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5D6E19E2A17B4410042679C /* API.plist */; };
 		C5D7458B2A21CCFB006F9F31 /* DetailMenuTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D7458A2A21CCFB006F9F31 /* DetailMenuTableModel.swift */; };
 		C5D7458D2A2223A6006F9F31 /* CommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D7458C2A2223A6006F9F31 /* CommentModel.swift */; };
@@ -54,8 +57,8 @@
 		C5EB50E82A1C6FD600B29CC1 /* PopularViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50E72A1C6FD600B29CC1 /* PopularViewController.swift */; };
 		C5EB50EA2A1C705900B29CC1 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50E92A1C705900B29CC1 /* MyPageViewController.swift */; };
 		C5EB50EC2A1C72C600B29CC1 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50EB2A1C72C600B29CC1 /* TabBarViewController.swift */; };
-		C5EB50F32A1DEC2400B29CC1 /* InrollPlaceLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50F22A1DEC2400B29CC1 /* InrollPlaceLayout.swift */; };
-		C5EB50F52A1DEC3900B29CC1 /* InrollPlaceAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50F42A1DEC3900B29CC1 /* InrollPlaceAttribute.swift */; };
+		C5EB50F32A1DEC2400B29CC1 /* InrollPlaceViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50F22A1DEC2400B29CC1 /* InrollPlaceViewLayout.swift */; };
+		C5EB50F52A1DEC3900B29CC1 /* InrollPlaceViewAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50F42A1DEC3900B29CC1 /* InrollPlaceViewAttribute.swift */; };
 		C5EB50F92A1E71BA00B29CC1 /* VeganMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50F82A1E71BA00B29CC1 /* VeganMenuTableViewCell.swift */; };
 		C5EB50FB2A1E71E900B29CC1 /* IfRequestVeganMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50FA2A1E71E900B29CC1 /* IfRequestVeganMenuTableViewCell.swift */; };
 		C5EB51002A20720300B29CC1 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50FF2A20720300B29CC1 /* UserDefaultsManager.swift */; };
@@ -78,7 +81,7 @@
 		B57500A8C1EA6C6CFDED2C4C /* Pods-AVIRO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AVIRO.debug.xcconfig"; path = "Target Support Files/Pods-AVIRO/Pods-AVIRO.debug.xcconfig"; sourceTree = "<group>"; };
 		C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewPresenter.swift; sourceTree = "<group>"; };
 		C50367F72A179D7B0020C6BB /* CustomConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomConfiguration.swift; sourceTree = "<group>"; };
-		C52B61CA2A31F97E001388E3 /* InrollPlaceUserInteractions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceUserInteractions.swift; sourceTree = "<group>"; };
+		C52B61CA2A31F97E001388E3 /* InrollPlaceViewUserInteractions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewUserInteractions.swift; sourceTree = "<group>"; };
 		C52FA33F2A175B20005E70DC /* AVIRO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AVIRO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C52FA3422A175B20005E70DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C52FA3442A175B20005E70DC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -106,12 +109,15 @@
 		C54BC0DA2A2C2D0D00B65439 /* ColorCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCustom.swift; sourceTree = "<group>"; };
 		C54BC0DC2A2C762C00B65439 /* CommentsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsLabel.swift; sourceTree = "<group>"; };
 		C5538AAE2A1BB81200661DE2 /* VeganModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganModel.swift; sourceTree = "<group>"; };
+		C596D9832A3B39E500829B17 /* InrollPlaceViewTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewTableView.swift; sourceTree = "<group>"; };
+		C596D9852A3B3BFD00829B17 /* InrollPlaceViewActionAndAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewActionAndAnimation.swift; sourceTree = "<group>"; };
+		C596D9872A3B3C8900829B17 /* InrollPlaceViewNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewNotification.swift; sourceTree = "<group>"; };
 		C5A03C112A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerActionAndAnimation.swift; sourceTree = "<group>"; };
 		C5A3C3C32A39658A0050AB3D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C5A3C3C52A39659B0050AB3D /* LoginViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewPresenter.swift; sourceTree = "<group>"; };
-		C5CAAC442A39A93C008C5FDA /* StaticLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticLayout.swift; sourceTree = "<group>"; };
-		C5CAAC462A39AEFE008C5FDA /* StaticImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticImage.swift; sourceTree = "<group>"; };
-		C5CAAC482A39C6D4008C5FDA /* StaticStringValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticStringValue.swift; sourceTree = "<group>"; };
+		C5CAAC442A39A93C008C5FDA /* Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
+		C5CAAC462A39AEFE008C5FDA /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		C5CAAC482A39C6D4008C5FDA /* StringValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringValue.swift; sourceTree = "<group>"; };
 		C5D6E19E2A17B4410042679C /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = API.plist; sourceTree = "<group>"; };
 		C5D7458A2A21CCFB006F9F31 /* DetailMenuTableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMenuTableModel.swift; sourceTree = "<group>"; };
 		C5D7458C2A2223A6006F9F31 /* CommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentModel.swift; sourceTree = "<group>"; };
@@ -125,8 +131,8 @@
 		C5EB50E72A1C6FD600B29CC1 /* PopularViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularViewController.swift; sourceTree = "<group>"; };
 		C5EB50E92A1C705900B29CC1 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		C5EB50EB2A1C72C600B29CC1 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
-		C5EB50F22A1DEC2400B29CC1 /* InrollPlaceLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceLayout.swift; sourceTree = "<group>"; };
-		C5EB50F42A1DEC3900B29CC1 /* InrollPlaceAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceAttribute.swift; sourceTree = "<group>"; };
+		C5EB50F22A1DEC2400B29CC1 /* InrollPlaceViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewLayout.swift; sourceTree = "<group>"; };
+		C5EB50F42A1DEC3900B29CC1 /* InrollPlaceViewAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewAttribute.swift; sourceTree = "<group>"; };
 		C5EB50F82A1E71BA00B29CC1 /* VeganMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganMenuTableViewCell.swift; sourceTree = "<group>"; };
 		C5EB50FA2A1E71E900B29CC1 /* IfRequestVeganMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IfRequestVeganMenuTableViewCell.swift; sourceTree = "<group>"; };
 		C5EB50FF2A20720300B29CC1 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
@@ -351,9 +357,12 @@
 			isa = PBXGroup;
 			children = (
 				C5351B6C2A1B215D00116D50 /* InrollPlaceViewController.swift */,
-				C5EB50F22A1DEC2400B29CC1 /* InrollPlaceLayout.swift */,
-				C5EB50F42A1DEC3900B29CC1 /* InrollPlaceAttribute.swift */,
-				C52B61CA2A31F97E001388E3 /* InrollPlaceUserInteractions.swift */,
+				C596D9832A3B39E500829B17 /* InrollPlaceViewTableView.swift */,
+				C5EB50F22A1DEC2400B29CC1 /* InrollPlaceViewLayout.swift */,
+				C5EB50F42A1DEC3900B29CC1 /* InrollPlaceViewAttribute.swift */,
+				C52B61CA2A31F97E001388E3 /* InrollPlaceViewUserInteractions.swift */,
+				C596D9852A3B3BFD00829B17 /* InrollPlaceViewActionAndAnimation.swift */,
+				C596D9872A3B3C8900829B17 /* InrollPlaceViewNotification.swift */,
 				C5EB50F72A1E718A00B29CC1 /* InrollTableView */,
 				C5351B7F2A1B537000116D50 /* PlaceList */,
 			);
@@ -429,9 +438,9 @@
 		C5CAAC432A39A92A008C5FDA /* StaticValue */ = {
 			isa = PBXGroup;
 			children = (
-				C5CAAC442A39A93C008C5FDA /* StaticLayout.swift */,
-				C5CAAC462A39AEFE008C5FDA /* StaticImage.swift */,
-				C5CAAC482A39C6D4008C5FDA /* StaticStringValue.swift */,
+				C5CAAC442A39A93C008C5FDA /* Layout.swift */,
+				C5CAAC462A39AEFE008C5FDA /* Image.swift */,
+				C5CAAC482A39C6D4008C5FDA /* StringValue.swift */,
 			);
 			path = StaticValue;
 			sourceTree = "<group>";
@@ -700,15 +709,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5CAAC492A39C6D4008C5FDA /* StaticStringValue.swift in Sources */,
+				C5CAAC492A39C6D4008C5FDA /* StringValue.swift in Sources */,
 				C5A3C3C42A39658A0050AB3D /* LoginViewController.swift in Sources */,
 				C5351B582A19F5DA00116D50 /* PlaceListViewController.swift in Sources */,
 				C5EB51182A21016600B29CC1 /* DetailViewPresenter.swift in Sources */,
 				C5EB510B2A209FD300B29CC1 /* HomeSearchPresenter.swift in Sources */,
-				C5EB50F32A1DEC2400B29CC1 /* InrollPlaceLayout.swift in Sources */,
+				C5EB50F32A1DEC2400B29CC1 /* InrollPlaceViewLayout.swift in Sources */,
 				C5351B5E2A19F84800116D50 /* PlaceListCell.swift in Sources */,
 				C5351B6F2A1B242C00116D50 /* InrollPlacePresenter.swift in Sources */,
-				C5CAAC452A39A93C008C5FDA /* StaticLayout.swift in Sources */,
+				C5CAAC452A39A93C008C5FDA /* Layout.swift in Sources */,
 				C52FA3472A175B20005E70DC /* HomeViewController.swift in Sources */,
 				C5D7458D2A2223A6006F9F31 /* CommentModel.swift in Sources */,
 				C5EB50E82A1C6FD600B29CC1 /* PopularViewController.swift in Sources */,
@@ -721,6 +730,7 @@
 				C5351B4D2A19223300116D50 /* KakaoMapRequestAPI.swift in Sources */,
 				C5EB511E2A21189B00B29CC1 /* StoreDetailView.swift in Sources */,
 				C5D745962A2277A4006F9F31 /* CommentsViewCell.swift in Sources */,
+				C596D9862A3B3BFD00829B17 /* InrollPlaceViewActionAndAnimation.swift in Sources */,
 				C5EB51222A2118B200B29CC1 /* CommentDetailView.swift in Sources */,
 				C50367F82A179D7B0020C6BB /* CustomConfiguration.swift in Sources */,
 				C54BC0DD2A2C762C00B65439 /* CommentsLabel.swift in Sources */,
@@ -729,9 +739,10 @@
 				C5351B562A19B67900116D50 /* CustomAlertController.swift in Sources */,
 				C5D745942A2267C7006F9F31 /* CommentDetailPresenter.swift in Sources */,
 				C5538AAF2A1BB81200661DE2 /* VeganModel.swift in Sources */,
-				C5CAAC472A39AEFE008C5FDA /* StaticImage.swift in Sources */,
+				C5CAAC472A39AEFE008C5FDA /* Image.swift in Sources */,
 				C5EB510D2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift in Sources */,
 				C50367F52A1795D10020C6BB /* HomeViewPresenter.swift in Sources */,
+				C596D9842A3B39E500829B17 /* InrollPlaceViewTableView.swift in Sources */,
 				C5351B622A1A083400116D50 /* PlaceListCellModel.swift in Sources */,
 				C52FA3452A175B20005E70DC /* SceneDelegate.swift in Sources */,
 				C5351B542A19A7B100116D50 /* PersonalLocation.swift in Sources */,
@@ -741,13 +752,14 @@
 				C5A3C3C62A39659B0050AB3D /* LoginViewPresenter.swift in Sources */,
 				C5351B6D2A1B215D00116D50 /* InrollPlaceViewController.swift in Sources */,
 				C5D745912A225DE6006F9F31 /* CommentsViewController.swift in Sources */,
+				C596D9882A3B3C8900829B17 /* InrollPlaceViewNotification.swift in Sources */,
 				C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */,
 				C5351B672A1A154C00116D50 /* PageEndingCheck.swift in Sources */,
 				C5351B5C2A19F60200116D50 /* PlaceListViewPresenter.swift in Sources */,
 				C5EB51162A21011C00B29CC1 /* DetailViewController.swift in Sources */,
 				C5EB51202A2118AB00B29CC1 /* MenuDetailView.swift in Sources */,
 				C5D745982A22C203006F9F31 /* MockData.swift in Sources */,
-				C52B61CB2A31F97E001388E3 /* InrollPlaceUserInteractions.swift in Sources */,
+				C52B61CB2A31F97E001388E3 /* InrollPlaceViewUserInteractions.swift in Sources */,
 				C5351B692A1A2EAF00116D50 /* CustomPresentation.swift in Sources */,
 				C5EB51122A20CC7D00B29CC1 /* HomeInfoStoreView.swift in Sources */,
 				C5EB50E42A1C685100B29CC1 /* TabBarItem.swift in Sources */,
@@ -756,7 +768,7 @@
 				C5351B602A19F9A700116D50 /* PlaceListModel.swift in Sources */,
 				C5EB50EC2A1C72C600B29CC1 /* TabBarViewController.swift in Sources */,
 				C5EB50F92A1E71BA00B29CC1 /* VeganMenuTableViewCell.swift in Sources */,
-				C5EB50F52A1DEC3900B29CC1 /* InrollPlaceAttribute.swift in Sources */,
+				C5EB50F52A1DEC3900B29CC1 /* InrollPlaceViewAttribute.swift in Sources */,
 				C5A03C122A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift in Sources */,
 				C5EB511C2A21188D00B29CC1 /* TopDetailView.swift in Sources */,
 			);

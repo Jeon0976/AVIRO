@@ -9,7 +9,7 @@ import UIKit
 class HomeFirstPopUpView: UIView {
     let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "bigGilraim")
+        imageView.image = UIImage(named: Image.bigGilraim)
         imageView.contentMode = .scaleAspectFit
         
         return imageView
@@ -17,7 +17,7 @@ class HomeFirstPopUpView: UIView {
 
     let cancelButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "Close"), for: .normal)
+        button.setImage(UIImage(named: Image.close), for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
         
         return button
@@ -26,12 +26,11 @@ class HomeFirstPopUpView: UIView {
     let reportButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .plusButton
-        button.setTitle("비건 식당 제보하러가기", for: .normal)
+        button.setTitle(StringValue.HomeView.reportButton, for: .normal)
         button.setTitleColor(.mainTitle, for: .normal)
         
-        button.contentEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
-        button.layer.cornerRadius = 28
-        button.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
+        button.layer.cornerRadius = Layout.Button.cornerRadius
+        button.titleLabel?.font = Layout.Button.font
         
         return button
     }()
@@ -41,7 +40,7 @@ class HomeFirstPopUpView: UIView {
     
         self.backgroundColor = .white
         self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        self.layer.cornerRadius = 28
+        self.layer.cornerRadius = Layout.SlideView.cornerRadius
         
         [
             imageView,
@@ -54,27 +53,26 @@ class HomeFirstPopUpView: UIView {
         
         NSLayoutConstraint.activate([
             // imageView
-            imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            imageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
-            imageView.bottomAnchor.constraint(equalTo: reportButton.topAnchor, constant: -10),
+            imageView.centerXAnchor.constraint(
+                equalTo: self.centerXAnchor),
+            imageView.topAnchor.constraint(
+                equalTo: self.topAnchor, constant: Layout.Inset.leadingTopPlus),
+            imageView.bottomAnchor.constraint(
+                equalTo: reportButton.topAnchor, constant: Layout.Inset.trailingBottomHalf),
             
             // cancelButton
-            cancelButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
-            cancelButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            cancelButton.topAnchor.constraint(
+                equalTo: self.topAnchor, constant: Layout.Inset.leadingTopPlus),
+            cancelButton.trailingAnchor.constraint(
+                equalTo: self.trailingAnchor, constant: Layout.Inset.trailingBottom),
             
-            reportButton.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16),
-            reportButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            reportButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            reportButton.heightAnchor.constraint(equalToConstant: 53)
+            reportButton.leadingAnchor.constraint(
+                equalTo: self.leadingAnchor, constant: Layout.Inset.leadingTop),
+            reportButton.trailingAnchor.constraint(
+                equalTo: self.trailingAnchor, constant: Layout.Inset.trailingBottom),
+            reportButton.heightAnchor.constraint(
+                equalToConstant: Layout.Button.height)
         ])
-        
-        imageView.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        cancelButton.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        reportButton.setContentHuggingPriority(.defaultHigh, for: .vertical)
-
-        imageView.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
-        cancelButton.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
-        reportButton.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
     }
     
     required init?(coder: NSCoder) {

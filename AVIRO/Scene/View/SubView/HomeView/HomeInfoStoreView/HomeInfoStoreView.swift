@@ -12,7 +12,10 @@ class HomeInfoStoreView: UIView {
     let title: UILabel = {
         let label = UILabel()
         label.textColor = .mainTitle
-        label.font = .systemFont(ofSize: 20)
+        label.font = .systemFont(
+            ofSize: CGFloat(Layout.SlideView.titleFont),
+            weight: .bold
+        )
         
         return label
     }()
@@ -32,7 +35,9 @@ class HomeInfoStoreView: UIView {
     let address: UILabel = {
         let label = UILabel()
         label.textColor = .subTitle
-        label.font = .systemFont(ofSize: 16)
+        label.font = .systemFont(
+            ofSize: CGFloat(Layout.SlideView.addressFont)
+        )
         
         return label
     }()
@@ -40,7 +45,7 @@ class HomeInfoStoreView: UIView {
     let handleView: UIView = {
         let view = UIView()
         view.backgroundColor = .separateLine
-        view.layer.cornerRadius = 2.5
+        view.layer.cornerRadius = Layout.SlideView.lineCornerRadius
         
         return view
     }()
@@ -48,14 +53,13 @@ class HomeInfoStoreView: UIView {
     let shareButton: UIButton = {
         let button = UIButton()
         
-        button.setImage(UIImage(named: "share"), for: .normal)
-        button.setTitle("공유하기", for: .normal)
+        button.setImage(UIImage(named: Image.share), for: .normal)
+        button.setTitle(StringValue.HomeView.share, for: .normal)
         button.setTitleColor(.mainTitle, for: .normal)
         
         button.imageView?.contentMode = .scaleAspectFit
         button.semanticContentAttribute = .forceLeftToRight
-//        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 10)
+        button.imageEdgeInsets = Layout.SlideView.imageToTextInset
 
         button.contentHorizontalAlignment = .center
         
@@ -65,14 +69,13 @@ class HomeInfoStoreView: UIView {
     let bookmarkButton: UIButton = {
         let button = UIButton()
         
-        button.setImage(UIImage(named: "Bookmark"), for: .normal)
-        button.setTitle("북마크   ", for: .normal)
+        button.setImage(UIImage(named: Image.bookmark), for: .normal)
+        button.setTitle(StringValue.HomeView.bookmark, for: .normal)
         button.setTitleColor(.mainTitle, for: .normal)
 
         button.imageView?.contentMode = .scaleAspectFit
         button.semanticContentAttribute = .forceLeftToRight
-//        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 10)
+        button.imageEdgeInsets = Layout.SlideView.imageToTextInset
 
         button.contentHorizontalAlignment = .center
 
@@ -82,14 +85,13 @@ class HomeInfoStoreView: UIView {
     let commentButton: UIButton = {
         let button = UIButton()
         
-        button.setImage(UIImage(named: "comment"), for: .normal)
-        button.setTitle("댓글     ", for: .normal)
+        button.setImage(UIImage(named: Image.comment), for: .normal)
+        button.setTitle(StringValue.HomeView.comments, for: .normal)
         button.setTitleColor(.mainTitle, for: .normal)
 
         button.imageView?.contentMode = .scaleAspectFit
         button.semanticContentAttribute = .forceLeftToRight
-//        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 10)
+        button.imageEdgeInsets = Layout.SlideView.imageToTextInset
 
         button.contentHorizontalAlignment = .center
 
@@ -98,8 +100,9 @@ class HomeInfoStoreView: UIView {
     
     let separator1: UIView = {
         let view = UIView()
+        
         view.backgroundColor = .separateLine
-        view.layer.cornerRadius = 2.5
+        view.layer.cornerRadius = Layout.SlideView.lineCornerRadius
         view.widthAnchor.constraint(equalToConstant: 1).isActive = true
         
         return view
@@ -107,8 +110,9 @@ class HomeInfoStoreView: UIView {
     
     let separator2: UIView = {
         let view = UIView()
+        
         view.backgroundColor = .separateLine
-        view.layer.cornerRadius = 2.5
+        view.layer.cornerRadius = Layout.SlideView.lineCornerRadius
         view.widthAnchor.constraint(equalToConstant: 1).isActive = true
         
         return view
@@ -132,6 +136,12 @@ class HomeInfoStoreView: UIView {
         view.backgroundColor = .white
         view.alpha = 1
         
+        view.layer.cornerRadius = CGFloat(Layout.SlideView.cornerRadius)
+        view.layer.shadowColor = Layout.SlideView.shadowColor
+        view.layer.shadowOffset = Layout.SlideView.shadowOffset
+        view.layer.shadowRadius = CGFloat(Layout.SlideView.shadowRadius)
+        view.layer.shadowOpacity = Float(Layout.SlideView.shadowOpacity)
+        
         return view
     }()
     
@@ -148,18 +158,12 @@ class HomeInfoStoreView: UIView {
         super.init(frame: frame)
                 
         self.backgroundColor = .white
-        self.layer.cornerRadius = 30
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOffset = CGSize(width: -2, height: -2)
-        self.layer.shadowRadius = 4
-        self.layer.shadowOpacity = 0.25
         
-        entireView.backgroundColor = .white
-        entireView.layer.cornerRadius = 30
-        entireView.layer.shadowColor = UIColor.black.cgColor
-        entireView.layer.shadowOffset = CGSize(width: -2, height: -2)
-        entireView.layer.shadowRadius = 4
-        entireView.layer.shadowOpacity = 0.25
+        self.layer.cornerRadius = CGFloat(Layout.SlideView.cornerRadius)
+        self.layer.shadowColor = Layout.SlideView.shadowColor
+        self.layer.shadowOffset = Layout.SlideView.shadowOffset
+        self.layer.shadowRadius = CGFloat(Layout.SlideView.shadowRadius)
+        self.layer.shadowOpacity = Float(Layout.SlideView.shadowOpacity)
         
         [
             shareButton,
@@ -187,31 +191,31 @@ class HomeInfoStoreView: UIView {
 
         NSLayoutConstraint.activate([
             // handleView
-            handleView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+            handleView.topAnchor.constraint(equalTo: self.topAnchor, constant: Layout.Inset.leadingTopHalf),
             handleView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             handleView.widthAnchor.constraint(equalToConstant: 40),
             handleView.heightAnchor.constraint(equalToConstant: 5),
             
             // topImageView
-            topImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
-            topImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            topImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: Layout.Inset.leadingTop),
+            topImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Layout.Inset.leadingTop),
             
             // imageView
             imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            imageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+            imageView.topAnchor.constraint(equalTo: self.topAnchor, constant: Layout.Inset.leadingTopPlus),
             
             // title
             title.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            title.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 3),
+            title.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: Layout.Inset.leadingTopSmall),
             
             // address
             address.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            address.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 8),
+            address.topAnchor.constraint(equalTo: title.bottomAnchor, constant: Layout.Inset.leadingTopHalf),
             
             // stackView
-            stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            stackView.topAnchor.constraint(equalTo: address.bottomAnchor, constant: 20),
+            stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Layout.Inset.leadingTop),
+            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: Layout.Inset.trailingBottom),
+            stackView.topAnchor.constraint(equalTo: address.bottomAnchor, constant: Layout.Inset.leadingTopPlus),
              
             // entireView
             entireView.topAnchor.constraint(equalTo: self.topAnchor),

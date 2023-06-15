@@ -38,11 +38,7 @@ extension HomeViewController {
     @objc func firstPopupViewDelete() {
         UIView.animate(withDuration: 0.15, animations: {
             self.blurEffectView.alpha = 0
-            self.firstPopupView.frame = CGRect(x: 0,
-                                               y: self.view.frame.height,
-                                               width: self.view.frame.width,
-                                               height: StaticLayout.firstSlideViewHeight
-            )
+            self.firstPopupView.frame.origin.y = self.view.frame.height
         }, completion: { [weak self] _ in
             // 왜? hidden처리 안 하면,
             // marker클릭할 때 firstPopupView도 같이 올라옴??
@@ -91,11 +87,9 @@ extension HomeViewController {
         if recognizer.state == .changed {
             let newHeight = currentHeight - translation.y
             if newHeight >= minHeight && newHeight <= maxHeight {
-                storeInfoView.frame = CGRect(x: 0,
-                                             y: self.view.frame.height - newHeight + 32,
-                                             width: view.frame.width,
-                                             height: newHeight
-                )
+                storeInfoView.frame.size.height = newHeight
+                storeInfoView.frame.origin.y = self.view.frame.height - newHeight + 32
+                
                 recognizer.setTranslation(CGPoint.zero, in: self.storeInfoView)
                 
                 let newAlpha = (newHeight - minHeight) / (maxHeight - minHeight)
@@ -106,19 +100,14 @@ extension HomeViewController {
         } else if recognizer.state == .ended {
             UIView.animate(withDuration: 0.3, animations: {
                 if velocity.y >= 0 {
-                    self.storeInfoView.frame = CGRect(x: 0,
-                                                      y: self.view.frame.height,
-                                                      width: self.view.frame.width,
-                                                      height: StaticLayout.slideViewHeight
-                    )
+                    self.storeInfoView.frame.origin.y = self.view.frame.size.height
+
                     self.storeInfoView.entireView.alpha = 0
                     self.storeInfoView.activityIndicator.alpha = 0
                 } else {
-                    self.storeInfoView.frame = CGRect(x: 0,
-                                                      y: self.view.frame.height - maxHeight + 32,
-                                                      width: self.view.frame.width,
-                                                      height: maxHeight
-                    )
+                    self.storeInfoView.frame.size.height = maxHeight + 32
+                    self.storeInfoView.frame.origin.y = self.view.frame.origin.y
+
                     self.storeInfoView.entireView.alpha = 1
                     self.storeInfoView.activityIndicator.alpha = 1
                 }

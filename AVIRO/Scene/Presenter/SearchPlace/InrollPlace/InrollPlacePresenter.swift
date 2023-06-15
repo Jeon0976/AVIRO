@@ -19,8 +19,8 @@ final class InrollPlacePresenter: NSObject {
     private let userDefaultsManager: UserDefaultsManagerProtocol?
     
     // tableView Cell 개수 데이터 (최초 데이터)
-    var notRequestMenu = [NotRequestMenu](repeating: NotRequestMenu(menu: "", price: ""), count: 1)
-    var requestMenu = [RequestMenu](repeating: RequestMenu(menu: "", price: "", howToRequest: "", isCheck: false), count: 1)
+    var notRequestMenu = [NotRequestMenu(menu: "", price: "")]
+    var requestMenu = [RequestMenu(menu: "", price: "", howToRequest: "", isCheck: false)]
     
     var storeNomalData: PlaceListModel!
     
@@ -68,6 +68,16 @@ final class InrollPlacePresenter: NSObject {
     
     func updatePlaceModel(_ model: PlaceListModel) {
         storeNomalData = model
+    }
+    
+    // MARK: Report 버튼 활성화 조건 -> 추후 수정 예정
+    // store 다른 필수 조건도 삭제되면 버튼 비활성화 되어야 함
+    func reportButtonPossible() -> Bool {
+        if (requestMenu[0].menu != "" && requestMenu[0].price != "")
+            ||
+            (notRequestMenu[0].menu != "" && notRequestMenu[0].price != "") {
+            return true
+        } else { return false }
     }
     
     func reportData(_ title: String, _ address: String, _ category: String, _ phone: String ) {

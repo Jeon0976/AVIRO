@@ -84,17 +84,17 @@ extension HomeViewController: HomeViewProtocol {
             
             // loadLoactionButton
             loadLocationButton.bottomAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: StaticLayout.minusLocationInset),
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: Layout.HomeView.minusLocationInset),
             loadLocationButton.trailingAnchor.constraint(
-                equalTo: naverMapView.trailingAnchor, constant: StaticLayout.minusLocationInset),
+                equalTo: naverMapView.trailingAnchor, constant: Layout.HomeView.minusLocationInset),
             
             // searchTextField
             searchTextField.topAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.topAnchor, constant: StaticLayout.leadingTopInset),
+                equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Layout.Inset.leadingTop),
             searchTextField.leadingAnchor.constraint(
-                equalTo: naverMapView.leadingAnchor, constant: StaticLayout.leadingTopInset),
+                equalTo: naverMapView.leadingAnchor, constant: Layout.Inset.leadingTop),
             searchTextField.trailingAnchor.constraint(
-                equalTo: naverMapView.trailingAnchor, constant: StaticLayout.trailingBottomInset)
+                equalTo: naverMapView.trailingAnchor, constant: Layout.Inset.trailingBottom)
         ])
     }
     
@@ -108,7 +108,7 @@ extension HomeViewController: HomeViewProtocol {
         navigationItem.backBarButtonItem = backItem
         
         // lodeLocationButton
-        loadLocationButton.setImage(UIImage(named: StaticImage.PersonalLocation), for: .normal)
+        loadLocationButton.setImage(UIImage(named: Image.PersonalLocation), for: .normal)
         loadLocationButton.addTarget(
             self,
             action: #selector(refreshMyLocationTouchDown),
@@ -128,14 +128,17 @@ extension HomeViewController: HomeViewProtocol {
         )
         
         // searchTextField
-        searchTextField.makeCustomPlaceHolder(StaticStringValue.searchPlaceHolder)
+        searchTextField.makeCustomPlaceHolder(StringValue.HomeView.searchPlaceHolder)
         searchTextField.delegate = self
         
     }
     // MARK: Gesture 설정
     func makeGesture() {
         storeInfoView.addGestureRecognizer(panGesture)
-        panGesture.addTarget(self, action: #selector(panGestureHandler))
+        panGesture.addTarget(
+            self,
+            action: #selector(panGestureHandler)
+        )
     }
     
     // MARK: SlideView 설정
@@ -144,7 +147,7 @@ extension HomeViewController: HomeViewProtocol {
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
         blurEffectView.effect = blurEffect
         blurEffectView.frame = view.bounds
-        blurEffectView.alpha = 0.6
+        blurEffectView.alpha = 0.4
         
         firstPopupView.cancelButton.addTarget(self,
                                               action: #selector(firstPopupViewDelete),
@@ -173,18 +176,23 @@ extension HomeViewController: HomeViewProtocol {
         
         NSLayoutConstraint.activate([
             // firstPopUpView
-            firstPopupView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            firstPopupView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            firstPopupView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            firstPopupView.heightAnchor.constraint(equalToConstant: StaticLayout.firstSlideViewHeight)
+            firstPopupView.bottomAnchor.constraint(
+                equalTo: view.bottomAnchor),
+            firstPopupView.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor, constant: Layout.Inset.leadingTopSmall),
+            firstPopupView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor, constant: Layout.Inset.trailingBottomSmall),
+            firstPopupView.heightAnchor.constraint(
+                equalToConstant: Layout.SlideView.firstHeight)
         ])
         
         // store info view
-        storeInfoView.frame = CGRect(x: 0,
+        storeInfoView.frame = CGRect(x: 3,
                                      y: self.view.frame.height,
-                                     width: self.view.frame.width,
-                                     height: CGFloat(StaticLayout.slideViewHeight)
+                                     width: self.view.frame.width - 6,
+                                     height: CGFloat(Layout.SlideView.height)
         )
+                
         storeInfoView.entireView.alpha = 0
         storeInfoView.activityIndicator.alpha = 0
 
@@ -219,11 +227,11 @@ extension HomeViewController: HomeViewProtocol {
                 marker.height = 30
                 markers.append(marker)
                 if veganModel.allVegan {
-                    marker.iconImage = NMFOverlayImage(name: StaticImage.allVegan)
+                    marker.iconImage = NMFOverlayImage(name: Image.allVegan)
                 } else if veganModel.someMenuVegan {
-                    marker.iconImage = NMFOverlayImage(name: StaticImage.someMenuVegan)
+                    marker.iconImage = NMFOverlayImage(name: Image.someMenuVegan)
                 } else {
-                    marker.iconImage = NMFOverlayImage(name: StaticImage.requestVegan)
+                    marker.iconImage = NMFOverlayImage(name: Image.requestVegan)
                 }
                 // Marker 터치할 때
                 marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
@@ -236,32 +244,29 @@ extension HomeViewController: HomeViewProtocol {
                                  
                                  if veganModel.allVegan {
                                      storeInfoView.imageView.image = UIImage(
-                                        named: StaticImage.homeInfoVegan)
+                                        named: Image.homeInfoVegan)
                                      storeInfoView.topImageView.image = UIImage(
-                                        named: StaticImage.homeInfoVeganTitle)
+                                        named: Image.homeInfoVeganTitle)
                                  } else if veganModel.someMenuVegan {
                                      storeInfoView.imageView.image = UIImage(
-                                        named: StaticImage.homeInfoSomeVegan)
+                                        named: Image.homeInfoSomeVegan)
                                      storeInfoView.topImageView.image = UIImage(
-                                        named: StaticImage.homeInfoSomeVeganTitle)
+                                        named: Image.homeInfoSomeVeganTitle)
                                  } else {
                                      storeInfoView.imageView.image = UIImage(
-                                        named: StaticImage.homeInfoRequestVegan)
+                                        named: Image.homeInfoRequestVegan)
                                      storeInfoView.topImageView.image = UIImage(
-                                        named: StaticImage.homeInfoRequestVeganTitle)
+                                        named: Image.homeInfoRequestVeganTitle)
                                  }
                                  storeInfoView.imageView.contentMode = .scaleAspectFit
                                  storeInfoView.topImageView.contentMode = .scaleAspectFit
                                                                   
                                  UIView.animate(withDuration: 0.15) {
-                                     print(self.view.frame)
-                                     self.storeInfoView.frame = CGRect(
-                                        x: 0,
-                                        y: self.view.frame.height - StaticLayout.slideViewHeight,
-                                        width: self.view.frame.width,
-                                        height: StaticLayout.slideViewHeight + (self.tabBarController?.tabBar.frame.size
-                                            .height ?? 32)
-                                     )
+                                     let tabBarHeight = self.tabBarController?.tabBar.frame.size.height ?? 32
+                                     self.storeInfoView.frame.origin.y =
+                                        self.view.frame.height - Layout.SlideView.height
+                                     self.storeInfoView.frame.size.height =
+                                        Layout.SlideView.height + tabBarHeight
                                  }
                              }
                              return true
@@ -279,10 +284,14 @@ extension HomeViewController: HomeViewProtocol {
     func pushDetailViewController(_ veganModel: VeganModel) {
         DispatchQueue.main.async { [weak self] in
             let viewController = DetailViewController()
-            let presenter = DetailViewPresenter(viewController: viewController, veganModel: veganModel)
+            let presenter = DetailViewPresenter(viewController: viewController,
+                                                veganModel: veganModel
+            )
             viewController.presenter = presenter
             
-            self?.navigationController?.pushViewController(viewController, animated: false)
+            self?.navigationController?.pushViewController(viewController,
+                                                           animated: false
+            )
         }
     }
 }
@@ -291,7 +300,9 @@ extension HomeViewController: HomeViewProtocol {
 extension HomeViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         let viewController = HomeSearchViewController()
-        navigationController?.pushViewController(viewController, animated: true)
+        navigationController?.pushViewController(viewController,
+                                                 animated: true
+        )
         return false
     }
 }
