@@ -265,18 +265,6 @@ extension InrollPlaceViewController: InrollPlaceProtocol {
 }
 
 extension InrollPlaceViewController {
-    // MARK: 검색 후 데이터 불러오기 작업
-    @objc func selectedPlace(_ notification: Notification) {
-        guard let selectedPlace = notification.userInfo?["selectedPlace"] as? PlaceListModel else { return }
-        
-        presenter.updatePlaceModel(selectedPlace)
-        
-        storeTitleField.text = selectedPlace.title
-        storeLocationField.text = selectedPlace.address
-        storeCategoryField.text = selectedPlace.category
-        storePhoneField.text = selectedPlace.phone
-    }
-
     // MARK: refreshData
     func refreshData() {
         storeTitleField.text = ""
@@ -296,13 +284,13 @@ extension InrollPlaceViewController {
         navigationItem.rightBarButtonItem?.isEnabled = false
         reportStoreButton.isEnabled = false
         
-        allVegan.setImage(UIImage(named: Image.InrollPageImage.allVeganNoSelected), for: .normal)
+        allVegan.setImage(UIImage(named: Image.InrollView.allVeganNoSelected), for: .normal)
         allVegan.setTitleColor(.separateLine, for: .normal)
         
-        someMenuVegan.setImage(UIImage(named: Image.InrollPageImage.someMenuVeganNoSelected), for: .normal)
+        someMenuVegan.setImage(UIImage(named: Image.InrollView.someMenuVeganNoSelected), for: .normal)
         someMenuVegan.setTitleColor(.separateLine, for: .normal)
         
-        ifRequestPossibleVegan.setImage(UIImage(named: Image.InrollPageImage.requestMenuVeganNoSelected), for: .normal)
+        ifRequestPossibleVegan.setImage(UIImage(named: Image.InrollView.requestMenuVeganNoSelected), for: .normal)
         ifRequestPossibleVegan.setTitleColor(.separateLine, for: .normal)
         
         updateViewChanges(.offAll)

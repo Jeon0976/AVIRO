@@ -27,6 +27,7 @@ struct StringValue {
         static let reportButton = "비건 식당 제보하러가기"
     }
     
+    // MARK: Inroll View
     struct InrollView {
         static let naviTitle = "가게 제보하기"
         static let naviRightBar = "제보하기"
@@ -47,5 +48,10 @@ struct StringValue {
         static let requestVegan = "요청하면 비건"
         
         static let menuTable = "메뉴 등록하기"
+        
+        static let menuPlaceHolder = "메뉴"
+        static let pricePlaceHolder = "가격"
+        static let requestButtonTitle = "요청"
+        static let detailPlaceHolder = "예. 비비밥에 달걀 빼주세요."
     }
 }

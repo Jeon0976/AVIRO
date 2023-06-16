@@ -233,13 +233,14 @@
 		C50367F32A1795BE0020C6BB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C5538AAE2A1BB81200661DE2 /* VeganModel.swift */,
 				C5EB51012A20926800B29CC1 /* TapBarModel */,
 				C5EB51022A20927400B29CC1 /* HomeReferModel */,
 				C5351B782A1B437600116D50 /* APIResonseModel */,
 				C5351B652A1A128D00116D50 /* SingleTonModel */,
 				C5351B7B2A1B52A000116D50 /* PlaceListModel */,
 				C5351B7E2A1B52D400116D50 /* CustomLocationModel */,
-				C5538AAE2A1BB81200661DE2 /* VeganModel.swift */,
+				C596D9892A3C72D500829B17 /* TableCellIdentifierModel */,
 				C5D745972A22C203006F9F31 /* MockData.swift */,
 			);
 			path = Model;
@@ -425,6 +426,13 @@
 				C54BC0DC2A2C762C00B65439 /* CommentsLabel.swift */,
 			);
 			path = UITextLabel;
+			sourceTree = "<group>";
+		};
+		C596D9892A3C72D500829B17 /* TableCellIdentifierModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TableCellIdentifierModel;
 			sourceTree = "<group>";
 		};
 		C5CAAC432A39A92A008C5FDA /* StaticValue */ = {

@@ -42,7 +42,7 @@ final class VeganMenuTableViewCell: UITableViewCell {
         }
         
         textFieldStackView.axis = .horizontal
-        textFieldStackView.spacing = 12
+        textFieldStackView.spacing = Layout.InrollView.fieldToField
         textFieldStackView.distribution = .fillEqually
         
         [
@@ -53,20 +53,24 @@ final class VeganMenuTableViewCell: UITableViewCell {
         }
         
         NSLayoutConstraint.activate([
-            textFieldStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            textFieldStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            textFieldStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            textFieldStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+            textFieldStackView.topAnchor.constraint(
+                equalTo: contentView.topAnchor, constant: Layout.InrollView.notRequestTableConstant),
+            textFieldStackView.bottomAnchor.constraint(
+                equalTo: contentView.bottomAnchor),
+            textFieldStackView.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor),
+            textFieldStackView.trailingAnchor.constraint(
+                equalTo: contentView.trailingAnchor)
         ])
     }
     
     private func makeAttribute() {
         self.backgroundColor = .clear
         
-        menuTextField.placeholder = "메뉴"
+        menuTextField.placeholder = StringValue.InrollView.menuPlaceHolder
         menuTextField.textColor = .mainTitle
         
-        priceTextField.placeholder = "가격"
+        priceTextField.placeholder = StringValue.InrollView.pricePlaceHolder
         priceTextField.textColor = .mainTitle
     }
     

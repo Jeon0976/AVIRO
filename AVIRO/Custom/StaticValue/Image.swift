@@ -5,7 +5,7 @@
 //  Created by 전성훈 on 2023/06/14.
 //
 
-import Foundation
+import UIKit
 
 /// image data set 
 struct Image {
@@ -52,8 +52,8 @@ struct Image {
     static let requestVegan = "requestVegan"
     static let someMenuVegan = "someMenuVegan"
 
-    // MARK: Inroll Page Image
-    struct InrollPageImage {
+    // MARK: Inroll View Image
+    struct InrollView {
         static let plusButton = "plusButton"
         static let allVeganSelected = "올비건"
         static let allVeganNoSelected = "올비건No"
@@ -61,5 +61,7 @@ struct Image {
         static let someMenuVeganNoSelected = "썸비건No"
         static let requestMenuVeganSelected = "요청비건"
         static let requestMenuVeganNoSelected = "요청비건No"
+        
+        static let checkImage = UIImage(systemName: "checkmark")
     }
 }

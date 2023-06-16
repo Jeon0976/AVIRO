@@ -49,7 +49,7 @@ final class IfRequestVeganMenuTableViewCell: UITableViewCell {
         }
         
         topStackView.axis = .horizontal
-        topStackView.spacing = 12
+        topStackView.spacing = Layout.InrollView.fieldToField
         topStackView.distribution = .fillEqually
         
         [
@@ -63,34 +63,46 @@ final class IfRequestVeganMenuTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             // topStackView
-            topStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            topStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            topStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            topStackView.topAnchor.constraint(
+                equalTo: contentView.topAnchor, constant: Layout.InrollView.notRequestTableConstant),
+            topStackView.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor),
+            topStackView.trailingAnchor.constraint(
+                equalTo: contentView.trailingAnchor),
 
             // requestButton
-            requestButton.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 10),
-            requestButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            requestButton.heightAnchor.constraint(equalTo: menuTextField.heightAnchor, multiplier: 1),
-            requestButton.widthAnchor.constraint(equalTo: requestButton.heightAnchor, multiplier: 1),
-            requestButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            requestButton.topAnchor.constraint(
+                equalTo: topStackView.bottomAnchor, constant: Layout.InrollView.requestBetween),
+            requestButton.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor),
+            requestButton.heightAnchor.constraint(
+                equalTo: menuTextField.heightAnchor, multiplier: 1),
+            requestButton.widthAnchor.constraint(
+                equalTo: requestButton.heightAnchor, multiplier: 1),
+            requestButton.bottomAnchor.constraint(
+                equalTo: contentView.bottomAnchor),
 
             // detailTextField
-            detailTextField.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 10),
-            detailTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            detailTextField.leadingAnchor.constraint(equalTo: requestButton.trailingAnchor, constant: 16),
-            detailTextField.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            detailTextField.topAnchor.constraint(
+                equalTo: topStackView.bottomAnchor, constant: Layout.InrollView.requestBetween),
+            detailTextField.trailingAnchor.constraint(
+                equalTo: contentView.trailingAnchor),
+            detailTextField.leadingAnchor.constraint(
+                equalTo: requestButton.trailingAnchor, constant: Layout.InrollView.fieldToField),
+            detailTextField.bottomAnchor.constraint(
+                equalTo: contentView.bottomAnchor)
         ])
     }
     
     private func makeAttribute() {
         self.backgroundColor = .clear
         
-        menuTextField.placeholder = "메뉴"
+        menuTextField.placeholder = StringValue.InrollView.menuPlaceHolder
         menuTextField.textColor = .mainTitle
-        priceTextField.placeholder = "가격"
+        priceTextField.placeholder = StringValue.InrollView.pricePlaceHolder
         priceTextField.textColor = .mainTitle
                 
-        requestButton.setTitle("요청", for: .normal)
+        requestButton.setTitle(StringValue.InrollView.requestButtonTitle, for: .normal)
         requestButton.setTitleColor(.placeholderText, for: .normal)
         requestButton.backgroundColor = .clear
         requestButton.layer.borderWidth = 1
@@ -100,7 +112,7 @@ final class IfRequestVeganMenuTableViewCell: UITableViewCell {
         
         detailTextField.isEnabled = false
         detailTextField.textColor = .black
-        detailTextField.placeholder = "예. 비빔밥에 달걀 빼주세요."
+        detailTextField.placeholder = StringValue.InrollView.detailPlaceHolder
         
     }
     
@@ -108,12 +120,12 @@ final class IfRequestVeganMenuTableViewCell: UITableViewCell {
         if check == false {
             detailTextField.isEnabled = true
             requestButton.setTitle("", for: .normal)
-            requestButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
+            requestButton.setImage(Image.InrollView.checkImage, for: .normal)
             check = true
         } else {
             detailTextField.text = ""
             detailTextField.isEnabled = false
-            requestButton.setTitle("요청", for: .normal)
+            requestButton.setTitle(StringValue.InrollView.requestButtonTitle, for: .normal)
             requestButton.setImage(nil, for: .normal)
             check = false
 
@@ -128,7 +140,7 @@ final class IfRequestVeganMenuTableViewCell: UITableViewCell {
             detailTextField.isEnabled = true
             detailTextField.backgroundColor = .white
             requestButton.setTitle("", for: .normal)
-            requestButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
+            requestButton.setImage(Image.InrollView.checkImage, for: .normal)
         }
     }
 }

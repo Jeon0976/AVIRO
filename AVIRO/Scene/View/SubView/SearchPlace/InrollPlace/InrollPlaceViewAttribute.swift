@@ -67,13 +67,13 @@ extension InrollPlaceViewController {
         veganDetailExplanation.text = StringValue.InrollView.storeTypes
         veganDetailExplanation.textColor = .mainTitle
         
-        allVegan.makeVeganSelectButton(Image.InrollPageImage.allVeganNoSelected,
+        allVegan.makeVeganSelectButton(Image.InrollView.allVeganNoSelected,
                                        StringValue.InrollView.allVegan
         )
-        someMenuVegan.makeVeganSelectButton(Image.InrollPageImage.someMenuVeganNoSelected,
+        someMenuVegan.makeVeganSelectButton(Image.InrollView.someMenuVeganNoSelected,
                                             StringValue.InrollView.someVegan
         )
-        ifRequestPossibleVegan.makeVeganSelectButton(Image.InrollPageImage.requestMenuVeganNoSelected,
+        ifRequestPossibleVegan.makeVeganSelectButton(Image.InrollView.requestMenuVeganNoSelected,
                                                      StringValue.InrollView.requestVegan
         )
         
@@ -121,6 +121,6 @@ extension InrollPlaceViewController {
     // MARK: vegan Header View
     public func veganHeaderViewAttribute() {
         veganMenuExplanation.text = StringValue.InrollView.menuTable
-        veganMenuPlusButton.customImageConfig(Image.InrollPageImage.plusButton, Image.InrollPageImage.plusButton)
+        veganMenuPlusButton.customImageConfig(Image.InrollView.plusButton, Image.InrollView.plusButton)
     }
 }

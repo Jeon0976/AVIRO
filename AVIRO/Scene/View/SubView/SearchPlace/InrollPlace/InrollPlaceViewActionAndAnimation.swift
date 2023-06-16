@@ -69,7 +69,8 @@ extension InrollPlaceViewController {
                 self?.updateViewChanges(.offAll)
 
                 self?.isNegativeReportButton()
-            }        })
+            }
+        })
     }
     // MARK: 요청하면 비건 클릭 시
     @objc func clickedIfRequestPossibleVebanButton(_ sender: UIButton) {
@@ -111,14 +112,26 @@ extension InrollPlaceViewController {
     // MARK: TableView Cell 데이터 입력 창 추가
     @objc func plusCell() {
         if veganMenuTableView.isHidden {
+            
             presenter.plusCell(false)
-            requestVeganTableHeightPlusValue += Int(storeTitleField.intrinsicContentSize.height * 2 + 26)
-            requestVeganTableViewHeightConstraint.constant += storeTitleField.intrinsicContentSize.height * 2 + 26
+            
+            requestVeganTableHeightPlusValue +=
+            Int(storeTitleField.intrinsicContentSize.height * 2 + Layout.InrollView.requestTableConstant)
+            
+            requestVeganTableViewHeightConstraint.constant +=
+            storeTitleField.intrinsicContentSize.height * 2 + Layout.InrollView.requestTableConstant
+            
             view.layoutIfNeeded()
         } else {
+            
             presenter.plusCell(true)
-            veganTableHeightPlusValue += Int(storeTitleField.intrinsicContentSize.height + 16)
-            veganTableViewHeightConstraint.constant += storeTitleField.intrinsicContentSize.height + 16
+            
+            veganTableHeightPlusValue +=
+            Int(storeTitleField.intrinsicContentSize.height + Layout.InrollView.notRequestTableConstant)
+            
+            veganTableViewHeightConstraint.constant +=
+            storeTitleField.intrinsicContentSize.height + Layout.InrollView.notRequestTableConstant
+            
             view.layoutIfNeeded()
         }
     }

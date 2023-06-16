@@ -69,8 +69,12 @@ struct Layout {
     struct InrollView {
         static let labelToLabel = CGFloat(3)
         static let labelToField = CGFloat(8)
+        static let fieldToField = CGFloat(12)
         
         static let notRequestTableConstant = CGFloat(16)
-        static let requestTableConstant = CGFloat(26)
+        
+        static let requestBetween = CGFloat(10)
+        
+        static let requestTableConstant = notRequestTableConstant + requestBetween
     }
 }

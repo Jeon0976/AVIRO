@@ -8,6 +8,18 @@
 import UIKit
 
 extension InrollPlaceViewController {
+    // MARK: 검색 후 데이터 불러오기 작업
+    @objc func selectedPlace(_ notification: Notification) {
+        guard let selectedPlace = notification.userInfo?["selectedPlace"] as? PlaceListModel else { return }
+        
+        presenter.updatePlaceModel(selectedPlace)
+        
+        storeTitleField.text = selectedPlace.title
+        storeLocationField.text = selectedPlace.address
+        storeCategoryField.text = selectedPlace.category
+        storePhoneField.text = selectedPlace.phone
+    }
+    
     // MARK: 키보드 나타남에 따라 view 동적으로 보여주기
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
@@ -17,7 +29,9 @@ extension InrollPlaceViewController {
             UIView.animate(
                 withDuration: 0.3,
                 animations: {
-                    self.view.transform = CGAffineTransform(translationX: 0, y: -(keyboardRectangle.height - tabBarHeight))
+                    self.view.transform = CGAffineTransform(translationX: 0,
+                                                            y: -(keyboardRectangle.height - tabBarHeight)
+                    )
                 }
             )
         }

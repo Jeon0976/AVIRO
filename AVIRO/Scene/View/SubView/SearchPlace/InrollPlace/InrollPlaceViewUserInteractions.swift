@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: Vegan Button의 상태
 enum VeganState {
     case allVeganClicked
     case onlySomeVeganClicked
@@ -15,6 +16,7 @@ enum VeganState {
     case offAll
 }
 
+// MARK: Vegan Button UI 설정
 struct ButtonState {
     var imageString: String
     var titleColor: UIColor?
@@ -26,17 +28,17 @@ extension InrollPlaceViewController {
     // MARK: Button 클릭 시 UI 분기 처리
     func updateVeganState(_ state: VeganState) {
         
-        let defaultAllVeganState = ButtonState(imageString: Image.InrollPageImage.allVeganNoSelected,
+        let defaultAllVeganState = ButtonState(imageString: Image.InrollView.allVeganNoSelected,
                                                titleColor: UIColor.separateLine,
                                                backgroundColor: UIColor.white,
                                                borderColor: UIColor.separateLine?.cgColor)
                                                
-        let defaultSomeVeganState = ButtonState(imageString: Image.InrollPageImage.someMenuVeganNoSelected,
+        let defaultSomeVeganState = ButtonState(imageString: Image.InrollView.someMenuVeganNoSelected,
                                                 titleColor: UIColor.separateLine,
                                                 backgroundColor: UIColor.white,
                                                 borderColor: UIColor.separateLine?.cgColor)
                                                 
-        let defaultRequestVeganState = ButtonState(imageString: Image.InrollPageImage.requestMenuVeganNoSelected,
+        let defaultRequestVeganState = ButtonState(imageString: Image.InrollView.requestMenuVeganNoSelected,
                                                    titleColor: UIColor.separateLine,
                                                    backgroundColor: UIColor.white,
                                                    borderColor: UIColor.separateLine?.cgColor)
@@ -47,32 +49,32 @@ extension InrollPlaceViewController {
         
         switch state {
         case .allVeganClicked:
-            allVeganState = ButtonState(imageString: Image.InrollPageImage.allVeganSelected,
+            allVeganState = ButtonState(imageString: Image.InrollView.allVeganSelected,
                                         titleColor: UIColor.white,
                                         backgroundColor: UIColor.allVegan,
                                         borderColor: UIColor.allVegan?.cgColor)
             presenter.buttonChecked(true, false, false)
             
         case .onlySomeVeganClicked:
-            someMenuVeganState = ButtonState(imageString: Image.InrollPageImage.someMenuVeganSelected,
+            someMenuVeganState = ButtonState(imageString: Image.InrollView.someMenuVeganSelected,
                                              titleColor: UIColor.white,
                                              backgroundColor: UIColor.someVegan,
                                              borderColor: UIColor.someVegan?.cgColor)
             presenter.buttonChecked(false, true, false)
             
         case .onlyRequestVeganClicked:
-            ifRequestVeganState = ButtonState(imageString: Image.InrollPageImage.requestMenuVeganSelected,
+            ifRequestVeganState = ButtonState(imageString: Image.InrollView.requestMenuVeganSelected,
                                               titleColor: UIColor.white,
                                               backgroundColor: UIColor.requestVegan,
                                               borderColor: UIColor.requestVegan?.cgColor)
             presenter.buttonChecked(false, false, true)
             
         case .someAndReqeustVeganClicked:
-            someMenuVeganState = ButtonState(imageString: Image.InrollPageImage.someMenuVeganSelected,
+            someMenuVeganState = ButtonState(imageString: Image.InrollView.someMenuVeganSelected,
                                              titleColor: UIColor.white,
                                              backgroundColor: UIColor.someVegan,
                                              borderColor: UIColor.someVegan?.cgColor)
-            ifRequestVeganState = ButtonState(imageString: Image.InrollPageImage.requestMenuVeganSelected,
+            ifRequestVeganState = ButtonState(imageString: Image.InrollView.requestMenuVeganSelected,
                                               titleColor: UIColor.white,
                                               backgroundColor: UIColor.requestVegan,
                                               borderColor: UIColor.requestVegan?.cgColor)
