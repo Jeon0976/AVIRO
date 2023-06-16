@@ -63,7 +63,7 @@ final class IfRequestVeganMenuTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             // topStackView
-            topStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
+            topStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             topStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             topStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
 
@@ -77,12 +77,14 @@ final class IfRequestVeganMenuTableViewCell: UITableViewCell {
             // detailTextField
             detailTextField.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 10),
             detailTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            detailTextField.leadingAnchor.constraint(equalTo: requestButton.trailingAnchor, constant: 15),
+            detailTextField.leadingAnchor.constraint(equalTo: requestButton.trailingAnchor, constant: 16),
             detailTextField.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
     
     private func makeAttribute() {
+        self.backgroundColor = .clear
+        
         menuTextField.placeholder = "메뉴"
         menuTextField.textColor = .mainTitle
         priceTextField.placeholder = "가격"

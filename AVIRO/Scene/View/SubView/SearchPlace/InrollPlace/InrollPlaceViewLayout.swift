@@ -19,7 +19,7 @@ extension InrollPlaceViewController {
         }
         
         storeTitleExplanationStackView.axis = .horizontal
-        storeTitleExplanationStackView.spacing = 3.0
+        storeTitleExplanationStackView.spacing = Layout.InrollView.labelToLabel
         storeTitleExplanationStackView.distribution = .equalSpacing
         
         [
@@ -31,7 +31,7 @@ extension InrollPlaceViewController {
         }
                 
         storeTitleStackView.axis = .vertical
-        storeTitleStackView.spacing = 8.0
+        storeTitleStackView.spacing = Layout.InrollView.labelToField
         storeTitleStackView.alignment = .leading
         
         NSLayoutConstraint.activate([
@@ -54,7 +54,7 @@ extension InrollPlaceViewController {
         
         storeLocationExplanationStackView.axis = .horizontal
         storeLocationExplanationStackView.distribution = .fill
-        storeLocationExplanationStackView.spacing = 3.0
+        storeLocationExplanationStackView.spacing = Layout.InrollView.labelToLabel
         
         [
             storeLocationExplanationStackView,
@@ -65,7 +65,7 @@ extension InrollPlaceViewController {
         }
         
         storeLocationStackView.axis = .vertical
-        storeLocationStackView.spacing = 8.0
+        storeLocationStackView.spacing = Layout.InrollView.labelToField
         storeLocationStackView.alignment = .leading
         
         NSLayoutConstraint.activate([
@@ -88,7 +88,7 @@ extension InrollPlaceViewController {
         
         storeCategoryExplanationStackView.axis = .horizontal
         storeCategoryExplanationStackView.distribution = .fill
-        storeCategoryExplanationStackView.spacing = 3.0
+        storeCategoryExplanationStackView.spacing = Layout.InrollView.labelToLabel
         
         [
             storeCategoryExplanationStackView,
@@ -99,7 +99,7 @@ extension InrollPlaceViewController {
         }
         
         storeCategoryStackView.axis = .vertical
-        storeCategoryStackView.spacing = 8.0
+        storeCategoryStackView.spacing = Layout.InrollView.labelToField
         storeCategoryStackView.alignment = .leading
         
         NSLayoutConstraint.activate([
@@ -122,7 +122,7 @@ extension InrollPlaceViewController {
         
         storePhoneExplanationStackView.axis = .horizontal
         storePhoneExplanationStackView.distribution = .fill
-        storePhoneExplanationStackView.spacing = 3.0
+        storePhoneExplanationStackView.spacing = Layout.InrollView.labelToLabel
         
         [
             storePhoneExplanationStackView,
@@ -133,7 +133,7 @@ extension InrollPlaceViewController {
         }
         
         storePhoneStackView.axis = .vertical
-        storePhoneStackView.spacing = 8.0
+        storePhoneStackView.spacing = Layout.InrollView.labelToField
         storePhoneStackView.alignment = .leading
         
         NSLayoutConstraint.activate([
@@ -156,7 +156,7 @@ extension InrollPlaceViewController {
         
         veganDetailExplanationStackView.axis = .horizontal
         veganDetailExplanationStackView.distribution = .fill
-        veganDetailExplanationStackView.spacing = 3.0
+        veganDetailExplanationStackView.spacing = Layout.InrollView.labelToLabel
         
         [
             allVegan,
@@ -168,7 +168,7 @@ extension InrollPlaceViewController {
         }
         
         veganButtonStackView.axis = .horizontal
-        veganButtonStackView.spacing = 3.0
+        veganButtonStackView.spacing = Layout.InrollView.labelToLabel
         veganButtonStackView.distribution = .fillEqually
         
         NSLayoutConstraint.activate([
@@ -186,7 +186,7 @@ extension InrollPlaceViewController {
         }
         
         veganDetailStackView.axis = .vertical
-        veganDetailStackView.spacing = 8.0
+        veganDetailStackView.spacing = Layout.InrollView.labelToField
         veganDetailStackView.alignment = .leading
         
         NSLayoutConstraint.activate([
@@ -209,7 +209,7 @@ extension InrollPlaceViewController {
         
         veganMenuExplanationStackView.axis = .horizontal
         
-        veganMenuExplanationStackView.spacing = 3.0
+        veganMenuExplanationStackView.spacing = Layout.InrollView.labelToLabel
         
         [
             veganMenuExplanationStackView,
@@ -230,14 +230,13 @@ extension InrollPlaceViewController {
         // 동적 뷰를 위한 설정
         // 최초 및 모든 버튼 비활성화 시 활성화될 layout
         veganDetailStackViewBottomL = veganDetailStackView.bottomAnchor.constraint(
-            equalTo: reportStoreButton.topAnchor,
-            constant: -32)
+            equalTo: reportStoreButton.topAnchor, constant: Layout.Inset.trailingBottomDouble)
 
         // 어떤 버튼이라도 눌렀을 시 활성화될 layout
         tableHeaderViewL = [
             // Vegan Header View
             veganMenuHeaderStackView.topAnchor.constraint(
-                equalTo: veganDetailStackView.bottomAnchor, constant: 30),
+                equalTo: veganDetailStackView.bottomAnchor, constant: Layout.Inset.leadingTopDouble),
             veganMenuHeaderStackView.leadingAnchor.constraint(
                 equalTo: storeTitleStackView.leadingAnchor),
             veganMenuHeaderStackView.trailingAnchor.constraint(
@@ -248,36 +247,36 @@ extension InrollPlaceViewController {
         veganTableViewHeightConstraint = veganMenuTableView.heightAnchor.constraint(
             equalTo: storeTitleField.heightAnchor, multiplier: 1)
 
-        veganTableViewHeightConstraint.constant = 15
+        veganTableViewHeightConstraint.constant = Layout.InrollView.notRequestTableConstant
 
         // Not Request Vegan Menu Table View의 Layout
         allAndVeganMenuL = [
             veganMenuTableView.topAnchor.constraint(
-                equalTo: veganMenuHeaderStackView.bottomAnchor, constant: 8),
+                equalTo: veganMenuHeaderStackView.bottomAnchor, constant: Layout.Inset.trailingBottomHalf),
             veganMenuTableView.leadingAnchor.constraint(
                 equalTo: storeTitleStackView.leadingAnchor),
             veganMenuTableView.trailingAnchor.constraint(
                 equalTo: storeTitleStackView.trailingAnchor),
             veganMenuTableView.bottomAnchor.constraint(
-                equalTo: reportStoreButton.topAnchor, constant: -32),
+                equalTo: reportStoreButton.topAnchor, constant: Layout.Inset.trailingBottomDouble),
             veganTableViewHeightConstraint
         ]
         
         requestVeganTableViewHeightConstraint = howToRequestVeganMenuTableView.heightAnchor.constraint(
             equalTo: storeTitleField.heightAnchor, multiplier: 2)
 
-        requestVeganTableViewHeightConstraint.constant = 25
+        requestVeganTableViewHeightConstraint.constant = Layout.InrollView.requestTableConstant
         
         // Request Vegan Menu Table View의 Layout
         howToRequestVeganMenuTableViewL = [
             howToRequestVeganMenuTableView.topAnchor.constraint(
-                equalTo: veganMenuHeaderStackView.bottomAnchor, constant: 8),
+                equalTo: veganMenuHeaderStackView.bottomAnchor, constant: Layout.Inset.trailingBottomHalf),
             howToRequestVeganMenuTableView.leadingAnchor.constraint(
                 equalTo: storeTitleStackView.leadingAnchor),
             howToRequestVeganMenuTableView.trailingAnchor.constraint(
                 equalTo: storeTitleStackView.trailingAnchor),
             howToRequestVeganMenuTableView.bottomAnchor.constraint(
-                equalTo: reportStoreButton.topAnchor, constant: -32),
+                equalTo: reportStoreButton.topAnchor, constant: Layout.Inset.trailingBottomDouble),
             requestVeganTableViewHeightConstraint
         ]
         
@@ -306,19 +305,15 @@ extension InrollPlaceViewController {
         NSLayoutConstraint.activate([
             // storeTitleStackView
             storeTitleStackView.topAnchor.constraint(
-                equalTo: scrollView.topAnchor,
-                constant: 16),
+                equalTo: scrollView.topAnchor, constant: Layout.Inset.leadingTop),
             storeTitleStackView.leadingAnchor.constraint(
-                equalTo: scrollView.leadingAnchor,
-                constant: 16),
+                equalTo: scrollView.leadingAnchor, constant: Layout.Inset.leadingTop),
             storeTitleStackView.trailingAnchor.constraint(
-                equalTo: scrollView.trailingAnchor,
-                constant: -16),
+                equalTo: scrollView.trailingAnchor, constant: Layout.Inset.trailingBottom),
             
             // storeLocationStackView
             storeLocationStackView.topAnchor.constraint(
-                equalTo: storeTitleStackView.bottomAnchor,
-                constant: 32),
+                equalTo: storeTitleStackView.bottomAnchor, constant: Layout.Inset.leadingTopDouble),
             storeLocationStackView.leadingAnchor.constraint(
                 equalTo: storeTitleStackView.leadingAnchor),
             storeLocationStackView.trailingAnchor.constraint(
@@ -326,8 +321,7 @@ extension InrollPlaceViewController {
 
             // storeCategoryStackView
             storeCategoryStackView.topAnchor.constraint(
-                equalTo: storeLocationStackView.bottomAnchor,
-                constant: 32),
+                equalTo: storeLocationStackView.bottomAnchor, constant: Layout.Inset.leadingTopDouble),
             storeCategoryStackView.leadingAnchor.constraint(
                 equalTo: storeTitleStackView.leadingAnchor),
             storeCategoryStackView.trailingAnchor.constraint(
@@ -335,8 +329,7 @@ extension InrollPlaceViewController {
             
             // storePhoneStackView
             storePhoneStackView.topAnchor.constraint(
-                equalTo: storeCategoryStackView.bottomAnchor,
-                constant: 32),
+                equalTo: storeCategoryStackView.bottomAnchor, constant: Layout.Inset.leadingTopDouble),
             storePhoneStackView.leadingAnchor.constraint(
                 equalTo: storeTitleStackView.leadingAnchor),
             storePhoneStackView.trailingAnchor.constraint(
@@ -344,8 +337,7 @@ extension InrollPlaceViewController {
 
             // veganDetailStackView
             veganDetailStackView.topAnchor.constraint(
-                equalTo: storePhoneStackView.bottomAnchor,
-                constant: 32),
+                equalTo: storePhoneStackView.bottomAnchor, constant: Layout.Inset.leadingTopDouble),
             veganDetailStackView.leadingAnchor.constraint(
                 equalTo: storeTitleStackView.leadingAnchor),
             veganDetailStackView.trailingAnchor.constraint(
@@ -354,7 +346,7 @@ extension InrollPlaceViewController {
             
             // reportStoreButton
             reportStoreButton.bottomAnchor.constraint(
-                equalTo: scrollView.bottomAnchor, constant: -32),
+                equalTo: scrollView.bottomAnchor, constant: Layout.Inset.trailingBottomDouble),
             reportStoreButton.leadingAnchor.constraint(
                 equalTo: storeTitleStackView.leadingAnchor),
             reportStoreButton.trailingAnchor.constraint(
@@ -362,7 +354,7 @@ extension InrollPlaceViewController {
             reportStoreButton.centerXAnchor.constraint(
                 equalTo: scrollView.centerXAnchor),
             reportStoreButton.heightAnchor.constraint(
-                equalTo: storeTitleField.heightAnchor, multiplier: 1)
+                equalToConstant: Layout.Button.height)
         ])
     }
 }

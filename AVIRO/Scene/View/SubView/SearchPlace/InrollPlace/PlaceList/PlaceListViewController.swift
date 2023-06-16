@@ -76,6 +76,14 @@ extension PlaceListViewController: PlaceListProtocol {
         listTableView.reloadData()
     }
     
+    // TODO: 검색 결과가 없을 때 Shake 기능 넣기
+    func shakeTableView() {
+        let shakeAnimation = CAKeyframeAnimation(keyPath: "transform.translation.x")
+        shakeAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
+        shakeAnimation.values = [-5.0, 5.0, -5.0, 5.0, -3.0, 3.0, -1.0, 1.0, 0.0 ]
+        shakeAnimation.duration = 0.2
+        searchField.layer.add(shakeAnimation, forKey: "shake")
+    }
 }
 
 extension PlaceListViewController: UITableViewDelegate {

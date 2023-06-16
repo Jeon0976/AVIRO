@@ -336,19 +336,11 @@
 			path = SearchPlace;
 			sourceTree = "<group>";
 		};
-		C5351B732A1B36A300116D50 /* WhenClickSearchButton */ = {
-			isa = PBXGroup;
-			children = (
-				C5351B812A1B547C00116D50 /* PlaceList */,
-			);
-			path = WhenClickSearchButton;
-			sourceTree = "<group>";
-		};
 		C5351B762A1B36C700116D50 /* InrollPlace */ = {
 			isa = PBXGroup;
 			children = (
 				C5351B6E2A1B242C00116D50 /* InrollPlacePresenter.swift */,
-				C5351B732A1B36A300116D50 /* WhenClickSearchButton */,
+				C5351B812A1B547C00116D50 /* PlaceList */,
 			);
 			path = InrollPlace;
 			sourceTree = "<group>";

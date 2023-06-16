@@ -133,10 +133,3 @@ extension InrollPlaceViewController {
         }
     }
 }
-
-// MARK: 다른곳 클릭할 때 키보드 없애기
-extension InrollPlaceViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        view.endEditing(true)
-    }
-}

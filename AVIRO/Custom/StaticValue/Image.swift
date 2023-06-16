@@ -51,13 +51,15 @@ struct Image {
     static let allVegan = "allVegan"
     static let requestVegan = "requestVegan"
     static let someMenuVegan = "someMenuVegan"
-    
+
     // MARK: Inroll Page Image
-    static let plusButton = "plusButton"
-    static let allVeganSelected = "올비건"
-    static let allVeganNoSelected = "올비건No"
-    static let someMenuVeganSelected = "썸비건"
-    static let someMenuVeganNoSelected = "썸비건No"
-    static let requestMenuVeganSelected = "요청비건"
-    static let requestMenuVeganNoSelected = "요청비건No"
+    struct InrollPageImage {
+        static let plusButton = "plusButton"
+        static let allVeganSelected = "올비건"
+        static let allVeganNoSelected = "올비건No"
+        static let someMenuVeganSelected = "썸비건"
+        static let someMenuVeganNoSelected = "썸비건No"
+        static let requestMenuVeganSelected = "요청비건"
+        static let requestMenuVeganNoSelected = "요청비건No"
+    }
 }

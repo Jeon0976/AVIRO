@@ -42,20 +42,12 @@ final class HomeViewController: UIViewController {
                 
         presenter.viewWillAppear()
         presenter.loadVeganData()
-        
-        navigationController?.navigationBar.isHidden = true
-        
-        // TabBar Controller
-        if let tabBarController = self.tabBarController as? TabBarViewController {
-            tabBarController.hiddenTabBar(false)
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         presenter.firstLocationUpdate()
-        print(view.frame)
     }
 }
 
@@ -132,6 +124,7 @@ extension HomeViewController: HomeViewProtocol {
         searchTextField.delegate = self
         
     }
+    
     // MARK: Gesture 설정
     func makeGesture() {
         storeInfoView.addGestureRecognizer(panGesture)
@@ -179,17 +172,17 @@ extension HomeViewController: HomeViewProtocol {
             firstPopupView.bottomAnchor.constraint(
                 equalTo: view.bottomAnchor),
             firstPopupView.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor, constant: Layout.Inset.leadingTopSmall),
+                equalTo: view.leadingAnchor),
             firstPopupView.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor, constant: Layout.Inset.trailingBottomSmall),
+                equalTo: view.trailingAnchor),
             firstPopupView.heightAnchor.constraint(
                 equalToConstant: Layout.SlideView.firstHeight)
         ])
         
         // store info view
-        storeInfoView.frame = CGRect(x: 3,
+        storeInfoView.frame = CGRect(x: 0,
                                      y: self.view.frame.height,
-                                     width: self.view.frame.width - 6,
+                                     width: self.view.frame.width,
                                      height: CGFloat(Layout.SlideView.height)
         )
                 
@@ -198,6 +191,17 @@ extension HomeViewController: HomeViewProtocol {
 
         view.addSubview(storeInfoView)
     }
+    
+    // MARK: View Will Appear할 때 navigation & Tab Bar hidden Setting
+    func whenViewWillAppear() {
+        navigationController?.navigationBar.isHidden = true
+        
+        // TabBar Controller
+        if let tabBarController = self.tabBarController as? TabBarViewController {
+            tabBarController.hiddenTabBar(false)
+        }
+    }
+    
     // MARK: 위치 denided or approval
     // 위치 denied 할 때
     func ifDenied() {

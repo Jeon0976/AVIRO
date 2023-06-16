@@ -10,6 +10,9 @@ import UIKit
 protocol InrollPlaceProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
+    func makeGesture()
+    func whenViewWillAppear()
+    func whenViewDisappear()
     func reloadTableView(_ checkTable: Bool)
 }
 
@@ -39,6 +42,15 @@ final class InrollPlacePresenter: NSObject {
     func viewDidLoad() {
         viewController?.makeLayout()
         viewController?.makeAttribute()
+        viewController?.makeGesture()
+    }
+    
+    func viewWillAppear() {
+        viewController?.whenViewWillAppear()
+    }
+    
+    func viewWillDisappear() {
+        viewController?.whenViewDisappear()
     }
     
     // MARK: plus button 클릭 시 tableView Cell Data 추가
@@ -60,12 +72,14 @@ final class InrollPlacePresenter: NSObject {
         }
     }
     
+    // MARK: Button Clieck Property 저장
     func buttonChecked(_ allVegan: Bool, _ someMenuVegan: Bool, _ ifRequestVegan: Bool) {
         self.allVegan = allVegan
         self.someMenuVegan = someMenuVegan
         self.ifRequestVegan = ifRequestVegan
     }
     
+    // MARK: Place Model Update
     func updatePlaceModel(_ model: PlaceListModel) {
         storeNomalData = model
     }
@@ -73,13 +87,13 @@ final class InrollPlacePresenter: NSObject {
     // MARK: Report 버튼 활성화 조건 -> 추후 수정 예정
     // store 다른 필수 조건도 삭제되면 버튼 비활성화 되어야 함
     func reportButtonPossible() -> Bool {
-        if (requestMenu[0].menu != "" && requestMenu[0].price != "")
-            ||
+        if (requestMenu[0].menu != "" && requestMenu[0].price != "") ||
             (notRequestMenu[0].menu != "" && notRequestMenu[0].price != "") {
             return true
         } else { return false }
     }
     
+    // MARK: report Button 클릭 시
     func reportData(_ title: String, _ address: String, _ category: String, _ phone: String ) {
         
         storeNomalData.title = title
@@ -98,8 +112,8 @@ final class InrollPlacePresenter: NSObject {
 
         userDefaultsManager?.setData(veganModel)
         
-        notRequestMenu = [NotRequestMenu](repeating: NotRequestMenu(menu: "", price: ""), count: 1)
-        requestMenu = [RequestMenu](repeating: RequestMenu(menu: "", price: "", howToRequest: "", isCheck: false), count: 1)
+        notRequestMenu = [NotRequestMenu(menu: "", price: "")]
+        requestMenu = [RequestMenu(menu: "", price: "", howToRequest: "", isCheck: false)]
         
         storeNomalData = nil
         allVegan = false

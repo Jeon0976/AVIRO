@@ -8,95 +8,117 @@
 import UIKit
 
 extension InrollPlaceViewController {
+    // MARK: Button touch down
+    @objc func buttonTouchDown(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.1, animations: {
+            sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            sender.layer.opacity = 0.4
+        })
+    }
+    
     // MARK: ALL 비건 클릭 시
-    @objc func clickedAllVeganButton() {
-        // ALL 비건 클릭 on
-        if !presenter.allVegan {
-            updateVeganState(.allVeganClicked)
-            updateViewChanges(.allVeganClicked)
-            
-            isNegativeReportButton()
-        } else {
-        // ALL 비건 클릭 off
-            updateVeganState(.offAll)
-            updateViewChanges(.offAll)
-            
-            isNegativeReportButton()
-        }
+    @objc func clickedAllVeganButton(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.05, animations: {
+            sender.transform = CGAffineTransform.identity
+            sender.layer.opacity = 1
+        }, completion: { [weak self] _ in
+            // ALL 비건 클릭 on
+            if !(self?.presenter.allVegan ?? false) {
+                self?.updateVeganState(.allVeganClicked)
+                self?.updateViewChanges(.allVeganClicked)
+                
+                self?.isNegativeReportButton()
+            } else {
+            // ALL 비건 클릭 off
+                self?.updateVeganState(.offAll)
+                self?.updateViewChanges(.offAll)
+                
+                self?.isNegativeReportButton()
+            }
+        })
     }
     // MARK: 비건 메뉴 포함 클릭 시
-    @objc func clickedSomeMenuVeganButton() {
-        // 비건 메뉴 포함, 요청하면 비건 둘다 클릭 안 되어있을 때
-        if !presenter.someMenuVegan && !presenter.ifRequestVegan {
-            updateVeganState(.onlySomeVeganClicked)
-            updateViewChanges(.onlySomeVeganClicked)
-            
-            isNegativeReportButton()
-            // 비건 메뉴 포함만 안 되있고, 요청하면 비건은 눌러져있을 때
-        } else if !presenter.someMenuVegan && presenter.ifRequestVegan {
-            updateVeganState(.someAndReqeustVeganClicked)
-            updateViewChanges(.someAndReqeustVeganClicked)
+    @objc func clickedSomeMenuVeganButton(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.05, animations: {
+            sender.transform = CGAffineTransform.identity
+            sender.layer.opacity = 1
+        }, completion: { [weak self] _ in
+            // 비건 메뉴 포함, 요청하면 비건 둘다 클릭 안 되어있을 때
+            if !(self?.presenter.someMenuVegan ?? false) && !(self?.presenter.ifRequestVegan ?? false) {
+                self?.updateVeganState(.onlySomeVeganClicked)
+                self?.updateViewChanges(.onlySomeVeganClicked)
+                
+                self?.isNegativeReportButton()
+                // 비건 메뉴 포함만 안 되있고, 요청하면 비건은 눌러져있을 때
+            } else if !(self?.presenter.someMenuVegan ?? false ) && (self?.presenter.ifRequestVegan ?? false) {
+                self?.updateVeganState(.someAndReqeustVeganClicked)
+                self?.updateViewChanges(.someAndReqeustVeganClicked)
 
-            isNegativeReportButton()
-            
-            // 둘 다 눌러져 있을 때
-        } else if presenter.someMenuVegan && presenter.ifRequestVegan {
-            updateVeganState(.onlyRequestVeganClicked)
-            updateViewChanges(.onlyRequestVeganClicked)
+                self?.isNegativeReportButton()
+                
+                // 둘 다 눌러져 있을 때
+            } else if (self?.presenter.someMenuVegan ?? false) && (self?.presenter.ifRequestVegan ?? false) {
+                self?.updateVeganState(.onlyRequestVeganClicked)
+                self?.updateViewChanges(.onlyRequestVeganClicked)
 
-            isNegativeReportButton()
-            
-            // 비건 메뉴만 눌러져 있을 때
-        } else {
-            updateVeganState(.offAll)
-            updateViewChanges(.offAll)
+                self?.isNegativeReportButton()
+                
+                // 비건 메뉴만 눌러져 있을 때
+            } else {
+                self?.updateVeganState(.offAll)
+                self?.updateViewChanges(.offAll)
 
-            isNegativeReportButton()
-        }
+                self?.isNegativeReportButton()
+            }        })
     }
     // MARK: 요청하면 비건 클릭 시
-    @objc func clickedIfRequestPossibleVebanButton() {
-        // 비건 메뉴 포함, 요청하면 비건 둘다 클릭 안 되어있을 때
-        if !presenter.ifRequestVegan && !presenter.someMenuVegan {
-            updateVeganState(.onlyRequestVeganClicked)
-            updateViewChanges(.onlyRequestVeganClicked)
+    @objc func clickedIfRequestPossibleVebanButton(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.05, animations: {
+            sender.transform = CGAffineTransform.identity
+            sender.layer.opacity = 1
+        }, completion: { [weak self] _ in
+            // 비건 메뉴 포함, 요청하면 비건 둘다 클릭 안 되어있을 때
+            if !(self?.presenter.ifRequestVegan ?? false) && !(self?.presenter.someMenuVegan ?? false) {
+                self?.updateVeganState(.onlyRequestVeganClicked)
+                self?.updateViewChanges(.onlyRequestVeganClicked)
 
-            isNegativeReportButton()
-            
-            // 비건 메뉴 포함만 눌러져 있을 때
-        } else if !presenter.ifRequestVegan && presenter.someMenuVegan {
-            updateVeganState(.someAndReqeustVeganClicked)
-            updateViewChanges(.someAndReqeustVeganClicked)
+                self?.isNegativeReportButton()
+                
+                // 비건 메뉴 포함만 눌러져 있을 때
+            } else if !(self?.presenter.ifRequestVegan ?? false) && (self?.presenter.someMenuVegan ?? false) {
+                self?.updateVeganState(.someAndReqeustVeganClicked)
+                self?.updateViewChanges(.someAndReqeustVeganClicked)
 
-            isNegativeReportButton()
+                self?.isNegativeReportButton()
 
-            // 둘다 눌러져 있을 때
-        } else if presenter.ifRequestVegan && presenter.someMenuVegan {
-            updateVeganState(.onlySomeVeganClicked)
-            updateViewChanges(.onlySomeVeganClicked)
+                // 둘다 눌러져 있을 때
+            } else if (self?.presenter.ifRequestVegan ?? false) && (self?.presenter.someMenuVegan ?? false) {
+                self?.updateVeganState(.onlySomeVeganClicked)
+                self?.updateViewChanges(.onlySomeVeganClicked)
 
-            isNegativeReportButton()
+                self?.isNegativeReportButton()
 
-            // 혼자만 눌러져 있을 때
-        } else {
-            updateVeganState(.offAll)
-            updateViewChanges(.offAll)
+                // 혼자만 눌러져 있을 때
+            } else {
+                self?.updateVeganState(.offAll)
+                self?.updateViewChanges(.offAll)
 
-            isNegativeReportButton()
-        }
+                self?.isNegativeReportButton()
+            }
+        })
     }
     
     // MARK: TableView Cell 데이터 입력 창 추가
     @objc func plusCell() {
         if veganMenuTableView.isHidden {
             presenter.plusCell(false)
-            requestVeganTableHeightPlusValueTotal += Int(storeTitleField.intrinsicContentSize.height * 2 + 25)
-            requestVeganTableViewHeightConstraint.constant += storeTitleField.intrinsicContentSize.height * 2 + 25
+            requestVeganTableHeightPlusValue += Int(storeTitleField.intrinsicContentSize.height * 2 + 26)
+            requestVeganTableViewHeightConstraint.constant += storeTitleField.intrinsicContentSize.height * 2 + 26
             view.layoutIfNeeded()
         } else {
             presenter.plusCell(true)
-            veganTableHeightPlusValueTotal += Int(storeTitleField.intrinsicContentSize.height + 15)
-            veganTableViewHeightConstraint.constant += storeTitleField.intrinsicContentSize.height + 15
+            veganTableHeightPlusValue += Int(storeTitleField.intrinsicContentSize.height + 16)
+            veganTableViewHeightConstraint.constant += storeTitleField.intrinsicContentSize.height + 16
             view.layoutIfNeeded()
         }
     }

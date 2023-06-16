@@ -27,4 +27,25 @@ struct StringValue {
         static let reportButton = "비건 식당 제보하러가기"
     }
     
+    struct InrollView {
+        static let naviTitle = "가게 제보하기"
+        static let naviRightBar = "제보하기"
+        static let reportButton = "이 가게 제보하기"
+        
+        static let required = "(필수)"
+        static let optional = "(선택)"
+        
+        static let storeTitle = "가게 이름"
+        static let storeTitlePlaceHolder = "가게를 찾아보세요"
+        static let storeLocation = "가게 위치"
+        static let storeCategory = "카테고리"
+        static let storePhone = "전화번호"
+        static let storeTypes = "가게 종류"
+        
+        static let allVegan = "ALL 비건"
+        static let someVegan = "비건 메뉴 포함"
+        static let requestVegan = "요청하면 비건"
+        
+        static let menuTable = "메뉴 등록하기"
+    }
 }

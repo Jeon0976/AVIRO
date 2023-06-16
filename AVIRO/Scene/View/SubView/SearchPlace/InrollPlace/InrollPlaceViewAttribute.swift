@@ -10,74 +10,117 @@ import UIKit
 extension InrollPlaceViewController {
     // MARK: Requirde & Optional Attribute
     public func requiredAndOptionalAttribute() {
-        requiredTitleLabel.text = "(필수)"
+        requiredTitleLabel.text = StringValue.InrollView.required
         requiredTitleLabel.textColor = .subTitle
-        requiredTitleLabel.font = .systemFont(ofSize: 12, weight: .light)
+        requiredTitleLabel.font = Layout.Label.subTitleFont
         
-        requriedLocationLabel.text = "(필수)"
+        requriedLocationLabel.text = StringValue.InrollView.required
         requriedLocationLabel.textColor = .subTitle
-        requriedLocationLabel.font = .systemFont(ofSize: 12, weight: .light)
+        requriedLocationLabel.font = Layout.Label.subTitleFont
         
-        requriedCategoryLabel.text = "(필수)"
+        requriedCategoryLabel.text = StringValue.InrollView.required
         requriedCategoryLabel.textColor = .subTitle
-        requriedCategoryLabel.font = .systemFont(ofSize: 12, weight: .light)
+        requriedCategoryLabel.font = Layout.Label.subTitleFont
         
-        optionalPhoneLabel.text = "(선택)"
+        optionalPhoneLabel.text = StringValue.InrollView.optional
         optionalPhoneLabel.textColor = .subTitle
-        optionalPhoneLabel.font = .systemFont(ofSize: 12, weight: .light)
+        optionalPhoneLabel.font = Layout.Label.subTitleFont
         
-        requriedDetailLabel.text = "(필수)"
+        requriedDetailLabel.text = StringValue.InrollView.required
         requriedDetailLabel.textColor = .subTitle
-        requriedDetailLabel.font = .systemFont(ofSize: 12, weight: .light)
+        requriedDetailLabel.font = Layout.Label.subTitleFont
         
-        requriedMenuLabel.text = "(필수)"
+        requriedMenuLabel.text = StringValue.InrollView.required
         requriedMenuLabel.textColor = .subTitle
-        requriedMenuLabel.font = .systemFont(ofSize: 12, weight: .light)
+        requriedMenuLabel.font = Layout.Label.subTitleFont
 
     }
     
     // MARK: Store Title Attribute
     public func storeTitleReferAttribute() {
-        storeTitleExplanation.text = "가게 이름"
+        storeTitleExplanation.text = StringValue.InrollView.storeTitle
         storeTitleExplanation.textColor = .mainTitle
-        storeTitleField.placeholder = "가게를 찾아보세요"
+        storeTitleField.placeholder = StringValue.InrollView.storeTitlePlaceHolder
         storeTitleField.delegate = self
     }
 
     // MARK: Store Location Attribute
     public func storeLocationReferAttribute() {
-        storeLocationExplanation.text = "가게 위치"
+        storeLocationExplanation.text = StringValue.InrollView.storeLocation
         storeLocationExplanation.textColor = .mainTitle
     }
     
     // MARK: Store Category Attribute
     public func storeCategoryReferAttribute() {
-        storeCategoryExplanation.text = "카테고리"
+        storeCategoryExplanation.text = StringValue.InrollView.storeCategory
         storeCategoryExplanation.textColor = .mainTitle
     }
     
     // MARK: Store Phone Attribute
     public func storePhoneReferAttribute() {
-        storePhoneExplanation.text = "전화번호"
+        storePhoneExplanation.text = StringValue.InrollView.storePhone
         storePhoneExplanation.textColor = .mainTitle
     }
     
     // MARK: Vegan Detail Attribute
     public func veganDetailReferAttribute() {
-        veganDetailExplanation.text = "가게 종류"
+        veganDetailExplanation.text = StringValue.InrollView.storeTypes
         veganDetailExplanation.textColor = .mainTitle
         
-        allVegan.makeVeganSelectButton("올비건No", "ALL 비건")
-        someMenuVegan.makeVeganSelectButton("썸비건No", "비건 메뉴 포함")
-        ifRequestPossibleVegan.makeVeganSelectButton("요청비건No", "요청하면 비건")
-        allVegan.addTarget(self, action: #selector(clickedAllVeganButton), for: .touchUpInside)
-        someMenuVegan.addTarget(self, action: #selector(clickedSomeMenuVeganButton), for: .touchUpInside)
-        ifRequestPossibleVegan.addTarget(self, action: #selector(clickedIfRequestPossibleVebanButton), for: .touchUpInside)
+        allVegan.makeVeganSelectButton(Image.InrollPageImage.allVeganNoSelected,
+                                       StringValue.InrollView.allVegan
+        )
+        someMenuVegan.makeVeganSelectButton(Image.InrollPageImage.someMenuVeganNoSelected,
+                                            StringValue.InrollView.someVegan
+        )
+        ifRequestPossibleVegan.makeVeganSelectButton(Image.InrollPageImage.requestMenuVeganNoSelected,
+                                                     StringValue.InrollView.requestVegan
+        )
+        
+        allVegan.addTarget(self,
+                           action: #selector(clickedAllVeganButton),
+                           for: .touchUpInside
+        )
+        allVegan.addTarget(self,
+                           action: #selector(clickedAllVeganButton),
+                           for: .touchDragExit
+        )
+        allVegan.addTarget(self,
+                           action: #selector(buttonTouchDown),
+                           for: .touchDown
+        )
+        
+        someMenuVegan.addTarget(self,
+                                action: #selector(clickedSomeMenuVeganButton),
+                                for: .touchUpInside
+        )
+        someMenuVegan.addTarget(self,
+                                action: #selector(clickedSomeMenuVeganButton),
+                                for: .touchDragExit
+        )
+        someMenuVegan.addTarget(self,
+                                action: #selector(buttonTouchDown),
+                                for: .touchDown
+        )
+
+        ifRequestPossibleVegan.addTarget(self,
+                                         action: #selector(clickedIfRequestPossibleVebanButton),
+                                         for: .touchUpInside
+        )
+        ifRequestPossibleVegan.addTarget(self,
+                                         action: #selector(clickedIfRequestPossibleVebanButton),
+                                         for: .touchDragExit
+        )
+        ifRequestPossibleVegan.addTarget(self,
+                                         action: #selector(buttonTouchDown),
+                                         for: .touchDown
+        )
+
     }
     
     // MARK: vegan Header View
     public func veganHeaderViewAttribute() {
-        veganMenuExplanation.text = "메뉴 등록하기"
-        veganMenuPlusButton.customImageConfig("plusButton", "plusButton")
+        veganMenuExplanation.text = StringValue.InrollView.menuTable
+        veganMenuPlusButton.customImageConfig(Image.InrollPageImage.plusButton, Image.InrollPageImage.plusButton)
     }
 }

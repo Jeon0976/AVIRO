@@ -53,7 +53,7 @@ final class VeganMenuTableViewCell: UITableViewCell {
         }
         
         NSLayoutConstraint.activate([
-            textFieldStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
+            textFieldStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             textFieldStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             textFieldStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             textFieldStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
@@ -61,6 +61,8 @@ final class VeganMenuTableViewCell: UITableViewCell {
     }
     
     private func makeAttribute() {
+        self.backgroundColor = .clear
+        
         menuTextField.placeholder = "메뉴"
         menuTextField.textColor = .mainTitle
         

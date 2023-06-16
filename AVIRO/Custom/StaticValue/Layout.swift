@@ -38,6 +38,10 @@ struct Layout {
         
     }
     
+    struct Label {
+        static let subTitleFont = UIFont.systemFont(ofSize: 12, weight: .light)
+    }
+    
     // MARK: Slide View
     struct SlideView {
         static let height = CGFloat(280)
@@ -59,5 +63,14 @@ struct Layout {
     // MARK: Home View
     struct HomeView {
         static let minusLocationInset = CGFloat(-4)
+    }
+    
+    // MARK: Inroll View
+    struct InrollView {
+        static let labelToLabel = CGFloat(3)
+        static let labelToField = CGFloat(8)
+        
+        static let notRequestTableConstant = CGFloat(16)
+        static let requestTableConstant = CGFloat(26)
     }
 }

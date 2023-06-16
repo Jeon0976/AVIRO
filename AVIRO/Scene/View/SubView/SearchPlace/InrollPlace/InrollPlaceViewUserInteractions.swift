@@ -15,62 +15,83 @@ enum VeganState {
     case offAll
 }
 
+struct ButtonState {
+    var imageString: String
+    var titleColor: UIColor?
+    var backgroundColor: UIColor?
+    var borderColor: CGColor?
+}
+
 extension InrollPlaceViewController {
     // MARK: Button 클릭 시 UI 분기 처리
     func updateVeganState(_ state: VeganState) {
-        let inactiveState = ("No", UIColor.separateLine, UIColor.white, UIColor.separateLine?.cgColor)
-        let activeState = ("", UIColor.plusButton, UIColor.mainTitle!, UIColor.mainTitle?.cgColor)
         
-        var allVeganState = inactiveState
-        var someMenuVeganState = inactiveState
-        var ifRequestVeganState = inactiveState
+        let defaultAllVeganState = ButtonState(imageString: Image.InrollPageImage.allVeganNoSelected,
+                                               titleColor: UIColor.separateLine,
+                                               backgroundColor: UIColor.white,
+                                               borderColor: UIColor.separateLine?.cgColor)
+                                               
+        let defaultSomeVeganState = ButtonState(imageString: Image.InrollPageImage.someMenuVeganNoSelected,
+                                                titleColor: UIColor.separateLine,
+                                                backgroundColor: UIColor.white,
+                                                borderColor: UIColor.separateLine?.cgColor)
+                                                
+        let defaultRequestVeganState = ButtonState(imageString: Image.InrollPageImage.requestMenuVeganNoSelected,
+                                                   titleColor: UIColor.separateLine,
+                                                   backgroundColor: UIColor.white,
+                                                   borderColor: UIColor.separateLine?.cgColor)
+                                       
+        var allVeganState = defaultAllVeganState
+        var someMenuVeganState = defaultSomeVeganState
+        var ifRequestVeganState = defaultRequestVeganState
         
         switch state {
         case .allVeganClicked:
-            allVeganState = activeState
-            someMenuVeganState = inactiveState
-            ifRequestVeganState = inactiveState
-            
+            allVeganState = ButtonState(imageString: Image.InrollPageImage.allVeganSelected,
+                                        titleColor: UIColor.white,
+                                        backgroundColor: UIColor.allVegan,
+                                        borderColor: UIColor.allVegan?.cgColor)
             presenter.buttonChecked(true, false, false)
+            
         case .onlySomeVeganClicked:
-            someMenuVeganState = activeState
-            allVeganState = inactiveState
-            ifRequestVeganState = inactiveState
-            
+            someMenuVeganState = ButtonState(imageString: Image.InrollPageImage.someMenuVeganSelected,
+                                             titleColor: UIColor.white,
+                                             backgroundColor: UIColor.someVegan,
+                                             borderColor: UIColor.someVegan?.cgColor)
             presenter.buttonChecked(false, true, false)
+            
         case .onlyRequestVeganClicked:
-            ifRequestVeganState = activeState
-            allVeganState = inactiveState
-            someMenuVeganState = inactiveState
-            
+            ifRequestVeganState = ButtonState(imageString: Image.InrollPageImage.requestMenuVeganSelected,
+                                              titleColor: UIColor.white,
+                                              backgroundColor: UIColor.requestVegan,
+                                              borderColor: UIColor.requestVegan?.cgColor)
             presenter.buttonChecked(false, false, true)
-        case .someAndReqeustVeganClicked:
-            someMenuVeganState = activeState
-            ifRequestVeganState = activeState
-            allVeganState = inactiveState
             
+        case .someAndReqeustVeganClicked:
+            someMenuVeganState = ButtonState(imageString: Image.InrollPageImage.someMenuVeganSelected,
+                                             titleColor: UIColor.white,
+                                             backgroundColor: UIColor.someVegan,
+                                             borderColor: UIColor.someVegan?.cgColor)
+            ifRequestVeganState = ButtonState(imageString: Image.InrollPageImage.requestMenuVeganSelected,
+                                              titleColor: UIColor.white,
+                                              backgroundColor: UIColor.requestVegan,
+                                              borderColor: UIColor.requestVegan?.cgColor)
             presenter.buttonChecked(false, true, true)
+            
         case .offAll:
-            allVeganState = inactiveState
-            someMenuVeganState = inactiveState
-            ifRequestVeganState = inactiveState
             presenter.buttonChecked(false, false, false)
         }
         
-        allVegan.setImage(UIImage(named: "올비건" + allVeganState.0), for: .normal)
-        allVegan.setTitleColor(allVeganState.1, for: .normal)
-        allVegan.backgroundColor = allVeganState.2
-        allVegan.layer.borderColor = allVeganState.3
-        
-        someMenuVegan.setImage(UIImage(named: "썸비건" + someMenuVeganState.0), for: .normal)
-        someMenuVegan.setTitleColor(someMenuVeganState.1, for: .normal)
-        someMenuVegan.backgroundColor = someMenuVeganState.2
-        someMenuVegan.layer.borderColor = someMenuVeganState.3
-        
-        ifRequestPossibleVegan.setImage(UIImage(named: "요청비건" + ifRequestVeganState.0), for: .normal)
-        ifRequestPossibleVegan.setTitleColor(ifRequestVeganState.1, for: .normal)
-        ifRequestPossibleVegan.backgroundColor = ifRequestVeganState.2
-        ifRequestPossibleVegan.layer.borderColor = ifRequestVeganState.3
+        updateButtonState(allVegan, state: allVeganState)
+        updateButtonState(someMenuVegan, state: someMenuVeganState)
+        updateButtonState(ifRequestPossibleVegan, state: ifRequestVeganState)
+    }
+    
+    func updateButtonState(_ button: UIButton, state: ButtonState) {
+        button.setImage(UIImage(named: state.imageString), for: .normal)
+        button.setTitleColor(state.titleColor, for: .normal)
+        button.backgroundColor = state.backgroundColor
+        button.layer.borderColor = state.borderColor
     }
     
     // MARK: 버튼 클릭 시 TableView Layout 처리
@@ -208,16 +229,16 @@ extension InrollPlaceViewController {
     private func resetNotRequestTable() {
         presenter.notRequestMenu = [NotRequestMenu(menu: "", price: "")]
         veganMenuTableView.reloadData()
-        veganTableViewHeightConstraint.constant -= CGFloat(integerLiteral: veganTableHeightPlusValueTotal)
-        veganTableHeightPlusValueTotal = 0
+        veganTableViewHeightConstraint.constant -= CGFloat(integerLiteral: veganTableHeightPlusValue)
+        veganTableHeightPlusValue = 0
     }
     
     // MARK: Reset Request Table
     private func resetRequestTable() {
         presenter.requestMenu = [RequestMenu(menu: "", price: "", howToRequest: "", isCheck: false)]
         howToRequestVeganMenuTableView.reloadData()
-        requestVeganTableViewHeightConstraint.constant -= CGFloat(integerLiteral: requestVeganTableHeightPlusValueTotal)
-        requestVeganTableHeightPlusValueTotal = 0
+        requestVeganTableViewHeightConstraint.constant -= CGFloat(integerLiteral: requestVeganTableHeightPlusValue)
+        requestVeganTableHeightPlusValue = 0
     }
     
     // MARK: Reset TableView

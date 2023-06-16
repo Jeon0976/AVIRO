@@ -13,7 +13,7 @@ protocol HomeViewProtocol: NSObject {
     func makeAttribute()
     func makeGesture()
     func makeSlideView()
-//    func presentPlaceListView(_ placeLists: [PlaceListModel])
+    func whenViewWillAppear()
     func ifDenied()
     func requestSuccess()
     func makeMarker(_ veganList: [VeganModel])
@@ -49,6 +49,7 @@ final class HomeViewPresenter: NSObject {
     }
     
     func viewWillAppear() {
+        viewController?.whenViewWillAppear()
         viewController?.makeSlideView()
     }
     
