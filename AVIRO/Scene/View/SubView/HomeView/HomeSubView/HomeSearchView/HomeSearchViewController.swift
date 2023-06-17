@@ -35,21 +35,21 @@ extension HomeSearchViewController: HomeSearchProtocol {
         NSLayoutConstraint.activate([
             // searchTextField
             searchTextField.topAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+                equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Layout.Inset.leadingTop),
             searchTextField.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor, constant: 16),
+                equalTo: view.leadingAnchor, constant: Layout.Inset.leadingTop),
             searchTextField.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor, constant: -16),
+                equalTo: view.trailingAnchor, constant: Layout.Inset.trailingBottom),
             
             // placeListTableView
             placeListTableView.topAnchor.constraint(
-                equalTo: searchTextField.bottomAnchor, constant: 16),
+                equalTo: searchTextField.bottomAnchor, constant: 5),
             placeListTableView.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor),
+                equalTo: view.leadingAnchor, constant: Layout.Inset.leadingTop),
             placeListTableView.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor),
+                equalTo: view.trailingAnchor, constant: Layout.Inset.trailingBottom),
             placeListTableView.bottomAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: Layout.Inset.trailingBottom)
         ])
     }
     
@@ -61,7 +61,7 @@ extension HomeSearchViewController: HomeSearchProtocol {
         tapGesture.delegate = self
         
         view.backgroundColor = .white
-        navigationItem.title = "검색 결과"
+        navigationItem.title = StringValue.HomeSearchView.naviTitle
         
         navigationController?.navigationBar.isHidden = false
         
@@ -72,7 +72,7 @@ extension HomeSearchViewController: HomeSearchProtocol {
         
         // searchText
         searchTextField.makeCustomClearButton()
-        searchTextField.placeholder = "가게 이름을 검색해보세요"
+        searchTextField.placeholder = StringValue.HomeSearchView.searchPlaceHolder
         searchTextField.delegate = self
         searchTextField.rightView?.isHidden = true
         
@@ -80,9 +80,10 @@ extension HomeSearchViewController: HomeSearchProtocol {
         placeListTableView.delegate = self
         placeListTableView.dataSource = self
         placeListTableView.register(
-            HomeSearchViewTableViewCell.self,
-            forCellReuseIdentifier: HomeSearchViewTableViewCell.identifier
+            PlaceListCell.self,
+            forCellReuseIdentifier: PlaceListCell.identifier
         )
+        placeListTableView.separatorStyle = .singleLine
     }
 }
 
@@ -95,29 +96,64 @@ extension HomeSearchViewController: UITextFieldDelegate {
 
 extension HomeSearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 20
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
         let cell = tableView.dequeueReusableCell(
-            withIdentifier: HomeSearchViewTableViewCell.identifier,
-            for: indexPath) as? HomeSearchViewTableViewCell
-        
+            withIdentifier: PlaceListCell.identifier,
+            for: indexPath
+        ) as? PlaceListCell
+
         let mockUp = HomeSearchData(
-            icon: "InrollSearchIcon",
-            title: "러브얼스",
-            address: "주소입니다",
-            category: "카테고리입니다",
-            distance: "200m"
+                icon: "InrollSearchIcon",
+                title: "러브얼스",
+                address: "주소입니다",
+                category: "카테고리입니다",
+                distance: "200"
+            )
+
+        let title = mockUp.title
+        let category = mockUp.category
+        let address = mockUp.address
+        let distance = mockUp.distance
+
+        let cellData = PlaceListCellModel(
+            title: title,
+            category: category,
+            address: address,
+            distance: distance
         )
-        
-        cell?.makeCellData(mockUp)
-        
+
+        cell?.makeCellData(cellData)
+
         cell?.backgroundColor = .white
         cell?.selectionStyle = .none
-        
+
         return cell ?? UITableViewCell()
     }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(
+//            withIdentifier: HomeSearchViewTableViewCell.identifier,
+//            for: indexPath) as? HomeSearchViewTableViewCell
+//
+//        let mockUp = HomeSearchData(
+//            icon: "InrollSearchIcon",
+//            title: "러브얼스",
+//            address: "주소입니다",
+//            category: "카테고리입니다",
+//            distance: "200m"
+//        )
+//
+//        cell?.makeCellData(mockUp)
+//
+//        cell?.backgroundColor = .white
+//        cell?.selectionStyle = .none
+//
+//        return cell ?? UITableViewCell()
+//    }
 }
 
 extension HomeSearchViewController: UIGestureRecognizerDelegate {

@@ -12,27 +12,27 @@ extension InrollPlaceViewController {
     public func requiredAndOptionalAttribute() {
         requiredTitleLabel.text = StringValue.InrollView.required
         requiredTitleLabel.textColor = .subTitle
-        requiredTitleLabel.font = Layout.Label.subTitleFont
+        requiredTitleLabel.font = Layout.Label.subTitle
         
         requriedLocationLabel.text = StringValue.InrollView.required
         requriedLocationLabel.textColor = .subTitle
-        requriedLocationLabel.font = Layout.Label.subTitleFont
+        requriedLocationLabel.font = Layout.Label.subTitle
         
         requriedCategoryLabel.text = StringValue.InrollView.required
         requriedCategoryLabel.textColor = .subTitle
-        requriedCategoryLabel.font = Layout.Label.subTitleFont
+        requriedCategoryLabel.font = Layout.Label.subTitle
         
         optionalPhoneLabel.text = StringValue.InrollView.optional
         optionalPhoneLabel.textColor = .subTitle
-        optionalPhoneLabel.font = Layout.Label.subTitleFont
+        optionalPhoneLabel.font = Layout.Label.subTitle
         
         requriedDetailLabel.text = StringValue.InrollView.required
         requriedDetailLabel.textColor = .subTitle
-        requriedDetailLabel.font = Layout.Label.subTitleFont
+        requriedDetailLabel.font = Layout.Label.subTitle
         
         requriedMenuLabel.text = StringValue.InrollView.required
         requriedMenuLabel.textColor = .subTitle
-        requriedMenuLabel.font = Layout.Label.subTitleFont
+        requriedMenuLabel.font = Layout.Label.subTitle
 
     }
     

@@ -33,29 +33,44 @@ final class PlaceListCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             // icon
-            icon.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
-            icon.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            icon.heightAnchor.constraint(equalToConstant: 25),
-            icon.widthAnchor.constraint(equalTo: icon.heightAnchor, multiplier: 1),
+            icon.topAnchor.constraint(
+                equalTo: contentView.topAnchor, constant: Layout.Inset.leadingTopPlus),
+            icon.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor, constant: Layout.Inset.leadingTop),
+            icon.heightAnchor.constraint(
+                equalToConstant: Layout.Inset.iconInest),
+            icon.widthAnchor.constraint(
+                equalTo: icon.heightAnchor, multiplier: 1),
             
             // title
-            title.topAnchor.constraint(equalTo: icon.topAnchor),
-            title.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 10),
+            title.topAnchor.constraint(
+                equalTo: icon.topAnchor),
+            title.leadingAnchor.constraint(
+                equalTo: icon.trailingAnchor, constant: Layout.Inset.iconToLabel),
             
             // distance
-            distance.topAnchor.constraint(equalTo: icon.topAnchor),
-            distance.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            distance.topAnchor.constraint(
+                equalTo: icon.topAnchor),
+            distance.trailingAnchor.constraint(
+                equalTo: contentView.trailingAnchor, constant: Layout.Inset.trailingBottom),
             
             // address
-            address.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 8),
-            address.leadingAnchor.constraint(equalTo: title.leadingAnchor),
-            address.trailingAnchor.constraint(equalTo: title.trailingAnchor),
+            address.topAnchor.constraint(
+                equalTo: title.bottomAnchor, constant: Layout.Inset.leadingTopHalf),
+            address.leadingAnchor.constraint(
+                equalTo: title.leadingAnchor),
+            address.trailingAnchor.constraint(
+                equalTo: title.trailingAnchor),
             
             // category
-            category.topAnchor.constraint(equalTo: address.bottomAnchor, constant: 8),
-            category.leadingAnchor.constraint(equalTo: title.leadingAnchor),
-            category.trailingAnchor.constraint(equalTo: title.trailingAnchor),
-            category.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
+            category.topAnchor.constraint(
+                equalTo: address.bottomAnchor, constant: Layout.Inset.leadingTopHalf),
+            category.leadingAnchor.constraint(
+                equalTo: title.leadingAnchor),
+            category.trailingAnchor.constraint(
+                equalTo: title.trailingAnchor),
+            category.bottomAnchor.constraint(
+                equalTo: contentView.bottomAnchor, constant: Layout.Inset.trailingBottomPlus)
         ])
     }
     
@@ -66,22 +81,22 @@ final class PlaceListCell: UITableViewCell {
     // MARK: Attribute
     private func makeAttribute() {
         title.numberOfLines = 0
-        title.font = .systemFont(ofSize: 18, weight: .bold)
+        title.font = Layout.Label.title
         
         address.numberOfLines = 0
-        address.font = .systemFont(ofSize: 14, weight: .medium)
+        address.font = Layout.Label.nomal1
         
         category.numberOfLines = 0
-        category.font = .systemFont(ofSize: 14, weight: .medium)
+        category.font = Layout.Label.nomal1
         
-        distance.font = .systemFont(ofSize: 14, weight: .light)
+        distance.font = Layout.Label.nomal2
         
         title.textColor = .mainTitle
         address.textColor = .mainTitle
         category.textColor = .mainTitle
         distance.textColor = .mainTitle
         
-        icon.image = UIImage(named: "InrollSearchIcon")
+        icon.image = UIImage(named: Image.inrollSearchIcon)
         icon.contentMode = .scaleAspectFit
     }
     

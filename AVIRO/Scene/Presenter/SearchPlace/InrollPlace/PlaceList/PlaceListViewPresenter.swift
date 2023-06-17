@@ -18,7 +18,7 @@ final class PlaceListViewPresenter: NSObject {
     
     private let requestManager = KakaoMapRequestManager()
     
-    var placeList = [PlaceListModel]()
+    private var placeList = [PlaceListModel]()
     
     // page 추가
     var currentPage = 1
@@ -32,6 +32,16 @@ final class PlaceListViewPresenter: NSObject {
         self.placeList = placeList
     }
     
+    // MARK: PlaceList 변수 다루기
+    var placeListCount: Int {
+        return self.placeList.count
+    }
+    
+    func placeListLow(_ row: Int) -> PlaceListModel {
+        return placeList[row]
+    }
+    
+    // MARK: ViewDidLoad
     func viewDidLoad() {
         viewController?.makeLayout()
         viewController?.makeAttribute()
@@ -129,38 +139,5 @@ final class PlaceListViewPresenter: NSObject {
             object: nil,
             userInfo: userInfo
         )
-    }
-}
-
-// MARK: TableView DataSource
-extension PlaceListViewPresenter: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        placeList.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(
-            withIdentifier: PlaceListCell.identifier,
-            for: indexPath
-        ) as? PlaceListCell
-        
-        let title = placeList[indexPath.row].title
-        let category = placeList[indexPath.row].category
-        let address = placeList[indexPath.row].address
-        let distance = placeList[indexPath.row].distance
-        
-        let cellData = PlaceListCellModel(
-            title: title,
-            category: category,
-            address: address,
-            distance: distance
-        )
-        
-        cell?.makeCellData(cellData)
-        
-        cell?.backgroundColor = .white
-        cell?.selectionStyle = .none
-
-        return cell ?? UITableViewCell()
     }
 }

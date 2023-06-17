@@ -35,15 +35,22 @@ extension PlaceListViewController: PlaceListProtocol {
                 
         NSLayoutConstraint.activate([
             // searchField
-            searchField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            searchField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            searchField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            searchField.leadingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: Layout.Inset.leadingTop),
+            searchField.trailingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: Layout.Inset.trailingBottom),
+            searchField.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Layout.Inset.leadingTop),
             
             // listTableView
-            listTableView.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 5),
-            listTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-            listTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            listTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+            listTableView.topAnchor.constraint(
+                equalTo: searchField.bottomAnchor, constant: Layout.Inset.tableToField),
+            listTableView.bottomAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: Layout.Inset.trailingBottom),
+            listTableView.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor, constant: Layout.Inset.leadingTop),
+            listTableView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor, constant: Layout.Inset.trailingBottom)
         ])
     }
     
@@ -53,18 +60,18 @@ extension PlaceListViewController: PlaceListProtocol {
         tapGesture.cancelsTouchesInView = false
         tapGesture.delegate = self
         view.backgroundColor = .white
-        navigationItem.title = "가게 이름 검색"
+        navigationItem.title = StringValue.PlaceListView.naviTitle
         
         // listTableView
-        listTableView.dataSource = presenter
         listTableView.backgroundColor = .white
+        listTableView.dataSource = self
         listTableView.delegate = self
         listTableView.register(PlaceListCell.self, forCellReuseIdentifier: PlaceListCell.identifier)
         listTableView.separatorStyle = .singleLine
         
         // search Textfield
         
-        searchField.placeholder = "가게 이름을 검색해보세요"
+        searchField.placeholder = StringValue.PlaceListView.searchFieldPlaceHolder
         searchField.backgroundColor = .white
         searchField.makeCustomClearButton()
         searchField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
@@ -100,9 +107,50 @@ extension PlaceListViewController: UITableViewDelegate {
     }
     
     // MARK: Item 클릭 될 때
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView,
+                   didSelectRowAt indexPath: IndexPath
+    ) {
         presenter.didSelectRowAt(indexPath)
         navigationController?.popViewController(animated: true)
+    }
+}
+
+// MARK: TableView DataSource
+extension PlaceListViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView,
+                   numberOfRowsInSection section: Int
+    ) -> Int {
+        presenter.placeListCount
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: PlaceListCell.identifier,
+            for: indexPath
+        ) as? PlaceListCell
+        
+        let placeList = presenter.placeListLow(indexPath.row)
+        
+        let title = placeList.title
+        let category = placeList.category
+        let address = placeList.address
+        let distance = placeList.distance
+        
+        let cellData = PlaceListCellModel(
+            title: title,
+            category: category,
+            address: address,
+            distance: distance
+        )
+        
+        cell?.makeCellData(cellData)
+        
+        cell?.backgroundColor = .white
+        cell?.selectionStyle = .none
+
+        return cell ?? UITableViewCell()
     }
 }
 
@@ -118,7 +166,9 @@ extension PlaceListViewController {
 
 extension PlaceListViewController: UIGestureRecognizerDelegate {
     // MARK: 외부 클릭 시 키보드 내려가면서, 키보드 취소버튼 사라짐 & 취소버튼 클릭시 text 사라짐
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldReceive touch: UITouch
+    ) -> Bool {
         if let touchedView = touch.view as? UIButton, touchedView == searchField.rightView {
             searchField.text = ""
             searchField.rightView?.isHidden = true
@@ -129,7 +179,9 @@ extension PlaceListViewController: UIGestureRecognizerDelegate {
         return true
     }
     
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
+    ) -> Bool {
         return true
     }
 }

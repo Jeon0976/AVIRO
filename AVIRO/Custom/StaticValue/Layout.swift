@@ -24,6 +24,11 @@ struct Layout {
         
         static let leadingTopSmall = CGFloat(4)
         static let trailingBottomSmall = CGFloat(-4)
+    
+        // MARK: 가게 리스트만 해당되는 Inset
+        static let iconInest = CGFloat(25)
+        static let iconToLabel = CGFloat(10)
+        static let tableToField = CGFloat(5)
     }
     
     // MARK: 공통 button
@@ -39,7 +44,10 @@ struct Layout {
     }
     
     struct Label {
-        static let subTitleFont = UIFont.systemFont(ofSize: 12, weight: .light)
+        static let title = UIFont.systemFont(ofSize: 18, weight: .bold)
+        static let nomal1 = UIFont.systemFont(ofSize: 14, weight: .medium)
+        static let nomal2 = UIFont.systemFont(ofSize: 14, weight: .medium)
+        static let subTitle = UIFont.systemFont(ofSize: 12, weight: .light)
     }
     
     // MARK: Slide View
@@ -76,5 +84,7 @@ struct Layout {
         static let requestBetween = CGFloat(10)
         
         static let requestTableConstant = notRequestTableConstant + requestBetween
+        
+        static let checkBoxCornerRadius = 15 
     }
 }

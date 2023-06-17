@@ -70,19 +70,6 @@ class ReportButton: UIButton {
     }
 }
 
-extension String {
-    // MARK: Text m/k 변환
-    func convertDistanceUnit() -> String {
-        guard let number = Int(self) else { return "" }
-        
-        if number >= 1000 {
-           return "\(number / 1000)k"
-        } else {
-           return "\(number)m"
-        }
-    }
-}
-
 // MARK: Inroll TextField 설정
 class InrollTextField: UITextField {
     private let commonInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)

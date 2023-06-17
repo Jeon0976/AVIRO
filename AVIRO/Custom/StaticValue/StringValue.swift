@@ -27,6 +27,12 @@ struct StringValue {
         static let reportButton = "비건 식당 제보하러가기"
     }
     
+    // MARK: Home Search View
+    struct HomeSearchView {
+        static let naviTitle = "검색 결과"
+        static let searchPlaceHolder = "가게 이름을 검색해보세요"
+    }
+    
     // MARK: Inroll View
     struct InrollView {
         static let naviTitle = "가게 제보하기"
@@ -53,5 +59,11 @@ struct StringValue {
         static let pricePlaceHolder = "가격"
         static let requestButtonTitle = "요청"
         static let detailPlaceHolder = "예. 비비밥에 달걀 빼주세요."
+    }
+    
+    // MARK: Place List Search View
+    struct PlaceListView {
+        static let naviTitle = "가게 이름 검색"
+        static let searchFieldPlaceHolder = "가게 이름을 검색해보세요"
     }
 }
