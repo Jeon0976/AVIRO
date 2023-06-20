@@ -19,8 +19,6 @@ protocol InrollPlaceProtocol: NSObject {
 final class InrollPlacePresenter: NSObject {
     weak var viewController: InrollPlaceProtocol?
     
-    private let userDefaultsManager: UserDefaultsManagerProtocol?
-    
     // tableView Cell 개수 데이터 (최초 데이터)
     var notRequestMenu = [NotRequestMenu(menu: "", price: "")]
     var requestMenu = [RequestMenu(menu: "", price: "", howToRequest: "", isCheck: false)]
@@ -33,10 +31,8 @@ final class InrollPlacePresenter: NSObject {
     var someMenuVegan = false
     var ifRequestVegan = false
     
-    init(viewController: InrollPlaceProtocol,
-         userDefaultsManager: UserDefaultsManagerProtocol = UserDefalutsManager()) {
+    init(viewController: InrollPlaceProtocol) {
         self.viewController = viewController
-        self.userDefaultsManager = userDefaultsManager
     }
     
     func viewDidLoad() {

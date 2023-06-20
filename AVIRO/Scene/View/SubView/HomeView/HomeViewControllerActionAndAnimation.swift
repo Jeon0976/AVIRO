@@ -114,8 +114,8 @@ extension HomeViewController {
                 self.view.layoutIfNeeded()
             }, completion: { [weak self] _ in
                 if !(velocity.y >= 0) {
-                    guard let address = self?.storeInfoView.address.text else { return }
-                    self?.presenter.pushDetailViewController(address)
+                    guard let placeId = self?.storeInfoView.placeId else { return }
+                    self?.pushDetailViewController(placeId)
                 }
             })
         }

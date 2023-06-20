@@ -16,25 +16,22 @@ protocol HomeViewProtocol: NSObject {
     func whenViewWillAppear()
     func ifDenied()
     func requestSuccess()
-    func makeMarker(_ veganList: [VeganModel])
-    func pushDetailViewController(_ veganModel: VeganModel)
+    func makeMarker(_ veganList: [HomeMapData])
+    func pushDetailViewController(_ veganModel: HomeMapData)
 }
 
 final class HomeViewPresenter: NSObject {
     weak var viewController: HomeViewProtocol?
     
     private let locationManager = CLLocationManager()
-    private let userDefaults: UserDefaultsManagerProtocol?
+    private let aviroManager = AVIROAPIManager()
 
-    var veganData: [VeganModel]?
+    var homeMapData: [HomeMapData]?
     
     var firstLocation = true
     
-    init(viewController: HomeViewProtocol,
-         userDefaults: UserDefaultsManagerProtocol = UserDefalutsManager()
-    ) {
+    init(viewController: HomeViewProtocol) {
         self.viewController = viewController
-        self.userDefaults = userDefaults
     }
     
     func viewDidLoad() {
@@ -43,9 +40,6 @@ final class HomeViewPresenter: NSObject {
         viewController?.makeLayout()
         viewController?.makeAttribute()
         viewController?.makeGesture()
-        
-       let mock = Mock()
-        mock.make()
     }
     
     func viewWillAppear() {
@@ -55,16 +49,20 @@ final class HomeViewPresenter: NSObject {
     
     // MARK: vegan Data 불러오기
     func loadVeganData() {
-        guard let veganData = userDefaults?.getData() else { return }
-        self.veganData = veganData
-        viewController?.makeMarker(veganData)
+        aviroManager.getPlaceModels(
+            longitude: PersonalLocation.shared.longitudeString,
+            latitude: PersonalLocation.shared.latitudeString,
+            wide: "0.0") { [weak self] mapDatas in
+                self?.homeMapData = mapDatas.data.placeData
+                self?.viewController?.makeMarker((self?.homeMapData)!)
+            }
     }
     
     // MARK: pushDetailViewController
-    func pushDetailViewController(_ address: String) {
+    func pushDetailViewController(_ placeId: String) {
         DispatchQueue.global().async { [weak self] in
-            guard let veganData = self?.veganData else { return }
-            if let data = veganData.first(where: { $0.placeModel.address == address }) {
+            guard let homeMapData = self?.homeMapData else { return }
+            if let data = homeMapData.first(where: { $0.placeId == placeId }) {
                 self?.viewController?.pushDetailViewController(data)
             }
         }

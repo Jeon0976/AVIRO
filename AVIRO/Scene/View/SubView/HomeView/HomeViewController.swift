@@ -217,22 +217,25 @@ extension HomeViewController: HomeViewProtocol {
     }
     
     // MARK: 지도에 마크 표시하기 작업
-    func makeMarker(_ veganList: [VeganModel]) {
+    func makeMarker(_ veganList: [HomeMapData]) {
         DispatchQueue.global().async {
             var markers = [NMFMarker]()
             
-            veganList.forEach { veganModel in
+            veganList.forEach { homeMapData in
                 
-                let title = veganModel.placeModel.title
-                let address = veganModel.placeModel.address
-                let latLng = NMGLatLng(lat: veganModel.placeModel.y, lng: veganModel.placeModel.x)
+                let title = homeMapData.title
+                let address = homeMapData.address
+                let latLng = NMGLatLng(lat: homeMapData.y, lng: homeMapData.x)
                 let marker = NMFMarker(position: latLng)
+                let placeId = homeMapData.placeId
+                
                 marker.width = 30
                 marker.height = 30
                 markers.append(marker)
-                if veganModel.allVegan {
+                
+                if homeMapData.allVegan {
                     marker.iconImage = NMFOverlayImage(name: Image.allVegan)
-                } else if veganModel.someMenuVegan {
+                } else if homeMapData.someMenuVegan {
                     marker.iconImage = NMFOverlayImage(name: Image.someMenuVegan)
                 } else {
                     marker.iconImage = NMFOverlayImage(name: Image.requestVegan)
@@ -245,13 +248,14 @@ extension HomeViewController: HomeViewProtocol {
                                  guard let self = self else { return false }
                                  storeInfoView.title.text = title
                                  storeInfoView.address.text = address
+                                 storeInfoView.placeId = placeId
                                  
-                                 if veganModel.allVegan {
+                                 if homeMapData.allVegan {
                                      storeInfoView.imageView.image = UIImage(
                                         named: Image.homeInfoVegan)
                                      storeInfoView.topImageView.image = UIImage(
                                         named: Image.homeInfoVeganTitle)
-                                 } else if veganModel.someMenuVegan {
+                                 } else if homeMapData.someMenuVegan {
                                      storeInfoView.imageView.image = UIImage(
                                         named: Image.homeInfoSomeVegan)
                                      storeInfoView.topImageView.image = UIImage(
@@ -285,16 +289,18 @@ extension HomeViewController: HomeViewProtocol {
     }
     
     // MARK: pushDetailViewController
-    func pushDetailViewController(_ veganModel: VeganModel) {
+    func pushDetailViewController(_ placeId: String) {
         DispatchQueue.main.async { [weak self] in
             let viewController = DetailViewController()
-            let presenter = DetailViewPresenter(viewController: viewController,
-                                                veganModel: veganModel
+            let presenter = DetailViewPresenter(
+                viewController: viewController,
+                placeId: placeId
             )
             viewController.presenter = presenter
             
-            self?.navigationController?.pushViewController(viewController,
-                                                           animated: false
+            self?.navigationController?.pushViewContrller(
+                viewController,
+                animated: false
             )
         }
     }

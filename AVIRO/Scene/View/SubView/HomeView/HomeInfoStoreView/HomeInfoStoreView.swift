@@ -9,6 +9,8 @@ import UIKit
 
 class HomeInfoStoreView: UIView {
     
+    var placeId: String?
+    
     let title: UILabel = {
         let label = UILabel()
         label.textColor = .mainTitle

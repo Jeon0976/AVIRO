@@ -17,12 +17,10 @@ protocol DetailViewProtocol: NSObject {
 final class DetailViewPresenter {
     weak var viewController: DetailViewProtocol?
     
-    var veganModel: VeganModel?
+    var placeId: String?
     
-    init(viewController: DetailViewProtocol,
-         veganModel: VeganModel? = nil) {
+    init(viewController: DetailViewProtocol) {
         self.viewController = viewController
-        self.veganModel = veganModel
     }
     
     func viewDidLoad() {
@@ -31,8 +29,8 @@ final class DetailViewPresenter {
         viewController?.showOthers()
     }
     
-    func reloadVeganModel(_ model: VeganModel) {
-        veganModel = model
-        viewController?.updateComment(veganModel)
-    }
+//    func reloadVeganModel(_ model: VeganModel) {
+//        veganModel = model
+//        viewController?.updateComment(veganModel)
+//    }
 }
