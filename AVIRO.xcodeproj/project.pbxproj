@@ -40,6 +40,8 @@
 		C5732C752A41962D00CDC499 /* AVIRORequestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C742A41962D00CDC499 /* AVIRORequestAPI.swift */; };
 		C5732C772A41A0A500CDC499 /* AVIROMapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C762A41A0A500CDC499 /* AVIROMapModel.swift */; };
 		C5732C792A41AD8100CDC499 /* HomeMapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C782A41AD8100CDC499 /* HomeMapData.swift */; };
+		C5732C7C2A41D41B00CDC499 /* VeganTableFieldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C7B2A41D41B00CDC499 /* VeganTableFieldModel.swift */; };
+		C5732C7E2A41D42700CDC499 /* RequestTableFieldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C7D2A41D42700CDC499 /* RequestTableFieldModel.swift */; };
 		C596D9842A3B39E500829B17 /* InrollPlaceViewTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C596D9832A3B39E500829B17 /* InrollPlaceViewTableView.swift */; };
 		C596D9862A3B3BFD00829B17 /* InrollPlaceViewActionAndAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C596D9852A3B3BFD00829B17 /* InrollPlaceViewActionAndAnimation.swift */; };
 		C596D9882A3B3C8900829B17 /* InrollPlaceViewNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C596D9872A3B3C8900829B17 /* InrollPlaceViewNotification.swift */; };
@@ -119,6 +121,8 @@
 		C5732C742A41962D00CDC499 /* AVIRORequestAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIRORequestAPI.swift; sourceTree = "<group>"; };
 		C5732C762A41A0A500CDC499 /* AVIROMapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROMapModel.swift; sourceTree = "<group>"; };
 		C5732C782A41AD8100CDC499 /* HomeMapData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMapData.swift; sourceTree = "<group>"; };
+		C5732C7B2A41D41B00CDC499 /* VeganTableFieldModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganTableFieldModel.swift; sourceTree = "<group>"; };
+		C5732C7D2A41D42700CDC499 /* RequestTableFieldModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTableFieldModel.swift; sourceTree = "<group>"; };
 		C596D9832A3B39E500829B17 /* InrollPlaceViewTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewTableView.swift; sourceTree = "<group>"; };
 		C596D9852A3B3BFD00829B17 /* InrollPlaceViewActionAndAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewActionAndAnimation.swift; sourceTree = "<group>"; };
 		C596D9872A3B3C8900829B17 /* InrollPlaceViewNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewNotification.swift; sourceTree = "<group>"; };
@@ -246,7 +250,8 @@
 			children = (
 				C5538AAE2A1BB81200661DE2 /* VeganModel.swift */,
 				C5EB51012A20926800B29CC1 /* TapBarModel */,
-				C5EB51022A20927400B29CC1 /* HomeReferModel */,
+				C5EB51022A20927400B29CC1 /* HomeViewModel */,
+				C5732C7A2A41D3F800CDC499 /* InrollViewModel */,
 				C5351B782A1B437600116D50 /* APIResonseModel */,
 				C5351B652A1A128D00116D50 /* SingleTonModel */,
 				C5351B7B2A1B52A000116D50 /* PlaceListModel */,
@@ -361,12 +366,7 @@
 			isa = PBXGroup;
 			children = (
 				C5351B6C2A1B215D00116D50 /* InrollPlaceViewController.swift */,
-				C596D9832A3B39E500829B17 /* InrollPlaceViewTableView.swift */,
-				C5EB50F22A1DEC2400B29CC1 /* InrollPlaceViewLayout.swift */,
-				C5EB50F42A1DEC3900B29CC1 /* InrollPlaceViewAttribute.swift */,
-				C52B61CA2A31F97E001388E3 /* InrollPlaceViewUserInteractions.swift */,
-				C596D9852A3B3BFD00829B17 /* InrollPlaceViewActionAndAnimation.swift */,
-				C596D9872A3B3C8900829B17 /* InrollPlaceViewNotification.swift */,
+				C5732C7F2A41DE8B00CDC499 /* InrollPlaceSubFile */,
 				C5EB50F72A1E718A00B29CC1 /* InrollTableView */,
 				C5351B7F2A1B537000116D50 /* PlaceList */,
 			);
@@ -450,6 +450,36 @@
 			path = AVIRODatabase;
 			sourceTree = "<group>";
 		};
+		C5732C7A2A41D3F800CDC499 /* InrollViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C5732C7B2A41D41B00CDC499 /* VeganTableFieldModel.swift */,
+				C5732C7D2A41D42700CDC499 /* RequestTableFieldModel.swift */,
+			);
+			path = InrollViewModel;
+			sourceTree = "<group>";
+		};
+		C5732C7F2A41DE8B00CDC499 /* InrollPlaceSubFile */ = {
+			isa = PBXGroup;
+			children = (
+				C5EB50F22A1DEC2400B29CC1 /* InrollPlaceViewLayout.swift */,
+				C5EB50F42A1DEC3900B29CC1 /* InrollPlaceViewAttribute.swift */,
+				C52B61CA2A31F97E001388E3 /* InrollPlaceViewUserInteractions.swift */,
+				C596D9852A3B3BFD00829B17 /* InrollPlaceViewActionAndAnimation.swift */,
+				C596D9872A3B3C8900829B17 /* InrollPlaceViewNotification.swift */,
+				C596D9832A3B39E500829B17 /* InrollPlaceViewTableView.swift */,
+			);
+			path = InrollPlaceSubFile;
+			sourceTree = "<group>";
+		};
+		C5732C802A41E20800CDC499 /* HomeViewSubFile */ = {
+			isa = PBXGroup;
+			children = (
+				C5A03C112A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift */,
+			);
+			path = HomeViewSubFile;
+			sourceTree = "<group>";
+		};
 		C596D9892A3C72D500829B17 /* TableCellIdentifierModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -479,7 +509,7 @@
 			isa = PBXGroup;
 			children = (
 				C52FA3462A175B20005E70DC /* HomeViewController.swift */,
-				C5A03C112A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift */,
+				C5732C802A41E20800CDC499 /* HomeViewSubFile */,
 				C5EB51102A20CC6800B29CC1 /* HomeInfoStoreView */,
 				C5EB51052A209F3F00B29CC1 /* HomeSubView */,
 			);
@@ -527,7 +557,7 @@
 			path = TapBarModel;
 			sourceTree = "<group>";
 		};
-		C5EB51022A20927400B29CC1 /* HomeReferModel */ = {
+		C5EB51022A20927400B29CC1 /* HomeViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				C5732C782A41AD8100CDC499 /* HomeMapData.swift */,
@@ -535,7 +565,7 @@
 				C5D7458A2A21CCFB006F9F31 /* DetailMenuTableModel.swift */,
 				C5D7458C2A2223A6006F9F31 /* CommentModel.swift */,
 			);
-			path = HomeReferModel;
+			path = HomeViewModel;
 			sourceTree = "<group>";
 		};
 		C5EB51052A209F3F00B29CC1 /* HomeSubView */ = {
@@ -735,6 +765,7 @@
 				C5CAAC492A39C6D4008C5FDA /* StringValue.swift in Sources */,
 				C5A3C3C42A39658A0050AB3D /* LoginViewController.swift in Sources */,
 				C5732C732A41778A00CDC499 /* AVIROPostAPI.swift in Sources */,
+				C5732C7C2A41D41B00CDC499 /* VeganTableFieldModel.swift in Sources */,
 				C5732C752A41962D00CDC499 /* AVIRORequestAPI.swift in Sources */,
 				C5351B582A19F5DA00116D50 /* PlaceListViewController.swift in Sources */,
 				C5EB51182A21016600B29CC1 /* DetailViewPresenter.swift in Sources */,
@@ -764,6 +795,7 @@
 				C5351B562A19B67900116D50 /* CustomAlertController.swift in Sources */,
 				C5D745942A2267C7006F9F31 /* CommentDetailPresenter.swift in Sources */,
 				C5538AAF2A1BB81200661DE2 /* VeganModel.swift in Sources */,
+				C5732C7E2A41D42700CDC499 /* RequestTableFieldModel.swift in Sources */,
 				C5CAAC472A39AEFE008C5FDA /* Image.swift in Sources */,
 				C5EB510D2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift in Sources */,
 				C50367F52A1795D10020C6BB /* HomeViewPresenter.swift in Sources */,

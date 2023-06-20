@@ -19,32 +19,44 @@ protocol InrollPlaceProtocol: NSObject {
 final class InrollPlacePresenter: NSObject {
     weak var viewController: InrollPlaceProtocol?
     
-    // tableView Cell 개수 데이터 (최초 데이터)
-    var notRequestMenu = [NotRequestMenu(menu: "", price: "")]
-    var requestMenu = [RequestMenu(menu: "", price: "", howToRequest: "", isCheck: false)]
+    private let aviroManager = AVIROAPIManager()
     
-    var storeNomalData: PlaceListModel!
+    private var storeNomalData: PlaceListModel!
+    private var menuArray = [MenuArray]()
     
-    var veganModel: VeganModel?
+    private var veganTableFieldModel = [VeganTableFieldModel(menu: "", price: "")]
+    private var requestTableFieldModel = [RequestTableFieldModel(menu: "", price: "", howToRequest: "", isCheck: false)]
     
-    var allVegan = false
-    var someMenuVegan = false
-    var ifRequestVegan = false
+    // MARK: Table Count 처리
+    var veganTableCount: Int  {
+        veganTableFieldModel.count
+    }
+    var requestTableCount: Int {
+        requestTableFieldModel.count
+    }
+    
+    private var allVegan = false
+    private var someMenuVegan = false
+    private var ifRequestVegan = false
+    
     
     init(viewController: InrollPlaceProtocol) {
         self.viewController = viewController
     }
-    
+        
+    // MARK: ViewDidLoad
     func viewDidLoad() {
         viewController?.makeLayout()
         viewController?.makeAttribute()
         viewController?.makeGesture()
     }
     
+    // MARK: ViewWillAppear
     func viewWillAppear() {
         viewController?.whenViewWillAppear()
     }
     
+    // MARK: ViewDisAppear
     func viewWillDisappear() {
         viewController?.whenViewDisappear()
     }
@@ -52,17 +64,17 @@ final class InrollPlacePresenter: NSObject {
     // MARK: plus button 클릭 시 tableView Cell Data 추가
     func plusCell(_ checkCell: Bool) {
         if checkCell {
-            let mockCellData = NotRequestMenu(menu: "", price: "")
+            let mockCellData = VeganTableFieldModel(menu: "", price: "")
             
-            notRequestMenu.append(mockCellData)
-            notRequestMenu.sort { ($0.hasData, $1.hasData) == (true, false) }
+            veganTableFieldModel.append(mockCellData)
+            veganTableFieldModel.sort { ($0.hasData, $1.hasData) == (true, false) }
             
             viewController?.reloadTableView(true)
         } else {
-            let mockCellData = RequestMenu(menu: "", price: "", howToRequest: "", isCheck: false)
+            let mockCellData = RequestTableFieldModel(menu: "", price: "", howToRequest: "", isCheck: false)
             
-            requestMenu.append(mockCellData)
-            requestMenu.sort { ($0.hasData, $1.hasData) == (true, false)}
+            requestTableFieldModel.append(mockCellData)
+            requestTableFieldModel.sort { ($0.isCheck && !$1.isCheck) || (($0.isCheck == $1.isCheck) && $0.hasData && !$1.hasData) }
 
             viewController?.reloadTableView(false)
         }
@@ -83,33 +95,66 @@ final class InrollPlacePresenter: NSObject {
     // MARK: Report 버튼 활성화 조건 -> 추후 수정 예정
     // store 다른 필수 조건도 삭제되면 버튼 비활성화 되어야 함
     func reportButtonPossible() -> Bool {
-        if (requestMenu[0].menu != "" && requestMenu[0].price != "") ||
-            (notRequestMenu[0].menu != "" && notRequestMenu[0].price != "") {
+        if (veganTableFieldModel[0].menu != "" && veganTableFieldModel[0].price != "") ||
+            (requestTableFieldModel[0].menu != "" && requestTableFieldModel[0].price != "") {
             return true
         } else { return false }
     }
     
+    // MARK: Array 합치기
+    // TODO: Price 처음부터 숫자로만 입력하도록 유도해야 함
+    func mergeArray() -> [MenuArray] {
+        let veganMenu = veganTableFieldModel
+            .filter{ $0.hasData }
+            .map {
+                MenuArray(
+                    menuType: MenuType.vegan.rawValue,
+                    menu: $0.menu,
+                    price: Int($0.price) ?? 0,
+                    howToRequest: "", isCheck: false
+                )
+            }
+        
+        let requestMenu = requestTableFieldModel
+            .filter { $0.hasData }
+            .map {
+                MenuArray(
+                    menuType: MenuType.vegan.rawValue,
+                    menu: $0.menu, price: Int($0.price) ?? 0,
+                    howToRequest: $0.howToRequest,
+                    isCheck: $0.isCheck
+                )
+            }
+        
+        return veganMenu + requestMenu
+    }
+    
     // MARK: report Button 클릭 시
-    func reportData(_ title: String, _ address: String, _ category: String, _ phone: String ) {
+    func reportData(_ title: String, _ address: String, _ category: String, _ phone: String, completionHandler: ((VeganModel) -> Void) ) {
         
         storeNomalData.title = title
         storeNomalData.address = address
         storeNomalData.category = category
         storeNomalData.phone = phone
         
+        self.menuArray = mergeArray()
+        
         let veganModel = VeganModel(
-            placeModel: storeNomalData,
+            title: title,
+            category: category,
+            address: address,
+            phone: phone,
+            url: storeNomalData.url,
+            x: storeNomalData.x,
+            y: storeNomalData.y,
             allVegan: allVegan,
             someMenuVegan: someMenuVegan,
             ifRequestVegan: ifRequestVegan,
-            notRequestMenuArray: notRequestMenu,
-            requestMenuArray: requestMenu
+            menuArray: menuArray
         )
-
-        userDefaultsManager?.setData(veganModel)
         
-        notRequestMenu = [NotRequestMenu(menu: "", price: "")]
-        requestMenu = [RequestMenu(menu: "", price: "", howToRequest: "", isCheck: false)]
+        resetArray(request: false)
+        resetArray(request: true)
         
         storeNomalData = nil
         allVegan = false
@@ -118,5 +163,79 @@ final class InrollPlacePresenter: NSObject {
         
         viewController?.reloadTableView(false)
         viewController?.reloadTableView(true)
+        
+        completionHandler(veganModel)
+    }
+    
+    // MARK: API 호출하기
+    func postData(_ veganModel: VeganModel) {
+        
+        aviroManager.postPlaceModel(veganModel)
+    }
+}
+
+// MARK: TableView 관련 함수
+
+
+extension InrollPlacePresenter {
+    // MARK: Table IndexPath.row 값 불러오기
+    func checkVeganTable(_ indexPath: IndexPath) -> VeganTableFieldModel {
+        return veganTableFieldModel[indexPath.row]
+    }
+    
+    func checkRequestTable(_ indexPath: IndexPath) -> RequestTableFieldModel {
+        return requestTableFieldModel[indexPath.row]
+    }
+    
+    // MARK: Table IndexPath.row 값 저장하기
+    func plusVeganTable(_ indexPath: IndexPath,
+                        _ menu: String?,
+                        _ price: String?
+    ) {
+        if let menu = menu {
+            veganTableFieldModel[indexPath.row].menu = menu
+        }
+        if let price = price {
+            veganTableFieldModel[indexPath.row].price = price
+        }
+    }
+    
+    func plusRequestTable(_ indexPath: IndexPath,
+                          _ menu: String?,
+                          _ price: String?,
+                          _ howToRequest: String?
+    ) {
+        if let menu = menu {
+            requestTableFieldModel[indexPath.row].menu = menu
+        }
+        
+        if let price = price {
+            requestTableFieldModel[indexPath.row].price = price
+        }
+        
+        if let howToRequest = howToRequest {
+            requestTableFieldModel[indexPath.row].howToRequest = howToRequest
+            requestTableFieldModel[indexPath.row].isCheck = true
+        }
+    }
+    // MARK: Table View 값 초기화
+    func resetArray(request: Bool) {
+        if request {
+            requestTableFieldModel = [
+                RequestTableFieldModel(
+                    menu: "",
+                    price: "",
+                    howToRequest: "",
+                    isCheck: false
+                )
+            ]
+        } else {
+            veganTableFieldModel = [
+                VeganTableFieldModel(
+                    menu: "",
+                    price: ""
+                )
+            ]
+        }
     }
 }

@@ -229,7 +229,7 @@ extension InrollPlaceViewController {
     
     // MARK: Reset Not Request Table
     private func resetNotRequestTable() {
-        presenter.notRequestMenu = [NotRequestMenu(menu: "", price: "")]
+        presenter.resetArray(request: false)
         veganMenuTableView.reloadData()
         veganTableViewHeightConstraint.constant -= CGFloat(integerLiteral: veganTableHeightPlusValue)
         veganTableHeightPlusValue = 0
@@ -237,7 +237,7 @@ extension InrollPlaceViewController {
     
     // MARK: Reset Request Table
     private func resetRequestTable() {
-        presenter.requestMenu = [RequestMenu(menu: "", price: "", howToRequest: "", isCheck: false)]
+        presenter.resetArray(request: true)
         howToRequestVeganMenuTableView.reloadData()
         requestVeganTableViewHeightConstraint.constant -= CGFloat(integerLiteral: requestVeganTableHeightPlusValue)
         requestVeganTableHeightPlusValue = 0

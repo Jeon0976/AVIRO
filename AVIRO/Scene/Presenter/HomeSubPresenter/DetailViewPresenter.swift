@@ -17,10 +17,11 @@ protocol DetailViewProtocol: NSObject {
 final class DetailViewPresenter {
     weak var viewController: DetailViewProtocol?
     
-    var placeId: String?
+    var placeId: String
     
-    init(viewController: DetailViewProtocol) {
+    init(viewController: DetailViewProtocol, placeId: String) {
         self.viewController = viewController
+        self.placeId = placeId
     }
     
     func viewDidLoad() {

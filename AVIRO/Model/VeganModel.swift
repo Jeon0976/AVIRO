@@ -32,30 +32,10 @@ struct VeganModel: Codable {
 }
 
 struct MenuArray: Codable {
-    var menuId: String
+    var menuId = UUID().uuidString
     var menuType: String
     var menu: String
     var price: Int
     var howToRequest: String
     var isCheck: Bool
 }
-
-//struct NotRequestMenu: Codable {
-//    var menu: String
-//    var price: String
-//
-//    var hasData: Bool {
-//        return !menu.isEmpty && !price.isEmpty
-//    }
-//}
-//
-//struct RequestMenu: Codable {
-//    var menu: String
-//    var price: String
-//    var howToRequest: String
-//    var isCheck: Bool
-//
-//    var hasData: Bool {
-//        return !menu.isEmpty && !price.isEmpty && !howToRequest.isEmpty
-//    }
-//}

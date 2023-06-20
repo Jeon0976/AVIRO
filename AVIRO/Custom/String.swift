@@ -18,4 +18,17 @@ extension String {
            return "\(number)m"
         }
     }
+    
+    // MARK: 숫자 변형
+    // TODO: 숫자가 아닌 값 입력할 때를 여기서 처리??
+    func currenyKR() -> String {
+        guard let price = Int(self) else {
+            return "0"
+        }
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = Locale(identifier: "ko_KR")
+        return formatter.string(from: NSNumber(value: price)) ?? ""
+    }
 }
+

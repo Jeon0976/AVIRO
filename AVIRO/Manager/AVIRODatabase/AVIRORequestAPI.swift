@@ -26,7 +26,7 @@ struct AVIRORequestAPI {
     static let longitude = "x"
     static let latitude = "y"
     static let wide = "wide"
-    
+
     // MARK: response All Data
     mutating func responseAllData(longitude: String,
                                   latitude: String,

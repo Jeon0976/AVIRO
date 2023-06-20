@@ -142,7 +142,9 @@ extension InrollPlaceViewController {
                              storeLocationField.text ?? "",
                              storeCategoryField.text ?? "",
                              storePhoneField.text ?? ""
-        )
+        ) { veganModel in
+            presenter.postData(veganModel)
+        }
         
         refreshData()
         resetTable()

@@ -12,9 +12,9 @@ extension InrollPlaceViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch tableView.tag {
         case 0:
-            return presenter.notRequestMenu.count
+            return presenter.veganTableCount
         case 1:
-            return presenter.requestMenu.count
+            return presenter.requestTableCount
         default:
             return 0
         }
@@ -35,16 +35,24 @@ extension InrollPlaceViewController: UITableViewDataSource {
                 action: #selector(veganMenuTextDidChange(_:)),
                 for: .editingChanged
             )
+            
             cell?.priceTextField.addTarget(
                 self,
                 action: #selector(veganMenuPriceTextDidChange(_:)),
                 for: .editingChanged
             )
             
-            let name = presenter.notRequestMenu[indexPath.row].menu
-            let price = presenter.notRequestMenu[indexPath.row].price
+            cell?.priceTextField.addTarget(
+                self,
+                action: #selector(changePrice(_:)),
+                for: .editingDidEnd
+            )
             
-            cell?.dataBinding(name, price)
+            let veganTable = presenter.checkVeganTable(indexPath)
+            
+            cell?.dataBinding(veganTable.menu,
+                              veganTable.price
+            )
             
             return cell ?? UITableViewCell()
         case 1:
@@ -60,22 +68,32 @@ extension InrollPlaceViewController: UITableViewDataSource {
                 action: #selector(requestMenuTextDidChange(_:)),
                 for: .editingChanged
             )
+            
             cell?.priceTextField.addTarget(
                 self,
                 action: #selector(requestPriceTextDidChange(_:)),
                 for: .editingChanged
             )
+            
+            cell?.priceTextField.addTarget(
+                self,
+                action: #selector(changePrice(_:)),
+                for: .editingDidEnd
+            )
+            
             cell?.detailTextField.addTarget(
                 self,
                 action: #selector(requestDetailTextDidChahge(_:)),
                 for: .editingChanged)
             
-            let name = presenter.requestMenu[indexPath.row].menu
-            let price = presenter.requestMenu[indexPath.row].price
-            let detail = presenter.requestMenu[indexPath.row].howToRequest
-            let check = presenter.requestMenu[indexPath.row].isCheck
+            let requestTable = presenter.checkRequestTable(indexPath)
             
-            cell?.dataBinding(name, price, detail, check)
+            cell?.dataBinding(requestTable.menu,
+                              requestTable.price,
+                              requestTable.howToRequest,
+                              requestTable.isCheck
+            )
+            
             return cell ?? UITableViewCell()
         default:
             return UITableViewCell()
@@ -88,7 +106,11 @@ extension InrollPlaceViewController {
     @objc func veganMenuTextDidChange(_ textField: UITextField) {
         let pointInTable = textField.convert(textField.bounds.origin, to: veganMenuTableView)
         if let textFieldIndexPath = veganMenuTableView.indexPathForRow(at: pointInTable) {
-            presenter.notRequestMenu[textFieldIndexPath.row].menu = textField.text ?? ""
+            
+            presenter.plusVeganTable(textFieldIndexPath,
+                                     textField.text,
+                                     nil
+            )
             
             isPossibleReportButton()
         }
@@ -97,7 +119,11 @@ extension InrollPlaceViewController {
     @objc func veganMenuPriceTextDidChange(_ textField: UITextField) {
         let pointInTable = textField.convert(textField.bounds.origin, to: veganMenuTableView)
         if let textFieldIndexPath = veganMenuTableView.indexPathForRow(at: pointInTable) {
-            presenter.notRequestMenu[textFieldIndexPath.row].price = textField.text ?? ""
+            
+            presenter.plusVeganTable(textFieldIndexPath,
+                                     nil,
+                                     textField.text
+            )
             
             isPossibleReportButton()
         }
@@ -106,7 +132,12 @@ extension InrollPlaceViewController {
     @objc func requestMenuTextDidChange(_ textField: UITextField) {
         let pointInTable = textField.convert(textField.bounds.origin, to: howToRequestVeganMenuTableView)
         if let textFieldIndexPath = howToRequestVeganMenuTableView.indexPathForRow(at: pointInTable) {
-            presenter.requestMenu[textFieldIndexPath.row].menu = textField.text ?? ""
+            
+            presenter.plusRequestTable(textFieldIndexPath,
+                                       textField.text,
+                                       nil,
+                                       nil
+            )
             
             isPossibleReportButton()
         }
@@ -115,7 +146,12 @@ extension InrollPlaceViewController {
     @objc func requestPriceTextDidChange(_ textField: UITextField) {
         let pointInTable = textField.convert(textField.bounds.origin, to: howToRequestVeganMenuTableView)
         if let textFieldIndexPath = howToRequestVeganMenuTableView.indexPathForRow(at: pointInTable) {
-            presenter.requestMenu[textFieldIndexPath.row].price = textField.text ?? ""
+            
+            presenter.plusRequestTable(textFieldIndexPath,
+                                       nil,
+                                       textField.text,
+                                       nil
+            )
             
             isPossibleReportButton()
         }
@@ -124,12 +160,18 @@ extension InrollPlaceViewController {
     @objc func requestDetailTextDidChahge(_ textField: UITextField) {
         let pointInTable = textField.convert(textField.bounds.origin, to: howToRequestVeganMenuTableView)
         if let textFieldIndexPath = howToRequestVeganMenuTableView.indexPathForRow(at: pointInTable) {
-            presenter.requestMenu[textFieldIndexPath.row].howToRequest = textField.text ?? ""
-            if textField.text != "" {
-                presenter.requestMenu[textFieldIndexPath.row].isCheck = true
-                
-                isPossibleReportButton()
-            }
+            
+            presenter.plusRequestTable(textFieldIndexPath,
+                                       nil,
+                                       nil,
+                                       textField.text
+            )
+            
+            isPossibleReportButton()
         }
+    }
+    
+    @objc func changePrice(_ textField: UITextField) {
+        textField.text = textField.text?.currenyKR()
     }
 }

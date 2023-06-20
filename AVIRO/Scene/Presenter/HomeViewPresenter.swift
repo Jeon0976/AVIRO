@@ -17,7 +17,7 @@ protocol HomeViewProtocol: NSObject {
     func ifDenied()
     func requestSuccess()
     func makeMarker(_ veganList: [HomeMapData])
-    func pushDetailViewController(_ veganModel: HomeMapData)
+    func pushDetailViewController(_ placeId: String)
 }
 
 final class HomeViewPresenter: NSObject {
@@ -56,16 +56,6 @@ final class HomeViewPresenter: NSObject {
                 self?.homeMapData = mapDatas.data.placeData
                 self?.viewController?.makeMarker((self?.homeMapData)!)
             }
-    }
-    
-    // MARK: pushDetailViewController
-    func pushDetailViewController(_ placeId: String) {
-        DispatchQueue.global().async { [weak self] in
-            guard let homeMapData = self?.homeMapData else { return }
-            if let data = homeMapData.first(where: { $0.placeId == placeId }) {
-                self?.viewController?.pushDetailViewController(data)
-            }
-        }
     }
 }
 
