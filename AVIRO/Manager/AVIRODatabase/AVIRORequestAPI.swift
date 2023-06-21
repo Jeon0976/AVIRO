@@ -20,22 +20,26 @@ struct AVIRORequestAPI {
     }()
     
     // MARK: Path
-    static let allDataPath = "/prod/map"
+    static let nerbyStore = "/prod/map"
+    static let placeInfoPath = "/prod/map/load/place"
+    static let menuInfoPath = "/prod/map/load/menu"
+    static let commentPath = "/prod/map/load/comment"
     
     // MARK: Key
     static let longitude = "x"
     static let latitude = "y"
     static let wide = "wide"
+    static let placeId = "placeId"
 
-    // MARK: response All Data
-    mutating func responseAllData(longitude: String,
+    // MARK: get Nerby Store
+    mutating func getNerbyStore(longitude: String,
                                   latitude: String,
                                   wide: String
     ) -> URLComponents {
         var components = URLComponents()
         components.scheme = AVIRORequestAPI.scheme
         components.host = host
-        components.path = AVIRORequestAPI.allDataPath
+        components.path = AVIRORequestAPI.nerbyStore
         
         components.queryItems = [
             URLQueryItem(name: AVIRORequestAPI.longitude, value: longitude),
@@ -46,4 +50,47 @@ struct AVIRORequestAPI {
         return components
     }
     
+    // MARK: place Info
+    mutating func getPlaceInfo(placeId: String) -> URLComponents {
+        var components = URLComponents()
+        components.scheme = AVIRORequestAPI.scheme
+        components.host = host
+        components.path = AVIRORequestAPI.placeInfoPath
+        
+        components.queryItems = [
+            URLQueryItem(name: AVIRORequestAPI.placeId, value: placeId)
+        ]
+        
+        return components
+    }
+    
+    // MARK: Menu Info
+    mutating func getMenuInfo(placeId: String) -> URLComponents {
+        var components = URLComponents()
+        components.scheme = AVIRORequestAPI.scheme
+        components.host = host
+        components.path = AVIRORequestAPI.menuInfoPath
+        
+        components.queryItems = [
+            URLQueryItem(name: AVIRORequestAPI.placeId, value: placeId)
+        ]
+        
+        return components
+    }
+
+    
+    // MARK: Comment Info
+    mutating func getCommentInfo(placeId: String) -> URLComponents {
+        var components = URLComponents()
+        components.scheme = AVIRORequestAPI.scheme
+        components.host = host
+        components.path = AVIRORequestAPI.commentPath
+        
+        components.queryItems = [
+            URLQueryItem(name: AVIRORequestAPI.placeId, value: placeId)
+        ]
+        
+        return components
+    }
+
 }

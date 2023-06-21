@@ -298,7 +298,7 @@ extension HomeViewController: HomeViewProtocol {
             )
             viewController.presenter = presenter
             
-            self?.navigationController?.pushViewContrller(
+            self?.navigationController?.pushViewController(
                 viewController,
                 animated: false
             )

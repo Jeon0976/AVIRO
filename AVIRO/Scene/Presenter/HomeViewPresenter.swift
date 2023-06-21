@@ -49,10 +49,10 @@ final class HomeViewPresenter: NSObject {
     
     // MARK: vegan Data 불러오기
     func loadVeganData() {
-        aviroManager.getPlaceModels(
-            longitude: PersonalLocation.shared.longitudeString,
-            latitude: PersonalLocation.shared.latitudeString,
-            wide: "0.0") { [weak self] mapDatas in
+        aviroManager.getNerbyPlaceModels(longitude: PersonalLocation.shared.longitudeString,
+                                         latitude: PersonalLocation.shared.latitudeString,
+                                         wide: "0.0"
+        ) { [weak self] mapDatas in
                 self?.homeMapData = mapDatas.data.placeData
                 self?.viewController?.makeMarker((self?.homeMapData)!)
             }

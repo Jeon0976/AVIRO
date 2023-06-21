@@ -18,13 +18,12 @@ final class AVIROAPIManager {
     }
     
     // MARK: Get Place Models
-    func getPlaceModels(
-        longitude: String,
-        latitude: String,
-        wide: String,
-        completionHandler: @escaping((AVIROMapModel) -> Void)
+    func getNerbyPlaceModels(longitude: String,
+                             latitude: String,
+                             wide: String,
+                             completionHandler: @escaping((AVIROMapModel) -> Void)
     ) {
-        guard let url = requestAPI.responseAllData(
+        guard let url = requestAPI.getNerbyStore(
             longitude: longitude,
             latitude: latitude,
             wide: wide
@@ -49,6 +48,95 @@ final class AVIROAPIManager {
             if let data = data {
                 if let mapDatas = try? JSONDecoder().decode(AVIROMapModel.self, from: data) {
                     completionHandler(mapDatas)
+                }
+            }
+        }.resume()
+    }
+    
+    // MARK: Get Place Info
+    func getPlaceInfo(placeId: String,
+                      completionHandler: @escaping((AVIROPlaceModel)-> Void)
+    ) {
+        guard let url = requestAPI.getPlaceInfo(placeId: placeId).url else {
+            print("url Error")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        
+        request.httpMethod = "GET"
+        
+        session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            if let response = response {
+                print(response)
+            }
+            
+            if let data = data {
+                if let placeData = try? JSONDecoder().decode(AVIROPlaceModel.self, from: data) {
+                    completionHandler(placeData)
+                }
+            }
+        }.resume()
+    }
+    
+    // MARK: Get Menu Info
+    func getMenuInfo(placeId: String,
+                     completionHandler: @escaping((AVIROMenuModel) -> Void)
+    ) {
+        guard let url = requestAPI.getMenuInfo(placeId: placeId).url else {
+            print("url Error")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        
+        request.httpMethod = "GET"
+        
+        session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            if let response = response {
+                print(response)
+            }
+            
+            if let data = data {
+                if let menuData = try? JSONDecoder().decode(AVIROMenuModel.self, from: data) {
+                    completionHandler(menuData)
+                }
+            }
+        }.resume()
+    }
+    // MARK: Get Comment Info
+    func getCommentInfo(placeId: String,
+                        completionHandler: @escaping((AVIROCommentModel) -> Void)
+    ) {
+        guard let url = requestAPI.getCommentInfo(placeId: placeId).url else {
+            print("url Error")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        
+        request.httpMethod = "GET"
+        
+        session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            if let response = response {
+                print(response)
+            }
+            
+            if let data = data {
+                if let commentData = try? JSONDecoder().decode(AVIROCommentModel.self, from: data) {
+                    completionHandler(commentData)
                 }
             }
         }.resume()

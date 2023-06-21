@@ -53,7 +53,7 @@
 		C5CAAC492A39C6D4008C5FDA /* StringValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAAC482A39C6D4008C5FDA /* StringValue.swift */; };
 		C5D6E19F2A17B4410042679C /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5D6E19E2A17B4410042679C /* API.plist */; };
 		C5D7458B2A21CCFB006F9F31 /* DetailMenuTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D7458A2A21CCFB006F9F31 /* DetailMenuTableModel.swift */; };
-		C5D7458D2A2223A6006F9F31 /* CommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D7458C2A2223A6006F9F31 /* CommentModel.swift */; };
+		C5D7458D2A2223A6006F9F31 /* CommentPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D7458C2A2223A6006F9F31 /* CommentPostModel.swift */; };
 		C5D7458F2A224DCE006F9F31 /* HomeFirstPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D7458E2A224DCE006F9F31 /* HomeFirstPopUpView.swift */; };
 		C5D745912A225DE6006F9F31 /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D745902A225DE6006F9F31 /* CommentsViewController.swift */; };
 		C5D745942A2267C7006F9F31 /* CommentDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D745932A2267C7006F9F31 /* CommentDetailPresenter.swift */; };
@@ -80,6 +80,9 @@
 		C5EB511E2A21189B00B29CC1 /* StoreDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB511D2A21189B00B29CC1 /* StoreDetailView.swift */; };
 		C5EB51202A2118AB00B29CC1 /* MenuDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB511F2A2118AB00B29CC1 /* MenuDetailView.swift */; };
 		C5EB51222A2118B200B29CC1 /* CommentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB51212A2118B200B29CC1 /* CommentDetailView.swift */; };
+		C5FF13532A42C8810026981D /* AVIROPlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FF13522A42C8810026981D /* AVIROPlaceModel.swift */; };
+		C5FF13552A42C88D0026981D /* AVIROMenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FF13542A42C88D0026981D /* AVIROMenuModel.swift */; };
+		C5FF13572A42C8970026981D /* AVIROCommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FF13562A42C8970026981D /* AVIROCommentModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -134,7 +137,7 @@
 		C5CAAC482A39C6D4008C5FDA /* StringValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringValue.swift; sourceTree = "<group>"; };
 		C5D6E19E2A17B4410042679C /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = API.plist; sourceTree = "<group>"; };
 		C5D7458A2A21CCFB006F9F31 /* DetailMenuTableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMenuTableModel.swift; sourceTree = "<group>"; };
-		C5D7458C2A2223A6006F9F31 /* CommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentModel.swift; sourceTree = "<group>"; };
+		C5D7458C2A2223A6006F9F31 /* CommentPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentPostModel.swift; sourceTree = "<group>"; };
 		C5D7458E2A224DCE006F9F31 /* HomeFirstPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFirstPopUpView.swift; sourceTree = "<group>"; };
 		C5D745902A225DE6006F9F31 /* CommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
 		C5D745932A2267C7006F9F31 /* CommentDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDetailPresenter.swift; sourceTree = "<group>"; };
@@ -161,6 +164,9 @@
 		C5EB511D2A21189B00B29CC1 /* StoreDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailView.swift; sourceTree = "<group>"; };
 		C5EB511F2A2118AB00B29CC1 /* MenuDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetailView.swift; sourceTree = "<group>"; };
 		C5EB51212A2118B200B29CC1 /* CommentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDetailView.swift; sourceTree = "<group>"; };
+		C5FF13522A42C8810026981D /* AVIROPlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROPlaceModel.swift; sourceTree = "<group>"; };
+		C5FF13542A42C88D0026981D /* AVIROMenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROMenuModel.swift; sourceTree = "<group>"; };
+		C5FF13562A42C8970026981D /* AVIROCommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROCommentModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -376,9 +382,8 @@
 		C5351B782A1B437600116D50 /* APIResonseModel */ = {
 			isa = PBXGroup;
 			children = (
-				C5351B4F2A19225A00116D50 /* KakaoMapResponseKeywordModel.swift */,
-				C5351B792A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift */,
-				C5732C762A41A0A500CDC499 /* AVIROMapModel.swift */,
+				C5FF13502A42C8630026981D /* KakaoMap */,
+				C5FF13512A42C86C0026981D /* AVIRO */,
 			);
 			path = APIResonseModel;
 			sourceTree = "<group>";
@@ -563,7 +568,7 @@
 				C5732C782A41AD8100CDC499 /* HomeMapData.swift */,
 				C5EB510E2A20A89100B29CC1 /* HomeSearchData.swift */,
 				C5D7458A2A21CCFB006F9F31 /* DetailMenuTableModel.swift */,
-				C5D7458C2A2223A6006F9F31 /* CommentModel.swift */,
+				C5D7458C2A2223A6006F9F31 /* CommentPostModel.swift */,
 			);
 			path = HomeViewModel;
 			sourceTree = "<group>";
@@ -625,6 +630,26 @@
 				C5D745952A2277A4006F9F31 /* CommentsViewCell.swift */,
 			);
 			path = CommentDetailView;
+			sourceTree = "<group>";
+		};
+		C5FF13502A42C8630026981D /* KakaoMap */ = {
+			isa = PBXGroup;
+			children = (
+				C5351B4F2A19225A00116D50 /* KakaoMapResponseKeywordModel.swift */,
+				C5351B792A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift */,
+			);
+			path = KakaoMap;
+			sourceTree = "<group>";
+		};
+		C5FF13512A42C86C0026981D /* AVIRO */ = {
+			isa = PBXGroup;
+			children = (
+				C5732C762A41A0A500CDC499 /* AVIROMapModel.swift */,
+				C5FF13522A42C8810026981D /* AVIROPlaceModel.swift */,
+				C5FF13542A42C88D0026981D /* AVIROMenuModel.swift */,
+				C5FF13562A42C8970026981D /* AVIROCommentModel.swift */,
+			);
+			path = AVIRO;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -775,7 +800,7 @@
 				C5351B6F2A1B242C00116D50 /* InrollPlacePresenter.swift in Sources */,
 				C5CAAC452A39A93C008C5FDA /* Layout.swift in Sources */,
 				C52FA3472A175B20005E70DC /* HomeViewController.swift in Sources */,
-				C5D7458D2A2223A6006F9F31 /* CommentModel.swift in Sources */,
+				C5D7458D2A2223A6006F9F31 /* CommentPostModel.swift in Sources */,
 				C5EB50E82A1C6FD600B29CC1 /* PopularViewController.swift in Sources */,
 				C5EB51002A20720300B29CC1 /* UserDefaultsManager.swift in Sources */,
 				C5351B7D2A1B52B900116D50 /* CustomLocationCellModel.swift in Sources */,
@@ -811,10 +836,12 @@
 				C5351B6D2A1B215D00116D50 /* InrollPlaceViewController.swift in Sources */,
 				C5732C792A41AD8100CDC499 /* HomeMapData.swift in Sources */,
 				C5D745912A225DE6006F9F31 /* CommentsViewController.swift in Sources */,
+				C5FF13552A42C88D0026981D /* AVIROMenuModel.swift in Sources */,
 				C596D9882A3B3C8900829B17 /* InrollPlaceViewNotification.swift in Sources */,
 				C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */,
 				C5351B672A1A154C00116D50 /* PageEndingCheck.swift in Sources */,
 				C5732C772A41A0A500CDC499 /* AVIROMapModel.swift in Sources */,
+				C5FF13532A42C8810026981D /* AVIROPlaceModel.swift in Sources */,
 				C5351B5C2A19F60200116D50 /* PlaceListViewPresenter.swift in Sources */,
 				C5EB51162A21011C00B29CC1 /* DetailViewController.swift in Sources */,
 				C5EB51202A2118AB00B29CC1 /* MenuDetailView.swift in Sources */,
@@ -823,6 +850,7 @@
 				C5EB51122A20CC7D00B29CC1 /* HomeInfoStoreView.swift in Sources */,
 				C5EB50E42A1C685100B29CC1 /* TabBarItem.swift in Sources */,
 				C5351B7A2A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift in Sources */,
+				C5FF13572A42C8970026981D /* AVIROCommentModel.swift in Sources */,
 				C5D7458B2A21CCFB006F9F31 /* DetailMenuTableModel.swift in Sources */,
 				C5351B602A19F9A700116D50 /* PlaceListModel.swift in Sources */,
 				C5732C712A41739000CDC499 /* AVIROAPIManager.swift in Sources */,

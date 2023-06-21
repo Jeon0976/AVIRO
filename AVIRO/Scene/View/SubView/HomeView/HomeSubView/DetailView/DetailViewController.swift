@@ -61,6 +61,13 @@ final class DetailViewController: UIViewController {
 }
 
 extension DetailViewController: DetailViewProtocol {
+    func bindingData() {
+        presenter.loadPlaceInfo { bindingTopDetailView()
+        }
+        presenter.loadMenuInfo()
+        presenter.loadCommentInfo()
+    }
+    
     func makeLayout() {
 
         bindingTopDetailView()
@@ -138,7 +145,6 @@ extension DetailViewController: DetailViewProtocol {
         indicator.color = .separateLine
         indicator.startAnimating()
         indicator.alpha = 1
-        navigationItem.title = presenter.veganModel?.placeModel.title
         navigationItem.backButtonDisplayMode = .generic
         
         navigationController?.navigationBar.isHidden = false
@@ -190,17 +196,16 @@ extension DetailViewController: DetailViewProtocol {
     }
     
     // MARK: TopDetailView data binding
-    private func bindingTopDetailView() {
-        guard let veganModel = presenter.veganModel else { return }
-        topDetail.title.text = veganModel.placeModel.title
-        topDetail.address.text = veganModel.placeModel.address
+    private func bindingTopDetailView(_ placeModel: PlaceData) {
+        topDetail.title.text = placeModel.title
+        topDetail.address.text = placeModel.address
         
-        if veganModel.allVegan {
+        if placeModel.allVegan {
             topDetail.imageView.image = UIImage(
                named: "HomeInfoVegan")
             topDetail.topImageView.image = UIImage(
                named: "HomeInfoVeganTitle")
-        } else if veganModel.someMenuVegan {
+        } else if placeModel.someMenuVegan {
             topDetail.imageView.image = UIImage(
                named: "HomeInfoSomeVegan")
             topDetail.topImageView.image = UIImage(
@@ -214,22 +219,23 @@ extension DetailViewController: DetailViewProtocol {
         topDetail.imageView.contentMode = .scaleAspectFit
         topDetail.topImageView.contentMode = .scaleAspectFit
         
-        topDetail.layoutIfNeeded()
-        
         topDetail.viewHeight = topDetail.frame.size.height
-
+        
+        topDetail.layoutIfNeeded()
     }
     
     // MARK: StoreDetail data binding
-    private func bindingStoreDetail() {
-        storeDetail.addressLabel.text = presenter.veganModel?.placeModel.address
-        storeDetail.phoneLabel.text = presenter.veganModel?.placeModel.phone ?? ""
-        storeDetail.categoryLabel.text = presenter.veganModel?.placeModel.category
+    private func bindingStoreDetail(_ placeModel: PlaceData) {
+        storeDetail.addressLabel.text = placeModel.address ?? "정보가 없습니다."
+        storeDetail.phoneLabel.text = placeModel.phone ?? "정보가 없습니다."
+        storeDetail.categoryLabel.text = placeModel.category ?? "정보가 없습니다."
+        
+        storeDetail.layoutIfNeeded()
     }
     
     // MARK: MenuDetail data binding
-    private func bindingMenuDetail() {
-        guard let veganModel = presenter.veganModel else {
+    private func bindingMenuDetail(_ menuModel: [MenuArray]) {
+        guard let veganModel = menuModel else {
             menuDetail.showNoData()
             return
         }
@@ -268,6 +274,8 @@ extension DetailViewController: DetailViewProtocol {
         let titleHeight = menuDetail.heightOfLabel(label: menuDetail.title)
         
         menuHeight = menuDetail.tableView.contentSize.height + titleHeight + 100
+        
+        menuDetail.layoutIfNeeded()
     }
     
     // MARK: CommentDetail data binding
@@ -287,5 +295,7 @@ extension DetailViewController: DetailViewProtocol {
         comment.showData()
         
         commentHeight = comment.tableView.contentSize.height + titleHeight + buttonHeight + 60
+        
+        comment.layoutIfNeeded()
     }
 }
