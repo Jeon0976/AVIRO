@@ -34,7 +34,12 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         presenter.locationAuthorization()
         presenter.viewDidLoad()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
+        presenter.firstLocationUpdate()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -44,11 +49,6 @@ final class HomeViewController: UIViewController {
         presenter.loadVeganData()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        presenter.firstLocationUpdate()
-    }
 }
 
 extension HomeViewController: HomeViewProtocol {
@@ -98,7 +98,7 @@ extension HomeViewController: HomeViewProtocol {
         let backItem = UIBarButtonItem()
         backItem.title = ""
         navigationItem.backBarButtonItem = backItem
-        
+
         // lodeLocationButton
         loadLocationButton.setImage(UIImage(named: Image.PersonalLocation), for: .normal)
         loadLocationButton.addTarget(
@@ -218,72 +218,70 @@ extension HomeViewController: HomeViewProtocol {
     
     // MARK: 지도에 마크 표시하기 작업
     func makeMarker(_ veganList: [HomeMapData]) {
-        DispatchQueue.global().async {
-            var markers = [NMFMarker]()
+        var markers = [NMFMarker]()
+        
+        veganList.forEach { homeMapData in
             
-            veganList.forEach { homeMapData in
-                
-                let title = homeMapData.title
-                let address = homeMapData.address
-                let latLng = NMGLatLng(lat: homeMapData.y, lng: homeMapData.x)
-                let marker = NMFMarker(position: latLng)
-                let placeId = homeMapData.placeId
-                
-                marker.width = 30
-                marker.height = 30
-                markers.append(marker)
-                
-                if homeMapData.allVegan {
-                    marker.iconImage = NMFOverlayImage(name: Image.allVegan)
-                } else if homeMapData.someMenuVegan {
-                    marker.iconImage = NMFOverlayImage(name: Image.someMenuVegan)
-                } else {
-                    marker.iconImage = NMFOverlayImage(name: Image.requestVegan)
-                }
-                // Marker 터치할 때
-                marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
-                             if nil != overlay as? NMFMarker {
-                                 let title = title
-                                 let address = address
-                                 guard let self = self else { return false }
-                                 storeInfoView.title.text = title
-                                 storeInfoView.address.text = address
-                                 storeInfoView.placeId = placeId
-                                 
-                                 if homeMapData.allVegan {
-                                     storeInfoView.imageView.image = UIImage(
-                                        named: Image.homeInfoVegan)
-                                     storeInfoView.topImageView.image = UIImage(
-                                        named: Image.homeInfoVeganTitle)
-                                 } else if homeMapData.someMenuVegan {
-                                     storeInfoView.imageView.image = UIImage(
-                                        named: Image.homeInfoSomeVegan)
-                                     storeInfoView.topImageView.image = UIImage(
-                                        named: Image.homeInfoSomeVeganTitle)
-                                 } else {
-                                     storeInfoView.imageView.image = UIImage(
-                                        named: Image.homeInfoRequestVegan)
-                                     storeInfoView.topImageView.image = UIImage(
-                                        named: Image.homeInfoRequestVeganTitle)
-                                 }
-                                 storeInfoView.imageView.contentMode = .scaleAspectFit
-                                 storeInfoView.topImageView.contentMode = .scaleAspectFit
-                                                                  
-                                 UIView.animate(withDuration: 0.15) {
-                                     let tabBarHeight = self.tabBarController?.tabBar.frame.size.height ?? 32
-                                     self.storeInfoView.frame.origin.y =
-                                        self.view.frame.height - Layout.SlideView.height
-                                     self.storeInfoView.frame.size.height =
-                                        Layout.SlideView.height + tabBarHeight
-                                 }
-                             }
-                             return true
-                         }
+            let title = homeMapData.title
+            let address = homeMapData.address
+            let latLng = NMGLatLng(lat: homeMapData.y, lng: homeMapData.x)
+            let marker = NMFMarker(position: latLng)
+            let placeId = homeMapData.placeId
+            
+            marker.width = 30
+            marker.height = 30
+            markers.append(marker)
+            
+            if homeMapData.allVegan {
+                marker.iconImage = NMFOverlayImage(name: Image.allVegan)
+            } else if homeMapData.someMenuVegan {
+                marker.iconImage = NMFOverlayImage(name: Image.someMenuVegan)
+            } else {
+                marker.iconImage = NMFOverlayImage(name: Image.requestVegan)
             }
-            DispatchQueue.main.async { [weak self] in
-                for marker in markers {
-                    marker.mapView = self?.naverMapView
+            // Marker 터치할 때
+            marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
+                if nil != overlay as? NMFMarker {
+                    let title = title
+                    let address = address
+                    guard let self = self else { return false }
+                    storeInfoView.title.text = title
+                    storeInfoView.address.text = address
+                    storeInfoView.placeId = placeId
+                    
+                    if homeMapData.allVegan {
+                        storeInfoView.imageView.image = UIImage(
+                            named: Image.homeInfoVegan)
+                        storeInfoView.topImageView.image = UIImage(
+                            named: Image.homeInfoVeganTitle)
+                    } else if homeMapData.someMenuVegan {
+                        storeInfoView.imageView.image = UIImage(
+                            named: Image.homeInfoSomeVegan)
+                        storeInfoView.topImageView.image = UIImage(
+                            named: Image.homeInfoSomeVeganTitle)
+                    } else {
+                        storeInfoView.imageView.image = UIImage(
+                            named: Image.homeInfoRequestVegan)
+                        storeInfoView.topImageView.image = UIImage(
+                            named: Image.homeInfoRequestVeganTitle)
+                    }
+                    storeInfoView.imageView.contentMode = .scaleAspectFit
+                    storeInfoView.topImageView.contentMode = .scaleAspectFit
+                    
+                    UIView.animate(withDuration: 0.15) {
+                        let tabBarHeight = self.tabBarController?.tabBar.frame.size.height ?? 32
+                        self.storeInfoView.frame.origin.y =
+                        self.view.frame.height - Layout.SlideView.height
+                        self.storeInfoView.frame.size.height =
+                        Layout.SlideView.height + tabBarHeight
+                    }
                 }
+                return true
+            }
+        }
+        DispatchQueue.main.async { [weak self] in
+            for marker in markers {
+                marker.mapView = self?.naverMapView
             }
         }
     }

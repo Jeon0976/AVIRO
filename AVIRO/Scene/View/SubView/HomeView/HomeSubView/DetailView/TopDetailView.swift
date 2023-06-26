@@ -12,6 +12,7 @@ final class TopDetailView: UIView {
         let label = UILabel()
         label.textColor = .mainTitle
         label.font = .systemFont(ofSize: 25, weight: .bold)
+        label.numberOfLines = 0
         
         return label
     }()
@@ -25,6 +26,7 @@ final class TopDetailView: UIView {
         let label = UILabel()
         label.textColor = .subTitle
         label.font = .systemFont(ofSize: 18)
+        label.numberOfLines = 0
         
         return label
     }()
@@ -106,13 +108,15 @@ final class TopDetailView: UIView {
         return stackView
     }()
     
-    var viewHeight = CGFloat()
+    var viewHeightConstraint: NSLayoutConstraint?
     
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.backgroundColor = .white
+        
+        viewHeightConstraint = heightAnchor.constraint(equalToConstant: 0)
+        viewHeightConstraint?.isActive = true
         
         [
             shareButton,
@@ -157,9 +161,20 @@ final class TopDetailView: UIView {
             stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             stackView.topAnchor.constraint(equalTo: address.bottomAnchor, constant: 20)
         ])
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        viewHeightConstraint?.constant =
+            imageView.frame.height +
+            title.frame.height +
+            address.frame.height +
+            stackView.frame.height + 82
     }
 }

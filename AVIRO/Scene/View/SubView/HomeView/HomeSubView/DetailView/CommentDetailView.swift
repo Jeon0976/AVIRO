@@ -17,7 +17,7 @@ final class CommentDetailView: UIView {
         return label
     }()
     
-    var comentCount: UILabel = {
+    var commentCount: UILabel = {
         let label = UILabel()
         label.textColor = .subTitle
         label.font = .systemFont(ofSize: 14, weight: .medium)
@@ -69,14 +69,15 @@ final class CommentDetailView: UIView {
     }()
     
     var tableViewHeightConstraint: NSLayoutConstraint?
-    var items: [CommentModel]?
+    var viewHeightConstraint: NSLayoutConstraint?
+    var commentItems = [CommentArray]()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         [
             title,
-            comentCount,
+            commentCount,
             tableView,
             noCommentLabel,
             noCommentLabel2,
@@ -94,6 +95,9 @@ final class CommentDetailView: UIView {
         )
         tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: 0)
         tableViewHeightConstraint?.isActive = true
+        
+        viewHeightConstraint = heightAnchor.constraint(equalToConstant: 0)
+        viewHeightConstraint?.isActive = true
                 
         NSLayoutConstraint.activate([
             // title
@@ -101,8 +105,8 @@ final class CommentDetailView: UIView {
             title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             
             // commentCount
-            comentCount.bottomAnchor.constraint(equalTo: title.bottomAnchor),
-            comentCount.leadingAnchor.constraint(equalTo: title.trailingAnchor, constant: 4),
+            commentCount.bottomAnchor.constraint(equalTo: title.bottomAnchor),
+            commentCount.leadingAnchor.constraint(equalTo: title.trailingAnchor, constant: 4),
             
             // tableView
             tableView.topAnchor.constraint(equalTo: self.title.bottomAnchor, constant: 20),
@@ -128,43 +132,45 @@ final class CommentDetailView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func showData() {
-        guard var items = items else { return }
+    // TODO: Menu Table, Comment Table height 불러오기 방식 다름 -> 향후 수정 해야할 부분
+    override func layoutSubviews() {
+        super.layoutSubviews()
         
-        comentCount.text = "\(items.count)개"
-        noCommentLabel.isHidden = true
-        noCommentLabel2.isHidden = true
-        
-        items.sort(by: { $0.date > $1.date })
-        
-        tableView.reloadData()
-        
-        let height = tableView.contentSize.height
-        tableViewHeightConstraint?.constant = height
-        layoutIfNeeded()
-    }
-    
-    func heightOfLabel(label: UILabel) -> CGFloat {
-        let constraintRect = CGSize(width: label.frame.width, height: .greatestFiniteMagnitude)
-        let boundingBox = label.text?.boundingRect(
-            with: constraintRect, options: [.usesLineFragmentOrigin, .usesFontLeading],
-            attributes: [NSAttributedString.Key.font: label.font!],
-            context: nil
-        )
-        
-        return ceil(boundingBox?.height ?? 0)
+        if commentItems.isEmpty {
+            let titleHeight = title.frame.height
+            let noCommentLabelHeight = noCommentLabel.frame.height
+            let noCommentLabel2Height = noCommentLabel2.frame.height
+            let buttonHeight = commentButton.frame.height
+            let totalHeight = titleHeight + noCommentLabelHeight + noCommentLabel2Height + buttonHeight + 86
+            
+            viewHeightConstraint?.constant = totalHeight
+            
+            tableView.isHidden = true
+            noCommentLabel.isHidden = false
+            noCommentLabel2.isHidden = false
+        } else {
+            let titleHeight = title.frame.height
+            let tableViewHeight = tableView.frame.height
+            let buttonHeight = commentButton.frame.height
+            let totalHeight = titleHeight + tableViewHeight + buttonHeight + 76
+            
+            viewHeightConstraint?.constant = totalHeight
+            tableView.isHidden = false
+            noCommentLabel.isHidden = true
+            noCommentLabel2.isHidden = true
+            commentCount.text = "\(commentItems.count)개"
+        }
     }
 }
 
 extension CommentDetailView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let items = items else { return 0 }
         
-        if items.count > 5 {
+        if commentItems.count > 5 {
             return 5
         }
         
-        return items.count
+        return commentItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -174,11 +180,10 @@ extension CommentDetailView: UITableViewDataSource {
             for: indexPath
         ) as? CommentDetailTableCell
         
-        guard let items = items else { return UITableViewCell() }
-        let item = items[indexPath.row]
+        let item = commentItems[indexPath.row]
         
         cell?.selectionStyle = .none
-        cell?.makeData(item.comment)
+        cell?.makeData(item.content)
         
         return cell ?? UITableViewCell()
     }

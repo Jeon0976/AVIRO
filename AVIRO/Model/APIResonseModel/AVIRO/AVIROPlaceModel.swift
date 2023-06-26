@@ -19,7 +19,9 @@ struct PlaceData: Decodable {
     let address: String
     let phone: String?
     let url: String?
+    
     let commentCount: Int
+    
     let allVegan: Bool
     let someMenuVegan: Bool
     let ifRequestVegan: Bool

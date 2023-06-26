@@ -37,7 +37,7 @@ final class PlaceListViewPresenter: NSObject {
         return self.placeList.count
     }
     
-    func placeListLow(_ row: Int) -> PlaceListModel {
+    func placeListRow(_ row: Int) -> PlaceListModel {
         return placeList[row]
     }
     

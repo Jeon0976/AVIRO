@@ -35,9 +35,9 @@ final class InrollPlacePresenter: NSObject {
         requestTableFieldModel.count
     }
     
-    private var allVegan = false
-    private var someMenuVegan = false
-    private var ifRequestVegan = false
+    var allVegan = false
+    var someMenuVegan = false
+    var ifRequestVegan = false
     
     
     init(viewController: InrollPlaceProtocol) {

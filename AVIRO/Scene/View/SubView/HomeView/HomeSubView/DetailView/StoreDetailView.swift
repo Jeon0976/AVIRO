@@ -113,10 +113,15 @@ final class StoreDetailView: UIView {
         return label
     }()
     
+    var viewHeightConstraint: NSLayoutConstraint?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.backgroundColor = .white
+        
+        viewHeightConstraint = heightAnchor.constraint(equalToConstant: 0)
+        viewHeightConstraint?.isActive = true
         
         [
             storeDetailLabel,
@@ -190,5 +195,12 @@ final class StoreDetailView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        viewHeightConstraint?.constant = storeDetailLabel.frame.height + addressLabel.frame.height + phoneIcon.frame.height + categoryLabel.frame.height + requestDelete.frame.height + 140
+        
     }
 }

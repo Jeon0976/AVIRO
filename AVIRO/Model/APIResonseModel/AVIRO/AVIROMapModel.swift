@@ -9,10 +9,10 @@ import Foundation
 
 struct AVIROMapModel: Decodable {
     let status: Int
-    let data: mapData
+    let data: MapData
 }
 
-struct mapData: Decodable {
+struct MapData: Decodable {
     let amount: Int
     let placeData: [HomeMapData]
 }

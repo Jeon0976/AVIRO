@@ -1,5 +1,5 @@
 //
-//  CommentsViewController.swift
+//  CommentsDetailViewController.swift
 //  AVIRO
 //
 //  Created by 전성훈 on 2023/05/28.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class CommentsViewController: UIViewController {
+final class CommentsDetailViewController: UIViewController {
     lazy var presenter = CommentDetailPresenter(viewController: self)
         
     var commentsTitle = UILabel()
@@ -58,7 +58,7 @@ final class CommentsViewController: UIViewController {
     
 }
 
-extension CommentsViewController: CommentDetailProtocol {
+extension CommentsDetailViewController: CommentDetailProtocol {
     func makeLayout() {
         [
             commentsTitle,
@@ -172,7 +172,7 @@ extension CommentsViewController: CommentDetailProtocol {
     }
 }
 
-extension CommentsViewController {
+extension CommentsDetailViewController {
     // MARK: Upload Comment
     @objc func tappedCommentButton() {
         guard let comment = commentTextField.text else { return }
@@ -183,7 +183,7 @@ extension CommentsViewController {
 }
 
 // MARK: 글자수 제한
-extension CommentsViewController: UITextFieldDelegate {
+extension CommentsDetailViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField,
                    shouldChangeCharactersIn range: NSRange,
                    replacementString string: String
@@ -199,11 +199,9 @@ extension CommentsViewController: UITextFieldDelegate {
 }
 
 // MARK: TableVeiw data source
-extension CommentsViewController: UITableViewDataSource {
+extension CommentsDetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let count = presenter.veganModel?.comment?.count else { return 0 }
-        
-        return count
+        return presenter.checkComments()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -211,13 +209,11 @@ extension CommentsViewController: UITableViewDataSource {
             withIdentifier: CommentsViewCell.identifier,
             for: indexPath) as? CommentsViewCell
        
-        guard let comments = presenter.veganModel?.comment else { return UITableViewCell() }
-
-        let comment = comments[indexPath.row]
+        guard let comment = presenter.commentRow(indexPath) else { return UITableViewCell() }
         
         cell?.selectionStyle = .none
         
-        cell?.makeData(comment.comment)
+        cell?.makeData(comment.content)
         
         return cell ?? UITableViewCell()
     }
@@ -225,13 +221,13 @@ extension CommentsViewController: UITableViewDataSource {
 }
 
 // MARK: TableView Delegate
-extension CommentsViewController: UITableViewDelegate {
+extension CommentsDetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tableView.rowHeight
     }
 }
 
-extension CommentsViewController: UIGestureRecognizerDelegate {
+extension CommentsDetailViewController: UIGestureRecognizerDelegate {
     // MARK: 외부 클릭 시 키보드 내려가면서, 키보드 취소버튼 사라짐 & 취소버튼 클릭시 text 사라짐
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         if let touchedView = touch.view as? UIButton, touchedView == commentTextField.rightView {

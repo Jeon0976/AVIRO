@@ -131,7 +131,7 @@ extension PlaceListViewController: UITableViewDataSource {
             for: indexPath
         ) as? PlaceListCell
         
-        let placeList = presenter.placeListLow(indexPath.row)
+        let placeList = presenter.placeListRow(indexPath.row)
         
         let title = placeList.title
         let category = placeList.category

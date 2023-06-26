@@ -9,10 +9,10 @@ import Foundation
 
 struct HomeMapData: Decodable {
     let placeId: String
-    let x: Double
-    let y: Double
     let title: String
     let address: String
+    let x: Double
+    let y: Double
 
     let allVegan: Bool
     let someMenuVegan: Bool

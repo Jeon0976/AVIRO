@@ -32,10 +32,10 @@ final class DetailViewPresenter {
     }
     // MARK: ViewDidLoad()
     func viewDidLoad() {
-        viewController?.bindingData()
         viewController?.makeLayout()
         viewController?.makeAttribute()
         viewController?.showOthers()
+        viewController?.bindingData()
     }
     
     // MARK: Place Info 불러오기
@@ -44,7 +44,9 @@ final class DetailViewPresenter {
         aviroManager.getPlaceInfo(placeId: placeId
         ) { [weak self] placeModel in
             self?.placeModel = placeModel.data
-            completionHandler(placeModel.data)
+            DispatchQueue.main.async {
+                completionHandler(placeModel.data)
+            }
         }
     }
     
@@ -53,8 +55,10 @@ final class DetailViewPresenter {
         guard let placeId = placeId else { return }
         aviroManager.getMenuInfo(placeId: placeId
         ) { [weak self] menuModel in
-            self?.menuModel = menuModel.data.menuArray
-            completionHandler(menuModel.data.menuArray)
+            self?.menuModel = menuModel.data
+            DispatchQueue.main.async {
+                completionHandler(menuModel.data)
+            }
         }
     }
     
@@ -63,8 +67,10 @@ final class DetailViewPresenter {
         guard let placeId = placeId else { return }
         aviroManager.getCommentInfo(placeId: placeId
         ) { [weak self] commentModel in
-            self?.commentModel = commentModel.data.commentArray
-            commentModel(commentModel.data.commentArray)
+            self?.commentModel = commentModel.data
+            DispatchQueue.main.async {
+                completionHandler(commentModel.data)
+            }
         }
     }
 //

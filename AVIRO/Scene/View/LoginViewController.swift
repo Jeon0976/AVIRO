@@ -56,6 +56,7 @@ extension LoginViewController: LoginViewProtocol {
     
     func makeAttribute() {
         navigationController?.navigationBar.isHidden = true
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
 
         scrollView.backgroundColor = .brown
         

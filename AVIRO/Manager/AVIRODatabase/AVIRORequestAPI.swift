@@ -33,8 +33,8 @@ struct AVIRORequestAPI {
 
     // MARK: get Nerby Store
     mutating func getNerbyStore(longitude: String,
-                                  latitude: String,
-                                  wide: String
+                                latitude: String,
+                                wide: String
     ) -> URLComponents {
         var components = URLComponents()
         components.scheme = AVIRORequestAPI.scheme
@@ -78,7 +78,6 @@ struct AVIRORequestAPI {
         return components
     }
 
-    
     // MARK: Comment Info
     mutating func getCommentInfo(placeId: String) -> URLComponents {
         var components = URLComponents()

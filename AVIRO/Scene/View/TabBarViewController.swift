@@ -37,6 +37,7 @@ class TabBarViewController: UITabBarController {
         centerButton.addTarget(self, action: #selector(buttonDragExit), for: .touchDragExit)
         centerButton.addTarget(self, action: #selector(didTapPlusButton), for: .touchUpInside)
         setupMiddleButton()
+        
     }
     
     func setupMiddleButton() {

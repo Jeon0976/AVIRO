@@ -6,7 +6,6 @@
 //
 //
 import Foundation
-
 enum MenuType: String {
     case vegan
     case needToRequset

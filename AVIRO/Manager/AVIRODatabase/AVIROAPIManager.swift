@@ -28,25 +28,21 @@ final class AVIROAPIManager {
             latitude: latitude,
             wide: wide
         ).url else {
-            print ("url error")
+            print("url error")
             return
         }
         
         var request = URLRequest(url: url)
         
         request.httpMethod = "GET"
-
-        session.dataTask(with: request) { data, response, error in
+        session.dataTask(with: request) { data, _, error in
             if let error = error {
                 print(error.localizedDescription)
             }
             
-            if let response = response {
-                print(response)
-            }
-            
             if let data = data {
                 if let mapDatas = try? JSONDecoder().decode(AVIROMapModel.self, from: data) {
+                    print(mapDatas)
                     completionHandler(mapDatas)
                 }
             }
@@ -55,7 +51,7 @@ final class AVIROAPIManager {
     
     // MARK: Get Place Info
     func getPlaceInfo(placeId: String,
-                      completionHandler: @escaping((AVIROPlaceModel)-> Void)
+                      completionHandler: @escaping((AVIROPlaceModel) -> Void)
     ) {
         guard let url = requestAPI.getPlaceInfo(placeId: placeId).url else {
             print("url Error")
@@ -66,13 +62,9 @@ final class AVIROAPIManager {
         
         request.httpMethod = "GET"
         
-        session.dataTask(with: request) { data, response, error in
+        session.dataTask(with: request) { data, _, error in
             if let error = error {
                 print(error.localizedDescription)
-            }
-            
-            if let response = response {
-                print(response)
             }
             
             if let data = data {
@@ -96,17 +88,14 @@ final class AVIROAPIManager {
         
         request.httpMethod = "GET"
         
-        session.dataTask(with: request) { data, response, error in
+        session.dataTask(with: request) { data, _, error in
             if let error = error {
                 print(error.localizedDescription)
             }
-            
-            if let response = response {
-                print(response)
-            }
-            
+
             if let data = data {
                 if let menuData = try? JSONDecoder().decode(AVIROMenuModel.self, from: data) {
+                    print(menuData)
                     completionHandler(menuData)
                 }
             }
@@ -125,15 +114,11 @@ final class AVIROAPIManager {
         
         request.httpMethod = "GET"
         
-        session.dataTask(with: request) { data, response, error in
+        session.dataTask(with: request) { data, _, error in
             if let error = error {
                 print(error.localizedDescription)
             }
-            
-            if let response = response {
-                print(response)
-            }
-            
+
             if let data = data {
                 if let commentData = try? JSONDecoder().decode(AVIROCommentModel.self, from: data) {
                     completionHandler(commentData)
