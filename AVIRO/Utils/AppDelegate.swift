@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AuthenticationServices
 
 import NMapsMap
 

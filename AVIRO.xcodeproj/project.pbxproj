@@ -44,6 +44,7 @@
 		C5732C7E2A41D42700CDC499 /* RequestTableFieldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C7D2A41D42700CDC499 /* RequestTableFieldModel.swift */; };
 		C593B6472A4AB3A700D224CE /* PushCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593B6462A4AB3A700D224CE /* PushCommentView.swift */; };
 		C593B64B2A4AEA9800D224CE /* AVIROCommentPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593B64A2A4AEA9800D224CE /* AVIROCommentPost.swift */; };
+		C593B64F2A4C490600D224CE /* MyPageViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593B64E2A4C490600D224CE /* MyPageViewPresenter.swift */; };
 		C596D9842A3B39E500829B17 /* InrollPlaceViewTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C596D9832A3B39E500829B17 /* InrollPlaceViewTableView.swift */; };
 		C596D9862A3B3BFD00829B17 /* InrollPlaceViewActionAndAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C596D9852A3B3BFD00829B17 /* InrollPlaceViewActionAndAnimation.swift */; };
 		C596D9882A3B3C8900829B17 /* InrollPlaceViewNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C596D9872A3B3C8900829B17 /* InrollPlaceViewNotification.swift */; };
@@ -128,6 +129,8 @@
 		C5732C7D2A41D42700CDC499 /* RequestTableFieldModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTableFieldModel.swift; sourceTree = "<group>"; };
 		C593B6462A4AB3A700D224CE /* PushCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushCommentView.swift; sourceTree = "<group>"; };
 		C593B64A2A4AEA9800D224CE /* AVIROCommentPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROCommentPost.swift; sourceTree = "<group>"; };
+		C593B64C2A4BFD9A00D224CE /* AVIRO.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AVIRO.entitlements; sourceTree = "<group>"; };
+		C593B64E2A4C490600D224CE /* MyPageViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewPresenter.swift; sourceTree = "<group>"; };
 		C596D9832A3B39E500829B17 /* InrollPlaceViewTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewTableView.swift; sourceTree = "<group>"; };
 		C596D9852A3B3BFD00829B17 /* InrollPlaceViewActionAndAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewActionAndAnimation.swift; sourceTree = "<group>"; };
 		C596D9872A3B3C8900829B17 /* InrollPlaceViewNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewNotification.swift; sourceTree = "<group>"; };
@@ -227,6 +230,7 @@
 				C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */,
 				C5EB51092A209FC000B29CC1 /* HomeSubPresenter */,
 				C5351B5A2A19F5EE00116D50 /* SearchPlace */,
+				C593B64D2A4C48EE00D224CE /* Mypage */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -303,6 +307,7 @@
 		C52FA3412A175B20005E70DC /* AVIRO */ = {
 			isa = PBXGroup;
 			children = (
+				C593B64C2A4BFD9A00D224CE /* AVIRO.entitlements */,
 				C50367EC2A1791620020C6BB /* Utils */,
 				C50367F62A179D6E0020C6BB /* Custom */,
 				C50367F32A1795BE0020C6BB /* Model */,
@@ -502,6 +507,14 @@
 				C5FF13562A42C8970026981D /* AVIROCommentModel.swift */,
 			);
 			path = AVIROGet;
+			sourceTree = "<group>";
+		};
+		C593B64D2A4C48EE00D224CE /* Mypage */ = {
+			isa = PBXGroup;
+			children = (
+				C593B64E2A4C490600D224CE /* MyPageViewPresenter.swift */,
+			);
+			path = Mypage;
 			sourceTree = "<group>";
 		};
 		C596D9892A3C72D500829B17 /* TableCellIdentifierModel */ = {
@@ -866,6 +879,7 @@
 				C5EB50E42A1C685100B29CC1 /* TabBarItem.swift in Sources */,
 				C5351B7A2A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift in Sources */,
 				C593B64B2A4AEA9800D224CE /* AVIROCommentPost.swift in Sources */,
+				C593B64F2A4C490600D224CE /* MyPageViewPresenter.swift in Sources */,
 				C5FF13572A42C8970026981D /* AVIROCommentModel.swift in Sources */,
 				C5351B602A19F9A700116D50 /* PlaceListModel.swift in Sources */,
 				C5732C712A41739000CDC499 /* AVIROAPIManager.swift in Sources */,
@@ -1012,6 +1026,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = AVIRO/AVIRO.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = C4K2HXA435;
@@ -1044,6 +1059,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = AVIRO/AVIRO.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = C4K2HXA435;

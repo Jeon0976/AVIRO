@@ -24,34 +24,47 @@
 				B521269790554904B95202DE2D5AC59C /* [CP] Copy XCFrameworks */,
 			);
 			dependencies = (
-				258F097AFE79EE06421A954BF7063DC2 /* PBXTargetDependency */,
+				427A8BEEF4C193798A2EB06D4886BF1D /* PBXTargetDependency */,
 			);
 			name = NMapsMap;
 		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		6D8DC1AAABAE33EE7A32512DDE3E62D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		F8D89B6AD4BEC580A26E62B7A388DADB /* Pods-AVIRO-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E122BBE903BD003FBF3BD32C235526DF /* Pods-AVIRO-dummy.m */; };
-		F9E225BF9E6A34446DFAA9ECFCF5144C /* Pods-AVIRO-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3728B056ADE22C29EB6C1FEAB7FC0F3B /* Pods-AVIRO-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0CBFBBC52B77AEDD220B219AFA55B4F6 /* KeychainSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF12B0E82AEC236808788D1D1DD60443 /* KeychainSwift.swift */; };
+		0F92A47CBF615136A6BA30A1FD7569DD /* Pods-AVIRO-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3728B056ADE22C29EB6C1FEAB7FC0F3B /* Pods-AVIRO-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1045E71B730CDE8E912BD3B1A4A22D52 /* Pods-AVIRO-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E122BBE903BD003FBF3BD32C235526DF /* Pods-AVIRO-dummy.m */; };
+		37EC024F54023B0D698A37C47122C953 /* KeychainSwift-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D5BD794CA806E58E7A6F7A3859A11323 /* KeychainSwift-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4BF34FF4786E23314D21CF9417B5270C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
+		6C133193471A0A93B4CE45491148072A /* TegKeychainConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E880B76F519644A5F71BD64EAF86EC /* TegKeychainConstants.swift */; };
+		B39BF720A3E471DC10CDC6CC3986D2A9 /* KeychainSwift-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D4AD5225BEE85022F2D3783E5131239A /* KeychainSwift-dummy.m */; };
+		C543B2A5CF83423F50EF2DFA3A7F1141 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
+		FAA9422DBF165F89AA81D94DB2DBF457 /* KeychainSwiftAccessOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5A76F63A1A8CD7353A54D5417D07D7 /* KeychainSwiftAccessOptions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		7F00C360A1E47BCFA7970B4BBEC51126 /* PBXContainerItemProxy */ = {
+		2C98D09E5008DBCEB374819ADB7C844D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 72E614C823EA09AB1AAE80D5CD8A4C58;
 			remoteInfo = NMapsGeometry;
 		};
-		9CA348EF676A6EE40E6121E362D4FD42 /* PBXContainerItemProxy */ = {
+		E310F241A52F235C3AF45AE7E5B5F04B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 72E614C823EA09AB1AAE80D5CD8A4C58;
 			remoteInfo = NMapsGeometry;
 		};
-		DCEBE91EA18B01B41AE3C7AEC8698C8B /* PBXContainerItemProxy */ = {
+		ED1707CD794EB8B521C43C2E18EF6D3F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 07E54A78BCF82272E99319D7F7F5E8C1;
+			remoteInfo = KeychainSwift;
+		};
+		FB4A901916B01E95B577B2135463A355 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -61,94 +74,95 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		00CFAEC4BF984A00BDFC03CD46084953 /* KeychainSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KeychainSwift.debug.xcconfig; sourceTree = "<group>"; };
 		0569B39A57B17AA9FDED51C37A82A8C9 /* Pods-AVIRO.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-AVIRO.modulemap"; sourceTree = "<group>"; };
-		0970046F7060534BA9B286629593DA0C /* NMapsMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NMapsMap.debug.xcconfig; sourceTree = "<group>"; };
 		0C4CBD9773E7794962E30DD82A779441 /* Pods-AVIRO */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-AVIRO"; path = Pods_AVIRO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1A326C79B1B897CBCFDC36BFF5174A43 /* NMapsGeometry.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NMapsGeometry.debug.xcconfig; sourceTree = "<group>"; };
 		1DFA2BDADDCF8952D2926167CAF8F22E /* Pods-AVIRO-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AVIRO-acknowledgements.plist"; sourceTree = "<group>"; };
 		30E9D6B98C780E731DC6E5BF1D4C6C56 /* Pods-AVIRO-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AVIRO-frameworks.sh"; sourceTree = "<group>"; };
 		35941369A0A112BA132D94CBE2736100 /* Pods-AVIRO-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AVIRO-acknowledgements.markdown"; sourceTree = "<group>"; };
 		3728B056ADE22C29EB6C1FEAB7FC0F3B /* Pods-AVIRO-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-AVIRO-umbrella.h"; sourceTree = "<group>"; };
-		485FAE6318CCD7779377C7AA4A7B3528 /* NMapsGeometry.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = NMapsGeometry.xcframework; path = framework/NMapsGeometry.xcframework; sourceTree = "<group>"; };
+		40797FA341A94D631BCD4BF18F5391D9 /* NMapsGeometry.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NMapsGeometry.release.xcconfig; sourceTree = "<group>"; };
+		4725273FE77CB75A6946E7032844C933 /* NMapsMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NMapsMap.release.xcconfig; sourceTree = "<group>"; };
 		4A7CEF4490D6403E91330872D30B3852 /* Pods-AVIRO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AVIRO.debug.xcconfig"; sourceTree = "<group>"; };
-		4F0C55D25B9900DE7936740E68EFDFCF /* NMapsMap.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = NMapsMap.xcframework; path = framework/NMapsMap.xcframework; sourceTree = "<group>"; };
-		53BB18D8DE6118DEC0AAC01027DBECA8 /* NMapsMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NMapsMap.release.xcconfig; sourceTree = "<group>"; };
+		52088F29154A5DAAA43E34CE34F526F3 /* KeychainSwift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = KeychainSwift.modulemap; sourceTree = "<group>"; };
+		53E880B76F519644A5F71BD64EAF86EC /* TegKeychainConstants.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TegKeychainConstants.swift; path = Sources/TegKeychainConstants.swift; sourceTree = "<group>"; };
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		759E249799FCB60AD71A05CE47221735 /* Pods-AVIRO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AVIRO.release.xcconfig"; sourceTree = "<group>"; };
-		7F89040B8DC7FC773592AA5FE110E9DF /* NMapsGeometry.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NMapsGeometry.release.xcconfig; sourceTree = "<group>"; };
-		983FCEF2808419DF12F69DFEBD7685D4 /* NMapsMap-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "NMapsMap-xcframeworks.sh"; sourceTree = "<group>"; };
+		830D03B07A99408013B50AD04F20672A /* NMapsGeometry-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "NMapsGeometry-xcframeworks.sh"; sourceTree = "<group>"; };
+		8C83655117F1708AA768C0D5E2D601F7 /* NMapsGeometry.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = NMapsGeometry.xcframework; path = framework/NMapsGeometry.xcframework; sourceTree = "<group>"; };
+		914B0795C522D909CC00DB38066C3D8E /* NMapsMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NMapsMap.debug.xcconfig; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		E101130795B024FC83E4F774AA209B18 /* NMapsGeometry-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "NMapsGeometry-xcframeworks.sh"; sourceTree = "<group>"; };
+		9E0FD012ADC3C7179C684035672383E5 /* KeychainSwift */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = KeychainSwift; path = KeychainSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FF287F8930000B77CA03DB63BD6DCA9 /* KeychainSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KeychainSwift.release.xcconfig; sourceTree = "<group>"; };
+		A46E7EDB2DBDFD72A2DB152D20E38782 /* KeychainSwift-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "KeychainSwift-Info.plist"; sourceTree = "<group>"; };
+		B4585AB5DD8C0679381DB3CAC6A4B0E6 /* KeychainSwift-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "KeychainSwift-prefix.pch"; sourceTree = "<group>"; };
+		BACA07AAFAFF2755967DC133015A7CB1 /* NMapsMap.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = NMapsMap.xcframework; path = framework/NMapsMap.xcframework; sourceTree = "<group>"; };
+		BD5A76F63A1A8CD7353A54D5417D07D7 /* KeychainSwiftAccessOptions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KeychainSwiftAccessOptions.swift; path = Sources/KeychainSwiftAccessOptions.swift; sourceTree = "<group>"; };
+		C8403A24E3E15F92C367C06CD27CBD66 /* NMapsGeometry.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NMapsGeometry.debug.xcconfig; sourceTree = "<group>"; };
+		D4AD5225BEE85022F2D3783E5131239A /* KeychainSwift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "KeychainSwift-dummy.m"; sourceTree = "<group>"; };
+		D5BD794CA806E58E7A6F7A3859A11323 /* KeychainSwift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "KeychainSwift-umbrella.h"; sourceTree = "<group>"; };
+		DF12B0E82AEC236808788D1D1DD60443 /* KeychainSwift.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KeychainSwift.swift; path = Sources/KeychainSwift.swift; sourceTree = "<group>"; };
 		E122BBE903BD003FBF3BD32C235526DF /* Pods-AVIRO-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AVIRO-dummy.m"; sourceTree = "<group>"; };
 		E163F5AF1DFFCC33998215C1619AE6D4 /* Pods-AVIRO-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AVIRO-Info.plist"; sourceTree = "<group>"; };
+		ED665F8DEF929696B72BFDDE8B8A569A /* NMapsMap-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "NMapsMap-xcframeworks.sh"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		E231DE3C3E1C563617B3A4A111B9C074 /* Frameworks */ = {
+		831EF394D7314A06C7D2D5935E51F98D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D8DC1AAABAE33EE7A32512DDE3E62D7 /* Foundation.framework in Frameworks */,
+				4BF34FF4786E23314D21CF9417B5270C /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8F5E1096151C1DC75B67489352719863 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C543B2A5CF83423F50EF2DFA3A7F1141 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		169A894F474781F666BE8D90408D3828 /* Support Files */ = {
+		2957A2850CFBA25819F312DC9C6F4FD2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E101130795B024FC83E4F774AA209B18 /* NMapsGeometry-xcframeworks.sh */,
-				1A326C79B1B897CBCFDC36BFF5174A43 /* NMapsGeometry.debug.xcconfig */,
-				7F89040B8DC7FC773592AA5FE110E9DF /* NMapsGeometry.release.xcconfig */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/NMapsGeometry";
-			sourceTree = "<group>";
-		};
-		25B56312D79088C322C5B52238334BCC /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				2FE65985C01476131D3AC219F92CC3CF /* NMapsGeometry */,
-				487B37947971C0C75B135158191A5547 /* NMapsMap */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		2ED541A35C7BD1778556550CF4846D2F /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				4F0C55D25B9900DE7936740E68EFDFCF /* NMapsMap.xcframework */,
+				8C83655117F1708AA768C0D5E2D601F7 /* NMapsGeometry.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		2FE65985C01476131D3AC219F92CC3CF /* NMapsGeometry */ = {
+		43739A4A78658811CEC410578C36B39D /* NMapsMap */ = {
 			isa = PBXGroup;
 			children = (
-				DC955F600E602E5041F1000DC79753BB /* Frameworks */,
-				169A894F474781F666BE8D90408D3828 /* Support Files */,
-			);
-			name = NMapsGeometry;
-			path = NMapsGeometry;
-			sourceTree = "<group>";
-		};
-		39BD2C41D9E161E484292CD081F11A8D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				0C4CBD9773E7794962E30DD82A779441 /* Pods-AVIRO */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		487B37947971C0C75B135158191A5547 /* NMapsMap */ = {
-			isa = PBXGroup;
-			children = (
-				2ED541A35C7BD1778556550CF4846D2F /* Frameworks */,
-				A3E28C362EAC5C5A2CCC22EE5E2FDA30 /* Support Files */,
+				47931E61F2A6809CA4D55070628B1EC0 /* Frameworks */,
+				72552DC9113B8BD6E1FBD31BA039312E /* Support Files */,
 			);
 			name = NMapsMap;
 			path = NMapsMap;
+			sourceTree = "<group>";
+		};
+		47931E61F2A6809CA4D55070628B1EC0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BACA07AAFAFF2755967DC133015A7CB1 /* NMapsMap.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4F659B54759C4D3F29B35480B1AFE9DB /* KeychainSwift */ = {
+			isa = PBXGroup;
+			children = (
+				DF12B0E82AEC236808788D1D1DD60443 /* KeychainSwift.swift */,
+				BD5A76F63A1A8CD7353A54D5417D07D7 /* KeychainSwiftAccessOptions.swift */,
+				53E880B76F519644A5F71BD64EAF86EC /* TegKeychainConstants.swift */,
+				E8A36A6A7265D26DA4DA0882314498B3 /* Support Files */,
+			);
+			name = KeychainSwift;
+			path = KeychainSwift;
 			sourceTree = "<group>";
 		};
 		578452D2E740E91742655AC8F1636D1F /* iOS */ = {
@@ -157,6 +171,38 @@
 				73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */,
 			);
 			name = iOS;
+			sourceTree = "<group>";
+		};
+		72552DC9113B8BD6E1FBD31BA039312E /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				ED665F8DEF929696B72BFDDE8B8A569A /* NMapsMap-xcframeworks.sh */,
+				914B0795C522D909CC00DB38066C3D8E /* NMapsMap.debug.xcconfig */,
+				4725273FE77CB75A6946E7032844C933 /* NMapsMap.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/NMapsMap";
+			sourceTree = "<group>";
+		};
+		999A1AB85B132058005A05CEDE09E1F3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4F659B54759C4D3F29B35480B1AFE9DB /* KeychainSwift */,
+				FA7E9C52CC2783FAC4C327A0BB3A7CB3 /* NMapsGeometry */,
+				43739A4A78658811CEC410578C36B39D /* NMapsMap */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		9F0377DB3B1AFB72E77B1FCB166E6DCC /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				830D03B07A99408013B50AD04F20672A /* NMapsGeometry-xcframeworks.sh */,
+				C8403A24E3E15F92C367C06CD27CBD66 /* NMapsGeometry.debug.xcconfig */,
+				40797FA341A94D631BCD4BF18F5391D9 /* NMapsGeometry.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/NMapsGeometry";
 			sourceTree = "<group>";
 		};
 		A3B296F20465CE3A873EFF43497A1C5B /* Pods-AVIRO */ = {
@@ -176,24 +222,13 @@
 			path = "Target Support Files/Pods-AVIRO";
 			sourceTree = "<group>";
 		};
-		A3E28C362EAC5C5A2CCC22EE5E2FDA30 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				983FCEF2808419DF12F69DFEBD7685D4 /* NMapsMap-xcframeworks.sh */,
-				0970046F7060534BA9B286629593DA0C /* NMapsMap.debug.xcconfig */,
-				53BB18D8DE6118DEC0AAC01027DBECA8 /* NMapsMap.release.xcconfig */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/NMapsMap";
-			sourceTree = "<group>";
-		};
 		CF1408CF629C7361332E53B88F7BD30C = {
 			isa = PBXGroup;
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
-				25B56312D79088C322C5B52238334BCC /* Pods */,
-				39BD2C41D9E161E484292CD081F11A8D /* Products */,
+				999A1AB85B132058005A05CEDE09E1F3 /* Pods */,
+				EFF80F5399E1AC0E98317BF00DC7BE93 /* Products */,
 				E5BDC121CF915B138F68EA2C71442330 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
@@ -206,14 +241,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		DC955F600E602E5041F1000DC79753BB /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				485FAE6318CCD7779377C7AA4A7B3528 /* NMapsGeometry.xcframework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		E5BDC121CF915B138F68EA2C71442330 /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -222,34 +249,95 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
+		E8A36A6A7265D26DA4DA0882314498B3 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				52088F29154A5DAAA43E34CE34F526F3 /* KeychainSwift.modulemap */,
+				D4AD5225BEE85022F2D3783E5131239A /* KeychainSwift-dummy.m */,
+				A46E7EDB2DBDFD72A2DB152D20E38782 /* KeychainSwift-Info.plist */,
+				B4585AB5DD8C0679381DB3CAC6A4B0E6 /* KeychainSwift-prefix.pch */,
+				D5BD794CA806E58E7A6F7A3859A11323 /* KeychainSwift-umbrella.h */,
+				00CFAEC4BF984A00BDFC03CD46084953 /* KeychainSwift.debug.xcconfig */,
+				9FF287F8930000B77CA03DB63BD6DCA9 /* KeychainSwift.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/KeychainSwift";
+			sourceTree = "<group>";
+		};
+		EFF80F5399E1AC0E98317BF00DC7BE93 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9E0FD012ADC3C7179C684035672383E5 /* KeychainSwift */,
+				0C4CBD9773E7794962E30DD82A779441 /* Pods-AVIRO */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FA7E9C52CC2783FAC4C327A0BB3A7CB3 /* NMapsGeometry */ = {
+			isa = PBXGroup;
+			children = (
+				2957A2850CFBA25819F312DC9C6F4FD2 /* Frameworks */,
+				9F0377DB3B1AFB72E77B1FCB166E6DCC /* Support Files */,
+			);
+			name = NMapsGeometry;
+			path = NMapsGeometry;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		BC5B8F0BB6FB1269625281BF44C0FC0A /* Headers */ = {
+		1380B9994192F420D8BC0308CC7B1B0D /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F9E225BF9E6A34446DFAA9ECFCF5144C /* Pods-AVIRO-umbrella.h in Headers */,
+				37EC024F54023B0D698A37C47122C953 /* KeychainSwift-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D43382F2CA1CBF33EA331D531EE48743 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0F92A47CBF615136A6BA30A1FD7569DD /* Pods-AVIRO-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		60A7021A5E051B83B2C46602C1AC738A /* Pods-AVIRO */ = {
+		07E54A78BCF82272E99319D7F7F5E8C1 /* KeychainSwift */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CC423D0073A18D9474B70D4FCD2BC46A /* Build configuration list for PBXNativeTarget "Pods-AVIRO" */;
+			buildConfigurationList = 997BF8AEF73E04BE3F0E828FF63C51E6 /* Build configuration list for PBXNativeTarget "KeychainSwift" */;
 			buildPhases = (
-				BC5B8F0BB6FB1269625281BF44C0FC0A /* Headers */,
-				B1EF46E8DB58DCE8892512D4A2D7128A /* Sources */,
-				E231DE3C3E1C563617B3A4A111B9C074 /* Frameworks */,
-				397995F9FD9B1124F2480CE8D3A701F7 /* Resources */,
+				1380B9994192F420D8BC0308CC7B1B0D /* Headers */,
+				27429ECFAA0B46393CF2868590187F44 /* Sources */,
+				8F5E1096151C1DC75B67489352719863 /* Frameworks */,
+				417F0B4D46DB5C4EC5381D3770D462EC /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				3F277B4800098F216F8D8F09F7D4651C /* PBXTargetDependency */,
-				92D64B29F76F96089B684BDBF4F65BD7 /* PBXTargetDependency */,
+			);
+			name = KeychainSwift;
+			productName = KeychainSwift;
+			productReference = 9E0FD012ADC3C7179C684035672383E5 /* KeychainSwift */;
+			productType = "com.apple.product-type.framework";
+		};
+		60A7021A5E051B83B2C46602C1AC738A /* Pods-AVIRO */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2EF8FD4050B24BB3AE8EBF80423D5F02 /* Build configuration list for PBXNativeTarget "Pods-AVIRO" */;
+			buildPhases = (
+				D43382F2CA1CBF33EA331D531EE48743 /* Headers */,
+				A33EECC9AF0011C42549C7716F90DA1D /* Sources */,
+				831EF394D7314A06C7D2D5935E51F98D /* Frameworks */,
+				805739FEEAB9E947ACC272E46F95BBE7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A1D940DD8EA941E5DCD59FCF58BA3D7D /* PBXTargetDependency */,
+				BC69AFD7814E2CFA70FCF11B3636827B /* PBXTargetDependency */,
+				159D5273F6A1B7B3E6911A7DB28AF438 /* PBXTargetDependency */,
 			);
 			name = "Pods-AVIRO";
 			productName = Pods_AVIRO;
@@ -274,10 +362,11 @@
 				en,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = 39BD2C41D9E161E484292CD081F11A8D /* Products */;
+			productRefGroup = EFF80F5399E1AC0E98317BF00DC7BE93 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				07E54A78BCF82272E99319D7F7F5E8C1 /* KeychainSwift */,
 				72E614C823EA09AB1AAE80D5CD8A4C58 /* NMapsGeometry */,
 				8E049F5F4E3BDC647F924FEF22D49D90 /* NMapsMap */,
 				60A7021A5E051B83B2C46602C1AC738A /* Pods-AVIRO */,
@@ -286,7 +375,14 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		397995F9FD9B1124F2480CE8D3A701F7 /* Resources */ = {
+		417F0B4D46DB5C4EC5381D3770D462EC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		805739FEEAB9E947ACC272E46F95BBE7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -333,41 +429,58 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		B1EF46E8DB58DCE8892512D4A2D7128A /* Sources */ = {
+		27429ECFAA0B46393CF2868590187F44 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8D89B6AD4BEC580A26E62B7A388DADB /* Pods-AVIRO-dummy.m in Sources */,
+				0CBFBBC52B77AEDD220B219AFA55B4F6 /* KeychainSwift.swift in Sources */,
+				B39BF720A3E471DC10CDC6CC3986D2A9 /* KeychainSwift-dummy.m in Sources */,
+				FAA9422DBF165F89AA81D94DB2DBF457 /* KeychainSwiftAccessOptions.swift in Sources */,
+				6C133193471A0A93B4CE45491148072A /* TegKeychainConstants.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A33EECC9AF0011C42549C7716F90DA1D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1045E71B730CDE8E912BD3B1A4A22D52 /* Pods-AVIRO-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		258F097AFE79EE06421A954BF7063DC2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = NMapsGeometry;
-			target = 72E614C823EA09AB1AAE80D5CD8A4C58 /* NMapsGeometry */;
-			targetProxy = 7F00C360A1E47BCFA7970B4BBEC51126 /* PBXContainerItemProxy */;
-		};
-		3F277B4800098F216F8D8F09F7D4651C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = NMapsGeometry;
-			target = 72E614C823EA09AB1AAE80D5CD8A4C58 /* NMapsGeometry */;
-			targetProxy = 9CA348EF676A6EE40E6121E362D4FD42 /* PBXContainerItemProxy */;
-		};
-		92D64B29F76F96089B684BDBF4F65BD7 /* PBXTargetDependency */ = {
+		159D5273F6A1B7B3E6911A7DB28AF438 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = NMapsMap;
 			target = 8E049F5F4E3BDC647F924FEF22D49D90 /* NMapsMap */;
-			targetProxy = DCEBE91EA18B01B41AE3C7AEC8698C8B /* PBXContainerItemProxy */;
+			targetProxy = FB4A901916B01E95B577B2135463A355 /* PBXContainerItemProxy */;
+		};
+		427A8BEEF4C193798A2EB06D4886BF1D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = NMapsGeometry;
+			target = 72E614C823EA09AB1AAE80D5CD8A4C58 /* NMapsGeometry */;
+			targetProxy = E310F241A52F235C3AF45AE7E5B5F04B /* PBXContainerItemProxy */;
+		};
+		A1D940DD8EA941E5DCD59FCF58BA3D7D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = KeychainSwift;
+			target = 07E54A78BCF82272E99319D7F7F5E8C1 /* KeychainSwift */;
+			targetProxy = ED1707CD794EB8B521C43C2E18EF6D3F /* PBXContainerItemProxy */;
+		};
+		BC69AFD7814E2CFA70FCF11B3636827B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = NMapsGeometry;
+			target = 72E614C823EA09AB1AAE80D5CD8A4C58 /* NMapsGeometry */;
+			targetProxy = 2C98D09E5008DBCEB374819ADB7C844D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		138EE7F5840AEF4E4028CA5FAAE9EE6E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7F89040B8DC7FC773592AA5FE110E9DF /* NMapsGeometry.release.xcconfig */;
+			baseConfigurationReference = 40797FA341A94D631BCD4BF18F5391D9 /* NMapsGeometry.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -382,47 +495,9 @@
 			};
 			name = Release;
 		};
-		3A0A3B5D9D86D0D3D742F0ECE6C64290 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 759E249799FCB60AD71A05CE47221735 /* Pods-AVIRO.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-AVIRO/Pods-AVIRO-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-AVIRO/Pods-AVIRO.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		4122D12474652D4B94029A59C0DC6010 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1A326C79B1B897CBCFDC36BFF5174A43 /* NMapsGeometry.debug.xcconfig */;
+			baseConfigurationReference = C8403A24E3E15F92C367C06CD27CBD66 /* NMapsGeometry.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -435,6 +510,41 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
+		};
+		717BF11508A479CC048B39007DBFA655 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9FF287F8930000B77CA03DB63BD6DCA9 /* KeychainSwift.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/KeychainSwift/KeychainSwift-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/KeychainSwift/KeychainSwift-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/KeychainSwift/KeychainSwift.modulemap";
+				PRODUCT_MODULE_NAME = KeychainSwift;
+				PRODUCT_NAME = KeychainSwift;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
 		};
 		7C3FBC45C4966EFE20583918767EFBE2 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -502,7 +612,7 @@
 			};
 			name = Debug;
 		};
-		B6D92490F0FE6DC6041E6286B208F24F /* Debug */ = {
+		A9327D85195CD854F203F8C3DBA3E067 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4A7CEF4490D6403E91330872D30B3852 /* Pods-AVIRO.debug.xcconfig */;
 			buildSettings = {
@@ -539,9 +649,81 @@
 			};
 			name = Debug;
 		};
+		BC0AC3D33440A95EE0AA68FDB5A665B0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 759E249799FCB60AD71A05CE47221735 /* Pods-AVIRO.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-AVIRO/Pods-AVIRO-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-AVIRO/Pods-AVIRO.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		D2F78367C06F341A16DEF595FE4BB14C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 00CFAEC4BF984A00BDFC03CD46084953 /* KeychainSwift.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/KeychainSwift/KeychainSwift-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/KeychainSwift/KeychainSwift-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/KeychainSwift/KeychainSwift.modulemap";
+				PRODUCT_MODULE_NAME = KeychainSwift;
+				PRODUCT_NAME = KeychainSwift;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 		E683018BA3CA2E27A39E5DF5619B90F6 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0970046F7060534BA9B286629593DA0C /* NMapsMap.debug.xcconfig */;
+			baseConfigurationReference = 914B0795C522D909CC00DB38066C3D8E /* NMapsMap.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -557,7 +739,7 @@
 		};
 		FE5D137BA104CCBECE001BF38C0AEB3E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 53BB18D8DE6118DEC0AAC01027DBECA8 /* NMapsMap.release.xcconfig */;
+			baseConfigurationReference = 4725273FE77CB75A6946E7032844C933 /* NMapsMap.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -637,6 +819,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2EF8FD4050B24BB3AE8EBF80423D5F02 /* Build configuration list for PBXNativeTarget "Pods-AVIRO" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9327D85195CD854F203F8C3DBA3E067 /* Debug */,
+				BC0AC3D33440A95EE0AA68FDB5A665B0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -655,11 +846,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CC423D0073A18D9474B70D4FCD2BC46A /* Build configuration list for PBXNativeTarget "Pods-AVIRO" */ = {
+		997BF8AEF73E04BE3F0E828FF63C51E6 /* Build configuration list for PBXNativeTarget "KeychainSwift" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B6D92490F0FE6DC6041E6286B208F24F /* Debug */,
-				3A0A3B5D9D86D0D3D742F0ECE6C64290 /* Release */,
+				D2F78367C06F341A16DEF595FE4BB14C /* Debug */,
+				717BF11508A479CC048B39007DBFA655 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

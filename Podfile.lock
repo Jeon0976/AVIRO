@@ -1,20 +1,24 @@
 PODS:
+  - KeychainSwift (20.0.0)
   - NMapsGeometry (1.0.1)
   - NMapsMap (3.16.2):
     - NMapsGeometry
 
 DEPENDENCIES:
+  - KeychainSwift
   - NMapsMap
 
 SPEC REPOS:
   trunk:
+    - KeychainSwift
     - NMapsGeometry
     - NMapsMap
 
 SPEC CHECKSUMS:
+  KeychainSwift: 0ce6a4d13f7228054d1a71bb1b500448fb2ab837
   NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
   NMapsMap: aaa64717249b06ae82c3a3addb3a01f0e33100ab
 
-PODFILE CHECKSUM: 53002ccffaefabaa8b64a68c079a3125e55584a7
+PODFILE CHECKSUM: 2e7d5ca2a63a5905f78ee7d99a2019f5bba47b6e
 
 COCOAPODS: 1.12.1

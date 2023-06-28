@@ -7,6 +7,7 @@ target 'AVIRO' do
 
 # NaverMap
 pod 'NMapsMap'
+pod 'KeychainSwift'
 
 # Firebase
 

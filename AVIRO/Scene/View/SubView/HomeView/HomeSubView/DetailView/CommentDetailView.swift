@@ -267,10 +267,10 @@ class CommentDetailTableCell: UITableViewCell {
     }
     
     func calculateHeight(_ text: String) -> CGFloat {
-        let approximateWidthOfText = frame.width - 16  // Assuming padding of 8 on each side
-        let size = CGSize(width: approximateWidthOfText, height: 1000)  // Large height
-        let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)]  // Assuming font size of 14
-
+        let approximateWidthOfText = frame.width - 16
+        let size = CGSize(width: approximateWidthOfText, height: 1000)
+        let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)]
+        
         let estimatedFrame = NSString(string: text).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
 
         return estimatedFrame.height + CGFloat(40)

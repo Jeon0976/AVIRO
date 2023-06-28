@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import AuthenticationServices
+
+import KeychainSwift
 
 final class LoginViewController: UIViewController {
     lazy var presenter = LoginViewPresenter(viewController: self)
@@ -14,6 +17,8 @@ final class LoginViewController: UIViewController {
     var viewPageControl = UIPageControl()
     var appleLoginButton = UIButton()
     var noLoginButton = UIButton()
+    
+    let keychain = KeychainSwift()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,6 +74,7 @@ extension LoginViewController: LoginViewProtocol {
         appleLoginButton.layer.borderColor = UIColor.mainTitle?.cgColor
         appleLoginButton.layer.borderWidth = 2
         appleLoginButton.layer.cornerRadius = 28
+        appleLoginButton.addTarget(self, action: #selector(tapAppleLogin), for: .touchUpInside)
         
         noLoginButton.setTitle("로그인 없이 둘러보기", for: .normal)
         noLoginButton.setTitleColor(.subTitle, for: .normal)
@@ -80,5 +86,43 @@ extension LoginViewController: LoginViewProtocol {
         let viewController = TabBarViewController()
         
         navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    @objc func tapAppleLogin() {
+        let request = ASAuthorizationAppleIDProvider().createRequest()
+        request.requestedScopes = [.fullName, .email]
+        
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self as? ASAuthorizationControllerPresentationContextProviding
+        authorizationController.performRequests()
+    }
+}
+
+extension LoginViewController: ASAuthorizationControllerDelegate {
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            let userIdentifier = appleIDCredential.user
+            let fullName = appleIDCredential.fullName?.formatted() ?? ""
+            let email = appleIDCredential.email ?? ""
+            
+            // MARK: 서버에 데이터 업로드
+            // 1. 처음 앱 킬 때 서버와 데이터 비교 후 yes, no에 따라 보이는 화면 별도 구현
+            print("1: \(userIdentifier), 2: \(fullName), 3: \(email)")
+            
+            keychain.set(userIdentifier, forKey: "userIdentifier")
+            
+            let viewController = TabBarViewController()
+            
+            navigationController?.pushViewController(viewController, animated: true)
+        }
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        
+    }
+    
+    private func saveUserInKeyChain(_ userIdentifier: String) {
+
     }
 }
