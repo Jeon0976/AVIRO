@@ -9,6 +9,15 @@ import Foundation
 enum MenuType: String {
     case vegan
     case needToRequset
+    
+    var value: String {
+        switch self {
+        case .vegan:
+            return "vegan"
+        case .needToRequset:
+            return "need to request"
+        }
+    }
 }
 
 /// 사용자가 입력한 데이터

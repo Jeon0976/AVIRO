@@ -42,7 +42,6 @@ final class AVIROAPIManager {
             
             if let data = data {
                 if let mapDatas = try? JSONDecoder().decode(AVIROMapModel.self, from: data) {
-                    print(mapDatas)
                     completionHandler(mapDatas)
                 }
             }
@@ -133,6 +132,37 @@ final class AVIROAPIManager {
         
         guard let jsonData = try? JSONEncoder().encode(veganModel) else {
             print("JSOE Encode ERROR")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        session.dataTask(with: request) { data, response, error in
+            guard error == nil else {
+                print("error")
+                return
+            }
+            
+            guard data != nil else {
+                print("data error")
+                return
+            }
+            
+            guard response != nil else {
+                print(response ?? "response error")
+                return
+            }
+        }.resume()
+    }
+    
+    // MARK: Post Comment Model
+    func postCommentModel(_ commentModel: AVIROCommentPost) {
+        guard let url = postAPI.commentInroll().url else { return }
+        
+        guard let jsonData = try? JSONEncoder().encode(commentModel) else {
             return
         }
         

@@ -42,6 +42,8 @@
 		C5732C792A41AD8100CDC499 /* HomeMapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C782A41AD8100CDC499 /* HomeMapData.swift */; };
 		C5732C7C2A41D41B00CDC499 /* VeganTableFieldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C7B2A41D41B00CDC499 /* VeganTableFieldModel.swift */; };
 		C5732C7E2A41D42700CDC499 /* RequestTableFieldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C7D2A41D42700CDC499 /* RequestTableFieldModel.swift */; };
+		C593B6472A4AB3A700D224CE /* PushCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593B6462A4AB3A700D224CE /* PushCommentView.swift */; };
+		C593B64B2A4AEA9800D224CE /* AVIROCommentPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593B64A2A4AEA9800D224CE /* AVIROCommentPost.swift */; };
 		C596D9842A3B39E500829B17 /* InrollPlaceViewTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C596D9832A3B39E500829B17 /* InrollPlaceViewTableView.swift */; };
 		C596D9862A3B3BFD00829B17 /* InrollPlaceViewActionAndAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C596D9852A3B3BFD00829B17 /* InrollPlaceViewActionAndAnimation.swift */; };
 		C596D9882A3B3C8900829B17 /* InrollPlaceViewNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C596D9872A3B3C8900829B17 /* InrollPlaceViewNotification.swift */; };
@@ -52,9 +54,8 @@
 		C5CAAC472A39AEFE008C5FDA /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAAC462A39AEFE008C5FDA /* Image.swift */; };
 		C5CAAC492A39C6D4008C5FDA /* StringValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAAC482A39C6D4008C5FDA /* StringValue.swift */; };
 		C5D6E19F2A17B4410042679C /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5D6E19E2A17B4410042679C /* API.plist */; };
-		C5D7458D2A2223A6006F9F31 /* CommentPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D7458C2A2223A6006F9F31 /* CommentPostModel.swift */; };
 		C5D7458F2A224DCE006F9F31 /* HomeFirstPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D7458E2A224DCE006F9F31 /* HomeFirstPopUpView.swift */; };
-		C5D745912A225DE6006F9F31 /* CommentsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D745902A225DE6006F9F31 /* CommentsDetailViewController.swift */; };
+		C5D745912A225DE6006F9F31 /* CommentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D745902A225DE6006F9F31 /* CommentDetailViewController.swift */; };
 		C5D745942A2267C7006F9F31 /* CommentDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D745932A2267C7006F9F31 /* CommentDetailPresenter.swift */; };
 		C5D745962A2277A4006F9F31 /* CommentsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D745952A2277A4006F9F31 /* CommentsViewCell.swift */; };
 		C5D8E8632A3DEC3900D88A43 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D8E8622A3DEC3900D88A43 /* String.swift */; };
@@ -125,6 +126,8 @@
 		C5732C782A41AD8100CDC499 /* HomeMapData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMapData.swift; sourceTree = "<group>"; };
 		C5732C7B2A41D41B00CDC499 /* VeganTableFieldModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganTableFieldModel.swift; sourceTree = "<group>"; };
 		C5732C7D2A41D42700CDC499 /* RequestTableFieldModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTableFieldModel.swift; sourceTree = "<group>"; };
+		C593B6462A4AB3A700D224CE /* PushCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushCommentView.swift; sourceTree = "<group>"; };
+		C593B64A2A4AEA9800D224CE /* AVIROCommentPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROCommentPost.swift; sourceTree = "<group>"; };
 		C596D9832A3B39E500829B17 /* InrollPlaceViewTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewTableView.swift; sourceTree = "<group>"; };
 		C596D9852A3B3BFD00829B17 /* InrollPlaceViewActionAndAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewActionAndAnimation.swift; sourceTree = "<group>"; };
 		C596D9872A3B3C8900829B17 /* InrollPlaceViewNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewNotification.swift; sourceTree = "<group>"; };
@@ -135,9 +138,8 @@
 		C5CAAC462A39AEFE008C5FDA /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		C5CAAC482A39C6D4008C5FDA /* StringValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringValue.swift; sourceTree = "<group>"; };
 		C5D6E19E2A17B4410042679C /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = API.plist; sourceTree = "<group>"; };
-		C5D7458C2A2223A6006F9F31 /* CommentPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentPostModel.swift; sourceTree = "<group>"; };
 		C5D7458E2A224DCE006F9F31 /* HomeFirstPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFirstPopUpView.swift; sourceTree = "<group>"; };
-		C5D745902A225DE6006F9F31 /* CommentsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsDetailViewController.swift; sourceTree = "<group>"; };
+		C5D745902A225DE6006F9F31 /* CommentDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDetailViewController.swift; sourceTree = "<group>"; };
 		C5D745932A2267C7006F9F31 /* CommentDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDetailPresenter.swift; sourceTree = "<group>"; };
 		C5D745952A2277A4006F9F31 /* CommentsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsViewCell.swift; sourceTree = "<group>"; };
 		C5D8E8622A3DEC3900D88A43 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -252,7 +254,6 @@
 		C50367F32A1795BE0020C6BB /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C5538AAE2A1BB81200661DE2 /* VeganModel.swift */,
 				C5EB51012A20926800B29CC1 /* TapBarModel */,
 				C5EB51022A20927400B29CC1 /* HomeViewModel */,
 				C5732C7A2A41D3F800CDC499 /* InrollViewModel */,
@@ -483,6 +484,26 @@
 			path = HomeViewSubFile;
 			sourceTree = "<group>";
 		};
+		C593B6482A4AEA6600D224CE /* AVIROPost */ = {
+			isa = PBXGroup;
+			children = (
+				C5538AAE2A1BB81200661DE2 /* VeganModel.swift */,
+				C593B64A2A4AEA9800D224CE /* AVIROCommentPost.swift */,
+			);
+			path = AVIROPost;
+			sourceTree = "<group>";
+		};
+		C593B6492A4AEA7400D224CE /* AVIROGet */ = {
+			isa = PBXGroup;
+			children = (
+				C5732C762A41A0A500CDC499 /* AVIROMapModel.swift */,
+				C5FF13522A42C8810026981D /* AVIROPlaceModel.swift */,
+				C5FF13542A42C88D0026981D /* AVIROMenuModel.swift */,
+				C5FF13562A42C8970026981D /* AVIROCommentModel.swift */,
+			);
+			path = AVIROGet;
+			sourceTree = "<group>";
+		};
 		C596D9892A3C72D500829B17 /* TableCellIdentifierModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -565,7 +586,6 @@
 			children = (
 				C5732C782A41AD8100CDC499 /* HomeMapData.swift */,
 				C5EB510E2A20A89100B29CC1 /* HomeSearchData.swift */,
-				C5D7458C2A2223A6006F9F31 /* CommentPostModel.swift */,
 			);
 			path = HomeViewModel;
 			sourceTree = "<group>";
@@ -623,8 +643,9 @@
 		C5EB511A2A21186900B29CC1 /* CommentDetailView */ = {
 			isa = PBXGroup;
 			children = (
-				C5D745902A225DE6006F9F31 /* CommentsDetailViewController.swift */,
+				C5D745902A225DE6006F9F31 /* CommentDetailViewController.swift */,
 				C5D745952A2277A4006F9F31 /* CommentsViewCell.swift */,
+				C593B6462A4AB3A700D224CE /* PushCommentView.swift */,
 			);
 			path = CommentDetailView;
 			sourceTree = "<group>";
@@ -641,10 +662,8 @@
 		C5FF13512A42C86C0026981D /* AVIRO */ = {
 			isa = PBXGroup;
 			children = (
-				C5732C762A41A0A500CDC499 /* AVIROMapModel.swift */,
-				C5FF13522A42C8810026981D /* AVIROPlaceModel.swift */,
-				C5FF13542A42C88D0026981D /* AVIROMenuModel.swift */,
-				C5FF13562A42C8970026981D /* AVIROCommentModel.swift */,
+				C593B6492A4AEA7400D224CE /* AVIROGet */,
+				C593B6482A4AEA6600D224CE /* AVIROPost */,
 			);
 			path = AVIRO;
 			sourceTree = "<group>";
@@ -797,7 +816,6 @@
 				C5351B6F2A1B242C00116D50 /* InrollPlacePresenter.swift in Sources */,
 				C5CAAC452A39A93C008C5FDA /* Layout.swift in Sources */,
 				C52FA3472A175B20005E70DC /* HomeViewController.swift in Sources */,
-				C5D7458D2A2223A6006F9F31 /* CommentPostModel.swift in Sources */,
 				C5EB50E82A1C6FD600B29CC1 /* PopularViewController.swift in Sources */,
 				C5EB51002A20720300B29CC1 /* UserDefaultsManager.swift in Sources */,
 				C5351B7D2A1B52B900116D50 /* CustomLocationCellModel.swift in Sources */,
@@ -832,7 +850,7 @@
 				C5A3C3C62A39659B0050AB3D /* LoginViewPresenter.swift in Sources */,
 				C5351B6D2A1B215D00116D50 /* InrollPlaceViewController.swift in Sources */,
 				C5732C792A41AD8100CDC499 /* HomeMapData.swift in Sources */,
-				C5D745912A225DE6006F9F31 /* CommentsDetailViewController.swift in Sources */,
+				C5D745912A225DE6006F9F31 /* CommentDetailViewController.swift in Sources */,
 				C5FF13552A42C88D0026981D /* AVIROMenuModel.swift in Sources */,
 				C596D9882A3B3C8900829B17 /* InrollPlaceViewNotification.swift in Sources */,
 				C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */,
@@ -847,6 +865,7 @@
 				C5EB51122A20CC7D00B29CC1 /* HomeInfoStoreView.swift in Sources */,
 				C5EB50E42A1C685100B29CC1 /* TabBarItem.swift in Sources */,
 				C5351B7A2A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift in Sources */,
+				C593B64B2A4AEA9800D224CE /* AVIROCommentPost.swift in Sources */,
 				C5FF13572A42C8970026981D /* AVIROCommentModel.swift in Sources */,
 				C5351B602A19F9A700116D50 /* PlaceListModel.swift in Sources */,
 				C5732C712A41739000CDC499 /* AVIROAPIManager.swift in Sources */,
@@ -854,6 +873,7 @@
 				C5EB50F92A1E71BA00B29CC1 /* VeganMenuTableViewCell.swift in Sources */,
 				C5EB50F52A1DEC3900B29CC1 /* InrollPlaceViewAttribute.swift in Sources */,
 				C5A03C122A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift in Sources */,
+				C593B6472A4AB3A700D224CE /* PushCommentView.swift in Sources */,
 				C5EB511C2A21188D00B29CC1 /* TopDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -997,6 +1017,7 @@
 				DEVELOPMENT_TEAM = C4K2HXA435;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AVIRO/Utils/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "테스트2";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "테스트";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1028,6 +1049,7 @@
 				DEVELOPMENT_TEAM = C4K2HXA435;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AVIRO/Utils/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "테스트2";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "테스트";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

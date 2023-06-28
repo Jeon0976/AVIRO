@@ -9,7 +9,11 @@ import Foundation
 
 struct AVIROCommentModel: Decodable {
     let status: Int
-    let data: [CommentArray]
+    let data: AVIROCommentData
+}
+
+struct AVIROCommentData: Decodable {
+    let commentArray: [CommentArray]
 }
 
 struct CommentArray: Codable {

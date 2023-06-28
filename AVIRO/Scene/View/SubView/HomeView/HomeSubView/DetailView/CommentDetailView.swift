@@ -68,9 +68,20 @@ final class CommentDetailView: UIView {
         return button
     }()
     
+    var moreComment: UIImageView = {
+        let image = UIImageView()
+        
+        image.image = UIImage(systemName: "ellipsis")
+        image.tintColor = .separateLine
+        
+        return image
+    }()
+    
     var tableViewHeightConstraint: NSLayoutConstraint?
     var viewHeightConstraint: NSLayoutConstraint?
-    var commentItems = [CommentArray]()
+    
+    var commentArray = [CommentArray]()
+    var cellHeights = [CGFloat]()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -81,6 +92,7 @@ final class CommentDetailView: UIView {
             tableView,
             noCommentLabel,
             noCommentLabel2,
+            moreComment,
             commentButton
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -113,6 +125,10 @@ final class CommentDetailView: UIView {
             tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             
+            // moreComment
+            moreComment.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: -16),
+            moreComment.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            
             // noCommentLabel
             noCommentLabel.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 20),
             noCommentLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
@@ -124,7 +140,7 @@ final class CommentDetailView: UIView {
             // commentButton
             commentButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             commentButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            commentButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20)
+            commentButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16)
         ])
     }
     
@@ -132,11 +148,14 @@ final class CommentDetailView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // TODO: Menu Table, Comment Table height 불러오기 방식 다름 -> 향후 수정 해야할 부분
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        if commentItems.isEmpty {
+        if commentArray.isEmpty {
+            tableView.isHidden = true
+            moreComment.isHidden = true
+            noCommentLabel.isHidden = false
+            noCommentLabel2.isHidden = false
+            
             let titleHeight = title.frame.height
             let noCommentLabelHeight = noCommentLabel.frame.height
             let noCommentLabel2Height = noCommentLabel2.frame.height
@@ -144,33 +163,50 @@ final class CommentDetailView: UIView {
             let totalHeight = titleHeight + noCommentLabelHeight + noCommentLabel2Height + buttonHeight + 86
             
             viewHeightConstraint?.constant = totalHeight
-            
-            tableView.isHidden = true
-            noCommentLabel.isHidden = false
-            noCommentLabel2.isHidden = false
-        } else {
-            let titleHeight = title.frame.height
-            let tableViewHeight = tableView.frame.height
-            let buttonHeight = commentButton.frame.height
-            let totalHeight = titleHeight + tableViewHeight + buttonHeight + 76
-            
-            viewHeightConstraint?.constant = totalHeight
+        }
+    }
+    
+    func bindingCommentData(_ commentData: [CommentArray]) {
+        commentArray = commentData
+        commentCount.text = String(commentArray.count) + "개"
+
+        let dummyCell = CommentDetailTableCell()
+        cellHeights = commentArray.map { dummyCell.calculateHeight($0.content) }
+        
+        if cellHeights.count > 5 {
+            cellHeights = Array(cellHeights[0..<5])
+            moreComment.isHidden = false
+        }
+        
+        if !commentArray.isEmpty {
             tableView.isHidden = false
             noCommentLabel.isHidden = true
             noCommentLabel2.isHidden = true
-            commentCount.text = "\(commentItems.count)개"
+
+            tableView.reloadData()
+            
+            let titleHeight = title.frame.height
+            let tableHaight = cellHeights.reduce(0, +)
+            let buttonHeight = commentButton.frame.height
+            
+            tableViewHeightConstraint?.constant = tableHaight
+
+            let totalHeight = titleHeight + tableHaight + buttonHeight + 72
+            
+            viewHeightConstraint?.constant = totalHeight
         }
     }
+
 }
 
 extension CommentDetailView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if commentItems.count > 5 {
+        if commentArray.count > 5 {
             return 5
         }
         
-        return commentItems.count
+        return commentArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -180,7 +216,7 @@ extension CommentDetailView: UITableViewDataSource {
             for: indexPath
         ) as? CommentDetailTableCell
         
-        let item = commentItems[indexPath.row]
+        let item = commentArray[indexPath.row]
         
         cell?.selectionStyle = .none
         cell?.makeData(item.content)
@@ -190,8 +226,12 @@ extension CommentDetailView: UITableViewDataSource {
 }
 
 extension CommentDetailView: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cellHeights[indexPath.row] = cell.frame.size.height
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.rowHeight
+        return UITableView.automaticDimension
     }
 }
 
@@ -224,5 +264,15 @@ class CommentDetailTableCell: UITableViewCell {
     
     func makeData(_ text: String) {
         comment.text = text
+    }
+    
+    func calculateHeight(_ text: String) -> CGFloat {
+        let approximateWidthOfText = frame.width - 16  // Assuming padding of 8 on each side
+        let size = CGSize(width: approximateWidthOfText, height: 1000)  // Large height
+        let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)]  // Assuming font size of 14
+
+        let estimatedFrame = NSString(string: text).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+
+        return estimatedFrame.height + CGFloat(40)
     }
 }

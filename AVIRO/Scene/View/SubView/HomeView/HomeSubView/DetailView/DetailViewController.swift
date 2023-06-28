@@ -42,8 +42,8 @@ final class DetailViewController: UIViewController {
 //    }
     
     @objc func handleDismissNotification(_ notification: Notification) {
-        if let model = notification.userInfo?["veganModel"] as? VeganModel {
-//            presenter.reloadVeganModel(model)
+        if let commnet = notification.userInfo?["comment"] as? [CommentArray] {
+            presenter.reloadComment(commnet)
         }
     }
 }
@@ -155,14 +155,15 @@ extension DetailViewController: DetailViewProtocol {
     }
     
     @objc func pushDetailComment() {
-//        guard let veganModel = presenter.veganModel else { return }
-//
-//        let view = CommentsViewController()
-//
-//        let presenter = CommentDetailPresenter(viewController: view, veganModel: veganModel)
-//        view.presenter = presenter
-//
-//        present(view, animated: true)
+
+        let viewController = CommentDetailViewController()
+        let presenter = CommentDetailPresenter(viewController: viewController,
+                                               placeId: presenter.placeId,
+                                               commentItems: presenter.commentModel
+        )
+        viewController.presenter = presenter
+
+        present(viewController, animated: true)
     }
     
     func showOthers() {
@@ -174,11 +175,9 @@ extension DetailViewController: DetailViewProtocol {
     }
     
     // MARK: UpdateComment
-    func updateComment(_ model: VeganModel?) {
-//        guard let data = model?.comment else { return }
-//        comment.comentCount.text = "\(data.count)개"
-//        comment.items = data
-//        comment.tableView.reloadData()
+    func updateComment(_ model: [CommentArray]) {
+        comment.commentCount.text = "\(model.count)개"
+        comment.bindingCommentData(model)
     }
     
     // MARK: TopDetailView data binding
@@ -214,7 +213,6 @@ extension DetailViewController: DetailViewProtocol {
     // MARK: MenuDetail data binding
     private func bindingMenuDetail(_ menuModel: [MenuArray]) {
         var menuModel = menuModel
-        
         menuModel.sort { (menu1, menu2) -> Bool in
             if menu1.menuType == MenuType.vegan.rawValue && menu2.menuType == MenuType.needToRequset.rawValue {
                 return true
@@ -225,13 +223,13 @@ extension DetailViewController: DetailViewProtocol {
             }
         }
         
-        menuDetail.menuArray = menuModel
+        menuDetail.bindingMenuData(menuModel)
     }
     
     // MARK: CommentDetail data binding
     private func bindingComment(_ commentModel: [CommentArray]) {
         let sortedData = commentModel.sorted(by: { $0.createdTime > $1.createdTime})
         
-        comment.commentItems = sortedData
+        comment.bindingCommentData(sortedData)
     }
 }

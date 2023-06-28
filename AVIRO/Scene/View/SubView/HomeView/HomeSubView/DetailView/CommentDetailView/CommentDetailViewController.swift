@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class CommentsDetailViewController: UIViewController {
+final class CommentDetailViewController: UIViewController {
     lazy var presenter = CommentDetailPresenter(viewController: self)
         
     var commentsTitle = UILabel()
@@ -17,9 +17,7 @@ final class CommentsDetailViewController: UIViewController {
     var noCommentLabel1 = UILabel()
     var noCommentLabel2 = UILabel()
     
-    var commentTextField = CommentsTextField()
-
-    var commentButton = UIButton()
+    var pushCommentView = PushCommentView()
     
     var tapGesture = UITapGestureRecognizer()
     
@@ -56,16 +54,21 @@ final class CommentsDetailViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        presenter.viewDidDisappear()
+    }
+    
 }
 
-extension CommentsDetailViewController: CommentDetailProtocol {
+extension CommentDetailViewController: CommentDetailProtocol {
     func makeLayout() {
         [
             commentsTitle,
             commentsCount,
             commentsTableView,
-            commentTextField,
-            commentButton,
+            pushCommentView,
             noCommentLabel1,
             noCommentLabel2
         ].forEach {
@@ -86,16 +89,11 @@ extension CommentsDetailViewController: CommentDetailProtocol {
             commentsTableView.topAnchor.constraint(equalTo: commentsTitle.bottomAnchor, constant: 20),
             commentsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             commentsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            commentsTableView.bottomAnchor.constraint(equalTo: commentTextField.topAnchor),
+            commentsTableView.bottomAnchor.constraint(equalTo: pushCommentView.topAnchor),
             
-            // commentTextField
-            commentTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            commentTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            commentTextField.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            
-            // commentButton
-            commentButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            commentButton.centerYAnchor.constraint(equalTo: commentTextField.centerYAnchor),
+            pushCommentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            pushCommentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            pushCommentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             
             // noCommentLabel1
             noCommentLabel1.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -111,11 +109,9 @@ extension CommentsDetailViewController: CommentDetailProtocol {
         // view & tap
         view.backgroundColor = .white
         
-        tapGesture.cancelsTouchesInView = false
-        tapGesture.delegate = self
-        tapGesture.addTarget(self, action: #selector(dismissKeyboard))
+        tapGesture.delegate =  self
         view.addGestureRecognizer(tapGesture)
-        
+
         // no Comment
         noCommentLabel1.textColor = .mainTitle
         noCommentLabel1.font = .systemFont(ofSize: 18, weight: .bold)
@@ -133,15 +129,6 @@ extension CommentsDetailViewController: CommentDetailProtocol {
         // comments Count
         commentsCount.text = "0개"
         
-        // comment TextField
-        commentTextField.placeholder = "이 식당에 대한 경험을 적어주세요!"
-        commentTextField.delegate = self
-        
-        // comment button
-        commentButton.setTitle("게시", for: .normal)
-        commentButton.setTitleColor(.mainTitle, for: .normal)
-        commentButton.addTarget(self, action: #selector(tappedCommentButton), for: .touchUpInside)
-        
         // comments tableView
         commentsTableView.dataSource = self
         commentsTableView.delegate = self
@@ -152,6 +139,9 @@ extension CommentsDetailViewController: CommentDetailProtocol {
         commentsTableView.estimatedRowHeight = 80.0
         commentsTableView.separatorStyle = .none
     
+        pushCommentView.textView.delegate = self
+        
+        pushCommentView.button.addTarget(self, action: #selector(reportButtonTap), for: .touchUpInside)
     }
     
     // MARK: comments 숫자 확인
@@ -172,75 +162,85 @@ extension CommentsDetailViewController: CommentDetailProtocol {
     }
 }
 
-extension CommentsDetailViewController {
+extension CommentDetailViewController {
     // MARK: Upload Comment
-    @objc func tappedCommentButton() {
-        guard let comment = commentTextField.text else { return }
-
-        presenter.uploadData(comment)
-        commentTextField.text = ""
-    }
-}
-
-// MARK: 글자수 제한
-extension CommentsDetailViewController: UITextFieldDelegate {
-    func textField(_ textField: UITextField,
-                   shouldChangeCharactersIn range: NSRange,
-                   replacementString string: String
-    ) -> Bool {
-        let currentText = textField.text ?? ""
-        
-        guard let stringRange = Range(range, in: currentText) else { return false }
-        
-        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
-
-        return updatedText.count <= 28
+    @objc func reportButtonTap() {
+        if pushCommentView.textView.text != "" {
+            presenter.uploadData(pushCommentView.textView.text)
+            pushCommentView.textView.text = ""
+            pushCommentView.button.setTitleColor(.separateLine, for: .normal)
+        }
     }
 }
 
 // MARK: TableVeiw data source
-extension CommentsDetailViewController: UITableViewDataSource {
+extension CommentDetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return presenter.checkComments()
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
             withIdentifier: CommentsViewCell.identifier,
             for: indexPath) as? CommentsViewCell
-       
+
         guard let comment = presenter.commentRow(indexPath) else { return UITableViewCell() }
-        
+
         cell?.selectionStyle = .none
-        
+
         cell?.makeData(comment.content)
-        
+
         return cell ?? UITableViewCell()
     }
-    
+
 }
 
 // MARK: TableView Delegate
-extension CommentsDetailViewController: UITableViewDelegate {
+extension CommentDetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tableView.rowHeight
     }
 }
 
-extension CommentsDetailViewController: UIGestureRecognizerDelegate {
+extension CommentDetailViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == .separateLine {
+            textView.textColor = .black
+            textView.text = ""
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if textView.text != "" {
+            pushCommentView.button.setTitleColor(.black, for: .normal)
+        } else {
+            pushCommentView.button.setTitleColor(.separateLine, for: .normal)
+        }
+        
+        let size = CGSize(width: textView.frame.width, height: .infinity)
+        let estimatedSize = textView.sizeThatFits(size)
+        
+        if estimatedSize.height <= textView.font!.lineHeight * 5 {
+            textView.isScrollEnabled = false
+            textView.constraints.forEach { constraint in
+                if constraint.firstAttribute == .height {
+                    constraint.constant = estimatedSize.height
+                }
+            }
+        } else {
+            textView.isScrollEnabled = true
+        }
+    }
+}
+
+extension CommentDetailViewController: UIGestureRecognizerDelegate {
     // MARK: 외부 클릭 시 키보드 내려가면서, 키보드 취소버튼 사라짐 & 취소버튼 클릭시 text 사라짐
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        if let touchedView = touch.view as? UIButton, touchedView == commentTextField.rightView {
-            commentTextField.text = ""
-            commentTextField.rightView?.isHidden = true
-              return true
+        if touch.view is UITextView {
+            return false
         }
 
         view.endEditing(true)
-        return true
-    }
-    
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
     
@@ -249,7 +249,7 @@ extension CommentsDetailViewController: UIGestureRecognizerDelegate {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
            let keyboardRectangle = keyboardFrame.cgRectValue
             let tabBarHeight = self.tabBarController?.tabBar.frame.size.height ?? 0
-            
+
             UIView.animate(
                 withDuration: 0.3,
                 animations: {
@@ -261,9 +261,5 @@ extension CommentsDetailViewController: UIGestureRecognizerDelegate {
 
     @objc func keyboardWillHide(notification: NSNotification) {
         self.view.transform = .identity
-    }
-    
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
     }
 }

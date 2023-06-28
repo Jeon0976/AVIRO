@@ -17,12 +17,17 @@ protocol CommentDetailProtocol: NSObject {
 final class CommentDetailPresenter {
     weak var viewController: CommentDetailProtocol?
         
-    var commentItems: [CommentArray]?
+    private let aviroAPIManager = AVIROAPIManager()
+    
+    private var placeId: String?
+    private var commentItems: [CommentArray]?
         
     init(viewController: CommentDetailProtocol,
+         placeId: String? = nil,
          commentItems: [CommentArray]? = nil
     ) {
         self.viewController = viewController
+        self.placeId = placeId
         self.commentItems = commentItems
     }
     
@@ -37,9 +42,20 @@ final class CommentDetailPresenter {
         viewController?.checkComments()
     }
     
+    func viewDidDisappear() {
+        guard let commentItems = commentItems else { return }
+        NotificationCenter.default.post(
+            name: Notification.Name( "CommentsViewControllerrDismiss"),
+            object: nil,
+            userInfo: ["comment": commentItems]
+        )
+    }
+    
     func checkComments() -> Int {
         guard let comments = commentItems else { return 0 }
                 
+        commentItems?.sort(by: {$0.createdTime > $1.createdTime})
+        
         let count = comments.count
         
         return count
@@ -52,36 +68,20 @@ final class CommentDetailPresenter {
     }
     
     func uploadData(_ comment: String) {
-//        let commentData = CommentModel(comment: comment, date: .now)
-//
-//        guard var comments = veganModel.comment else {
-//            let comment = CommentModel(comment: comment, date: .now)
-//            veganModel.comment = [comment]
-//
-//            self.veganModel = veganModel
-//            print(veganModel)
-//
-//            userDefaluts.editingData(veganModel)
-//
-//            viewController?.checkComments()
-//
-//            return
-//        }
+        guard let placeId = placeId else { return }
+        let commentModel = AVIROCommentPost(placeId: placeId, userId: "test", content: comment)
         
-//        comments.append(commentData)
-//
-//        let sortedComments = comments.sorted(by: {$0.date < $1.date})
-//
-//        veganModel.comment = sortedComments
-//
-//        self.veganModel = veganModel
-//
-//        userDefaluts.editingData(veganModel)
-//
-//        let userInfo: [String: Any] = ["veganModel": veganModel]
-//
-//        NotificationCenter.default.post(name: Notification.Name("CommentsViewControllerrDismiss"), object: nil, userInfo: userInfo)
-
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateString = dateFormatter.string(from: date)
+        
+        let commentArrayValue = CommentArray(commentId: commentModel.commentId, userId: commentModel.userId, content: comment, createdTime: dateString)
+        
+        aviroAPIManager.postCommentModel(commentModel)
+        
+        commentItems?.append(commentArrayValue)
+        
         viewController?.checkComments()
     }
 }

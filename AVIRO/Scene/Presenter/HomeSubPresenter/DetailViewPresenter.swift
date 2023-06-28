@@ -12,7 +12,7 @@ protocol DetailViewProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
     func showOthers()
-    func updateComment(_ model: VeganModel?)
+    func updateComment(_ model: [CommentArray])
 }
 
 final class DetailViewPresenter {
@@ -55,9 +55,9 @@ final class DetailViewPresenter {
         guard let placeId = placeId else { return }
         aviroManager.getMenuInfo(placeId: placeId
         ) { [weak self] menuModel in
-            self?.menuModel = menuModel.data
+            self?.menuModel = menuModel.data.menuArray
             DispatchQueue.main.async {
-                completionHandler(menuModel.data)
+                completionHandler(menuModel.data.menuArray)
             }
         }
     }
@@ -67,15 +67,15 @@ final class DetailViewPresenter {
         guard let placeId = placeId else { return }
         aviroManager.getCommentInfo(placeId: placeId
         ) { [weak self] commentModel in
-            self?.commentModel = commentModel.data
+            self?.commentModel = commentModel.data.commentArray
             DispatchQueue.main.async {
-                completionHandler(commentModel.data)
+                completionHandler(commentModel.data.commentArray)
             }
         }
     }
-//
-//    func reloadVeganModel(_ model: VeganModel) {
-//        veganModel = model
-//        viewController?.updateComment(veganModel)
-//    }
+
+    func reloadComment(_ model: [CommentArray]) {
+        commentModel = model
+        viewController?.updateComment(model)
+    }
 }

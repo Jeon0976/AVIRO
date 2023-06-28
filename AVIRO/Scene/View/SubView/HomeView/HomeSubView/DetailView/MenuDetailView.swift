@@ -46,9 +46,9 @@ final class MenuDetailView: UIView {
     }()
 
     // TODO: Test Layout Constraint
-    var tableViewHeightConstraint: NSLayoutConstraint?
     var viewHeightConstraint: NSLayoutConstraint?
-    
+    var tableViewHeightConstraint: NSLayoutConstraint?
+        
     var menuArray = [MenuArray]()
     
     override init(frame: CGRect) {
@@ -66,11 +66,12 @@ final class MenuDetailView: UIView {
         
         // tableView
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.register(
             DetailMenuTableCell.self,
             forCellReuseIdentifier: DetailMenuTableCell.idendifier
         )
-
+        
         tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: 0)
         tableViewHeightConstraint?.isActive = true
         
@@ -95,14 +96,13 @@ final class MenuDetailView: UIView {
             noMenuLabel2.topAnchor.constraint(equalTo: noMenuLabel.bottomAnchor, constant: 5),
             noMenuLabel2.centerXAnchor.constraint(equalTo: noMenuLabel.centerXAnchor)
         ])
-        
-        tableView.isHidden = true
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: 메뉴 데이터가 없을 때
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -111,29 +111,40 @@ final class MenuDetailView: UIView {
             let noMenuLabelHeight = noMenuLabel.frame.height
             let noMenuLabel2Height = noMenuLabel2.frame.height
             let totalHeight = titleHeight + noMenuLabelHeight + noMenuLabel2Height + 70
-
+            
             viewHeightConstraint?.constant = totalHeight
             tableView.isHidden = true
             noMenuLabel.isHidden = false
             noMenuLabel2.isHidden = false
-        } else {
-            let titleHeight = title.frame.height
-            let contentHeight = tableView.contentSize.height
-            tableViewHeightConstraint?.constant = contentHeight
+        }
+    }
+    
+    // MARK: 메뉴 데이터가 있을 때
+    func bindingMenuData(_ menuData: [MenuArray]) {
+        menuArray = menuData
+        
+        if !menuArray.isEmpty {
+            tableView.reloadData()
 
-            let totalHeight = titleHeight + contentHeight + 60
-
-            viewHeightConstraint?.constant = totalHeight
             tableView.isHidden = false
             noMenuLabel.isHidden = true
             noMenuLabel2.isHidden = true
+
+            let titleHeight = title.frame.height
+            let tableHeight = tableView.contentSize.height
+            
+            tableViewHeightConstraint?.constant = tableHeight
+
+            let totalHeight = titleHeight + tableHeight + CGFloat(menuArray.count * 2) + 45
+
+            viewHeightConstraint?.constant = totalHeight
+
         }
     }
 }
 
 extension MenuDetailView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return menuArray.count
     }
     
@@ -144,16 +155,21 @@ extension MenuDetailView: UITableViewDataSource {
         ) as? DetailMenuTableCell
         
         let menuItem = menuArray[indexPath.row]
-        
         cell?.selectionStyle = .none
         
         let currencyKR = String(menuItem.price).currenyKR()
-        let howToRequest = menuItem.menuType == MenuType.vegan.rawValue ? "비건" : menuItem.howToRequest
+        let howToRequest = menuItem.menuType == MenuType.vegan.value ? "비건" : menuItem.howToRequest
         
         cell?.makeData(menuItem.menu, currencyKR, howToRequest)
         cell?.isCheck(menuItem.isCheck)
         
         return cell ?? UITableViewCell()
+    }
+}
+
+extension MenuDetailView: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return tableView.rowHeight
     }
 }
 
