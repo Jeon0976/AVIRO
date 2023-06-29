@@ -11,7 +11,7 @@ final class TopDetailView: UIView {
     let title: UILabel = {
         let label = UILabel()
         label.textColor = .mainTitle
-        label.font = .systemFont(ofSize: 25, weight: .bold)
+        label.font = Layout.Label.bigTitile
         label.numberOfLines = 0
         
         return label
@@ -25,7 +25,7 @@ final class TopDetailView: UIView {
     let address: UILabel = {
         let label = UILabel()
         label.textColor = .subTitle
-        label.font = .systemFont(ofSize: 18)
+        label.font = Layout.Label.bigNormal
         label.numberOfLines = 0
         
         return label
@@ -40,12 +40,13 @@ final class TopDetailView: UIView {
     let shareButton: UIButton = {
         let button = UIButton()
         
-        button.setImage(UIImage(named: "share"), for: .normal)
-        button.setTitle("공유하기", for: .normal)
+        button.setImage(UIImage(named: Image.share), for: .normal)
+        button.setTitle(StringValue.HomeView.share, for: .normal)
         button.setTitleColor(.mainTitle, for: .normal)
+        
         button.imageView?.contentMode = .scaleAspectFit
         button.semanticContentAttribute = .forceLeftToRight
-        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
+        button.imageEdgeInsets = Layout.SlideView.imageToTextInset
 
         return button
     }()
@@ -53,28 +54,26 @@ final class TopDetailView: UIView {
     let bookmarkButton: UIButton = {
         let button = UIButton()
         
-        button.setImage(UIImage(named: "Bookmark"), for: .normal)
-        button.setTitle("북마크   ", for: .normal)
+        button.setImage(UIImage(named: Image.bookmark), for: .normal)
+        button.setTitle(StringValue.HomeView.bookmark, for: .normal)
         button.setTitleColor(.mainTitle, for: .normal)
 
         button.imageView?.contentMode = .scaleAspectFit
         button.semanticContentAttribute = .forceLeftToRight
-        button.titleLabel?.textColor = .black
-        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
+        button.imageEdgeInsets = Layout.SlideView.imageToTextInset
         return button
     }()
     
     let commentButton: UIButton = {
         let button = UIButton()
         
-        button.setImage(UIImage(named: "comment"), for: .normal)
-        button.setTitle("댓글     ", for: .normal)
+        button.setImage(UIImage(named: Image.comment), for: .normal)
+        button.setTitle(StringValue.HomeView.comments, for: .normal)
         button.setTitleColor(.mainTitle, for: .normal)
 
         button.imageView?.contentMode = .scaleAspectFit
         button.semanticContentAttribute = .forceLeftToRight
-        button.titleLabel?.textColor = .black
-        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
+        button.imageEdgeInsets = Layout.SlideView.imageToTextInset
 
         return button
     }()
@@ -82,7 +81,7 @@ final class TopDetailView: UIView {
     let separator1: UIView = {
         let view = UIView()
         view.backgroundColor = .separateLine
-        view.layer.cornerRadius = 2.5
+        view.layer.cornerRadius = Layout.Inset.separatorCornerRadius
         view.widthAnchor.constraint(equalToConstant: 1).isActive = true
         
         return view
@@ -91,7 +90,7 @@ final class TopDetailView: UIView {
     let separator2: UIView = {
         let view = UIView()
         view.backgroundColor = .separateLine
-        view.layer.cornerRadius = 2.5
+        view.layer.cornerRadius = Layout.Inset.separatorCornerRadius
         view.widthAnchor.constraint(equalToConstant: 1).isActive = true
         
         return view
@@ -103,7 +102,7 @@ final class TopDetailView: UIView {
         stackView.axis = .horizontal
         stackView.distribution = .fillProportionally
         stackView.alignment = .fill
-        stackView.spacing = 5
+        stackView.spacing = Layout.Inset.buttonStackViewSpacing
         
         return stackView
     }()
@@ -141,25 +140,36 @@ final class TopDetailView: UIView {
         
         NSLayoutConstraint.activate([
             // imageView
-            imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            imageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+            imageView.centerXAnchor.constraint(
+                equalTo: self.centerXAnchor),
+            imageView.topAnchor.constraint(
+                equalTo: self.topAnchor, constant: Layout.Inset.leadingTopPlus),
             
             // topImageView
-            topImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
-            topImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            topImageView.topAnchor.constraint(
+                equalTo: self.topAnchor, constant: Layout.Inset.leadingTop),
+            topImageView.leadingAnchor.constraint(
+                equalTo: self.leadingAnchor, constant: Layout.Inset.leadingTop),
             
             // title
-            title.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            title.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20),
+            title.centerXAnchor.constraint(
+                equalTo: self.centerXAnchor),
+            title.topAnchor.constraint(
+                equalTo: imageView.bottomAnchor, constant: Layout.Inset.leadingTopPlus),
             
             // address
-            address.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            address.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 10),
+            address.centerXAnchor.constraint(
+                equalTo: self.centerXAnchor),
+            address.topAnchor.constraint(
+                equalTo: title.bottomAnchor, constant: Layout.Inset.leadingTopHalf),
             
             // stackView
-            stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            stackView.topAnchor.constraint(equalTo: address.bottomAnchor, constant: 20)
+            stackView.leadingAnchor.constraint(
+                equalTo: self.leadingAnchor, constant: Layout.Inset.leadingTop),
+            stackView.trailingAnchor.constraint(
+                equalTo: self.trailingAnchor, constant: Layout.Inset.trailingBottom),
+            stackView.topAnchor.constraint(
+                equalTo: address.bottomAnchor, constant: Layout.Inset.leadingTop)
         ])
         
     }
@@ -167,14 +177,15 @@ final class TopDetailView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func layoutSubviews() {
         super.layoutSubviews()
-
+        
         viewHeightConstraint?.constant =
             imageView.frame.height +
             title.frame.height +
             address.frame.height +
-            stackView.frame.height + 82
+            stackView.frame.height +
+            Layout.DetailView.fisrtViewHeightInset
     }
 }

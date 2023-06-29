@@ -79,15 +79,15 @@ final class HomeSearchViewTableViewCell: UITableViewCell {
     
     private func makeAttribute() {
         title.numberOfLines = 0
-        title.font = Layout.Label.title
+        title.font = Layout.Label.mainTitle
         
         address.numberOfLines = 0
-        address.font = Layout.Label.nomal1
+        address.font = Layout.Label.tableSubTitle
         
         category.numberOfLines = 0
-        category.font = Layout.Label.nomal1
+        category.font = Layout.Label.tableSubTitle
         
-        distance.font = Layout.Label.nomal2
+        distance.font = Layout.Label.tableDistance
         
         title.textColor = .mainTitle
         address.textColor = .mainTitle

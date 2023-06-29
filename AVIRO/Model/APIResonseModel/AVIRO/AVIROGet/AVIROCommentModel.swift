@@ -8,7 +8,7 @@
 import Foundation
 
 struct AVIROCommentModel: Decodable {
-    let status: Int
+    let statusCode: Int
     let data: AVIROCommentData
 }
 

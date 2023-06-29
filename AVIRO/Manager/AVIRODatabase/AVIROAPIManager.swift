@@ -126,6 +126,41 @@ final class AVIROAPIManager {
         }.resume()
     }
     
+    // MARK: Post UserInfo Model
+    func postUserModel(_ userModel: UserInfoModel,
+                       completionHandler: @escaping((CheckUser) -> Void)) {
+        guard let url = postAPI.userInfoInroll().url else { print("url error"); return}
+        
+        guard let jsonData = try? JSONEncoder().encode(userModel) else {
+            print("JSON Encode Error")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        session.dataTask(with: request) { data, response, error in
+            guard error == nil else {
+                print("error")
+                return
+            }
+            
+            if let data = data {
+                if let userInfo = try? JSONDecoder().decode(CheckUser.self, from: data) {
+                    completionHandler(userInfo)
+                }
+                return
+            }
+            
+            guard response != nil else {
+                print(response ?? "response error")
+                return
+            }
+        }.resume()
+    }
+    
     // MARK: Post Place Model
     func postPlaceModel(_ veganModel: VeganModel) {
         guard let url = postAPI.placeInroll().url else { print("url error"); return }
@@ -139,7 +174,7 @@ final class AVIROAPIManager {
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonData
-        
+
         session.dataTask(with: request) { data, response, error in
             guard error == nil else {
                 print("error")

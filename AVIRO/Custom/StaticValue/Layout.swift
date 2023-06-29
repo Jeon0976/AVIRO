@@ -25,6 +25,9 @@ struct Layout {
         static let leadingTopSmall = CGFloat(4)
         static let trailingBottomSmall = CGFloat(-4)
     
+        static let separatorCornerRadius = CGFloat(2.5)
+        static let buttonStackViewSpacing = CGFloat(5)
+        
         // MARK: 가게 리스트만 해당되는 Inset
         static let iconInest = CGFloat(25)
         static let iconToLabel = CGFloat(10)
@@ -43,10 +46,16 @@ struct Layout {
         
     }
     
+    // MARK: 공통 Label
     struct Label {
-        static let title = UIFont.systemFont(ofSize: 18, weight: .bold)
-        static let nomal1 = UIFont.systemFont(ofSize: 14, weight: .medium)
-        static let nomal2 = UIFont.systemFont(ofSize: 14, weight: .medium)
+        static let mainTitle = UIFont.systemFont(ofSize: 18, weight: .bold)
+        
+        static let bigTitile = UIFont.systemFont(ofSize: 25, weight: .bold)
+        static let bigNormal = UIFont.systemFont(ofSize: 18, weight: .regular)
+        
+        static let tableSubTitle = UIFont.systemFont(ofSize: 14, weight: .medium)
+        static let tableDistance = UIFont.systemFont(ofSize: 14, weight: .medium)
+        
         static let subTitle = UIFont.systemFont(ofSize: 12, weight: .light)
     }
     
@@ -71,6 +80,13 @@ struct Layout {
     // MARK: Home View
     struct HomeView {
         static let minusLocationInset = CGFloat(-4)
+    }
+    
+    // MARK: Detail View
+    struct DetailView {
+        static let viewCornerRadius = CGFloat(16)
+        
+        static let fisrtViewHeightInset = CGFloat(76)
     }
     
     // MARK: Inroll View

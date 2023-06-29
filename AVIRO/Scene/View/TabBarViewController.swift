@@ -17,6 +17,7 @@ class TabBarViewController: UITabBarController {
         return button
     }()
     
+    // MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,13 +34,24 @@ class TabBarViewController: UITabBarController {
         
         self.tabBar.backgroundColor = .white
         
-        centerButton.addTarget(self, action: #selector(buttonTouchDown), for: .touchDown)
-        centerButton.addTarget(self, action: #selector(buttonDragExit), for: .touchDragExit)
-        centerButton.addTarget(self, action: #selector(didTapPlusButton), for: .touchUpInside)
+        centerButton.addTarget(self,
+                               action: #selector(buttonTouchDown),
+                               for: .touchDown
+        )
+        centerButton.addTarget(self,
+                               action: #selector(buttonDragExit),
+                               for: .touchDragExit
+        )
+        centerButton.addTarget(self, action:
+                                #selector(didTapPlusButton),
+                               for: .touchUpInside
+        )
+        
         setupMiddleButton()
         
     }
     
+    // MARK: 가운데 plus 버튼 만들기
     func setupMiddleButton() {
         view.addSubview(centerButton)
         
@@ -53,6 +65,7 @@ class TabBarViewController: UITabBarController {
         ])
     }
     
+    // MARK: button touch method
     @objc func buttonTouchDown(_ sender: UIButton) {
         UIView.animate(withDuration: 0.1, animations: {
             sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
@@ -77,6 +90,7 @@ class TabBarViewController: UITabBarController {
         })
     }
 
+    // MARK: tabBar 숨길때 사용하는 method
     func hiddenTabBar(_ hidden: Bool) {
         self.tabBar.isHidden = hidden
         self.tabBar.isTranslucent = hidden

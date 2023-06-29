@@ -8,7 +8,7 @@
 import Foundation
 
 struct AVIROPlaceModel: Decodable {
-    let status: Int
+    let statusCode: Int
     let data: PlaceData
 }
 
@@ -17,8 +17,8 @@ struct PlaceData: Decodable {
     let title: String
     let category: String
     let address: String
-    let phone: String?
-    let url: String?
+    let phone: String
+    let url: String
     
     let commentCount: Int
     

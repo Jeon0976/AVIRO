@@ -127,7 +127,7 @@ class HomeInfoStoreView: UIView {
         stackView.distribution = .fillProportionally
         stackView.alignment = .fill
         
-        stackView.spacing = 5
+        stackView.spacing = Layout.Inset.buttonStackViewSpacing
         
         return stackView
     }()

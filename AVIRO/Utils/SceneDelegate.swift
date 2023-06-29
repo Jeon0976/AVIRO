@@ -14,6 +14,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     
     let keychain = KeychainSwift()
+    let aviroManager = AVIROAPIManager()
 
     func scene(_ scene: UIScene,
                willConnectTo session: UISceneSession,
@@ -22,25 +23,32 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        guard let saveUserIdentifier = keychain.get("userIdentifier") else {
-            let viewController = LoginViewController()
-
-            let rootViewContrller = UINavigationController(rootViewController: viewController)
-            
-            window?.rootViewController = rootViewContrller
-            window?.backgroundColor = .white
-            window?.tintColor = .mainTitle
-            
-            window?.makeKeyAndVisible()
-            return
+        if let saveUserIdentifier = keychain.get("userIdentifier") {
+            aviroManager.postUserModel(UserInfoModel(userToken: saveUserIdentifier, userName: "", userEmail: "")) { userInfo in
+                print("UserInfo.isMember:",userInfo.isMember)
+                DispatchQueue.main.async { [weak self] in
+                    if userInfo.isMember {
+                        let viewController = TabBarViewController()
+                        
+                        self?.window?.rootViewController = viewController
+                        self?.window?.backgroundColor = .white
+                        self?.window?.tintColor = .mainTitle
+                        
+                        self?.window?.makeKeyAndVisible()
+                        return
+                    } else {
+                        let viewController = LoginViewController()
+                        let rootViewContrller = UINavigationController(rootViewController: viewController)
+                        
+                        self?.window?.rootViewController = rootViewContrller
+                        self?.window?.backgroundColor = .white
+                        self?.window?.tintColor = .mainTitle
+                        
+                        self?.window?.makeKeyAndVisible()
+                        return
+                    }
+                }
+            }
         }
-        
-        let viewController = TabBarViewController()
-        
-        window?.rootViewController = viewController
-        window?.backgroundColor = .white
-        window?.tintColor = .mainTitle
-        
-        window?.makeKeyAndVisible()
     }
 }

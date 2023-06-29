@@ -21,6 +21,8 @@ final class LoginViewPresenter {
     let keychain = KeychainSwift()
     let images: [String] = ["HomeInfoRequestVegan", "HomeInfoSomeVegan", "HomeInfoVegan"]
     
+    private let avrioManager = AVIROAPIManager()
+    
     init(viewController: LoginViewProtocol) {
         self.viewController = viewController
     }
@@ -35,8 +37,12 @@ final class LoginViewPresenter {
     }
     
     func upLoadUserInfo(_ userInfoModel: UserInfoModel) {
-        keychain.set(userInfoModel.userIdentifier,
+        keychain.set(userInfoModel.userToken,
                      forKey: "userIdentifier")
+        
+        avrioManager.postUserModel(userInfoModel) { userInfo in
+            print(userInfo.statusCode)
+        }
         
         viewController?.pushTabBar()
     }

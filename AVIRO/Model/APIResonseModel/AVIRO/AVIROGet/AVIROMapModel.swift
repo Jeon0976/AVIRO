@@ -8,7 +8,7 @@
 import Foundation
 
 struct AVIROMapModel: Decodable {
-    let status: Int
+    let statusCode: Int
     let data: MapData
 }
 

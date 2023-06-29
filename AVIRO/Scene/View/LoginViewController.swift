@@ -128,9 +128,9 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
             let fullName = appleIDCredential.fullName?.formatted() ?? ""
             let email = appleIDCredential.email ?? ""
             
-            let userInfo = UserInfoModel(userIdentifier: userIdentifier,
-                                         fullName: fullName,
-                                         email: email
+            let userInfo = UserInfoModel(userToken: userIdentifier,
+                                         userName: fullName,
+                                         userEmail: email
             )
             
             presenter.upLoadUserInfo(userInfo)

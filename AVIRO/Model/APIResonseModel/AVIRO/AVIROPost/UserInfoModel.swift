@@ -8,7 +8,12 @@
 import Foundation
 
 struct UserInfoModel: Codable {
-    let userIdentifier: String
-    let fullName: String?
-    let email: String?
+    let userToken: String
+    let userName: String?
+    let userEmail: String?
+}
+
+struct CheckUser: Codable {
+    let statusCode: Int
+    let isMember: Bool
 }

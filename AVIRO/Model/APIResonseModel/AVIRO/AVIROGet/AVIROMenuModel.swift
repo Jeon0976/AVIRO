@@ -8,7 +8,7 @@
 import Foundation
 
 struct AVIROMenuModel: Decodable {
-    let status: Int
+    let statusCode: Int
     let data: AVIROMenuData
 }
 

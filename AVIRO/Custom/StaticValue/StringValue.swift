@@ -38,6 +38,10 @@ struct StringValue {
         static let searchPlaceHolder = "가게 이름을 검색해보세요"
     }
     
+    struct DetailView {
+        static let noInfo = "정보가 없습니다."
+    }
+    
     // MARK: Inroll View
     struct InrollView {
         static let naviTitle = "가게 제보하기"

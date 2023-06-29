@@ -19,6 +19,7 @@ final class DetailViewController: UIViewController {
     var menuDetail = MenuDetailView()
     var comment = CommentDetailView()
     
+    // MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()
@@ -32,23 +33,142 @@ final class DetailViewController: UIViewController {
         )
 
     }
-//
-//    deinit {
-//        NotificationCenter.default.removeObserver(
-//            self,
-//            name: Notification.Name("CommentsViewControllerrDismiss"),
-//            object: nil
-//        )
-//    }
-    
-    @objc func handleDismissNotification(_ notification: Notification) {
-        if let commnet = notification.userInfo?["comment"] as? [CommentArray] {
-            presenter.reloadComment(commnet)
-        }
-    }
 }
 
 extension DetailViewController: DetailViewProtocol {
+    // MARK: Make Layout
+    func makeLayout() {
+        [
+            indicator,
+            scrollView
+        ].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview($0)
+        }
+        
+        NSLayoutConstraint.activate([
+            // indicator
+            indicator.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor),
+            indicator.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor),
+            indicator.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor),
+            indicator.bottomAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            // scrollView
+            scrollView.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(
+                equalTo: view.bottomAnchor)
+        ])
+        
+        [
+            topDetail,
+            storeDetail,
+            menuDetail,
+            comment
+        ].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            scrollView.addSubview($0)
+        }
+        
+        NSLayoutConstraint.activate([
+            // topDetail
+            topDetail.topAnchor.constraint(
+                equalTo: scrollView.topAnchor),
+            topDetail.leadingAnchor.constraint(
+                equalTo: scrollView.leadingAnchor),
+            topDetail.trailingAnchor.constraint(
+                equalTo: scrollView.trailingAnchor),
+            topDetail.widthAnchor.constraint(
+                equalTo: scrollView.widthAnchor),
+            
+            // storeDetail
+            storeDetail.topAnchor.constraint(
+                equalTo: topDetail.bottomAnchor, constant: Layout.Inset.leadingTop),
+            storeDetail.leadingAnchor.constraint(
+                equalTo: scrollView.leadingAnchor, constant: Layout.Inset.leadingTop),
+            storeDetail.trailingAnchor.constraint(
+                equalTo: scrollView.trailingAnchor, constant: Layout.Inset.trailingBottom),
+            storeDetail.widthAnchor.constraint(
+                equalTo: scrollView.widthAnchor, constant: Layout.Inset.trailingBottomDouble),
+
+            // menuDetail
+            menuDetail.topAnchor.constraint(
+                equalTo: storeDetail.bottomAnchor, constant: Layout.Inset.leadingTop),
+            menuDetail.leadingAnchor.constraint(
+                equalTo: scrollView.leadingAnchor, constant: Layout.Inset.leadingTop),
+            menuDetail.trailingAnchor.constraint(
+                equalTo: scrollView.trailingAnchor, constant: Layout.Inset.trailingBottom),
+            menuDetail.widthAnchor.constraint(
+                equalTo: scrollView.widthAnchor, constant: Layout.Inset.trailingBottomDouble),
+
+            // comment
+            comment.topAnchor.constraint(
+                equalTo: menuDetail.bottomAnchor, constant: Layout.Inset.leadingTop),
+            comment.leadingAnchor.constraint(
+                equalTo: scrollView.leadingAnchor, constant: Layout.Inset.leadingTop),
+            comment.trailingAnchor.constraint(
+                equalTo: scrollView.trailingAnchor, constant: Layout.Inset.trailingBottom),
+            comment.bottomAnchor.constraint(
+                equalTo: scrollView.bottomAnchor, constant: Layout.Inset.trailingBottomPlus),
+            comment.widthAnchor.constraint(
+                equalTo: scrollView.widthAnchor, constant: Layout.Inset.trailingBottomDouble)
+        ])
+    }
+    
+    // MARK: Make Attribute
+    func makeAttribute() {
+        // navigation, view, indicator
+        view.backgroundColor = .white
+        
+        indicator.color = .separateLine
+        indicator.startAnimating()
+        indicator.alpha = 1
+        
+        navigationItem.backButtonDisplayMode = .generic
+        navigationController?.navigationBar.isHidden = false
+        
+        // TabBar Controller
+        if let tabBarController = self.tabBarController as? TabBarViewController {
+            tabBarController.hiddenTabBar(true)
+        }
+        
+        // 최초 scrollView Hidden
+        scrollView.isHidden = true
+        scrollView.backgroundColor = .separateLine
+        topDetail.backgroundColor = .white
+        storeDetail.backgroundColor = .white
+        menuDetail.backgroundColor = .white
+        comment.backgroundColor = .white
+        
+        storeDetail.layer.cornerRadius = Layout.DetailView.viewCornerRadius
+        menuDetail.layer.cornerRadius = Layout.DetailView.viewCornerRadius
+        comment.layer.cornerRadius = Layout.DetailView.viewCornerRadius
+        
+        comment.commentButton.addTarget(
+            self,
+            action: #selector(pushDetailComment),
+            for: .touchUpInside
+        )
+    }
+    
+    // MARK: 최초 Indicator 작동 후 ScrollView 보여짐
+    func showOthers() {
+        UIView.animate(withDuration: 0.7, animations: { [weak self] in
+            self?.indicator.alpha = 0
+        }, completion: { [weak self] _ in
+            self?.scrollView.isHidden = false
+        })
+    }
+    
+    // MARK: Data Binding
     func bindingData() {
         presenter.loadPlaceInfo { [weak self] in
             self?.bindingTopDetailView($0)
@@ -64,122 +184,6 @@ extension DetailViewController: DetailViewProtocol {
         }
     }
     
-    func makeLayout() {
-        [
-            indicator,
-            scrollView
-        ].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview($0)
-        }
-        
-        NSLayoutConstraint.activate([
-            // indicator
-            indicator.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            indicator.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            indicator.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            indicator.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            
-            // scrollView
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-        
-        [
-            topDetail,
-            storeDetail,
-            menuDetail,
-            comment
-        ].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            scrollView.addSubview($0)
-        }
-        
-        NSLayoutConstraint.activate([
-            // topDetail
-            topDetail.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            topDetail.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            topDetail.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            topDetail.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            
-            // storeDetail
-            storeDetail.topAnchor.constraint(equalTo: topDetail.bottomAnchor, constant: 16),
-            storeDetail.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
-            storeDetail.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
-            storeDetail.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32),
-
-            // menuDetail
-            menuDetail.topAnchor.constraint(equalTo: storeDetail.bottomAnchor, constant: 16),
-            menuDetail.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
-            menuDetail.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
-            menuDetail.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32),
-
-            // comment
-            comment.topAnchor.constraint(equalTo: menuDetail.bottomAnchor, constant: 16),
-            comment.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
-            comment.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
-            comment.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -20),
-            comment.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32)
-        ])
-    }
-    
-    func makeAttribute() {
-        // navigation, view, indicator
-        view.backgroundColor = .white
-        indicator.color = .separateLine
-        indicator.startAnimating()
-        indicator.alpha = 1
-        navigationItem.backButtonDisplayMode = .generic
-        
-        navigationController?.navigationBar.isHidden = false
-        
-        // TabBar Controller
-        if let tabBarController = self.tabBarController as? TabBarViewController {
-            tabBarController.hiddenTabBar(true)
-        }
-        
-        scrollView.isHidden = true
-        scrollView.backgroundColor = .separateLine
-        topDetail.backgroundColor = .white
-        storeDetail.backgroundColor = .white
-        menuDetail.backgroundColor = .white
-        comment.backgroundColor = .white
-        
-        storeDetail.layer.cornerRadius = 16
-        menuDetail.layer.cornerRadius = 16
-        comment.layer.cornerRadius = 16
-        
-        comment.commentButton.addTarget(self, action: #selector(pushDetailComment), for: .touchUpInside)
-    }
-    
-    @objc func pushDetailComment() {
-
-        let viewController = CommentDetailViewController()
-        let presenter = CommentDetailPresenter(viewController: viewController,
-                                               placeId: presenter.placeId,
-                                               commentItems: presenter.commentModel
-        )
-        viewController.presenter = presenter
-
-        present(viewController, animated: true)
-    }
-    
-    func showOthers() {
-        UIView.animate(withDuration: 0.7, animations: { [weak self] in
-            self?.indicator.alpha = 0
-        }, completion: { [weak self] _ in
-            self?.scrollView.isHidden = false
-        })
-    }
-    
-    // MARK: UpdateComment
-    func updateComment(_ model: [CommentArray]) {
-        comment.commentCount.text = "\(model.count)개"
-        comment.bindingCommentData(model)
-    }
-    
     // MARK: TopDetailView data binding
     private func bindingTopDetailView(_ placeModel: PlaceData) {
         topDetail.title.text = placeModel.title
@@ -187,32 +191,40 @@ extension DetailViewController: DetailViewProtocol {
         
         if placeModel.allVegan {
             topDetail.imageView.image = UIImage(
-               named: "HomeInfoVegan")
+                named: Image.homeInfoVegan
+            )
             topDetail.topImageView.image = UIImage(
-               named: "HomeInfoVeganTitle")
+                named: Image.homeInfoVeganTitle
+            )
         } else if placeModel.someMenuVegan {
             topDetail.imageView.image = UIImage(
-               named: "HomeInfoSomeVegan")
+                named: Image.homeInfoSomeVegan
+            )
             topDetail.topImageView.image = UIImage(
-               named: "HomeInfoSomeVeganTItle")
+                named: Image.homeInfoSomeVeganTitle
+            )
         } else {
             topDetail.imageView.image = UIImage(
-               named: "HomeInfoRequestVegan")
+                named: Image.homeInfoRequestVegan
+            )
             topDetail.topImageView.image = UIImage(
-               named: "HomeInfoRequestVeganTitle")
+                named: Image.homeInfoRequestVeganTitle
+            )
         }
     }
     
     // MARK: StoreDetail data binding
     private func bindingStoreDetail(_ placeModel: PlaceData) {
         storeDetail.addressLabel.text = placeModel.address
-        storeDetail.phoneLabel.text = placeModel.phone ?? "정보가 없습니다."
-        storeDetail.categoryLabel.text = placeModel.category
+        storeDetail.phoneLabel.text = placeModel.phone == "" ? StringValue.DetailView.noInfo : placeModel.phone
+        storeDetail.phoneLabel.textColor = placeModel.phone == "" ? .separateLine : .mainTitle
+         storeDetail.categoryLabel.text = placeModel.category
     }
     
     // MARK: MenuDetail data binding
     private func bindingMenuDetail(_ menuModel: [MenuArray]) {
         var menuModel = menuModel
+        // 비건 > not 비건 순으로 정렬하되, 가격이 낮은 순
         menuModel.sort { (menu1, menu2) -> Bool in
             if menu1.menuType == MenuType.vegan.rawValue && menu2.menuType == MenuType.needToRequset.rawValue {
                 return true
@@ -232,4 +244,34 @@ extension DetailViewController: DetailViewProtocol {
         
         comment.bindingCommentData(sortedData)
     }
+    
+    // MARK: CommentDetailView Dismiss 될 때
+    // comment data update
+    @objc func handleDismissNotification(_ notification: Notification) {
+        if let commnet = notification.userInfo?["comment"] as? [CommentArray] {
+            presenter.reloadComment(commnet)
+        }
+    }
+    
+    // MARK: UpdateComment
+    func updateComment(_ model: [CommentArray]) {
+        comment.commentCount.text = "\(model.count)개"
+        comment.bindingCommentData(model)
+    }
+    
+    // MARK: Push Comment Detail View
+    @objc func pushDetailComment() {
+
+        let viewController = CommentDetailViewController()
+        let presenter = CommentDetailPresenter(
+            viewController: viewController,
+            placeId: presenter.placeId,
+            commentItems: presenter.commentModel
+        )
+
+        viewController.presenter = presenter
+
+        present(viewController, animated: true)
+    }
+    
 }
