@@ -53,7 +53,6 @@ extension MyPageViewController: MyPageViewProtocol {
         
         let viewController = LoginViewController()
         let rootViewController = UINavigationController(rootViewController: viewController)
-        
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
             windowScene.windows.first?.rootViewController = rootViewController
             windowScene.windows.first?.makeKeyAndVisible()

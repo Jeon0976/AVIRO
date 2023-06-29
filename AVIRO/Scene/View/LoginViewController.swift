@@ -8,8 +8,6 @@
 import UIKit
 import AuthenticationServices
 
-import KeychainSwift
-
 final class LoginViewController: UIViewController {
     lazy var presenter = LoginViewPresenter(viewController: self)
     
@@ -17,8 +15,6 @@ final class LoginViewController: UIViewController {
     var viewPageControl = UIPageControl()
     var appleLoginButton = UIButton()
     var noLoginButton = UIButton()
-    
-    let keychain = KeychainSwift()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +25,7 @@ final class LoginViewController: UIViewController {
 }
 
 extension LoginViewController: LoginViewProtocol {
+    // MARK: Make Layout
     func makeLayout() {
         [
             scrollView,
@@ -41,53 +38,70 @@ extension LoginViewController: LoginViewProtocol {
         }
         
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            // scrollView
+            scrollView.topAnchor.constraint(
+                equalTo: view.topAnchor),
+            scrollView.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor),
             
-            viewPageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            viewPageControl.bottomAnchor.constraint(equalTo: appleLoginButton.topAnchor, constant: -16),
-            viewPageControl.topAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 16),
+            // viewPageControl
+            viewPageControl.centerXAnchor.constraint(
+                equalTo: view.centerXAnchor),
+            viewPageControl.bottomAnchor.constraint(
+                equalTo: appleLoginButton.topAnchor, constant: Layout.Inset.trailingBottom),
+            viewPageControl.topAnchor.constraint(
+                equalTo: scrollView.bottomAnchor, constant: Layout.Inset.leadingTop),
             
-            appleLoginButton.bottomAnchor.constraint(equalTo: noLoginButton.topAnchor, constant: -16),
-            appleLoginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            appleLoginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            appleLoginButton.heightAnchor.constraint(equalToConstant: 52),
+            // appleLoginButton
+            appleLoginButton.bottomAnchor.constraint(
+                equalTo: noLoginButton.topAnchor, constant: Layout.Inset.trailingBottom),
+            appleLoginButton.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor, constant: Layout.Inset.leadingTop),
+            appleLoginButton.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor, constant: Layout.Inset.trailingBottom),
+            appleLoginButton.heightAnchor.constraint(
+                equalToConstant: Layout.Button.height),
             
-            noLoginButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-            noLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            // noLoginButton
+            noLoginButton.bottomAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: Layout.Inset.trailingBottom),
+            noLoginButton.centerXAnchor.constraint(
+                equalTo: view.centerXAnchor)
         ])
     }
     
+    // MARK: Make Attribute
     func makeAttribute() {
         navigationController?.navigationBar.isHidden = true
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
 
         scrollView.backgroundColor = .brown
         
-        viewPageControl.numberOfPages = 5
+        viewPageControl.numberOfPages = presenter.makeScrollView()
         viewPageControl.currentPageIndicatorTintColor = .plusButton
         viewPageControl.pageIndicatorTintColor = .gray
         
-        appleLoginButton.setTitle("애플로 로그인", for: .normal)
+        appleLoginButton.setTitle(StringValue.Login.apple, for: .normal)
         appleLoginButton.setTitleColor(.mainTitle, for: .normal)
         appleLoginButton.layer.borderColor = UIColor.mainTitle?.cgColor
         appleLoginButton.layer.borderWidth = 2
         appleLoginButton.layer.cornerRadius = 28
         appleLoginButton.addTarget(self, action: #selector(tapAppleLogin), for: .touchUpInside)
         
-        noLoginButton.setTitle("로그인 없이 둘러보기", for: .normal)
+        noLoginButton.setTitle(StringValue.Login.noLogin, for: .normal)
         noLoginButton.setTitleColor(.subTitle, for: .normal)
         noLoginButton.titleLabel?.font = .systemFont(ofSize: 14)
         noLoginButton.addTarget(self, action: #selector(tapNoLoginButton), for: .touchUpInside)
     }
     
+    // MARK: No Login Button Tapped
     @objc func tapNoLoginButton() {
-        let viewController = TabBarViewController()
-        
-        navigationController?.pushViewController(viewController, animated: true)
+        pushTabBar()
     }
     
+    // MARK: Apple Login Tapped
     @objc func tapAppleLogin() {
         let request = ASAuthorizationAppleIDProvider().createRequest()
         request.requestedScopes = [.fullName, .email]
@@ -97,8 +111,16 @@ extension LoginViewController: LoginViewProtocol {
         authorizationController.presentationContextProvider = self as? ASAuthorizationControllerPresentationContextProviding
         authorizationController.performRequests()
     }
+    
+    // MARK: Push TabBarViewcontroller
+    func pushTabBar() {
+        let viewController = TabBarViewController()
+        
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 }
 
+// MARK: Apple Login 처리 설정
 extension LoginViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
@@ -106,23 +128,16 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
             let fullName = appleIDCredential.fullName?.formatted() ?? ""
             let email = appleIDCredential.email ?? ""
             
-            // MARK: 서버에 데이터 업로드
-            // 1. 처음 앱 킬 때 서버와 데이터 비교 후 yes, no에 따라 보이는 화면 별도 구현
-            print("1: \(userIdentifier), 2: \(fullName), 3: \(email)")
+            let userInfo = UserInfoModel(userIdentifier: userIdentifier,
+                                         fullName: fullName,
+                                         email: email
+            )
             
-            keychain.set(userIdentifier, forKey: "userIdentifier")
-            
-            let viewController = TabBarViewController()
-            
-            navigationController?.pushViewController(viewController, animated: true)
+            presenter.upLoadUserInfo(userInfo)
         }
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         
-    }
-    
-    private func saveUserInKeyChain(_ userIdentifier: String) {
-
     }
 }

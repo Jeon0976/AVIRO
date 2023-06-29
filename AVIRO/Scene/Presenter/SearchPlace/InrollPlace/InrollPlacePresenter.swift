@@ -39,7 +39,6 @@ final class InrollPlacePresenter: NSObject {
     var someMenuVegan = false
     var ifRequestVegan = false
     
-    
     init(viewController: InrollPlaceProtocol) {
         self.viewController = viewController
     }

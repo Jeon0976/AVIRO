@@ -7,14 +7,18 @@
 
 import UIKit
 
+import KeychainSwift
+
 protocol LoginViewProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
+    func pushTabBar()
 }
 
 final class LoginViewPresenter {
     weak var viewController: LoginViewProtocol?
     
+    let keychain = KeychainSwift()
     let images: [String] = ["HomeInfoRequestVegan", "HomeInfoSomeVegan", "HomeInfoVegan"]
     
     init(viewController: LoginViewProtocol) {
@@ -28,5 +32,12 @@ final class LoginViewPresenter {
     
     func makeScrollView() -> Int {
         images.count
+    }
+    
+    func upLoadUserInfo(_ userInfoModel: UserInfoModel) {
+        keychain.set(userInfoModel.userIdentifier,
+                     forKey: "userIdentifier")
+        
+        viewController?.pushTabBar()
     }
 }

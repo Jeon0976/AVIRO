@@ -9,6 +9,11 @@ import Foundation
 
 /// String data set
 struct StringValue {
+    // MARK: Login View
+    struct Login {
+        static let apple = "애플로 로그인"
+        static let noLogin = "로그인 없이 둘러보기"
+    }
     // MARK: Tab bar
     struct TabBar {
         static let home = "홈"

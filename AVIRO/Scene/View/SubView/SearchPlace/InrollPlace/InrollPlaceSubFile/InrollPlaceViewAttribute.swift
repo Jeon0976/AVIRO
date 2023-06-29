@@ -77,45 +77,21 @@ extension InrollPlaceViewController {
                                                      StringValue.InrollView.requestVegan
         )
         
-        allVegan.addTarget(self,
-                           action: #selector(clickedAllVeganButton),
-                           for: .touchUpInside
-        )
-        allVegan.addTarget(self,
-                           action: #selector(clickedAllVeganButton),
-                           for: .touchDragExit
-        )
+
         allVegan.addTarget(self,
                            action: #selector(buttonTouchDown),
                            for: .touchDown
         )
-        
-        someMenuVegan.addTarget(self,
-                                action: #selector(clickedSomeMenuVeganButton),
-                                for: .touchUpInside
-        )
-        someMenuVegan.addTarget(self,
-                                action: #selector(clickedSomeMenuVeganButton),
-                                for: .touchDragExit
-        )
+
         someMenuVegan.addTarget(self,
                                 action: #selector(buttonTouchDown),
                                 for: .touchDown
         )
 
         ifRequestPossibleVegan.addTarget(self,
-                                         action: #selector(clickedIfRequestPossibleVebanButton),
-                                         for: .touchUpInside
-        )
-        ifRequestPossibleVegan.addTarget(self,
-                                         action: #selector(clickedIfRequestPossibleVebanButton),
-                                         for: .touchDragExit
-        )
-        ifRequestPossibleVegan.addTarget(self,
                                          action: #selector(buttonTouchDown),
                                          for: .touchDown
         )
-
     }
     
     // MARK: vegan Header View

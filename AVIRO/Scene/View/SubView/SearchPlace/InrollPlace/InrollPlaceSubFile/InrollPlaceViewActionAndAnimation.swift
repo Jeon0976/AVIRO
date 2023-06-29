@@ -9,15 +9,25 @@ import UIKit
 
 extension InrollPlaceViewController {
     // MARK: Button touch down
+    // Scroll View가 움직일때 .touchDown만 적용되고 나머지는 적용 안되는 버그 발생
+    // ScrollViewDelegate 사용하려고했는데 안되서 아래와 같이 처리
     @objc func buttonTouchDown(_ sender: UIButton) {
         UIView.animate(withDuration: 0.1, animations: {
             sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
             sender.layer.opacity = 0.4
+        }, completion: { [weak self] _ in
+            if sender == self?.allVegan {
+                self?.clickedAllVeganButton(sender)
+            } else if sender == self?.someMenuVegan {
+                self?.clickedSomeMenuVeganButton(sender)
+            } else {
+                self?.clickedIfRequestPossibleVebanButton(sender)
+            }
         })
     }
     
     // MARK: ALL 비건 클릭 시
-    @objc func clickedAllVeganButton(_ sender: UIButton) {
+    func clickedAllVeganButton(_ sender: UIButton) {
         UIView.animate(withDuration: 0.05, animations: {
             sender.transform = CGAffineTransform.identity
             sender.layer.opacity = 1
@@ -26,19 +36,19 @@ extension InrollPlaceViewController {
             if !(self?.presenter.allVegan ?? false) {
                 self?.updateVeganState(.allVeganClicked)
                 self?.updateViewChanges(.allVeganClicked)
-                
+
                 self?.isNegativeReportButton()
             } else {
             // ALL 비건 클릭 off
                 self?.updateVeganState(.offAll)
                 self?.updateViewChanges(.offAll)
-                
+
                 self?.isNegativeReportButton()
             }
         })
     }
     // MARK: 비건 메뉴 포함 클릭 시
-    @objc func clickedSomeMenuVeganButton(_ sender: UIButton) {
+    func clickedSomeMenuVeganButton(_ sender: UIButton) {
         UIView.animate(withDuration: 0.05, animations: {
             sender.transform = CGAffineTransform.identity
             sender.layer.opacity = 1
@@ -73,7 +83,7 @@ extension InrollPlaceViewController {
         })
     }
     // MARK: 요청하면 비건 클릭 시
-    @objc func clickedIfRequestPossibleVebanButton(_ sender: UIButton) {
+    func clickedIfRequestPossibleVebanButton(_ sender: UIButton) {
         UIView.animate(withDuration: 0.05, animations: {
             sender.transform = CGAffineTransform.identity
             sender.layer.opacity = 1

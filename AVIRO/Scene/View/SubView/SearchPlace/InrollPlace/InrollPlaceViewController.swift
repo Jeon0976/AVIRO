@@ -153,7 +153,10 @@ extension InrollPlaceViewController: InrollPlaceProtocol {
         navigationItem.backBarButtonItem = backItem
         
         view.backgroundColor = .white
-
+        
+        // scrollView
+        scrollView.delaysContentTouches = false
+        
         // report button & navigaitonRightBarButton
         reportStoreButton.isEnabled = false
         navigationItem.rightBarButtonItem?.isEnabled = false
