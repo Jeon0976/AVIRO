@@ -11,7 +11,7 @@ final class StoreDetailView: UIView {
     let storeDetailLabel: UILabel = {
        let label = UILabel()
         label.text = "식당 정보"
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.font = Layout.Label.mainTitle
         label.textColor = .mainTitle
         label.numberOfLines = 0
         
@@ -29,7 +29,7 @@ final class StoreDetailView: UIView {
     
     let addressLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 15)
+        label.font = Layout.Label.placeInfoNormal
         label.textColor = .mainTitle
         label.numberOfLines = 0
         
@@ -40,7 +40,7 @@ final class StoreDetailView: UIView {
         let view = UIView()
         
         view.backgroundColor = .separateLine
-        view.layer.cornerRadius = 2.5
+        view.layer.cornerRadius = Layout.Inset.separatorCornerRadius
         view.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
         return view
@@ -58,7 +58,7 @@ final class StoreDetailView: UIView {
     let phoneLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 15)
+        label.font = Layout.Label.placeInfoNormal
         label.textColor = .mainTitle
         label.numberOfLines = 0
 
@@ -69,7 +69,7 @@ final class StoreDetailView: UIView {
         let view = UIView()
         
         view.backgroundColor = .separateLine
-        view.layer.cornerRadius = 2.5
+        view.layer.cornerRadius = Layout.Inset.separatorCornerRadius
         view.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
         return view
@@ -87,7 +87,7 @@ final class StoreDetailView: UIView {
     let categoryLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 15)
+        label.font = Layout.Label.placeInfoNormal
         label.textColor = .mainTitle
         label.numberOfLines = 0
 
@@ -98,7 +98,7 @@ final class StoreDetailView: UIView {
         let view = UIView()
         
         view.backgroundColor = .separateLine
-        view.layer.cornerRadius = 2.5
+        view.layer.cornerRadius = Layout.Inset.separatorCornerRadius
         view.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
         return view
@@ -107,7 +107,7 @@ final class StoreDetailView: UIView {
     let requestDelete: UILabel = {
         let label = UILabel()
         label.textColor = .subTitle
-        label.font = .systemFont(ofSize: 14)
+        label.font = Layout.Label.subTitle
         label.text = "식당 정보 오류 및 삭제 요청"
         
         return label
@@ -142,54 +142,82 @@ final class StoreDetailView: UIView {
         
         NSLayoutConstraint.activate([
             // storeDetailLabel
-            storeDetailLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
-            storeDetailLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            storeDetailLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            storeDetailLabel.topAnchor.constraint(
+                equalTo: self.topAnchor, constant: Layout.Inset.leadingTopPlus),
+            storeDetailLabel.leadingAnchor.constraint(
+                equalTo: self.leadingAnchor, constant: Layout.Inset.leadingTop),
+            storeDetailLabel.trailingAnchor.constraint(
+                equalTo: self.trailingAnchor, constant: Layout.Inset.trailingBottom),
 
             // addressIcon
-            addressIcon.topAnchor.constraint(equalTo: storeDetailLabel.bottomAnchor, constant: 30),
-            addressIcon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30),
+            addressIcon.topAnchor.constraint(
+                equalTo: storeDetailLabel.bottomAnchor, constant: Layout.DetailView.iconInset),
+            addressIcon.leadingAnchor.constraint(
+                equalTo: self.leadingAnchor, constant: Layout.DetailView.iconInset),
             
             // addressLabel
-            addressLabel.centerYAnchor.constraint(equalTo: addressIcon.centerYAnchor),
-            addressLabel.leadingAnchor.constraint(equalTo: addressIcon.trailingAnchor, constant: 10),
-            addressLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            addressLabel.centerYAnchor.constraint(
+                equalTo: addressIcon.centerYAnchor),
+            addressLabel.leadingAnchor.constraint(
+                equalTo: addressIcon.trailingAnchor, constant: Layout.DetailView.iconToSeparator),
+            addressLabel.trailingAnchor.constraint(
+                equalTo: self.trailingAnchor, constant: Layout.Inset.trailingBottom),
             
             // firstSeperator
-            firstSeparator.topAnchor.constraint(equalTo: addressIcon.bottomAnchor, constant: 10),
-            firstSeparator.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            firstSeparator.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            firstSeparator.topAnchor.constraint(
+                equalTo: addressIcon.bottomAnchor, constant: Layout.DetailView.iconToSeparator),
+            firstSeparator.leadingAnchor.constraint(
+                equalTo: self.leadingAnchor, constant: Layout.Inset.leadingTop),
+            firstSeparator.trailingAnchor.constraint(
+                equalTo: self.trailingAnchor, constant: Layout.Inset.trailingBottom),
             
             // phoneIcon
-            phoneIcon.topAnchor.constraint(equalTo: firstSeparator.bottomAnchor, constant: 10),
-            phoneIcon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30),
+            phoneIcon.topAnchor.constraint(
+                equalTo: firstSeparator.bottomAnchor, constant: Layout.DetailView.iconToSeparator),
+            phoneIcon.leadingAnchor.constraint(
+                equalTo: self.leadingAnchor, constant: Layout.DetailView.iconInset),
             
             // phoneLabel
-            phoneLabel.centerYAnchor.constraint(equalTo: phoneIcon.centerYAnchor),
-            phoneLabel.leadingAnchor.constraint(equalTo: phoneIcon.trailingAnchor, constant: 10),
+            phoneLabel.centerYAnchor.constraint(
+                equalTo: phoneIcon.centerYAnchor),
+            phoneLabel.leadingAnchor.constraint(
+                equalTo: phoneIcon.trailingAnchor, constant: Layout.DetailView.iconToSeparator),
             
             // secondSeparator
-            secondSeparator.topAnchor.constraint(equalTo: phoneIcon.bottomAnchor, constant: 10),
-            secondSeparator.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            secondSeparator.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            secondSeparator.topAnchor.constraint(
+                equalTo: phoneIcon.bottomAnchor, constant: Layout.DetailView.iconToSeparator),
+            secondSeparator.leadingAnchor.constraint(
+                equalTo: self.leadingAnchor, constant: Layout.Inset.leadingTop),
+            secondSeparator.trailingAnchor.constraint(
+                equalTo: self.trailingAnchor, constant: Layout.Inset.trailingBottom),
             
             // categoryIcon
-            categoryIcon.topAnchor.constraint(equalTo: secondSeparator.bottomAnchor, constant: 10),
-            categoryIcon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30),
+            categoryIcon.topAnchor.constraint(
+                equalTo: secondSeparator.bottomAnchor, constant: Layout.DetailView.iconToSeparator),
+            categoryIcon.leadingAnchor.constraint(
+                equalTo: self.leadingAnchor, constant: Layout.DetailView.iconInset),
             
             // categoryLabel
-            categoryLabel.centerYAnchor.constraint(equalTo: categoryIcon.centerYAnchor),
-            categoryLabel.leadingAnchor.constraint(equalTo: categoryIcon.trailingAnchor, constant: 10),
-            categoryLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            categoryLabel.centerYAnchor.constraint(
+                equalTo: categoryIcon.centerYAnchor),
+            categoryLabel.leadingAnchor.constraint(
+                equalTo: categoryIcon.trailingAnchor, constant: Layout.DetailView.iconToSeparator),
+            categoryLabel.trailingAnchor.constraint(
+                equalTo: self.trailingAnchor, constant: Layout.Inset.trailingBottom),
 
             // thridSeparator
-            thridSeparator.topAnchor.constraint(equalTo: categoryIcon.bottomAnchor, constant: 10),
-            thridSeparator.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            thridSeparator.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            thridSeparator.topAnchor.constraint(
+                equalTo: categoryIcon.bottomAnchor, constant: Layout.DetailView.iconToSeparator),
+            thridSeparator.leadingAnchor.constraint(
+                equalTo: self.leadingAnchor, constant: Layout.Inset.leadingTop),
+            thridSeparator.trailingAnchor.constraint(
+                equalTo: self.trailingAnchor, constant: Layout.Inset.trailingBottom),
             
             // delete
-            requestDelete.topAnchor.constraint(equalTo: thridSeparator.bottomAnchor, constant: 10),
-            requestDelete.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
+            requestDelete.topAnchor.constraint(
+                equalTo: thridSeparator.bottomAnchor, constant: Layout.DetailView.iconToSeparator),
+            requestDelete.trailingAnchor.constraint(
+                equalTo: self.trailingAnchor, constant: Layout.Inset.trailingBottom)
         ])
     }
     
@@ -200,7 +228,20 @@ final class StoreDetailView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        viewHeightConstraint?.constant = storeDetailLabel.frame.height + addressLabel.frame.height + phoneIcon.frame.height + categoryLabel.frame.height + requestDelete.frame.height + 140
+        let storeDetailHeight = storeDetailLabel.frame.height
+        let addressHeight = addressLabel.frame.height
+        let phoneHeight = phoneIcon.frame.height
+        let categoryHeight = categoryLabel.frame.height
+        let requestDeleteHeight = requestDelete.frame.height
         
+        let totalHeight =
+            storeDetailHeight +
+            addressHeight +
+            phoneHeight +
+            categoryHeight +
+            requestDeleteHeight +
+            Layout.DetailView.storeDetailInset
+        
+        viewHeightConstraint?.constant = totalHeight
     }
 }

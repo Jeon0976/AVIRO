@@ -181,11 +181,13 @@ final class TopDetailView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        viewHeightConstraint?.constant =
-            imageView.frame.height +
-            title.frame.height +
-            address.frame.height +
-            stackView.frame.height +
-            Layout.DetailView.fisrtViewHeightInset
+        let imageHeight = imageView.frame.height
+        let titleHeight = title.frame.height
+        let addressHeight = address.frame.height
+        let stackViewHeight = stackView.frame.height
+        
+        let totalHeight = imageHeight + titleHeight + addressHeight + stackViewHeight + Layout.DetailView.fisrtViewInset
+        
+        viewHeightConstraint?.constant = totalHeight
     }
 }

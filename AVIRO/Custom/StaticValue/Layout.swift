@@ -27,6 +27,7 @@ struct Layout {
     
         static let separatorCornerRadius = CGFloat(2.5)
         static let buttonStackViewSpacing = CGFloat(5)
+        static let menuSpacing = CGFloat(5)
         
         // MARK: 가게 리스트만 해당되는 Inset
         static let iconInest = CGFloat(25)
@@ -53,10 +54,18 @@ struct Layout {
         static let bigTitile = UIFont.systemFont(ofSize: 25, weight: .bold)
         static let bigNormal = UIFont.systemFont(ofSize: 18, weight: .regular)
         
+        // Search Table
         static let tableSubTitle = UIFont.systemFont(ofSize: 14, weight: .medium)
         static let tableDistance = UIFont.systemFont(ofSize: 14, weight: .medium)
         
         static let subTitle = UIFont.systemFont(ofSize: 12, weight: .light)
+        
+        static let placeInfoNormal = UIFont.systemFont(ofSize: 15, weight: .medium)
+        static let noInfoSub = UIFont.systemFont(ofSize: 14)
+        
+        // menuInfo Table
+        static let menuInfo = UIFont.systemFont(ofSize: 16)
+        static let menuSubInfo = UIFont.systemFont(ofSize: 14)
     }
     
     // MARK: Slide View
@@ -85,8 +94,21 @@ struct Layout {
     // MARK: Detail View
     struct DetailView {
         static let viewCornerRadius = CGFloat(16)
+                
+        static let iconInset = CGFloat(30)
+        static let iconToSeparator = CGFloat(10)
         
-        static let fisrtViewHeightInset = CGFloat(76)
+        // plus * 2 + half + normal + 마지막 inset 16
+        static let fisrtViewInset = Inset.leadingTopPlus * 2 + Inset.leadingTopHalf + Inset.leadingTop + 16
+
+        // plus + iconInset + iconToSeparator * 6 + 마지막 inset 20
+        static let storeDetailInset = Inset.leadingTopPlus + iconInset + iconToSeparator * 6 + 20
+        
+        // plus * 2 + menuSpacing + 마지막 inset 20
+        static let whenNoMenuTable = Inset.leadingTopPlus * 2 + Inset.menuSpacing + 20
+        
+        // plus * 2 + 마지막 inset 20
+        static let whenMenuTable = Inset.leadingTopPlus * 2 + 20
     }
     
     // MARK: Inroll View

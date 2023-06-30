@@ -12,7 +12,7 @@ final class MenuDetailView: UIView {
         let label = UILabel()
         
         label.textColor = .mainTitle
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.font = Layout.Label.mainTitle
         label.text = "메뉴 정보"
 
         return label
@@ -30,7 +30,7 @@ final class MenuDetailView: UIView {
         let label = UILabel()
        
         label.textColor = .mainTitle
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.font = Layout.Label.mainTitle
         label.text = "등록된 메뉴가 없어요"
         
         return label
@@ -39,13 +39,12 @@ final class MenuDetailView: UIView {
     let noMenuLabel2: UILabel = {
         let label = UILabel()
         label.textColor = .subTitle
-        label.font = .systemFont(ofSize: 14)
+        label.font = Layout.Label.noInfoSub
         label.text = "식당 정보 오류 및 삭제 요청을 통해 등록해주세요"
         
         return label
     }()
 
-    // TODO: Test Layout Constraint
     var viewHeightConstraint: NSLayoutConstraint?
     var tableViewHeightConstraint: NSLayoutConstraint?
         
@@ -80,21 +79,30 @@ final class MenuDetailView: UIView {
         
         NSLayoutConstraint.activate([
             // title
-            title.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
-            title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            title.topAnchor.constraint(
+                equalTo: self.topAnchor, constant: Layout.Inset.leadingTopPlus),
+            title.leadingAnchor.constraint(
+                equalTo: self.leadingAnchor, constant: Layout.Inset.leadingTop),
             
             // tableView
-            tableView.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 20),
-            tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            tableView.topAnchor.constraint(
+                equalTo: title.bottomAnchor, constant: Layout.Inset.leadingTopPlus),
+            tableView.leadingAnchor.constraint(
+                equalTo: self.leadingAnchor, constant: Layout.Inset.leadingTop),
+            tableView.trailingAnchor.constraint(
+                equalTo: self.trailingAnchor, constant: Layout.Inset.trailingBottom),
              
             // noMenuLabel
-            noMenuLabel.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 20),
-            noMenuLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            noMenuLabel.topAnchor.constraint(
+                equalTo: title.bottomAnchor, constant: Layout.Inset.leadingTopPlus),
+            noMenuLabel.centerXAnchor.constraint(
+                equalTo: self.centerXAnchor),
             
             // noMenuLabel2
-            noMenuLabel2.topAnchor.constraint(equalTo: noMenuLabel.bottomAnchor, constant: 5),
-            noMenuLabel2.centerXAnchor.constraint(equalTo: noMenuLabel.centerXAnchor)
+            noMenuLabel2.topAnchor.constraint(
+                equalTo: noMenuLabel.bottomAnchor, constant: Layout.Inset.menuSpacing),
+            noMenuLabel2.centerXAnchor.constraint(
+                equalTo: noMenuLabel.centerXAnchor)
         ])
     }
 
@@ -110,9 +118,11 @@ final class MenuDetailView: UIView {
             let titleHeight = title.frame.height
             let noMenuLabelHeight = noMenuLabel.frame.height
             let noMenuLabel2Height = noMenuLabel2.frame.height
-            let totalHeight = titleHeight + noMenuLabelHeight + noMenuLabel2Height + 70
+            
+            let totalHeight = titleHeight + noMenuLabelHeight + noMenuLabel2Height + Layout.DetailView.whenNoMenuTable
             
             viewHeightConstraint?.constant = totalHeight
+            
             tableView.isHidden = true
             noMenuLabel.isHidden = false
             noMenuLabel2.isHidden = false
@@ -134,11 +144,12 @@ final class MenuDetailView: UIView {
             let tableHeight = tableView.contentSize.height
             
             tableViewHeightConstraint?.constant = tableHeight
+            
+            let tableInset = CGFloat(menuArray.count * 2)
 
-            let totalHeight = titleHeight + tableHeight + CGFloat(menuArray.count * 2) + 45
+            let totalHeight = titleHeight + tableHeight + tableInset + Layout.DetailView.whenMenuTable
 
             viewHeightConstraint?.constant = totalHeight
-
         }
     }
 }
@@ -158,7 +169,7 @@ extension MenuDetailView: UITableViewDataSource {
         cell?.selectionStyle = .none
         
         let currencyKR = String(menuItem.price).currenyKR()
-        let howToRequest = menuItem.menuType == MenuType.vegan.value ? "비건" : menuItem.howToRequest
+        let howToRequest = menuItem.isCheck == false ? "비건" : menuItem.howToRequest
         
         cell?.makeData(menuItem.menu, currencyKR, howToRequest)
         cell?.isCheck(menuItem.isCheck)
@@ -197,25 +208,31 @@ class DetailMenuTableCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             // title
-            title.topAnchor.constraint(equalTo: contentView.topAnchor),
-            title.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            title.topAnchor.constraint(
+                equalTo: contentView.topAnchor),
+            title.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor),
             
             // price
-            price.topAnchor.constraint(equalTo: contentView.topAnchor),
-            price.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            price.topAnchor.constraint(
+                equalTo: contentView.topAnchor),
+            price.trailingAnchor.constraint(
+                equalTo: contentView.trailingAnchor),
             
             // isVegan
-            isVegan.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 5),
-            isVegan.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
+            isVegan.topAnchor.constraint(
+                equalTo: title.bottomAnchor, constant: Layout.Inset.menuSpacing),
+            isVegan.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor)
         ])
         
-        isVegan.font = .systemFont(ofSize: 14)
         isVegan.textColor = .allVegan
         title.textColor = .mainTitle
         price.textColor = .mainTitle
-        title.font = .systemFont(ofSize: 16)
-        price.font = .systemFont(ofSize: 16)
         
+        isVegan.font = Layout.Label.menuSubInfo
+        title.font = Layout.Label.menuInfo
+        price.font = Layout.Label.menuInfo
     }
 
     required init?(coder: NSCoder) {
