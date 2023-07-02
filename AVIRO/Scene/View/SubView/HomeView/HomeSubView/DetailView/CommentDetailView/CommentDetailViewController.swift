@@ -59,7 +59,6 @@ final class CommentDetailViewController: UIViewController {
         
         presenter.viewDidDisappear()
     }
-    
 }
 
 extension CommentDetailViewController: CommentDetailProtocol {
@@ -78,30 +77,45 @@ extension CommentDetailViewController: CommentDetailProtocol {
         
         NSLayoutConstraint.activate([
             // commentsTitle
-            commentsTitle.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
-            commentsTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            commentsTitle.topAnchor.constraint(
+                equalTo: view.topAnchor, constant: Layout.Inset.leadingTop),
+            commentsTitle.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor, constant: Layout.Inset.leadingTop),
             
             // commentsCount
-            commentsCount.leadingAnchor.constraint(equalTo: commentsTitle.trailingAnchor, constant: 4),
-            commentsCount.bottomAnchor.constraint(equalTo: commentsTitle.bottomAnchor),
+            commentsCount.leadingAnchor.constraint(
+                equalTo: commentsTitle.trailingAnchor, constant: Layout.Inset.leadingTopSmall),
+            commentsCount.bottomAnchor.constraint(
+                equalTo: commentsTitle.bottomAnchor),
             
             // commentsTableView
-            commentsTableView.topAnchor.constraint(equalTo: commentsTitle.bottomAnchor, constant: 20),
-            commentsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            commentsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            commentsTableView.bottomAnchor.constraint(equalTo: pushCommentView.topAnchor),
+            commentsTableView.topAnchor.constraint(
+                equalTo: commentsTitle.bottomAnchor, constant: Layout.Inset.leadingTopPlus),
+            commentsTableView.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor, constant: Layout.Inset.leadingTop),
+            commentsTableView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor, constant: Layout.Inset.trailingBottom),
+            commentsTableView.bottomAnchor.constraint(
+                equalTo: pushCommentView.topAnchor),
             
-            pushCommentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            pushCommentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            pushCommentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            pushCommentView.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor),
+            pushCommentView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor),
+            pushCommentView.bottomAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: Layout.Inset.trailingBottom),
             
             // noCommentLabel1
-            noCommentLabel1.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            noCommentLabel1.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            noCommentLabel1.centerXAnchor.constraint(
+                equalTo: view.centerXAnchor),
+            noCommentLabel1.centerYAnchor.constraint(
+                equalTo: view.centerYAnchor),
             
             // noCommentLabel2
-            noCommentLabel2.centerXAnchor.constraint(equalTo: noCommentLabel1.centerXAnchor),
-            noCommentLabel2.topAnchor.constraint(equalTo: noCommentLabel1.bottomAnchor, constant: 6)
+            noCommentLabel2.centerXAnchor.constraint(
+                equalTo: noCommentLabel1.centerXAnchor),
+            noCommentLabel2.topAnchor.constraint(
+                equalTo: noCommentLabel1.bottomAnchor, constant: Layout.Inset.menuSpacing)
         ])
     }
     
@@ -114,20 +128,21 @@ extension CommentDetailViewController: CommentDetailProtocol {
 
         // no Comment
         noCommentLabel1.textColor = .mainTitle
-        noCommentLabel1.font = .systemFont(ofSize: 18, weight: .bold)
-        noCommentLabel1.text = "아직 댓글이 없어요"
+        noCommentLabel1.font = Layout.Label.mainTitle
+        noCommentLabel1.text = StringValue.DetailView.noCommentInfo
         
         noCommentLabel2.textColor = .lightGray
-        noCommentLabel2.font = .systemFont(ofSize: 14)
-        noCommentLabel2.text = "영광스러운 첫 댓글을 남겨주세요"
+        noCommentLabel2.font = Layout.Label.noInfoSub
+        noCommentLabel2.text = StringValue.DetailView.noCommentDetail
         
         // comments Title
-        commentsTitle.text = "댓글"
+        commentsTitle.text = StringValue.DetailView.commentInfoTitle
         commentsTitle.textColor = .mainTitle
-        commentsTitle.font = .systemFont(ofSize: 20, weight: .bold)
+        commentsTitle.font = Layout.Label.commentTitle
         
         // comments Count
-        commentsCount.text = "0개"
+        commentsCount.text = "0" + StringValue.DetailView.commentCount
+        commentsCount.font = Layout.Label.menuSubInfo
         
         // comments tableView
         commentsTableView.dataSource = self
@@ -135,6 +150,7 @@ extension CommentDetailViewController: CommentDetailProtocol {
         commentsTableView.register(CommentsViewCell.self,
                                    forCellReuseIdentifier: CommentsViewCell.identifier
         )
+        
         commentsTableView.rowHeight = UITableView.automaticDimension
         commentsTableView.estimatedRowHeight = 80.0
         commentsTableView.separatorStyle = .none
@@ -151,7 +167,7 @@ extension CommentDetailViewController: CommentDetailProtocol {
         if count != 0 {
             noCommentLabel1.isHidden = true
             noCommentLabel2.isHidden = true
-            commentsCount.text = "\(count)개"
+            commentsCount.text = "\(count)" + StringValue.DetailView.commentCount
             tableViewReload()
         }
     }
@@ -222,6 +238,7 @@ extension CommentDetailViewController: UITextViewDelegate {
         
         if estimatedSize.height <= textView.font!.lineHeight * 5 {
             textView.isScrollEnabled = false
+
             textView.constraints.forEach { constraint in
                 if constraint.firstAttribute == .height {
                     constraint.constant = estimatedSize.height
@@ -239,8 +256,13 @@ extension CommentDetailViewController: UIGestureRecognizerDelegate {
         if touch.view is UITextView {
             return false
         }
+        
+        if touch.view is UIButton {
+            return false
+        }
 
         view.endEditing(true)
+        
         return true
     }
     

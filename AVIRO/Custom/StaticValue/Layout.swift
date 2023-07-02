@@ -38,6 +38,9 @@ struct Layout {
     // MARK: 공통 button
     struct Button {
         static let cornerRadius = CGFloat(28)
+        
+        static let buttonEdgeInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        
         static let font = UIFont.systemFont(ofSize: 18, weight: .bold)
         static let height = CGFloat(54)
     }
@@ -66,6 +69,12 @@ struct Layout {
         // menuInfo Table
         static let menuInfo = UIFont.systemFont(ofSize: 16)
         static let menuSubInfo = UIFont.systemFont(ofSize: 14)
+        
+        // comment view
+        static let commentTitle = UIFont.systemFont(ofSize: 20, weight: .bold)
+        
+        // Comment Text View
+        static let commentTextView = UIFont.systemFont(ofSize: 17, weight: .medium)
     }
     
     // MARK: Slide View
@@ -98,17 +107,28 @@ struct Layout {
         static let iconInset = CGFloat(30)
         static let iconToSeparator = CGFloat(10)
         
+        static let moreCommentInset = CGFloat(-13)
+        
         // plus * 2 + half + normal + 마지막 inset 16
         static let fisrtViewInset = Inset.leadingTopPlus * 2 + Inset.leadingTopHalf + Inset.leadingTop + 16
 
         // plus + iconInset + iconToSeparator * 6 + 마지막 inset 20
-        static let storeDetailInset = Inset.leadingTopPlus + iconInset + iconToSeparator * 6 + 20
+        static let storeDetailInset = Inset.leadingTopPlus + iconInset + iconToSeparator * 6 + 26
         
         // plus * 2 + menuSpacing + 마지막 inset 20
         static let whenNoMenuTable = Inset.leadingTopPlus * 2 + Inset.menuSpacing + 20
         
         // plus * 2 + 마지막 inset 20
-        static let whenMenuTable = Inset.leadingTopPlus * 2 + 20
+        static let whenHaveMenuTable = Inset.leadingTopPlus * 2 + 20
+        
+        // plus * 2 + menuSpacing + normal + 20
+        static let whenNoComment = Inset.leadingTopPlus * 2 + Inset.menuSpacing + Inset.leadingTop + 20
+        
+        // plus * 2 + normal + 10
+        static let whenHaveCommentUnder5 = Inset.leadingTopPlus * 2 + Inset.leadingTop + 10
+        
+        // plus * 2 + normal * 2 + 10
+        static let whenHaveCommentOver5 = Inset.leadingTopPlus * 2 + Inset.leadingTop * 2 + 10
     }
     
     // MARK: Inroll View

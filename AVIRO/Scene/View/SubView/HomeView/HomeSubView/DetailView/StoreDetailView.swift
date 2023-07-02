@@ -10,7 +10,7 @@ import UIKit
 final class StoreDetailView: UIView {
     let storeDetailLabel: UILabel = {
        let label = UILabel()
-        label.text = "식당 정보"
+        label.text = StringValue.DetailView.storeInfoTitle
         label.font = Layout.Label.mainTitle
         label.textColor = .mainTitle
         label.numberOfLines = 0
@@ -21,7 +21,7 @@ final class StoreDetailView: UIView {
     let addressIcon: UIImageView = {
         let imageView = UIImageView()
         
-        imageView.image = UIImage(named: "map")
+        imageView.image = UIImage(named: Image.map)
         imageView.contentMode = .scaleAspectFit
         
         return imageView
@@ -49,7 +49,7 @@ final class StoreDetailView: UIView {
     let phoneIcon: UIImageView = {
         let imageView = UIImageView()
         
-        imageView.image = UIImage(named: "call")
+        imageView.image = UIImage(named: Image.call)
         imageView.contentMode = .scaleAspectFit
         
         return imageView
@@ -78,7 +78,7 @@ final class StoreDetailView: UIView {
     let categoryIcon: UIImageView = {
         let imageView = UIImageView()
         
-        imageView.image = UIImage(named: "info")
+        imageView.image = UIImage(named: Image.info)
         imageView.contentMode = .scaleAspectFit
         
         return imageView
@@ -108,7 +108,7 @@ final class StoreDetailView: UIView {
         let label = UILabel()
         label.textColor = .subTitle
         label.font = Layout.Label.subTitle
-        label.text = "식당 정보 오류 및 삭제 요청"
+        label.text = StringValue.DetailView.requestDelete
         
         return label
     }()
@@ -229,9 +229,9 @@ final class StoreDetailView: UIView {
         super.layoutSubviews()
         
         let storeDetailHeight = storeDetailLabel.frame.height
-        let addressHeight = addressLabel.frame.height
+        let addressHeight = addressIcon.frame.height
         let phoneHeight = phoneIcon.frame.height
-        let categoryHeight = categoryLabel.frame.height
+        let categoryHeight = categoryIcon.frame.height
         let requestDeleteHeight = requestDelete.frame.height
         
         let totalHeight =

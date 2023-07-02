@@ -13,7 +13,7 @@ final class MenuDetailView: UIView {
         
         label.textColor = .mainTitle
         label.font = Layout.Label.mainTitle
-        label.text = "메뉴 정보"
+        label.text = StringValue.DetailView.menuInfoTitle
 
         return label
     }()
@@ -31,7 +31,7 @@ final class MenuDetailView: UIView {
        
         label.textColor = .mainTitle
         label.font = Layout.Label.mainTitle
-        label.text = "등록된 메뉴가 없어요"
+        label.text = StringValue.DetailView.noMenuInfo
         
         return label
     }()
@@ -40,7 +40,7 @@ final class MenuDetailView: UIView {
         let label = UILabel()
         label.textColor = .subTitle
         label.font = Layout.Label.noInfoSub
-        label.text = "식당 정보 오류 및 삭제 요청을 통해 등록해주세요"
+        label.text = StringValue.DetailView.noMenuDetail
         
         return label
     }()
@@ -147,7 +147,7 @@ final class MenuDetailView: UIView {
             
             let tableInset = CGFloat(menuArray.count * 2)
 
-            let totalHeight = titleHeight + tableHeight + tableInset + Layout.DetailView.whenMenuTable
+            let totalHeight = titleHeight + tableHeight + tableInset + Layout.DetailView.whenHaveMenuTable
 
             viewHeightConstraint?.constant = totalHeight
         }

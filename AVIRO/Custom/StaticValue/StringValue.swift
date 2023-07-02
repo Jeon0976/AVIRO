@@ -38,9 +38,30 @@ struct StringValue {
         static let searchPlaceHolder = "가게 이름을 검색해보세요"
     }
     
+    // MARK: Detail View
     struct DetailView {
-        static let noInfo = "정보가 없습니다."
+        static let storeInfoTitle = "식당 정보"
+        static let menuInfoTitle = "메뉴 정보"
+        static let commentInfoTitle = "댓글"
+        
+        static let requestDelete = "식당 정보 오류 및 삭제 요청"
+        static let commentCount = "개"
+        
+        static let noInfo = "정보가 없습니다"
+        static let noMenuInfo = "등록된 메뉴가 없어요"
+        static let noMenuDetail = "식당 정보 오류 및 삭제 요청을 통해 등록해주세요"
+        static let noCommentInfo = "아직 댓글이 없어요"
+        static let noCommentDetail = "영광스러운 첫 댓글을 남겨주세요"
+        
+        static let commentButton = "나도 댓글 달기"
     }
+    
+    // MARK: Comment View
+    struct CommentView {
+        static let commentPlaceHolder = "이 식당에 대한 경험을 적어주세요!"
+        static let reportButton = "게시"
+    }
+    
     
     // MARK: Inroll View
     struct InrollView {

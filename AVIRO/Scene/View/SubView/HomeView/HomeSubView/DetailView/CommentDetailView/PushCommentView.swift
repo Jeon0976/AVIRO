@@ -11,8 +11,8 @@ final class PushCommentView: UIView {
     let textView: UITextView = {
         let textView = UITextView()
         
-        textView.text = "이 식당에 대한 경험을 적어주세요!"
-        textView.font = .systemFont(ofSize: 17, weight: .medium)
+        textView.text = StringValue.CommentView.commentPlaceHolder
+        textView.font = Layout.Label.commentTextView
         textView.textColor = .separateLine
         
         textView.isEditable = true
@@ -27,7 +27,7 @@ final class PushCommentView: UIView {
     let button: UIButton = {
         let button = UIButton()
         
-        button.setTitle("게시", for: .normal)
+        button.setTitle(StringValue.CommentView.reportButton, for: .normal)
         button.setTitleColor(.separateLine, for: .normal)
         
         return button
@@ -37,7 +37,7 @@ final class PushCommentView: UIView {
        let separator = UIView()
         
         separator.backgroundColor = .separateLine
-        separator.layer.cornerRadius = 2.5
+        separator.layer.cornerRadius = Layout.Inset.separatorCornerRadius
         separator.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
         return separator
@@ -64,19 +64,28 @@ final class PushCommentView: UIView {
         
         NSLayoutConstraint.activate([
             // separator
-            separator.topAnchor.constraint(equalTo: self.topAnchor),
-            separator.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            separator.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            separator.topAnchor.constraint(
+                equalTo: self.topAnchor),
+            separator.leadingAnchor.constraint(
+                equalTo: self.leadingAnchor),
+            separator.trailingAnchor.constraint(
+                equalTo: self.trailingAnchor),
             
             // textView
-            textView.topAnchor.constraint(equalTo: separator.bottomAnchor),
-            textView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            textView.trailingAnchor.constraint(equalTo: button.leadingAnchor, constant: -16),
+            textView.topAnchor.constraint(
+                equalTo: separator.bottomAnchor),
+            textView.leadingAnchor.constraint(
+                equalTo: self.leadingAnchor, constant: Layout.Inset.leadingTop),
+            textView.trailingAnchor.constraint(
+                equalTo: button.leadingAnchor, constant: Layout.Inset.trailingBottom),
             
             // button
-            button.topAnchor.constraint(equalTo: separator.bottomAnchor),
-            button.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            button.widthAnchor.constraint(equalTo: button.heightAnchor)
+            button.topAnchor.constraint(
+                equalTo: separator.bottomAnchor),
+            button.trailingAnchor.constraint(
+                equalTo: self.trailingAnchor, constant: Layout.Inset.trailingBottom),
+            button.widthAnchor.constraint(
+                equalTo: button.heightAnchor)
         ])
     }
     

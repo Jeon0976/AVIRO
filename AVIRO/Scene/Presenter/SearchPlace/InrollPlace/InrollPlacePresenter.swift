@@ -79,6 +79,14 @@ final class InrollPlacePresenter: NSObject {
         }
     }
     
+    func plusAllVeganTable() {
+        
+    }
+    
+    func plusSomeMenuVeganTable() {
+        
+    }
+    
     // MARK: Button Clieck Property 저장
     func buttonChecked(_ allVegan: Bool, _ someMenuVegan: Bool, _ ifRequestVegan: Bool) {
         self.allVegan = allVegan

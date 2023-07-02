@@ -155,7 +155,7 @@ extension InrollPlaceViewController: InrollPlaceProtocol {
         view.backgroundColor = .white
         
         // scrollView
-        scrollView.delaysContentTouches = false
+//        scrollView.delaysContentTouches = false
         
         // report button & navigaitonRightBarButton
         reportStoreButton.isEnabled = false

@@ -23,10 +23,14 @@ class CommentsViewCell: UITableViewCell {
         }
         
         NSLayoutConstraint.activate([
-              comment.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-              comment.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-              comment.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-              comment.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8)
+            comment.topAnchor.constraint(
+                equalTo: contentView.topAnchor, constant: Layout.Inset.leadingTopHalf),
+            comment.bottomAnchor.constraint(
+                equalTo: contentView.bottomAnchor, constant: Layout.Inset.trailingBottomHalf),
+            comment.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor, constant: Layout.Inset.leadingTopHalf),
+            comment.trailingAnchor.constraint(
+                equalTo: contentView.trailingAnchor, constant: Layout.Inset.trailingBottomHalf)
           ])
         
         comment.numberOfLines = 0

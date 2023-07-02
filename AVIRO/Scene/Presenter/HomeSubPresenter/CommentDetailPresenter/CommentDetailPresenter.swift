@@ -76,7 +76,12 @@ final class CommentDetailPresenter {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateString = dateFormatter.string(from: date)
         
-        let commentArrayValue = CommentArray(commentId: commentModel.commentId, userId: commentModel.userId, content: comment, createdTime: dateString)
+        let commentArrayValue = CommentArray(
+            commentId: commentModel.commentId,
+            userId: commentModel.userId,
+            content: comment,
+            createdTime: dateString
+        )
         
         aviroAPIManager.postCommentModel(commentModel)
         
