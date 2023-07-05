@@ -20,6 +20,9 @@ final class PlaceListViewPresenter: NSObject {
     
     private var placeList = [PlaceListModel]()
     
+    // textColor 변경을 위한 변수
+    var inrolledData: String?
+    
     // page 추가
     var currentPage = 1
     var isEnd = false

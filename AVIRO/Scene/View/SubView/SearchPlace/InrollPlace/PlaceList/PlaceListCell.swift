@@ -101,10 +101,13 @@ final class PlaceListCell: UITableViewCell {
     }
     
     // MARK: cell data 바인딩
-    func makeCellData(_ listData: PlaceListCellModel) {
+    func makeCellData(_ listData: PlaceListCellModel,
+                      attributedTitle: NSAttributedString?,
+                      attributedAddress: NSAttributedString?
+    ) {
         makeAttribute()
-        title.text = listData.title
-        address.text = listData.address
+        title.attributedText = attributedTitle ?? NSAttributedString(string: listData.title)
+        address.attributedText = attributedAddress ?? NSAttributedString(string: listData.address)
         category.text = listData.category
         distance.text = listData.distance.convertDistanceUnit()
     }

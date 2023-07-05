@@ -61,7 +61,13 @@ extension PlaceListViewController: PlaceListProtocol {
         tapGesture.delegate = self
         view.backgroundColor = .white
         navigationItem.title = StringValue.PlaceListView.naviTitle
+        navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.prefersLargeTitles = true
         
+        let searchController = UISearchController(searchResultsController: nil)
+        navigationItem.searchController = searchController
+        searchController.hidesNavigationBarDuringPresentation = false
+    
         // listTableView
         listTableView.backgroundColor = .white
         listTableView.dataSource = self
@@ -96,11 +102,12 @@ extension PlaceListViewController: PlaceListProtocol {
 extension PlaceListViewController: UITableViewDelegate {
     // MARK: Scroll 될 때 API 요청을 위한 메서드
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentSize.height
+        let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         let height = scrollView.frame.size.height
 
-        if offsetY > contentHeight - height {
+        // 더 빠른 API 호출을 위한 상수 300
+        if offsetY > contentHeight - height - 300 {
             let query = searchField.text ?? ""
             presenter.loadData(query)
         }
@@ -144,13 +151,30 @@ extension PlaceListViewController: UITableViewDataSource {
             address: address,
             distance: distance
         )
-        
-        cell?.makeCellData(cellData)
+  
+        let attributedTitle = attributedText(title)
+        let attributedAddress = attributedText(address)
+
+        cell?.makeCellData(cellData, attributedTitle: attributedTitle, attributedAddress: attributedAddress)
         
         cell?.backgroundColor = .white
         cell?.selectionStyle = .none
-
+        
         return cell ?? UITableViewCell()
+    }
+    
+    // MARK: 색상 변경
+    // TODO: Extension String으로 옮김 작업 
+    func attributedText(_ text: String) -> NSMutableAttributedString? {
+        if let range = text.range(of: presenter.inrolledData ?? "", options: []) {
+            let attributedText = NSMutableAttributedString(string: text)
+            attributedText.addAttribute(.foregroundColor,
+                                        value: UIColor.subTitle ?? UIColor.gray,
+                                        range: NSRange(range, in: text)
+            )
+            return attributedText
+        }
+        return nil
     }
 }
 
@@ -159,6 +183,7 @@ extension PlaceListViewController {
     @objc func textFieldDidChange(_ textField: UITextField) {
         
         if let text = textField.text {
+            presenter.inrolledData = text
             presenter.searchData(text)
         }
     }

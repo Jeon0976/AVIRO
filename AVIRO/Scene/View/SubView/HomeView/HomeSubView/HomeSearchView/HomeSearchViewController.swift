@@ -126,7 +126,7 @@ extension HomeSearchViewController: UITableViewDataSource, UITableViewDelegate {
             distance: distance
         )
 
-        cell?.makeCellData(cellData)
+        cell?.makeCellData(cellData, attributedTitle: nil, attributedAddress: nil)
 
         cell?.backgroundColor = .white
         cell?.selectionStyle = .none
