@@ -10,6 +10,8 @@
 		A156F24E1DC1F5FA54D44A76 /* Pods_AVIRO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 796022A3066B91147B712BB4 /* Pods_AVIRO.framework */; };
 		C50367F52A1795D10020C6BB /* HomeViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */; };
 		C50367F82A179D7B0020C6BB /* CustomConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F72A179D7B0020C6BB /* CustomConfiguration.swift */; };
+		C51132BF2A559838006E1EC3 /* NotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51132BE2A559838006E1EC3 /* NotificationCenter.swift */; };
+		C51132C12A559BCA006E1EC3 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51132C02A559BCA006E1EC3 /* AppController.swift */; };
 		C52B61CB2A31F97E001388E3 /* InrollPlaceViewUserInteractions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52B61CA2A31F97E001388E3 /* InrollPlaceViewUserInteractions.swift */; };
 		C52FA3432A175B20005E70DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FA3422A175B20005E70DC /* AppDelegate.swift */; };
 		C52FA3452A175B20005E70DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FA3442A175B20005E70DC /* SceneDelegate.swift */; };
@@ -26,7 +28,6 @@
 		C5351B602A19F9A700116D50 /* PlaceListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B5F2A19F9A700116D50 /* PlaceListModel.swift */; };
 		C5351B622A1A083400116D50 /* PlaceListCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B612A1A083400116D50 /* PlaceListCellModel.swift */; };
 		C5351B672A1A154C00116D50 /* PageEndingCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B662A1A154C00116D50 /* PageEndingCheck.swift */; };
-		C5351B692A1A2EAF00116D50 /* CustomPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B682A1A2EAF00116D50 /* CustomPresentation.swift */; };
 		C5351B6D2A1B215D00116D50 /* InrollPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B6C2A1B215D00116D50 /* InrollPlaceViewController.swift */; };
 		C5351B6F2A1B242C00116D50 /* InrollPlacePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B6E2A1B242C00116D50 /* InrollPlacePresenter.swift */; };
 		C5351B7A2A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B792A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift */; };
@@ -92,6 +93,8 @@
 		B57500A8C1EA6C6CFDED2C4C /* Pods-AVIRO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AVIRO.debug.xcconfig"; path = "Target Support Files/Pods-AVIRO/Pods-AVIRO.debug.xcconfig"; sourceTree = "<group>"; };
 		C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewPresenter.swift; sourceTree = "<group>"; };
 		C50367F72A179D7B0020C6BB /* CustomConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomConfiguration.swift; sourceTree = "<group>"; };
+		C51132BE2A559838006E1EC3 /* NotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenter.swift; sourceTree = "<group>"; };
+		C51132C02A559BCA006E1EC3 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		C52B61CA2A31F97E001388E3 /* InrollPlaceViewUserInteractions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewUserInteractions.swift; sourceTree = "<group>"; };
 		C52FA33F2A175B20005E70DC /* AVIRO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AVIRO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C52FA3422A175B20005E70DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -111,7 +114,6 @@
 		C5351B5F2A19F9A700116D50 /* PlaceListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListModel.swift; sourceTree = "<group>"; };
 		C5351B612A1A083400116D50 /* PlaceListCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListCellModel.swift; sourceTree = "<group>"; };
 		C5351B662A1A154C00116D50 /* PageEndingCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageEndingCheck.swift; sourceTree = "<group>"; };
-		C5351B682A1A2EAF00116D50 /* CustomPresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPresentation.swift; sourceTree = "<group>"; };
 		C5351B6C2A1B215D00116D50 /* InrollPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewController.swift; sourceTree = "<group>"; };
 		C5351B6E2A1B242C00116D50 /* InrollPlacePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlacePresenter.swift; sourceTree = "<group>"; };
 		C5351B792A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapResponseCoordinateModel.swift; sourceTree = "<group>"; };
@@ -272,16 +274,24 @@
 		C50367F62A179D6E0020C6BB /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				C51132BD2A559826006E1EC3 /* Extension */,
 				C5CAAC432A39A92A008C5FDA /* StaticValue */,
 				C54BC0D92A2C2CF900B65439 /* UITextLabel */,
 				C54BC0D82A2C2CEE00B65439 /* UIButton */,
 				C54BC0D72A2C2CE700B65439 /* UIColor */,
 				C50367F72A179D7B0020C6BB /* CustomConfiguration.swift */,
 				C5351B552A19B67900116D50 /* CustomAlertController.swift */,
-				C5351B682A1A2EAF00116D50 /* CustomPresentation.swift */,
-				C5D8E8622A3DEC3900D88A43 /* String.swift */,
 			);
 			path = Custom;
+			sourceTree = "<group>";
+		};
+		C51132BD2A559826006E1EC3 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				C5D8E8622A3DEC3900D88A43 /* String.swift */,
+				C51132BE2A559838006E1EC3 /* NotificationCenter.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		C52FA3362A175B20005E70DC = {
@@ -348,6 +358,7 @@
 		C5351B652A1A128D00116D50 /* SingleTonModel */ = {
 			isa = PBXGroup;
 			children = (
+				C51132C02A559BCA006E1EC3 /* AppController.swift */,
 				C5351B532A19A7B100116D50 /* PersonalLocation.swift */,
 				C5351B662A1A154C00116D50 /* PageEndingCheck.swift */,
 			);
@@ -869,12 +880,12 @@
 				C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */,
 				C5351B672A1A154C00116D50 /* PageEndingCheck.swift in Sources */,
 				C5732C772A41A0A500CDC499 /* AVIROMapModel.swift in Sources */,
+				C51132BF2A559838006E1EC3 /* NotificationCenter.swift in Sources */,
 				C5FF13532A42C8810026981D /* AVIROPlaceModel.swift in Sources */,
 				C5351B5C2A19F60200116D50 /* PlaceListViewPresenter.swift in Sources */,
 				C5EB51162A21011C00B29CC1 /* DetailViewController.swift in Sources */,
 				C5EB51202A2118AB00B29CC1 /* MenuDetailView.swift in Sources */,
 				C52B61CB2A31F97E001388E3 /* InrollPlaceViewUserInteractions.swift in Sources */,
-				C5351B692A1A2EAF00116D50 /* CustomPresentation.swift in Sources */,
 				C5EB51122A20CC7D00B29CC1 /* HomeInfoStoreView.swift in Sources */,
 				C5EB50E42A1C685100B29CC1 /* TabBarItem.swift in Sources */,
 				C5351B7A2A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift in Sources */,
@@ -885,6 +896,7 @@
 				C5732C712A41739000CDC499 /* AVIROAPIManager.swift in Sources */,
 				C5EB50EC2A1C72C600B29CC1 /* TabBarViewController.swift in Sources */,
 				C5EB50F92A1E71BA00B29CC1 /* VeganMenuTableViewCell.swift in Sources */,
+				C51132C12A559BCA006E1EC3 /* AppController.swift in Sources */,
 				C5EB50F52A1DEC3900B29CC1 /* InrollPlaceViewAttribute.swift in Sources */,
 				C5A03C122A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift in Sources */,
 				C593B6472A4AB3A700D224CE /* PushCommentView.swift in Sources */,
