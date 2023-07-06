@@ -10,9 +10,9 @@ import AuthenticationServices
 
 final class LoginViewController: UIViewController {
     lazy var presenter = LoginViewPresenter(viewController: self)
-    
-    var scrollView = UIScrollView()
-    var viewPageControl = UIPageControl()
+        
+    var imageView = UIImageView()
+    var titleLabel = UILabel()
     var appleLoginButton = UIButton()
     var noLoginButton = UIButton()
     
@@ -28,8 +28,8 @@ extension LoginViewController: LoginViewProtocol {
     // MARK: Make Layout
     func makeLayout() {
         [
-            scrollView,
-            viewPageControl,
+            imageView,
+            titleLabel,
             appleLoginButton,
             noLoginButton
         ].forEach {
@@ -38,35 +38,28 @@ extension LoginViewController: LoginViewProtocol {
         }
         
         NSLayoutConstraint.activate([
-            // scrollView
-            scrollView.topAnchor.constraint(
-                equalTo: view.topAnchor),
-            scrollView.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor),
+            // imageView
+            // TODO: 추후 수정 예정
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageView.widthAnchor.constraint(equalToConstant: view.frame.width - 100),
+            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor),
+            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100),
             
-            // viewPageControl
-            viewPageControl.centerXAnchor.constraint(
-                equalTo: view.centerXAnchor),
-            viewPageControl.bottomAnchor.constraint(
-                equalTo: appleLoginButton.topAnchor, constant: Layout.Inset.trailingBottom),
-            viewPageControl.topAnchor.constraint(
-                equalTo: scrollView.bottomAnchor, constant: Layout.Inset.leadingTop),
+            // titleLabel
+            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 30),
             
             // appleLoginButton
-            appleLoginButton.bottomAnchor.constraint(
-                equalTo: noLoginButton.topAnchor, constant: Layout.Inset.trailingBottom),
+            appleLoginButton.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 50),
             appleLoginButton.leadingAnchor.constraint(
                 equalTo: view.leadingAnchor, constant: Layout.Inset.leadingTop),
             appleLoginButton.trailingAnchor.constraint(
                 equalTo: view.trailingAnchor, constant: Layout.Inset.trailingBottom),
             appleLoginButton.heightAnchor.constraint(
                 equalToConstant: Layout.Button.height),
-            
+
             // noLoginButton
-            noLoginButton.bottomAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: Layout.Inset.trailingBottom),
+            noLoginButton.topAnchor.constraint(equalTo: appleLoginButton.bottomAnchor, constant: 16),
             noLoginButton.centerXAnchor.constraint(
                 equalTo: view.centerXAnchor)
         ])
@@ -76,12 +69,12 @@ extension LoginViewController: LoginViewProtocol {
     func makeAttribute() {
         navigationController?.navigationBar.isHidden = true
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-
-        scrollView.backgroundColor = .brown
         
-        viewPageControl.numberOfPages = presenter.makeScrollView()
-        viewPageControl.currentPageIndicatorTintColor = .plusButton
-        viewPageControl.pageIndicatorTintColor = .gray
+        imageView.backgroundColor = .gray
+        
+        titleLabel.text = "어디서든\n비건으로!"
+        titleLabel.numberOfLines = 2
+        titleLabel.font = .systemFont(ofSize: 20, weight: .bold)
         
         appleLoginButton.setTitle(StringValue.Login.apple, for: .normal)
         appleLoginButton.setTitleColor(.mainTitle, for: .normal)
@@ -108,7 +101,8 @@ extension LoginViewController: LoginViewProtocol {
         
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         authorizationController.delegate = self
-        authorizationController.presentationContextProvider = self as? ASAuthorizationControllerPresentationContextProviding
+        authorizationController.presentationContextProvider = self
+            as? ASAuthorizationControllerPresentationContextProviding
         authorizationController.performRequests()
     }
     
@@ -122,7 +116,9 @@ extension LoginViewController: LoginViewProtocol {
 
 // MARK: Apple Login 처리 설정
 extension LoginViewController: ASAuthorizationControllerDelegate {
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+    func authorizationController(controller: ASAuthorizationController,
+                                 didCompleteWithAuthorization authorization: ASAuthorization
+    ) {
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             let userIdentifier = appleIDCredential.user
             let fullName = appleIDCredential.fullName?.formatted() ?? ""
@@ -137,7 +133,27 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
         }
     }
     
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+    // TODO: Error 처리
+    func authorizationController(controller: ASAuthorizationController,
+                                 didCompleteWithError error: Error
+    ) {
         
     }
+}
+
+extension LoginViewController: UICollectionViewDelegateFlowLayout {
+    
+}
+
+extension LoginViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = UICollectionViewCell()
+        
+        return cell
+    }
+    
 }

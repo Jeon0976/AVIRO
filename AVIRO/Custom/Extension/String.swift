@@ -31,4 +31,3 @@ extension String {
         return formatter.string(from: NSNumber(value: price)) ?? ""
     }
 }
-

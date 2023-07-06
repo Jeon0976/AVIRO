@@ -32,9 +32,10 @@ final class AppController {
     func show(in window: UIWindow) {
         self.window = window
         window.backgroundColor = .white
+        window.tintColor = .mainTitle
         window.makeKeyAndVisible()
         
-        checkUserIdentifier()
+        checkState()
     }
     
     private func setHomeView() {
@@ -49,7 +50,18 @@ final class AppController {
         rootViewController = UINavigationController(rootViewController: loginVC)
     }
     
-    private func checkUserIdentifier() {
+    private func setTutorialView() {
+        let tutorialVC = TutorialViewController()
+        
+        rootViewController = UINavigationController(rootViewController: tutorialVC)
+    }
+    
+    private func checkState() {
+        guard UserDefaults.standard.bool(forKey: "Tutorial") else {
+            setTutorialView()
+            return
+        }
+        
         guard let userIdentifier = userIdentifier else {
             setLoginView()
             return

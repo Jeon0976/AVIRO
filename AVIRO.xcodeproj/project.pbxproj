@@ -36,6 +36,7 @@
 		C54BC0DB2A2C2D0D00B65439 /* ColorCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54BC0DA2A2C2D0D00B65439 /* ColorCustom.swift */; };
 		C54BC0DD2A2C762C00B65439 /* CommentsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54BC0DC2A2C762C00B65439 /* CommentsLabel.swift */; };
 		C5538AAF2A1BB81200661DE2 /* VeganModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5538AAE2A1BB81200661DE2 /* VeganModel.swift */; };
+		C567C1502A56611500D4B426 /* TutorialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C567C14F2A56611500D4B426 /* TutorialCell.swift */; };
 		C5732C712A41739000CDC499 /* AVIROAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C702A41739000CDC499 /* AVIROAPIManager.swift */; };
 		C5732C732A41778A00CDC499 /* AVIROPostAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C722A41778A00CDC499 /* AVIROPostAPI.swift */; };
 		C5732C752A41962D00CDC499 /* AVIRORequestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C742A41962D00CDC499 /* AVIRORequestAPI.swift */; };
@@ -43,6 +44,7 @@
 		C5732C792A41AD8100CDC499 /* HomeMapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C782A41AD8100CDC499 /* HomeMapData.swift */; };
 		C5732C7C2A41D41B00CDC499 /* VeganTableFieldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C7B2A41D41B00CDC499 /* VeganTableFieldModel.swift */; };
 		C5732C7E2A41D42700CDC499 /* RequestTableFieldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C7D2A41D42700CDC499 /* RequestTableFieldModel.swift */; };
+		C58B9AAE2A5675B9008AEAC3 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58B9AAD2A5675B9008AEAC3 /* TutorialViewController.swift */; };
 		C593B6472A4AB3A700D224CE /* PushCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593B6462A4AB3A700D224CE /* PushCommentView.swift */; };
 		C593B64B2A4AEA9800D224CE /* AVIROCommentPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593B64A2A4AEA9800D224CE /* AVIROCommentPost.swift */; };
 		C593B64F2A4C490600D224CE /* MyPageViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593B64E2A4C490600D224CE /* MyPageViewPresenter.swift */; };
@@ -122,6 +124,7 @@
 		C54BC0DA2A2C2D0D00B65439 /* ColorCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCustom.swift; sourceTree = "<group>"; };
 		C54BC0DC2A2C762C00B65439 /* CommentsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsLabel.swift; sourceTree = "<group>"; };
 		C5538AAE2A1BB81200661DE2 /* VeganModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganModel.swift; sourceTree = "<group>"; };
+		C567C14F2A56611500D4B426 /* TutorialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCell.swift; sourceTree = "<group>"; };
 		C5732C702A41739000CDC499 /* AVIROAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROAPIManager.swift; sourceTree = "<group>"; };
 		C5732C722A41778A00CDC499 /* AVIROPostAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROPostAPI.swift; sourceTree = "<group>"; };
 		C5732C742A41962D00CDC499 /* AVIRORequestAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIRORequestAPI.swift; sourceTree = "<group>"; };
@@ -129,6 +132,7 @@
 		C5732C782A41AD8100CDC499 /* HomeMapData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMapData.swift; sourceTree = "<group>"; };
 		C5732C7B2A41D41B00CDC499 /* VeganTableFieldModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganTableFieldModel.swift; sourceTree = "<group>"; };
 		C5732C7D2A41D42700CDC499 /* RequestTableFieldModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTableFieldModel.swift; sourceTree = "<group>"; };
+		C58B9AAD2A5675B9008AEAC3 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		C593B6462A4AB3A700D224CE /* PushCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushCommentView.swift; sourceTree = "<group>"; };
 		C593B64A2A4AEA9800D224CE /* AVIROCommentPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROCommentPost.swift; sourceTree = "<group>"; };
 		C593B64C2A4BFD9A00D224CE /* AVIRO.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AVIRO.entitlements; sourceTree = "<group>"; };
@@ -240,8 +244,8 @@
 		C50367F12A1795AF0020C6BB /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C5A3C3C32A39658A0050AB3D /* LoginViewController.swift */,
-				C5EB50EB2A1C72C600B29CC1 /* TabBarViewController.swift */,
+				C567C14D2A5658C700D4B426 /* LoginView */,
+				C567C14E2A5658D400D4B426 /* TabBarView */,
 				C5351B592A19F5DE00116D50 /* SubView */,
 			);
 			path = View;
@@ -459,6 +463,25 @@
 			path = UITextLabel;
 			sourceTree = "<group>";
 		};
+		C567C14D2A5658C700D4B426 /* LoginView */ = {
+			isa = PBXGroup;
+			children = (
+				C5D93D962A56C6ED00629C39 /* RegistrationView */,
+				C5A3C3C32A39658A0050AB3D /* LoginViewController.swift */,
+				C567C14F2A56611500D4B426 /* TutorialCell.swift */,
+				C58B9AAD2A5675B9008AEAC3 /* TutorialViewController.swift */,
+			);
+			path = LoginView;
+			sourceTree = "<group>";
+		};
+		C567C14E2A5658D400D4B426 /* TabBarView */ = {
+			isa = PBXGroup;
+			children = (
+				C5EB50EB2A1C72C600B29CC1 /* TabBarViewController.swift */,
+			);
+			path = TabBarView;
+			sourceTree = "<group>";
+		};
 		C5732C6F2A41736D00CDC499 /* AVIRODatabase */ = {
 			isa = PBXGroup;
 			children = (
@@ -551,6 +574,13 @@
 				C5D745932A2267C7006F9F31 /* CommentDetailPresenter.swift */,
 			);
 			path = CommentDetailPresenter;
+			sourceTree = "<group>";
+		};
+		C5D93D962A56C6ED00629C39 /* RegistrationView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RegistrationView;
 			sourceTree = "<group>";
 		};
 		C5EB50ED2A1C76FC00B29CC1 /* HomeView */ = {
@@ -834,6 +864,7 @@
 				C5732C752A41962D00CDC499 /* AVIRORequestAPI.swift in Sources */,
 				C5351B582A19F5DA00116D50 /* PlaceListViewController.swift in Sources */,
 				C5EB51182A21016600B29CC1 /* DetailViewPresenter.swift in Sources */,
+				C567C1502A56611500D4B426 /* TutorialCell.swift in Sources */,
 				C5EB510B2A209FD300B29CC1 /* HomeSearchPresenter.swift in Sources */,
 				C5EB50F32A1DEC2400B29CC1 /* InrollPlaceViewLayout.swift in Sources */,
 				C5351B5E2A19F84800116D50 /* PlaceListCell.swift in Sources */,
@@ -872,6 +903,7 @@
 				C5D8E8632A3DEC3900D88A43 /* String.swift in Sources */,
 				C5D7458F2A224DCE006F9F31 /* HomeFirstPopUpView.swift in Sources */,
 				C5A3C3C62A39659B0050AB3D /* LoginViewPresenter.swift in Sources */,
+				C58B9AAE2A5675B9008AEAC3 /* TutorialViewController.swift in Sources */,
 				C5351B6D2A1B215D00116D50 /* InrollPlaceViewController.swift in Sources */,
 				C5732C792A41AD8100CDC499 /* HomeMapData.swift in Sources */,
 				C5D745912A225DE6006F9F31 /* CommentDetailViewController.swift in Sources */,

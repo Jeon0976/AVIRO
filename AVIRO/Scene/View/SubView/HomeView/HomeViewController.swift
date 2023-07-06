@@ -30,10 +30,23 @@ final class HomeViewController: UIViewController {
     var firstPopupView = HomeFirstPopUpView()
     var blurEffectView = UIVisualEffectView()
     
+    // TODO: zoom level
+    var zoomLevel = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.locationAuthorization()
         presenter.viewDidLoad()
+        view.addSubview(zoomLevel)
+        zoomLevel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            zoomLevel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            zoomLevel.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 30)
+        ])
+        zoomLevel.textColor = .black
+        zoomLevel.text = "zoom Level"
+        zoomLevel.font = .systemFont(ofSize: 20, weight: .bold)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -98,6 +111,9 @@ extension HomeViewController: HomeViewProtocol {
         let backItem = UIBarButtonItem()
         backItem.title = ""
         navigationItem.backBarButtonItem = backItem
+        
+        // NFMAP
+        naverMapView.addCameraDelegate(delegate: self)
 
         // lodeLocationButton
         loadLocationButton.setImage(UIImage(named: Image.PersonalLocation), for: .normal)
@@ -228,8 +244,8 @@ extension HomeViewController: HomeViewProtocol {
             let marker = NMFMarker(position: latLng)
             let placeId = homeMapData.placeId
             
-            marker.width = 30
-            marker.height = 30
+            marker.width = 22
+            marker.height = 22
             markers.append(marker)
             
             if homeMapData.allVegan {
@@ -312,5 +328,11 @@ extension HomeViewController: UITextFieldDelegate {
                                                  animated: true
         )
         return false
+    }
+}
+
+extension HomeViewController: NMFMapViewCameraDelegate {
+    func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
+        zoomLevel.text = String(mapView.zoomLevel)
     }
 }
