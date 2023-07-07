@@ -306,10 +306,8 @@ extension HomeViewController: HomeViewProtocol {
     func pushDetailViewController(_ placeId: String) {
         DispatchQueue.main.async { [weak self] in
             let viewController = DetailViewController()
-            let presenter = DetailViewPresenter(
-                viewController: viewController,
-                placeId: placeId
-            )
+            let presenter = DetailViewPresenter(viewController: viewController,
+                                                placeId: placeId)
             viewController.presenter = presenter
             
             self?.navigationController?.pushViewController(

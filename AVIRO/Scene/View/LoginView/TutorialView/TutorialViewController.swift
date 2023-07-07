@@ -71,7 +71,7 @@ final class TutorialViewController: UIViewController {
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.7),
                         
-            buttonSafeAear.heightAnchor.constraint(equalToConstant: 30),
+            buttonSafeAear.heightAnchor.constraint(equalToConstant: 40),
             buttonSafeAear.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             buttonSafeAear.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             buttonSafeAear.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -117,8 +117,10 @@ final class TutorialViewController: UIViewController {
     private func changeButtonColor() {
         if viewPageControl.currentPage == tutorial.count - 1 {
             nextButton.backgroundColor = .plusButton
+            buttonSafeAear.backgroundColor = .plusButton
         } else {
             nextButton.backgroundColor = .lightGray
+            buttonSafeAear.backgroundColor = .lightGray
         }
     }
     

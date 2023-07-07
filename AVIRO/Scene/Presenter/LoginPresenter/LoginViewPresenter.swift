@@ -13,13 +13,13 @@ protocol LoginViewProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
     func pushTabBar()
+    func pushRegistration(_ userInfo: UserInfoModel)
 }
 
 final class LoginViewPresenter {
     weak var viewController: LoginViewProtocol?
     
     let keychain = KeychainSwift()
-    let images: [String] = ["HomeInfoRequestVegan", "HomeInfoSomeVegan", "HomeInfoVegan"]
     
     private let avrioManager = AVIROAPIManager()
     
@@ -32,18 +32,19 @@ final class LoginViewPresenter {
         viewController?.makeAttribute()
     }
     
-    func makeScrollView() -> Int {
-        images.count
-    }
-    
+    // MARK: Login 후 최초인지 아닌지 확인 처리
     func upLoadUserInfo(_ userInfoModel: UserInfoModel) {
         keychain.set(userInfoModel.userToken,
                      forKey: "userIdentifier")
         
         avrioManager.postUserModel(userInfoModel) { userInfo in
-            print(userInfo.statusCode)
+            DispatchQueue.main.async { [weak self] in
+                if userInfo.isMember {
+                    self?.viewController?.pushTabBar()
+                } else {
+                    self?.viewController?.pushRegistration(userInfoModel)
+                }
+            }
         }
-        
-        viewController?.pushTabBar()
     }
 }

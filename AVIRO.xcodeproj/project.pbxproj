@@ -63,6 +63,9 @@
 		C5D745942A2267C7006F9F31 /* CommentDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D745932A2267C7006F9F31 /* CommentDetailPresenter.swift */; };
 		C5D745962A2277A4006F9F31 /* CommentsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D745952A2277A4006F9F31 /* CommentsViewCell.swift */; };
 		C5D8E8632A3DEC3900D88A43 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D8E8622A3DEC3900D88A43 /* String.swift */; };
+		C5D93D9F2A581EC800629C39 /* FirstRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D93D9E2A581EC800629C39 /* FirstRegistrationViewController.swift */; };
+		C5D93DA12A581F5A00629C39 /* FirstRegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D93DA02A581F5A00629C39 /* FirstRegistrationPresenter.swift */; };
+		C5D93DA32A58718300629C39 /* TutorialResButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D93DA22A58718300629C39 /* TutorialResButton.swift */; };
 		C5E7B7A92A4D3CDF00CA2090 /* UserInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E7B7A82A4D3CDF00CA2090 /* UserInfoModel.swift */; };
 		C5EB50E42A1C685100B29CC1 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50E32A1C685100B29CC1 /* TabBarItem.swift */; };
 		C5EB50E62A1C6FC700B29CC1 /* BookMarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50E52A1C6FC700B29CC1 /* BookMarkViewController.swift */; };
@@ -152,6 +155,9 @@
 		C5D745932A2267C7006F9F31 /* CommentDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDetailPresenter.swift; sourceTree = "<group>"; };
 		C5D745952A2277A4006F9F31 /* CommentsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsViewCell.swift; sourceTree = "<group>"; };
 		C5D8E8622A3DEC3900D88A43 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		C5D93D9E2A581EC800629C39 /* FirstRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstRegistrationViewController.swift; sourceTree = "<group>"; };
+		C5D93DA02A581F5A00629C39 /* FirstRegistrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstRegistrationPresenter.swift; sourceTree = "<group>"; };
+		C5D93DA22A58718300629C39 /* TutorialResButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialResButton.swift; sourceTree = "<group>"; };
 		C5E7B7A82A4D3CDF00CA2090 /* UserInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoModel.swift; sourceTree = "<group>"; };
 		C5EB50E32A1C685100B29CC1 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		C5EB50E52A1C6FC700B29CC1 /* BookMarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookMarkViewController.swift; sourceTree = "<group>"; };
@@ -232,9 +238,8 @@
 		C50367F02A1795A30020C6BB /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
-				C5A3C3C52A39659B0050AB3D /* LoginViewPresenter.swift */,
-				C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */,
-				C5EB51092A209FC000B29CC1 /* HomeSubPresenter */,
+				C5D93D972A56C74500629C39 /* LoginPresenter */,
+				C5D93D982A56C74F00629C39 /* HomePresenter */,
 				C5351B5A2A19F5EE00116D50 /* SearchPlace */,
 				C593B64D2A4C48EE00D224CE /* Mypage */,
 			);
@@ -451,6 +456,7 @@
 		C54BC0D82A2C2CEE00B65439 /* UIButton */ = {
 			isa = PBXGroup;
 			children = (
+				C5D93DA22A58718300629C39 /* TutorialResButton.swift */,
 			);
 			path = UIButton;
 			sourceTree = "<group>";
@@ -466,10 +472,9 @@
 		C567C14D2A5658C700D4B426 /* LoginView */ = {
 			isa = PBXGroup;
 			children = (
-				C5D93D962A56C6ED00629C39 /* RegistrationView */,
+				C5D93D9D2A581E9100629C39 /* TutorialView */,
 				C5A3C3C32A39658A0050AB3D /* LoginViewController.swift */,
-				C567C14F2A56611500D4B426 /* TutorialCell.swift */,
-				C58B9AAD2A5675B9008AEAC3 /* TutorialViewController.swift */,
+				C5D93D962A56C6ED00629C39 /* RegistrationView */,
 			);
 			path = LoginView;
 			sourceTree = "<group>";
@@ -579,8 +584,44 @@
 		C5D93D962A56C6ED00629C39 /* RegistrationView */ = {
 			isa = PBXGroup;
 			children = (
+				C5D93D9E2A581EC800629C39 /* FirstRegistrationViewController.swift */,
 			);
 			path = RegistrationView;
+			sourceTree = "<group>";
+		};
+		C5D93D972A56C74500629C39 /* LoginPresenter */ = {
+			isa = PBXGroup;
+			children = (
+				C5A3C3C52A39659B0050AB3D /* LoginViewPresenter.swift */,
+				C5D93D992A56C75F00629C39 /* RegistrationPresenter */,
+			);
+			path = LoginPresenter;
+			sourceTree = "<group>";
+		};
+		C5D93D982A56C74F00629C39 /* HomePresenter */ = {
+			isa = PBXGroup;
+			children = (
+				C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */,
+				C5EB51092A209FC000B29CC1 /* HomeSubPresenter */,
+			);
+			path = HomePresenter;
+			sourceTree = "<group>";
+		};
+		C5D93D992A56C75F00629C39 /* RegistrationPresenter */ = {
+			isa = PBXGroup;
+			children = (
+				C5D93DA02A581F5A00629C39 /* FirstRegistrationPresenter.swift */,
+			);
+			path = RegistrationPresenter;
+			sourceTree = "<group>";
+		};
+		C5D93D9D2A581E9100629C39 /* TutorialView */ = {
+			isa = PBXGroup;
+			children = (
+				C567C14F2A56611500D4B426 /* TutorialCell.swift */,
+				C58B9AAD2A5675B9008AEAC3 /* TutorialViewController.swift */,
+			);
+			path = TutorialView;
 			sourceTree = "<group>";
 		};
 		C5EB50ED2A1C76FC00B29CC1 /* HomeView */ = {
@@ -864,6 +905,7 @@
 				C5732C752A41962D00CDC499 /* AVIRORequestAPI.swift in Sources */,
 				C5351B582A19F5DA00116D50 /* PlaceListViewController.swift in Sources */,
 				C5EB51182A21016600B29CC1 /* DetailViewPresenter.swift in Sources */,
+				C5D93DA12A581F5A00629C39 /* FirstRegistrationPresenter.swift in Sources */,
 				C567C1502A56611500D4B426 /* TutorialCell.swift in Sources */,
 				C5EB510B2A209FD300B29CC1 /* HomeSearchPresenter.swift in Sources */,
 				C5EB50F32A1DEC2400B29CC1 /* InrollPlaceViewLayout.swift in Sources */,
@@ -882,6 +924,8 @@
 				C5D745962A2277A4006F9F31 /* CommentsViewCell.swift in Sources */,
 				C596D9862A3B3BFD00829B17 /* InrollPlaceViewActionAndAnimation.swift in Sources */,
 				C5EB51222A2118B200B29CC1 /* CommentDetailView.swift in Sources */,
+				C5D93D9F2A581EC800629C39 /* FirstRegistrationViewController.swift in Sources */,
+				C5D93DA32A58718300629C39 /* TutorialResButton.swift in Sources */,
 				C50367F82A179D7B0020C6BB /* CustomConfiguration.swift in Sources */,
 				C54BC0DD2A2C762C00B65439 /* CommentsLabel.swift in Sources */,
 				C5EB50E62A1C6FC700B29CC1 /* BookMarkViewController.swift in Sources */,

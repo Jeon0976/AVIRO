@@ -15,7 +15,7 @@ final class LoginViewController: UIViewController {
     var titleLabel = UILabel()
     var appleLoginButton = UIButton()
     var noLoginButton = UIButton()
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -91,7 +91,7 @@ extension LoginViewController: LoginViewProtocol {
     
     // MARK: No Login Button Tapped
     @objc func tapNoLoginButton() {
-        pushTabBar()
+       pushRegistration(UserInfoModel(userToken: "", userName: "", userEmail: ""))
     }
     
     // MARK: Apple Login Tapped
@@ -106,10 +106,26 @@ extension LoginViewController: LoginViewProtocol {
         authorizationController.performRequests()
     }
     
-    // MARK: Push TabBarViewcontroller
+    // MARK: Push TabBar Viewcontroller
     func pushTabBar() {
         let viewController = TabBarViewController()
         
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    // MARK: Push Registration ViewController
+    func pushRegistration(_ userInfo: UserInfoModel) {
+        
+        navigationController?.navigationBar.isHidden = false
+        navigationItem.backButtonTitle = ""
+        
+        let viewController = FirstRegistrationViewController()
+        
+        let presenter = FirstRegistrationPresenter(viewController: viewController,
+                                              userInfoModel: userInfo)
+        
+        viewController.presenter = presenter
+
         navigationController?.pushViewController(viewController, animated: true)
     }
 }
@@ -139,21 +155,4 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
     ) {
         
     }
-}
-
-extension LoginViewController: UICollectionViewDelegateFlowLayout {
-    
-}
-
-extension LoginViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        2
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = UICollectionViewCell()
-        
-        return cell
-    }
-    
 }
