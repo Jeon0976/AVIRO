@@ -37,7 +37,9 @@ final class LoginViewPresenter {
         keychain.set(userInfoModel.userToken,
                      forKey: "userIdentifier")
         
-        avrioManager.postUserModel(userInfoModel) { userInfo in
+        let userCheck = UserCheckInput(userToken: userInfoModel.userToken)
+        
+        avrioManager.checkUserModel(userCheck) { userInfo in
             DispatchQueue.main.async { [weak self] in
                 if userInfo.isMember {
                     self?.viewController?.pushTabBar()

@@ -68,18 +68,18 @@ final class AppController {
             return
         }
         
+        // TODO: 회원가입 페이지 다 만들면 변경
         // 자동로그인 토큰 없을 때
         guard let userIdentifier = userIdentifier else {
+            
             setLoginView()
             return
         }
-        
-        setLoginView()
-        
-        let userInfo = UserInfoModel(userToken: userIdentifier, userName: "", userEmail: "")
+                
+        let userCheck = UserCheckInput(userToken: userIdentifier)
         
         // 회원이 서버에 없을 때
-        aviroManager.postUserModel(userInfo) { userInfo in
+        aviroManager.checkUserModel(userCheck) { userInfo in
             DispatchQueue.main.async { [weak self] in
                 if userInfo.isMember {
                     self?.setHomeView()
@@ -88,6 +88,5 @@ final class AppController {
                 }
             }
         }
-        
     }
 }

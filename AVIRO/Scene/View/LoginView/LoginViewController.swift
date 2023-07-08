@@ -11,7 +11,6 @@ import AuthenticationServices
 final class LoginViewController: UIViewController {
     lazy var presenter = LoginViewPresenter(viewController: self)
         
-    var imageView = UIImageView()
     var titleLabel = UILabel()
     var appleLoginButton = UIButton()
     var noLoginButton = UIButton()
@@ -22,13 +21,19 @@ final class LoginViewController: UIViewController {
         presenter.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidLoad()
+        
+        navigationController?.navigationBar.isHidden = true
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+    }
+    
 }
 
 extension LoginViewController: LoginViewProtocol {
     // MARK: Make Layout
     func makeLayout() {
         [
-            imageView,
             titleLabel,
             appleLoginButton,
             noLoginButton
@@ -38,28 +43,19 @@ extension LoginViewController: LoginViewProtocol {
         }
         
         NSLayoutConstraint.activate([
-            // imageView
-            // TODO: 추후 수정 예정
-            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            imageView.widthAnchor.constraint(equalToConstant: view.frame.width - 100),
-            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor),
-            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100),
-            
             // titleLabel
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 30),
+            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
             
             // appleLoginButton
-            appleLoginButton.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 50),
-            appleLoginButton.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor, constant: Layout.Inset.leadingTop),
-            appleLoginButton.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor, constant: Layout.Inset.trailingBottom),
+            appleLoginButton.bottomAnchor.constraint(equalTo: noLoginButton.topAnchor, constant: -50),
+            appleLoginButton.widthAnchor.constraint(equalToConstant: 220),
             appleLoginButton.heightAnchor.constraint(
                 equalToConstant: Layout.Button.height),
+            appleLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 
             // noLoginButton
-            noLoginButton.topAnchor.constraint(equalTo: appleLoginButton.bottomAnchor, constant: 16),
+            noLoginButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
             noLoginButton.centerXAnchor.constraint(
                 equalTo: view.centerXAnchor)
         ])
@@ -67,22 +63,27 @@ extension LoginViewController: LoginViewProtocol {
     
     // MARK: Make Attribute
     func makeAttribute() {
-        navigationController?.navigationBar.isHidden = true
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        // titleLabel
+        titleLabel.text = "어디서든 비건으로\n어비로 시작하기"
+        titleLabel.numberOfLines = 0
+        titleLabel.font = .systemFont(ofSize: 30, weight: .bold)
+        titleLabel.textColor = .allVegan
+        titleLabel.textAlignment = .center
         
-        imageView.backgroundColor = .gray
-        
-        titleLabel.text = "어디서든\n비건으로!"
-        titleLabel.numberOfLines = 2
-        titleLabel.font = .systemFont(ofSize: 20, weight: .bold)
-        
+        // appleLoginButton
         appleLoginButton.setTitle(StringValue.Login.apple, for: .normal)
         appleLoginButton.setTitleColor(.mainTitle, for: .normal)
+        appleLoginButton.setImage(UIImage(named: "Logo"), for: .normal)
+        appleLoginButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -12, bottom: 0, right: 0)
+        
+        appleLoginButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .semibold)
         appleLoginButton.layer.borderColor = UIColor.mainTitle?.cgColor
         appleLoginButton.layer.borderWidth = 2
-        appleLoginButton.layer.cornerRadius = 28
+        appleLoginButton.layer.cornerRadius = 26
         appleLoginButton.addTarget(self, action: #selector(tapAppleLogin), for: .touchUpInside)
+        appleLoginButton.adjustsImageWhenHighlighted = false
         
+        // noLoginButton
         noLoginButton.setTitle(StringValue.Login.noLogin, for: .normal)
         noLoginButton.setTitleColor(.subTitle, for: .normal)
         noLoginButton.titleLabel?.font = .systemFont(ofSize: 14)
@@ -91,7 +92,7 @@ extension LoginViewController: LoginViewProtocol {
     
     // MARK: No Login Button Tapped
     @objc func tapNoLoginButton() {
-       pushRegistration(UserInfoModel(userToken: "", userName: "", userEmail: ""))
+        pushRegistration(UserInfoModel(userToken: "test", userName: "", userEmail: "", nickname: "", birthYear: 0, gender: Gender.male))
     }
     
     // MARK: Apple Login Tapped
@@ -142,7 +143,10 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
             
             let userInfo = UserInfoModel(userToken: userIdentifier,
                                          userName: fullName,
-                                         userEmail: email
+                                         userEmail: email,
+                                         nickname: "",
+                                         birthYear: 0,
+                                         gender: Gender.other
             )
             
             presenter.upLoadUserInfo(userInfo)

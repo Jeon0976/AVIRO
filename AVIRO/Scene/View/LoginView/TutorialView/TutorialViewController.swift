@@ -16,24 +16,42 @@ struct Tutorial {
 
 final class TutorialViewController: UIViewController {
     let tutorial = [
-        Tutorial(title: "홈 화면 핀\n3가지 타입 구분", subTitle: "보라색\n파란색\n주황색", image: nil),
-        Tutorial(title: "궁금한 지역의\n비건 식당 찾기", subTitle: "텍스트\n텍스트\n ", image: nil),
-        Tutorial(title: "내가 알고 있는\n비건 식당 등록하기", subTitle: "텍스트\n텍스트\n ", image: nil),
-        Tutorial(title: "댓글로\n경험 공유하기", subTitle: "텍스트\n텍스트\n ", image: nil)
+        Tutorial(title: "홈 화면 핀\n3가지 타입 구분", subTitle: "비건 식당의 종류에 따라\n3가지 타입의 색상으로 구분됩니다", image: nil),
+        Tutorial(title: "궁금한 지역의\n비건 식당 찾기", subTitle: "비건 식당이라면 어디든", image: nil),
+        Tutorial(title: "내가 알고 있는\n비건 식당 등록하기", subTitle: "비건 식당이라면 어디든", image: nil),
+        Tutorial(title: "나의 경험\n댓글로 공유하기", subTitle: "비건들의 집단지성이 모여\n더욱 안심할 수 있는 댓글 기능", image: nil)
     ]
     
-    lazy var collectionView: UICollectionView = {
+    lazy var topCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: view.frame.width, height: view.frame.height * 0.7)
+        layout.itemSize = CGSize(width: view.frame.width, height: view.frame.height * 0.3)
         layout.minimumLineSpacing = 0
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(TutorialCell.self, forCellWithReuseIdentifier: TutorialCell.identifier)
+        collectionView.register(TopCell.self, forCellWithReuseIdentifier: TopCell.identifier)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.isPagingEnabled = true
+        
+        return collectionView
+    }()
+    
+    lazy var bottomCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: view.frame.width, height: view.frame.height * 0.5)
+        layout.minimumLineSpacing = 0
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(BottomCell.self, forCellWithReuseIdentifier: BottomCell.identifier)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.isPagingEnabled = true
         
@@ -42,7 +60,6 @@ final class TutorialViewController: UIViewController {
     
     var viewPageControl = UIPageControl()
     var nextButton = UIButton()
-    var buttonSafeAear = UIView()
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,9 +70,9 @@ final class TutorialViewController: UIViewController {
         
     private func makeLayout() {
         [
+            topCollectionView,
             viewPageControl,
-            collectionView,
-            buttonSafeAear,
+            bottomCollectionView,
             nextButton
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -63,44 +80,45 @@ final class TutorialViewController: UIViewController {
         }
         
         NSLayoutConstraint.activate([
+            topCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            topCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            topCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            topCollectionView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.3),
+            topCollectionView.bottomAnchor.constraint(equalTo: viewPageControl.topAnchor),
+            
             viewPageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            viewPageControl.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -30),
+            viewPageControl.bottomAnchor.constraint(equalTo: bottomCollectionView.topAnchor, constant: -30),
             
-            collectionView.bottomAnchor.constraint(equalTo: nextButton.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.7),
-                        
-            buttonSafeAear.heightAnchor.constraint(equalToConstant: 40),
-            buttonSafeAear.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            buttonSafeAear.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            buttonSafeAear.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            bottomCollectionView.bottomAnchor.constraint(equalTo: nextButton.topAnchor),
+            bottomCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            bottomCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            bottomCollectionView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.5),
             
-            nextButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            nextButton.heightAnchor.constraint(equalToConstant: 50)
+            nextButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            nextButton.heightAnchor.constraint(equalToConstant: Layout.Button.height)
         ])
     }
     
     private func makeAttribute() {
         // navigation setting
+        navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.isHidden = true
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         
         // viewPageControl
         viewPageControl.numberOfPages = tutorial.count
         viewPageControl.currentPage = 0
-        viewPageControl.currentPageIndicatorTintColor = .gray
-        viewPageControl.pageIndicatorTintColor = .lightGray
+        viewPageControl.currentPageIndicatorTintColor = .allVegan
+        viewPageControl.pageIndicatorTintColor = .separateLine
         
         // nextButton
-        nextButton.setTitle("다음", for: .normal)
-        nextButton.setTitleColor(UIColor.mainTitle, for: .normal)
-        nextButton.backgroundColor = .lightGray
+        nextButton.setTitle("다음으로", for: .normal)
+        nextButton.setTitleColor(.white, for: .normal)
+        nextButton.backgroundColor = .allVegan
         nextButton.addTarget(self, action: #selector(tappedButton), for: .touchUpInside)
-        
-        buttonSafeAear.backgroundColor = .lightGray
+        nextButton.layer.cornerRadius = 26
     }
     
     @objc func tappedButton() {
@@ -108,24 +126,25 @@ final class TutorialViewController: UIViewController {
             showLoginView()
         } else {
             viewPageControl.currentPage += 1
-            changeButtonColor()
+            
+            changeButton()
+            
             let indexPath = IndexPath(item: viewPageControl.currentPage, section: 0)
-            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        
+            topCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         }
     }
     
-    private func changeButtonColor() {
+    private func changeButton() {
         if viewPageControl.currentPage == tutorial.count - 1 {
-            nextButton.backgroundColor = .plusButton
-            buttonSafeAear.backgroundColor = .plusButton
+            nextButton.setTitle("어비로 시작하기", for: .normal)
         } else {
-            nextButton.backgroundColor = .lightGray
-            buttonSafeAear.backgroundColor = .lightGray
+            nextButton.setTitle("다음으로", for: .normal)
         }
     }
     
     private func showLoginView() {
-        UserDefaults.standard.set(true, forKey: "Tutorial")
+//        UserDefaults.standard.set(true, forKey: "Tutorial")
             
         let loginVC = LoginViewController()
         
@@ -137,28 +156,48 @@ extension TutorialViewController: UICollectionViewDelegateFlowLayout {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
         viewPageControl.currentPage = page
-        changeButtonColor()
+        changeButton()
     }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == topCollectionView {
+            bottomCollectionView.contentOffset = scrollView.contentOffset
+        } else if scrollView == bottomCollectionView {
+            topCollectionView.contentOffset = scrollView.contentOffset
+        }
+    }
+    
 }
 
 extension TutorialViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int
     ) -> Int {
-        tutorial.count
+        return tutorial.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TutorialCell.identifier, for: indexPath) as? TutorialCell
-        
         let data = tutorial[indexPath.row]
-        
-        cell?.setupData(title: data.title, subTitle: data.subTitle, image: data.image)
-        
-        
-        return cell ?? UICollectionViewCell()
+
+        if collectionView == self.topCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopCell.identifier,
+                                                          for: indexPath
+            ) as? TopCell
+
+            cell?.setupData(title: data.title, subTitle: data.subTitle)
+
+            return cell ?? UICollectionViewCell()
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BottomCell.identifier,
+                                                          for: indexPath
+            ) as? BottomCell
+
+            cell?.setupData(image: data.image)
+
+            return cell ?? UICollectionViewCell()
+        }
     }
     
 }

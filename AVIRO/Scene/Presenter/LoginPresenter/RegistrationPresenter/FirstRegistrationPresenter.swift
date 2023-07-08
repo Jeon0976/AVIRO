@@ -25,5 +25,6 @@ final class FirstRegistrationPresenter {
     func viewDidLoad() {
         viewController?.makeLayout()
         viewController?.makeAttribute()
+        print(userInfoModel)
     }
 }
