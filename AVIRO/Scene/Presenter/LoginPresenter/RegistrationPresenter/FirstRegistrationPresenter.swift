@@ -11,6 +11,7 @@ protocol FirstRegistrationProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
     func changeSubInfo(subInfo: String, isVaild: Bool)
+    func pushSecondRegistrationView(_ userInfoModel: UserInfoModel)
 }
 
 final class FirstRegistrationPresenter {
@@ -32,6 +33,7 @@ final class FirstRegistrationPresenter {
         viewController?.makeAttribute()
     }
     
+    // MARK: Nicname Setting Method
     func insertUserNicName(_ userName: String) {
         userNicname = userName
     }
@@ -40,6 +42,7 @@ final class FirstRegistrationPresenter {
         userNicname?.count ?? 0
     }
     
+    // MARK: Nicmane Check Method
     func checkDuplication() {
         let nicname = NicnameCheckInput(nickname: userNicname)
         aviroManager.postCheckNicname(nicname) { result in
@@ -49,5 +52,12 @@ final class FirstRegistrationPresenter {
                 self?.viewController?.changeSubInfo(subInfo: result.message, isVaild: result.isValid)
             }
         }
+    }
+    
+    // MARK: Nicmane + UserModel Push Method
+    func pushUserInfo() {
+        guard var userInfoModel = userInfoModel else { return }
+        userInfoModel.nickname = userNicname
+        viewController?.pushSecondRegistrationView(userInfoModel)
     }
 }

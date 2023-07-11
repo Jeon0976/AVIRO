@@ -51,7 +51,7 @@ class TutorRegisButton: UIButton {
             UIColor.allVegan?.cgColor ?? UIColor.purple.cgColor,
             UIColor.allVeganGradient?.cgColor ?? UIColor.blue.cgColor
         ]
-        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.startPoint = CGPoint(x: 0, y: 1)
         gradientLayer.endPoint = CGPoint(x: 1, y: 1)
         gradientLayer.cornerRadius = 26
         

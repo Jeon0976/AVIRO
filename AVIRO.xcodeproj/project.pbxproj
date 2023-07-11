@@ -70,6 +70,8 @@
 		C5D93DA32A58718300629C39 /* TutorRegisButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D93DA22A58718300629C39 /* TutorRegisButton.swift */; };
 		C5E430AD2A5D142C00CB67EC /* LoginJson.json in Resources */ = {isa = PBXBuildFile; fileRef = C5E430AB2A5D142C00CB67EC /* LoginJson.json */; };
 		C5E430AE2A5D142C00CB67EC /* RegistrationCompleted.json in Resources */ = {isa = PBXBuildFile; fileRef = C5E430AC2A5D142C00CB67EC /* RegistrationCompleted.json */; };
+		C5E430B32A5DADBE00CB67EC /* SecondRegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E430B22A5DADBE00CB67EC /* SecondRegistrationPresenter.swift */; };
+		C5E430B52A5DAE9800CB67EC /* SecondRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E430B42A5DAE9800CB67EC /* SecondRegistrationViewController.swift */; };
 		C5E7B7A92A4D3CDF00CA2090 /* UserInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E7B7A82A4D3CDF00CA2090 /* UserInfoModel.swift */; };
 		C5EB50E42A1C685100B29CC1 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50E32A1C685100B29CC1 /* TabBarItem.swift */; };
 		C5EB50E62A1C6FC700B29CC1 /* BookMarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50E52A1C6FC700B29CC1 /* BookMarkViewController.swift */; };
@@ -166,6 +168,8 @@
 		C5D93DA22A58718300629C39 /* TutorRegisButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorRegisButton.swift; sourceTree = "<group>"; };
 		C5E430AB2A5D142C00CB67EC /* LoginJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = LoginJson.json; path = ../../../../../Downloads/LoginJson.json; sourceTree = "<group>"; };
 		C5E430AC2A5D142C00CB67EC /* RegistrationCompleted.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = RegistrationCompleted.json; path = ../../../../../Downloads/RegistrationCompleted.json; sourceTree = "<group>"; };
+		C5E430B22A5DADBE00CB67EC /* SecondRegistrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondRegistrationPresenter.swift; sourceTree = "<group>"; };
+		C5E430B42A5DAE9800CB67EC /* SecondRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondRegistrationViewController.swift; sourceTree = "<group>"; };
 		C5E7B7A82A4D3CDF00CA2090 /* UserInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoModel.swift; sourceTree = "<group>"; };
 		C5EB50E32A1C685100B29CC1 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		C5EB50E52A1C6FC700B29CC1 /* BookMarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookMarkViewController.swift; sourceTree = "<group>"; };
@@ -603,6 +607,7 @@
 			isa = PBXGroup;
 			children = (
 				C5D93D9E2A581EC800629C39 /* FirstRegistrationViewController.swift */,
+				C5E430B42A5DAE9800CB67EC /* SecondRegistrationViewController.swift */,
 			);
 			path = RegistrationView;
 			sourceTree = "<group>";
@@ -629,6 +634,7 @@
 			isa = PBXGroup;
 			children = (
 				C5D93DA02A581F5A00629C39 /* FirstRegistrationPresenter.swift */,
+				C5E430B22A5DADBE00CB67EC /* SecondRegistrationPresenter.swift */,
 			);
 			path = RegistrationPresenter;
 			sourceTree = "<group>";
@@ -967,6 +973,7 @@
 				C5732C7E2A41D42700CDC499 /* RequestTableFieldModel.swift in Sources */,
 				C5CAAC472A39AEFE008C5FDA /* Image.swift in Sources */,
 				C5E7B7A92A4D3CDF00CA2090 /* UserInfoModel.swift in Sources */,
+				C5E430B32A5DADBE00CB67EC /* SecondRegistrationPresenter.swift in Sources */,
 				C5EB510D2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift in Sources */,
 				C50367F52A1795D10020C6BB /* HomeViewPresenter.swift in Sources */,
 				C596D9842A3B39E500829B17 /* InrollPlaceViewTableView.swift in Sources */,
@@ -996,6 +1003,7 @@
 				C5EB51122A20CC7D00B29CC1 /* HomeInfoStoreView.swift in Sources */,
 				C5EB50E42A1C685100B29CC1 /* TabBarItem.swift in Sources */,
 				C5351B7A2A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift in Sources */,
+				C5E430B52A5DAE9800CB67EC /* SecondRegistrationViewController.swift in Sources */,
 				C593B64B2A4AEA9800D224CE /* AVIROCommentPost.swift in Sources */,
 				C593B64F2A4C490600D224CE /* MyPageViewPresenter.swift in Sources */,
 				C5FF13572A42C8970026981D /* AVIROCommentModel.swift in Sources */,

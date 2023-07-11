@@ -32,6 +32,7 @@ final class FirstRegistrationViewController: UIViewController {
 }
 
 extension FirstRegistrationViewController: FirstRegistrationProtocol {
+    // MARK: Layout
     func makeLayout() {
         [
             titleLabel,
@@ -50,7 +51,7 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
             titleLabel.topAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
             titleLabel.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor, constant: Layout.Inset.leadingTopDouble),
+                equalTo: view.leadingAnchor, constant: 30),
             
             // subTitle
             subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
@@ -87,9 +88,12 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
         ])
     }
     
+    // MARK: Attribute
     func makeAttribute() {
         // view, naivgation, ..
         view.backgroundColor = .white
+        navigationItem.backButtonTitle = ""
+
         // TODO: 확인
         tapGesture.cancelsTouchesInView = false
         tapGesture.delegate = self
@@ -111,7 +115,7 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
         nicNameField.makePlaceHolder("닉네임을 입력해주세요")
         nicNameField.isPossible = nil
         nicNameField.delegate = self
-        
+                
         // subInfo
         subInfo.text = "어비로에서 사용할 닉네임을 정해주세요."
         subInfo.font = .systemFont(ofSize: 14)
@@ -126,11 +130,37 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
         // nextButton
         nextButton.setTitle("다음으로", for: .normal)
         nextButton.isEnabled = false
+        nextButton.addTarget(self, action: #selector(tappedNextButton), for: .touchUpInside)
     }
     
     // MARK: check Result
     func changeSubInfo(subInfo: String, isVaild: Bool) {
         self.subInfo.text = subInfo
+        
+        if isVaild {
+            nextButton.isEnabled = true
+            nicNameField.isPossible = true
+            self.subInfo.textColor = .exampleRegistration
+        } else {
+            nextButton.isEnabled = false
+            nicNameField.isPossible = false
+            self.subInfo.textColor = .explainImPossible
+        }
+    }
+    
+    // MARK: Push Second Registration View
+    func pushSecondRegistrationView(_ userInfoModel: UserInfoModel) {
+        let viewController = SecondRegistrationViewController()
+        let presenter = SecondRegistrationPresenter(viewController: viewController,
+                                                    userInfoModel: userInfoModel)
+        
+        viewController.presenter = presenter
+        
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    @objc func tappedNextButton() {
+        presenter.pushUserInfo()
     }
 }
 
@@ -148,24 +178,34 @@ extension FirstRegistrationViewController: UIGestureRecognizerDelegate {
 extension FirstRegistrationViewController: UITextFieldDelegate {
     // MARK: TextField 값이 변하고 있을 때
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        let currentText = textField.text ?? ""
+        if textField.text == "" {
+            presenter.insertUserNicName("")
+            checkDuplication()
+            subInfo2.text = "(0/15)"
+            return
+        }
 
+        nicNameField.isPossible = nil
+
+        let currentText = textField.text ?? ""
+        
         if currentText.count > 15 {
             return
         }
         presenter.insertUserNicName(currentText)
         subInfo2.text = "(\(currentText.count)/15)"
         
-        // 1초 후 nicname 확인 method 실행
+        // 0.5초 후 nicname 확인 method 실행
         timer?.invalidate()
-        timer = Timer.scheduledTimer(timeInterval: 1,
+        timer = Timer.scheduledTimer(timeInterval: 0.5,
                                      target: self,
                                      selector: #selector(checkDuplication),
                                      userInfo: nil,
                                      repeats: false
         )
     }
-     
+    
+    // MARK: Nicname Check Timer 발동
     @objc func checkDuplication() {
         presenter.checkDuplication()
     }

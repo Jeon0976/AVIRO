@@ -16,12 +16,12 @@ enum Gender: String, Codable {
 
 // MARK: 유저 정보 input
 struct UserInfoModel: Codable {
-    let userToken: String
-    let userName: String?
-    let userEmail: String?
-    let nickname: String?
-    let birthYear: Int
-    let gender: Gender?
+    var userToken: String
+    var userName: String?
+    var userEmail: String?
+    var nickname: String?
+    var birthYear: Int
+    var gender: Gender?
 }
 
 // MARK: 유저 정보 output
