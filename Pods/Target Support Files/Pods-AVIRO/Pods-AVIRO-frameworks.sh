@@ -177,11 +177,13 @@ code_sign_if_enabled() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/KeychainSwift/KeychainSwift.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/NMapsGeometry/NMapsGeometry.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/NMapsMap/NMapsMap.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/KeychainSwift/KeychainSwift.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/NMapsGeometry/NMapsGeometry.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/NMapsMap/NMapsMap.framework"
 fi

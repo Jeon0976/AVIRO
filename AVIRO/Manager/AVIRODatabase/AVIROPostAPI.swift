@@ -67,4 +67,14 @@ struct AVIROPostAPI {
         return components
     }
     
+    // MARK: Nicname Check
+    mutating func nicnameCheck() -> URLComponents {
+        var components = URLComponents()
+        components.scheme = AVIRORequestAPI.scheme
+        components.host = host
+        components.path = AVIROPostAPI.userNicNameCheck
+        
+        return components
+    }
+    
 }

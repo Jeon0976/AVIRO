@@ -42,7 +42,7 @@ struct Layout {
         static let buttonEdgeInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         
         static let font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        static let height = CGFloat(54)
+        static let height = CGFloat(51)
     }
     
     // MARK: 공통 TextField

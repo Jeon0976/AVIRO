@@ -47,6 +47,7 @@ final class BottomCell: UICollectionViewCell {
     }
     
     // TODO: Image 들어올 때 image nil값 처리
+    // TODO: image 생성되면 수정 코드
     func setupData(image: UIImage?) {
         imageView.image = image
     }

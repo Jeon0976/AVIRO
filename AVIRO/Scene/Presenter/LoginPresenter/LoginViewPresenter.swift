@@ -12,6 +12,7 @@ import KeychainSwift
 protocol LoginViewProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
+    func makeNaviAttribute()
     func pushTabBar()
     func pushRegistration(_ userInfo: UserInfoModel)
 }
@@ -32,6 +33,9 @@ final class LoginViewPresenter {
         viewController?.makeAttribute()
     }
     
+    func viewWillAppear() {
+        viewController?.makeNaviAttribute()
+    }
     // MARK: Login 후 최초인지 아닌지 확인 처리
     func upLoadUserInfo(_ userInfoModel: UserInfoModel) {
         keychain.set(userInfoModel.userToken,
@@ -39,7 +43,7 @@ final class LoginViewPresenter {
         
         let userCheck = UserCheckInput(userToken: userInfoModel.userToken)
         
-        avrioManager.checkUserModel(userCheck) { userInfo in
+        avrioManager.postCheckUserModel(userCheck) { userInfo in
             DispatchQueue.main.async { [weak self] in
                 if userInfo.isMember {
                     self?.viewController?.pushTabBar()

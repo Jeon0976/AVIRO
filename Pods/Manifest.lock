@@ -1,24 +1,28 @@
 PODS:
   - KeychainSwift (20.0.0)
+  - lottie-ios (4.2.0)
   - NMapsGeometry (1.0.1)
   - NMapsMap (3.16.2):
     - NMapsGeometry
 
 DEPENDENCIES:
   - KeychainSwift
+  - lottie-ios
   - NMapsMap
 
 SPEC REPOS:
   trunk:
     - KeychainSwift
+    - lottie-ios
     - NMapsGeometry
     - NMapsMap
 
 SPEC CHECKSUMS:
   KeychainSwift: 0ce6a4d13f7228054d1a71bb1b500448fb2ab837
+  lottie-ios: 809ecf2d460ed650a6aed7aa88b2ec45fab4779c
   NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
   NMapsMap: aaa64717249b06ae82c3a3addb3a01f0e33100ab
 
-PODFILE CHECKSUM: 2e7d5ca2a63a5905f78ee7d99a2019f5bba47b6e
+PODFILE CHECKSUM: aa69072009a6cdcefd01d8c4f3df0db62418ed29
 
 COCOAPODS: 1.12.1

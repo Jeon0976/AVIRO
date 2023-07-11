@@ -79,7 +79,7 @@ final class AppController {
         let userCheck = UserCheckInput(userToken: userIdentifier)
         
         // 회원이 서버에 없을 때
-        aviroManager.checkUserModel(userCheck) { userInfo in
+        aviroManager.postCheckUserModel(userCheck) { userInfo in
             DispatchQueue.main.async { [weak self] in
                 if userInfo.isMember {
                     self?.setHomeView()

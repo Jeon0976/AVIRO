@@ -8,12 +8,16 @@
 import UIKit
 import AuthenticationServices
 
+import Lottie
+
 final class LoginViewController: UIViewController {
     lazy var presenter = LoginViewPresenter(viewController: self)
         
     var titleLabel = UILabel()
     var appleLoginButton = UIButton()
     var noLoginButton = UIButton()
+    
+    let loginAnimation = LottieAnimationView(name: "LoginJson")
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,8 +28,7 @@ final class LoginViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidLoad()
         
-        navigationController?.navigationBar.isHidden = true
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        presenter.viewWillAppear()
     }
     
 }
@@ -36,7 +39,8 @@ extension LoginViewController: LoginViewProtocol {
         [
             titleLabel,
             appleLoginButton,
-            noLoginButton
+            noLoginButton,
+            loginAnimation
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
@@ -48,21 +52,32 @@ extension LoginViewController: LoginViewProtocol {
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
             
             // appleLoginButton
-            appleLoginButton.bottomAnchor.constraint(equalTo: noLoginButton.topAnchor, constant: -50),
+            appleLoginButton.bottomAnchor.constraint(
+                equalTo: loginAnimation.topAnchor, constant: -35),
             appleLoginButton.widthAnchor.constraint(equalToConstant: 220),
             appleLoginButton.heightAnchor.constraint(
                 equalToConstant: Layout.Button.height),
-            appleLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-
-            // noLoginButton
-            noLoginButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
-            noLoginButton.centerXAnchor.constraint(
-                equalTo: view.centerXAnchor)
+            appleLoginButton.centerXAnchor.constraint(
+                equalTo: view.centerXAnchor),
+            
+            // loginAnimation
+            loginAnimation.widthAnchor.constraint(equalToConstant: view.frame.width),
+            loginAnimation.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
+            
+            // TODO: 추후 없애기
+            noLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            noLoginButton.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
     
     // MARK: Make Attribute
     func makeAttribute() {
+        view.backgroundColor = .white
+        
+        // loginAnimation
+        loginAnimation.play()
+        loginAnimation.loopMode = .loop
+        
         // titleLabel
         titleLabel.text = "어디서든 비건으로\n어비로 시작하기"
         titleLabel.numberOfLines = 0
@@ -88,6 +103,11 @@ extension LoginViewController: LoginViewProtocol {
         noLoginButton.setTitleColor(.subTitle, for: .normal)
         noLoginButton.titleLabel?.font = .systemFont(ofSize: 14)
         noLoginButton.addTarget(self, action: #selector(tapNoLoginButton), for: .touchUpInside)
+    }
+    
+    func makeNaviAttribute() {
+        navigationController?.navigationBar.isHidden = true
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
     
     // MARK: No Login Button Tapped

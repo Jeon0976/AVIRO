@@ -52,7 +52,7 @@ final class TopCell: UICollectionViewCell {
         titleLabel.textColor = .allVegan
         
         // subtitle 
-        subTitleLabel.font = .systemFont(ofSize: 15, weight: .medium)
+        subTitleLabel.font = .systemFont(ofSize: 15, weight: .regular)
         subTitleLabel.numberOfLines = 0
         subTitleLabel.textAlignment = .center
         

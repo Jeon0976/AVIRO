@@ -7,14 +7,9 @@
 
 import UIKit
 
-import KeychainSwift
-
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    
-    let keychain = KeychainSwift()
-    let aviroManager = AVIROAPIManager()
 
     func scene(_ scene: UIScene,
                willConnectTo session: UISceneSession,

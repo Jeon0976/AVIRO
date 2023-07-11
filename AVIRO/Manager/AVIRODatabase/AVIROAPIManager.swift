@@ -127,7 +127,7 @@ final class AVIROAPIManager {
     }
     
     // MARK: Check User Model
-    func checkUserModel(_ userToken: UserCheckInput, completionHandler: @escaping((CheckUser) -> Void)) {
+    func postCheckUserModel(_ userToken: UserCheckInput, completionHandler: @escaping((CheckUser) -> Void)) {
         guard let url = postAPI.userCheck().url else { print("url error"); return}
         
         guard let jsonData = try? JSONEncoder().encode(userToken) else {
@@ -249,6 +249,39 @@ final class AVIROAPIManager {
             
             guard data != nil else {
                 print("data error")
+                return
+            }
+            
+            guard response != nil else {
+                print(response ?? "response error")
+                return
+            }
+        }.resume()
+    }
+    
+    // MARK: Post Nicname Check
+    func postCheckNicname(_ nicname: NicnameCheckInput, completionHandler: @escaping ((NicnameCheck) -> Void)) {
+        guard let url = postAPI.nicnameCheck().url else { return }
+        
+        guard let jsonData = try? JSONEncoder().encode(nicname) else {
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        session.dataTask(with: request) { data, response, error in
+            guard error == nil else {
+                print("error")
+                return
+            }
+            
+            if let data = data {
+                if let userCheck = try? JSONDecoder().decode(NicnameCheck.self, from: data) {
+                    completionHandler(userCheck)
+                }
                 return
             }
             

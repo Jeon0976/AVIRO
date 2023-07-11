@@ -9,6 +9,13 @@ import UIKit
 
 /// image data set 
 struct Image {
+    // MARK: Tutorial & Registration
+    struct Registration {
+        static let check = "bxs-check-circle.svg"
+        static let xCheck = "xCheck"
+        static let logo = "Logo"
+    }
+    
     // MARK: TabBar Icon
     struct TabBar {
         static let bookmark1 = "bookmark1"

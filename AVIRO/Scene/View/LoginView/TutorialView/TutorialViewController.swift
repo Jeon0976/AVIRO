@@ -15,6 +15,7 @@ struct Tutorial {
 }
 
 final class TutorialViewController: UIViewController {
+    // MARK: tutorial array
     let tutorial = [
         Tutorial(title: "홈 화면 핀\n3가지 타입 구분", subTitle: "비건 식당의 종류에 따라\n3가지 타입의 색상으로 구분됩니다", image: nil),
         Tutorial(title: "궁금한 지역의\n비건 식당 찾기", subTitle: "비건 식당이라면 어디든", image: nil),
@@ -36,6 +37,7 @@ final class TutorialViewController: UIViewController {
         collectionView.register(TopCell.self, forCellWithReuseIdentifier: TopCell.identifier)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.isPagingEnabled = true
+        collectionView.tag = 0
         
         return collectionView
     }()
@@ -54,12 +56,14 @@ final class TutorialViewController: UIViewController {
         collectionView.register(BottomCell.self, forCellWithReuseIdentifier: BottomCell.identifier)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.isPagingEnabled = true
+        collectionView.tag = 1
         
         return collectionView
     }()
     
     var viewPageControl = UIPageControl()
-    var nextButton = UIButton()
+    
+    var nextButton = TutorRegisButton()
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,7 +71,8 @@ final class TutorialViewController: UIViewController {
         makeLayout()
         makeAttribute()
     }
-        
+
+    // MARK: Layout
     private func makeLayout() {
         [
             topCollectionView,
@@ -94,18 +99,20 @@ final class TutorialViewController: UIViewController {
             bottomCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             bottomCollectionView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.5),
             
-            nextButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
             nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             nextButton.heightAnchor.constraint(equalToConstant: Layout.Button.height)
         ])
     }
     
+    // MARK: Attribute
     private func makeAttribute() {
         // navigation setting
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.isHidden = true
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        view.backgroundColor = .white
         
         // viewPageControl
         viewPageControl.numberOfPages = tutorial.count
@@ -115,15 +122,14 @@ final class TutorialViewController: UIViewController {
         
         // nextButton
         nextButton.setTitle("다음으로", for: .normal)
-        nextButton.setTitleColor(.white, for: .normal)
-        nextButton.backgroundColor = .allVegan
         nextButton.addTarget(self, action: #selector(tappedButton), for: .touchUpInside)
-        nextButton.layer.cornerRadius = 26
+    
     }
     
+    // MARK: Button Tapped
     @objc func tappedButton() {
         if viewPageControl.currentPage == tutorial.count - 1 {
-            showLoginView()
+            pushLoginView()
         } else {
             viewPageControl.currentPage += 1
             
@@ -135,40 +141,46 @@ final class TutorialViewController: UIViewController {
         }
     }
     
+    // MARK: Button 변경 Method
     private func changeButton() {
         if viewPageControl.currentPage == tutorial.count - 1 {
-            nextButton.setTitle("어비로 시작하기", for: .normal)
+            nextButton.setTitle("어비로 바로 시작하기", for: .normal)
+            nextButton.setGradient()
         } else {
             nextButton.setTitle("다음으로", for: .normal)
+            nextButton.removeGradient()
         }
     }
     
-    private func showLoginView() {
-//        UserDefaults.standard.set(true, forKey: "Tutorial")
-            
+    // MARK: Login View
+    private func pushLoginView() {
+        //        UserDefaults.standard.set(true, forKey: "Tutorial")
         let loginVC = LoginViewController()
         
-        navigationController?.pushViewController(loginVC, animated: false)
+        self.navigationController?.pushViewController(loginVC, animated: true)
     }
 }
 
 extension TutorialViewController: UICollectionViewDelegateFlowLayout {
+    // MARK: 스크롤이 끝날때 발동 Method
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
         viewPageControl.currentPage = page
         changeButton()
     }
 
+    // MARK: 스크롤 하고있을 때 발동 Method
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == topCollectionView {
+        if scrollView.tag == 0 {
             bottomCollectionView.contentOffset = scrollView.contentOffset
-        } else if scrollView == bottomCollectionView {
+        } else {
             topCollectionView.contentOffset = scrollView.contentOffset
         }
     }
     
 }
 
+// MARK: Collection View Data Source
 extension TutorialViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int
@@ -181,7 +193,7 @@ extension TutorialViewController: UICollectionViewDataSource {
     ) -> UICollectionViewCell {
         let data = tutorial[indexPath.row]
 
-        if collectionView == self.topCollectionView {
+        if collectionView.tag == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopCell.identifier,
                                                           for: indexPath
             ) as? TopCell
