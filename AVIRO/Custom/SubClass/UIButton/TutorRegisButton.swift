@@ -8,7 +8,7 @@
 import UIKit
 
 // Enable 일때 설정 다시
-class TutorRegisButton: UIButton {
+final class TutorRegisButton: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,7 +36,6 @@ class TutorRegisButton: UIButton {
     }
     
     private func setupButton() {
-        self.backgroundColor = .subTitle
         self.layer.cornerRadius = 26
         self.contentEdgeInsets = UIEdgeInsets(top: 15, left: 25, bottom: 15, right: 25)
         self.clipsToBounds = true
