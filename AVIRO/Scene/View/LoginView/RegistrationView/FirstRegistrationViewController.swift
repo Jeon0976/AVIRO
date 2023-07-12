@@ -164,6 +164,7 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
     }
 }
 
+// MARK: 키보드 내리기
 extension FirstRegistrationViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         if touch.view is UITextField {

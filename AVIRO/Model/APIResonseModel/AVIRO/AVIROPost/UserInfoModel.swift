@@ -21,7 +21,7 @@ struct UserInfoModel: Codable {
     var userEmail: String?
     var nickname: String?
     var birthYear: Int
-    var gender: Gender?
+    var gender: String?
 }
 
 // MARK: 유저 정보 output

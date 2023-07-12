@@ -20,10 +20,14 @@ final class SecondRegistrationViewController: UIViewController {
     var male = GenderButton()
     var female = GenderButton()
     var other = GenderButton()
+    
     var genderStackView = UIStackView()
     var genderExample = UILabel()
     
     var nextButton = TutorRegisButton()
+    
+    var tapGesture = UITapGestureRecognizer()
+    var timer: Timer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -186,11 +190,25 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
     }
 }
 
+// MARK: 키보드 내리기
+extension SecondRegistrationViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if touch.view is UITextField {
+            return false
+        }
+        
+        view.endEditing(true)
+        return true
+    }
+}
+
 extension SecondRegistrationViewController: UITextFieldDelegate {
     //MARK: 년, 월 단위로 . 찍기
     func textFieldDidChangeSelection(_ textField: UITextField) {
         guard var text = textField.text else { return }
 
+        birthInit()
+        
         if text.count > 10 {
             text = String(text.prefix(10))
         }
@@ -201,6 +219,15 @@ extension SecondRegistrationViewController: UITextFieldDelegate {
 
         textField.text = text
         presenter.birth = text
+
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(timeInterval: 0.5,
+                                     target: self,
+                                     selector: #selector(checkInvalidDate),
+                                     userInfo: nil,
+                                     repeats: false
+        )
+
     }
     
     // MARK: 다음 숫자 덮어쓰기
@@ -218,8 +245,10 @@ extension SecondRegistrationViewController: UITextFieldDelegate {
                     newText += String(character)
                 }
             }
+            
             textField.text = newText
             presenter.birth = text
+            
             let newCursorPosition = min(range.location + 1, newText.count)
             let cursorPosition = textField.position(from: textField.beginningOfDocument, offset: newCursorPosition)
             textField.selectedTextRange = textField.textRange(from: cursorPosition!, to: cursorPosition!)
@@ -229,7 +258,7 @@ extension SecondRegistrationViewController: UITextFieldDelegate {
     }
     
     // MARK: String to Int (DateFormatter 활용)
-    func textFieldDidEndEditing(_ textField: UITextField) {
+    @objc func checkInvalidDate() {
         presenter.checkInvalidDate()
     }
 }
