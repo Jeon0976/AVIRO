@@ -163,7 +163,7 @@ final class AVIROAPIManager {
     
     // MARK: Post UserInfo Model
     func postUserModel(_ userModel: UserInfoModel,
-                       completionHandler: @escaping((CheckUser) -> Void)) {
+                       completionHandler: @escaping((UserInrollResponse) -> Void)) {
         guard let url = postAPI.userInfoInroll().url else { print("url error"); return}
         
         guard let jsonData = try? JSONEncoder().encode(userModel) else {
@@ -183,7 +183,7 @@ final class AVIROAPIManager {
             }
             
             if let data = data {
-                if let userInfo = try? JSONDecoder().decode(CheckUser.self, from: data) {
+                if let userInfo = try? JSONDecoder().decode(UserInrollResponse.self, from: data) {
                     completionHandler(userInfo)
                 }
                 return

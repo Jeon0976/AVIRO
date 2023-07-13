@@ -8,13 +8,6 @@
 import UIKit
 
 final class ThridRegistrationViewController: UIViewController {
-    var terms = [
-        ("어비로 이용 약관 (필수)", false),
-        ("개인정보 수집 및 이용에 대한 동의 (필수)", false),
-        ("위치기반 서비스 이용약관 (필수)", false),
-        ("이벤트 및 마케팅 활용 동의 (선택)", false)
-    ]
-    
     lazy var presenter = ThridRegistrationPresenter(viewController: self)
     
     var titleLabel = UILabel()
@@ -35,6 +28,7 @@ final class ThridRegistrationViewController: UIViewController {
 }
 
 extension ThridRegistrationViewController: ThridRegistrationProtocol {
+    // MARK: Layout
     func makeLayout() {
         [
             titleLabel,
@@ -69,6 +63,7 @@ extension ThridRegistrationViewController: ThridRegistrationProtocol {
         ])
     }
     
+    // MARK: Attribute
     func makeAttribute() {
         // view ...
         view.backgroundColor = .white
@@ -101,34 +96,33 @@ extension ThridRegistrationViewController: ThridRegistrationProtocol {
         // nextButton
         nextButton.setTitle("다음으로", for: .normal)
         nextButton.addTarget(self, action: #selector(tappedNextButton), for: .touchUpInside)
+        nextButton.isEnabled = false
+    }
+    
+    func pushFinalRegistrationView() {
+        let viewController = FinalRegistrationViewController()
+        
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     @objc func tappedNextButton() {
-        
+        presenter.pushUserInfo()
     }
 
     // MARK: All Accept Button 클릭 시
     @objc func allAcceptButtonTapped(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
-        
-        if sender.isSelected {
-            for index in terms.indices {
-                terms[index].1 = true
-            }
-            sender.tintColor = .allVegan
-        } else {
-            for index in terms.indices {
-                terms[index].1 = false
-            }
-            sender.tintColor = .subTitle
-        }
-        
+
+        sender.tintColor = sender.isSelected ? .allVegan : .subTitle
+        presenter.allAcceptButtonTapped(sender.isSelected)
+
+        checkAllRequiredTerms()
         termsTableView.reloadData()
-        print(terms)
     }
 }
 
 extension ThridRegistrationViewController: UITableViewDelegate {
+    // MARK: Table HeaderView
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         headerView.backgroundColor = tableView.backgroundColor
@@ -166,13 +160,13 @@ extension ThridRegistrationViewController: UITableViewDelegate {
 extension ThridRegistrationViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        terms.count
+        presenter.terms.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TermsTableCell.identifier, for: indexPath) as? TermsTableCell
         
-        let term = terms[indexPath.row]
+        let term = presenter.terms[indexPath.row]
         
         cell?.selectionStyle = .none
         cell?.backgroundColor = termsTableView.backgroundColor
@@ -180,10 +174,24 @@ extension ThridRegistrationViewController: UITableViewDataSource {
         cell?.makeCellData(check: term.1, term: term.0)
         
         cell?.checkButtonTapped = { [unowned self] in
-            self.terms[indexPath.row].1 = !self.terms[indexPath.row].1
-            print(self.terms)
+            self.presenter.terms[indexPath.row].1 = !self.presenter.terms[indexPath.row].1
+            self.checkAllRequiredTerms()
+        }
+                
+        return cell ?? UITableViewCell()
+    }
+    
+    // MARK: Check All Required Terms
+    private func checkAllRequiredTerms() {
+        // 하나 하나 체크 해서 전부다 채크 했을 경우
+        let result = presenter.checkAllRequiredTerms()
+        
+        if result.0 {
+            allAcceptButton.tintColor = .allVegan
+        } else {
+            allAcceptButton.tintColor = .subTitle
         }
         
-        return cell ?? UITableViewCell()
+        nextButton.isEnabled = result.1
     }
 }

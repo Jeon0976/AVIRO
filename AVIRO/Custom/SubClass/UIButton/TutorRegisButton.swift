@@ -58,7 +58,7 @@ final class TutorRegisButton: UIButton {
     }
     
     func removeGradient() {
-        self.layer.sublayers?.first(where: { $0 is CAGradientLayer} )?.removeFromSuperlayer()
+        self.layer.sublayers?.first(where: { $0 is CAGradientLayer })?.removeFromSuperlayer()
     }
     
     override var isEnabled: Bool {
