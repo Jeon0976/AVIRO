@@ -107,6 +107,12 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
     func makeAttribute() {
         // view ...
         view.backgroundColor = .white
+        navigationItem.backButtonTitle = ""
+        
+        // tapGesture
+        tapGesture.delegate = self
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
         
         // titleLabel
         titleLabel.text = "곧 어비로를\n사용할 수 있어요!"
@@ -157,6 +163,7 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
         birthField.isPossible = false
         birthExample.textColor = .explainImPossible
         birthExample.text = "올바른 형식으로 입력해주세요"
+        nextButton.isEnabled = false
     }
     
     // MARK: Birth Init
@@ -164,6 +171,17 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
         birthField.isPossible = nil
         birthExample.textColor = .exampleRegistration
         birthExample.text = "태어난 연도를 입력해주세요 (선택)"
+        nextButton.isEnabled = true
+    }
+    
+    // MARK: Push Thrid RegistrationView
+    func pushThridRegistrationView(_ userInfoModel: UserInfoModel) {
+        let viewController = ThridRegistrationViewController()
+        let presenter = ThridRegistrationPresenter(viewController: viewController,
+                                                   userInfo: userInfoModel)
+        viewController.presenter = presenter
+        
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     @objc func genderButtonTapped(_ sender: GenderButton) {
@@ -249,6 +267,7 @@ extension SecondRegistrationViewController: UITextFieldDelegate {
             textField.text = newText
             presenter.birth = text
             
+            // 최대 개수 넘어가는 것을 방지
             let newCursorPosition = min(range.location + 1, newText.count)
             let cursorPosition = textField.position(from: textField.beginningOfDocument, offset: newCursorPosition)
             textField.selectedTextRange = textField.textRange(from: cursorPosition!, to: cursorPosition!)

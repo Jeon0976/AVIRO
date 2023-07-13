@@ -16,13 +16,11 @@ protocol FirstRegistrationProtocol: NSObject {
 
 final class FirstRegistrationPresenter {
     weak var viewController: FirstRegistrationProtocol?
-    
-    var userInfoModel: UserInfoModel?
-    
-    var userNicname: String?
-    
     private let aviroManager = AVIROAPIManager()
-    
+
+    var userInfoModel: UserInfoModel?
+    var userNicname: String?
+        
     init(viewController: FirstRegistrationProtocol, userInfoModel: UserInfoModel? = nil) {
         self.viewController = viewController
         self.userInfoModel = userInfoModel

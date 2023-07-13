@@ -112,7 +112,14 @@ extension LoginViewController: LoginViewProtocol {
     
     // MARK: No Login Button Tapped
     @objc func tapNoLoginButton() {
-        pushRegistration(UserInfoModel(userToken: "test", userName: "", userEmail: "", nickname: "", birthYear: 0, gender: ""))
+        pushRegistration(UserInfoModel(userToken: "test",
+                                       userName: "",
+                                       userEmail: "",
+                                       nickname: "",
+                                       birthYear: 0,
+                                       gender: "",
+                                       marketingAgree: false)
+        )
     }
     
     // MARK: Apple Login Tapped
@@ -166,7 +173,8 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                                          userEmail: email,
                                          nickname: "",
                                          birthYear: 0,
-                                         gender: ""
+                                         gender: "",
+                                         marketingAgree: false
             )
             
             presenter.upLoadUserInfo(userInfo)

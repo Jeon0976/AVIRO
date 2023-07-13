@@ -12,6 +12,7 @@ protocol SecondRegistrationProtocol: NSObject {
     func makeAttribute()
     func invalidDate()
     func birthInit()
+    func pushThridRegistrationView(_ userInfoModel: UserInfoModel)
 }
 
 final class SecondRegistrationPresenter {
@@ -49,7 +50,7 @@ final class SecondRegistrationPresenter {
         
         userInfoModel.birthYear = birth
         
-        print(userInfoModel)
+        viewController?.pushThridRegistrationView(userInfoModel)
     }
     
     // MARK: String to Int (DateFormatter 활용) & Check Invaild Date
@@ -71,6 +72,11 @@ final class SecondRegistrationPresenter {
                 birth = ""
             }
             
+            if year < 1920 {
+                viewController?.invalidDate()
+                birth = ""
+            }
+            
             if month < 1 || month > 12 || day < 1 || day > 31 {
                 viewController?.invalidDate()
                 birth = ""
@@ -79,7 +85,6 @@ final class SecondRegistrationPresenter {
         } else {
             viewController?.invalidDate()
             birth = ""
-            
         }
     }
 }
