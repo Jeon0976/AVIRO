@@ -68,14 +68,13 @@ final class ThridRegistrationPresenter {
         userInfoModel.marketingAgree = terms.last?.1 ?? false
         
         print(userInfoModel)
-        viewController?.pushFinalRegistrationView()
         // TODO: 마지막 페이지 완성후 테스트
-//        aviroManager.postUserModel(userInfoModel) { userInfo in
-//            print(userInfo.statusCode)
-//            DispatchQueue.main.async { [weak self] in
-//                self?.viewController?.pushFinalRegistrationView()
-//            }
-//        }
+        aviroManager.postUserModel(userInfoModel) { userInfo in
+            print(userInfo.statusCode)
+            DispatchQueue.main.async { [weak self] in
+                self?.viewController?.pushFinalRegistrationView()
+            }
+        }
     }
     
 }

@@ -72,6 +72,8 @@ final class FinalRegistrationViewController: UIViewController {
     }
     
     @objc func buttonTapped() {
+        let viewController = TabBarViewController()
         
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }

@@ -71,7 +71,6 @@ final class AppController {
         // TODO: 회원가입 페이지 다 만들면 변경
         // 자동로그인 토큰 없을 때
         guard let userIdentifier = userIdentifier else {
-            
             setLoginView()
             return
         }
