@@ -9,8 +9,6 @@ import UIKit
 
 final class GenderButton: UIButton {
     
-    var gender: Gender?
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -48,6 +46,7 @@ final class GenderButton: UIButton {
     }
     
     // MARK: Set Width
+    // 폰 마다 버튼의 Width을 다르게 하기 위한 조치
     override func layoutSubviews() {
         super.layoutSubviews()
         

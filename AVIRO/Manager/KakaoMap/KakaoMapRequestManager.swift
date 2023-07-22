@@ -7,7 +7,11 @@
 
 import Foundation
 
-final class KakaoMapRequestManager {
+protocol KakaoMapRequestProtocol {
+    
+}
+
+final class KakaoMapRequestManager: KakaoMapRequestProtocol {
     private let session: URLSession
     
     let api = KakaoMapRequestAPI()

@@ -8,10 +8,10 @@
 import UIKit
 
 protocol DetailViewProtocol: NSObject {
-    func bindingData()
     func makeLayout()
     func makeAttribute()
     func showOthers()
+    func bindingData()
     func updateComment(_ model: [CommentArray])
 }
 

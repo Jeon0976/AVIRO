@@ -10,6 +10,7 @@ import UIKit
 final class TopDetailView: UIView {
     let title: UILabel = {
         let label = UILabel()
+        
         label.textColor = .mainTitle
         label.font = Layout.Label.bigTitile
         label.numberOfLines = 0
@@ -24,6 +25,7 @@ final class TopDetailView: UIView {
     
     let address: UILabel = {
         let label = UILabel()
+        
         label.textColor = .subTitle
         label.font = Layout.Label.bigNormal
         label.numberOfLines = 0
@@ -61,6 +63,7 @@ final class TopDetailView: UIView {
         button.imageView?.contentMode = .scaleAspectFit
         button.semanticContentAttribute = .forceLeftToRight
         button.imageEdgeInsets = Layout.SlideView.imageToTextInset
+        
         return button
     }()
     

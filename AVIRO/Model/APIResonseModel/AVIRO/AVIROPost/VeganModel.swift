@@ -10,12 +10,20 @@ enum MenuType: String {
     case vegan
     case needToRequset
     
-    var value: String {
+}
+
+enum Category: String {
+    case restaurant
+    case cafe
+    case bakery
+    case bar
+    
+    var title: String {
         switch self {
-        case .vegan:
-            return "vegan"
-        case .needToRequset:
-            return "need to request"
+        case .restaurant: return "식당"
+        case .cafe: return "카페"
+        case .bakery: return "빵집"
+        case .bar: return "술집"
         }
     }
 }

@@ -24,7 +24,7 @@ final class SecondRegistrationViewController: UIViewController {
     var genderStackView = UIStackView()
     var genderExample = UILabel()
     
-    var nextButton = TutorRegisButton()
+    var nextButton = BottomButton()
     
     var tapGesture = UITapGestureRecognizer()
     var timer: Timer?
@@ -81,8 +81,8 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
             
             // birthExample
             birthExample.topAnchor.constraint(equalTo: birthField.bottomAnchor, constant: 18),
-            birthExample.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 45),
-            birthExample.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -45),
+            birthExample.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            birthExample.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             
             // genderStack
             genderStackView.topAnchor.constraint(equalTo: birthExample.bottomAnchor, constant: 30),
@@ -91,8 +91,8 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
             
             // genderExample
             genderExample.topAnchor.constraint(equalTo: genderStackView.bottomAnchor, constant: 18),
-            genderExample.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 45),
-            genderExample.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 45),
+            genderExample.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            genderExample.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 40),
             
             // next Button
             nextButton.bottomAnchor.constraint(
@@ -132,7 +132,7 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
 
         // birthExample
         birthExample.text = "태어난 연도를 입력해주세요 (선택)"
-        birthExample.font = .systemFont(ofSize: 14)
+        birthExample.font = .systemFont(ofSize: 13)
         birthExample.numberOfLines = 0
         birthExample.textColor = .exampleRegistration
         
@@ -149,7 +149,7 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
         
         // genderExample
         genderExample.text = "성별을 선택해주세요 (선택)"
-        genderExample.font = .systemFont(ofSize: 14)
+        genderExample.font = .systemFont(ofSize: 13)
         genderExample.numberOfLines = 0
         genderExample.textColor = .exampleRegistration
         
@@ -226,7 +226,6 @@ extension SecondRegistrationViewController: UITextFieldDelegate {
         guard var text = textField.text else { return }
 
         birthInit()
-        
         if text.count > 10 {
             text = String(text.prefix(10))
         }
@@ -266,7 +265,7 @@ extension SecondRegistrationViewController: UITextFieldDelegate {
             
             textField.text = newText
             presenter.birth = text
-            
+
             // 최대 개수 넘어가는 것을 방지
             let newCursorPosition = min(range.location + 1, newText.count)
             let cursorPosition = textField.position(from: textField.beginningOfDocument, offset: newCursorPosition)
@@ -275,7 +274,7 @@ extension SecondRegistrationViewController: UITextFieldDelegate {
         }
         return true
     }
-    
+
     // MARK: String to Int (DateFormatter 활용)
     @objc func checkInvalidDate() {
         presenter.checkInvalidDate()

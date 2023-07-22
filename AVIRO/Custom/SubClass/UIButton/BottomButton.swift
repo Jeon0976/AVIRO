@@ -8,7 +8,7 @@
 import UIKit
 
 // Enable 일때 설정 다시
-final class TutorRegisButton: UIButton {
+final class BottomButton: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)

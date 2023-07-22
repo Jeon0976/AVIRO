@@ -79,7 +79,7 @@ extension PlaceListViewController: PlaceListProtocol {
         
         searchField.placeholder = StringValue.PlaceListView.searchFieldPlaceHolder
         searchField.backgroundColor = .white
-        searchField.makeCustomClearButton()
+//        searchField.makeCustomClearButton()
         searchField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         searchField.delegate = self
     }

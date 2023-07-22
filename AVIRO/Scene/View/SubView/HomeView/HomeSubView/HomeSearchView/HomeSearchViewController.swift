@@ -71,7 +71,7 @@ extension HomeSearchViewController: HomeSearchProtocol {
         }
         
         // searchText
-        searchTextField.makeCustomClearButton()
+//        searchTextField.makeCustomClearButton()
         searchTextField.placeholder = StringValue.HomeSearchView.searchPlaceHolder
         searchTextField.delegate = self
         searchTextField.rightView?.isHidden = true

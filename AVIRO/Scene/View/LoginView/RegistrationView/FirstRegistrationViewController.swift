@@ -18,7 +18,7 @@ final class FirstRegistrationViewController: UIViewController {
     var subInfo = UILabel()
     var subInfo2 = UILabel()
     
-    var nextButton = TutorRegisButton()
+    var nextButton = BottomButton()
     
     var tapGesture = UITapGestureRecognizer()
     var timer: Timer?
@@ -69,14 +69,14 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
             subInfo.topAnchor.constraint(
                 equalTo: nicNameField.bottomAnchor, constant: 18),
             subInfo.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor, constant: 45),
+                equalTo: view.leadingAnchor, constant: 40),
             subInfo.trailingAnchor.constraint(equalTo: subInfo2.leadingAnchor, constant: -10),
             
             // subInfo2
             subInfo2.topAnchor.constraint(
                 equalTo: subInfo.topAnchor),
             subInfo2.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor, constant: -45),
+                equalTo: view.trailingAnchor, constant: -40),
             subInfo2.widthAnchor.constraint(equalToConstant: 45),
             
             // next Button
@@ -117,14 +117,14 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
         nicNameField.delegate = self
                 
         // subInfo
-        subInfo.text = "어비로에서 사용할 닉네임을 정해주세요."
-        subInfo.font = .systemFont(ofSize: 14)
+        subInfo.text = "이모지, 특수문자(-, _ 제외)를 사용할 수 없습니다."
+        subInfo.font = .systemFont(ofSize: 13)
         subInfo.numberOfLines = 0
         subInfo.textColor = .exampleRegistration
         
         // subInfo2
         subInfo2.text = "(0/15)"
-        subInfo2.font = .systemFont(ofSize: 14)
+        subInfo2.font = .systemFont(ofSize: 13)
         subInfo2.textColor = .exampleRegistration
         
         // nextButton

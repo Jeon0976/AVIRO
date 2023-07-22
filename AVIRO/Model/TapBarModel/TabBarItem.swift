@@ -54,7 +54,7 @@ enum TabBarItem: CaseIterable {
         case .home: return UINavigationController(rootViewController: HomeViewController())
         case .popular: return UINavigationController(rootViewController: PopularViewController())
         case .plus: return UINavigationController(rootViewController: InrollPlaceViewController())
-        case .bookMark: return UINavigationController(rootViewController: BookMarkViewController())
+        case .bookMark: return UINavigationController(rootViewController: InrollPlaceViewController2())
         case .myPage: return UINavigationController(rootViewController: MyPageViewController())
         }
     }

@@ -18,7 +18,7 @@ final class ThridRegistrationViewController: UIViewController {
     
     var isAllAccepted = false
     
-    var nextButton = TutorRegisButton()
+    var nextButton = BottomButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()

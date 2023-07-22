@@ -115,7 +115,7 @@ final class InrollPlacePresenter: NSObject {
             .filter{ $0.hasData }
             .map {
                 MenuArray(
-                    menuType: MenuType.vegan.value,
+                    menuType: MenuType.vegan.rawValue,
                     menu: $0.menu,
                     price: Int($0.price) ?? 0,
                     howToRequest: "", isCheck: false
@@ -126,7 +126,7 @@ final class InrollPlacePresenter: NSObject {
             .filter { $0.hasData }
             .map {
                 MenuArray(
-                    menuType: MenuType.needToRequset.value,
+                    menuType: MenuType.needToRequset.rawValue,
                     menu: $0.menu, price: Int($0.price) ?? 0,
                     howToRequest: $0.howToRequest,
                     isCheck: $0.isCheck

@@ -215,11 +215,11 @@ final class CommentDetailView: UIView {
             tableViewHeightConstraint?.constant = tableHaight
 
             let totalHeight =
-                titleHeight +
-                tableHaight +
-                buttonHeight +
-                commentViewInset
-            
+                    titleHeight +
+                    tableHaight +
+                    buttonHeight +
+                    commentViewInset
+                
             viewHeightConstraint?.constant = totalHeight
         }
     }

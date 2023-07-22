@@ -12,7 +12,7 @@ struct Image {
     // MARK: Tutorial & Registration
     struct Registration {
         static let check = "bxs-check-circle.svg"
-        static let xCheck = "xCheck"
+        static let xCheck = "bxs-error-alt.svg"
         static let logo = "Logo"
     }
     

@@ -10,9 +10,7 @@ import UIKit
 class RegistrationField: UITextField {
     private let inset = UIEdgeInsets(top: 15, left: 20, bottom: 15, right: 20)
     private let rightButtonInset = CGFloat(5)
-    
-    var didTapBackspace: (() -> Void)?
-    
+        
     var isPossible: Bool? {
         didSet {
             if let isPossible = isPossible {
@@ -50,6 +48,7 @@ class RegistrationField: UITextField {
         self.layer.cornerRadius = 26
         self.backgroundColor = .backField
         self.rightViewMode = .unlessEditing
+        self.font = .systemFont(ofSize: 18, weight: .medium)
     }
     
     private func makeRightView(_ isPossible: Bool) -> UIView {
@@ -68,7 +67,7 @@ class RegistrationField: UITextField {
     func makePlaceHolder(_ placeHolder: String) {
         self.attributedPlaceholder = NSAttributedString(
             string: placeHolder,
-            attributes: [NSAttributedString.Key.foregroundColor : UIColor.registrationPlaceHolder]
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.registrationPlaceHolder!]
         )
     }
 }
