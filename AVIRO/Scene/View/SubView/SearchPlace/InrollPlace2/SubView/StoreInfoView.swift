@@ -62,12 +62,12 @@ final class StoreInfoView: UIView {
     let cafeButton = CategoryButton()
     let bakeryButton = CategoryButton()
     let barButton = CategoryButton()
-    var category: Category?
-    
-    var categoryButtons = [CategoryButton]()
     
     let buttonStackView = UIStackView()
     
+    // 공통된 button action 작업을 위해 배열화
+    var categoryButtons = [CategoryButton]()
+
     // MARK: Constraint 조절
     var viewHeightConstraint: NSLayoutConstraint?
     var categoryTopConstraint: NSLayoutConstraint?
@@ -86,17 +86,20 @@ final class StoreInfoView: UIView {
     // MARK: 최초 view Height 설정
     override func layoutSubviews() {
         super.layoutSubviews()
-        if !barButton.isSelected {
-            let titleHeight = title.frame.height
-            let titleFieldHeight = titleField.frame.height
-            let categoryHeight = categoryLabel.frame.height
-            let buttonStackViewHeight = buttonStackView.frame.height
-            
-            // 20, 20, 20, 15, 20
-            let totalHeight = titleHeight + titleFieldHeight + categoryHeight + buttonStackViewHeight + 95
-            
-            viewHeightConstraint?.constant = totalHeight
+        // TODO: 데이터 연결된거 구현하면 수정
+        guard let titleText = titleField.text, titleText.isEmpty else {
+            return
         }
+
+        let titleHeight = title.frame.height
+        let titleFieldHeight = titleField.frame.height
+        let categoryHeight = categoryLabel.frame.height
+        let buttonStackViewHeight = buttonStackView.frame.height
+
+        // 20, 20, 20, 15, 20
+        let totalHeight = titleHeight + titleFieldHeight + categoryHeight + buttonStackViewHeight + 95
+
+        viewHeightConstraint?.constant = totalHeight
     }
     
     // MARK: Layout
@@ -184,21 +187,52 @@ final class StoreInfoView: UIView {
 
         categoryButtons = [restaurantButton, cafeButton, bakeryButton, barButton]
         
-        categoryButtons.forEach {
-            $0.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
-        }
-        
         showOtherDetail(false)
     }
     
-    func showOtherDetail(_ show: Bool) {
+    // MARK: View height 확장 메서드
+    func expandStoreInformation() {
+        // TODO: 데이터 연결된거
+        guard let titleText = titleField.text, !titleText.isEmpty else {
+            showOtherDetail(false)
+            changeConstraint(false)
+            layoutSubviews()
+            return
+        }
+        
+        showOtherDetail(true)
+        changeConstraint(true)
+        
+        let titleHeight = title.frame.height
+        let titleFieldHeight = titleField.frame.height
+        
+        let categoryHeight = categoryLabel.frame.height
+        let buttonStackViewHeight = buttonStackView.frame.height
+        
+        let subtitleHeight = categoryHeight * 2
+        let subtitleFieldHeight = titleFieldHeight * 2
+        
+        // 20 + 15 + 20 + 15
+        let addInset: CGFloat = 70
+        
+        let plusInset = subtitleHeight + subtitleFieldHeight + addInset
+        
+        // 20, 20, 20, 15, 20
+        let totalHeight = titleHeight + titleFieldHeight + categoryHeight + buttonStackViewHeight + 95 + plusInset
+        
+        viewHeightConstraint?.constant = totalHeight
+    }
+    
+    // MARK: 숨겨진 label, field 로직 처리
+    private func showOtherDetail(_ show: Bool) {
         address.isHidden = !show
         addressField.isHidden = !show
         number.isHidden = !show
         numberField.isHidden = !show
     }
     
-    func changeConstraint(_ change: Bool) {
+    // MARK: view height 변경에 따라 변하는 categoyLabel constraint
+    private func changeConstraint(_ change: Bool) {
         if let categoryTopConstraint = categoryTopConstraint {
             categoryTopConstraint.isActive = false
         }
@@ -211,53 +245,5 @@ final class StoreInfoView: UIView {
                 equalTo: titleField.bottomAnchor, constant: 15)
         }
         categoryTopConstraint?.isActive = true
-    }
-    
-    func expandStoreInformation() {
-        if barButton.isSelected {
-            
-            showOtherDetail(true)
-            changeConstraint(true)
-
-            let titleHeight = title.frame.height
-            let titleFieldHeight = titleField.frame.height
-        
-            let categoryHeight = categoryLabel.frame.height
-            let buttonStackViewHeight = buttonStackView.frame.height
-            
-            let subtitleHeight = categoryHeight * 2
-            let subtitleFieldHeight = titleFieldHeight * 2
-            
-            // 20 + 15 + 20 + 15
-            let addInset: CGFloat = 70
-            
-            let plusInset = subtitleHeight + subtitleFieldHeight + addInset
-            
-            // 20, 20, 20, 15, 20
-            let totalHeight = titleHeight + titleFieldHeight + categoryHeight + buttonStackViewHeight + 95 + plusInset
-            
-            viewHeightConstraint?.constant = totalHeight
-        }
-    }
-    
-    @objc func buttonTapped(_ sender: UIButton) {
-        for button in categoryButtons {
-            button.isSelected = (button == sender)
-        }
-        
-        guard let title = sender.currentAttributedTitle?.string else { return }
-        
-        switch title {
-        case Category.restaurant.title:
-            category = .restaurant
-        case Category.cafe.title:
-            category = .cafe
-        case Category.bakery.title:
-            category = .bakery
-        case Category.bar.title:
-            category = .bar
-        default:
-            category = nil
-        }
     }
 }

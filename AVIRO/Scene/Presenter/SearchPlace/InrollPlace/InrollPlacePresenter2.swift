@@ -11,6 +11,7 @@ protocol InrollPlaceProtocol2: NSObject {
     func makeLayout()
     func makeAttribute()
     func makeGesture()
+    func makeNotification()
 }
 
 final class InrollPlacePresenter2 {
@@ -20,6 +21,7 @@ final class InrollPlacePresenter2 {
     
     private var storeNomalData: PlaceListModel?
     private var menuArray = [MenuArray]()
+    private var category: Category?
     
     private var noRequestFieldModel = [VeganTableFieldModel(menu: "", price: "")]
     private var requestFieldModel = [RequestTableFieldModel(menu: "", price: "", howToRequest: "", isCheck: false)]
@@ -42,7 +44,19 @@ final class InrollPlacePresenter2 {
     
     func viewDidLoad() {
         viewController?.makeLayout()
-        viewController?.makeAttribute()
         viewController?.makeGesture()
+        viewController?.makeNotification()
+    }
+    
+    func viewWillAppear() {
+        viewController?.makeAttribute()
+    }
+    
+    func updatePlaceModel(_ model: PlaceListModel) {
+        storeNomalData = model
+    }
+    
+    func updateCategory(_ category: Category?) {
+        self.category = category
     }
 }

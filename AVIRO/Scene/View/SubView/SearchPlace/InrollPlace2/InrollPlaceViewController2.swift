@@ -25,7 +25,17 @@ final class InrollPlaceViewController2: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        tabBarAttributed()
+        super.viewWillAppear(animated)
+        
+        presenter.viewWillAppear()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: NSNotification.Name("selectedPlace"),
+            object: nil
+        )
     }
 }
 
@@ -87,7 +97,7 @@ extension InrollPlaceViewController2: InrollPlaceProtocol2 {
         viewAttributed()
         navigationAttributed()
         tabBarAttributed()
-        
+        storeInfoViewAttribute()
     }
     
     // MARK: Gesture
@@ -96,6 +106,15 @@ extension InrollPlaceViewController2: InrollPlaceProtocol2 {
         tapGesture.delegate = self
     }
 
+    // MARK: Notification
+    func makeNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(selectedPlace(_:)),
+            name: NSNotification.Name("selectedPlace"),
+            object: nil
+        )
+    }
 }
 
 // MARK: @Objc Method
@@ -105,16 +124,50 @@ extension InrollPlaceViewController2 {
         
     }
     
+    // MARK: 홈 화면으로 돌아가기
     @objc func backToMain() {
         tabBarController?.selectedIndex = 0
-
+    }
+    
+    // MARK: 검색 결과 데이터 binding
+    @objc func selectedPlace(_ notification: Notification) {
+        guard let selectedPlace = notification.userInfo?["selectedPlace"] as? PlaceListModel else { return }
+        
+        presenter.updatePlaceModel(selectedPlace)
+        
+        storeInfoView.titleField.text = selectedPlace.title
+        storeInfoView.addressField.text = selectedPlace.address
+        storeInfoView.numberField.text = selectedPlace.phone
+        storeInfoView.expandStoreInformation()
+    }
+    
+    // MARK: Category button 클릭 시
+    @objc func buttonTapped(_ sender: UIButton) {
+        for button in storeInfoView.categoryButtons {
+            button.isSelected = (button == sender)
+        }
+        
+        guard let title = sender.currentAttributedTitle?.string else { return }
+        
+        switch title {
+        case Category.restaurant.title:
+            presenter.updateCategory(Category.restaurant)
+        case Category.cafe.title:
+            presenter.updateCategory(Category.cafe)
+        case Category.bakery.title:
+            presenter.updateCategory(Category.bakery)
+        case Category.bar.title:
+            presenter.updateCategory(Category.bar)
+        default:
+            presenter.updateCategory(nil)
+        }
     }
 }
 
 // MARK: TapGestureDelegate
 extension InrollPlaceViewController2: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        // TODO: touch가 textField이면서 가게 기본 정보가 아니면 flase
+        // TODO: touch가 textField이면서 가게 기본 정보가 아니면 false
         if touch.view is UITextField {
             return false
         }
@@ -164,4 +217,25 @@ extension InrollPlaceViewController2 {
         }
     }
     
+    // MARK: storeInfo View Attribute
+    private func storeInfoViewAttribute() {
+        storeInfoView.titleField.delegate = self
+        
+        storeInfoView.categoryButtons.forEach {
+            $0.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
+        }
+    }
+}
+
+extension InrollPlaceViewController2: UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        if textField == storeInfoView.titleField {
+            let viewController = PlaceListViewController()
+            
+            navigationController?.pushViewController(viewController, animated: true)
+            return true
+        }
+        
+        return true
+    }
 }
