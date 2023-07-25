@@ -6,11 +6,6 @@
 //
 //
 import Foundation
-enum MenuType: String {
-    case vegan
-    case needToRequset
-    
-}
 
 enum Category: String {
     case restaurant
@@ -26,6 +21,25 @@ enum Category: String {
         case .bar: return "술집"
         }
     }
+}
+
+enum VeganOption {
+    case allVegan
+    case someVegan
+    case requestVegan
+    
+    var value: String {
+        switch self {
+        case .allVegan: return "모든 메뉴가\n비건"
+        case .someVegan: return "일부 메뉴만\n비건"
+        case .requestVegan: return "비건 메뉴로\n요청 가능"
+        }
+    }
+}
+
+enum MenuType: String {
+    case vegan
+    case needToRequset
 }
 
 /// 사용자가 입력한 데이터

@@ -29,7 +29,7 @@ final class InrollPlaceViewController2: UIViewController {
         
         presenter.viewWillAppear()
     }
-    
+
     deinit {
         NotificationCenter.default.removeObserver(
             self,
@@ -43,6 +43,7 @@ final class InrollPlaceViewController2: UIViewController {
 extension InrollPlaceViewController2: InrollPlaceProtocol2 {
     // MARK: Layout
     func makeLayout() {
+
         [
             scrollView
         ].forEach {
@@ -66,7 +67,7 @@ extension InrollPlaceViewController2: InrollPlaceProtocol2 {
             $0.translatesAutoresizingMaskIntoConstraints = false
             scrollView.addSubview($0)
         }
-        
+
         NSLayoutConstraint.activate([
             // storeInfoView
             storeInfoView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 15),
@@ -79,7 +80,6 @@ extension InrollPlaceViewController2: InrollPlaceProtocol2 {
             veganDetailView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
             veganDetailView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
             veganDetailView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32),
-            veganDetailView.heightAnchor.constraint(equalToConstant: 200),
             
             // menuTableView
             menuTableView.topAnchor.constraint(equalTo: veganDetailView.bottomAnchor, constant: 15),
@@ -93,11 +93,16 @@ extension InrollPlaceViewController2: InrollPlaceProtocol2 {
     
     // MARK: Attribute
     func makeAttribute() {
-        // navigation, view...
         viewAttributed()
         navigationAttributed()
         tabBarAttributed()
         storeInfoViewAttribute()
+        veganDetailViewAttribute()
+    }
+    
+    // MARK: ViewWillAppear Attribute
+    func makeAttributeWhenViewWillAppear() {
+        tabBarAttributed()
     }
     
     // MARK: Gesture
@@ -108,6 +113,7 @@ extension InrollPlaceViewController2: InrollPlaceProtocol2 {
 
     // MARK: Notification
     func makeNotification() {
+        // after search method
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(selectedPlace(_:)),
@@ -115,65 +121,42 @@ extension InrollPlaceViewController2: InrollPlaceProtocol2 {
             object: nil
         )
     }
-}
-
-// MARK: @Objc Method
-extension InrollPlaceViewController2 {
-    // TODO: Report Button Logic 처리
-    @objc func reportStore() {
-        
-    }
     
-    // MARK: 홈 화면으로 돌아가기
-    @objc func backToMain() {
-        tabBarController?.selectedIndex = 0
-    }
-    
-    // MARK: 검색 결과 데이터 binding
-    @objc func selectedPlace(_ notification: Notification) {
-        guard let selectedPlace = notification.userInfo?["selectedPlace"] as? PlaceListModel else { return }
+    // MARK: After Search
+    func updatePlaceInfo(_ storeInfo: PlaceListModel) {
+        storeInfoView.titleField.text = storeInfo.title
+        storeInfoView.addressField.text = storeInfo.address
+        storeInfoView.numberField.text = storeInfo.phone
         
-        presenter.updatePlaceModel(selectedPlace)
-        
-        storeInfoView.titleField.text = selectedPlace.title
-        storeInfoView.addressField.text = selectedPlace.address
-        storeInfoView.numberField.text = selectedPlace.phone
         storeInfoView.expandStoreInformation()
     }
     
-    // MARK: Category button 클릭 시
-    @objc func buttonTapped(_ sender: UIButton) {
-        for button in storeInfoView.categoryButtons {
-            button.isSelected = (button == sender)
-        }
+    // MARK: All Vegan 클릭 시
+    func allVeganTapped() {
+        veganDetailView.allVeganButton.isSelected.toggle()
         
-        guard let title = sender.currentAttributedTitle?.string else { return }
-        
-        switch title {
-        case Category.restaurant.title:
-            presenter.updateCategory(Category.restaurant)
-        case Category.cafe.title:
-            presenter.updateCategory(Category.cafe)
-        case Category.bakery.title:
-            presenter.updateCategory(Category.bakery)
-        case Category.bar.title:
-            presenter.updateCategory(Category.bar)
-        default:
-            presenter.updateCategory(nil)
+        if veganDetailView.allVeganButton.isSelected {
+            veganDetailView.someVeganButton.isSelected = false
+            veganDetailView.requestVeganButton.isSelected = false
         }
     }
-}
-
-// MARK: TapGestureDelegate
-extension InrollPlaceViewController2: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        // TODO: touch가 textField이면서 가게 기본 정보가 아니면 false
-        if touch.view is UITextField {
-            return false
-        }
+    
+    // MARK: Some Vegan 클릭 시
+    func someVeganTapped() {
+        veganDetailView.someVeganButton.isSelected.toggle()
         
-        view.endEditing(true)
-        return true
+        if veganDetailView.someVeganButton.isSelected {
+            veganDetailView.allVeganButton.isSelected = false
+        }
+    }
+    
+    // MARK: Request Vegan 클릭 시
+    func requestVeganTapped() {
+        veganDetailView.requestVeganButton.isSelected.toggle()
+        
+        if veganDetailView.requestVeganButton.isSelected {
+            veganDetailView.allVeganButton.isSelected = false
+        }
     }
 }
 
@@ -204,7 +187,7 @@ extension InrollPlaceViewController2 {
         navigationItem.rightBarButtonItem = rightBarButton
         navigationItem.rightBarButtonItem?.isEnabled = false
         
-        // TODO: Check
+        // TODO: 백버튼 커스텀 할때 수정
         let leftBarButton = UIBarButtonItem(title: "테스트", style: .plain, target: self, action: #selector(backToMain))
         
         navigationItem.leftBarButtonItem = leftBarButton
@@ -220,20 +203,78 @@ extension InrollPlaceViewController2 {
     // MARK: storeInfo View Attribute
     private func storeInfoViewAttribute() {
         storeInfoView.titleField.delegate = self
+        storeInfoView.addressField.delegate = self
+        storeInfoView.numberField.delegate = self
         
         storeInfoView.categoryButtons.forEach {
-            $0.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
+            $0.addTarget(self, action: #selector(categoryTapped(_:)), for: .touchUpInside)
+        }
+    }
+    
+    // MARK: vegan Detail View Attrubute
+    private func veganDetailViewAttribute() {
+        veganDetailView.veganOptions.forEach {
+            $0.addTarget(self, action: #selector(veganOptionButtonTapped(_:)), for: .touchUpInside)
         }
     }
 }
 
+// MARK: @Objc Method
+extension InrollPlaceViewController2 {
+    // TODO: Report Button Logic 처리
+    @objc func reportStore() {
+        
+    }
+    
+    // MARK: 홈 화면으로 돌아가기
+    @objc func backToMain() {
+        tabBarController?.selectedIndex = 0
+    }
+    
+    // MARK: 검색 결과 데이터 binding notification
+    @objc func selectedPlace(_ notification: Notification) {
+        guard let selectedPlace = notification.userInfo?["selectedPlace"] as? PlaceListModel else { return }
+        
+        presenter.updatePlaceModel(selectedPlace)
+    }
+    
+    // MARK: Category button 클릭 시
+    @objc func categoryTapped(_ sender: UIButton) {
+        for button in storeInfoView.categoryButtons {
+            button.isSelected = (button == sender)
+        }
+        
+        guard let title = sender.currentAttributedTitle?.string else { return }
+        
+        presenter.categoryTapped(title)
+    }
+    
+    // MARK: Vegan Option Button 클릭 시
+    @objc func veganOptionButtonTapped(_ sender: VeganOptionButton) {
+        presenter.veganOptionButtonTapped(sender)
+    }
+}
+
+// MARK: TapGestureDelegate
+extension InrollPlaceViewController2: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        // TODO: touch가 menu text field일 때만 flase
+
+        view.endEditing(true)
+        return true
+    }
+}
+
+// MARK: TextField가 선택되었을 때 Method
 extension InrollPlaceViewController2: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textField == storeInfoView.titleField {
             let viewController = PlaceListViewController()
             
             navigationController?.pushViewController(viewController, animated: true)
-            return true
+            return false
+        } else if textField == storeInfoView.addressField  || textField == storeInfoView.numberField {
+            return false
         }
         
         return true

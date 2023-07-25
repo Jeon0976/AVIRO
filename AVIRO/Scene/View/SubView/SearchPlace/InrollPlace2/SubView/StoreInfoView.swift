@@ -8,7 +8,7 @@
 import UIKit
 
 final class StoreInfoView: UIView {
-    // Main Title
+    // MARK: Main Title
     let title: UILabel = {
         let label = UILabel()
         
@@ -21,7 +21,7 @@ final class StoreInfoView: UIView {
     
     let titleField = InrollField2()
     
-    // Adderss
+    // MARK: Adderss
     let address: UILabel = {
         let label = UILabel()
         
@@ -34,7 +34,7 @@ final class StoreInfoView: UIView {
     
     let addressField = InrollField2()
     
-    // Number
+    // MARK: Number
     let number: UILabel = {
         let label = UILabel()
         
@@ -47,7 +47,7 @@ final class StoreInfoView: UIView {
     
     let numberField = InrollField2()
     
-    // Category
+    // MARK: Category
     let categoryLabel: UILabel = {
         let label = UILabel()
         
@@ -72,6 +72,7 @@ final class StoreInfoView: UIView {
     var viewHeightConstraint: NSLayoutConstraint?
     var categoryTopConstraint: NSLayoutConstraint?
     
+    // MARK: View init
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -95,9 +96,11 @@ final class StoreInfoView: UIView {
         let titleFieldHeight = titleField.frame.height
         let categoryHeight = categoryLabel.frame.height
         let buttonStackViewHeight = buttonStackView.frame.height
-
+        // TODO: Static value 수정할 때 수정 요망
         // 20, 20, 20, 15, 20
-        let totalHeight = titleHeight + titleFieldHeight + categoryHeight + buttonStackViewHeight + 95
+        let paddingValues: CGFloat = 95
+
+        let totalHeight = titleHeight + titleFieldHeight + categoryHeight + buttonStackViewHeight + paddingValues
 
         viewHeightConstraint?.constant = totalHeight
     }
@@ -131,7 +134,7 @@ final class StoreInfoView: UIView {
             addSubview($0)
         }
         
-        viewHeightConstraint = heightAnchor.constraint(equalToConstant: 0)
+        viewHeightConstraint = heightAnchor.constraint(equalToConstant: 100)
         viewHeightConstraint?.isActive = true
         
         NSLayoutConstraint.activate([
@@ -185,7 +188,12 @@ final class StoreInfoView: UIView {
         bakeryButton.setButton(Category.bakery.title)
         barButton.setButton(Category.bar.title)
 
-        categoryButtons = [restaurantButton, cafeButton, bakeryButton, barButton]
+        categoryButtons = [
+            restaurantButton,
+            cafeButton,
+            bakeryButton,
+            barButton
+        ]
         
         showOtherDetail(false)
     }

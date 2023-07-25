@@ -8,11 +8,17 @@
 import UIKit
 
 final class GenderButton: UIButton {
+    // MARK: selected 분기 처리
+    override var isSelected: Bool {
+        didSet {
+            self.backgroundColor = isSelected ? .allVegan : .backField
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setupButton()
+        attribute()
     }
     
     required init?(coder: NSCoder) {
@@ -56,15 +62,10 @@ final class GenderButton: UIButton {
         self.widthAnchor.constraint(equalToConstant: CGFloat(buttonWidth)).isActive = true
     }
     
-    private func setupButton() {
+    // MARK: Button Attribute
+    private func attribute() {
         self.backgroundColor = .backField
         self.layer.cornerRadius = 26
         self.contentEdgeInsets = UIEdgeInsets(top: 16, left: 35, bottom: 16, right: 35)
-    }
-    
-    override var isSelected: Bool {
-        didSet {
-            self.backgroundColor = isSelected ? .allVegan : .backField
-        }
     }
 }

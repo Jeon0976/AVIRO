@@ -134,7 +134,6 @@ final class InrollPlacePresenter: NSObject {
             }
         
         let test = veganMenu + requestMenu
-        print(test)
         return veganMenu + requestMenu
     }
     

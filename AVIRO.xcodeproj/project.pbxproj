@@ -106,6 +106,7 @@
 		C5EB511E2A21189B00B29CC1 /* StoreDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB511D2A21189B00B29CC1 /* StoreDetailView.swift */; };
 		C5EB51202A2118AB00B29CC1 /* MenuDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB511F2A2118AB00B29CC1 /* MenuDetailView.swift */; };
 		C5EB51222A2118B200B29CC1 /* CommentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB51212A2118B200B29CC1 /* CommentDetailView.swift */; };
+		C5F1014F2A6D19A800C53286 /* VeganOptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F1014E2A6D19A800C53286 /* VeganOptionButton.swift */; };
 		C5FF13532A42C8810026981D /* AVIROPlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FF13522A42C8810026981D /* AVIROPlaceModel.swift */; };
 		C5FF13552A42C88D0026981D /* AVIROMenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FF13542A42C88D0026981D /* AVIROMenuModel.swift */; };
 		C5FF13572A42C8970026981D /* AVIROCommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FF13562A42C8970026981D /* AVIROCommentModel.swift */; };
@@ -217,6 +218,7 @@
 		C5EB511D2A21189B00B29CC1 /* StoreDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailView.swift; sourceTree = "<group>"; };
 		C5EB511F2A2118AB00B29CC1 /* MenuDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetailView.swift; sourceTree = "<group>"; };
 		C5EB51212A2118B200B29CC1 /* CommentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDetailView.swift; sourceTree = "<group>"; };
+		C5F1014E2A6D19A800C53286 /* VeganOptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganOptionButton.swift; sourceTree = "<group>"; };
 		C5FF13522A42C8810026981D /* AVIROPlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROPlaceModel.swift; sourceTree = "<group>"; };
 		C5FF13542A42C88D0026981D /* AVIROMenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROMenuModel.swift; sourceTree = "<group>"; };
 		C5FF13562A42C8970026981D /* AVIROCommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROCommentModel.swift; sourceTree = "<group>"; };
@@ -521,6 +523,7 @@
 				C5D93DA22A58718300629C39 /* BottomButton.swift */,
 				C53893152A5EC0C500CB9A54 /* GenderButton.swift */,
 				C50F6B032A6BCD6900E942F5 /* CategoryButton.swift */,
+				C5F1014E2A6D19A800C53286 /* VeganOptionButton.swift */,
 			);
 			path = UIButton;
 			sourceTree = "<group>";
@@ -1010,6 +1013,7 @@
 				C5EB510B2A209FD300B29CC1 /* HomeSearchPresenter.swift in Sources */,
 				C5EB50F32A1DEC2400B29CC1 /* InrollPlaceViewLayout.swift in Sources */,
 				C5351B5E2A19F84800116D50 /* PlaceListCell.swift in Sources */,
+				C5F1014F2A6D19A800C53286 /* VeganOptionButton.swift in Sources */,
 				C5351B6F2A1B242C00116D50 /* InrollPlacePresenter.swift in Sources */,
 				C50F6AF52A68FD6300E942F5 /* InrollPlacePresenter2.swift in Sources */,
 				C5CAAC452A39A93C008C5FDA /* Layout.swift in Sources */,

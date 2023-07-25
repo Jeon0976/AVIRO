@@ -73,3 +73,40 @@ extension UIColor {
         UIColor(named: "ExplainImPossible")
     }
 }
+
+// MARK: GRAY
+extension UIColor {
+    /// 본문, 작성 후 텍스트 (Active)
+    static let gray0 = UIColor(named: "GRAY0")
+    
+    /// 부제
+    static let gray1 = UIColor(named: "GRAY1")
+    
+    /// 부제, 인풋창 내 아이콘
+    static let gray2 = UIColor(named: "GRAY2")
+    
+    /// 작성 전 텍스트 (Default)
+    static let gray3 = UIColor(named: "GRAY3")
+    
+    /// 누르기 전 버튼 (Default)
+    static let gray4 = UIColor(named: "GRAY4")
+    
+    /// 구분 선, 인풋 창 아웃라인
+    static let gray5 = UIColor(named: "GRAY5")
+    
+    /// 인풋창 배경
+    static let gray6 = UIColor(named: "GRAY6")
+    
+    /// 모든 화이트
+    static let gray7 = UIColor(named: "GRAY7")
+}
+extension UIColor {
+    /// All
+    static let all = UIColor(named: "All")
+    
+    /// Some
+    static let some = UIColor(named: "Some")
+    
+    /// Request
+    static let request = UIColor(named: "Request")
+}

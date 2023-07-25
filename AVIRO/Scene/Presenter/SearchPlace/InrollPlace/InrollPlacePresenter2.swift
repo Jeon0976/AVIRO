@@ -10,8 +10,13 @@ import UIKit
 protocol InrollPlaceProtocol2: NSObject {
     func makeLayout()
     func makeAttribute()
+    func makeAttributeWhenViewWillAppear()
     func makeGesture()
     func makeNotification()
+    func updatePlaceInfo(_ storeInfo: PlaceListModel)
+    func allVeganTapped()
+    func someVeganTapped()
+    func requestVeganTapped()
 }
 
 final class InrollPlacePresenter2 {
@@ -42,21 +47,59 @@ final class InrollPlacePresenter2 {
         self.viewController = viewController
     }
     
+    // MARK: View Did Load
     func viewDidLoad() {
         viewController?.makeLayout()
         viewController?.makeGesture()
         viewController?.makeNotification()
-    }
-    
-    func viewWillAppear() {
         viewController?.makeAttribute()
     }
     
-    func updatePlaceModel(_ model: PlaceListModel) {
-        storeNomalData = model
+    // MARK: View Will Appear
+    func viewWillAppear() {
+        viewController?.makeAttributeWhenViewWillAppear()
     }
     
-    func updateCategory(_ category: Category?) {
-        self.category = category
+    // MARK: After Serach
+    func updatePlaceModel(_ model: PlaceListModel) {
+        storeNomalData = model
+        
+        guard let storeInfo = storeNomalData else { return }
+        
+        viewController?.updatePlaceInfo(storeInfo)
+    }
+    
+    // MARK: Category Button 클릭 시
+    func categoryTapped(_ title: String) {
+        switch title {
+        case Category.restaurant.title:
+            category = Category.restaurant
+        case Category.cafe.title:
+            category = Category.cafe
+        case Category.bakery.title:
+            category = Category.bakery
+        case Category.bar.title:
+            category = Category.bar
+        default:
+            category = nil
+        }
+    }
+    
+    // MARK: Vegan Option Button 클릭 시
+    func veganOptionButtonTapped(_ button: VeganOptionButton) {
+        guard let title = button.titleLabel?.text else { return }
+        
+        if title == VeganOption.allVegan.value {
+            viewController?.allVeganTapped()
+        } else {
+            switch title {
+            case VeganOption.someVegan.value:
+                viewController?.someVeganTapped()
+            case VeganOption.requestVegan.value:
+                viewController?.requestVeganTapped()
+            default:
+                break
+            }
+        }
     }
 }

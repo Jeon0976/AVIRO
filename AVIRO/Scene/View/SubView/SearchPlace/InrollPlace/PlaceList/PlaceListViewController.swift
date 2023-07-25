@@ -61,8 +61,6 @@ extension PlaceListViewController: PlaceListProtocol {
         tapGesture.delegate = self
         view.backgroundColor = .white
         navigationItem.title = StringValue.PlaceListView.naviTitle
-        navigationItem.largeTitleDisplayMode = .always
-        navigationController?.navigationBar.prefersLargeTitles = true
         
         let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
