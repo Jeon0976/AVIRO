@@ -50,6 +50,9 @@
 		C54BC0DD2A2C762C00B65439 /* CommentsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54BC0DC2A2C762C00B65439 /* CommentsLabel.swift */; };
 		C5538AAF2A1BB81200661DE2 /* VeganModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5538AAE2A1BB81200661DE2 /* VeganModel.swift */; };
 		C567C1502A56611500D4B426 /* TopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C567C14F2A56611500D4B426 /* TopCell.swift */; };
+		C568577D2A70E1F600F52715 /* MenuPlusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C568577C2A70E1F600F52715 /* MenuPlusButton.swift */; };
+		C56857802A7113C600F52715 /* NormalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C568577F2A7113C600F52715 /* NormalTableViewCell.swift */; };
+		C56857822A7113CF00F52715 /* RequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56857812A7113CF00F52715 /* RequestTableViewCell.swift */; };
 		C5732C712A41739000CDC499 /* AVIROAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C702A41739000CDC499 /* AVIROAPIManager.swift */; };
 		C5732C732A41778A00CDC499 /* AVIROPostAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C722A41778A00CDC499 /* AVIROPostAPI.swift */; };
 		C5732C752A41962D00CDC499 /* AVIRORequestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C742A41962D00CDC499 /* AVIRORequestAPI.swift */; };
@@ -81,6 +84,7 @@
 		C5D93D9F2A581EC800629C39 /* FirstRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D93D9E2A581EC800629C39 /* FirstRegistrationViewController.swift */; };
 		C5D93DA12A581F5A00629C39 /* FirstRegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D93DA02A581F5A00629C39 /* FirstRegistrationPresenter.swift */; };
 		C5D93DA32A58718300629C39 /* BottomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D93DA22A58718300629C39 /* BottomButton.swift */; };
+		C5E306E72A6FB4ED00C11CF7 /* MenuField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E306E62A6FB4ED00C11CF7 /* MenuField.swift */; };
 		C5E430AD2A5D142C00CB67EC /* LoginJson.json in Resources */ = {isa = PBXBuildFile; fileRef = C5E430AB2A5D142C00CB67EC /* LoginJson.json */; };
 		C5E430AE2A5D142C00CB67EC /* RegistrationCompleted.json in Resources */ = {isa = PBXBuildFile; fileRef = C5E430AC2A5D142C00CB67EC /* RegistrationCompleted.json */; };
 		C5E430B32A5DADBE00CB67EC /* SecondRegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E430B22A5DADBE00CB67EC /* SecondRegistrationPresenter.swift */; };
@@ -161,6 +165,9 @@
 		C54BC0DC2A2C762C00B65439 /* CommentsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsLabel.swift; sourceTree = "<group>"; };
 		C5538AAE2A1BB81200661DE2 /* VeganModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganModel.swift; sourceTree = "<group>"; };
 		C567C14F2A56611500D4B426 /* TopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCell.swift; sourceTree = "<group>"; };
+		C568577C2A70E1F600F52715 /* MenuPlusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuPlusButton.swift; sourceTree = "<group>"; };
+		C568577F2A7113C600F52715 /* NormalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalTableViewCell.swift; sourceTree = "<group>"; };
+		C56857812A7113CF00F52715 /* RequestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTableViewCell.swift; sourceTree = "<group>"; };
 		C5732C702A41739000CDC499 /* AVIROAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROAPIManager.swift; sourceTree = "<group>"; };
 		C5732C722A41778A00CDC499 /* AVIROPostAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROPostAPI.swift; sourceTree = "<group>"; };
 		C5732C742A41962D00CDC499 /* AVIRORequestAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIRORequestAPI.swift; sourceTree = "<group>"; };
@@ -193,6 +200,7 @@
 		C5D93D9E2A581EC800629C39 /* FirstRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstRegistrationViewController.swift; sourceTree = "<group>"; };
 		C5D93DA02A581F5A00629C39 /* FirstRegistrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstRegistrationPresenter.swift; sourceTree = "<group>"; };
 		C5D93DA22A58718300629C39 /* BottomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomButton.swift; sourceTree = "<group>"; };
+		C5E306E62A6FB4ED00C11CF7 /* MenuField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuField.swift; sourceTree = "<group>"; };
 		C5E430AB2A5D142C00CB67EC /* LoginJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = LoginJson.json; path = ../../../../../Downloads/LoginJson.json; sourceTree = "<group>"; };
 		C5E430AC2A5D142C00CB67EC /* RegistrationCompleted.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = RegistrationCompleted.json; path = ../../../../../Downloads/RegistrationCompleted.json; sourceTree = "<group>"; };
 		C5E430B22A5DADBE00CB67EC /* SecondRegistrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondRegistrationPresenter.swift; sourceTree = "<group>"; };
@@ -359,6 +367,7 @@
 				C50F6AF82A68FFBB00E942F5 /* StoreInfoView.swift */,
 				C50F6AFA2A68FFC300E942F5 /* VeganDetailView.swift */,
 				C50F6AFC2A68FFCB00E942F5 /* MenuTableView.swift */,
+				C568577E2A7113A100F52715 /* MenuTableView */,
 			);
 			path = SubView;
 			sourceTree = "<group>";
@@ -524,6 +533,7 @@
 				C53893152A5EC0C500CB9A54 /* GenderButton.swift */,
 				C50F6B032A6BCD6900E942F5 /* CategoryButton.swift */,
 				C5F1014E2A6D19A800C53286 /* VeganOptionButton.swift */,
+				C568577C2A70E1F600F52715 /* MenuPlusButton.swift */,
 			);
 			path = UIButton;
 			sourceTree = "<group>";
@@ -552,6 +562,15 @@
 				C5EB50EB2A1C72C600B29CC1 /* TabBarViewController.swift */,
 			);
 			path = TabBarView;
+			sourceTree = "<group>";
+		};
+		C568577E2A7113A100F52715 /* MenuTableView */ = {
+			isa = PBXGroup;
+			children = (
+				C568577F2A7113C600F52715 /* NormalTableViewCell.swift */,
+				C56857812A7113CF00F52715 /* RequestTableViewCell.swift */,
+			);
+			path = MenuTableView;
 			sourceTree = "<group>";
 		};
 		C5732C6F2A41736D00CDC499 /* AVIRODatabase */ = {
@@ -636,6 +655,7 @@
 				C5B071E42A59B4AC00AE709A /* RegistrationField.swift */,
 				C50F6AFE2A691AE100E942F5 /* InrollField.swift */,
 				C50F6B012A6BC8E400E942F5 /* InrollField2.swift */,
+				C5E306E62A6FB4ED00C11CF7 /* MenuField.swift */,
 			);
 			path = UITextField;
 			sourceTree = "<group>";
@@ -1045,6 +1065,7 @@
 				C5732C7E2A41D42700CDC499 /* RequestTableFieldModel.swift in Sources */,
 				C5CAAC472A39AEFE008C5FDA /* Image.swift in Sources */,
 				C5E7B7A92A4D3CDF00CA2090 /* UserInfoModel.swift in Sources */,
+				C5E306E72A6FB4ED00C11CF7 /* MenuField.swift in Sources */,
 				C5E430B32A5DADBE00CB67EC /* SecondRegistrationPresenter.swift in Sources */,
 				C5EB510D2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift in Sources */,
 				C50367F52A1795D10020C6BB /* HomeViewPresenter.swift in Sources */,
@@ -1079,6 +1100,7 @@
 				C5EB51122A20CC7D00B29CC1 /* HomeInfoStoreView.swift in Sources */,
 				C5EB50E42A1C685100B29CC1 /* TabBarItem.swift in Sources */,
 				C5351B7A2A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift in Sources */,
+				C56857802A7113C600F52715 /* NormalTableViewCell.swift in Sources */,
 				C5E430B52A5DAE9800CB67EC /* SecondRegistrationViewController.swift in Sources */,
 				C593B64B2A4AEA9800D224CE /* AVIROCommentPost.swift in Sources */,
 				C593B64F2A4C490600D224CE /* MyPageViewPresenter.swift in Sources */,
@@ -1089,8 +1111,10 @@
 				C5351B602A19F9A700116D50 /* PlaceListModel.swift in Sources */,
 				C5732C712A41739000CDC499 /* AVIROAPIManager.swift in Sources */,
 				C50F6AF92A68FFBB00E942F5 /* StoreInfoView.swift in Sources */,
+				C56857822A7113CF00F52715 /* RequestTableViewCell.swift in Sources */,
 				C5EB50EC2A1C72C600B29CC1 /* TabBarViewController.swift in Sources */,
 				C5EB50F92A1E71BA00B29CC1 /* VeganMenuTableViewCell.swift in Sources */,
+				C568577D2A70E1F600F52715 /* MenuPlusButton.swift in Sources */,
 				C51132C12A559BCA006E1EC3 /* AppController.swift in Sources */,
 				C5EB50F52A1DEC3900B29CC1 /* InrollPlaceViewAttribute.swift in Sources */,
 				C50F6AFF2A691AE100E942F5 /* InrollField.swift in Sources */,

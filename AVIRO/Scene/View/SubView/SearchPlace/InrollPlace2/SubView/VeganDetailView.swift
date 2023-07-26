@@ -65,7 +65,7 @@ final class VeganDetailView: UIView {
         let paddingValues: CGFloat = 60
         
         let totalHeight = titleHeight + buttonStackViewHeight + paddingValues
-        
+            
         viewHeightConstraint?.constant = totalHeight
     }
     
@@ -80,7 +80,7 @@ final class VeganDetailView: UIView {
             self.addSubview($0)
         }
         
-        viewHeightConstraint = heightAnchor.constraint(equalToConstant: 150)
+        viewHeightConstraint = heightAnchor.constraint(equalToConstant: self.frame.height)
         viewHeightConstraint?.isActive = true
         
         NSLayoutConstraint.activate([

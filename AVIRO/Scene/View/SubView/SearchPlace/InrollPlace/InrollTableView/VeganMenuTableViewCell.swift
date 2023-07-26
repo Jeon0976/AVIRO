@@ -72,6 +72,7 @@ final class VeganMenuTableViewCell: UITableViewCell {
         
         priceTextField.placeholder = StringValue.InrollView.pricePlaceHolder
         priceTextField.textColor = .mainTitle
+        
     }
     
     func dataBinding(_ name: String, _ price: String) {

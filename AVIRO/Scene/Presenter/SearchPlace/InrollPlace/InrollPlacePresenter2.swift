@@ -13,6 +13,8 @@ protocol InrollPlaceProtocol2: NSObject {
     func makeAttributeWhenViewWillAppear()
     func makeGesture()
     func makeNotification()
+    func keyboardWillShow(notification: NSNotification)
+    func keyboardWillHide()
     func updatePlaceInfo(_ storeInfo: PlaceListModel)
     func allVeganTapped()
     func someVeganTapped()
@@ -43,6 +45,8 @@ final class InrollPlacePresenter2 {
     var someMenuVagen = false
     var ifRequestVegan = false
     
+    var isPresentingDefaultTable = true
+    
     init(viewController: InrollPlaceProtocol2) {
         self.viewController = viewController
     }
@@ -58,6 +62,48 @@ final class InrollPlacePresenter2 {
     // MARK: View Will Appear
     func viewWillAppear() {
         viewController?.makeAttributeWhenViewWillAppear()
+        addKeyboardNotification()
+    }
+    
+    func viewWillDisappear() {
+        removeKeyboardNotification()
+    }
+    
+    // MARK: Keyboard에 따른 view 높이 변경 Notification
+    func addKeyboardNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    func removeKeyboardNotification() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        viewController?.keyboardWillShow(notification: notification)
+    }
+    
+    @objc func keyboardWillHide() {
+        viewController?.keyboardWillHide()
     }
     
     // MARK: After Serach

@@ -84,7 +84,7 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
                 equalTo: view.bottomAnchor, constant: -40),
             nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            nextButton.heightAnchor.constraint(equalToConstant: Layout.Button.height)
+
         ])
     }
     
@@ -190,9 +190,15 @@ extension FirstRegistrationViewController: UITextFieldDelegate {
 
         let currentText = textField.text ?? ""
         
+        // MARK: 최대 갯수 제한
         if currentText.count > 15 {
+            let startIndex = currentText.startIndex
+            let endIndex = currentText.index(startIndex, offsetBy: 15 - 1)
+            let fixedText = String(currentText[startIndex...endIndex])
+            textField.text = fixedText
             return
         }
+        
         presenter.insertUserNicName(currentText)
         subInfo2.text = "(\(currentText.count)/15)"
         

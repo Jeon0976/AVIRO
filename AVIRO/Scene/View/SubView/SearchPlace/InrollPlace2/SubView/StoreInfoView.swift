@@ -69,8 +69,8 @@ final class StoreInfoView: UIView {
     var categoryButtons = [CategoryButton]()
 
     // MARK: Constraint 조절
-    var viewHeightConstraint: NSLayoutConstraint?
     var categoryTopConstraint: NSLayoutConstraint?
+    var viewHeightConstraint: NSLayoutConstraint?
     
     // MARK: View init
     override init(frame: CGRect) {
@@ -101,7 +101,7 @@ final class StoreInfoView: UIView {
         let paddingValues: CGFloat = 95
 
         let totalHeight = titleHeight + titleFieldHeight + categoryHeight + buttonStackViewHeight + paddingValues
-
+        
         viewHeightConstraint?.constant = totalHeight
     }
     
@@ -116,6 +116,9 @@ final class StoreInfoView: UIView {
             $0.translatesAutoresizingMaskIntoConstraints = false
             buttonStackView.addArrangedSubview($0)
         }
+        
+        viewHeightConstraint = heightAnchor.constraint(equalToConstant: self.frame.height)
+        viewHeightConstraint?.isActive = true
         
         buttonStackView.axis = .horizontal
         buttonStackView.distribution = .fillEqually
@@ -133,9 +136,6 @@ final class StoreInfoView: UIView {
             $0.translatesAutoresizingMaskIntoConstraints = false
             addSubview($0)
         }
-        
-        viewHeightConstraint = heightAnchor.constraint(equalToConstant: 100)
-        viewHeightConstraint?.isActive = true
         
         NSLayoutConstraint.activate([
             // title
@@ -166,7 +166,6 @@ final class StoreInfoView: UIView {
             numberField.trailingAnchor.constraint(equalTo: titleField.trailingAnchor),
             
             // category
-            categoryLabel.topAnchor.constraint(equalTo: numberField.bottomAnchor, constant: 20),
             categoryLabel.leadingAnchor.constraint(equalTo: title.leadingAnchor),
             
             // buttonStackView
@@ -175,7 +174,7 @@ final class StoreInfoView: UIView {
             buttonStackView.trailingAnchor.constraint(equalTo: titleField.trailingAnchor)
         ])
         
-        changeConstraint(false)
+        changeCategoryTopConstraint(false)
     }
     
     // MARK: Attribute
@@ -203,13 +202,13 @@ final class StoreInfoView: UIView {
         // TODO: 데이터 연결된거
         guard let titleText = titleField.text, !titleText.isEmpty else {
             showOtherDetail(false)
-            changeConstraint(false)
+            changeCategoryTopConstraint(false)
             layoutSubviews()
             return
         }
         
         showOtherDetail(true)
-        changeConstraint(true)
+        changeCategoryTopConstraint(true)
         
         let titleHeight = title.frame.height
         let titleFieldHeight = titleField.frame.height
@@ -240,16 +239,16 @@ final class StoreInfoView: UIView {
     }
     
     // MARK: view height 변경에 따라 변하는 categoyLabel constraint
-    private func changeConstraint(_ change: Bool) {
+    private func changeCategoryTopConstraint(_ change: Bool) {
         if let categoryTopConstraint = categoryTopConstraint {
             categoryTopConstraint.isActive = false
         }
         
         if change {
-            categoryTopConstraint =         categoryLabel.topAnchor.constraint(
+            categoryTopConstraint = categoryLabel.topAnchor.constraint(
                 equalTo: numberField.bottomAnchor, constant: 15)
         } else {
-            categoryTopConstraint =         categoryLabel.topAnchor.constraint(
+            categoryTopConstraint = categoryLabel.topAnchor.constraint(
                 equalTo: titleField.bottomAnchor, constant: 15)
         }
         categoryTopConstraint?.isActive = true

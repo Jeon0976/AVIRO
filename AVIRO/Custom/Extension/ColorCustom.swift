@@ -74,7 +74,7 @@ extension UIColor {
     }
 }
 
-// MARK: GRAY
+// MARK: Background
 extension UIColor {
     /// 본문, 작성 후 텍스트 (Active)
     static let gray0 = UIColor(named: "GRAY0")
@@ -100,13 +100,27 @@ extension UIColor {
     /// 모든 화이트
     static let gray7 = UIColor(named: "GRAY7")
 }
+
+// MARK: MAIN
 extension UIColor {
-    /// All
-    static let all = UIColor(named: "All")
+    /// GREEN
+    static let all = UIColor(named: "GREEN")
     
-    /// Some
-    static let some = UIColor(named: "Some")
+    /// ORANGE
+    static let some = UIColor(named: "ORANGE")
     
-    /// Request
-    static let request = UIColor(named: "Request")
+    /// YELLOW
+    static let request = UIColor(named: "YELLOW")
+    
+    /// NAVY
+    static let main = UIColor(named: "NAVY")
+    
+    /// RED
+    static let warning = UIColor(named: "RED")
+    
+    /// BG NAVY
+    static let approveBack = UIColor(named: "BG NAVY")
+    
+    /// BG RED
+    static let warningBack = UIColor(named: "BG RED")
 }

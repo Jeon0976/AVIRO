@@ -8,6 +8,7 @@
 import UIKit
 
 final class VeganOptionButton: UIButton {
+    private let spacing: CGFloat = 32
     var changedColor: UIColor?
     
     // MARK: selected 분기 처리
@@ -39,7 +40,7 @@ final class VeganOptionButton: UIButton {
     // 폰 마다 버튼의 width을 다르게 하기 위한 조치
     override func layoutSubviews() {
         super.layoutSubviews()
-
+        
         let depth: CGFloat = 20.0
 
         let superViewWitdh: CGFloat = Double(self.superview?.frame.width ?? 0)
@@ -47,14 +48,18 @@ final class VeganOptionButton: UIButton {
         let buttonWidth = (superViewWitdh - depth) / 3
         self.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
         
-        // image Height + title Height + spaing + padding
-        self.heightAnchor.constraint(equalToConstant: 140).isActive = true
+        // image Height + title Height + spacing + padding
+        let imageHeight = imageView?.frame.height ?? 0
+        let titleHeight = titleLabel?.frame.height ?? 0
+        let padding: CGFloat = 24
+        
+        let totalHeight = imageHeight + titleHeight + padding + spacing
+        self.heightAnchor.constraint(equalToConstant: totalHeight).isActive = true
 
     }
     
     // MARK: SetUp Button
     func setButton(_ title: String, _ image: UIImage) {
-        print(self.frame)
         let image = image.withRenderingMode(.alwaysTemplate)
         
         setTitle(title, for: .normal)
@@ -74,8 +79,6 @@ final class VeganOptionButton: UIButton {
     func verticalTitleToImage() {
         // title size width 74 height 39
         // image size width 40 height 40
-        let spacing: CGFloat = 32
-
         let titleHeight: CGFloat = 40
         let titleWidth: CGFloat = 74
         
@@ -95,7 +98,19 @@ final class VeganOptionButton: UIButton {
             top: 0.0,
             left: 0.0,
             bottom: -(titleHeight + spacing),
-            right: -titleWidth + (-titleWidth / 2) - 12
+            right: -titleWidth + (-titleWidth / 2)
         )
+        
+//        let depth: CGFloat = 20.0
+//
+//        let superViewWitdh: CGFloat = Double(self.superview?.frame.width ?? 0)
+//
+//        let buttonWidth = (superViewWitdh - depth) / 3
+//
+//        self.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
+//
+//        // image Height + title Height + spaing + padding
+//        let buttonHeight = totalHeight + 24
+//        self.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
     }
 }

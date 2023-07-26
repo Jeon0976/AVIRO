@@ -45,7 +45,7 @@ class RegistrationField: UITextField {
     
     private func configuration() {
         self.textColor = .registrationColor
-        self.layer.cornerRadius = 26
+        self.layer.cornerRadius = 25
         self.backgroundColor = .backField
         self.rightViewMode = .unlessEditing
         self.font = .systemFont(ofSize: 18, weight: .medium)

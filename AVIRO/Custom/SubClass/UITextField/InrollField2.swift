@@ -8,31 +8,68 @@
 import UIKit
 
 class InrollField2: UITextField {
-    var leftPadding = CGFloat(16)
-    var buttonPadding = CGFloat(7)
-    var verticalPadding =  CGFloat(13)
-    var imageViewWidth: CGFloat = 24
+    private var horizontalPadding: CGFloat = 16
+    private var buttonPadding: CGFloat = 7
+    private var verticalPadding: CGFloat = 12
+    private var imageViewSize: CGFloat = 24
     
     var isAddLeftImage = false
     
+    // MARK: Init 설정
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         configuration()
     }
     
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: 기본 Text Inset
+    override func textRect(forBounds bounds: CGRect) -> CGRect {
+        let inset = setTextInset()
+            
+        return bounds.inset(by: inset)
+    }
+    
+    // MARK: Editing Text Inset
+    override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        let inset = setTextInset()
+        
+        return bounds.inset(by: inset)
+    }
+    
+    // MARK: Set Configuration
     private func configuration() {
-        self.textColor = .registrationColor
+        self.textColor = .gray0
         self.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        self.backgroundColor = .backField
+        self.backgroundColor = .gray6
         self.layer.cornerRadius = 10
     }
     
+    // MARK: Text Edge Inset 값 설정
+    /// Text Edge Inset 값 설정
+    private func setTextInset() -> UIEdgeInsets {
+        var inset = UIEdgeInsets(
+            top: verticalPadding,
+            left: horizontalPadding,
+            bottom: verticalPadding,
+            right: horizontalPadding
+        )
+        
+        if isAddLeftImage {
+            let leftInest = horizontalPadding + imageViewSize + buttonPadding
+            
+            inset.left = leftInest
+        
+            return inset
+        }
+        
+        return inset
+    }
+    // MARK: Left Image 넣기
+    /// Left Image 넣기
     func addLeftImage() {
         isAddLeftImage = !isAddLeftImage
         
@@ -40,44 +77,29 @@ class InrollField2: UITextField {
         image?.withTintColor(.systemGray)
             
         let imageView = UIImageView(image: image)
-        imageView.frame = CGRect(x: leftPadding, y: 0, width: imageViewWidth, height: imageViewWidth)
+        imageView.frame = CGRect(x: horizontalPadding, y: 0, width: imageViewSize, height: imageViewSize)
         
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: leftPadding + buttonPadding + imageViewWidth , height: imageViewWidth))
+        let paddingWidth = horizontalPadding + buttonPadding + imageViewSize
+        
+        let paddingView = UIView(frame: CGRect(
+            x: 0,
+            y: 0,
+            width: paddingWidth,
+            height: imageViewSize)
+        )
+        
         paddingView.addSubview(imageView)
             
         self.leftView = paddingView
         self.leftViewMode = .always
     }
-    
-    override func textRect(forBounds bounds: CGRect) -> CGRect {
-        if isAddLeftImage {
-            let leftInest = leftPadding + imageViewWidth + buttonPadding
-            let insetBounds = bounds.inset(by: UIEdgeInsets(top: verticalPadding, left: leftInest, bottom: verticalPadding, right: leftPadding))
-            return insetBounds
-        } else {
-            let insetBounds = bounds.inset(by: UIEdgeInsets(top: verticalPadding, left: leftPadding, bottom: verticalPadding, right: leftPadding))
-            return insetBounds
-        }
-    }
-    
-    override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        if isAddLeftImage {
-            let leftInest = leftPadding + imageViewWidth + buttonPadding
-            let insetBounds = bounds.inset(by: UIEdgeInsets(top: verticalPadding, left: leftInest, bottom: verticalPadding, right: leftPadding))
-            return insetBounds
-        } else {
-            let insetBounds = bounds.inset(by: UIEdgeInsets(top: verticalPadding, left: leftPadding, bottom: verticalPadding, right: leftPadding))
-            return insetBounds
-        }
-    }
 
-    
+    // MARK: Place Holder 값 넣기
+    /// placeHolder 값 넣기
     func makePlaceHolder(_ placeHolder: String) {
         self.attributedPlaceholder = NSAttributedString(
             string: placeHolder,
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.registrationPlaceHolder!]
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray3 ?? .systemGray4]
         )
     }
-
 }
-

@@ -16,8 +16,7 @@ final class BottomButton: UIButton {
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupButton()
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func setTitle(_ title: String?, for state: UIControl.State) {
@@ -36,12 +35,12 @@ final class BottomButton: UIButton {
     }
     
     private func setupButton() {
-        self.layer.cornerRadius = 26
+        self.layer.cornerRadius = 25
         self.contentEdgeInsets = UIEdgeInsets(top: 15, left: 25, bottom: 15, right: 25)
         self.clipsToBounds = true
         self.backgroundColor = .allVegan
     }
-    
+     
     func setGradient() {
         let gradientLayer = CAGradientLayer()
         
