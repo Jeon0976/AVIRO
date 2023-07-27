@@ -44,6 +44,7 @@ extension MyPageViewController: MyPageViewProtocol {
         logOutButton.setTitle("로그아웃", for: .normal)
         logOutButton.setTitleColor(.black, for: .normal)
         logOutButton.addTarget(self, action: #selector(tappedLogOutButton), for: .touchUpInside)
+        
     }
     
     @objc func tappedLogOutButton() {

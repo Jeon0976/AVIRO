@@ -81,11 +81,11 @@ extension HomeViewController: HomeViewProtocol {
             naverMapView.topAnchor.constraint(
                 equalTo: view.topAnchor),
             naverMapView.bottomAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+                equalTo: view.bottomAnchor, constant: 20),
             naverMapView.leadingAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+                equalTo: view.leadingAnchor),
             naverMapView.trailingAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+                equalTo: view.trailingAnchor),
             
             // loadLoactionButton
             loadLocationButton.bottomAnchor.constraint(

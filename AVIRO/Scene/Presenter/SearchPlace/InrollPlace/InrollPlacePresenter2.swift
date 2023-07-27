@@ -13,14 +13,16 @@ protocol InrollPlaceProtocol2: NSObject {
     func makeAttributeWhenViewWillAppear()
     func makeGesture()
     func makeNotification()
-    func keyboardWillShow(notification: NSNotification)
-    func keyboardWillHide()
     func updatePlaceInfo(_ storeInfo: PlaceListModel)
     func allVeganTapped()
     func someVeganTapped()
     func requestVeganTapped()
+    func menuTableReload(isPresentingDefaultTable: Bool)
+    func keyboardWillShow(notification: NSNotification)
+    func keyboardWillHide()
 }
 
+// TODO: Dictionary로 데이터 구조 변경해서 binding 하기
 final class InrollPlacePresenter2 {
     weak var viewController: InrollPlaceProtocol2?
     
@@ -30,15 +32,15 @@ final class InrollPlacePresenter2 {
     private var menuArray = [MenuArray]()
     private var category: Category?
     
-    private var noRequestFieldModel = [VeganTableFieldModel(menu: "", price: "")]
-    private var requestFieldModel = [RequestTableFieldModel(menu: "", price: "", howToRequest: "", isCheck: false)]
+    private var normalTableModel = [VeganTableFieldModel(menu: "", price: "")]
+    private var requestTableModel = [RequestTableFieldModel(menu: "", price: "", howToRequest: "", isCheck: false)]
     
-    var noRequestCount: Int {
-        noRequestFieldModel.count
+    var normalTableCount: Int {
+        normalTableModel.count
     }
     
     var requestTableCount: Int {
-        requestFieldModel.count
+        requestTableModel.count
     }
     
     var allVegan = false
@@ -65,8 +67,18 @@ final class InrollPlacePresenter2 {
         addKeyboardNotification()
     }
     
+    // MARK: View Will Disappear
     func viewWillDisappear() {
         removeKeyboardNotification()
+    }
+    
+    // MARK: TableView Data 불러오기 함수
+    func normalTableData(_ indexPath: IndexPath) -> VeganTableFieldModel {
+        return normalTableModel[indexPath.row]
+    }
+    
+    func requestTableData(_ indexPath: IndexPath) -> RequestTableFieldModel {
+        return requestTableModel[indexPath.row]
     }
     
     // MARK: Keyboard에 따른 view 높이 변경 Notification
@@ -147,5 +159,18 @@ final class InrollPlacePresenter2 {
                 break
             }
         }
+    }
+    
+    // MARK: Menu Plus Button 클릭 시
+    func menuPlusButtonTapped() {
+        if isPresentingDefaultTable {
+            let dummyNormal = VeganTableFieldModel(menu: "", price: "")
+            normalTableModel.append(dummyNormal)
+        } else {
+            let dummyRequest = RequestTableFieldModel(menu: "", price: "", howToRequest: "", isCheck: false)
+            requestTableModel.append(dummyRequest)
+        }
+        
+        viewController?.menuTableReload(isPresentingDefaultTable: isPresentingDefaultTable)
     }
 }

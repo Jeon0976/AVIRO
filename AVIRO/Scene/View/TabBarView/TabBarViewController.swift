@@ -31,69 +31,56 @@ class TabBarViewController: UITabBarController {
             return viewController
         }
         self.viewControllers = tabBarViewControllers
-        
-        self.tabBar.backgroundColor = .white
-        
-        centerButton.addTarget(self,
-                               action: #selector(buttonTouchDown),
-                               for: .touchDown
-        )
-        centerButton.addTarget(self,
-                               action: #selector(buttonDragExit),
-                               for: .touchDragExit
-        )
+                
         centerButton.addTarget(self, action:
                                 #selector(didTapPlusButton),
                                for: .touchUpInside
         )
         
+        setupTabBar()
         setupMiddleButton()
-        
     }
     
     // MARK: 가운데 plus 버튼 만들기
-    func setupMiddleButton() {
+    private func setupMiddleButton() {
         view.addSubview(centerButton)
-        
-        let itemWidth = tabBar.frame.width / CGFloat(TabBarItem.allCases.count) - 12
-        
+
         NSLayoutConstraint.activate([
             centerButton.centerXAnchor.constraint(equalTo: tabBar.centerXAnchor),
             centerButton.bottomAnchor.constraint(equalTo: tabBar.topAnchor, constant: tabBar.frame.height - 6),
-            centerButton.widthAnchor.constraint(equalToConstant: itemWidth),
-            centerButton.heightAnchor.constraint(equalToConstant: itemWidth)
+            centerButton.widthAnchor.constraint(equalToConstant: 80),
+            centerButton.heightAnchor.constraint(equalToConstant: 80)
         ])
     }
     
+    // MARK: TabBar Attribute
+    private func setupTabBar() {
+        tabBar.backgroundColor = .gray7
+        tabBar.tintColor = .main
+        tabBar.isTranslucent = false
+        tabBar.layer.cornerRadius = tabBar.frame.height * 0.41
+        tabBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        tabBar.layer.borderWidth = 1
+        tabBar.layer.borderColor = UIColor.gray6?.cgColor
+        
+        tabBar.layer.shadowColor = UIColor.black.cgColor
+        
+    }
+    
     // MARK: button touch method
-    @objc func buttonTouchDown(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.1, animations: {
-            sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-            sender.layer.opacity = 0.4
-        })
-    }
-    
-    @objc func buttonDragExit(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.05, animations: {
-            sender.transform = CGAffineTransform.identity
-            sender.layer.opacity = 1
-        })
-    }
-    
     @objc func didTapPlusButton(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.05, animations: {
-            sender.transform = CGAffineTransform.identity
-            sender.layer.opacity = 1
-
-        }, completion: {  [weak self] _ in
-            self?.selectedIndex = 2
-        })
+        selectedIndex = 1
     }
 
     // MARK: tabBar 숨길때 사용하는 method
     func hiddenTabBar(_ hidden: Bool) {
-        self.tabBar.isHidden = hidden
         self.tabBar.isTranslucent = hidden
+        self.tabBar.isHidden = hidden
         self.centerButton.isHidden = hidden
+        
+        if !hidden {
+            setupTabBar()
+            setupMiddleButton()
+        }
     }
 }

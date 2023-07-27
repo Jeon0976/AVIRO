@@ -58,7 +58,7 @@ extension InrollPlaceViewController2: InrollPlaceProtocol2 {
         
         NSLayoutConstraint.activate([
             // scrollView
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
@@ -142,11 +142,11 @@ extension InrollPlaceViewController2: InrollPlaceProtocol2 {
         veganDetailView.allVeganButton.isSelected.toggle()
         
         if veganDetailView.allVeganButton.isSelected {
+            presenter.isPresentingDefaultTable = true 
             veganDetailView.someVeganButton.isSelected = false
             veganDetailView.requestVeganButton.isSelected = false
-            defaultMenuTable()
+            changeMenuTable(presenter.isPresentingDefaultTable)
         }
-        
     }
     
     // MARK: Some Vegan 클릭 시
@@ -155,6 +155,7 @@ extension InrollPlaceViewController2: InrollPlaceProtocol2 {
         
         if veganDetailView.someVeganButton.isSelected {
             veganDetailView.allVeganButton.isSelected = false
+            changeMenuTable(presenter.isPresentingDefaultTable)
         } else {
 
         }
@@ -165,7 +166,23 @@ extension InrollPlaceViewController2: InrollPlaceProtocol2 {
         veganDetailView.requestVeganButton.isSelected.toggle()
         
         if veganDetailView.requestVeganButton.isSelected {
+            presenter.isPresentingDefaultTable = false
             veganDetailView.allVeganButton.isSelected = false
+            changeMenuTable(presenter.isPresentingDefaultTable)
+        } else {
+            presenter.isPresentingDefaultTable = true
+            changeMenuTable(presenter.isPresentingDefaultTable)
+        }
+    }
+    
+    // MARK: TableView Reload
+    func menuTableReload(isPresentingDefaultTable: Bool) {
+        if isPresentingDefaultTable {
+            changeMenuTable(isPresentingDefaultTable)
+            menuTableView.normalTableView.reloadData()
+        } else {
+            changeMenuTable(isPresentingDefaultTable)
+            menuTableView.requestTableView.reloadData()
         }
     }
     
@@ -194,13 +211,13 @@ extension InrollPlaceViewController2: InrollPlaceProtocol2 {
 extension InrollPlaceViewController2 {
     // MARK: View Attribute
     private func viewAttributed() {
-        view.backgroundColor = .white
+        view.backgroundColor = .gray7
 
-        scrollView.backgroundColor = .systemGray6
+        scrollView.backgroundColor = .gray6
         
-        storeInfoView.backgroundColor = .white
-        veganDetailView.backgroundColor = .white
-        menuTableView.backgroundColor = .white
+        storeInfoView.backgroundColor = .gray7
+        veganDetailView.backgroundColor = .gray7
+        menuTableView.backgroundColor = .gray7
         
         storeInfoView.layer.cornerRadius = 16
         veganDetailView.layer.cornerRadius = 16
@@ -218,7 +235,7 @@ extension InrollPlaceViewController2 {
         navigationItem.rightBarButtonItem?.isEnabled = false
         
         // TODO: 백버튼 커스텀 할때 수정
-        let leftBarButton = UIBarButtonItem(title: "테스트", style: .plain, target: self, action: #selector(backToMain))
+        let leftBarButton = UIBarButtonItem(title: "<", style: .plain, target: self, action: #selector(backToMain))
         
         navigationItem.leftBarButtonItem = leftBarButton
     }
@@ -251,23 +268,29 @@ extension InrollPlaceViewController2 {
     // MARK: Menu Table View Attribute
     private func menuTableViewAttribute() {
         menuTableView.normalTableView.dataSource = self
-        menuTableView.requestTableView.dataSource = self 
+        menuTableView.requestTableView.dataSource = self
+        menuTableView.menuPlusButton.addTarget(self, action: #selector(menuPlusButtonTapped), for: .touchUpInside)
     }
+    
     
     // MARK: Menu Table View Show
-    private func defaultMenuTable() {
-        presenter.isPresentingDefaultTable = true
-        menuTableView.normalTableView.isHidden = false
-        menuTableView.requestTableView.isHidden = true
+    private func changeMenuTable(_ isPresentingDefaultTable: Bool) {
+        if isPresentingDefaultTable {
+            menuTableView.normalTableView.isHidden = false
+            menuTableView.requestTableView.isHidden = true
+            menuTableView.updateViewHeight(
+                defaultTable: isPresentingDefaultTable,
+                count: presenter.normalTableCount
+            )
+        } else {
+            menuTableView.normalTableView.isHidden = true
+            menuTableView.requestTableView.isHidden = false
+            menuTableView.updateViewHeight(
+                defaultTable: isPresentingDefaultTable,
+                count: presenter.requestTableCount
+            )
+        }
         view.layoutIfNeeded()
-    }
-    
-    private func changeMenuTable() {
-        presenter.isPresentingDefaultTable = false
-        menuTableView.normalTableView.isHidden = true
-        menuTableView.requestTableView.isHidden = false
-        view.layoutIfNeeded()
-
     }
 }
 
@@ -305,13 +328,20 @@ extension InrollPlaceViewController2 {
     @objc func veganOptionButtonTapped(_ sender: VeganOptionButton) {
         presenter.veganOptionButtonTapped(sender)
     }
+    
+    @objc func menuPlusButtonTapped() {
+        presenter.menuPlusButtonTapped()
+    }
 }
 
 // MARK: TapGestureDelegate
 extension InrollPlaceViewController2: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         // TODO: touch가 menu text field일 때만 flase
-
+        if touch.view is MenuField || touch.view is UIButton {
+            return false
+        }
+        
         view.endEditing(true)
         return true
     }
@@ -337,9 +367,9 @@ extension InrollPlaceViewController2: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch tableView.tag {
         case 0:
-            return 1
+            return presenter.normalTableCount
         case 1:
-            return 1
+            return presenter.requestTableCount
         default:
             return 0
         }
@@ -348,23 +378,32 @@ extension InrollPlaceViewController2: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch tableView.tag {
         case 0:
-            let cell = tableView.dequeueReusableCell(withIdentifier: NormalTableViewCell.identifier, for: indexPath) as? NormalTableViewCell
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: NormalTableViewCell.identifier,
+                for: indexPath
+            ) as? NormalTableViewCell
             
-            cell?.setData(menu: "", price: "")
+            let data = presenter.normalTableData(indexPath)
+            
+            cell?.setData(menu: data.menu,
+                          price: data.price
+            )
+            
             cell?.selectionStyle = .none
             cell?.priceField.buttonDelegate = self
             
             // TODO: Data 연동 처리
+            // presenter에 indexPath줘서 그거 맞춰서 data binding
             cell?.editingMenuField = { [weak self] data in
-                print(data)
+                
             }
             
             cell?.editingPriceField = { [weak self] data in
-                print(data)
+
             }
             
             cell?.priceField.variblePriceChanged = { [weak self] data in
-                print(data)
+
             }
             
             cell?.onMinusButtonTapped = { [weak self] in
@@ -373,23 +412,33 @@ extension InrollPlaceViewController2: UITableViewDataSource {
             
             return cell ?? UITableViewCell()
         case 1:
-            let cell = tableView.dequeueReusableCell(withIdentifier: RequestTableViewCell.identifier, for: indexPath) as? RequestTableViewCell
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: RequestTableViewCell.identifier,
+                for: indexPath
+            ) as? RequestTableViewCell
             
-            cell?.setData(menu: "", price: "", request: "")
+            let data = presenter.requestTableData(indexPath)
+            
+            cell?.setData(menu: data.menu,
+                          price: data.price,
+                          request: data.howToRequest,
+                          isSelected: data.isCheck
+            )
+            
             cell?.selectionStyle = .none
             cell?.priceField.buttonDelegate = self
             
             // TODO: Data 연동 처리
             cell?.editingMenuField = { [weak self] data in
-                print(data)
+
             }
             
             cell?.editingPriceField = { [weak self] data in
-                print(data)
+
             }
             
             cell?.priceField.variblePriceChanged = { [weak self] data in
-                print(data)
+
             }
             
             cell?.editingRequestField = { [weak self] data in
@@ -397,11 +446,11 @@ extension InrollPlaceViewController2: UITableViewDataSource {
             }
             
             cell?.onRequestButtonTapped = { [weak self] data in
-                print()
+
             }
             
             cell?.onMinusButtonTapped = { [weak self] in
-                print("Test")
+
             }
 
             return cell ?? UITableViewCell()

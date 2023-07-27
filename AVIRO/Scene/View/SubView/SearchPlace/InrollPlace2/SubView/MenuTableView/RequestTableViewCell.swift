@@ -38,15 +38,16 @@ final class RequestTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        menuField.removeTarget(nil, action: nil, for: .allEvents)
-        priceField.removeTarget(nil, action: nil, for: .allEvents)
-        minusButton.removeTarget(nil, action: nil, for: .allEvents)
-        requestCheckButton.removeTarget(nil, action: nil, for: .allEvents)
+        editingMenuField = nil
+        editingPriceField = nil
+        editingRequestField = nil
+        onMinusButtonTapped = nil
+        onRequestButtonTapped = nil
+        priceField.variblePriceChanged = nil
 
     }
     
     private func makeLayout() {
-        self.contentView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         [
             menuField,
             priceField
@@ -79,11 +80,14 @@ final class RequestTableViewCell: UITableViewCell {
             // requestCheckButton
             requestCheckButton.centerYAnchor.constraint(equalTo: requestField.centerYAnchor),
             requestCheckButton.leadingAnchor.constraint(equalTo: fieldStackView.leadingAnchor),
+            requestCheckButton.heightAnchor.constraint(equalToConstant: 24),
+            requestCheckButton.widthAnchor.constraint(equalToConstant: 24),
             
             // requestField
             requestField.topAnchor.constraint(equalTo: fieldStackView.bottomAnchor, constant: 10),
             requestField.leadingAnchor.constraint(equalTo: requestCheckButton.trailingAnchor, constant: 7),
             requestField.trailingAnchor.constraint(equalTo: fieldStackView.trailingAnchor),
+            requestField.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             
             // minus Button
             minusButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
@@ -139,11 +143,11 @@ final class RequestTableViewCell: UITableViewCell {
         }
     }
     
-    func setData(menu: String, price: String, request: String) {
+    func setData(menu: String, price: String, request: String, isSelected: Bool) {
         menuField.text = menu
         priceField.text = price
         requestField.text = request
-//        requestCheckButton.isSelected = isSelected
+        requestCheckButton.isSelected = isSelected
     }
 }
 

@@ -111,17 +111,15 @@ final class MenuTableView: UIView {
             menuPlusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -30)
         ])
         
-        normalTableViewHeight = normalTableView.heightAnchor.constraint(equalToConstant: 45)
+        normalTableViewHeight = normalTableView.heightAnchor.constraint(equalToConstant: 55)
         normalTableViewHeight?.isActive = true
         
-        requestTableViewHeight = requestTableView.heightAnchor.constraint(equalToConstant: 100)
+        requestTableViewHeight = requestTableView.heightAnchor.constraint(equalToConstant: 110)
         requestTableViewHeight?.isActive = true
         
     }
     
     private func makeAttribute() {
-        menuPlusButton.setButton("메뉴 정보 추가하기")
-        
         normalTableView.register(
             NormalTableViewCell.self,
             forCellReuseIdentifier: NormalTableViewCell.identifier
@@ -141,6 +139,31 @@ final class MenuTableView: UIView {
         requestTableView.tag = 1
         requestTableView.isScrollEnabled = false
         requestTableView.isHidden = true
+        
+        menuPlusButton.setButton("메뉴 정보 추가하기")
+    }
+    
+    func updateViewHeight(defaultTable: Bool, count: Int) {
+        let titleHeight = title.frame.height
+        let subTitleHeight = subTitle.frame.height
+        let buttonHeight = menuPlusButton.frame.height
+        // 20, 7, 20, 20, 30
+        let defaultPadding: CGFloat = 97
+                
+        let defaultTotalHeight = titleHeight + subTitleHeight + buttonHeight + defaultPadding
+        
+        if defaultTable {
+            let height = CGFloat(55 * count)
+            normalTableViewHeight?.constant = height
+            viewHeightConstraint?.constant = defaultTotalHeight + height
+            self.layoutIfNeeded()
+            
+        } else {
+            let height = CGFloat(110 * count)
+            requestTableViewHeight?.constant = height
+            viewHeightConstraint?.constant = defaultTotalHeight + height
+            self.layoutIfNeeded()
 
+        }
     }
 }

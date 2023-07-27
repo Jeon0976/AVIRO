@@ -41,8 +41,6 @@ final class NormalTableViewCell: UITableViewCell {
     }
     
     private func makeLayout() {
-        self.contentView.heightAnchor.constraint(equalToConstant: 45).isActive = true
-        
         [
             menuField,
             priceField
@@ -69,6 +67,7 @@ final class NormalTableViewCell: UITableViewCell {
             fieldStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             fieldStackView.trailingAnchor.constraint(equalTo: minusButton.leadingAnchor, constant: -7),
             fieldStackView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 1, constant: -31),
+            fieldStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             
             // minusButton
             minusButton.centerYAnchor.constraint(equalTo: fieldStackView.centerYAnchor),
