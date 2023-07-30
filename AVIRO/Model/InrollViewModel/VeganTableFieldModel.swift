@@ -10,8 +10,4 @@ import Foundation
 struct VeganTableFieldModel {
     var menu: String
     var price: String
-    
-    var hasData: Bool {
-        return !menu.isEmpty && !price.isEmpty
-    }
 }

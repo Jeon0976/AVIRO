@@ -14,6 +14,7 @@ final class MyPageViewController: UIViewController {
     let keychain = KeychainSwift()
     
     var logOutButton = UIButton()
+    var label = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,17 +34,20 @@ extension MyPageViewController: MyPageViewProtocol {
         
         NSLayoutConstraint.activate([
             logOutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logOutButton.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            logOutButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
         
     }
     
     func makeAttribute() {
         view.backgroundColor = .white
-
+        
         logOutButton.setTitle("로그아웃", for: .normal)
         logOutButton.setTitleColor(.black, for: .normal)
         logOutButton.addTarget(self, action: #selector(tappedLogOutButton), for: .touchUpInside)
+        
+        label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.numberOfLines = 0
         
     }
     

@@ -10,8 +10,8 @@
 		A156F24E1DC1F5FA54D44A76 /* Pods_AVIRO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 796022A3066B91147B712BB4 /* Pods_AVIRO.framework */; };
 		C50367F52A1795D10020C6BB /* HomeViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */; };
 		C50367F82A179D7B0020C6BB /* CustomConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F72A179D7B0020C6BB /* CustomConfiguration.swift */; };
-		C50F6AF32A68FD0A00E942F5 /* InrollPlaceViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6AF22A68FD0A00E942F5 /* InrollPlaceViewController2.swift */; };
-		C50F6AF52A68FD6300E942F5 /* InrollPlacePresenter2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6AF42A68FD6300E942F5 /* InrollPlacePresenter2.swift */; };
+		C50F6AF32A68FD0A00E942F5 /* InrollPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6AF22A68FD0A00E942F5 /* InrollPlaceViewController.swift */; };
+		C50F6AF52A68FD6300E942F5 /* InrollPlacePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6AF42A68FD6300E942F5 /* InrollPlacePresenter.swift */; };
 		C50F6AF92A68FFBB00E942F5 /* StoreInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6AF82A68FFBB00E942F5 /* StoreInfoView.swift */; };
 		C50F6AFB2A68FFC300E942F5 /* VeganDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6AFA2A68FFC300E942F5 /* VeganDetailView.swift */; };
 		C50F6AFD2A68FFCB00E942F5 /* MenuTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6AFC2A68FFCB00E942F5 /* MenuTableView.swift */; };
@@ -24,7 +24,6 @@
 		C528E4BC2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C528E4BB2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift */; };
 		C528E4BE2A5FB816002BD72E /* TermsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C528E4BD2A5FB816002BD72E /* TermsTableCell.swift */; };
 		C528E4C02A5FF1CB002BD72E /* FinalRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C528E4BF2A5FF1CB002BD72E /* FinalRegistrationViewController.swift */; };
-		C52B61CB2A31F97E001388E3 /* InrollPlaceViewUserInteractions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52B61CA2A31F97E001388E3 /* InrollPlaceViewUserInteractions.swift */; };
 		C52FA3432A175B20005E70DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FA3422A175B20005E70DC /* AppDelegate.swift */; };
 		C52FA3452A175B20005E70DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FA3442A175B20005E70DC /* SceneDelegate.swift */; };
 		C52FA3472A175B20005E70DC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FA3462A175B20005E70DC /* HomeViewController.swift */; };
@@ -34,14 +33,10 @@
 		C5351B502A19225A00116D50 /* KakaoMapResponseKeywordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B4F2A19225A00116D50 /* KakaoMapResponseKeywordModel.swift */; };
 		C5351B542A19A7B100116D50 /* PersonalLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B532A19A7B100116D50 /* PersonalLocation.swift */; };
 		C5351B562A19B67900116D50 /* CustomAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B552A19B67900116D50 /* CustomAlertController.swift */; };
-		C5351B582A19F5DA00116D50 /* PlaceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B572A19F5DA00116D50 /* PlaceListViewController.swift */; };
 		C5351B5C2A19F60200116D50 /* PlaceListViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B5B2A19F60200116D50 /* PlaceListViewPresenter.swift */; };
-		C5351B5E2A19F84800116D50 /* PlaceListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B5D2A19F84800116D50 /* PlaceListCell.swift */; };
 		C5351B602A19F9A700116D50 /* PlaceListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B5F2A19F9A700116D50 /* PlaceListModel.swift */; };
 		C5351B622A1A083400116D50 /* PlaceListCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B612A1A083400116D50 /* PlaceListCellModel.swift */; };
 		C5351B672A1A154C00116D50 /* PageEndingCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B662A1A154C00116D50 /* PageEndingCheck.swift */; };
-		C5351B6D2A1B215D00116D50 /* InrollPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B6C2A1B215D00116D50 /* InrollPlaceViewController.swift */; };
-		C5351B6F2A1B242C00116D50 /* InrollPlacePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B6E2A1B242C00116D50 /* InrollPlacePresenter.swift */; };
 		C5351B7A2A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B792A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift */; };
 		C5351B7D2A1B52B900116D50 /* CustomLocationCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B7C2A1B52B900116D50 /* CustomLocationCellModel.swift */; };
 		C53893162A5EC0C500CB9A54 /* GenderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53893152A5EC0C500CB9A54 /* GenderButton.swift */; };
@@ -64,9 +59,6 @@
 		C593B6472A4AB3A700D224CE /* PushCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593B6462A4AB3A700D224CE /* PushCommentView.swift */; };
 		C593B64B2A4AEA9800D224CE /* AVIROCommentPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593B64A2A4AEA9800D224CE /* AVIROCommentPost.swift */; };
 		C593B64F2A4C490600D224CE /* MyPageViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593B64E2A4C490600D224CE /* MyPageViewPresenter.swift */; };
-		C596D9842A3B39E500829B17 /* InrollPlaceViewTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C596D9832A3B39E500829B17 /* InrollPlaceViewTableView.swift */; };
-		C596D9862A3B3BFD00829B17 /* InrollPlaceViewActionAndAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C596D9852A3B3BFD00829B17 /* InrollPlaceViewActionAndAnimation.swift */; };
-		C596D9882A3B3C8900829B17 /* InrollPlaceViewNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C596D9872A3B3C8900829B17 /* InrollPlaceViewNotification.swift */; };
 		C5A03C122A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A03C112A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift */; };
 		C5A3C3C42A39658A0050AB3D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A3C3C32A39658A0050AB3D /* LoginViewController.swift */; };
 		C5A3C3C62A39659B0050AB3D /* LoginViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A3C3C52A39659B0050AB3D /* LoginViewPresenter.swift */; };
@@ -76,6 +68,8 @@
 		C5CAAC472A39AEFE008C5FDA /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAAC462A39AEFE008C5FDA /* Image.swift */; };
 		C5CAAC492A39C6D4008C5FDA /* StringValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAAC482A39C6D4008C5FDA /* StringValue.swift */; };
 		C5D36D2E2A76031E003328E8 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D36D2D2A76031E003328E8 /* Double.swift */; };
+		C5D36D322A76BA65003328E8 /* PlaceListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D36D302A76BA65003328E8 /* PlaceListCell.swift */; };
+		C5D36D332A76BA65003328E8 /* PlaceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D36D312A76BA65003328E8 /* PlaceListViewController.swift */; };
 		C5D6E19F2A17B4410042679C /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5D6E19E2A17B4410042679C /* API.plist */; };
 		C5D7458F2A224DCE006F9F31 /* HomeFirstPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D7458E2A224DCE006F9F31 /* HomeFirstPopUpView.swift */; };
 		C5D745912A225DE6006F9F31 /* CommentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D745902A225DE6006F9F31 /* CommentDetailViewController.swift */; };
@@ -96,10 +90,6 @@
 		C5EB50E82A1C6FD600B29CC1 /* PopularViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50E72A1C6FD600B29CC1 /* PopularViewController.swift */; };
 		C5EB50EA2A1C705900B29CC1 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50E92A1C705900B29CC1 /* MyPageViewController.swift */; };
 		C5EB50EC2A1C72C600B29CC1 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50EB2A1C72C600B29CC1 /* TabBarViewController.swift */; };
-		C5EB50F32A1DEC2400B29CC1 /* InrollPlaceViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50F22A1DEC2400B29CC1 /* InrollPlaceViewLayout.swift */; };
-		C5EB50F52A1DEC3900B29CC1 /* InrollPlaceViewAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50F42A1DEC3900B29CC1 /* InrollPlaceViewAttribute.swift */; };
-		C5EB50F92A1E71BA00B29CC1 /* VeganMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50F82A1E71BA00B29CC1 /* VeganMenuTableViewCell.swift */; };
-		C5EB50FB2A1E71E900B29CC1 /* IfRequestVeganMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50FA2A1E71E900B29CC1 /* IfRequestVeganMenuTableViewCell.swift */; };
 		C5EB51082A209F6900B29CC1 /* HomeSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB51072A209F6900B29CC1 /* HomeSearchViewController.swift */; };
 		C5EB510B2A209FD300B29CC1 /* HomeSearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB510A2A209FD300B29CC1 /* HomeSearchPresenter.swift */; };
 		C5EB510D2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB510C2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift */; };
@@ -123,8 +113,8 @@
 		B57500A8C1EA6C6CFDED2C4C /* Pods-AVIRO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AVIRO.debug.xcconfig"; path = "Target Support Files/Pods-AVIRO/Pods-AVIRO.debug.xcconfig"; sourceTree = "<group>"; };
 		C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewPresenter.swift; sourceTree = "<group>"; };
 		C50367F72A179D7B0020C6BB /* CustomConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomConfiguration.swift; sourceTree = "<group>"; };
-		C50F6AF22A68FD0A00E942F5 /* InrollPlaceViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewController2.swift; sourceTree = "<group>"; };
-		C50F6AF42A68FD6300E942F5 /* InrollPlacePresenter2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlacePresenter2.swift; sourceTree = "<group>"; };
+		C50F6AF22A68FD0A00E942F5 /* InrollPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewController.swift; sourceTree = "<group>"; };
+		C50F6AF42A68FD6300E942F5 /* InrollPlacePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlacePresenter.swift; sourceTree = "<group>"; };
 		C50F6AF82A68FFBB00E942F5 /* StoreInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreInfoView.swift; sourceTree = "<group>"; };
 		C50F6AFA2A68FFC300E942F5 /* VeganDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganDetailView.swift; sourceTree = "<group>"; };
 		C50F6AFC2A68FFCB00E942F5 /* MenuTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableView.swift; sourceTree = "<group>"; };
@@ -137,7 +127,6 @@
 		C528E4BB2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThridRegistrationPresenter.swift; sourceTree = "<group>"; };
 		C528E4BD2A5FB816002BD72E /* TermsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsTableCell.swift; sourceTree = "<group>"; };
 		C528E4BF2A5FF1CB002BD72E /* FinalRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalRegistrationViewController.swift; sourceTree = "<group>"; };
-		C52B61CA2A31F97E001388E3 /* InrollPlaceViewUserInteractions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewUserInteractions.swift; sourceTree = "<group>"; };
 		C52FA33F2A175B20005E70DC /* AVIRO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AVIRO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C52FA3422A175B20005E70DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C52FA3442A175B20005E70DC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -150,14 +139,10 @@
 		C5351B4F2A19225A00116D50 /* KakaoMapResponseKeywordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapResponseKeywordModel.swift; sourceTree = "<group>"; };
 		C5351B532A19A7B100116D50 /* PersonalLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalLocation.swift; sourceTree = "<group>"; };
 		C5351B552A19B67900116D50 /* CustomAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertController.swift; sourceTree = "<group>"; };
-		C5351B572A19F5DA00116D50 /* PlaceListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListViewController.swift; sourceTree = "<group>"; };
 		C5351B5B2A19F60200116D50 /* PlaceListViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListViewPresenter.swift; sourceTree = "<group>"; };
-		C5351B5D2A19F84800116D50 /* PlaceListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListCell.swift; sourceTree = "<group>"; };
 		C5351B5F2A19F9A700116D50 /* PlaceListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListModel.swift; sourceTree = "<group>"; };
 		C5351B612A1A083400116D50 /* PlaceListCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListCellModel.swift; sourceTree = "<group>"; };
 		C5351B662A1A154C00116D50 /* PageEndingCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageEndingCheck.swift; sourceTree = "<group>"; };
-		C5351B6C2A1B215D00116D50 /* InrollPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewController.swift; sourceTree = "<group>"; };
-		C5351B6E2A1B242C00116D50 /* InrollPlacePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlacePresenter.swift; sourceTree = "<group>"; };
 		C5351B792A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapResponseCoordinateModel.swift; sourceTree = "<group>"; };
 		C5351B7C2A1B52B900116D50 /* CustomLocationCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLocationCellModel.swift; sourceTree = "<group>"; };
 		C53893152A5EC0C500CB9A54 /* GenderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderButton.swift; sourceTree = "<group>"; };
@@ -181,9 +166,6 @@
 		C593B64A2A4AEA9800D224CE /* AVIROCommentPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROCommentPost.swift; sourceTree = "<group>"; };
 		C593B64C2A4BFD9A00D224CE /* AVIRO.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AVIRO.entitlements; sourceTree = "<group>"; };
 		C593B64E2A4C490600D224CE /* MyPageViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewPresenter.swift; sourceTree = "<group>"; };
-		C596D9832A3B39E500829B17 /* InrollPlaceViewTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewTableView.swift; sourceTree = "<group>"; };
-		C596D9852A3B3BFD00829B17 /* InrollPlaceViewActionAndAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewActionAndAnimation.swift; sourceTree = "<group>"; };
-		C596D9872A3B3C8900829B17 /* InrollPlaceViewNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewNotification.swift; sourceTree = "<group>"; };
 		C5A03C112A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerActionAndAnimation.swift; sourceTree = "<group>"; };
 		C5A3C3C32A39658A0050AB3D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C5A3C3C52A39659B0050AB3D /* LoginViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewPresenter.swift; sourceTree = "<group>"; };
@@ -193,6 +175,8 @@
 		C5CAAC462A39AEFE008C5FDA /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		C5CAAC482A39C6D4008C5FDA /* StringValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringValue.swift; sourceTree = "<group>"; };
 		C5D36D2D2A76031E003328E8 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
+		C5D36D302A76BA65003328E8 /* PlaceListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceListCell.swift; sourceTree = "<group>"; };
+		C5D36D312A76BA65003328E8 /* PlaceListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceListViewController.swift; sourceTree = "<group>"; };
 		C5D6E19E2A17B4410042679C /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = API.plist; sourceTree = "<group>"; };
 		C5D7458E2A224DCE006F9F31 /* HomeFirstPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFirstPopUpView.swift; sourceTree = "<group>"; };
 		C5D745902A225DE6006F9F31 /* CommentDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDetailViewController.swift; sourceTree = "<group>"; };
@@ -213,10 +197,6 @@
 		C5EB50E72A1C6FD600B29CC1 /* PopularViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularViewController.swift; sourceTree = "<group>"; };
 		C5EB50E92A1C705900B29CC1 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		C5EB50EB2A1C72C600B29CC1 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
-		C5EB50F22A1DEC2400B29CC1 /* InrollPlaceViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewLayout.swift; sourceTree = "<group>"; };
-		C5EB50F42A1DEC3900B29CC1 /* InrollPlaceViewAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewAttribute.swift; sourceTree = "<group>"; };
-		C5EB50F82A1E71BA00B29CC1 /* VeganMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganMenuTableViewCell.swift; sourceTree = "<group>"; };
-		C5EB50FA2A1E71E900B29CC1 /* IfRequestVeganMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IfRequestVeganMenuTableViewCell.swift; sourceTree = "<group>"; };
 		C5EB51072A209F6900B29CC1 /* HomeSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchViewController.swift; sourceTree = "<group>"; };
 		C5EB510A2A209FD300B29CC1 /* HomeSearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchPresenter.swift; sourceTree = "<group>"; };
 		C5EB510C2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchViewTableViewCell.swift; sourceTree = "<group>"; };
@@ -343,13 +323,14 @@
 			path = Custom;
 			sourceTree = "<group>";
 		};
-		C50F6AF12A68FCFC00E942F5 /* InrollPlace2 */ = {
+		C50F6AF12A68FCFC00E942F5 /* InrollPlace */ = {
 			isa = PBXGroup;
 			children = (
-				C50F6AF22A68FD0A00E942F5 /* InrollPlaceViewController2.swift */,
+				C50F6AF22A68FD0A00E942F5 /* InrollPlaceViewController.swift */,
 				C50F6AF72A68FFAF00E942F5 /* SubView */,
+				C5D36D2F2A76BA65003328E8 /* PlaceList */,
 			);
-			path = InrollPlace2;
+			path = InrollPlace;
 			sourceTree = "<group>";
 		};
 		C50F6AF62A68FFA400E942F5 /* SubView */ = {
@@ -459,8 +440,7 @@
 		C5351B722A1B369000116D50 /* SearchPlace */ = {
 			isa = PBXGroup;
 			children = (
-				C50F6AF12A68FCFC00E942F5 /* InrollPlace2 */,
-				C5351B772A1B36D100116D50 /* InrollPlace */,
+				C50F6AF12A68FCFC00E942F5 /* InrollPlace */,
 			);
 			path = SearchPlace;
 			sourceTree = "<group>";
@@ -468,20 +448,8 @@
 		C5351B762A1B36C700116D50 /* InrollPlace */ = {
 			isa = PBXGroup;
 			children = (
-				C50F6AF42A68FD6300E942F5 /* InrollPlacePresenter2.swift */,
-				C5351B6E2A1B242C00116D50 /* InrollPlacePresenter.swift */,
+				C50F6AF42A68FD6300E942F5 /* InrollPlacePresenter.swift */,
 				C5351B812A1B547C00116D50 /* PlaceList */,
-			);
-			path = InrollPlace;
-			sourceTree = "<group>";
-		};
-		C5351B772A1B36D100116D50 /* InrollPlace */ = {
-			isa = PBXGroup;
-			children = (
-				C5351B6C2A1B215D00116D50 /* InrollPlaceViewController.swift */,
-				C5732C7F2A41DE8B00CDC499 /* InrollPlaceSubFile */,
-				C5EB50F72A1E718A00B29CC1 /* InrollTableView */,
-				C5351B7F2A1B537000116D50 /* PlaceList */,
 			);
 			path = InrollPlace;
 			sourceTree = "<group>";
@@ -510,15 +478,6 @@
 				C5351B7C2A1B52B900116D50 /* CustomLocationCellModel.swift */,
 			);
 			path = CustomLocationModel;
-			sourceTree = "<group>";
-		};
-		C5351B7F2A1B537000116D50 /* PlaceList */ = {
-			isa = PBXGroup;
-			children = (
-				C5351B572A19F5DA00116D50 /* PlaceListViewController.swift */,
-				C5351B5D2A19F84800116D50 /* PlaceListCell.swift */,
-			);
-			path = PlaceList;
 			sourceTree = "<group>";
 		};
 		C5351B812A1B547C00116D50 /* PlaceList */ = {
@@ -595,19 +554,6 @@
 			path = InrollViewModel;
 			sourceTree = "<group>";
 		};
-		C5732C7F2A41DE8B00CDC499 /* InrollPlaceSubFile */ = {
-			isa = PBXGroup;
-			children = (
-				C5EB50F22A1DEC2400B29CC1 /* InrollPlaceViewLayout.swift */,
-				C5EB50F42A1DEC3900B29CC1 /* InrollPlaceViewAttribute.swift */,
-				C52B61CA2A31F97E001388E3 /* InrollPlaceViewUserInteractions.swift */,
-				C596D9852A3B3BFD00829B17 /* InrollPlaceViewActionAndAnimation.swift */,
-				C596D9872A3B3C8900829B17 /* InrollPlaceViewNotification.swift */,
-				C596D9832A3B39E500829B17 /* InrollPlaceViewTableView.swift */,
-			);
-			path = InrollPlaceSubFile;
-			sourceTree = "<group>";
-		};
 		C5732C802A41E20800CDC499 /* HomeViewSubFile */ = {
 			isa = PBXGroup;
 			children = (
@@ -681,6 +627,16 @@
 				C5CAAC482A39C6D4008C5FDA /* StringValue.swift */,
 			);
 			path = StaticValue;
+			sourceTree = "<group>";
+		};
+		C5D36D2F2A76BA65003328E8 /* PlaceList */ = {
+			isa = PBXGroup;
+			children = (
+				C5D36D302A76BA65003328E8 /* PlaceListCell.swift */,
+				C5D36D312A76BA65003328E8 /* PlaceListViewController.swift */,
+			);
+			name = PlaceList;
+			path = "../../../../../../../AVIRO deprecated/InrollPlace/PlaceList";
 			sourceTree = "<group>";
 		};
 		C5D745922A22679E006F9F31 /* CommentDetailPresenter */ = {
@@ -783,15 +739,6 @@
 				C5EB50E92A1C705900B29CC1 /* MyPageViewController.swift */,
 			);
 			path = MyPage;
-			sourceTree = "<group>";
-		};
-		C5EB50F72A1E718A00B29CC1 /* InrollTableView */ = {
-			isa = PBXGroup;
-			children = (
-				C5EB50F82A1E71BA00B29CC1 /* VeganMenuTableViewCell.swift */,
-				C5EB50FA2A1E71E900B29CC1 /* IfRequestVeganMenuTableViewCell.swift */,
-			);
-			path = InrollTableView;
 			sourceTree = "<group>";
 		};
 		C5EB51012A20926800B29CC1 /* TapBarModel */ = {
@@ -1026,19 +973,16 @@
 				C5CAAC492A39C6D4008C5FDA /* StringValue.swift in Sources */,
 				C5A3C3C42A39658A0050AB3D /* LoginViewController.swift in Sources */,
 				C5732C732A41778A00CDC499 /* AVIROPostAPI.swift in Sources */,
+				C5D36D332A76BA65003328E8 /* PlaceListViewController.swift in Sources */,
 				C5732C7C2A41D41B00CDC499 /* VeganTableFieldModel.swift in Sources */,
 				C5732C752A41962D00CDC499 /* AVIRORequestAPI.swift in Sources */,
-				C5351B582A19F5DA00116D50 /* PlaceListViewController.swift in Sources */,
 				C5EB51182A21016600B29CC1 /* DetailViewPresenter.swift in Sources */,
 				C5D93DA12A581F5A00629C39 /* FirstRegistrationPresenter.swift in Sources */,
 				C567C1502A56611500D4B426 /* TopCell.swift in Sources */,
 				C50F6B042A6BCD6900E942F5 /* CategoryButton.swift in Sources */,
 				C5EB510B2A209FD300B29CC1 /* HomeSearchPresenter.swift in Sources */,
-				C5EB50F32A1DEC2400B29CC1 /* InrollPlaceViewLayout.swift in Sources */,
-				C5351B5E2A19F84800116D50 /* PlaceListCell.swift in Sources */,
 				C5F1014F2A6D19A800C53286 /* VeganOptionButton.swift in Sources */,
-				C5351B6F2A1B242C00116D50 /* InrollPlacePresenter.swift in Sources */,
-				C50F6AF52A68FD6300E942F5 /* InrollPlacePresenter2.swift in Sources */,
+				C50F6AF52A68FD6300E942F5 /* InrollPlacePresenter.swift in Sources */,
 				C5CAAC452A39A93C008C5FDA /* Layout.swift in Sources */,
 				C52FA3472A175B20005E70DC /* HomeViewController.swift in Sources */,
 				C5EB50E82A1C6FD600B29CC1 /* PopularViewController.swift in Sources */,
@@ -1051,7 +995,6 @@
 				C5351B4D2A19223300116D50 /* KakaoMapRequestAPI.swift in Sources */,
 				C5EB511E2A21189B00B29CC1 /* StoreDetailView.swift in Sources */,
 				C5D745962A2277A4006F9F31 /* CommentsViewCell.swift in Sources */,
-				C596D9862A3B3BFD00829B17 /* InrollPlaceViewActionAndAnimation.swift in Sources */,
 				C50F6AFB2A68FFC300E942F5 /* VeganDetailView.swift in Sources */,
 				C5EB51222A2118B200B29CC1 /* CommentDetailView.swift in Sources */,
 				C5D93D9F2A581EC800629C39 /* FirstRegistrationViewController.swift in Sources */,
@@ -1065,7 +1008,7 @@
 				C5351B562A19B67900116D50 /* CustomAlertController.swift in Sources */,
 				C5D745942A2267C7006F9F31 /* CommentDetailPresenter.swift in Sources */,
 				C5538AAF2A1BB81200661DE2 /* VeganModel.swift in Sources */,
-				C50F6AF32A68FD0A00E942F5 /* InrollPlaceViewController2.swift in Sources */,
+				C50F6AF32A68FD0A00E942F5 /* InrollPlaceViewController.swift in Sources */,
 				C5732C7E2A41D42700CDC499 /* RequestTableFieldModel.swift in Sources */,
 				C5CAAC472A39AEFE008C5FDA /* Image.swift in Sources */,
 				C5E7B7A92A4D3CDF00CA2090 /* UserInfoModel.swift in Sources */,
@@ -1073,22 +1016,18 @@
 				C5E430B32A5DADBE00CB67EC /* SecondRegistrationPresenter.swift in Sources */,
 				C5EB510D2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift in Sources */,
 				C50367F52A1795D10020C6BB /* HomeViewPresenter.swift in Sources */,
-				C596D9842A3B39E500829B17 /* InrollPlaceViewTableView.swift in Sources */,
 				C5351B622A1A083400116D50 /* PlaceListCellModel.swift in Sources */,
 				C52FA3452A175B20005E70DC /* SceneDelegate.swift in Sources */,
 				C5351B542A19A7B100116D50 /* PersonalLocation.swift in Sources */,
 				C5EB50EA2A1C705900B29CC1 /* MyPageViewController.swift in Sources */,
-				C5EB50FB2A1E71E900B29CC1 /* IfRequestVeganMenuTableViewCell.swift in Sources */,
 				C5D8E8632A3DEC3900D88A43 /* String.swift in Sources */,
 				C50F6B022A6BC8E400E942F5 /* InrollField2.swift in Sources */,
 				C5D7458F2A224DCE006F9F31 /* HomeFirstPopUpView.swift in Sources */,
 				C5A3C3C62A39659B0050AB3D /* LoginViewPresenter.swift in Sources */,
 				C58B9AAE2A5675B9008AEAC3 /* TutorialViewController.swift in Sources */,
-				C5351B6D2A1B215D00116D50 /* InrollPlaceViewController.swift in Sources */,
 				C5732C792A41AD8100CDC499 /* HomeMapData.swift in Sources */,
 				C5D745912A225DE6006F9F31 /* CommentDetailViewController.swift in Sources */,
 				C5FF13552A42C88D0026981D /* AVIROMenuModel.swift in Sources */,
-				C596D9882A3B3C8900829B17 /* InrollPlaceViewNotification.swift in Sources */,
 				C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */,
 				C5351B672A1A154C00116D50 /* PageEndingCheck.swift in Sources */,
 				C5732C772A41A0A500CDC499 /* AVIROMapModel.swift in Sources */,
@@ -1099,7 +1038,6 @@
 				C528E4BC2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift in Sources */,
 				C5EB51162A21011C00B29CC1 /* DetailViewController.swift in Sources */,
 				C5EB51202A2118AB00B29CC1 /* MenuDetailView.swift in Sources */,
-				C52B61CB2A31F97E001388E3 /* InrollPlaceViewUserInteractions.swift in Sources */,
 				C528E4BE2A5FB816002BD72E /* TermsTableCell.swift in Sources */,
 				C5EB51122A20CC7D00B29CC1 /* HomeInfoStoreView.swift in Sources */,
 				C5EB50E42A1C685100B29CC1 /* TabBarItem.swift in Sources */,
@@ -1115,12 +1053,11 @@
 				C5351B602A19F9A700116D50 /* PlaceListModel.swift in Sources */,
 				C5732C712A41739000CDC499 /* AVIROAPIManager.swift in Sources */,
 				C50F6AF92A68FFBB00E942F5 /* StoreInfoView.swift in Sources */,
+				C5D36D322A76BA65003328E8 /* PlaceListCell.swift in Sources */,
 				C56857822A7113CF00F52715 /* RequestTableViewCell.swift in Sources */,
 				C5EB50EC2A1C72C600B29CC1 /* TabBarViewController.swift in Sources */,
-				C5EB50F92A1E71BA00B29CC1 /* VeganMenuTableViewCell.swift in Sources */,
 				C568577D2A70E1F600F52715 /* MenuPlusButton.swift in Sources */,
 				C51132C12A559BCA006E1EC3 /* AppController.swift in Sources */,
-				C5EB50F52A1DEC3900B29CC1 /* InrollPlaceViewAttribute.swift in Sources */,
 				C50F6AFF2A691AE100E942F5 /* InrollField.swift in Sources */,
 				C5A03C122A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift in Sources */,
 				C593B6472A4AB3A700D224CE /* PushCommentView.swift in Sources */,

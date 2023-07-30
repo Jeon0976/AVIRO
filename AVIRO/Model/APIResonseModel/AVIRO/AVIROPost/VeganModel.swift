@@ -65,7 +65,7 @@ struct MenuArray: Codable {
     var menuId = UUID().uuidString
     var menuType: String
     var menu: String
-    var price: Int
+    var price: String
     var howToRequest: String
     var isCheck: Bool
 }
