@@ -9,8 +9,11 @@ import UIKit
 
 final class VeganOptionButton: UIButton {
     private let spacing: CGFloat = 32
+
     var changedColor: UIColor?
-    
+
+    private var change = false
+
     // MARK: selected 분기 처리
     override var isSelected: Bool {
         didSet {
@@ -36,57 +39,65 @@ final class VeganOptionButton: UIButton {
         layer.cornerRadius = 10
     }
     
-    // MARK: set Width
+    // MARK: set button size
     // 폰 마다 버튼의 width을 다르게 하기 위한 조치
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let depth: CGFloat = 20.0
-
-        let superViewWitdh: CGFloat = Double(self.superview?.frame.width ?? 0)
-
-        let buttonWidth = (superViewWitdh - depth) / 3
-        self.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
-        
-        // image Height + title Height + spacing + padding
-        let imageHeight = imageView?.frame.height ?? 0
-        let titleHeight = titleLabel?.frame.height ?? 0
-        let padding: CGFloat = 24
-        
-        let totalHeight = imageHeight + titleHeight + padding + spacing
-        self.heightAnchor.constraint(equalToConstant: totalHeight).isActive = true
-
+        if !change {
+            change = !change
+            verticalTitleToImage()
+            setButtonSize()
+        }
     }
     
     // MARK: SetUp Button
     func setButton(_ title: String, _ image: UIImage) {
         let image = image.withRenderingMode(.alwaysTemplate)
         
-        setTitle(title, for: .normal)
         setImage(image, for: .normal)
         
-        setTitleColor(.gray3, for: .normal)
-        setTitleColor(.gray7, for: .selected)
+        let attributedString = NSMutableAttributedString(string: title)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 5
         
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle,
+                                      value: paragraphStyle,
+                                      range: NSRange(location: 0, length: attributedString.length)
+        )
+        attributedString.addAttribute(NSAttributedString.Key.foregroundColor,
+                                      value: UIColor.gray3 ?? .systemGray3,
+                                      range: NSRange(location: 0, length: attributedString.length)
+        )
+        
+        setAttributedTitle(attributedString, for: .normal)
+        
+        let attributedStringSelected = NSMutableAttributedString(string: title)
+        attributedStringSelected.addAttribute(NSAttributedString.Key.paragraphStyle,
+                                              value: paragraphStyle,
+                                              range: NSRange(location: 0, length: attributedStringSelected.length)
+        )
+        attributedStringSelected.addAttribute(NSAttributedString.Key.foregroundColor,
+                                              value: UIColor.gray7 ?? .white,
+                                              range: NSRange(location: 0, length: attributedStringSelected.length)
+        )
+        
+        setAttributedTitle(attributedStringSelected, for: .selected)
+
         titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
         titleLabel?.numberOfLines = 2
-        tintColor = .gray2
         
-        verticalTitleToImage()
+        tintColor = .gray2
     }
     
     // MARK: Vertical Title -> Image
-    func verticalTitleToImage() {
-        // title size width 74 height 39
-        // image size width 40 height 40
-        let titleHeight: CGFloat = 40
-        let titleWidth: CGFloat = 74
+    private func verticalTitleToImage() {
+        let titleHeight = titleLabel?.frame.height ?? 0
+        let titleWidth = titleLabel?.frame.width ?? 0
         
-        let imageHeight: CGFloat = 40
-        let imageWidth: CGFloat = 40
+        let imageHeight = imageView?.frame.height ?? 0
+        let imageWidth = imageView?.frame.width ?? 0
         
-        let totalHeight = imageHeight + titleHeight + spacing
-
         titleEdgeInsets = UIEdgeInsets(
             top: -(imageHeight + spacing),
             left: -imageWidth,
@@ -100,17 +111,24 @@ final class VeganOptionButton: UIButton {
             bottom: -(titleHeight + spacing),
             right: -titleWidth + (-titleWidth / 2)
         )
+    }
+    
+    // MARK: button 높이 & 넓이 설정
+    private func setButtonSize() {
+        let depth: CGFloat = 20.0
+
+        let superViewWitdh: CGFloat = Double(self.superview?.frame.width ?? 0)
+
+        let buttonWidth = (superViewWitdh - depth) / 3
+        self.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
         
-//        let depth: CGFloat = 20.0
-//
-//        let superViewWitdh: CGFloat = Double(self.superview?.frame.width ?? 0)
-//
-//        let buttonWidth = (superViewWitdh - depth) / 3
-//
-//        self.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
-//
-//        // image Height + title Height + spaing + padding
-//        let buttonHeight = totalHeight + 24
-//        self.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
+        // image Height + title Height + spacing + padding
+        let imageHeight = imageView?.frame.height ?? 0
+        let titleHeight = titleLabel?.frame.height ?? 0
+        let padding: CGFloat = 24
+        
+        let totalHeight = imageHeight + titleHeight + padding + spacing
+
+        self.heightAnchor.constraint(equalToConstant: totalHeight).isActive = true
     }
 }

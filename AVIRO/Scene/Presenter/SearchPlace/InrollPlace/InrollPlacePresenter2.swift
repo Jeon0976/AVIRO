@@ -25,15 +25,15 @@ protocol InrollPlaceProtocol2: NSObject {
 // TODO: Dictionary로 데이터 구조 변경해서 binding 하기
 final class InrollPlacePresenter2 {
     weak var viewController: InrollPlaceProtocol2?
-    
-    private let aviroManager = AVIROAPIManager()
-    
+        
     private var storeNomalData: PlaceListModel?
     private var menuArray = [MenuArray]()
     private var category: Category?
     
     private var normalTableModel = [VeganTableFieldModel(menu: "", price: "")]
     private var requestTableModel = [RequestTableFieldModel(menu: "", price: "", howToRequest: "", isCheck: false)]
+    
+    private var LastModel: VeganModel?
     
     var normalTableCount: Int {
         normalTableModel.count
@@ -71,16 +71,7 @@ final class InrollPlacePresenter2 {
     func viewWillDisappear() {
         removeKeyboardNotification()
     }
-    
-    // MARK: TableView Data 불러오기 함수
-    func normalTableData(_ indexPath: IndexPath) -> VeganTableFieldModel {
-        return normalTableModel[indexPath.row]
-    }
-    
-    func requestTableData(_ indexPath: IndexPath) -> RequestTableFieldModel {
-        return requestTableModel[indexPath.row]
-    }
-    
+
     // MARK: Keyboard에 따른 view 높이 변경 Notification
     func addKeyboardNotification() {
         NotificationCenter.default.addObserver(
@@ -172,5 +163,112 @@ final class InrollPlacePresenter2 {
         }
         
         viewController?.menuTableReload(isPresentingDefaultTable: isPresentingDefaultTable)
+    }
+    
+    // MARK: Normal Table Cell
+    func normalTableCell (_ tableView: UITableView, _ indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: NormalTableViewCell.identifier, for: indexPath) as? NormalTableViewCell
+        let data =  normalTableModel[indexPath.row]
+        
+        cell?.setData(menu: data.menu, price: data.price)
+        
+        cell?.editingMenuField = { [weak self] menu in
+            self?.bindingNormalMenuData(menu, indexPath)
+        }
+        
+        cell?.editingPriceField = { [weak self] price in
+            self?.bindingNormalPriceData(price, indexPath)
+        }
+        
+        cell?.priceField.variblePriceChanged = { [weak self] price in
+            self?.bindingNormalPriceData(price, indexPath)
+        }
+        
+        cell?.onMinusButtonTapped = { [weak self] in
+            self?.deleteNormalData(indexPath)
+        }
+        
+        return cell ?? UITableViewCell()
+    }
+    
+    // MARK: Request Table Cell
+    func requestTableCell (_ tableView: UITableView, _ indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: RequestTableViewCell.identifier,
+            for: indexPath
+        ) as? RequestTableViewCell
+        
+        let data = requestTableModel[indexPath.row]
+        
+        print(data)
+        
+        cell?.setData(menu: data.menu,
+                      price: data.price,
+                      request: data.howToRequest,
+                      isSelected: data.isCheck
+        )
+        
+        cell?.editingMenuField = { [weak self] menu in
+            self?.bindingRequestMenu(menu, indexPath)
+        }
+        
+        cell?.editingPriceField = { [weak self] price in
+            self?.bindingRequestPrice(price, indexPath)
+        }
+        
+        cell?.priceField.variblePriceChanged = { [weak self] price in
+            self?.bindingRequestPrice(price, indexPath)
+        }
+        
+        cell?.editingRequestField = { [weak self] request in
+            self?.bindingRequestField(request, indexPath)
+        }
+        
+        cell?.onRequestButtonTapped = { [weak self] active in
+            self?.bindingRequestActiviate(active, indexPath)
+        }
+        
+        cell?.onMinusButtonTapped = { [weak self] in
+            self?.deleteRequestData(indexPath)
+        }
+
+        return cell ?? UITableViewCell()
+    }
+    
+    // MARK: Binding Normal Data
+    func bindingNormalMenuData(_ menu: String, _ indexPath: IndexPath) {
+        normalTableModel[indexPath.row].menu = menu
+    }
+    
+    func bindingNormalPriceData(_ price: String, _ indexPath: IndexPath) {
+        normalTableModel[indexPath.row].price = price
+    }
+    
+    func deleteNormalData(_ indexPath: IndexPath) {
+        normalTableModel.remove(at: indexPath.row)
+        viewController?.menuTableReload(isPresentingDefaultTable: true)
+    }
+    
+    // MARK: Binding Request Data
+    func bindingRequestMenu(_ menu: String, _ indexPath: IndexPath) {
+        requestTableModel[indexPath.row].menu = menu
+    }
+    
+    func bindingRequestPrice(_ price: String, _ indexPath: IndexPath) {
+        requestTableModel[indexPath.row].price = price
+    }
+    
+    func bindingRequestField(_ request: String, _ indexPath: IndexPath) {
+        requestTableModel[indexPath.row].howToRequest = request
+        print(requestTableModel)
+    }
+    
+    func bindingRequestActiviate(_ active: Bool, _ indexPath: IndexPath) {
+        requestTableModel[indexPath.row].isCheck = active
+    }
+    
+    func deleteRequestData(_ indexPath: IndexPath) {
+        requestTableModel.remove(at: indexPath.row)
+        viewController?.menuTableReload(isPresentingDefaultTable: false)
     }
 }

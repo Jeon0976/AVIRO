@@ -31,9 +31,9 @@ final class VeganDetailView: UIView {
     }()
     
     // MARK: Vegan Options
-    let allVeganButton = VeganOptionButton()
-    let someVeganButton = VeganOptionButton()
-    let requestVeganButton = VeganOptionButton()
+    lazy var allVeganButton = VeganOptionButton()
+    lazy var someVeganButton = VeganOptionButton()
+    lazy var requestVeganButton = VeganOptionButton()
     
     var veganOptions = [VeganOptionButton]()
     

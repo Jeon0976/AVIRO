@@ -37,13 +37,13 @@ struct PlaceListModel: Codable, Equatable {
         let R = 6371.0 // 지구의 평균 반경(km)
         let dLat = (lat2 - lat1).degreesToRadians
         let dLon = (lon2 - lon1).degreesToRadians
-        let a = sin(dLat/2) * sin(dLat/2) + cos(lat1.degreesToRadians) * cos(lat2.degreesToRadians) * sin(dLon/2) * sin(dLon/2)
+        let a = sin(dLat/2) * sin(dLat/2) +
+            cos(lat1.degreesToRadians) *
+            cos(lat2.degreesToRadians) *
+            sin(dLon/2) * sin(dLon/2)
         let c = 2 * atan2(sqrt(a), sqrt(1-a))
         return R * c
     }
 
 }
 
-extension Double {
-    var degreesToRadians: Double { return self * .pi / 180 }
-}

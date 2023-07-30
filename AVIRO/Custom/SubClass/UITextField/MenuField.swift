@@ -22,6 +22,12 @@ final class MenuField: UITextField {
     weak var buttonDelegate: MenuFieldDelegate?
     
     var variblePriceChanged: ((String) -> Void)?
+    
+    override var text: String? {
+        didSet {
+            updateButtonMenu()
+        }
+    }
 
     override var isEnabled: Bool {
         didSet {
@@ -50,7 +56,6 @@ final class MenuField: UITextField {
         
         return bounds.inset(by: inset)
     }
-    
     
     private func configuration() {
         textColor = .gray0
@@ -85,17 +90,20 @@ final class MenuField: UITextField {
         )
     }
     
+    // MARK: Right Button 생성
     func addRightButton() {
         isAddRightButton = !isAddRightButton
         
         let image = UIImage(named: "Dots")?.withRenderingMode(.alwaysTemplate)
         
-        let button = UIButton()
+        var button = UIButton()
         button.setImage(image, for: .normal)
-        button.addTarget(self, action: #selector(makeAlert), for: .touchUpInside)
         button.tintColor = .gray2
-
         button.frame = .init(x: horizontalPadding, y: 0, width: buttonSize, height: buttonSize)
+        
+        button.menu = setButtonMenu()
+
+        button.showsMenuAsPrimaryAction = true
         
         let paddingWidth = horizontalPadding + buttonSize + buttonPadding
         
@@ -112,28 +120,38 @@ final class MenuField: UITextField {
         rightViewMode = .always
     }
     
-    @objc private func makeAlert() {
-        let alertController = UIAlertController(title: "변동 선택", message: "", preferredStyle: .alert)
-        var action = UIAlertAction()
-        
-        if self.text == "변동" {
-            action = UIAlertAction(title: "변동취소", style: .default) { _ in
-                let text = ""
-                self.text = text
-                self.variblePriceChanged?(text)
-            }
-        } else {
-            action = UIAlertAction(title: "변동", style: .default) { _ in
-                let text = "변동"
-                self.text = "변동"
-                self.variblePriceChanged?(text)
-            }
+    // MARK: text 데이터에 따른 '변동'데이터 로직 처리
+    private func updateButtonMenu() {
+        guard let button = rightView?.subviews.first as? UIButton else {
+            return
         }
-        let cancel = UIAlertAction(title: "닫기", style: .destructive)
-        
-        alertController.addAction(action)
-        alertController.addAction(cancel)
-        
-        buttonDelegate?.menuFieldDIdTapDotsButton(alertController)
+
+        button.menu = setButtonMenu()
+    }
+    
+    // MARK: SetButton Menu 
+    private func setButtonMenu() -> UIMenu {
+        var variablePrice: UIAction
+
+        if self.text == "변동" {
+            variablePrice = UIAction(title: "변동취소", handler: { [weak self] _ in
+                self?.text = ""
+                self?.variblePriceChanged?("")
+            })
+        } else {
+            variablePrice = UIAction(title: "변동", handler: { [weak self] _ in
+                self?.text = "변동"
+                self?.variblePriceChanged?("변동")
+            })
+        }
+
+        let cancel = UIAction(title: "취소", attributes: .destructive) { _ in }
+        let menu = UIMenu(title: "변동가격",
+                          identifier: nil,
+                          options: .displayInline,
+                          children: [variablePrice, cancel]
+        )
+
+        return menu
     }
 }

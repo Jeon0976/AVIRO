@@ -45,7 +45,6 @@ final class HomeViewController: UIViewController {
             zoomLevel.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 30)
         ])
         zoomLevel.textColor = .black
-        zoomLevel.text = "zoom Level"
         zoomLevel.font = .systemFont(ofSize: 20, weight: .bold)
     }
     
@@ -81,7 +80,7 @@ extension HomeViewController: HomeViewProtocol {
             naverMapView.topAnchor.constraint(
                 equalTo: view.topAnchor),
             naverMapView.bottomAnchor.constraint(
-                equalTo: view.bottomAnchor, constant: 20),
+                equalTo: view.bottomAnchor, constant: 40),
             naverMapView.leadingAnchor.constraint(
                 equalTo: view.leadingAnchor),
             naverMapView.trailingAnchor.constraint(

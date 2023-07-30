@@ -271,8 +271,7 @@ extension InrollPlaceViewController2 {
         menuTableView.requestTableView.dataSource = self
         menuTableView.menuPlusButton.addTarget(self, action: #selector(menuPlusButtonTapped), for: .touchUpInside)
     }
-    
-    
+        
     // MARK: Menu Table View Show
     private func changeMenuTable(_ isPresentingDefaultTable: Bool) {
         if isPresentingDefaultTable {
@@ -378,90 +377,17 @@ extension InrollPlaceViewController2: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch tableView.tag {
         case 0:
-            let cell = tableView.dequeueReusableCell(
-                withIdentifier: NormalTableViewCell.identifier,
-                for: indexPath
-            ) as? NormalTableViewCell
+            let cell = presenter.normalTableCell(tableView, indexPath)
+            cell.selectionStyle = .none
             
-            let data = presenter.normalTableData(indexPath)
-            
-            cell?.setData(menu: data.menu,
-                          price: data.price
-            )
-            
-            cell?.selectionStyle = .none
-            cell?.priceField.buttonDelegate = self
-            
-            // TODO: Data 연동 처리
-            // presenter에 indexPath줘서 그거 맞춰서 data binding
-            cell?.editingMenuField = { [weak self] data in
-                
-            }
-            
-            cell?.editingPriceField = { [weak self] data in
-
-            }
-            
-            cell?.priceField.variblePriceChanged = { [weak self] data in
-
-            }
-            
-            cell?.onMinusButtonTapped = { [weak self] in
-                
-            }
-            
-            return cell ?? UITableViewCell()
+            return cell
         case 1:
-            let cell = tableView.dequeueReusableCell(
-                withIdentifier: RequestTableViewCell.identifier,
-                for: indexPath
-            ) as? RequestTableViewCell
+            let cell = presenter.requestTableCell(tableView, indexPath)
+            cell.selectionStyle = .none
             
-            let data = presenter.requestTableData(indexPath)
-            
-            cell?.setData(menu: data.menu,
-                          price: data.price,
-                          request: data.howToRequest,
-                          isSelected: data.isCheck
-            )
-            
-            cell?.selectionStyle = .none
-            cell?.priceField.buttonDelegate = self
-            
-            // TODO: Data 연동 처리
-            cell?.editingMenuField = { [weak self] data in
-
-            }
-            
-            cell?.editingPriceField = { [weak self] data in
-
-            }
-            
-            cell?.priceField.variblePriceChanged = { [weak self] data in
-
-            }
-            
-            cell?.editingRequestField = { [weak self] data in
-                
-            }
-            
-            cell?.onRequestButtonTapped = { [weak self] data in
-
-            }
-            
-            cell?.onMinusButtonTapped = { [weak self] in
-
-            }
-
-            return cell ?? UITableViewCell()
+            return cell
         default:
             return UITableViewCell()
         }
-    }
-}
-
-extension InrollPlaceViewController2: MenuFieldDelegate {
-    func menuFieldDIdTapDotsButton(_ alertController: UIAlertController) {
-        present(alertController, animated: true)
     }
 }

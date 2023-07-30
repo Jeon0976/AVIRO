@@ -39,7 +39,6 @@ extension String {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
         numberFormatter.locale = .current
-        print(self)
         
         let noCommaString = self.replacingOccurrences(of: ",", with: "")
         

@@ -33,13 +33,19 @@ final class NormalTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        // TODO: Test 요망 진짜 다른 데이터가 입력되는지 확인
         editingMenuField = nil
         editingPriceField = nil
         onMinusButtonTapped = nil
         priceField.variblePriceChanged = nil
     }
     
+    // MARK: Set Data
+    func setData(menu: String, price: String) {
+        menuField.text = menu
+        priceField.text = price
+    }
+    
+    // MARK: Layout
     private func makeLayout() {
         [
             menuField,
@@ -75,6 +81,7 @@ final class NormalTableViewCell: UITableViewCell {
         ])
     }
     
+    // MARK: Attribute
     private func makeAttribute() {
         self.backgroundColor = .gray7
         
@@ -92,18 +99,15 @@ final class NormalTableViewCell: UITableViewCell {
         minusButton.addTarget(self, action: #selector(minusButtonTapped), for: .touchUpInside)
     }
     
-    func setData(menu: String, price: String) {
-        menuField.text = menu
-        priceField.text = price
-    }
-    
+    // MARK: Minus Button Tapped
     @objc func minusButtonTapped() {
         onMinusButtonTapped?()
     }
 }
 
-// MARK: Text Field 변경 될 때 발동
 extension NormalTableViewCell: UITextFieldDelegate {
+    // MARK: price field 로직
+    /// 변동일 땐 입력 금지, 숫자 데이터 입력 받을 때 3번째 차리 ',' 추가
     func textField(_ textField: UITextField,
                    shouldChangeCharactersIn range: NSRange,
                    replacementString string: String
@@ -121,6 +125,7 @@ extension NormalTableViewCell: UITextFieldDelegate {
         return true
     }
     
+    // MARK: Text 입력 되고 난 후
     func textFieldDidChangeSelection(_ textField: UITextField) {
         if textField == menuField {
             editingMenuField?(textField.text ?? "")

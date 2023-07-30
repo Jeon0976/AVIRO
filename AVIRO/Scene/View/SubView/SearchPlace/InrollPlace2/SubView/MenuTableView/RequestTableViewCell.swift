@@ -44,9 +44,18 @@ final class RequestTableViewCell: UITableViewCell {
         onMinusButtonTapped = nil
         onRequestButtonTapped = nil
         priceField.variblePriceChanged = nil
+    }
 
+    // MARK: Set Data
+    func setData(menu: String, price: String, request: String, isSelected: Bool) {
+        menuField.text = menu
+        priceField.text = price
+        requestField.text = request
+        requestField.isEnabled = isSelected
+        requestCheckButton.isSelected = isSelected
     }
     
+    // MARK: Layout
     private func makeLayout() {
         [
             menuField,
@@ -95,6 +104,7 @@ final class RequestTableViewCell: UITableViewCell {
         ])
     }
     
+    // MARK: Attribute
     private func makeAttribute() {
         self.backgroundColor = .gray7
         
@@ -107,7 +117,7 @@ final class RequestTableViewCell: UITableViewCell {
         priceField.delegate = self
         
         requestField.makePlaceHolder("계란 빼달라고 요청하기")
-        requestField.isEnabled = false
+        requestField.delegate = self
         
         let image = UIImage(named: "Minus")?.withRenderingMode(.alwaysTemplate)
         
@@ -124,34 +134,28 @@ final class RequestTableViewCell: UITableViewCell {
         
     }
     
+    // MARK: Minus Button Tapped
     @objc func minusButtonTapped() {
         onMinusButtonTapped?()
-        print("DD")
     }
     
+    // MARK: Active Request Field Button Tapped
     @objc func requestCheckButtonTapped() {
         requestCheckButton.isSelected.toggle()
-        print("Change")
 
         if requestCheckButton.isSelected {
             requestField.isEnabled = true
             onRequestButtonTapped?(true)
-            print("Change")
         } else {
             requestField.isEnabled = false
             onRequestButtonTapped?(false)
         }
     }
-    
-    func setData(menu: String, price: String, request: String, isSelected: Bool) {
-        menuField.text = menu
-        priceField.text = price
-        requestField.text = request
-        requestCheckButton.isSelected = isSelected
-    }
 }
 
 extension RequestTableViewCell: UITextFieldDelegate {
+    // MARK: price field 로직
+    /// 변동일 땐 입력 금지, 숫자 데이터 입력 받을 때 3번째 차리 ',' 추가
     func textField(_ textField: UITextField,
                    shouldChangeCharactersIn range: NSRange,
                    replacementString string: String
@@ -169,13 +173,16 @@ extension RequestTableViewCell: UITextFieldDelegate {
         return true
     }
     
+    // MARK: Text 입력 되고 난 후
     func textFieldDidChangeSelection(_ textField: UITextField) {
         if textField == menuField {
             editingMenuField?(textField.text ?? "")
         } else if textField == priceField {
             editingPriceField?(textField.text ?? "")
-        } else {
+            print(priceField.text)
+        } else if textField == requestField {
             editingRequestField?(textField.text ?? "")
+            print("Test: ", requestField)
         }
     }
 }
