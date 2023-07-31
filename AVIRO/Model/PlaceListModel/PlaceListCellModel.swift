@@ -10,7 +10,6 @@ import Foundation
 /// PlaceListCell에 뿌려질 데이터
 struct PlaceListCellModel: Codable {
     let title: String
-    let category: String
     let address: String
     let distance: String
 }

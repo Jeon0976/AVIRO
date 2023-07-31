@@ -168,7 +168,7 @@ extension MenuDetailView: UITableViewDataSource {
         let menuItem = menuArray[indexPath.row]
         cell?.selectionStyle = .none
         
-        let currencyKR = String(menuItem.price).currenyKR()
+        let currencyKR = String(menuItem.price).formatNumber()!
         let howToRequest = menuItem.isCheck == false ? "비건" : menuItem.howToRequest
         
         cell?.makeData(menuItem.menu, currencyKR, howToRequest)

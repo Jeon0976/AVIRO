@@ -1,5 +1,5 @@
 //
-//  PlaceListViewPresenter.swift
+//  PlaceListSearchViewPresenter.swift
 //  AVIRO
 //
 //  Created by 전성훈 on 2023/05/21.
@@ -10,10 +10,11 @@ import UIKit
 protocol PlaceListProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
+    func makeGesture()
     func reloadTableView()
 }
 
-final class PlaceListViewPresenter: NSObject {
+final class PlaceListSearchViewPresenter: NSObject {
     weak var viewController: PlaceListProtocol?
     
     private let requestManager = KakaoMapRequestManager()
@@ -48,6 +49,7 @@ final class PlaceListViewPresenter: NSObject {
     func viewDidLoad() {
         viewController?.makeLayout()
         viewController?.makeAttribute()
+        viewController?.makeGesture()
     }
     
     // MARK: 검색할때 api 호출
@@ -65,7 +67,6 @@ final class PlaceListViewPresenter: NSObject {
                 let placeListCellModel = PlaceListModel(
                     title: location.name,
                     distance: location.distance,
-                    category: location.category,
                     address: location.address,
                     phone: location.phone,
                     url: location.url,
@@ -111,7 +112,6 @@ final class PlaceListViewPresenter: NSObject {
                 let placeListCellModel = PlaceListModel(
                     title: location.name,
                     distance: location.distance,
-                    category: location.category,
                     address: location.address,
                     phone: location.phone,
                     url: location.url,

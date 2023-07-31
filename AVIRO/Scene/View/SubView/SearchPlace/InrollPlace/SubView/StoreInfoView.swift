@@ -19,7 +19,7 @@ final class StoreInfoView: UIView {
         return label
     }()
     
-    let titleField = InrollField2()
+    let titleField = InrollField()
     
     // MARK: Adderss
     let address: UILabel = {
@@ -32,7 +32,7 @@ final class StoreInfoView: UIView {
         return label
     }()
     
-    let addressField = InrollField2()
+    let addressField = InrollField()
     
     // MARK: Number
     let number: UILabel = {
@@ -45,7 +45,7 @@ final class StoreInfoView: UIView {
         return label
     }()
     
-    let numberField = InrollField2()
+    let numberField = InrollField()
     
     // MARK: Category
     let categoryLabel: UILabel = {

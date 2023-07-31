@@ -400,6 +400,5 @@ final class InrollPlacePresenter {
         requestTableModel.remove(at: indexPath.row)
         viewController?.menuTableReload(isPresentingDefaultTable: false)
         updateData(key: "requestTableModel", value: self.requestTableModel)
-
     }
 }

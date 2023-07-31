@@ -10,7 +10,7 @@ import UIKit
 final class HomeSearchViewController: UIViewController {
     lazy var presenter = HomeSearchPresenter(viewController: self)
     
-    var searchTextField = InrollTextField()
+    var searchTextField = InrollField()
     var placeListTableView = UITableView()
     
     var tapGesture = UITapGestureRecognizer()
@@ -115,13 +115,11 @@ extension HomeSearchViewController: UITableViewDataSource, UITableViewDelegate {
             )
 
         let title = mockUp.title
-        let category = mockUp.category
         let address = mockUp.address
         let distance = mockUp.distance
 
         let cellData = PlaceListCellModel(
             title: title,
-            category: category,
             address: address,
             distance: distance
         )

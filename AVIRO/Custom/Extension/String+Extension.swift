@@ -5,7 +5,7 @@
 //  Created by 전성훈 on 2023/06/17.
 //
 
-import Foundation
+import UIKit
 
 extension String {
     // MARK: Text m/k 변환
@@ -18,19 +18,6 @@ extension String {
         } else {
             return "\(number)m"
         }
-    }
-    
-    // MARK: 숫자 변형
-    // TODO: 숫자가 아닌 값 입력할 때를 여기서 처리??
-    // 취소 예정
-    func currenyKR() -> String {
-        guard let price = Int(self) else {
-            return "0"
-        }
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.locale = Locale(identifier: "ko_KR")
-        return formatter.string(from: NSNumber(value: price)) ?? ""
     }
     
     // MARK: 자동 ',' 찍기
@@ -48,4 +35,13 @@ extension String {
         return self
     }
 
+    // MARK: Text 색상 변경
+    func changeColor(changedText: String) -> NSMutableAttributedString? {
+        if let range = self.range(of: changedText, options: []) {
+            let attributedText = NSMutableAttributedString(string: self)
+            attributedText.addAttribute(.foregroundColor, value: UIColor.main, range: NSRange(range, in: self))
+            return attributedText
+        }
+        return nil
+    }
 }

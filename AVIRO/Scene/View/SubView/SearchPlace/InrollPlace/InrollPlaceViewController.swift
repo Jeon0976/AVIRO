@@ -373,7 +373,7 @@ extension InrollPlaceViewController: UIGestureRecognizerDelegate {
 extension InrollPlaceViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textField == storeInfoView.titleField {
-            let viewController = PlaceListViewController()
+            let viewController = PlaceListSearchViewController()
             
             navigationController?.pushViewController(viewController, animated: true)
             return false

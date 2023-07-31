@@ -7,20 +7,14 @@
 
 import UIKit
 
-protocol MenuFieldDelegate: AnyObject {
-    func menuFieldDIdTapDotsButton(_ alertController: UIAlertController)
-}
-
 final class MenuField: UITextField {
     private var horizontalPadding: CGFloat = 16
     private var verticalPadding: CGFloat = 12
-    private var buttonPadding: CGFloat = 7
+    private var buttonPadding: CGFloat = 10
     private var buttonSize: CGFloat = 24
     
     private var isAddRightButton = false
-    
-    weak var buttonDelegate: MenuFieldDelegate?
-    
+        
     var variblePriceChanged: ((String) -> Void)?
     
     override var text: String? {
@@ -96,7 +90,7 @@ final class MenuField: UITextField {
         
         let image = UIImage(named: "Dots")?.withRenderingMode(.alwaysTemplate)
         
-        var button = UIButton()
+        let button = UIButton()
         button.setImage(image, for: .normal)
         button.tintColor = .gray2
         button.frame = .init(x: horizontalPadding, y: 0, width: buttonSize, height: buttonSize)
