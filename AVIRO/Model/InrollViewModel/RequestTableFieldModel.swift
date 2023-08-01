@@ -12,8 +12,5 @@ struct RequestTableFieldModel {
     var price: String
     var howToRequest: String
     var isCheck: Bool
-    
-    var hasData: Bool {
-        return !menu.isEmpty && !price.isEmpty
-    }
+    var isEnabled: Bool
 }

@@ -291,4 +291,29 @@ final class AVIROAPIManager {
             }
         }.resume()
     }
+    
+    // MARK: Get Check Place
+    func getCheckPlace(placeModel: PlaceCheckModel, completionHandler: @escaping((AVIROCheckPlaceModel) -> Void)
+    ) {
+        guard let url = requestAPI.getCheckPlace(placeModel: placeModel).url else {
+            print("url Error")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        
+        request.httpMethod = "GET"
+        
+        session.dataTask(with: request) { data, _, error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+
+            if let data = data {
+                if let menuData = try? JSONDecoder().decode(AVIROCheckPlaceModel.self, from: data) {
+                    completionHandler(menuData)
+                }
+            }
+        }.resume()
+    }
 }

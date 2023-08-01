@@ -311,6 +311,7 @@ extension InrollPlaceViewController {
                 defaultTable: isPresentingDefaultTable,
                 count: presenter.requestTableCount
             )
+            
         }
         view.layoutIfNeeded()
     }

@@ -24,6 +24,7 @@ struct AVIRORequestAPI {
     static let placeInfoPath = "/prod/map/load/place"
     static let menuInfoPath = "/prod/map/load/menu"
     static let commentPath = "/prod/map/load/comment"
+    static let checkPlace = "/prod/map/check/place"
     
     // MARK: Key
     static let longitude = "x"
@@ -31,6 +32,11 @@ struct AVIRORequestAPI {
     static let wide = "wide"
     static let placeId = "placeId"
 
+    static let title = "title"
+    static let address = "address"
+    static let x = "x"
+    static let y = "y"
+    
     // MARK: get Nerby Store
     mutating func getNerbyStore(longitude: String,
                                 latitude: String,
@@ -92,4 +98,20 @@ struct AVIRORequestAPI {
         return components
     }
 
+    // MARK: Check Place
+    mutating func getCheckPlace(placeModel: PlaceCheckModel) -> URLComponents {
+        var components = URLComponents()
+        components.scheme = AVIRORequestAPI.scheme
+        components.host = host
+        components.path = AVIRORequestAPI.checkPlace
+        
+        components.queryItems = [
+            URLQueryItem(name: AVIRORequestAPI.title, value: placeModel.title),
+            URLQueryItem(name: AVIRORequestAPI.address, value: placeModel.address),
+            URLQueryItem(name: AVIRORequestAPI.x, value: placeModel.x),
+            URLQueryItem(name: AVIRORequestAPI.y, value: placeModel.y)
+        ]
+        
+        return components
+    }
 }

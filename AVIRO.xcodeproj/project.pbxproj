@@ -19,6 +19,8 @@
 		C50F6B042A6BCD6900E942F5 /* CategoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6B032A6BCD6900E942F5 /* CategoryButton.swift */; };
 		C51132BF2A559838006E1EC3 /* NotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51132BE2A559838006E1EC3 /* NotificationCenter.swift */; };
 		C51132C12A559BCA006E1EC3 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51132C02A559BCA006E1EC3 /* AppController.swift */; };
+		C51BBAD52A78D53D00BF5B7C /* AVIROCheckPlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51BBAD42A78D53D00BF5B7C /* AVIROCheckPlaceModel.swift */; };
+		C51BBAD72A78D5AB00BF5B7C /* PlaceCheckModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51BBAD62A78D5AB00BF5B7C /* PlaceCheckModel.swift */; };
 		C528E4BA2A5F9A3E002BD72E /* ThridRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C528E4B92A5F9A3E002BD72E /* ThridRegistrationViewController.swift */; };
 		C528E4BC2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C528E4BB2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift */; };
 		C528E4BE2A5FB816002BD72E /* TermsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C528E4BD2A5FB816002BD72E /* TermsTableCell.swift */; };
@@ -122,6 +124,8 @@
 		C50F6B032A6BCD6900E942F5 /* CategoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryButton.swift; sourceTree = "<group>"; };
 		C51132BE2A559838006E1EC3 /* NotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenter.swift; sourceTree = "<group>"; };
 		C51132C02A559BCA006E1EC3 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
+		C51BBAD42A78D53D00BF5B7C /* AVIROCheckPlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROCheckPlaceModel.swift; sourceTree = "<group>"; };
+		C51BBAD62A78D5AB00BF5B7C /* PlaceCheckModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCheckModel.swift; sourceTree = "<group>"; };
 		C528E4B92A5F9A3E002BD72E /* ThridRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThridRegistrationViewController.swift; sourceTree = "<group>"; };
 		C528E4BB2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThridRegistrationPresenter.swift; sourceTree = "<group>"; };
 		C528E4BD2A5FB816002BD72E /* TermsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsTableCell.swift; sourceTree = "<group>"; };
@@ -306,7 +310,6 @@
 				C5351B652A1A128D00116D50 /* SingleTonModel */,
 				C5351B7B2A1B52A000116D50 /* PlaceListModel */,
 				C5351B7E2A1B52D400116D50 /* CustomLocationModel */,
-				C596D9892A3C72D500829B17 /* TableCellIdentifierModel */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -468,6 +471,7 @@
 			children = (
 				C5351B5F2A19F9A700116D50 /* PlaceListModel.swift */,
 				C5351B612A1A083400116D50 /* PlaceListCellModel.swift */,
+				C51BBAD62A78D5AB00BF5B7C /* PlaceCheckModel.swift */,
 			);
 			path = PlaceListModel;
 			sourceTree = "<group>";
@@ -579,6 +583,7 @@
 				C5FF13522A42C8810026981D /* AVIROPlaceModel.swift */,
 				C5FF13542A42C88D0026981D /* AVIROMenuModel.swift */,
 				C5FF13562A42C8970026981D /* AVIROCommentModel.swift */,
+				C51BBAD42A78D53D00BF5B7C /* AVIROCheckPlaceModel.swift */,
 			);
 			path = AVIROGet;
 			sourceTree = "<group>";
@@ -589,13 +594,6 @@
 				C593B64E2A4C490600D224CE /* MyPageViewPresenter.swift */,
 			);
 			path = Mypage;
-			sourceTree = "<group>";
-		};
-		C596D9892A3C72D500829B17 /* TableCellIdentifierModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = TableCellIdentifierModel;
 			sourceTree = "<group>";
 		};
 		C5B071E22A59B3C200AE709A /* UITextField */ = {
@@ -986,6 +984,7 @@
 				C50F6AF52A68FD6300E942F5 /* InrollPlacePresenter.swift in Sources */,
 				C5CAAC452A39A93C008C5FDA /* Layout.swift in Sources */,
 				C52FA3472A175B20005E70DC /* HomeViewController.swift in Sources */,
+				C51BBAD72A78D5AB00BF5B7C /* PlaceCheckModel.swift in Sources */,
 				C5EB50E82A1C6FD600B29CC1 /* PopularViewController.swift in Sources */,
 				C5351B7D2A1B52B900116D50 /* CustomLocationCellModel.swift in Sources */,
 				C54BC0DB2A2C2D0D00B65439 /* ColorCustom.swift in Sources */,
@@ -1043,6 +1042,7 @@
 				C5EB51122A20CC7D00B29CC1 /* HomeInfoStoreView.swift in Sources */,
 				C5EB50E42A1C685100B29CC1 /* TabBarItem.swift in Sources */,
 				C5351B7A2A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift in Sources */,
+				C51BBAD52A78D53D00BF5B7C /* AVIROCheckPlaceModel.swift in Sources */,
 				C56857802A7113C600F52715 /* NormalTableViewCell.swift in Sources */,
 				C5E430B52A5DAE9800CB67EC /* SecondRegistrationViewController.swift in Sources */,
 				C593B64B2A4AEA9800D224CE /* AVIROCommentPost.swift in Sources */,

@@ -47,12 +47,13 @@ final class RequestTableViewCell: UITableViewCell {
     }
 
     // MARK: Set Data
-    func setData(menu: String, price: String, request: String, isSelected: Bool) {
+    func setData(menu: String, price: String, request: String, isSelected: Bool, isEnabled: Bool) {
         menuField.text = menu
         priceField.text = price
         requestField.text = request
         requestField.isEnabled = isSelected
         requestCheckButton.isSelected = isSelected
+        requestCheckButton.isUserInteractionEnabled = isEnabled
     }
     
     // MARK: Layout
@@ -130,8 +131,9 @@ final class RequestTableViewCell: UITableViewCell {
         
         requestCheckButton.setImage(emptyImage, for: .normal)
         requestCheckButton.setImage(checkImage, for: .selected)
+
         requestCheckButton.addTarget(self, action: #selector(requestCheckButtonTapped), for: .touchUpInside)
-        
+
     }
     
     // MARK: Minus Button Tapped
@@ -142,7 +144,7 @@ final class RequestTableViewCell: UITableViewCell {
     // MARK: Active Request Field Button Tapped
     @objc func requestCheckButtonTapped() {
         requestCheckButton.isSelected.toggle()
-
+        
         if requestCheckButton.isSelected {
             requestField.isEnabled = true
             onRequestButtonTapped?(true)
@@ -173,16 +175,14 @@ extension RequestTableViewCell: UITextFieldDelegate {
         return true
     }
     
-    // MARK: Text 입력 되고 난 후
+    // MARK: Text 입력 되고 난 후 실시간
     func textFieldDidChangeSelection(_ textField: UITextField) {
         if textField == menuField {
             editingMenuField?(textField.text ?? "")
         } else if textField == priceField {
             editingPriceField?(textField.text ?? "")
-            print(priceField.text)
         } else if textField == requestField {
             editingRequestField?(textField.text ?? "")
-            print("Test: ", requestField)
         }
     }
 }

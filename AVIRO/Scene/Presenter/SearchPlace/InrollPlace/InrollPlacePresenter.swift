@@ -32,7 +32,7 @@ final class InrollPlacePresenter {
     private var category: Category?
     
     private var normalTableModel = [VeganTableFieldModel(menu: "", price: "")]
-    private var requestTableModel = [RequestTableFieldModel(menu: "", price: "", howToRequest: "", isCheck: false)]
+    private var requestTableModel = [RequestTableFieldModel(menu: "", price: "", howToRequest: "", isCheck: false, isEnabled: true)]
     
     var normalTableCount: Int {
         normalTableModel.count
@@ -44,7 +44,15 @@ final class InrollPlacePresenter {
     
     private var allVegan = false
     private var someVegan = false
-    private var requestVegan = false
+    private var requestVegan = false {
+        didSet {
+            if requestVegan && !someVegan {
+                fixedRequestTable()
+            } else {
+                unFixedRequestTable()
+            }
+        }
+    }
     
     // MARK: Menu Table
     var isPresentingDefaultTable = true
@@ -278,18 +286,65 @@ final class InrollPlacePresenter {
     // MARK: Menu Plus Button 클릭 시
     func menuPlusButtonTapped() {
         if isPresentingDefaultTable {
-            let dummyNormal = VeganTableFieldModel(menu: "", price: "")
-            normalTableModel.append(dummyNormal)
-            updateData(key: "normalTableModel", value: self.normalTableModel)
+            plusNormalTable()
         } else {
-            let dummyRequest = RequestTableFieldModel(menu: "", price: "", howToRequest: "", isCheck: false)
-            requestTableModel.append(dummyRequest)
-            updateData(key: "requestTableModel", value: self.requestTableModel)
+            plusRequestTable()
         }
         
         viewController?.menuTableReload(isPresentingDefaultTable: isPresentingDefaultTable)
     }
     
+    // MARK: Plus Normal Table
+    private func plusNormalTable() {
+        let dummyNormal = VeganTableFieldModel(menu: "", price: "")
+        normalTableModel.append(dummyNormal)
+        updateData(key: "normalTableModel", value: self.normalTableModel)
+    }
+    
+    // MARK: Plus Request Table
+    private func plusRequestTable() {
+        let dummyRequest: RequestTableFieldModel!
+        
+        if requestVegan && !someVegan {
+            dummyRequest = RequestTableFieldModel(
+                menu: "",
+                price: "",
+                howToRequest: "",
+                isCheck: true,
+                isEnabled: false
+            )
+        } else {
+            dummyRequest = RequestTableFieldModel(
+                menu: "",
+                price: "",
+                howToRequest: "",
+                isCheck: false,
+                isEnabled: true
+            )
+        }
+        
+        requestTableModel.append(dummyRequest)
+        updateData(
+            key: "requestTableModel",
+            value: self.requestTableModel
+        )
+    }
+    
+    // MARK: 자동 check On
+    private func fixedRequestTable() {
+        for index in requestTableModel.indices {
+            requestTableModel[index].isCheck = true
+            requestTableModel[index].isEnabled = false
+        }
+        viewController?.menuTableReload(isPresentingDefaultTable: isPresentingDefaultTable)
+    }
+    
+    private func unFixedRequestTable() {
+        for index in requestTableModel.indices {
+            requestTableModel[index].isEnabled = true
+        }
+        viewController?.menuTableReload(isPresentingDefaultTable: isPresentingDefaultTable)
+    }
     // MARK: Normal Table Cell
     func normalTableCell (_ tableView: UITableView, _ indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NormalTableViewCell.identifier, for: indexPath) as? NormalTableViewCell
@@ -328,7 +383,8 @@ final class InrollPlacePresenter {
         cell?.setData(menu: data.menu,
                       price: data.price,
                       request: data.howToRequest,
-                      isSelected: data.isCheck
+                      isSelected: data.isCheck,
+                      isEnabled: data.isEnabled
         )
         
         cell?.editingMenuField = { [weak self] menu in
@@ -371,7 +427,7 @@ final class InrollPlacePresenter {
     
     func deleteNormalData(_ indexPath: IndexPath) {
         normalTableModel.remove(at: indexPath.row)
-        viewController?.menuTableReload(isPresentingDefaultTable: true)
+        viewController?.menuTableReload(isPresentingDefaultTable: isPresentingDefaultTable)
         updateData(key: "normalTableModel", value: self.normalTableModel)
     }
     
@@ -393,12 +449,21 @@ final class InrollPlacePresenter {
     }
     
     func bindingRequestActiviate(_ active: Bool, _ indexPath: IndexPath) {
+        if !active {
+            deleteRequest(indexPath)
+        }
         requestTableModel[indexPath.row].isCheck = active
     }
     
     func deleteRequestData(_ indexPath: IndexPath) {
         requestTableModel.remove(at: indexPath.row)
-        viewController?.menuTableReload(isPresentingDefaultTable: false)
+        viewController?.menuTableReload(isPresentingDefaultTable: isPresentingDefaultTable)
         updateData(key: "requestTableModel", value: self.requestTableModel)
+    }
+    
+    private func deleteRequest(_ indexPath: IndexPath) {
+        requestTableModel[indexPath.row].howToRequest = ""
+        updateData(key: "requestTableModel", value: self.requestTableModel)
+        viewController?.menuTableReload(isPresentingDefaultTable: isPresentingDefaultTable)
     }
 }

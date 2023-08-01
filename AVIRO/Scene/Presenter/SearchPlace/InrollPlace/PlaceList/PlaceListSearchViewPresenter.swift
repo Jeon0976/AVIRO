@@ -12,6 +12,8 @@ protocol PlaceListProtocol: NSObject {
     func makeAttribute()
     func makeGesture()
     func reloadTableView()
+    func popViewController()
+    func popAlertController()
 }
 
 final class PlaceListSearchViewPresenter: NSObject {
@@ -135,7 +137,29 @@ final class PlaceListSearchViewPresenter: NSObject {
     func didSelectRowAt(_ indexPath: IndexPath) {
         let selectedItem = placeList[indexPath.row]
         
-        let userInfo: [String: Any] = ["selectedPlace": selectedItem]
+        let placeModel = PlaceCheckModel(
+            title: selectedItem.title,
+            address: selectedItem.address,
+            x: String(selectedItem.x),
+            y: String(selectedItem.y)
+        )
+        
+        AVIROAPIManager().getCheckPlace(placeModel: placeModel) { [weak self] checkedPlace in
+            
+            DispatchQueue.main.async {
+                if checkedPlace.registered {
+                    self?.viewController?.popAlertController()
+                } else {
+                    self?.savePlaceModel(selectedItem)
+                    self?.viewController?.popViewController()
+                }
+            }
+        }
+    }
+    
+    // MARK: Place Model 저장
+    func savePlaceModel(_ selectedPlace: PlaceListModel) {
+        let userInfo: [String: Any] = ["selectedPlace": selectedPlace]
         
         NotificationCenter.default.post(
             name: NSNotification.Name("selectedPlace"),

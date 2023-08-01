@@ -50,7 +50,7 @@ struct AVIROPostAPI {
     // MARK: UserInfoInroll
     mutating func userInfoInroll() -> URLComponents {
         var components = URLComponents()
-        components.scheme = AVIRORequestAPI.scheme
+        components.scheme = AVIROPostAPI.scheme
         components.host = host
         components.path = AVIROPostAPI.userInfo
         
@@ -60,7 +60,7 @@ struct AVIROPostAPI {
     // MARK: UserCheck
     mutating func userCheck() -> URLComponents {
         var components = URLComponents()
-        components.scheme = AVIRORequestAPI.scheme
+        components.scheme = AVIROPostAPI.scheme
         components.host = host
         components.path = AVIROPostAPI.userCheck
         
@@ -70,7 +70,7 @@ struct AVIROPostAPI {
     // MARK: Nicname Check
     mutating func nicnameCheck() -> URLComponents {
         var components = URLComponents()
-        components.scheme = AVIRORequestAPI.scheme
+        components.scheme = AVIROPostAPI.scheme
         components.host = host
         components.path = AVIROPostAPI.userNicNameCheck
         
