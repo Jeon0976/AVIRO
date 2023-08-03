@@ -30,6 +30,11 @@ final class HomeViewController: UIViewController {
     var firstPopupView = HomeFirstPopUpView()
     var blurEffectView = UIVisualEffectView()
     
+    // MARK: Marker Info
+    var markers = [(NMFMarker, Bool)]()
+    var selectedMarkerIndex = 0
+    
+    
     // TODO: zoom level
     var zoomLevel = UILabel()
     
@@ -233,7 +238,11 @@ extension HomeViewController: HomeViewProtocol {
     
     // MARK: 지도에 마크 표시하기 작업
     func makeMarker(_ veganList: [HomeMapData]) {
-        var markers = [NMFMarker]()
+        
+        let allImage = NMFOverlayImage(name: Image.allVegan)
+        let someImage = NMFOverlayImage(name: Image.someMenuVegan)
+        let requestImage = NMFOverlayImage(name: Image.requestVegan)
+        let test = NMFOverlayImage(name: "Search")
         
         veganList.forEach { homeMapData in
             
@@ -243,16 +252,16 @@ extension HomeViewController: HomeViewProtocol {
             let marker = NMFMarker(position: latLng)
             let placeId = homeMapData.placeId
             
-            marker.width = 22
-            marker.height = 22
-            markers.append(marker)
+            marker.width = 15
+            marker.height = 15
+            markers.append((marker,false))
             
             if homeMapData.allVegan {
-                marker.iconImage = NMFOverlayImage(name: Image.allVegan)
+                marker.iconImage = allImage
             } else if homeMapData.someMenuVegan {
-                marker.iconImage = NMFOverlayImage(name: Image.someMenuVegan)
+                marker.iconImage = someImage
             } else {
-                marker.iconImage = NMFOverlayImage(name: Image.requestVegan)
+                marker.iconImage = requestImage
             }
             // Marker 터치할 때
             marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
@@ -263,7 +272,8 @@ extension HomeViewController: HomeViewProtocol {
                     storeInfoView.title.text = title
                     storeInfoView.address.text = address
                     storeInfoView.placeId = placeId
-                    
+                    marker.iconImage = test
+                
                     if homeMapData.allVegan {
                         storeInfoView.imageView.image = UIImage(
                             named: Image.homeInfoVegan)
@@ -290,13 +300,20 @@ extension HomeViewController: HomeViewProtocol {
                         self.storeInfoView.frame.size.height =
                         Layout.SlideView.height + tabBarHeight
                     }
+                    
+                    if let index = markers.enumerated().first(where: { $0.element.0 == marker})?.offset {
+                        selectedMarkerIndex = index
+                        markers[index].1 = true
+                    }
+                    
                 }
                 return true
             }
         }
         DispatchQueue.main.async { [weak self] in
+            guard let markers = self?.markers else { return }
             for marker in markers {
-                marker.mapView = self?.naverMapView
+                marker.0.mapView = self?.naverMapView
             }
         }
     }

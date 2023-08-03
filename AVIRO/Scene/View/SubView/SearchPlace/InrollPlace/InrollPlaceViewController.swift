@@ -140,10 +140,10 @@ extension InrollPlaceViewController: InrollPlaceProtocol {
         veganDetailView.allVeganButton.isSelected.toggle()
         
         if veganDetailView.allVeganButton.isSelected {
+            presenter.isPresentingDefaultTable = true
             veganDetailView.someVeganButton.isSelected = false
             veganDetailView.requestVeganButton.isSelected = false
             presenter.changeButton(allVegan: true, someVegan: false, requestVegan: false)
-            presenter.isPresentingDefaultTable = true
             changeMenuTable(presenter.isPresentingDefaultTable)
         } else {
             presenter.changeButton(allVegan: false, someVegan: false, requestVegan: false)

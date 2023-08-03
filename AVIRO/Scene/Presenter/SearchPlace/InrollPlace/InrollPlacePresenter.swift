@@ -106,12 +106,6 @@ final class InrollPlacePresenter {
     func viewWillDisappear() {
         removeKeyboardNotification()
     }
-    
-    // MARK: Data 추가 될 때 마다 발동
-    func updateData(key: String, value: Any?) {
-        totalData[key] = value
-        checkAllDataIsFilled()
-    }
 
     // MARK: Report Store
     func reportStore() {
@@ -259,9 +253,10 @@ final class InrollPlacePresenter {
         self.someVegan = someVegan
         self.requestVegan = requestVegan
 
-        updateData(key: "allVegan", value: allVegan)
-        updateData(key: "someVegan", value: someVegan)
-        updateData(key: "requestVegan", value: requestVegan)
+        let keys = ["allVegan", "someVegan", "requestVegan"]
+        let values = [allVegan, someVegan, requestVegan]
+        
+        updateButtonBools(keys: keys, values: values)
     }
     
     // MARK: Menu Plus Button 클릭 시
@@ -401,6 +396,20 @@ final class InrollPlacePresenter {
 }
 
 extension InrollPlacePresenter {
+    // MARK: Data 추가 될 때 마다 발동
+   private func updateData(key: String, value: Any?) {
+        totalData[key] = value
+        checkAllDataIsFilled()
+    }
+    
+   private func updateButtonBools(keys: [String], values: [Bool]) {
+        for i in 0..<keys.count {
+            totalData[keys[i]] = values[i]
+            print(keys[i], values[i])
+        }
+        checkAllDataIsFilled()
+    }
+    
     // MARK: Filled 가능한지 체크 함수
     private func checkAllDataIsFilled() {
         guard ((totalData["storeNormalData"] as? Bool?) ?? false) == true else {
@@ -438,7 +447,7 @@ extension InrollPlacePresenter {
         let requestTableModel = totalData["requestTableModel"] as? [RequestTableFieldModel] ?? []
         
         var menuArray: [MenuArray] = []
-        
+                
         if isPresentingDefaultTable {
             let hasEmptyData = normalTableModel.contains { $0.menu == "" || $0.price == ""} || normalTableModel.isEmpty
             guard !hasEmptyData else {
