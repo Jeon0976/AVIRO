@@ -9,6 +9,12 @@ import UIKit
 
 import NMapsMap
 
+enum Place {
+    case All
+    case Some
+    case Request
+}
+
 final class HomeViewController: UIViewController {
     lazy var presenter = HomeViewPresenter(viewController: self)
         
@@ -30,10 +36,53 @@ final class HomeViewController: UIViewController {
     var firstPopupView = HomeFirstPopUpView()
     var blurEffectView = UIVisualEffectView()
     
-    // MARK: Marker Info
-    var markers = [(NMFMarker, Bool)]()
-    var selectedMarkerIndex = 0
+    let allMap = NMFOverlayImage(name: "AllMap")
+    let someMap = NMFOverlayImage(name: "SomeMap")
+    let requestMap = NMFOverlayImage(name: "RequestMap")
+    let allMapClicked = NMFOverlayImage(name: "AllMapClicked")
+    let someMapClicked = NMFOverlayImage(name: "SomeMapClicked")
+    let requestMapClicked = NMFOverlayImage(name: "RequestMapClicked")
     
+    // MARK: Marker Info
+    var markers: [(NMFMarker, Bool, Place)]? {
+        didSet {
+            if afterSaveAllPlace {
+                guard let oldValue = oldValue?[selectedMarkerIndex],
+                      let newValue = markers?[selectedMarkerIndex] else {
+                    return
+                }
+
+                let (oldMarker, oldBoolValue, place) = oldValue
+                let (newMarker, newBoolValue, _) = newValue
+
+                if oldBoolValue != newBoolValue {
+
+                    if newBoolValue == false {
+                        switch place {
+                        case .All:
+                            newMarker.iconImage = allMap
+                        case .Some:
+                            newMarker.iconImage = someMap
+                        case .Request:
+                            newMarker.iconImage = requestMap
+                        }
+                    } else {
+                        switch place {
+                        case .All:
+                            newMarker.iconImage = allMapClicked
+                        case .Some:
+                            newMarker.iconImage = someMapClicked
+                        case .Request:
+                            newMarker.iconImage = requestMapClicked
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+    var selectedMarkerIndex = 0
+    var afterSaveAllPlace = false
     
     // TODO: zoom level
     var zoomLevel = UILabel()
@@ -51,19 +100,27 @@ final class HomeViewController: UIViewController {
         ])
         zoomLevel.textColor = .black
         zoomLevel.font = .systemFont(ofSize: 20, weight: .bold)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
         presenter.firstLocationUpdate()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-                
         presenter.viewWillAppear()
         presenter.loadVeganData()
+    }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//
+//        presenter.firstLocationUpdate()
+//    }
+//
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        presenter.viewWillAppear()
+//        presenter.loadVeganData()
+        if let markers = self.markers {
+            for (index, _) in markers.enumerated() {
+                self.markers?[index].1 = false
+            }
+        }
     }
     
 }
@@ -238,11 +295,7 @@ extension HomeViewController: HomeViewProtocol {
     
     // MARK: 지도에 마크 표시하기 작업
     func makeMarker(_ veganList: [HomeMapData]) {
-        
-        let allImage = NMFOverlayImage(name: Image.allVegan)
-        let someImage = NMFOverlayImage(name: Image.someMenuVegan)
-        let requestImage = NMFOverlayImage(name: Image.requestVegan)
-        let test = NMFOverlayImage(name: "Search")
+        self.markers = [(NMFMarker, Bool, Place)]()
         
         veganList.forEach { homeMapData in
             
@@ -252,28 +305,50 @@ extension HomeViewController: HomeViewProtocol {
             let marker = NMFMarker(position: latLng)
             let placeId = homeMapData.placeId
             
-            marker.width = 15
-            marker.height = 15
-            markers.append((marker,false))
-            
             if homeMapData.allVegan {
-                marker.iconImage = allImage
+                marker.iconImage = allMap
+                markers?.append((marker, false, Place.All))
             } else if homeMapData.someMenuVegan {
-                marker.iconImage = someImage
+                marker.iconImage = someMap
+                markers?.append((marker, false, Place.Some))
             } else {
-                marker.iconImage = requestImage
+                marker.iconImage = requestMap
+                markers?.append((marker, false, Place.Request))
             }
+            self.afterSaveAllPlace = true
+
             // Marker 터치할 때
             marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
                 if nil != overlay as? NMFMarker {
+        
                     let title = title
                     let address = address
                     guard let self = self else { return false }
+                    
                     storeInfoView.title.text = title
                     storeInfoView.address.text = address
                     storeInfoView.placeId = placeId
-                    marker.iconImage = test
-                
+                    
+                    // 이전 선택된 마커를 원래 이미지로 되돌리기
+                    let prevSelectedIndex = self.selectedMarkerIndex
+                    if let prevMarker = self.markers?[prevSelectedIndex] {
+                        switch prevMarker.2 {
+                        case .All:
+                            prevMarker.0.iconImage = self.allMap
+                        case .Some:
+                            prevMarker.0.iconImage = self.someMap
+                        case .Request:
+                            prevMarker.0.iconImage = self.requestMap
+                        }
+                        // 이전 선택된 마커의 선택 상태 업데이트
+                        self.markers?[prevSelectedIndex].1 = false
+                    }
+                    
+                    let latLng = marker.position
+                    let cameraUpdate = NMFCameraUpdate(scrollTo: latLng, zoomTo: 14)
+                    cameraUpdate.animation = .easeOut
+                    naverMapView.moveCamera(cameraUpdate)
+                    
                     if homeMapData.allVegan {
                         storeInfoView.imageView.image = UIImage(
                             named: Image.homeInfoVegan)
@@ -301,9 +376,9 @@ extension HomeViewController: HomeViewProtocol {
                         Layout.SlideView.height + tabBarHeight
                     }
                     
-                    if let index = markers.enumerated().first(where: { $0.element.0 == marker})?.offset {
+                    if let index = markers?.enumerated().first(where: { $0.element.0 == marker})?.offset {
                         selectedMarkerIndex = index
-                        markers[index].1 = true
+                        markers?[index].1 = true
                     }
                     
                 }
