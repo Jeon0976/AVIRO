@@ -21,18 +21,31 @@ protocol InrollPlaceProtocol: NSObject {
     func keyboardWillShow(height: CGFloat)
     func keyboardWillHide()
     func enableRightButton(_ bool: Bool)
-    func reportVeganModel(_ veganModel: VeganModel)
+    func popViewController()
+    func pushAlertController()
 }
 
-// TODO: Dictionary로 데이터 구조 변경해서 binding 하기
 final class InrollPlacePresenter {
     weak var viewController: InrollPlaceProtocol?
         
     private var storeNormalData: PlaceListModel?
     private var category: Category?
     
-    private var normalTableModel = [VeganTableFieldModel(menu: "", price: "")]
-    private var requestTableModel = [RequestTableFieldModel(menu: "", price: "", howToRequest: "", isCheck: false, isEnabled: true)]
+    private var normalTableModel = [
+        VeganTableFieldModel(
+            menu: "",
+            price: ""
+        )
+    ]
+    private var requestTableModel = [
+        RequestTableFieldModel(
+            menu: "",
+            price: "",
+            howToRequest: "",
+            isCheck: false,
+            isEnabled: true
+        )
+    ]
     
     var normalTableCount: Int {
         normalTableModel.count
@@ -99,93 +112,58 @@ final class InrollPlacePresenter {
         totalData[key] = value
         checkAllDataIsFilled()
     }
-    
-    // MARK: Filled 가능한지 체크 함수
-    private func checkAllDataIsFilled() {
-        guard ((totalData["storeNormalData"] as? Bool?) ?? false) == true else {
-            viewController?.enableRightButton(false)
-            return
-        }
-        
-        guard ((totalData["category"] as? Bool?) ?? false) == true else {
-            viewController?.enableRightButton(false)
-            return
-        }
-        
-        let allVegan = totalData["allVegan"] as? Bool ?? false
-        let someVegan = totalData["someVegan"] as? Bool ?? false
-        let requestVegan = totalData["requestVegan"] as? Bool ?? false
-        
-        guard allVegan || someVegan || requestVegan else {
-            viewController?.enableRightButton(false)
-            return
-        }
-        
-        veganModel = VeganModel(title: storeNormalData?.title ?? "",
-                                category: category?.rawValue ?? "",
-                        address: storeNormalData?.address ?? "",
-                        phone: storeNormalData?.phone ?? "",
-                        url: storeNormalData?.url ?? "",
-                                x: storeNormalData?.x ?? 0.0,
-                                y: storeNormalData?.y ?? 0.0,
-                        allVegan: allVegan,
-                        someMenuVegan: someVegan,
-                        ifRequestVegan: requestVegan
-        )
-        
-        let normalTableModel = totalData["normalTableModel"] as? [VeganTableFieldModel] ?? []
-        let requestTableModel = totalData["requestTableModel"] as? [RequestTableFieldModel] ?? []
-        
-        var menuArray: [MenuArray] = []
-        
-        if isPresentingDefaultTable {
-            let hasEmptyData = normalTableModel.contains { $0.menu == "" || $0.price == ""} || normalTableModel.isEmpty
-            guard !hasEmptyData else {
-                viewController?.enableRightButton(false)
-                return
-            }
-            normalTableModel.forEach {
-                let menu = MenuArray(
-                    menuType: MenuType.vegan.rawValue,
-                    menu: $0.menu,
-                    price: $0.price,
-                    howToRequest: "",
-                    isCheck: false
-                )
-                menuArray.append(menu)
-            }
-            
-            veganModel?.menuArray = menuArray
-        } else {
-            let hasEmptyData = requestTableModel.contains { $0.menu == "" || $0.price == ""} || requestTableModel.isEmpty
-            guard !hasEmptyData else {
-                viewController?.enableRightButton(false)
-                return
-            }
-            requestTableModel.forEach {
-                let menu = MenuArray(
-                    menuType: $0.isCheck ? MenuType.needToRequset.rawValue : MenuType.vegan.rawValue,
-                    menu: $0.menu,
-                    price: $0.price,
-                    howToRequest: $0.howToRequest,
-                    isCheck: $0.isCheck
-                )
-                
-                menuArray.append(menu)
-            }
-            
-            veganModel?.menuArray = menuArray
-        }
-        
-        viewController?.enableRightButton(true)
-    }
 
-    // TODO: AVIRO API 연동 시 수정 예정
+    // MARK: Report Store
     func reportStore() {
         guard let veganModel = veganModel else {
             return
         }
-        viewController?.reportVeganModel(veganModel)
+        
+        AVIROAPIManager().postPlaceModel(veganModel) { [weak self] responseModel in
+            DispatchQueue.main.async {
+                if responseModel.statusCode == 200 {
+                    self?.viewController?.popViewController()
+                } else {
+                    self?.viewController?.pushAlertController()
+                }
+            }
+        }
+    }
+    
+    // MARK: Init Data
+    func initData() {
+        storeNormalData = nil
+        category = nil
+        normalTableModel = [
+            VeganTableFieldModel(
+                menu: "",
+                price: "")
+        ]
+        requestTableModel = [
+            RequestTableFieldModel(
+                menu: "",
+                price: "",
+                howToRequest: "",
+                isCheck: false,
+                isEnabled: true)
+        ]
+        allVegan = false
+        someVegan = false
+        requestVegan = false
+        
+        isPresentingDefaultTable = true
+        
+        totalData = [
+            "storeNormalData": false,
+            "category": false,
+            "allVegan": false,
+            "someVegan": false,
+            "requestVegan": false,
+            "normalTableModel": nil,
+            "requestTableModel": nil
+        ]
+        
+        veganModel = nil
     }
     
     // MARK: Keyboard에 따른 view 높이 변경 Notification
@@ -273,7 +251,10 @@ final class InrollPlacePresenter {
     }
     
     // MARK: Button Data Binding
-    func changeButton(allVegan: Bool, someVegan: Bool, requestVegan: Bool) {
+    func changeButton(allVegan: Bool,
+                      someVegan: Bool,
+                      requestVegan: Bool
+    ) {
         self.allVegan = allVegan
         self.someVegan = someVegan
         self.requestVegan = requestVegan
@@ -330,7 +311,7 @@ final class InrollPlacePresenter {
         )
     }
     
-    // MARK: 자동 check On
+    // MARK: Request Table 자동 check On & Off
     private func fixedRequestTable() {
         for index in requestTableModel.indices {
             requestTableModel[index].isCheck = true
@@ -347,7 +328,11 @@ final class InrollPlacePresenter {
     }
     // MARK: Normal Table Cell
     func normalTableCell (_ tableView: UITableView, _ indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NormalTableViewCell.identifier, for: indexPath) as? NormalTableViewCell
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: NormalTableViewCell.identifier,
+            for: indexPath
+        ) as? NormalTableViewCell
+        
         let data =  normalTableModel[indexPath.row]
         
         cell?.setData(menu: data.menu, price: data.price)
@@ -408,62 +393,145 @@ final class InrollPlacePresenter {
         }
         
         cell?.onMinusButtonTapped = { [weak self] in
-            self?.deleteRequestData(indexPath)
+            self?.deleteRequestCell(indexPath)
         }
 
         return cell ?? UITableViewCell()
     }
+}
+
+extension InrollPlacePresenter {
+    // MARK: Filled 가능한지 체크 함수
+    private func checkAllDataIsFilled() {
+        guard ((totalData["storeNormalData"] as? Bool?) ?? false) == true else {
+            viewController?.enableRightButton(false)
+            return
+        }
+        
+        guard ((totalData["category"] as? Bool?) ?? false) == true else {
+            viewController?.enableRightButton(false)
+            return
+        }
+        
+        let allVegan = totalData["allVegan"] as? Bool ?? false
+        let someVegan = totalData["someVegan"] as? Bool ?? false
+        let requestVegan = totalData["requestVegan"] as? Bool ?? false
+        
+        guard allVegan || someVegan || requestVegan else {
+            viewController?.enableRightButton(false)
+            return
+        }
+        
+        veganModel = VeganModel(title: storeNormalData?.title ?? "",
+                                category: category?.rawValue ?? "",
+                        address: storeNormalData?.address ?? "",
+                        phone: storeNormalData?.phone ?? "",
+                        url: storeNormalData?.url ?? "",
+                                x: storeNormalData?.x ?? 0.0,
+                                y: storeNormalData?.y ?? 0.0,
+                        allVegan: allVegan,
+                        someMenuVegan: someVegan,
+                        ifRequestVegan: requestVegan
+        )
+        
+        let normalTableModel = totalData["normalTableModel"] as? [VeganTableFieldModel] ?? []
+        let requestTableModel = totalData["requestTableModel"] as? [RequestTableFieldModel] ?? []
+        
+        var menuArray: [MenuArray] = []
+        
+        if isPresentingDefaultTable {
+            let hasEmptyData = normalTableModel.contains { $0.menu == "" || $0.price == ""} || normalTableModel.isEmpty
+            guard !hasEmptyData else {
+                viewController?.enableRightButton(false)
+                return
+            }
+            normalTableModel.forEach {
+                let menu = MenuArray(
+                    menuType: MenuType.vegan.rawValue,
+                    menu: $0.menu,
+                    price: $0.price,
+                    howToRequest: "",
+                    isCheck: false
+                )
+                menuArray.append(menu)
+            }
+            
+            veganModel?.menuArray = menuArray
+        } else {
+            let hasEmptyData = requestTableModel.contains { $0.menu == "" || $0.price == ""} || requestTableModel.isEmpty
+            guard !hasEmptyData else {
+                viewController?.enableRightButton(false)
+                return
+            }
+            requestTableModel.forEach {
+                let menu = MenuArray(
+                    menuType: $0.isCheck ? MenuType.needToRequset.rawValue : MenuType.vegan.rawValue,
+                    menu: $0.menu,
+                    price: $0.price,
+                    howToRequest: $0.howToRequest,
+                    isCheck: $0.isCheck
+                )
+                
+                menuArray.append(menu)
+            }
+            
+            veganModel?.menuArray = menuArray
+        }
+        
+        viewController?.enableRightButton(true)
+    }
     
     // MARK: Binding Normal Data
-    func bindingNormalMenuData(_ menu: String, _ indexPath: IndexPath) {
+    private func bindingNormalMenuData(_ menu: String, _ indexPath: IndexPath) {
         normalTableModel[indexPath.row].menu = menu
         updateData(key: "normalTableModel", value: self.normalTableModel)
     }
     
-    func bindingNormalPriceData(_ price: String, _ indexPath: IndexPath) {
+    private func bindingNormalPriceData(_ price: String, _ indexPath: IndexPath) {
         normalTableModel[indexPath.row].price = price
         updateData(key: "normalTableModel", value: self.normalTableModel)
     }
     
-    func deleteNormalData(_ indexPath: IndexPath) {
+    private func deleteNormalData(_ indexPath: IndexPath) {
         normalTableModel.remove(at: indexPath.row)
         viewController?.menuTableReload(isPresentingDefaultTable: isPresentingDefaultTable)
         updateData(key: "normalTableModel", value: self.normalTableModel)
     }
     
     // MARK: Binding Request Data
-    func bindingRequestMenu(_ menu: String, _ indexPath: IndexPath) {
+    private func bindingRequestMenu(_ menu: String, _ indexPath: IndexPath) {
         requestTableModel[indexPath.row].menu = menu
         updateData(key: "requestTableModel", value: self.requestTableModel)
     }
     
-    func bindingRequestPrice(_ price: String, _ indexPath: IndexPath) {
+    private func bindingRequestPrice(_ price: String, _ indexPath: IndexPath) {
         requestTableModel[indexPath.row].price = price
         updateData(key: "requestTableModel", value: self.requestTableModel)
 
     }
     
-    func bindingRequestField(_ request: String, _ indexPath: IndexPath) {
+    private func bindingRequestField(_ request: String, _ indexPath: IndexPath) {
         requestTableModel[indexPath.row].howToRequest = request
         updateData(key: "requestTableModel", value: self.requestTableModel)
     }
     
-    func bindingRequestActiviate(_ active: Bool, _ indexPath: IndexPath) {
+    private func bindingRequestActiviate(_ active: Bool, _ indexPath: IndexPath) {
         if !active {
-            deleteRequest(indexPath)
+            deleteOnlyRequestString(indexPath)
         }
         requestTableModel[indexPath.row].isCheck = active
     }
     
-    func deleteRequestData(_ indexPath: IndexPath) {
+    private func deleteRequestCell(_ indexPath: IndexPath) {
         requestTableModel.remove(at: indexPath.row)
         viewController?.menuTableReload(isPresentingDefaultTable: isPresentingDefaultTable)
         updateData(key: "requestTableModel", value: self.requestTableModel)
     }
     
-    private func deleteRequest(_ indexPath: IndexPath) {
+    private func deleteOnlyRequestString(_ indexPath: IndexPath) {
         requestTableModel[indexPath.row].howToRequest = ""
         updateData(key: "requestTableModel", value: self.requestTableModel)
         viewController?.menuTableReload(isPresentingDefaultTable: isPresentingDefaultTable)
     }
+
 }

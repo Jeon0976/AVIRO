@@ -13,7 +13,7 @@ protocol PlaceListProtocol: NSObject {
     func makeGesture()
     func reloadTableView()
     func popViewController()
-    func popAlertController()
+    func pushAlertController()
 }
 
 final class PlaceListSearchViewPresenter: NSObject {
@@ -148,7 +148,7 @@ final class PlaceListSearchViewPresenter: NSObject {
             
             DispatchQueue.main.async {
                 if checkedPlace.registered {
-                    self?.viewController?.popAlertController()
+                    self?.viewController?.pushAlertController()
                 } else {
                     self?.savePlaceModel(selectedItem)
                     self?.viewController?.popViewController()

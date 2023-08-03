@@ -197,7 +197,7 @@ final class AVIROAPIManager {
     }
     
     // MARK: Post Place Model
-    func postPlaceModel(_ veganModel: VeganModel) {
+    func postPlaceModel(_ veganModel: VeganModel, completionHandler: @escaping((VeganPlaceResponse) -> Void)) {
         guard let url = postAPI.placeInroll().url else { print("url error"); return }
         
         guard let jsonData = try? JSONEncoder().encode(veganModel) else {
@@ -216,14 +216,16 @@ final class AVIROAPIManager {
                 return
             }
             
-            guard data != nil else {
-                print("data error")
-                return
-            }
-            
             guard response != nil else {
                 print(response ?? "response error")
                 return
+            }
+            
+            if let data = data {
+                if let placeResponse = try? JSONDecoder().decode(VeganPlaceResponse.self, from: data) {
+                    completionHandler(placeResponse)
+                }
+                return 
             }
         }.resume()
     }

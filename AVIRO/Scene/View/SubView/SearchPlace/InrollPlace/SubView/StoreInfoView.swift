@@ -91,18 +91,8 @@ final class StoreInfoView: UIView {
         guard let titleText = titleField.text, titleText.isEmpty else {
             return
         }
-
-        let titleHeight = title.frame.height
-        let titleFieldHeight = titleField.frame.height
-        let categoryHeight = categoryLabel.frame.height
-        let buttonStackViewHeight = buttonStackView.frame.height
-        // TODO: Static value 수정할 때 수정 요망
-        // 20, 20, 20, 15, 20
-        let paddingValues: CGFloat = 95
-
-        let totalHeight = titleHeight + titleFieldHeight + categoryHeight + buttonStackViewHeight + paddingValues
         
-        viewHeightConstraint?.constant = totalHeight
+        initStoreInfoView()
     }
     
     // MARK: Layout
@@ -198,7 +188,7 @@ final class StoreInfoView: UIView {
     }
     
     // MARK: View height 확장 메서드
-    func expandStoreInformation() {
+    func expandStoreInfoView() {
         // TODO: 데이터 연결된거
         guard let titleText = titleField.text, !titleText.isEmpty else {
             showOtherDetail(false)
@@ -226,6 +216,24 @@ final class StoreInfoView: UIView {
         
         // 20, 20, 20, 15, 20
         let totalHeight = titleHeight + titleFieldHeight + categoryHeight + buttonStackViewHeight + 95 + plusInset
+        
+        viewHeightConstraint?.constant = totalHeight
+    }
+    
+    // MARK: View hegit 초기화
+    func initStoreInfoView() {
+        showOtherDetail(false)
+        changeCategoryTopConstraint(false)
+        
+        let titleHeight = title.frame.height
+        let titleFieldHeight = titleField.frame.height
+        let categoryHeight = categoryLabel.frame.height
+        let buttonStackViewHeight = buttonStackView.frame.height
+        // TODO: Static value 수정할 때 수정 요망
+        // 20, 20, 20, 15, 20
+        let paddingValues: CGFloat = 95
+
+        let totalHeight = titleHeight + titleFieldHeight + categoryHeight + buttonStackViewHeight + paddingValues
         
         viewHeightConstraint?.constant = totalHeight
     }

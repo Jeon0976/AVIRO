@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct RequestTableFieldModel {
+struct RequestTableFieldModel: Hashable {
+    let id: UUID = UUID()
     var menu: String
     var price: String
     var howToRequest: String

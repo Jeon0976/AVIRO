@@ -132,7 +132,7 @@ extension InrollPlaceViewController: InrollPlaceProtocol {
         storeInfoView.addressField.text = storeInfo.address
         storeInfoView.numberField.text = storeInfo.phone
         
-        storeInfoView.expandStoreInformation()
+        storeInfoView.expandStoreInfoView()
     }
     
     // MARK: All Vegan 클릭 시
@@ -223,15 +223,63 @@ extension InrollPlaceViewController: InrollPlaceProtocol {
         navigationItem.rightBarButtonItem?.isEnabled = bool
     }
     
-    // MARK: Report Vegan Model
-    // TODO: AVIRO API 연동 시 수정 예정
-    func reportVeganModel(_ veganModel: VeganModel) {
-
+    // MARK: Pop View Controller
+    func popViewController() {
+        tabBarController?.selectedIndex = 0
+        initData()
+    }
+    
+    // MARK: Push Alert Controller
+    func pushAlertController() {
+        let title = "이미 등록된 가게입니다"
+        let message = "다른 유저가 이미 등록한 가게예요.\n홈 화면에서 검색해보세요."
+        let alertController = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+        let action = UIAlertAction(title: "확인", style: .default)
+        
+        alertController.addAction(action)
+        
+        present(alertController, animated: true)
     }
 }
 
 // MARK: Private Method
 extension InrollPlaceViewController {
+    // MARK: Init Data
+    private func initData() {
+        presenter.initData()
+        initStoreInfoView()
+        initVeganDetailView()
+        initmenuTableView()
+    }
+    
+    // MARK: Init Store Info View
+    private func initStoreInfoView() {
+        storeInfoView.titleField.text = nil
+        storeInfoView.addressField.text = nil
+        storeInfoView.numberField.text = nil
+        
+        storeInfoView.categoryButtons.forEach {
+            $0.isSelected = false
+        }
+        storeInfoView.initStoreInfoView()
+    }
+    
+    // MARK: Init Vegan Detail View
+    private func initVeganDetailView() {
+        veganDetailView.veganOptions.forEach {
+            $0.isSelected = false
+        }
+    }
+    
+    // MARK: Init Menu Table View
+    private func initmenuTableView() {
+        changeMenuTable(presenter.isPresentingDefaultTable)
+    }
+    
     // MARK: View Attribute
     private func viewAttributed() {
         view.backgroundColor = .gray7
@@ -317,9 +365,8 @@ extension InrollPlaceViewController {
     }
 }
 
-// MARK: @Objc Method
 extension InrollPlaceViewController {
-    // TODO: Report Button Logic 처리
+    // MARK: Report Button Tapped
     @objc func reportStore() {
         presenter.reportStore()
     }
@@ -360,7 +407,6 @@ extension InrollPlaceViewController {
 // MARK: TapGestureDelegate
 extension InrollPlaceViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        // TODO: touch가 menu text field일 때만 flase
         if touch.view is MenuField || touch.view is UIButton {
             return false
         }
@@ -415,3 +461,28 @@ extension InrollPlaceViewController: UITableViewDataSource {
         }
     }
 }
+
+// MARK: View Preview
+#if DEBUG
+import SwiftUI
+
+struct ViewControllerPresentable: UIViewControllerRepresentable {
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+        
+    }
+    
+    func makeUIViewController(context: Context) -> some UIViewController {
+        let vc = InrollPlaceViewController()
+        let presenter = InrollPlacePresenter(viewController: vc)
+        vc.presenter = presenter
+        
+        return vc
+    }
+}
+
+struct ViewControllerPresentablePreviewProvider: PreviewProvider {
+    static var previews: some View {
+        ViewControllerPresentable()
+    }
+}
+#endif

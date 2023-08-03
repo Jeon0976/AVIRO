@@ -7,6 +7,10 @@
 
 import UIKit
 
+enum RequestTableCellSection {
+    case main
+}
+
 final class RequestTableViewCell: UITableViewCell {
     static let identifier = "RequestTable"
     

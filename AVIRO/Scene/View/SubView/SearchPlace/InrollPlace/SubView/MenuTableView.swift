@@ -39,7 +39,7 @@ final class MenuTableView: UIView {
     var requestTableViewHeight: NSLayoutConstraint? // default 100
     var viewHeightConstraint: NSLayoutConstraint?
     
-    private var initialView = true
+    var initialView = true
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -56,21 +56,25 @@ final class MenuTableView: UIView {
         super.layoutSubviews()
         
         if initialView {
-            let titleHeight = title.frame.height
-            let subTitleHeight = subTitle.frame.height
-            let normalHeight = normalTableView.frame.height
-            let buttonHeight = menuPlusButton.frame.height
-            // 20, 7, 20, 20, 30
-            let paddingValues: CGFloat = 97
-            
-            let totalHeight = titleHeight + subTitleHeight + normalHeight + buttonHeight + paddingValues
-            
-            viewHeightConstraint?.constant = totalHeight
+            initViewHeight()
             
             initialView = !initialView
         }
     }
     
+    func initViewHeight() {
+        let titleHeight = title.frame.height
+        let subTitleHeight = subTitle.frame.height
+        let normalHeight = normalTableView.frame.height
+        let buttonHeight = menuPlusButton.frame.height
+        // 20, 7, 20, 20, 30
+        let paddingValues: CGFloat = 97
+        
+        let totalHeight = titleHeight + subTitleHeight + normalHeight + buttonHeight + paddingValues
+        
+        viewHeightConstraint?.constant = totalHeight
+    }
+        
     private func makeLayout() {
         [
             title,

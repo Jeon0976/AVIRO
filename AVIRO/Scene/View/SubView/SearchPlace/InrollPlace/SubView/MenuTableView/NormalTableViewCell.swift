@@ -7,6 +7,10 @@
 
 import UIKit
 
+enum NormalTableCellSection {
+    case main
+}
+
 final class NormalTableViewCell: UITableViewCell {
     static let identifier = "NormalTable"
     

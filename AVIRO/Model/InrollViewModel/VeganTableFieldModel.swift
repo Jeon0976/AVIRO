@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct VeganTableFieldModel {
+struct VeganTableFieldModel: Hashable {
+    let id: UUID = UUID()
     var menu: String
     var price: String
 }
