@@ -265,7 +265,7 @@ extension InrollPlaceViewController {
         storeInfoView.categoryButtons.forEach {
             $0.isSelected = false
         }
-        storeInfoView.initStoreInfoView()
+        storeInfoView.initStoreInfoViewHeight()
     }
     
     // MARK: Init Vegan Detail View

@@ -33,7 +33,8 @@ extension HomeViewController {
             sender.layer.opacity = 1
         }, completion: { [weak self] _ in
             self?.presenter.locationUpdate()
-            self?.presenter.loadVeganData()
+//            self?.presenter.loadVeganData()
+//            self?.afterSaveAllPlace = false
 
         })
     }

@@ -9,7 +9,7 @@ import UIKit
 
 final class VeganDetailView: UIView {
     // MARK: Main Title
-    let title: UILabel = {
+    private lazy var title: UILabel = {
         let label = UILabel()
         
         label.textColor = .registrationColor
@@ -20,7 +20,7 @@ final class VeganDetailView: UIView {
     }()
     
     // MARK: Sub Title
-    let subTitle: UILabel = {
+    private lazy var subTitle: UILabel = {
        let label = UILabel()
         
         label.textColor = .gray2
@@ -35,12 +35,12 @@ final class VeganDetailView: UIView {
     lazy var someVeganButton = VeganOptionButton()
     lazy var requestVeganButton = VeganOptionButton()
     
-    var veganOptions = [VeganOptionButton]()
+    lazy var veganOptions = [VeganOptionButton]()
     
-    let buttonStackView = UIStackView()
+    private lazy var buttonStackView = UIStackView()
     
     // MARK: Constraint 조절
-    var viewHeightConstraint: NSLayoutConstraint?
+    private var viewHeightConstraint: NSLayoutConstraint?
     
     // MARK: View Init
     override init(frame: CGRect) {
@@ -58,6 +58,11 @@ final class VeganDetailView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        initViewHeight()
+    }
+    
+    // MARK: View Height
+    private func initViewHeight() {
         let titleHeight = title.frame.height
         let buttonStackViewHeight = buttonStackView.frame.height
         // TODO: Static value 수정할 때 수정 요망

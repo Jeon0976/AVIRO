@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Search.png",
+      "filename" : "ExistedListCellIcon.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Search@2x.png",
+      "filename" : "ExistedListCellIcon@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Search@3x.png",
+      "filename" : "ExistedListCellIcon@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

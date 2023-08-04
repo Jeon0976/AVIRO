@@ -21,6 +21,9 @@
 		C51132C12A559BCA006E1EC3 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51132C02A559BCA006E1EC3 /* AppController.swift */; };
 		C51BBAD52A78D53D00BF5B7C /* AVIROCheckPlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51BBAD42A78D53D00BF5B7C /* AVIROCheckPlaceModel.swift */; };
 		C51BBAD72A78D5AB00BF5B7C /* PlaceCheckModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51BBAD62A78D5AB00BF5B7C /* PlaceCheckModel.swift */; };
+		C52066212A7CA9050038ECCD /* MainField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066202A7CA9050038ECCD /* MainField.swift */; };
+		C52066232A7CAC910038ECCD /* NoHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066222A7CAC910038ECCD /* NoHistoryView.swift */; };
+		C52066262A7CC3CE0038ECCD /* NoHistoryLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066252A7CC3CE0038ECCD /* NoHistoryLabelView.swift */; };
 		C528E4BA2A5F9A3E002BD72E /* ThridRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C528E4B92A5F9A3E002BD72E /* ThridRegistrationViewController.swift */; };
 		C528E4BC2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C528E4BB2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift */; };
 		C528E4BE2A5FB816002BD72E /* TermsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C528E4BD2A5FB816002BD72E /* TermsTableCell.swift */; };
@@ -126,6 +129,9 @@
 		C51132C02A559BCA006E1EC3 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		C51BBAD42A78D53D00BF5B7C /* AVIROCheckPlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROCheckPlaceModel.swift; sourceTree = "<group>"; };
 		C51BBAD62A78D5AB00BF5B7C /* PlaceCheckModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCheckModel.swift; sourceTree = "<group>"; };
+		C52066202A7CA9050038ECCD /* MainField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainField.swift; sourceTree = "<group>"; };
+		C52066222A7CAC910038ECCD /* NoHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoHistoryView.swift; sourceTree = "<group>"; };
+		C52066252A7CC3CE0038ECCD /* NoHistoryLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoHistoryLabelView.swift; sourceTree = "<group>"; };
 		C528E4B92A5F9A3E002BD72E /* ThridRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThridRegistrationViewController.swift; sourceTree = "<group>"; };
 		C528E4BB2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThridRegistrationPresenter.swift; sourceTree = "<group>"; };
 		C528E4BD2A5FB816002BD72E /* TermsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsTableCell.swift; sourceTree = "<group>"; };
@@ -369,6 +375,16 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
+		C52066242A7CACA80038ECCD /* SubView */ = {
+			isa = PBXGroup;
+			children = (
+				C5EB510C2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift */,
+				C52066222A7CAC910038ECCD /* NoHistoryView.swift */,
+				C52066252A7CC3CE0038ECCD /* NoHistoryLabelView.swift */,
+			);
+			path = SubView;
+			sourceTree = "<group>";
+		};
 		C52FA3362A175B20005E70DC = {
 			isa = PBXGroup;
 			children = (
@@ -603,6 +619,7 @@
 				C50F6B012A6BC8E400E942F5 /* InrollField.swift */,
 				C5E306E62A6FB4ED00C11CF7 /* MenuField.swift */,
 				C5C915482A777F8500C7CB93 /* SearchField.swift */,
+				C52066202A7CA9050038ECCD /* MainField.swift */,
 			);
 			path = UITextField;
 			sourceTree = "<group>";
@@ -769,7 +786,7 @@
 			isa = PBXGroup;
 			children = (
 				C5EB51072A209F6900B29CC1 /* HomeSearchViewController.swift */,
-				C5EB510C2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift */,
+				C52066242A7CACA80038ECCD /* SubView */,
 			);
 			path = HomeSearchView;
 			sourceTree = "<group>";
@@ -979,7 +996,9 @@
 				C567C1502A56611500D4B426 /* TopCell.swift in Sources */,
 				C50F6B042A6BCD6900E942F5 /* CategoryButton.swift in Sources */,
 				C5C915492A777F8500C7CB93 /* SearchField.swift in Sources */,
+				C52066212A7CA9050038ECCD /* MainField.swift in Sources */,
 				C5EB510B2A209FD300B29CC1 /* HomeSearchPresenter.swift in Sources */,
+				C52066262A7CC3CE0038ECCD /* NoHistoryLabelView.swift in Sources */,
 				C5F1014F2A6D19A800C53286 /* VeganOptionButton.swift in Sources */,
 				C50F6AF52A68FD6300E942F5 /* InrollPlacePresenter.swift in Sources */,
 				C5CAAC452A39A93C008C5FDA /* Layout.swift in Sources */,
@@ -1012,6 +1031,7 @@
 				C5732C7E2A41D42700CDC499 /* RequestTableFieldModel.swift in Sources */,
 				C5CAAC472A39AEFE008C5FDA /* Image.swift in Sources */,
 				C5E7B7A92A4D3CDF00CA2090 /* UserInfoModel.swift in Sources */,
+				C52066232A7CAC910038ECCD /* NoHistoryView.swift in Sources */,
 				C5E306E72A6FB4ED00C11CF7 /* MenuField.swift in Sources */,
 				C5E430B32A5DADBE00CB67EC /* SecondRegistrationPresenter.swift in Sources */,
 				C5EB510D2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift in Sources */,

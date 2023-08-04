@@ -21,7 +21,7 @@ final class HomeViewController: UIViewController {
     var naverMapView = NMFMapView()
     
     // 검색 기능 관련
-    var searchTextField = TitleTextField()
+    var searchTextField = MainField()
 
     // 내 위치 최신화 관련
     var loadLocationButton = UIButton()
@@ -100,16 +100,14 @@ final class HomeViewController: UIViewController {
         ])
         zoomLevel.textColor = .black
         zoomLevel.font = .systemFont(ofSize: 20, weight: .bold)
-        presenter.firstLocationUpdate()
-        presenter.viewWillAppear()
         presenter.loadVeganData()
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//
-//        presenter.firstLocationUpdate()
-//    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        presenter.firstLocationUpdate()
+    }
 //
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -197,7 +195,8 @@ extension HomeViewController: HomeViewProtocol {
         )
         
         // searchTextField
-        searchTextField.makeCustomPlaceHolder(StringValue.HomeView.searchPlaceHolder)
+        searchTextField.makePlaceHolder("어디로 이동할까요?")
+        searchTextField.makeShadow()
         searchTextField.delegate = self
         
     }
@@ -295,6 +294,7 @@ extension HomeViewController: HomeViewProtocol {
     
     // MARK: 지도에 마크 표시하기 작업
     func makeMarker(_ veganList: [HomeMapData]) {
+        afterSaveAllPlace = false
         self.markers = [(NMFMarker, Bool, Place)]()
         
         veganList.forEach { homeMapData in
@@ -315,8 +315,6 @@ extension HomeViewController: HomeViewProtocol {
                 marker.iconImage = requestMap
                 markers?.append((marker, false, Place.Request))
             }
-            self.afterSaveAllPlace = true
-
             // Marker 터치할 때
             marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
                 if nil != overlay as? NMFMarker {
@@ -385,6 +383,7 @@ extension HomeViewController: HomeViewProtocol {
                 return true
             }
         }
+        afterSaveAllPlace = true
         DispatchQueue.main.async { [weak self] in
             guard let markers = self?.markers else { return }
             for marker in markers {

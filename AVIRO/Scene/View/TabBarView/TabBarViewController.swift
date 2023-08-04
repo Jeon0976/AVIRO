@@ -11,9 +11,13 @@ class TabBarViewController: UITabBarController {
     
     private let centerButton: UIButton = {
         let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "InrollTab"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setBackgroundImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
-        button.tintColor = .plusButton
+        button.layer.shadowOpacity = 0.07
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowRadius = 5
+        button.layer.shadowOffset = CGSize(width: 1, height: 3)
+        
         return button
     }()
     
@@ -23,11 +27,14 @@ class TabBarViewController: UITabBarController {
         
         let tabBarViewControllers: [UIViewController] = TabBarItem.allCases.map { tabCase in
             let viewController = tabCase.viewController
-            viewController.tabBarItem = UITabBarItem(
+            let tabBarItem = UITabBarItem(
                 title: tabCase.title,
                 image: tabCase.icon.default,
                 selectedImage: tabCase.icon.selected
             )
+        
+            viewController.tabBarItem = tabBarItem
+            
             return viewController
         }
         self.viewControllers = tabBarViewControllers
@@ -47,7 +54,7 @@ class TabBarViewController: UITabBarController {
 
         NSLayoutConstraint.activate([
             centerButton.centerXAnchor.constraint(equalTo: tabBar.centerXAnchor),
-            centerButton.bottomAnchor.constraint(equalTo: tabBar.topAnchor, constant: tabBar.frame.height - 6),
+            centerButton.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: -30),
             centerButton.widthAnchor.constraint(equalToConstant: 80),
             centerButton.heightAnchor.constraint(equalToConstant: 80)
         ])

@@ -92,7 +92,7 @@ final class StoreInfoView: UIView {
             return
         }
         
-        initStoreInfoView()
+        initStoreInfoViewHeight()
     }
     
     // MARK: Layout
@@ -221,7 +221,7 @@ final class StoreInfoView: UIView {
     }
     
     // MARK: View hegit 초기화
-    func initStoreInfoView() {
+    func initStoreInfoViewHeight() {
         showOtherDetail(false)
         changeCategoryTopConstraint(false)
         

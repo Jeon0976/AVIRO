@@ -1,25 +1,24 @@
 //
-//  InrollField2.swift
+//  MainField.swift
 //  AVIRO
 //
-//  Created by 전성훈 on 2023/07/22.
+//  Created by 전성훈 on 2023/08/04.
 //
 
 import UIKit
 
-class InrollField: UITextField {
+class MainField: UITextField {
     private var horizontalPadding: CGFloat = 16
     private var buttonPadding: CGFloat = 7
-    private var verticalPadding: CGFloat = 12
+    private var verticalPadding: CGFloat = 15
     private var imageViewSize: CGFloat = 24
-    
-    var isAddLeftImage = false
-    
+        
     // MARK: Init 설정
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         configuration()
+        addLeftImage()
     }
     
     required init?(coder: NSCoder) {
@@ -43,7 +42,7 @@ class InrollField: UITextField {
     // MARK: Set Configuration
     private func configuration() {
         self.textColor = .gray0
-        self.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        self.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         self.backgroundColor = .gray6
         self.layer.cornerRadius = 10
     }
@@ -53,26 +52,16 @@ class InrollField: UITextField {
     private func setTextInset() -> UIEdgeInsets {
         var inset = UIEdgeInsets(
             top: verticalPadding,
-            left: horizontalPadding,
+            left: horizontalPadding + imageViewSize + buttonPadding,
             bottom: verticalPadding,
             right: horizontalPadding
         )
-        
-        if isAddLeftImage {
-            let leftInest = horizontalPadding + imageViewSize + buttonPadding
-            
-            inset.left = leftInest
-        
-            return inset
-        }
-        
         return inset
     }
+    
     // MARK: Left Image 넣기
     /// Left Image 넣기
-    func addLeftImage() {
-        isAddLeftImage = !isAddLeftImage
-        
+    private func addLeftImage() {
         let image = UIImage(named: "Search")
         image?.withTintColor(.systemGray)
             
@@ -95,7 +84,6 @@ class InrollField: UITextField {
     }
 
     // MARK: Place Holder 값 넣기
-    /// placeHolder 값 넣기
     func makePlaceHolder(_ placeHolder: String) {
         self.attributedPlaceholder = NSAttributedString(
             string: placeHolder,
