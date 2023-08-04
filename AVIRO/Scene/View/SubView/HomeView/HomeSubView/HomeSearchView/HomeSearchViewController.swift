@@ -40,7 +40,11 @@ extension HomeSearchViewController: HomeSearchProtocol {
             view.addSubview($0)
         }
         
-        searchFieldTopConstraint = searchField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15)
+        // searchField 클릭 시 navigation 위치로 이동시키기 위함
+        searchFieldTopConstraint = searchField.topAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.topAnchor,
+            constant: 15
+        )
         searchFieldTopConstraint?.isActive = true
         
         NSLayoutConstraint.activate([
@@ -72,14 +76,46 @@ extension HomeSearchViewController: HomeSearchProtocol {
         ])
     }
     
+    // MARK: Attribute
     func makeAttribute() {
-        // Navigation, View, TabBar
+        makeViewAndTabAttribute()
+        makeSearchFieldAttribute()
+        makePlaceListTableAttribute()
+        makeHistoryTableAttribute()
+        
+        historyTableView.isHidden = true
+    }
+    
+    // MARK: How to Show First View
+    func howToShowFirstView(_ isShowHistoryTable: Bool) {
+        if isShowHistoryTable {
+            ShowHistoryTable()
+        } else {
+            ShowNoHistoryView()
+        }
+    }
+}
+
+extension HomeSearchViewController {
+    // MARK: How to Show First View Detail
+    private func ShowHistoryTable() {
+        historyTableView.isHidden = false
+        noHistoryView.isHidden = true
+    }
+    
+    private func ShowNoHistoryView() {
+        historyTableView.isHidden = true
+        noHistoryView.isHidden = false
+    }
+    
+    // MARK: View and Tab Attribute
+    private func makeViewAndTabAttribute() {
         view.addGestureRecognizer(tapGesture)
         
         tapGesture.cancelsTouchesInView = false
         tapGesture.delegate = self
         
-        view.backgroundColor = .white
+        view.backgroundColor = .gray7
         navigationItem.title = "가게•위치 검색"
         
         navigationController?.navigationBar.isHidden = false
@@ -88,26 +124,33 @@ extension HomeSearchViewController: HomeSearchProtocol {
         if let tabBarController = self.tabBarController as? TabBarViewController {
             tabBarController.hiddenTabBar(true)
         }
-        
-        // searchText
-        searchField.placeholder = StringValue.HomeSearchView.searchPlaceHolder
+    }
+    
+    // MARK: Search Field Attribute
+    private func makeSearchFieldAttribute() {
         searchField.delegate = self
         searchField.rightButtonHidden = true
         searchField.makePlaceHolder("어디로 이동할까요?")
         searchField.didTappedLeftButton = { [weak self] in
             self?.navigationController?.popViewController(animated: true)
         }
-        
-        // placeListTableView
+    }
+    
+    // MARK: Place List Table Attribute
+    private func makePlaceListTableAttribute() {
         placeListTableView.delegate = self
         placeListTableView.dataSource = self
         placeListTableView.register(
             PlaceListCell.self,
             forCellReuseIdentifier: PlaceListCell.identifier
         )
-        placeListTableView.separatorStyle = .singleLine
+        placeListTableView.separatorStyle = .none
         placeListTableView.isHidden = true
-        historyTableView.isHidden = true
+    }
+    
+    // MARK: History Table Attribute
+    private func makeHistoryTableAttribute() {
+        
     }
 }
 
@@ -115,9 +158,13 @@ extension HomeSearchViewController: UITextFieldDelegate {
     // MARK: 검색 시작할 때
     func textFieldDidBeginEditing(_ textField: UITextField) {
         self.navigationController?.navigationBar.isHidden = true
-
+        
         searchField.changeLeftButton()
          UIView.animate(withDuration: 0.2) {
+             self.historyTableView.isHidden = true
+             self.noHistoryView.isHidden = true
+             self.placeListTableView.isHidden = false
+             
              self.searchFieldTopConstraint?.constant = 16
              self.view.layoutIfNeeded()
          }
@@ -128,7 +175,7 @@ extension HomeSearchViewController: UITextFieldDelegate {
         searchField.rightButtonHidden = false
 
         if let text = textField.text {
-
+            
         }
     }
 }
@@ -173,19 +220,13 @@ extension HomeSearchViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension HomeSearchViewController: UIGestureRecognizerDelegate {
-    // MARK: 외부 클릭 시 키보드 내려가면서, 키보드 취소버튼 사라짐 & 취소버튼 클릭시 text 사라짐
+    // MARK: 키보드 로직
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        if let touchedView = touch.view as? UIButton, touchedView == searchField.rightView {
-            searchField.text = ""
-            searchField.rightView?.isHidden = true
-              return true
+        if touch.view is SearchField {
+            return false
         }
 
         view.endEditing(true)
-        return true
-    }
-    
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
 }

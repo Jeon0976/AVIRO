@@ -24,6 +24,8 @@
 		C52066212A7CA9050038ECCD /* MainField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066202A7CA9050038ECCD /* MainField.swift */; };
 		C52066232A7CAC910038ECCD /* NoHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066222A7CAC910038ECCD /* NoHistoryView.swift */; };
 		C52066262A7CC3CE0038ECCD /* NoHistoryLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066252A7CC3CE0038ECCD /* NoHistoryLabelView.swift */; };
+		C52066292A7CD5FC0038ECCD /* HistoryTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066282A7CD5FC0038ECCD /* HistoryTableModel.swift */; };
+		C520662D2A7CE1CC0038ECCD /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C520662C2A7CE1CC0038ECCD /* UserDefaultsManager.swift */; };
 		C528E4BA2A5F9A3E002BD72E /* ThridRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C528E4B92A5F9A3E002BD72E /* ThridRegistrationViewController.swift */; };
 		C528E4BC2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C528E4BB2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift */; };
 		C528E4BE2A5FB816002BD72E /* TermsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C528E4BD2A5FB816002BD72E /* TermsTableCell.swift */; };
@@ -132,6 +134,8 @@
 		C52066202A7CA9050038ECCD /* MainField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainField.swift; sourceTree = "<group>"; };
 		C52066222A7CAC910038ECCD /* NoHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoHistoryView.swift; sourceTree = "<group>"; };
 		C52066252A7CC3CE0038ECCD /* NoHistoryLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoHistoryLabelView.swift; sourceTree = "<group>"; };
+		C52066282A7CD5FC0038ECCD /* HistoryTableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableModel.swift; sourceTree = "<group>"; };
+		C520662C2A7CE1CC0038ECCD /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		C528E4B92A5F9A3E002BD72E /* ThridRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThridRegistrationViewController.swift; sourceTree = "<group>"; };
 		C528E4BB2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThridRegistrationPresenter.swift; sourceTree = "<group>"; };
 		C528E4BD2A5FB816002BD72E /* TermsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsTableCell.swift; sourceTree = "<group>"; };
@@ -300,6 +304,7 @@
 		C50367F22A1795B90020C6BB /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				C520662B2A7CE19F0038ECCD /* UserDefaultsManager */,
 				C5732C6F2A41736D00CDC499 /* AVIRODatabase */,
 				C5351B4E2A19223600116D50 /* KakaoMap */,
 			);
@@ -383,6 +388,32 @@
 				C52066252A7CC3CE0038ECCD /* NoHistoryLabelView.swift */,
 			);
 			path = SubView;
+			sourceTree = "<group>";
+		};
+		C52066272A7CD5E60038ECCD /* HomeSearchViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C5EB510E2A20A89100B29CC1 /* HomeSearchData.swift */,
+				C52066282A7CD5FC0038ECCD /* HistoryTableModel.swift */,
+			);
+			path = HomeSearchViewModel;
+			sourceTree = "<group>";
+		};
+		C520662A2A7CD9AC0038ECCD /* DetailViewPresenter */ = {
+			isa = PBXGroup;
+			children = (
+				C5D745922A22679E006F9F31 /* CommentDetailPresenter */,
+				C5EB51172A21016600B29CC1 /* DetailViewPresenter.swift */,
+			);
+			path = DetailViewPresenter;
+			sourceTree = "<group>";
+		};
+		C520662B2A7CE19F0038ECCD /* UserDefaultsManager */ = {
+			isa = PBXGroup;
+			children = (
+				C520662C2A7CE1CC0038ECCD /* UserDefaultsManager.swift */,
+			);
+			path = UserDefaultsManager;
 			sourceTree = "<group>";
 		};
 		C52FA3362A175B20005E70DC = {
@@ -687,7 +718,8 @@
 			isa = PBXGroup;
 			children = (
 				C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */,
-				C5EB51092A209FC000B29CC1 /* HomeSubPresenter */,
+				C5EB51092A209FC000B29CC1 /* HomeSearchPresenter */,
+				C520662A2A7CD9AC0038ECCD /* DetailViewPresenter */,
 			);
 			path = HomePresenter;
 			sourceTree = "<group>";
@@ -768,7 +800,7 @@
 			isa = PBXGroup;
 			children = (
 				C5732C782A41AD8100CDC499 /* HomeMapData.swift */,
-				C5EB510E2A20A89100B29CC1 /* HomeSearchData.swift */,
+				C52066272A7CD5E60038ECCD /* HomeSearchViewModel */,
 			);
 			path = HomeViewModel;
 			sourceTree = "<group>";
@@ -791,14 +823,12 @@
 			path = HomeSearchView;
 			sourceTree = "<group>";
 		};
-		C5EB51092A209FC000B29CC1 /* HomeSubPresenter */ = {
+		C5EB51092A209FC000B29CC1 /* HomeSearchPresenter */ = {
 			isa = PBXGroup;
 			children = (
 				C5EB510A2A209FD300B29CC1 /* HomeSearchPresenter.swift */,
-				C5EB51172A21016600B29CC1 /* DetailViewPresenter.swift */,
-				C5D745922A22679E006F9F31 /* CommentDetailPresenter */,
 			);
-			path = HomeSubPresenter;
+			path = HomeSearchPresenter;
 			sourceTree = "<group>";
 		};
 		C5EB51102A20CC6800B29CC1 /* HomeInfoStoreView */ = {
@@ -1000,6 +1030,7 @@
 				C5EB510B2A209FD300B29CC1 /* HomeSearchPresenter.swift in Sources */,
 				C52066262A7CC3CE0038ECCD /* NoHistoryLabelView.swift in Sources */,
 				C5F1014F2A6D19A800C53286 /* VeganOptionButton.swift in Sources */,
+				C52066292A7CD5FC0038ECCD /* HistoryTableModel.swift in Sources */,
 				C50F6AF52A68FD6300E942F5 /* InrollPlacePresenter.swift in Sources */,
 				C5CAAC452A39A93C008C5FDA /* Layout.swift in Sources */,
 				C52FA3472A175B20005E70DC /* HomeViewController.swift in Sources */,
@@ -1043,6 +1074,7 @@
 				C5D8E8632A3DEC3900D88A43 /* String+Extension.swift in Sources */,
 				C50F6B022A6BC8E400E942F5 /* InrollField.swift in Sources */,
 				C5D7458F2A224DCE006F9F31 /* HomeFirstPopUpView.swift in Sources */,
+				C520662D2A7CE1CC0038ECCD /* UserDefaultsManager.swift in Sources */,
 				C5A3C3C62A39659B0050AB3D /* LoginViewPresenter.swift in Sources */,
 				C58B9AAE2A5675B9008AEAC3 /* TutorialViewController.swift in Sources */,
 				C5732C792A41AD8100CDC499 /* HomeMapData.swift in Sources */,
