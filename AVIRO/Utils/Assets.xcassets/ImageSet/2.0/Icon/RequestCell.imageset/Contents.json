@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "ExistedListCellIcon.png",
+      "filename" : "RequestCell.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ExistedListCellIcon@2x.png",
+      "filename" : "RequestCell@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "ExistedListCellIcon@3x.png",
+      "filename" : "RequestCell@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

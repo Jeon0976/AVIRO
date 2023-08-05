@@ -9,7 +9,7 @@ import Foundation
 
 struct KakaoMapResponseKeywordModel: Decodable {
     let meta: KakaoMapResponseMetaData
-    let documents: [RestaurantsAndCafes]
+    let documents: [PlaceDataFromKakao]
 }
 
 struct KakaoMapResponseMetaData: Decodable {
@@ -20,9 +20,8 @@ struct KakaoMapResponseMetaData: Decodable {
     }
 }
 
-struct RestaurantsAndCafes: Decodable {
+struct PlaceDataFromKakao: Decodable {
     let name: String
-    let category: String
     let address: String
     let phone: String
     let url: String
@@ -32,7 +31,6 @@ struct RestaurantsAndCafes: Decodable {
     
     enum CodingKeys: String, CodingKey {
         case name = "place_name"
-        case category = "category_name"
         case address = "road_address_name"
         case phone
         case url = "place_url"

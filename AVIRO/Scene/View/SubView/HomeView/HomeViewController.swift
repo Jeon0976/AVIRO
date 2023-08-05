@@ -413,7 +413,7 @@ extension HomeViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         let viewController = HomeSearchViewController()
         navigationController?.pushViewController(viewController,
-                                                 animated: true
+                                                 animated: false
         )
         return false
     }

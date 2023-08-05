@@ -26,6 +26,9 @@
 		C52066262A7CC3CE0038ECCD /* NoHistoryLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066252A7CC3CE0038ECCD /* NoHistoryLabelView.swift */; };
 		C52066292A7CD5FC0038ECCD /* HistoryTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066282A7CD5FC0038ECCD /* HistoryTableModel.swift */; };
 		C520662D2A7CE1CC0038ECCD /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C520662C2A7CE1CC0038ECCD /* UserDefaultsManager.swift */; };
+		C520662F2A7E485B0038ECCD /* MatchedPlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C520662E2A7E485B0038ECCD /* MatchedPlaceModel.swift */; };
+		C52066312A7E4A580038ECCD /* PlaceModelBeforeMatchedAVIRO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066302A7E4A580038ECCD /* PlaceModelBeforeMatchedAVIRO.swift */; };
+		C52066332A7E80350038ECCD /* MatchedPlaceListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066322A7E80350038ECCD /* MatchedPlaceListCell.swift */; };
 		C528E4BA2A5F9A3E002BD72E /* ThridRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C528E4B92A5F9A3E002BD72E /* ThridRegistrationViewController.swift */; };
 		C528E4BC2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C528E4BB2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift */; };
 		C528E4BE2A5FB816002BD72E /* TermsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C528E4BD2A5FB816002BD72E /* TermsTableCell.swift */; };
@@ -44,7 +47,6 @@
 		C5351B622A1A083400116D50 /* PlaceListCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B612A1A083400116D50 /* PlaceListCellModel.swift */; };
 		C5351B672A1A154C00116D50 /* PageEndingCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B662A1A154C00116D50 /* PageEndingCheck.swift */; };
 		C5351B7A2A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B792A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift */; };
-		C5351B7D2A1B52B900116D50 /* CustomLocationCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B7C2A1B52B900116D50 /* CustomLocationCellModel.swift */; };
 		C53893162A5EC0C500CB9A54 /* GenderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53893152A5EC0C500CB9A54 /* GenderButton.swift */; };
 		C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547A8B92A17D8D4004D1339 /* KakaoMapRequestManager.swift */; };
 		C54BC0DB2A2C2D0D00B65439 /* ColorCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54BC0DA2A2C2D0D00B65439 /* ColorCustom.swift */; };
@@ -100,7 +102,6 @@
 		C5EB51082A209F6900B29CC1 /* HomeSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB51072A209F6900B29CC1 /* HomeSearchViewController.swift */; };
 		C5EB510B2A209FD300B29CC1 /* HomeSearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB510A2A209FD300B29CC1 /* HomeSearchPresenter.swift */; };
 		C5EB510D2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB510C2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift */; };
-		C5EB510F2A20A89100B29CC1 /* HomeSearchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB510E2A20A89100B29CC1 /* HomeSearchData.swift */; };
 		C5EB51122A20CC7D00B29CC1 /* HomeInfoStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB51112A20CC7D00B29CC1 /* HomeInfoStoreView.swift */; };
 		C5EB51162A21011C00B29CC1 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB51152A21011C00B29CC1 /* DetailViewController.swift */; };
 		C5EB51182A21016600B29CC1 /* DetailViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB51172A21016600B29CC1 /* DetailViewPresenter.swift */; };
@@ -136,6 +137,9 @@
 		C52066252A7CC3CE0038ECCD /* NoHistoryLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoHistoryLabelView.swift; sourceTree = "<group>"; };
 		C52066282A7CD5FC0038ECCD /* HistoryTableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableModel.swift; sourceTree = "<group>"; };
 		C520662C2A7CE1CC0038ECCD /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		C520662E2A7E485B0038ECCD /* MatchedPlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchedPlaceModel.swift; sourceTree = "<group>"; };
+		C52066302A7E4A580038ECCD /* PlaceModelBeforeMatchedAVIRO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModelBeforeMatchedAVIRO.swift; sourceTree = "<group>"; };
+		C52066322A7E80350038ECCD /* MatchedPlaceListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchedPlaceListCell.swift; sourceTree = "<group>"; };
 		C528E4B92A5F9A3E002BD72E /* ThridRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThridRegistrationViewController.swift; sourceTree = "<group>"; };
 		C528E4BB2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThridRegistrationPresenter.swift; sourceTree = "<group>"; };
 		C528E4BD2A5FB816002BD72E /* TermsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsTableCell.swift; sourceTree = "<group>"; };
@@ -157,7 +161,6 @@
 		C5351B612A1A083400116D50 /* PlaceListCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListCellModel.swift; sourceTree = "<group>"; };
 		C5351B662A1A154C00116D50 /* PageEndingCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageEndingCheck.swift; sourceTree = "<group>"; };
 		C5351B792A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapResponseCoordinateModel.swift; sourceTree = "<group>"; };
-		C5351B7C2A1B52B900116D50 /* CustomLocationCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLocationCellModel.swift; sourceTree = "<group>"; };
 		C53893152A5EC0C500CB9A54 /* GenderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderButton.swift; sourceTree = "<group>"; };
 		C547A8B92A17D8D4004D1339 /* KakaoMapRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapRequestManager.swift; sourceTree = "<group>"; };
 		C54BC0DA2A2C2D0D00B65439 /* ColorCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCustom.swift; sourceTree = "<group>"; };
@@ -214,7 +217,6 @@
 		C5EB51072A209F6900B29CC1 /* HomeSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchViewController.swift; sourceTree = "<group>"; };
 		C5EB510A2A209FD300B29CC1 /* HomeSearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchPresenter.swift; sourceTree = "<group>"; };
 		C5EB510C2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchViewTableViewCell.swift; sourceTree = "<group>"; };
-		C5EB510E2A20A89100B29CC1 /* HomeSearchData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchData.swift; sourceTree = "<group>"; };
 		C5EB51112A20CC7D00B29CC1 /* HomeInfoStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInfoStoreView.swift; sourceTree = "<group>"; };
 		C5EB51152A21011C00B29CC1 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		C5EB51172A21016600B29CC1 /* DetailViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewPresenter.swift; sourceTree = "<group>"; };
@@ -320,7 +322,6 @@
 				C5351B782A1B437600116D50 /* APIResonseModel */,
 				C5351B652A1A128D00116D50 /* SingleTonModel */,
 				C5351B7B2A1B52A000116D50 /* PlaceListModel */,
-				C5351B7E2A1B52D400116D50 /* CustomLocationModel */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -393,8 +394,9 @@
 		C52066272A7CD5E60038ECCD /* HomeSearchViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				C5EB510E2A20A89100B29CC1 /* HomeSearchData.swift */,
 				C52066282A7CD5FC0038ECCD /* HistoryTableModel.swift */,
+				C520662E2A7E485B0038ECCD /* MatchedPlaceModel.swift */,
+				C52066322A7E80350038ECCD /* MatchedPlaceListCell.swift */,
 			);
 			path = HomeSearchViewModel;
 			sourceTree = "<group>";
@@ -523,14 +525,6 @@
 			path = PlaceListModel;
 			sourceTree = "<group>";
 		};
-		C5351B7E2A1B52D400116D50 /* CustomLocationModel */ = {
-			isa = PBXGroup;
-			children = (
-				C5351B7C2A1B52B900116D50 /* CustomLocationCellModel.swift */,
-			);
-			path = CustomLocationModel;
-			sourceTree = "<group>";
-		};
 		C5351B812A1B547C00116D50 /* PlaceList */ = {
 			isa = PBXGroup;
 			children = (
@@ -619,6 +613,7 @@
 				C5538AAE2A1BB81200661DE2 /* VeganModel.swift */,
 				C593B64A2A4AEA9800D224CE /* AVIROCommentPost.swift */,
 				C5E7B7A82A4D3CDF00CA2090 /* UserInfoModel.swift */,
+				C52066302A7E4A580038ECCD /* PlaceModelBeforeMatchedAVIRO.swift */,
 			);
 			path = AVIROPost;
 			sourceTree = "<group>";
@@ -1036,13 +1031,12 @@
 				C52FA3472A175B20005E70DC /* HomeViewController.swift in Sources */,
 				C51BBAD72A78D5AB00BF5B7C /* PlaceCheckModel.swift in Sources */,
 				C5EB50E82A1C6FD600B29CC1 /* PopularViewController.swift in Sources */,
-				C5351B7D2A1B52B900116D50 /* CustomLocationCellModel.swift in Sources */,
 				C54BC0DB2A2C2D0D00B65439 /* ColorCustom.swift in Sources */,
 				C52FA3432A175B20005E70DC /* AppDelegate.swift in Sources */,
-				C5EB510F2A20A89100B29CC1 /* HomeSearchData.swift in Sources */,
 				C5B071E12A59454300AE709A /* BottomCell.swift in Sources */,
 				C5351B502A19225A00116D50 /* KakaoMapResponseKeywordModel.swift in Sources */,
 				C5351B4D2A19223300116D50 /* KakaoMapRequestAPI.swift in Sources */,
+				C520662F2A7E485B0038ECCD /* MatchedPlaceModel.swift in Sources */,
 				C5EB511E2A21189B00B29CC1 /* StoreDetailView.swift in Sources */,
 				C5D745962A2277A4006F9F31 /* CommentsViewCell.swift in Sources */,
 				C50F6AFB2A68FFC300E942F5 /* VeganDetailView.swift in Sources */,
@@ -1080,6 +1074,7 @@
 				C5732C792A41AD8100CDC499 /* HomeMapData.swift in Sources */,
 				C5D745912A225DE6006F9F31 /* CommentDetailViewController.swift in Sources */,
 				C5FF13552A42C88D0026981D /* AVIROMenuModel.swift in Sources */,
+				C52066332A7E80350038ECCD /* MatchedPlaceListCell.swift in Sources */,
 				C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */,
 				C5351B672A1A154C00116D50 /* PageEndingCheck.swift in Sources */,
 				C5732C772A41A0A500CDC499 /* AVIROMapModel.swift in Sources */,
@@ -1096,6 +1091,7 @@
 				C5351B7A2A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift in Sources */,
 				C51BBAD52A78D53D00BF5B7C /* AVIROCheckPlaceModel.swift in Sources */,
 				C56857802A7113C600F52715 /* NormalTableViewCell.swift in Sources */,
+				C52066312A7E4A580038ECCD /* PlaceModelBeforeMatchedAVIRO.swift in Sources */,
 				C5E430B52A5DAE9800CB67EC /* SecondRegistrationViewController.swift in Sources */,
 				C593B64B2A4AEA9800D224CE /* AVIROCommentPost.swift in Sources */,
 				C593B64F2A4C490600D224CE /* MyPageViewPresenter.swift in Sources */,

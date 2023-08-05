@@ -318,4 +318,38 @@ final class AVIROAPIManager {
             }
         }.resume()
     }
+    
+    // MARK: Post PlaceList Matched AVIRO
+    func postPlaceListMatched(_ placeArray: PlaceModelBeforeMatchedAVIRO, completionHandler: @escaping((PlaceModelAfterMatchedAVIRO) -> Void)) {
+        guard let url = postAPI.placeListMatched().url else { print("url error"); return }
+        
+        guard let jsonData = try? JSONEncoder().encode(placeArray) else {
+            print("JSOE Encode ERROR")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+
+        session.dataTask(with: request) { data, response, error in
+            guard error == nil else {
+                print("error")
+                return
+            }
+            
+            guard response != nil else {
+                print(response ?? "response error")
+                return
+            }
+            
+            if let data = data {
+                if let placeResponse = try? JSONDecoder().decode(PlaceModelAfterMatchedAVIRO.self, from: data) {
+                    completionHandler(placeResponse)
+                }
+                return
+            }
+        }.resume()
+    }
 }

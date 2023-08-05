@@ -29,7 +29,7 @@ final class KakaoMapRequestManager: KakaoMapRequestProtocol {
                                page: String,
                                completionHandler: @escaping ((KakaoMapResponseKeywordModel) -> Void)
     ) {
-        guard let url = api.searchInfo(
+        guard let url = api.searchPlace(
             query: query,
             longitude: longitude,
             latitude: latitude,
@@ -41,6 +41,44 @@ final class KakaoMapRequestManager: KakaoMapRequestProtocol {
         
         kakaoMapAPIKey = (dictionary["KakaoMapAPI_ Authorization _Key"] as? String)!
                 
+        var request = URLRequest(url: url)
+        
+        request.httpMethod = "GET"
+        request.setValue(kakaoMapAPIKey, forHTTPHeaderField: "Authorization")
+        
+        session.dataTask(with: request) { data, _, error in
+            if let error = error {
+                // TODO: urlsession 오류
+                print(error.localizedDescription)
+            }
+            
+            if let data = data {
+                if let searchData = try? JSONDecoder().decode(KakaoMapResponseKeywordModel.self, from: data) {
+                    completionHandler(searchData)
+                }
+            }
+        }.resume()
+    }
+    
+    // MARK: Keyword Location Search
+    func kakaoMapLocationSearch(query: String,
+                                longitude: String,
+                                latitude: String,
+                                page: String,
+                                completionHandler: @escaping ((KakaoMapResponseKeywordModel) -> Void)
+    ) {
+        guard let url = api.searchLocation(
+            query: query,
+            longitude: longitude,
+            latitude: latitude,
+            page: page
+        ).url else { return }
+        
+        guard let keyUrl = Bundle.main.url(forResource: "API", withExtension: "plist"),
+              let dictionary = NSDictionary(contentsOf: keyUrl) as? [String: Any] else { return }
+        
+        kakaoMapAPIKey = (dictionary["KakaoMapAPI_ Authorization _Key"] as? String)!
+        
         var request = URLRequest(url: url)
         
         request.httpMethod = "GET"

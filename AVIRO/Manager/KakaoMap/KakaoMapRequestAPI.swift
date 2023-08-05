@@ -25,11 +25,13 @@ struct KakaoMapRequestAPI {
     // MARK: static query
     // 사용자 기준 거리순 정렬
     static let sortValue = "accuracy"
-    // CE7: 카페, FD6: 음식점
-    static let categoryValue = "CE7, FD6"
+    // CE7: 카페, FD6: 음식점, SW8: 지하철역, AT4: 관광명소, PO3: 공공기관
+    static let inrollCategory = "CE7, FD6"
+    static let mainSearchCategory = "CE7, FD6, SW8, AT4, PO3"
     
-    // MARK: Keyword Search Components 만들기 함수
-    func searchInfo(query: String,
+    
+    // MARK: Search 등록하기 Components 만들기 함수
+    func searchPlace(query: String,
                     longitude: String,
                     latitude: String,
                     page: String
@@ -41,7 +43,30 @@ struct KakaoMapRequestAPI {
 
         components.queryItems = [
             URLQueryItem(name: KakaoMapRequestAPI.query, value: query),
-            URLQueryItem(name: KakaoMapRequestAPI.category, value: KakaoMapRequestAPI.categoryValue),
+            URLQueryItem(name: KakaoMapRequestAPI.category, value: KakaoMapRequestAPI.inrollCategory),
+            URLQueryItem(name: KakaoMapRequestAPI.longitude, value: longitude),
+            URLQueryItem(name: KakaoMapRequestAPI.latitude, value: latitude),
+            URLQueryItem(name: KakaoMapRequestAPI.sort, value: KakaoMapRequestAPI.sortValue),
+            URLQueryItem(name: KakaoMapRequestAPI.page, value: page)
+        ]
+        
+        return components
+    }
+    
+    // MARK: Search Location Components 만들기 함수
+    func searchLocation(query: String,
+                    longitude: String,
+                    latitude: String,
+                    page: String
+    ) -> URLComponents {
+        var components = URLComponents()
+        components.scheme = KakaoMapRequestAPI.scheme
+        components.host = KakaoMapRequestAPI.host
+        components.path = KakaoMapRequestAPI.keywordPath
+
+        components.queryItems = [
+            URLQueryItem(name: KakaoMapRequestAPI.query, value: query),
+            URLQueryItem(name: KakaoMapRequestAPI.category, value: KakaoMapRequestAPI.mainSearchCategory),
             URLQueryItem(name: KakaoMapRequestAPI.longitude, value: longitude),
             URLQueryItem(name: KakaoMapRequestAPI.latitude, value: latitude),
             URLQueryItem(name: KakaoMapRequestAPI.sort, value: KakaoMapRequestAPI.sortValue),

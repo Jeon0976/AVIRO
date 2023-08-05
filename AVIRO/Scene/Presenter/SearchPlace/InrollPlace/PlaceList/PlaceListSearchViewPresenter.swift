@@ -18,24 +18,20 @@ protocol PlaceListProtocol: NSObject {
 
 final class PlaceListSearchViewPresenter: NSObject {
     weak var viewController: PlaceListProtocol?
-    
-    private let requestManager = KakaoMapRequestManager()
-    
+        
     private var placeList = [PlaceListModel]()
     
     // textColor 변경을 위한 변수
     var inrolledData: String?
     
     // page 추가
-    var currentPage = 1
-    var isEnd = false
-    var isLoading = false
+    private var currentPage = 1
+    private var isEnd = false
+    private var isLoading = false
     
-    init(viewController: PlaceListProtocol,
-         placeList: [PlaceListModel] = []
+    init(viewController: PlaceListProtocol
     ) {
         self.viewController = viewController
-        self.placeList = placeList
     }
     
     // MARK: PlaceList 변수 다루기
@@ -54,14 +50,14 @@ final class PlaceListSearchViewPresenter: NSObject {
         viewController?.makeGesture()
     }
     
-    // MARK: 검색할때 api 호출
+    // MARK: 검색 후 KakaoMap Place Search API 호출
     func searchData(_ query: String) {
         currentPage = 1
         let query = query
         let longitude = PersonalLocation.shared.longitudeString
         let latitude = PersonalLocation.shared.latitudeString
         
-        requestManager.kakaoMapKeywordSearch(query: query,
+        KakaoMapRequestManager().kakaoMapKeywordSearch(query: query,
                                       longitude: longitude,
                                       latitude: latitude,
                                       page: "\(currentPage)") { [weak self] model in
@@ -98,7 +94,6 @@ final class PlaceListSearchViewPresenter: NSObject {
         isLoading = true
         currentPage += 1
         
-        // TODO: page가 마지막 일때 api 호출 x
         if PageEndingCheck.shared.isend == true {
             return
         }
@@ -106,10 +101,12 @@ final class PlaceListSearchViewPresenter: NSObject {
         let longitude = PersonalLocation.shared.longitudeString
         let latitude = PersonalLocation.shared.latitudeString
         
-        requestManager.kakaoMapKeywordSearch(query: query,
-                                      longitude: longitude,
-                                      latitude: latitude,
-                                      page: "\(currentPage)") { [weak self] model in
+        KakaoMapRequestManager().kakaoMapKeywordSearch(
+            query: query,
+            longitude: longitude,
+            latitude: latitude,
+            page: "\(currentPage)"
+        ) { [weak self] model in
             let placeList = model.documents.map { location in
                 let placeListCellModel = PlaceListModel(
                     title: location.name,

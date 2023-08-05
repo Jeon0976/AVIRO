@@ -17,6 +17,9 @@ final class HomeSearchViewController: UIViewController {
                                       
     var historyTableView = UITableView()
     
+    /// API 호출 관련해서 다 입력이 끝나면 발동하도록 하는 변수
+    var searchTimer: DispatchWorkItem?
+
     var tapGesture = UITapGestureRecognizer()
     
     var searchFieldTopConstraint: NSLayoutConstraint?
@@ -94,6 +97,10 @@ extension HomeSearchViewController: HomeSearchProtocol {
             ShowNoHistoryView()
         }
     }
+    
+    func reloadTableView() {
+        placeListTableView.reloadData()
+    }
 }
 
 extension HomeSearchViewController {
@@ -141,8 +148,8 @@ extension HomeSearchViewController {
         placeListTableView.delegate = self
         placeListTableView.dataSource = self
         placeListTableView.register(
-            PlaceListCell.self,
-            forCellReuseIdentifier: PlaceListCell.identifier
+            HomeSearchViewTableViewCell.self,
+            forCellReuseIdentifier: HomeSearchViewTableViewCell.identifier
         )
         placeListTableView.separatorStyle = .none
         placeListTableView.isHidden = true
@@ -173,49 +180,86 @@ extension HomeSearchViewController: UITextFieldDelegate {
     // MARK: 실시간 검색
     func textFieldDidChangeSelection(_ textField: UITextField) {
         searchField.rightButtonHidden = false
+        // 중간 배열의 out of index 방지를 위해 & API 요청 횟수를 줄이기 위해 
+        
+        // 이전 타이머 작업을 취소합니다(있는 경우).
+        searchTimer?.cancel()
 
-        if let text = textField.text {
-            
+        // 새로운 타이머 작업을 생성합니다.
+        let task = DispatchWorkItem { [weak self] in
+            if let text = textField.text {
+                self?.presenter.changedColorText = text
+                self?.presenter.initialSearchDataAndCompareAVIROData(text)
+            }
         }
+
+        // 타이머 작업을 저장합니다.
+        searchTimer = task
+        
+        // 0.5초 후에 작업을 실행합니다.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: task)
     }
+    
 }
 
-extension HomeSearchViewController: UITableViewDataSource, UITableViewDelegate {
+extension HomeSearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return presenter.matchedPlaceModelCount
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(
-            withIdentifier: PlaceListCell.identifier,
+            withIdentifier: HomeSearchViewTableViewCell.identifier,
             for: indexPath
-        ) as? PlaceListCell
+        ) as? HomeSearchViewTableViewCell
 
-        let mockUp = HomeSearchData(
-                icon: "InrollSearchIcon",
-                title: "러브얼스",
-                address: "주소입니다",
-                category: "카테고리입니다",
-                distance: "200"
-            )
+        let data = presenter.matchedPlaceListRow(indexPath.row)
 
-        let title = mockUp.title
-        let address = mockUp.address
-        let distance = mockUp.distance
-
-        let cellData = PlaceListCellModel(
+        let title = data.title
+        let address = data.address
+        let distance = data.distance
+        
+        var icon: UIImage?
+        
+        switch (data.allVegan, data.someVegan, data.requestVegan) {
+        case (true, _, _):
+            icon = UIImage(named: "AllCell")
+        case (_, true, _):
+            icon = UIImage(named: "SomeCell")
+        case (_, _, true):
+            icon = UIImage(named: "RequestCell")
+        default:
+            icon = UIImage(named: "ListCellIcon")
+        }
+        
+        let cellData = MatchedPlaceListCell(
+            icon: icon ?? UIImage(named: "ListCellIcon")!,
             title: title,
             address: address,
             distance: distance
         )
-
+        
         cell?.makeCellData(cellData, attributedTitle: nil, attributedAddress: nil)
 
         cell?.backgroundColor = .white
         cell?.selectionStyle = .none
 
         return cell ?? UITableViewCell()
+    }
+}
+
+extension HomeSearchViewController: UITableViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
+
+        // 더 빠른 API 호출을 위한 상수 300
+        if offsetY > contentHeight - height {
+            let query = searchField.text ?? ""
+            presenter.afterPagingSearchAndCompareAVIROData(query)
+        }
     }
 }
 

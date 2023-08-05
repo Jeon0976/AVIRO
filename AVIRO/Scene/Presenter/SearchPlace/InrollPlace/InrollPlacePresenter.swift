@@ -402,10 +402,10 @@ extension InrollPlacePresenter {
         checkAllDataIsFilled()
     }
     
+    // MARK: Button 클릭 될 때마다 최신값 All Data is Filled의 최신화
    private func updateButtonBools(keys: [String], values: [Bool]) {
         for i in 0..<keys.count {
             totalData[keys[i]] = values[i]
-            print(keys[i], values[i])
         }
         checkAllDataIsFilled()
     }

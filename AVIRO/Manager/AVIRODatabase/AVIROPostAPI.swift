@@ -26,6 +26,7 @@ struct AVIROPostAPI {
     static let userCheck = "/prod/member"
     static let userNicNameCheck = "/prod/member/check"
     static let userWithdraw = "/prod/member/withdraw"
+    static let placeListMatchedAVIRO = "/prod/map/check/place"
     
     // MARK: Place Inroll
     mutating func placeInroll() -> URLComponents {
@@ -77,4 +78,13 @@ struct AVIROPostAPI {
         return components
     }
     
+    // MARK: PlaceList Matched AVIRO
+    mutating func placeListMatched() -> URLComponents {
+        var components = URLComponents()
+        components.scheme = AVIROPostAPI.scheme
+        components.host = host
+        components.path = AVIROPostAPI.placeListMatchedAVIRO
+        
+        return components
+    }
 }

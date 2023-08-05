@@ -11,7 +11,4 @@ struct HistoryTableModel: Codable, Hashable {
     var id: UUID = UUID()
     
     let title: String
-    let isAll: Bool
-    let isSome: Bool
-    let isRequest: Bool
 }
