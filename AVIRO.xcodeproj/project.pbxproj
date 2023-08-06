@@ -29,6 +29,7 @@
 		C520662F2A7E485B0038ECCD /* MatchedPlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C520662E2A7E485B0038ECCD /* MatchedPlaceModel.swift */; };
 		C52066312A7E4A580038ECCD /* PlaceModelBeforeMatchedAVIRO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066302A7E4A580038ECCD /* PlaceModelBeforeMatchedAVIRO.swift */; };
 		C52066332A7E80350038ECCD /* MatchedPlaceListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066322A7E80350038ECCD /* MatchedPlaceListCell.swift */; };
+		C52066352A7F3FAE0038ECCD /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066342A7F3FAE0038ECCD /* HistoryTableViewCell.swift */; };
 		C528E4BA2A5F9A3E002BD72E /* ThridRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C528E4B92A5F9A3E002BD72E /* ThridRegistrationViewController.swift */; };
 		C528E4BC2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C528E4BB2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift */; };
 		C528E4BE2A5FB816002BD72E /* TermsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C528E4BD2A5FB816002BD72E /* TermsTableCell.swift */; };
@@ -140,6 +141,7 @@
 		C520662E2A7E485B0038ECCD /* MatchedPlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchedPlaceModel.swift; sourceTree = "<group>"; };
 		C52066302A7E4A580038ECCD /* PlaceModelBeforeMatchedAVIRO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModelBeforeMatchedAVIRO.swift; sourceTree = "<group>"; };
 		C52066322A7E80350038ECCD /* MatchedPlaceListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchedPlaceListCell.swift; sourceTree = "<group>"; };
+		C52066342A7F3FAE0038ECCD /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
 		C528E4B92A5F9A3E002BD72E /* ThridRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThridRegistrationViewController.swift; sourceTree = "<group>"; };
 		C528E4BB2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThridRegistrationPresenter.swift; sourceTree = "<group>"; };
 		C528E4BD2A5FB816002BD72E /* TermsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsTableCell.swift; sourceTree = "<group>"; };
@@ -387,6 +389,7 @@
 				C5EB510C2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift */,
 				C52066222A7CAC910038ECCD /* NoHistoryView.swift */,
 				C52066252A7CC3CE0038ECCD /* NoHistoryLabelView.swift */,
+				C52066342A7F3FAE0038ECCD /* HistoryTableViewCell.swift */,
 			);
 			path = SubView;
 			sourceTree = "<group>";
@@ -1081,6 +1084,7 @@
 				C51132BF2A559838006E1EC3 /* NotificationCenter.swift in Sources */,
 				C5FF13532A42C8810026981D /* AVIROPlaceModel.swift in Sources */,
 				C5351B5C2A19F60200116D50 /* PlaceListSearchViewPresenter.swift in Sources */,
+				C52066352A7F3FAE0038ECCD /* HistoryTableViewCell.swift in Sources */,
 				C528E4BA2A5F9A3E002BD72E /* ThridRegistrationViewController.swift in Sources */,
 				C528E4BC2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift in Sources */,
 				C5EB51162A21011C00B29CC1 /* DetailViewController.swift in Sources */,

@@ -89,7 +89,6 @@ final class NoHistoryLabelView: UIView {
         
         let totalHeight = topHeight + bottomHeight + padding
         
-        
         viewHeightConstraint?.constant = totalHeight
     }
     

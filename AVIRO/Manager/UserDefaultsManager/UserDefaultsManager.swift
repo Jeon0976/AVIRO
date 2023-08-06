@@ -33,7 +33,15 @@ struct UserDefalutsManager: UserDefaultsManagerProtocol {
     func setHistoryModel(_ newValues: HistoryTableModel) {
         var currentTable: [HistoryTableModel] = getHistoryModel()
         
+        if currentTable.contains(where: { $0.title == newValues.title }) {
+                return
+            }
+        
         currentTable.insert(newValues, at: 0)
+        
+        if currentTable.count > 10 {
+            currentTable.removeSubrange(10..<currentTable.count)
+        }
         
         UserDefaults.standard.set(
             try? PropertyListEncoder().encode(currentTable),

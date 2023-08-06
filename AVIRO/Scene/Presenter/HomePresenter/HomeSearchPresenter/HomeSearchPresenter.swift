@@ -11,14 +11,14 @@ protocol HomeSearchProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
     func howToShowFirstView(_ isShowHistoryTable: Bool)
-    func reloadTableView()
+    func placeListTableReload()
 }
 
 final class HomeSearchPresenter {
     weak var viewController: HomeSearchProtocol?
 
     private let userDefaultsManager = UserDefalutsManager()
-    private var historyTableArray = [HistoryTableModel]()
+    private var historyPlaceModel = [HistoryTableModel]()
     private var matchedPlaceModel = [MatchedPlaceModel]()
     
     var changedColorText = ""
@@ -36,6 +36,15 @@ final class HomeSearchPresenter {
         return matchedPlaceModel[row]
     }
     
+    // MARK: History Place Model List Model 다루기
+    var historyPlaceModelCount: Int {
+        historyPlaceModel.count
+    }
+    
+    func historyPlaceListRow(_ row: Int) -> HistoryTableModel {
+        return historyPlaceModel[row]
+    }
+
     // MARK: 데이터 변함에 따라 보여지는 view가 다름
     private var haveHistoryTableValues = false {
         didSet {
@@ -48,7 +57,10 @@ final class HomeSearchPresenter {
     }
     
     func viewDidLoad() {
+        // MARK: 최근 검색어 데이터 불러오면서 데이터 상태에 따른 view 표시 
         loadHistoryTableArray()
+        CheckHistoryTableValues()
+        
         viewController?.makeLayout()
         viewController?.makeAttribute()
     }
@@ -57,14 +69,12 @@ final class HomeSearchPresenter {
     func loadHistoryTableArray() {
         let loadedHistory = userDefaultsManager.getHistoryModel()
         
-        historyTableArray = loadedHistory
-        
-        CheckHistoryTableValues()
+        historyPlaceModel = loadedHistory
     }
     
     // MARK: Check HistoryTableValues
     func CheckHistoryTableValues() {
-        if historyTableArray.isEmpty {
+        if historyPlaceModel.isEmpty {
             haveHistoryTableValues = false
         } else {
             haveHistoryTableValues = true
@@ -72,13 +82,17 @@ final class HomeSearchPresenter {
     }
     
     // MARK: HistoryTable에 데이터 저장하고 불러오기
-    func appendHistoryModel(_ newHistoryModel: HistoryTableModel) {
-        userDefaultsManager.setHistoryModel(newHistoryModel)
+    func insertHistoryModel(_ indexPath: IndexPath) {
+        let title = matchedPlaceModel[indexPath.row].title
+        let historyModel = HistoryTableModel(title: title)
+        userDefaultsManager.setHistoryModel(historyModel)
         loadHistoryTableArray()
     }
     
     // MARK: HistoryTable에 데이터 삭제하고 불러오기
-    func deleteHistoryModel(_ historyModel: HistoryTableModel) {
+    func deleteHistoryModel(_ indexPath: IndexPath) {
+        let historyModel = historyPlaceModel[indexPath.row]
+        
         userDefaultsManager.deleteHistoryModel(historyModel)
         loadHistoryTableArray()
     }
@@ -228,7 +242,7 @@ final class HomeSearchPresenter {
             matchedPlaceModel.append(matchedPlace)
         }
 
-        viewController?.reloadTableView()
+        viewController?.placeListTableReload()
         isLoading = false
     }
 }

@@ -29,18 +29,17 @@ struct KakaoMapRequestAPI {
     static let inrollCategory = "CE7, FD6"
     static let mainSearchCategory = "CE7, FD6, SW8, AT4, PO3"
     
-    
     // MARK: Search 등록하기 Components 만들기 함수
     func searchPlace(query: String,
-                    longitude: String,
-                    latitude: String,
-                    page: String
+                     longitude: String,
+                     latitude: String,
+                     page: String
     ) -> URLComponents {
         var components = URLComponents()
         components.scheme = KakaoMapRequestAPI.scheme
         components.host = KakaoMapRequestAPI.host
         components.path = KakaoMapRequestAPI.keywordPath
-
+        
         components.queryItems = [
             URLQueryItem(name: KakaoMapRequestAPI.query, value: query),
             URLQueryItem(name: KakaoMapRequestAPI.category, value: KakaoMapRequestAPI.inrollCategory),
@@ -55,15 +54,15 @@ struct KakaoMapRequestAPI {
     
     // MARK: Search Location Components 만들기 함수
     func searchLocation(query: String,
-                    longitude: String,
-                    latitude: String,
-                    page: String
+                        longitude: String,
+                        latitude: String,
+                        page: String
     ) -> URLComponents {
         var components = URLComponents()
         components.scheme = KakaoMapRequestAPI.scheme
         components.host = KakaoMapRequestAPI.host
         components.path = KakaoMapRequestAPI.keywordPath
-
+        
         components.queryItems = [
             URLQueryItem(name: KakaoMapRequestAPI.query, value: query),
             URLQueryItem(name: KakaoMapRequestAPI.category, value: KakaoMapRequestAPI.mainSearchCategory),

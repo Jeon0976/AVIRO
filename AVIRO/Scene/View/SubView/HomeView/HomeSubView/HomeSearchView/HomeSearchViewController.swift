@@ -10,12 +10,12 @@ import UIKit
 final class HomeSearchViewController: UIViewController {
     lazy var presenter = HomeSearchPresenter(viewController: self)
     
-    var searchField = SearchField()
+    lazy var searchField = SearchField()
     
-    var placeListTableView = UITableView()
-    var noHistoryView = NoHistoryView()
+    lazy var placeListTableView = UITableView()
+    lazy var noHistoryView = NoHistoryView()
                                       
-    var historyTableView = UITableView()
+    lazy var historyTableView = UITableView()
     
     /// API 호출 관련해서 다 입력이 끝나면 발동하도록 하는 변수
     var searchTimer: DispatchWorkItem?
@@ -69,13 +69,14 @@ extension HomeSearchViewController: HomeSearchProtocol {
             
             // noHistoryView
             noHistoryView.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 20),
-            noHistoryView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            noHistoryView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            noHistoryView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            noHistoryView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
             // historyTableView
-            historyTableView.topAnchor.constraint(equalTo: searchField.topAnchor, constant: 20),
-            historyTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            historyTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+            historyTableView.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 20),
+            historyTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            historyTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            historyTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
@@ -85,8 +86,6 @@ extension HomeSearchViewController: HomeSearchProtocol {
         makeSearchFieldAttribute()
         makePlaceListTableAttribute()
         makeHistoryTableAttribute()
-        
-        historyTableView.isHidden = true
     }
     
     // MARK: How to Show First View
@@ -98,7 +97,7 @@ extension HomeSearchViewController: HomeSearchProtocol {
         }
     }
     
-    func reloadTableView() {
+    func placeListTableReload() {
         placeListTableView.reloadData()
     }
 }
@@ -113,6 +112,12 @@ extension HomeSearchViewController {
     private func ShowNoHistoryView() {
         historyTableView.isHidden = true
         noHistoryView.isHidden = false
+    }
+    
+    private func showPlaceListTable() {
+        placeListTableView.isHidden = false
+        historyTableView.isHidden = true
+        noHistoryView.isHidden = true
     }
     
     // MARK: View and Tab Attribute
@@ -153,10 +158,19 @@ extension HomeSearchViewController {
         )
         placeListTableView.separatorStyle = .none
         placeListTableView.isHidden = true
+        placeListTableView.tag = 0
     }
     
     // MARK: History Table Attribute
     private func makeHistoryTableAttribute() {
+        historyTableView.dataSource = self
+        historyTableView.delegate = self
+        historyTableView.register(
+            HistoryTableViewCell.self,
+            forCellReuseIdentifier: HistoryTableViewCell.identifier
+        )
+        historyTableView.separatorStyle = .none
+        historyTableView.tag = 1
         
     }
 }
@@ -168,9 +182,7 @@ extension HomeSearchViewController: UITextFieldDelegate {
         
         searchField.changeLeftButton()
          UIView.animate(withDuration: 0.2) {
-             self.historyTableView.isHidden = true
-             self.noHistoryView.isHidden = true
-             self.placeListTableView.isHidden = false
+             self.showPlaceListTable()
              
              self.searchFieldTopConstraint?.constant = 16
              self.view.layoutIfNeeded()
@@ -204,61 +216,109 @@ extension HomeSearchViewController: UITextFieldDelegate {
 
 extension HomeSearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter.matchedPlaceModelCount
+        switch tableView.tag {
+        case 0:
+            return presenter.matchedPlaceModelCount
+        case 1:
+            return presenter.historyPlaceModelCount
+        default:
+            return 0
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCell(
-            withIdentifier: HomeSearchViewTableViewCell.identifier,
-            for: indexPath
-        ) as? HomeSearchViewTableViewCell
+        switch tableView.tag {
+        case 0:
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: HomeSearchViewTableViewCell.identifier,
+                for: indexPath
+            ) as? HomeSearchViewTableViewCell
 
-        let data = presenter.matchedPlaceListRow(indexPath.row)
+            let data = presenter.matchedPlaceListRow(indexPath.row)
 
-        let title = data.title
-        let address = data.address
-        let distance = data.distance
-        
-        var icon: UIImage?
-        
-        switch (data.allVegan, data.someVegan, data.requestVegan) {
-        case (true, _, _):
-            icon = UIImage(named: "AllCell")
-        case (_, true, _):
-            icon = UIImage(named: "SomeCell")
-        case (_, _, true):
-            icon = UIImage(named: "RequestCell")
+            let title = data.title
+            let address = data.address
+            let distance = data.distance
+            
+            var icon: UIImage?
+            
+            switch (data.allVegan, data.someVegan, data.requestVegan) {
+            case (true, _, _):
+                icon = UIImage(named: "AllCell")
+            case (_, true, _):
+                icon = UIImage(named: "SomeCell")
+            case (_, _, true):
+                icon = UIImage(named: "RequestCell")
+            default:
+                icon = UIImage(named: "ListCellIcon")
+            }
+            
+            let cellData = MatchedPlaceListCell(
+                icon: icon ?? UIImage(named: "ListCellIcon")!,
+                title: title,
+                address: address,
+                distance: distance
+            )
+            
+            let attributedTitle = title.changeColor(changedText: presenter.changedColorText)
+            let attributedAddress = address.changeColor(changedText: presenter.changedColorText)
+            
+            cell?.makeCellData(cellData, attributedTitle: attributedTitle, attributedAddress: attributedAddress)
+
+            cell?.backgroundColor = .gray7
+            cell?.selectionStyle = .none
+
+            return cell ?? UITableViewCell()
+        case 1:
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: HistoryTableViewCell.identifier,
+                for: indexPath
+            ) as? HistoryTableViewCell
+            
+            let cellData = presenter.historyPlaceListRow(indexPath.row)
+            
+            cell?.makeCellData(cellData)
+            
+            // MARK: Cancel button 클릭 시
+            cell?.cancelButtonTapped = { [weak self] in
+                self?.presenter.deleteHistoryModel(indexPath)
+            }
+            
+            cell?.backgroundColor = .gray7
+            cell?.selectionStyle = .none
+            
+            return cell ?? UITableViewCell()
         default:
-            icon = UIImage(named: "ListCellIcon")
+            return UITableViewCell()
         }
-        
-        let cellData = MatchedPlaceListCell(
-            icon: icon ?? UIImage(named: "ListCellIcon")!,
-            title: title,
-            address: address,
-            distance: distance
-        )
-        
-        cell?.makeCellData(cellData, attributedTitle: nil, attributedAddress: nil)
-
-        cell?.backgroundColor = .white
-        cell?.selectionStyle = .none
-
-        return cell ?? UITableViewCell()
     }
 }
 
 extension HomeSearchViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         let height = scrollView.frame.size.height
-
-        // 더 빠른 API 호출을 위한 상수 300
-        if offsetY > contentHeight - height {
-            let query = searchField.text ?? ""
-            presenter.afterPagingSearchAndCompareAVIROData(query)
+        
+        if scrollView == placeListTableView {
+            // 더 빠른 API 호출을 위한 상수 300
+            if offsetY > contentHeight - height {
+                let query = searchField.text ?? ""
+                presenter.afterPagingSearchAndCompareAVIROData(query)
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch tableView.tag {
+        case 0:
+            presenter.insertHistoryModel(indexPath)
+        case 1:
+            break
+        default:
+            break
         }
     }
 }
