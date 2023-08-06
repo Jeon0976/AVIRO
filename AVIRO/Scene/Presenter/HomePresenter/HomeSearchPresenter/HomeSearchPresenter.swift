@@ -12,6 +12,7 @@ protocol HomeSearchProtocol: NSObject {
     func makeAttribute()
     func howToShowFirstView(_ isShowHistoryTable: Bool)
     func placeListTableReload()
+    func historyListTableReload()
 }
 
 final class HomeSearchPresenter {
@@ -57,7 +58,7 @@ final class HomeSearchPresenter {
     }
     
     func viewDidLoad() {
-        // MARK: 최근 검색어 데이터 불러오면서 데이터 상태에 따른 view 표시 
+        // MARK: 최근 검색어 데이터 불러오면서 데이터 상태에 따른 view 표시
         loadHistoryTableArray()
         CheckHistoryTableValues()
         
@@ -70,6 +71,10 @@ final class HomeSearchPresenter {
         let loadedHistory = userDefaultsManager.getHistoryModel()
         
         historyPlaceModel = loadedHistory
+        
+        if historyPlaceModel.isEmpty {
+            CheckHistoryTableValues()
+        }
     }
     
     // MARK: Check HistoryTableValues
@@ -95,6 +100,7 @@ final class HomeSearchPresenter {
         
         userDefaultsManager.deleteHistoryModel(historyModel)
         loadHistoryTableArray()
+        viewController?.historyListTableReload()
     }
     
     // MARK: 최초 Search 후 KakaoMap Load -> AVIRO 데이터 비교

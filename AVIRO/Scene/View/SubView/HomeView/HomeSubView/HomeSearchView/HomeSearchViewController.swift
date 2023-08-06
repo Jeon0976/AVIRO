@@ -100,6 +100,10 @@ extension HomeSearchViewController: HomeSearchProtocol {
     func placeListTableReload() {
         placeListTableView.reloadData()
     }
+    
+    func historyListTableReload() {
+        historyTableView.reloadData()
+    }
 }
 
 extension HomeSearchViewController {
