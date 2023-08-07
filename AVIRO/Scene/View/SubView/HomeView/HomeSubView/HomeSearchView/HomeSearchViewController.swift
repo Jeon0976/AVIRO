@@ -340,8 +340,17 @@ extension HomeSearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch tableView.tag {
         case 0:
+            let headerView = PlaceListHeaderView()
             
-            return UIView()
+            headerView.touchedLocationPositionButton = { [weak self] alert in
+                self?.present(alert, animated: true)
+            }
+            
+            headerView.touchedSortingByButton = { [weak self] alert in
+                self?.present(alert, animated: true)
+            }
+            
+            return headerView
         case 1:
             let headerView = HistoryHeaderView()
             
