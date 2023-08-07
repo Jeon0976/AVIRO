@@ -33,6 +33,7 @@
 		C52066382A808DAD0038ECCD /* HistoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066372A808DAD0038ECCD /* HistoryHeaderView.swift */; };
 		C520663A2A808DC40038ECCD /* PlaceListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066392A808DC40038ECCD /* PlaceListHeaderView.swift */; };
 		C520663C2A80C0450038ECCD /* CenterCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C520663B2A80C0450038ECCD /* CenterCoordinate.swift */; };
+		C52066412A8129510038ECCD /* KakaoAPISortingQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066402A8129510038ECCD /* KakaoAPISortingQuery.swift */; };
 		C528E4BA2A5F9A3E002BD72E /* ThridRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C528E4B92A5F9A3E002BD72E /* ThridRegistrationViewController.swift */; };
 		C528E4BC2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C528E4BB2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift */; };
 		C528E4BE2A5FB816002BD72E /* TermsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C528E4BD2A5FB816002BD72E /* TermsTableCell.swift */; };
@@ -148,6 +149,7 @@
 		C52066372A808DAD0038ECCD /* HistoryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryHeaderView.swift; sourceTree = "<group>"; };
 		C52066392A808DC40038ECCD /* PlaceListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListHeaderView.swift; sourceTree = "<group>"; };
 		C520663B2A80C0450038ECCD /* CenterCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterCoordinate.swift; sourceTree = "<group>"; };
+		C52066402A8129510038ECCD /* KakaoAPISortingQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoAPISortingQuery.swift; sourceTree = "<group>"; };
 		C528E4B92A5F9A3E002BD72E /* ThridRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThridRegistrationViewController.swift; sourceTree = "<group>"; };
 		C528E4BB2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThridRegistrationPresenter.swift; sourceTree = "<group>"; };
 		C528E4BD2A5FB816002BD72E /* TermsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsTableCell.swift; sourceTree = "<group>"; };
@@ -459,6 +461,7 @@
 			isa = PBXGroup;
 			children = (
 				C5351B662A1A154C00116D50 /* PageEndingCheck.swift */,
+				C52066402A8129510038ECCD /* KakaoAPISortingQuery.swift */,
 			);
 			path = APISingleton;
 			sourceTree = "<group>";
@@ -1083,6 +1086,7 @@
 				C5B071E12A59454300AE709A /* BottomCell.swift in Sources */,
 				C520663C2A80C0450038ECCD /* CenterCoordinate.swift in Sources */,
 				C5351B502A19225A00116D50 /* KakaoMapResponseKeywordModel.swift in Sources */,
+				C52066412A8129510038ECCD /* KakaoAPISortingQuery.swift in Sources */,
 				C5351B4D2A19223300116D50 /* KakaoMapRequestAPI.swift in Sources */,
 				C520662F2A7E485B0038ECCD /* MatchedPlaceModel.swift in Sources */,
 				C5EB511E2A21189B00B29CC1 /* StoreDetailView.swift in Sources */,

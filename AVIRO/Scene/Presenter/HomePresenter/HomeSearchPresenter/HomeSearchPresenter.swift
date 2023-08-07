@@ -135,14 +135,27 @@ final class HomeSearchPresenter {
     ) {
         currentPage = 1
         let query = query
-        let longitude = MyCoordinate.shared.longitudeString
-        let latitude = MyCoordinate.shared.latitudeString
+        
+        var longitude: Double
+        var latitude: Double
+        
+        let whichLocation = KakaoAPISortingQuery.shared.coordinate
+        
+        if whichLocation == KakaoSerachCoordinate.MyCoordinate {
+            longitude = MyCoordinate.shared.longitude ?? 0.0
+            latitude = MyCoordinate.shared.latitude ?? 0.0
+        } else {
+            longitude = CenterCoordinate.shared.longitude ?? 0.0
+            latitude = CenterCoordinate.shared.latitude ?? 0.0
+        }
+        
         
         KakaoMapRequestManager().kakaoMapLocationSearch(
             query: query,
-            longitude: longitude,
-            latitude: latitude,
-            page: "\(currentPage)"
+            longitude: String(longitude),
+            latitude: String(latitude),
+            page: "\(currentPage)",
+            isAccuracy: KakaoAPISortingQuery.shared.sorting
         ) { model in
             let placeList = model.documents.map { location in
                 let placeListCellModel = PlaceListModel(
@@ -183,16 +196,27 @@ final class HomeSearchPresenter {
         if PageEndingCheck.shared.isend == true {
             return
         }
+  
+        var longitude: Double
+        var latitude: Double
         
-        let query = query
-        let longitude = MyCoordinate.shared.longitudeString
-        let latitude = MyCoordinate.shared.latitudeString
+        let whichLocation = KakaoAPISortingQuery.shared.coordinate
+        
+        if whichLocation == KakaoSerachCoordinate.MyCoordinate {
+            longitude = MyCoordinate.shared.longitude ?? 0.0
+            latitude = MyCoordinate.shared.latitude ?? 0.0
+        } else {
+            longitude = CenterCoordinate.shared.longitude ?? 0.0
+            latitude = CenterCoordinate.shared.latitude ?? 0.0
+        }
         
         KakaoMapRequestManager().kakaoMapLocationSearch(
             query: query,
-            longitude: longitude,
-            latitude: latitude,
-            page: "\(currentPage)") { model in
+            longitude: String(longitude),
+            latitude: String(latitude),
+            page: "\(currentPage)",
+            isAccuracy: KakaoAPISortingQuery.shared.sorting
+        ) { model in
                 let placeList = model.documents.map { location in
                     let placeListCellModel = PlaceListModel(
                         title: location.name,

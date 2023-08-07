@@ -11,12 +11,15 @@ final class PlaceListHeaderView: UIView {
     private lazy var locationPositionButton: UIButton = {
        let button = UIButton()
         
-        button.setTitle("내 위치 중심", for: .normal)
+        let title = KakaoAPISortingQuery.shared.coordinate.value
+        
+        button.setTitle(title, for: .normal)
         button.setImage(UIImage(named: "DownSorting"), for: .normal)
         button.setTitleColor(.gray3, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.semanticContentAttribute = .forceRightToLeft
         button.addTarget(self, action: #selector(locationPositionButtonTapped(_:)), for: .touchUpInside)
+        button.titleLabel?.textAlignment = .left
         
         return button
     }()
@@ -24,18 +27,25 @@ final class PlaceListHeaderView: UIView {
     private lazy var sortingByButton: UIButton = {
         let button = UIButton()
         
-        button.setTitle("정확도순", for: .normal)
+        let title = KakaoAPISortingQuery.shared.sorting.value
+        
+        button.setTitle(title, for: .normal)
         button.setImage(UIImage(named: "DownSorting"), for: .normal)
         button.setTitleColor(.gray3, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+        button.titleLabel?.textAlignment = .left
+
         button.semanticContentAttribute = .forceRightToLeft
         button.addTarget(self, action: #selector(sortingByButtonTapped(_:)), for: .touchUpInside)
         
         return button
     }()
     
+    /// Alert Present
     var touchedLocationPositionButton: ((UIAlertController) -> Void)?
     var touchedSortingByButton: ((UIAlertController) -> Void)?
+    /// Init Search And Compare AVIRO 시작
+    var touchedCanActiveSort: (() -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -60,17 +70,20 @@ final class PlaceListHeaderView: UIView {
         NSLayoutConstraint.activate([
             locationPositionButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             locationPositionButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            locationPositionButton.widthAnchor.constraint(equalToConstant: 110),
             
             sortingByButton.leadingAnchor.constraint(equalTo: locationPositionButton.trailingAnchor, constant: 10),
-            sortingByButton.centerYAnchor.constraint(equalTo: locationPositionButton.centerYAnchor)
+            sortingByButton.centerYAnchor.constraint(equalTo: locationPositionButton.centerYAnchor),
+            sortingByButton.widthAnchor.constraint(equalToConstant: 90)
         ])
     }
     
     // MARK: location Position Button 설정하기
     @objc private func locationPositionButtonTapped(_ sender: UIButton) {
+        // 선택된것에 따른 색상관련 변수
         var isTop = false
         
-        if sender.titleLabel?.text == "지도 중심" {
+        if sender.titleLabel?.text == KakaoSerachCoordinate.CenterCoordinate.value {
             isTop = true
         }
         
@@ -78,10 +91,14 @@ final class PlaceListHeaderView: UIView {
         
         let centerLocation = UIAlertAction(title: "지도 중심", style: .default) { _ in
             self.locationPositionButton.setTitle("지도 중심", for: .normal)
+            KakaoAPISortingQuery.shared.coordinate = KakaoSerachCoordinate.CenterCoordinate
+            self.touchedCanActiveSort?()
         }
     
         let myLocation = UIAlertAction(title: "내 위치 중심", style: .default) { _ in
             self.locationPositionButton.setTitle("내 위치 중심", for: .normal)
+            KakaoAPISortingQuery.shared.coordinate = KakaoSerachCoordinate.MyCoordinate
+            self.touchedCanActiveSort?()
         }
         
         let cancel = UIAlertAction(title: "취소하기", style: .cancel)
@@ -105,7 +122,7 @@ final class PlaceListHeaderView: UIView {
     @objc private func sortingByButtonTapped(_ sender: UIButton) {
         var isTop = false
         
-        if sender.titleLabel?.text == "정확도순" {
+        if sender.titleLabel?.text == KakaoSearchHowToSort.accuracy.value {
             isTop = true
         }
         
@@ -113,10 +130,14 @@ final class PlaceListHeaderView: UIView {
         
         let accurancy = UIAlertAction(title: "정확도순", style: .default) { _ in
             self.sortingByButton.setTitle("정확도순", for: .normal)
+            KakaoAPISortingQuery.shared.sorting = KakaoSearchHowToSort.accuracy
+            self.touchedCanActiveSort?()
         }
     
         let distance = UIAlertAction(title: "거리순", style: .default) { _ in
             self.sortingByButton.setTitle("거리순", for: .normal)
+            KakaoAPISortingQuery.shared.sorting = KakaoSearchHowToSort.distance
+            self.touchedCanActiveSort?()
         }
         
         let cancel = UIAlertAction(title: "취소하기", style: .cancel)

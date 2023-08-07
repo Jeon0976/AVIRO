@@ -24,7 +24,8 @@ struct KakaoMapRequestAPI {
     
     // MARK: static query
     // 사용자 기준 거리순 정렬
-    static let sortValue = "accuracy"
+    static let accuracy = "accuracy"
+    static let distance = "distance"
     // CE7: 카페, FD6: 음식점, SW8: 지하철역, AT4: 관광명소, PO3: 공공기관
     static let inrollCategory = "CE7, FD6"
     static let mainSearchCategory = "CE7, FD6, SW8, AT4, PO3"
@@ -45,7 +46,7 @@ struct KakaoMapRequestAPI {
             URLQueryItem(name: KakaoMapRequestAPI.category, value: KakaoMapRequestAPI.inrollCategory),
             URLQueryItem(name: KakaoMapRequestAPI.longitude, value: longitude),
             URLQueryItem(name: KakaoMapRequestAPI.latitude, value: latitude),
-            URLQueryItem(name: KakaoMapRequestAPI.sort, value: KakaoMapRequestAPI.sortValue),
+            URLQueryItem(name: KakaoMapRequestAPI.sort, value: KakaoMapRequestAPI.accuracy),
             URLQueryItem(name: KakaoMapRequestAPI.page, value: page)
         ]
         
@@ -56,7 +57,8 @@ struct KakaoMapRequestAPI {
     func searchLocation(query: String,
                         longitude: String,
                         latitude: String,
-                        page: String
+                        page: String,
+                        isAccuracy: KakaoSearchHowToSort
     ) -> URLComponents {
         var components = URLComponents()
         components.scheme = KakaoMapRequestAPI.scheme
@@ -68,7 +70,7 @@ struct KakaoMapRequestAPI {
             URLQueryItem(name: KakaoMapRequestAPI.category, value: KakaoMapRequestAPI.mainSearchCategory),
             URLQueryItem(name: KakaoMapRequestAPI.longitude, value: longitude),
             URLQueryItem(name: KakaoMapRequestAPI.latitude, value: latitude),
-            URLQueryItem(name: KakaoMapRequestAPI.sort, value: KakaoMapRequestAPI.sortValue),
+            URLQueryItem(name: KakaoMapRequestAPI.sort, value: isAccuracy == KakaoSearchHowToSort.accuracy ? KakaoMapRequestAPI.accuracy : KakaoMapRequestAPI.distance),
             URLQueryItem(name: KakaoMapRequestAPI.page, value: page)
         ]
         

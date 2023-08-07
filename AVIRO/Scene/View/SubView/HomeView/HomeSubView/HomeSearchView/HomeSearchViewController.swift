@@ -350,6 +350,11 @@ extension HomeSearchViewController: UITableViewDataSource {
                 self?.present(alert, animated: true)
             }
             
+            headerView.touchedCanActiveSort = { [weak self] in
+                guard let query = self?.searchField.text else { return }
+                self?.presenter.initialSearchDataAndCompareAVIROData(query)
+            }
+            
             return headerView
         case 1:
             let headerView = HistoryHeaderView()

@@ -65,13 +65,15 @@ final class KakaoMapRequestManager: KakaoMapRequestProtocol {
                                 longitude: String,
                                 latitude: String,
                                 page: String,
+                                isAccuracy: KakaoSearchHowToSort,
                                 completionHandler: @escaping ((KakaoMapResponseKeywordModel) -> Void)
     ) {
         guard let url = api.searchLocation(
             query: query,
             longitude: longitude,
             latitude: latitude,
-            page: page
+            page: page,
+            isAccuracy: isAccuracy
         ).url else { return }
         
         guard let keyUrl = Bundle.main.url(forResource: "API", withExtension: "plist"),
