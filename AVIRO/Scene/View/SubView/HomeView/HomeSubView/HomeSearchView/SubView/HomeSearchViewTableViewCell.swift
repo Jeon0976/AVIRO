@@ -39,15 +39,16 @@ final class HomeSearchViewTableViewCell: UITableViewCell {
             title.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 10),
             title.topAnchor.constraint(equalTo: icon.topAnchor),
             title.widthAnchor.constraint(equalToConstant: contentView.frame.width - 105),
-            
             // address
             address.leadingAnchor.constraint(equalTo: title.leadingAnchor),
             address.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 11),
             address.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -25),
+            address.widthAnchor.constraint(equalTo: title.widthAnchor, multiplier: 1),
             
             // distance
             distance.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 30),
             distance.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
+
         ])
         
         makeAttribute()
