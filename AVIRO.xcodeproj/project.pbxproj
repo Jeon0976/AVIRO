@@ -30,6 +30,9 @@
 		C52066312A7E4A580038ECCD /* PlaceModelBeforeMatchedAVIRO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066302A7E4A580038ECCD /* PlaceModelBeforeMatchedAVIRO.swift */; };
 		C52066332A7E80350038ECCD /* MatchedPlaceListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066322A7E80350038ECCD /* MatchedPlaceListCell.swift */; };
 		C52066352A7F3FAE0038ECCD /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066342A7F3FAE0038ECCD /* HistoryTableViewCell.swift */; };
+		C52066382A808DAD0038ECCD /* HistoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066372A808DAD0038ECCD /* HistoryHeaderView.swift */; };
+		C520663A2A808DC40038ECCD /* PlaceListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066392A808DC40038ECCD /* PlaceListHeaderView.swift */; };
+		C520663C2A80C0450038ECCD /* CenterCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C520663B2A80C0450038ECCD /* CenterCoordinate.swift */; };
 		C528E4BA2A5F9A3E002BD72E /* ThridRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C528E4B92A5F9A3E002BD72E /* ThridRegistrationViewController.swift */; };
 		C528E4BC2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C528E4BB2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift */; };
 		C528E4BE2A5FB816002BD72E /* TermsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C528E4BD2A5FB816002BD72E /* TermsTableCell.swift */; };
@@ -41,7 +44,7 @@
 		C52FA34F2A175B20005E70DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C52FA34D2A175B20005E70DC /* LaunchScreen.storyboard */; };
 		C5351B4D2A19223300116D50 /* KakaoMapRequestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B4C2A19223300116D50 /* KakaoMapRequestAPI.swift */; };
 		C5351B502A19225A00116D50 /* KakaoMapResponseKeywordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B4F2A19225A00116D50 /* KakaoMapResponseKeywordModel.swift */; };
-		C5351B542A19A7B100116D50 /* PersonalLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B532A19A7B100116D50 /* PersonalLocation.swift */; };
+		C5351B542A19A7B100116D50 /* MyCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B532A19A7B100116D50 /* MyCoordinate.swift */; };
 		C5351B562A19B67900116D50 /* CustomAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B552A19B67900116D50 /* CustomAlertController.swift */; };
 		C5351B5C2A19F60200116D50 /* PlaceListSearchViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B5B2A19F60200116D50 /* PlaceListSearchViewPresenter.swift */; };
 		C5351B602A19F9A700116D50 /* PlaceListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B5F2A19F9A700116D50 /* PlaceListModel.swift */; };
@@ -142,6 +145,9 @@
 		C52066302A7E4A580038ECCD /* PlaceModelBeforeMatchedAVIRO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModelBeforeMatchedAVIRO.swift; sourceTree = "<group>"; };
 		C52066322A7E80350038ECCD /* MatchedPlaceListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchedPlaceListCell.swift; sourceTree = "<group>"; };
 		C52066342A7F3FAE0038ECCD /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
+		C52066372A808DAD0038ECCD /* HistoryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryHeaderView.swift; sourceTree = "<group>"; };
+		C52066392A808DC40038ECCD /* PlaceListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListHeaderView.swift; sourceTree = "<group>"; };
+		C520663B2A80C0450038ECCD /* CenterCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterCoordinate.swift; sourceTree = "<group>"; };
 		C528E4B92A5F9A3E002BD72E /* ThridRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThridRegistrationViewController.swift; sourceTree = "<group>"; };
 		C528E4BB2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThridRegistrationPresenter.swift; sourceTree = "<group>"; };
 		C528E4BD2A5FB816002BD72E /* TermsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsTableCell.swift; sourceTree = "<group>"; };
@@ -156,7 +162,7 @@
 		C5351B4A2A1919F700116D50 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		C5351B4C2A19223300116D50 /* KakaoMapRequestAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapRequestAPI.swift; sourceTree = "<group>"; };
 		C5351B4F2A19225A00116D50 /* KakaoMapResponseKeywordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapResponseKeywordModel.swift; sourceTree = "<group>"; };
-		C5351B532A19A7B100116D50 /* PersonalLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalLocation.swift; sourceTree = "<group>"; };
+		C5351B532A19A7B100116D50 /* MyCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCoordinate.swift; sourceTree = "<group>"; };
 		C5351B552A19B67900116D50 /* CustomAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertController.swift; sourceTree = "<group>"; };
 		C5351B5B2A19F60200116D50 /* PlaceListSearchViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListSearchViewPresenter.swift; sourceTree = "<group>"; };
 		C5351B5F2A19F9A700116D50 /* PlaceListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListModel.swift; sourceTree = "<group>"; };
@@ -322,7 +328,7 @@
 				C5EB51022A20927400B29CC1 /* HomeViewModel */,
 				C5732C7A2A41D3F800CDC499 /* InrollViewModel */,
 				C5351B782A1B437600116D50 /* APIResonseModel */,
-				C5351B652A1A128D00116D50 /* SingleTonModel */,
+				C5351B652A1A128D00116D50 /* SingletonModel */,
 				C5351B7B2A1B52A000116D50 /* PlaceListModel */,
 			);
 			path = Model;
@@ -386,6 +392,7 @@
 		C52066242A7CACA80038ECCD /* SubView */ = {
 			isa = PBXGroup;
 			children = (
+				C52066362A808D920038ECCD /* HeaderView */,
 				C5EB510C2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift */,
 				C52066222A7CAC910038ECCD /* NoHistoryView.swift */,
 				C52066252A7CC3CE0038ECCD /* NoHistoryLabelView.swift */,
@@ -419,6 +426,41 @@
 				C520662C2A7CE1CC0038ECCD /* UserDefaultsManager.swift */,
 			);
 			path = UserDefaultsManager;
+			sourceTree = "<group>";
+		};
+		C52066362A808D920038ECCD /* HeaderView */ = {
+			isa = PBXGroup;
+			children = (
+				C52066372A808DAD0038ECCD /* HistoryHeaderView.swift */,
+				C52066392A808DC40038ECCD /* PlaceListHeaderView.swift */,
+			);
+			path = HeaderView;
+			sourceTree = "<group>";
+		};
+		C520663D2A80C60D0038ECCD /* ViewSingleton */ = {
+			isa = PBXGroup;
+			children = (
+				C51132C02A559BCA006E1EC3 /* AppController.swift */,
+			);
+			name = ViewSingleton;
+			path = "View Present 관련 Singleton";
+			sourceTree = "<group>";
+		};
+		C520663E2A80C6220038ECCD /* CoordinateSingleton */ = {
+			isa = PBXGroup;
+			children = (
+				C5351B532A19A7B100116D50 /* MyCoordinate.swift */,
+				C520663B2A80C0450038ECCD /* CenterCoordinate.swift */,
+			);
+			path = CoordinateSingleton;
+			sourceTree = "<group>";
+		};
+		C520663F2A80C6450038ECCD /* APISingleton */ = {
+			isa = PBXGroup;
+			children = (
+				C5351B662A1A154C00116D50 /* PageEndingCheck.swift */,
+			);
+			path = APISingleton;
 			sourceTree = "<group>";
 		};
 		C52FA3362A175B20005E70DC = {
@@ -482,14 +524,14 @@
 			path = SearchPlace;
 			sourceTree = "<group>";
 		};
-		C5351B652A1A128D00116D50 /* SingleTonModel */ = {
+		C5351B652A1A128D00116D50 /* SingletonModel */ = {
 			isa = PBXGroup;
 			children = (
-				C51132C02A559BCA006E1EC3 /* AppController.swift */,
-				C5351B532A19A7B100116D50 /* PersonalLocation.swift */,
-				C5351B662A1A154C00116D50 /* PageEndingCheck.swift */,
+				C520663D2A80C60D0038ECCD /* ViewSingleton */,
+				C520663E2A80C6220038ECCD /* CoordinateSingleton */,
+				C520663F2A80C6450038ECCD /* APISingleton */,
 			);
-			path = SingleTonModel;
+			path = SingletonModel;
 			sourceTree = "<group>";
 		};
 		C5351B722A1B369000116D50 /* SearchPlace */ = {
@@ -1031,12 +1073,15 @@
 				C52066292A7CD5FC0038ECCD /* HistoryTableModel.swift in Sources */,
 				C50F6AF52A68FD6300E942F5 /* InrollPlacePresenter.swift in Sources */,
 				C5CAAC452A39A93C008C5FDA /* Layout.swift in Sources */,
+				C520663A2A808DC40038ECCD /* PlaceListHeaderView.swift in Sources */,
+				C52066382A808DAD0038ECCD /* HistoryHeaderView.swift in Sources */,
 				C52FA3472A175B20005E70DC /* HomeViewController.swift in Sources */,
 				C51BBAD72A78D5AB00BF5B7C /* PlaceCheckModel.swift in Sources */,
 				C5EB50E82A1C6FD600B29CC1 /* PopularViewController.swift in Sources */,
 				C54BC0DB2A2C2D0D00B65439 /* ColorCustom.swift in Sources */,
 				C52FA3432A175B20005E70DC /* AppDelegate.swift in Sources */,
 				C5B071E12A59454300AE709A /* BottomCell.swift in Sources */,
+				C520663C2A80C0450038ECCD /* CenterCoordinate.swift in Sources */,
 				C5351B502A19225A00116D50 /* KakaoMapResponseKeywordModel.swift in Sources */,
 				C5351B4D2A19223300116D50 /* KakaoMapRequestAPI.swift in Sources */,
 				C520662F2A7E485B0038ECCD /* MatchedPlaceModel.swift in Sources */,
@@ -1066,7 +1111,7 @@
 				C50367F52A1795D10020C6BB /* HomeViewPresenter.swift in Sources */,
 				C5351B622A1A083400116D50 /* PlaceListCellModel.swift in Sources */,
 				C52FA3452A175B20005E70DC /* SceneDelegate.swift in Sources */,
-				C5351B542A19A7B100116D50 /* PersonalLocation.swift in Sources */,
+				C5351B542A19A7B100116D50 /* MyCoordinate.swift in Sources */,
 				C5EB50EA2A1C705900B29CC1 /* MyPageViewController.swift in Sources */,
 				C5D8E8632A3DEC3900D88A43 /* String+Extension.swift in Sources */,
 				C50F6B022A6BC8E400E942F5 /* InrollField.swift in Sources */,

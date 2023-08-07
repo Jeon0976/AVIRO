@@ -1,18 +1,20 @@
 //
-//  PersonalLocation.swift
+//  CenterCoordinate.swift
 //  AVIRO
 //
-//  Created by 전성훈 on 2023/05/21.
+//  Created by 전성훈 on 2023/08/07.
 //
 
 import Foundation
 
 /// 경도(x:Longitude) 위도(y:latitude)
-final class PersonalLocation {
-    static let shared = PersonalLocation()
+final class CenterCoordinate {
+    static let shared = CenterCoordinate()
     
     var latitude: Double?
     var longitude: Double?
+    
+    var highPrioriy = false
     
     var latitudeString: String {
         return String(format: "%.4f", latitude ?? "")

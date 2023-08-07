@@ -18,6 +18,7 @@ protocol HomeViewProtocol: NSObject {
     func requestSuccess()
     func makeMarker(_ veganList: [HomeMapData])
     func pushDetailViewController(_ placeId: String)
+    func moveToCameraWhenNoAVIRO(_ lng: Double, _ lat: Double)
 }
 
 final class HomeViewPresenter: NSObject {
@@ -25,13 +26,21 @@ final class HomeViewPresenter: NSObject {
     
     private let locationManager = CLLocationManager()
     private let aviroManager = AVIROAPIManager()
-
+    
     var homeMapData: [HomeMapData]?
     
     var firstLocation = true
     
     init(viewController: HomeViewProtocol) {
         self.viewController = viewController
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: NSNotification.Name("checkIsInAVRIO"),
+            object: nil
+        )
     }
     
     func viewDidLoad() {
@@ -50,14 +59,45 @@ final class HomeViewPresenter: NSObject {
     // MARK: vegan Data 불러오기
     func loadVeganData() {
         aviroManager.getNerbyPlaceModels(
-            longitude: PersonalLocation.shared.longitudeString,
-                                         
-            latitude: PersonalLocation.shared.latitudeString,
-                                         wide: "0.0"
+            longitude: MyCoordinate.shared.longitudeString,
+            
+            latitude: MyCoordinate.shared.latitudeString,
+            wide: "0.0"
         ) { [weak self] mapDatas in
-                self?.homeMapData = mapDatas.data.placeData
-                self?.viewController?.makeMarker((self?.homeMapData)!)
-            }
+            self?.homeMapData = mapDatas.data.placeData
+            self?.viewController?.makeMarker((self?.homeMapData)!)
+        }
+    }
+    
+    // MARK: Make Notification
+    func makeNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(checkIsInAVRIONotificaiton(_:)),
+            name: NSNotification.Name("checkIsInAVRIO"),
+            object: nil
+        )
+    }
+    
+    // MARK: Notification Method afterMainSearch
+    @objc func checkIsInAVRIONotificaiton(_ noficiation: Notification) {
+        guard let checkIsInAVIRO = noficiation.userInfo?["checkIsInAVRIO"] as? MatchedPlaceModel else { return }
+        
+        afterMainSearch(checkIsInAVIRO)
+    }
+    
+    // MARK: After Main Search Method
+    private func afterMainSearch(_ afterSearchModel: MatchedPlaceModel) {
+        // AVIRO에 데이터가 없을 때
+        if !afterSearchModel.allVegan && !afterSearchModel.someVegan && !afterSearchModel.requestVegan {
+            viewController?.moveToCameraWhenNoAVIRO(
+                afterSearchModel.x,
+                afterSearchModel.y
+            )
+        } else {
+        // AVIRO에 데이터가 있을 때
+            
+        }
     }
 }
 
@@ -103,16 +143,16 @@ extension HomeViewPresenter: CLLocationManagerDelegate {
             viewController?.requestSuccess()
         }
         
-        firstLocation = !firstLocation
+        firstLocation.toggle()
     }
 
     // MARK: 개인 Location Data 불러오고 나서 할 작업
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         
-        PersonalLocation.shared.latitude = location.coordinate.latitude
-        PersonalLocation.shared.longitude = location.coordinate.longitude
-
+        MyCoordinate.shared.latitude = location.coordinate.latitude
+        MyCoordinate.shared.longitude = location.coordinate.longitude
+                
         locationManager.stopUpdatingLocation()
     }
 }

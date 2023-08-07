@@ -14,4 +14,6 @@ struct MatchedPlaceModel {
     let allVegan: Bool
     let someVegan: Bool
     let requestVegan: Bool
+    let x: Double
+    let y: Double
 }

@@ -10,7 +10,7 @@ import UIKit
 final class HistoryTableViewCell: UITableViewCell {
     static let identifier = "HistoryTableViewCell"
     
-    lazy var icon: UIImageView = {
+    private lazy var icon: UIImageView = {
         let imageView = UIImageView()
        
         imageView.image = UIImage(named: "RecentlyTime")
@@ -18,13 +18,13 @@ final class HistoryTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    lazy var titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         
         return label
     }()
     
-    lazy var cancelButton: UIButton = {
+    private lazy var cancelButton: UIButton = {
         let button = UIButton()
         
         button.setImage(UIImage(named: "X-Circle"), for: .normal)

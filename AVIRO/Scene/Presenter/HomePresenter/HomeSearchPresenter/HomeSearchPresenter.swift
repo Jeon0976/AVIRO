@@ -13,6 +13,8 @@ protocol HomeSearchProtocol: NSObject {
     func howToShowFirstView(_ isShowHistoryTable: Bool)
     func placeListTableReload()
     func historyListTableReload()
+    func insertTitleToTextField(_ query: String)
+    func popViewController()
 }
 
 final class HomeSearchPresenter {
@@ -47,11 +49,14 @@ final class HomeSearchPresenter {
     }
 
     // MARK: 데이터 변함에 따라 보여지는 view가 다름
-    private var haveHistoryTableValues = false {
+    private (set) var haveHistoryTableValues = false {
         didSet {
             viewController?.howToShowFirstView(haveHistoryTableValues)
         }
     }
+
+    // MARK: Start Searching
+    var startSearching = false
     
     init(viewController: HomeSearchProtocol) {
         self.viewController = viewController
@@ -60,25 +65,25 @@ final class HomeSearchPresenter {
     func viewDidLoad() {
         // MARK: 최근 검색어 데이터 불러오면서 데이터 상태에 따른 view 표시
         loadHistoryTableArray()
-        CheckHistoryTableValues()
+        checkHistoryTableValues()
         
         viewController?.makeLayout()
         viewController?.makeAttribute()
     }
             
+    // TODO: Index 직접 접근하는거 최대한 버그 안 생기도록 코드 수정 필요
+    
     // MARK: HistoryTable local에서 데이터 불러오기
     func loadHistoryTableArray() {
         let loadedHistory = userDefaultsManager.getHistoryModel()
         
         historyPlaceModel = loadedHistory
         
-        if historyPlaceModel.isEmpty {
-            CheckHistoryTableValues()
-        }
+        viewController?.historyListTableReload()
     }
     
     // MARK: Check HistoryTableValues
-    func CheckHistoryTableValues() {
+    func checkHistoryTableValues() {
         if historyPlaceModel.isEmpty {
             haveHistoryTableValues = false
         } else {
@@ -86,12 +91,12 @@ final class HomeSearchPresenter {
         }
     }
     
+    // TODO: textfield 데이터 지우고 클릭할 떄
     // MARK: HistoryTable에 데이터 저장하고 불러오기
     func insertHistoryModel(_ indexPath: IndexPath) {
         let title = matchedPlaceModel[indexPath.row].title
         let historyModel = HistoryTableModel(title: title)
         userDefaultsManager.setHistoryModel(historyModel)
-        loadHistoryTableArray()
     }
     
     // MARK: HistoryTable에 데이터 삭제하고 불러오기
@@ -100,7 +105,18 @@ final class HomeSearchPresenter {
         
         userDefaultsManager.deleteHistoryModel(historyModel)
         loadHistoryTableArray()
-        viewController?.historyListTableReload()
+    }
+    
+    // MARK: HistoryTable 전체 삭제하기
+    func deleteHistoryModelAll() {
+        userDefaultsManager.deleteHistoryModelAll()
+        loadHistoryTableArray()
+    }
+    
+    func historyTableCellTapped(_ indexPath: IndexPath) {
+        let title = historyPlaceModel[indexPath.row].title
+        
+        viewController?.insertTitleToTextField(title)
     }
     
     // MARK: 최초 Search 후 KakaoMap Load -> AVIRO 데이터 비교
@@ -119,8 +135,8 @@ final class HomeSearchPresenter {
     ) {
         currentPage = 1
         let query = query
-        let longitude = PersonalLocation.shared.longitudeString
-        let latitude = PersonalLocation.shared.latitudeString
+        let longitude = MyCoordinate.shared.longitudeString
+        let latitude = MyCoordinate.shared.latitudeString
         
         KakaoMapRequestManager().kakaoMapLocationSearch(
             query: query,
@@ -169,8 +185,8 @@ final class HomeSearchPresenter {
         }
         
         let query = query
-        let longitude = PersonalLocation.shared.longitudeString
-        let latitude = PersonalLocation.shared.latitudeString
+        let longitude = MyCoordinate.shared.longitudeString
+        let latitude = MyCoordinate.shared.latitudeString
         
         KakaoMapRequestManager().kakaoMapLocationSearch(
             query: query,
@@ -242,7 +258,9 @@ final class HomeSearchPresenter {
                 address: place.address,
                 allVegan: matched?.allVegan == 1 ? true : false,
                 someVegan: matched?.someMenuVegan == 1 ? true : false,
-                requestVegan: matched?.ifRequestVegan == 1 ? true : false
+                requestVegan: matched?.ifRequestVegan == 1 ? true : false,
+                x: place.x,
+                y: place.y
             )
 
             matchedPlaceModel.append(matchedPlace)
@@ -250,5 +268,19 @@ final class HomeSearchPresenter {
 
         viewController?.placeListTableReload()
         isLoading = false
+    }
+    
+    func checkIsInAVIRO(_ indexPath: IndexPath) {
+        let model = matchedPlaceModel[indexPath.row]
+
+        let userInfo: [String: Any] = ["checkIsInAVRIO": model]
+
+        NotificationCenter.default.post(
+            name: NSNotification.Name("checkIsInAVRIO"),
+            object: nil,
+            userInfo: userInfo
+        )
+        
+        viewController?.popViewController()
     }
 }

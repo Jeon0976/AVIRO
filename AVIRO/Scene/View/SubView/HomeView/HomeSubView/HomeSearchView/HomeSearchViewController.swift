@@ -53,17 +53,17 @@ extension HomeSearchViewController: HomeSearchProtocol {
         NSLayoutConstraint.activate([
             // searchTextField
             searchField.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor, constant: Layout.Inset.leadingTop),
+                equalTo: view.leadingAnchor, constant: 16),
             searchField.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor, constant: Layout.Inset.trailingBottom),
+                equalTo: view.trailingAnchor, constant: -16),
             
             // placeListTableView
             placeListTableView.topAnchor.constraint(
                 equalTo: searchField.bottomAnchor),
             placeListTableView.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor, constant: Layout.Inset.leadingTop),
+                equalTo: view.leadingAnchor, constant: 20),
             placeListTableView.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor, constant: Layout.Inset.trailingBottom),
+                equalTo: view.trailingAnchor, constant: -20),
             placeListTableView.bottomAnchor.constraint(
                 equalTo: view.bottomAnchor),
             
@@ -73,7 +73,7 @@ extension HomeSearchViewController: HomeSearchProtocol {
             noHistoryView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
             // historyTableView
-            historyTableView.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 20),
+            historyTableView.topAnchor.constraint(equalTo: searchField.bottomAnchor),
             historyTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             historyTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             historyTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
@@ -103,6 +103,18 @@ extension HomeSearchViewController: HomeSearchProtocol {
     
     func historyListTableReload() {
         historyTableView.reloadData()
+    }
+    
+    // MARK: After Tapped History Table Cell
+    func insertTitleToTextField(_ query: String) {
+        searchField.text = query
+        
+        whenStartSearchingChangedView()
+        presenter.initialSearchDataAndCompareAVIROData(query)
+    }
+    
+    func popViewController() {
+        navigationController?.popViewController(animated: false)
     }
 }
 
@@ -148,7 +160,7 @@ extension HomeSearchViewController {
         searchField.rightButtonHidden = true
         searchField.makePlaceHolder("어디로 이동할까요?")
         searchField.didTappedLeftButton = { [weak self] in
-            self?.navigationController?.popViewController(animated: true)
+            self?.whenSearchingAndTppedBackButton()
         }
     }
     
@@ -175,43 +187,70 @@ extension HomeSearchViewController {
         )
         historyTableView.separatorStyle = .none
         historyTableView.tag = 1
+    }
+    
+    // MARK: 검색 시작할 때 메소드
+    private func whenStartSearchingChangedView() {
+        guard !presenter.startSearching else { return }
+        presenter.startSearching = true
         
+        self.navigationController?.navigationBar.isHidden = true
+        
+        searchField.changeLeftButton()
+        UIView.animate(withDuration: 0.2) {
+            self.showPlaceListTable()
+             
+            self.searchFieldTopConstraint?.constant = 16
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    // MARK: 검색 중 뒤로가기 버튼 누를 때 메소드
+    private func whenSearchingAndTppedBackButton() {
+        guard presenter.startSearching else { return }
+        presenter.startSearching = false
+        
+        self.navigationController?.navigationBar.isHidden = false
+                
+        searchField.changeLeftButton()
+        UIView.animate(withDuration: 0.2) {
+            self.presenter.checkHistoryTableValues()
+            self.placeListTableView.isHidden = true
+            
+            self.searchFieldTopConstraint?.constant = 15
+            self.view.layoutIfNeeded()
+        }
     }
 }
 
 extension HomeSearchViewController: UITextFieldDelegate {
     // MARK: 검색 시작할 때
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        self.navigationController?.navigationBar.isHidden = true
-        
-        searchField.changeLeftButton()
-         UIView.animate(withDuration: 0.2) {
-             self.showPlaceListTable()
-             
-             self.searchFieldTopConstraint?.constant = 16
-             self.view.layoutIfNeeded()
-         }
+        whenStartSearchingChangedView()
      }
     
     // MARK: 실시간 검색
     func textFieldDidChangeSelection(_ textField: UITextField) {
         searchField.rightButtonHidden = false
-        // 중간 배열의 out of index 방지를 위해 & API 요청 횟수를 줄이기 위해 
         
+        // 중간 배열의 out of index 방지를 위해 & API 요청 횟수를 줄이기 위해
+
         // 이전 타이머 작업을 취소합니다(있는 경우).
         searchTimer?.cancel()
 
         // 새로운 타이머 작업을 생성합니다.
         let task = DispatchWorkItem { [weak self] in
             if let text = textField.text {
-                self?.presenter.changedColorText = text
-                self?.presenter.initialSearchDataAndCompareAVIROData(text)
+                if text != "" {
+                    self?.presenter.changedColorText = text
+                    self?.presenter.initialSearchDataAndCompareAVIROData(text)
+                }
             }
         }
 
         // 타이머 작업을 저장합니다.
         searchTimer = task
-        
+
         // 0.5초 후에 작업을 실행합니다.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: task)
     }
@@ -297,9 +336,28 @@ extension HomeSearchViewController: UITableViewDataSource {
             return UITableViewCell()
         }
     }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        switch tableView.tag {
+        case 0:
+            
+            return UIView()
+        case 1:
+            let headerView = HistoryHeaderView()
+            
+            headerView.deleteAllCell = { [weak self] in
+                self?.presenter.deleteHistoryModelAll()
+            }
+            
+            return headerView
+        default:
+            return UIView()
+        }
+    }
 }
 
 extension HomeSearchViewController: UITableViewDelegate {
+    // MARK: ScrollView Did Scroll
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         let offsetY = scrollView.contentOffset.y
@@ -315,12 +373,14 @@ extension HomeSearchViewController: UITableViewDelegate {
         }
     }
     
+    // MARK: did Select Row At
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch tableView.tag {
         case 0:
             presenter.insertHistoryModel(indexPath)
+            presenter.checkIsInAVIRO(indexPath)
         case 1:
-            break
+            presenter.historyTableCellTapped(indexPath)
         default:
             break
         }

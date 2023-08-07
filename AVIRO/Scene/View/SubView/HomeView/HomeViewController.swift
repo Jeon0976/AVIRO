@@ -91,6 +91,7 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         presenter.locationAuthorization()
         presenter.viewDidLoad()
+        presenter.makeNotification()
         view.addSubview(zoomLevel)
         zoomLevel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -108,7 +109,7 @@ final class HomeViewController: UIViewController {
 
         presenter.firstLocationUpdate()
     }
-//
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -281,8 +282,8 @@ extension HomeViewController: HomeViewProtocol {
     // MARK: 위치 denided or approval
     // 위치 denied 할 때
     func ifDenied() {
-        PersonalLocation.shared.longitude = 129.118924
-        PersonalLocation.shared.latitude = 35.153354
+        MyCoordinate.shared.longitude = 129.118924
+        MyCoordinate.shared.latitude = 35.153354
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: 35.153354, lng: 129.118924))
         naverMapView.moveCamera(cameraUpdate)
     }
@@ -290,6 +291,23 @@ extension HomeViewController: HomeViewProtocol {
     // 위치 승인 되었을 때
     func requestSuccess() {
         naverMapView.positionMode = .direction
+    }
+    
+    // MARK: center 위치 coordinate 저장하기
+    func saveCenterCoordinate() {
+        let center = naverMapView.cameraPosition.target
+
+        CenterCoordinate.shared.longitude = center.lng
+        CenterCoordinate.shared.latitude = center.lat
+    }
+    
+    // MARK: AVIRO에 데이터가 없을때 지도 이동
+    func moveToCameraWhenNoAVIRO(_ lng: Double, _ lat: Double) {
+        let latlng = NMGLatLng(lat: lat, lng: lng)
+        let cameraUpdate = NMFCameraUpdate(scrollTo: latlng, zoomTo: 14)
+        cameraUpdate.animation = .easeOut
+        
+        naverMapView.moveCamera(cameraUpdate)
     }
     
     // MARK: 지도에 마크 표시하기 작업
@@ -422,5 +440,7 @@ extension HomeViewController: UITextFieldDelegate {
 extension HomeViewController: NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
         zoomLevel.text = String(mapView.zoomLevel)
+        
+        saveCenterCoordinate()
     }
 }

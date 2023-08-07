@@ -54,8 +54,8 @@ final class PlaceListSearchViewPresenter: NSObject {
     func searchData(_ query: String) {
         currentPage = 1
         let query = query
-        let longitude = PersonalLocation.shared.longitudeString
-        let latitude = PersonalLocation.shared.latitudeString
+        let longitude = MyCoordinate.shared.longitudeString
+        let latitude = MyCoordinate.shared.latitudeString
         
         KakaoMapRequestManager().kakaoMapKeywordSearch(query: query,
                                       longitude: longitude,
@@ -98,8 +98,8 @@ final class PlaceListSearchViewPresenter: NSObject {
             return
         }
         let query = query
-        let longitude = PersonalLocation.shared.longitudeString
-        let latitude = PersonalLocation.shared.latitudeString
+        let longitude = MyCoordinate.shared.longitudeString
+        let latitude = MyCoordinate.shared.latitudeString
         
         KakaoMapRequestManager().kakaoMapKeywordSearch(
             query: query,

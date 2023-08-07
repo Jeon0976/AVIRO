@@ -59,4 +59,12 @@ struct UserDefalutsManager: UserDefaultsManagerProtocol {
             forKey: Key.historyModel.rawValue
         )
     }
+    
+    func deleteHistoryModelAll() {
+        var currentTable = [HistoryTableModel]()
+        
+        UserDefaults.standard.set(
+            try? PropertyListEncoder().encode(currentTable),
+            forKey: Key.historyModel.rawValue)
+    }
 }
