@@ -93,7 +93,6 @@ final class SearchField: UITextField {
         let initImage = UIImage(named: "Search")?.withRenderingMode(.alwaysTemplate)
         
         leftButton.setImage(changedLeftButton ? changedImage : initImage, for: .normal)
-        print(changedLeftButton)
     }
     
     // MARK: Left Button이 바뀌었을 때만 활성화

@@ -463,7 +463,7 @@ extension InrollPlaceViewController: UITableViewDataSource {
 #if DEBUG
 import SwiftUI
 
-struct ViewControllerPresentable: UIViewControllerRepresentable {
+struct InrollViewControllerPresentable: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
         
     }
@@ -477,9 +477,9 @@ struct ViewControllerPresentable: UIViewControllerRepresentable {
     }
 }
 
-struct ViewControllerPresentablePreviewProvider: PreviewProvider {
+struct InrollViewControllerPresentablePreviewProvider: PreviewProvider {
     static var previews: some View {
-        ViewControllerPresentable()
+        InrollViewControllerPresentable()
     }
 }
 #endif

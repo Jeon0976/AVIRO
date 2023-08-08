@@ -93,7 +93,6 @@ final class StoreInfoView: UIView {
         }
         
         initStoreInfoViewHeight()
-        print(self.frame)
     }
     
     // MARK: Layout

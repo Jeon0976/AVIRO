@@ -91,3 +91,26 @@ class TabBarViewController: UITabBarController {
         }
     }
 }
+
+// MARK: View Preview
+#if DEBUG
+import SwiftUI
+
+struct TabBarViewControllerPresentable: UIViewControllerRepresentable {
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+        
+    }
+    
+    func makeUIViewController(context: Context) -> some UIViewController {
+        let vc = TabBarViewController()
+        
+        return vc
+    }
+}
+
+struct TabBarViewControllerPresentablePreviewProvider: PreviewProvider {
+    static var previews: some View {
+        TabBarViewControllerPresentable()
+    }
+}
+#endif
