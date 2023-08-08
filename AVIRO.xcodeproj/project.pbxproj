@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		A156F24E1DC1F5FA54D44A76 /* Pods_AVIRO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 796022A3066B91147B712BB4 /* Pods_AVIRO.framework */; };
 		C50367F52A1795D10020C6BB /* HomeViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */; };
-		C50367F82A179D7B0020C6BB /* CustomConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F72A179D7B0020C6BB /* CustomConfiguration.swift */; };
 		C50F6AF32A68FD0A00E942F5 /* InrollPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6AF22A68FD0A00E942F5 /* InrollPlaceViewController.swift */; };
 		C50F6AF52A68FD6300E942F5 /* InrollPlacePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6AF42A68FD6300E942F5 /* InrollPlacePresenter.swift */; };
 		C50F6AF92A68FFBB00E942F5 /* StoreInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6AF82A68FFBB00E942F5 /* StoreInfoView.swift */; };
@@ -17,8 +16,10 @@
 		C50F6AFD2A68FFCB00E942F5 /* MenuTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6AFC2A68FFCB00E942F5 /* MenuTableView.swift */; };
 		C50F6B022A6BC8E400E942F5 /* InrollField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6B012A6BC8E400E942F5 /* InrollField.swift */; };
 		C50F6B042A6BCD6900E942F5 /* CategoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6B032A6BCD6900E942F5 /* CategoryButton.swift */; };
-		C51132BF2A559838006E1EC3 /* NotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51132BE2A559838006E1EC3 /* NotificationCenter.swift */; };
+		C51132BF2A559838006E1EC3 /* NotificationCenter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51132BE2A559838006E1EC3 /* NotificationCenter+Extension.swift */; };
 		C51132C12A559BCA006E1EC3 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51132C02A559BCA006E1EC3 /* AppController.swift */; };
+		C51B09B82A82155200916BBD /* MarkerModelArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B09B72A82155200916BBD /* MarkerModelArray.swift */; };
+		C51B09BA2A8215D800916BBD /* MarkerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B09B92A8215D800916BBD /* MarkerModel.swift */; };
 		C51BBAD52A78D53D00BF5B7C /* AVIROCheckPlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51BBAD42A78D53D00BF5B7C /* AVIROCheckPlaceModel.swift */; };
 		C51BBAD72A78D5AB00BF5B7C /* PlaceCheckModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51BBAD62A78D5AB00BF5B7C /* PlaceCheckModel.swift */; };
 		C52066212A7CA9050038ECCD /* MainField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066202A7CA9050038ECCD /* MainField.swift */; };
@@ -54,7 +55,7 @@
 		C5351B7A2A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B792A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift */; };
 		C53893162A5EC0C500CB9A54 /* GenderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53893152A5EC0C500CB9A54 /* GenderButton.swift */; };
 		C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547A8B92A17D8D4004D1339 /* KakaoMapRequestManager.swift */; };
-		C54BC0DB2A2C2D0D00B65439 /* ColorCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54BC0DA2A2C2D0D00B65439 /* ColorCustom.swift */; };
+		C54BC0DB2A2C2D0D00B65439 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54BC0DA2A2C2D0D00B65439 /* UIColor+Extension.swift */; };
 		C54BC0DD2A2C762C00B65439 /* CommentsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54BC0DC2A2C762C00B65439 /* CommentsLabel.swift */; };
 		C5538AAF2A1BB81200661DE2 /* VeganModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5538AAE2A1BB81200661DE2 /* VeganModel.swift */; };
 		C567C1502A56611500D4B426 /* TopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C567C14F2A56611500D4B426 /* TopCell.swift */; };
@@ -125,7 +126,6 @@
 		796022A3066B91147B712BB4 /* Pods_AVIRO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AVIRO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B57500A8C1EA6C6CFDED2C4C /* Pods-AVIRO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AVIRO.debug.xcconfig"; path = "Target Support Files/Pods-AVIRO/Pods-AVIRO.debug.xcconfig"; sourceTree = "<group>"; };
 		C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewPresenter.swift; sourceTree = "<group>"; };
-		C50367F72A179D7B0020C6BB /* CustomConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomConfiguration.swift; sourceTree = "<group>"; };
 		C50F6AF22A68FD0A00E942F5 /* InrollPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewController.swift; sourceTree = "<group>"; };
 		C50F6AF42A68FD6300E942F5 /* InrollPlacePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlacePresenter.swift; sourceTree = "<group>"; };
 		C50F6AF82A68FFBB00E942F5 /* StoreInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreInfoView.swift; sourceTree = "<group>"; };
@@ -133,8 +133,10 @@
 		C50F6AFC2A68FFCB00E942F5 /* MenuTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableView.swift; sourceTree = "<group>"; };
 		C50F6B012A6BC8E400E942F5 /* InrollField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollField.swift; sourceTree = "<group>"; };
 		C50F6B032A6BCD6900E942F5 /* CategoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryButton.swift; sourceTree = "<group>"; };
-		C51132BE2A559838006E1EC3 /* NotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenter.swift; sourceTree = "<group>"; };
+		C51132BE2A559838006E1EC3 /* NotificationCenter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationCenter+Extension.swift"; sourceTree = "<group>"; };
 		C51132C02A559BCA006E1EC3 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
+		C51B09B72A82155200916BBD /* MarkerModelArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerModelArray.swift; sourceTree = "<group>"; };
+		C51B09B92A8215D800916BBD /* MarkerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerModel.swift; sourceTree = "<group>"; };
 		C51BBAD42A78D53D00BF5B7C /* AVIROCheckPlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROCheckPlaceModel.swift; sourceTree = "<group>"; };
 		C51BBAD62A78D5AB00BF5B7C /* PlaceCheckModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCheckModel.swift; sourceTree = "<group>"; };
 		C52066202A7CA9050038ECCD /* MainField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainField.swift; sourceTree = "<group>"; };
@@ -173,7 +175,7 @@
 		C5351B792A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapResponseCoordinateModel.swift; sourceTree = "<group>"; };
 		C53893152A5EC0C500CB9A54 /* GenderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderButton.swift; sourceTree = "<group>"; };
 		C547A8B92A17D8D4004D1339 /* KakaoMapRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapRequestManager.swift; sourceTree = "<group>"; };
-		C54BC0DA2A2C2D0D00B65439 /* ColorCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCustom.swift; sourceTree = "<group>"; };
+		C54BC0DA2A2C2D0D00B65439 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		C54BC0DC2A2C762C00B65439 /* CommentsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsLabel.swift; sourceTree = "<group>"; };
 		C5538AAE2A1BB81200661DE2 /* VeganModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganModel.swift; sourceTree = "<group>"; };
 		C567C14F2A56611500D4B426 /* TopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCell.swift; sourceTree = "<group>"; };
@@ -342,7 +344,6 @@
 				C5B071E32A59B3CB00AE709A /* SubClass */,
 				C51132BD2A559826006E1EC3 /* Extension */,
 				C5CAAC432A39A92A008C5FDA /* StaticValue */,
-				C50367F72A179D7B0020C6BB /* CustomConfiguration.swift */,
 				C5351B552A19B67900116D50 /* CustomAlertController.swift */,
 			);
 			path = Custom;
@@ -383,12 +384,20 @@
 		C51132BD2A559826006E1EC3 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				C54BC0DA2A2C2D0D00B65439 /* ColorCustom.swift */,
+				C51132BE2A559838006E1EC3 /* NotificationCenter+Extension.swift */,
+				C54BC0DA2A2C2D0D00B65439 /* UIColor+Extension.swift */,
 				C5D8E8622A3DEC3900D88A43 /* String+Extension.swift */,
-				C51132BE2A559838006E1EC3 /* NotificationCenter.swift */,
 				C5D36D2D2A76031E003328E8 /* Double+Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		C51B09B62A82046000916BBD /* MapDataSingleton */ = {
+			isa = PBXGroup;
+			children = (
+				C51B09B72A82155200916BBD /* MarkerModelArray.swift */,
+			);
+			path = MapDataSingleton;
 			sourceTree = "<group>";
 		};
 		C52066242A7CACA80038ECCD /* SubView */ = {
@@ -530,6 +539,7 @@
 		C5351B652A1A128D00116D50 /* SingletonModel */ = {
 			isa = PBXGroup;
 			children = (
+				C51B09B62A82046000916BBD /* MapDataSingleton */,
 				C520663D2A80C60D0038ECCD /* ViewSingleton */,
 				C520663E2A80C6220038ECCD /* CoordinateSingleton */,
 				C520663F2A80C6450038ECCD /* APISingleton */,
@@ -843,6 +853,7 @@
 			isa = PBXGroup;
 			children = (
 				C5732C782A41AD8100CDC499 /* HomeMapData.swift */,
+				C51B09B92A8215D800916BBD /* MarkerModel.swift */,
 				C52066272A7CD5E60038ECCD /* HomeSearchViewModel */,
 			);
 			path = HomeViewModel;
@@ -1081,7 +1092,7 @@
 				C52FA3472A175B20005E70DC /* HomeViewController.swift in Sources */,
 				C51BBAD72A78D5AB00BF5B7C /* PlaceCheckModel.swift in Sources */,
 				C5EB50E82A1C6FD600B29CC1 /* PopularViewController.swift in Sources */,
-				C54BC0DB2A2C2D0D00B65439 /* ColorCustom.swift in Sources */,
+				C54BC0DB2A2C2D0D00B65439 /* UIColor+Extension.swift in Sources */,
 				C52FA3432A175B20005E70DC /* AppDelegate.swift in Sources */,
 				C5B071E12A59454300AE709A /* BottomCell.swift in Sources */,
 				C520663C2A80C0450038ECCD /* CenterCoordinate.swift in Sources */,
@@ -1097,7 +1108,6 @@
 				C528E4C02A5FF1CB002BD72E /* FinalRegistrationViewController.swift in Sources */,
 				C5D93DA32A58718300629C39 /* BottomButton.swift in Sources */,
 				C5D36D2E2A76031E003328E8 /* Double+Extension.swift in Sources */,
-				C50367F82A179D7B0020C6BB /* CustomConfiguration.swift in Sources */,
 				C54BC0DD2A2C762C00B65439 /* CommentsLabel.swift in Sources */,
 				C5EB50E62A1C6FC700B29CC1 /* BookMarkViewController.swift in Sources */,
 				C5EB51082A209F6900B29CC1 /* HomeSearchViewController.swift in Sources */,
@@ -1114,12 +1124,14 @@
 				C5EB510D2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift in Sources */,
 				C50367F52A1795D10020C6BB /* HomeViewPresenter.swift in Sources */,
 				C5351B622A1A083400116D50 /* PlaceListCellModel.swift in Sources */,
+				C51B09BA2A8215D800916BBD /* MarkerModel.swift in Sources */,
 				C52FA3452A175B20005E70DC /* SceneDelegate.swift in Sources */,
 				C5351B542A19A7B100116D50 /* MyCoordinate.swift in Sources */,
 				C5EB50EA2A1C705900B29CC1 /* MyPageViewController.swift in Sources */,
 				C5D8E8632A3DEC3900D88A43 /* String+Extension.swift in Sources */,
 				C50F6B022A6BC8E400E942F5 /* InrollField.swift in Sources */,
 				C5D7458F2A224DCE006F9F31 /* HomeFirstPopUpView.swift in Sources */,
+				C51B09B82A82155200916BBD /* MarkerModelArray.swift in Sources */,
 				C520662D2A7CE1CC0038ECCD /* UserDefaultsManager.swift in Sources */,
 				C5A3C3C62A39659B0050AB3D /* LoginViewPresenter.swift in Sources */,
 				C58B9AAE2A5675B9008AEAC3 /* TutorialViewController.swift in Sources */,
@@ -1130,7 +1142,7 @@
 				C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */,
 				C5351B672A1A154C00116D50 /* PageEndingCheck.swift in Sources */,
 				C5732C772A41A0A500CDC499 /* AVIROMapModel.swift in Sources */,
-				C51132BF2A559838006E1EC3 /* NotificationCenter.swift in Sources */,
+				C51132BF2A559838006E1EC3 /* NotificationCenter+Extension.swift in Sources */,
 				C5FF13532A42C8810026981D /* AVIROPlaceModel.swift in Sources */,
 				C5351B5C2A19F60200116D50 /* PlaceListSearchViewPresenter.swift in Sources */,
 				C52066352A7F3FAE0038ECCD /* HistoryTableViewCell.swift in Sources */,

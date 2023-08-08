@@ -11,12 +11,12 @@ extension String {
     // MARK: Text m/k 변환
     /// Text m/k 변환
     func convertDistanceUnit() -> String {
-        guard let number = Int(self) else { return "" }
+        guard let number = Double(self) else { return "" }
         
         if number >= 1000 {
-            return "\(number / 1000)k"
+            return "\(Int(number / 1000))km"
         } else {
-            return "\(number)m"
+            return "\(Int(number))m"
         }
     }
     
@@ -39,7 +39,12 @@ extension String {
     func changeColor(changedText: String) -> NSMutableAttributedString? {
         if let range = self.range(of: changedText, options: []) {
             let attributedText = NSMutableAttributedString(string: self)
-            attributedText.addAttribute(.foregroundColor, value: UIColor.main, range: NSRange(range, in: self))
+            attributedText.addAttribute(
+                .foregroundColor, 
+                value: UIColor.main,
+                range: NSRange(range, in: self)
+            )
+            
             return attributedText
         }
         return nil

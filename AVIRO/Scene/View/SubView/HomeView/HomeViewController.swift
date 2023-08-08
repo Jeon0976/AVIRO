@@ -9,12 +9,6 @@ import UIKit
 
 import NMapsMap
 
-enum Place {
-    case All
-    case Some
-    case Request
-}
-
 final class HomeViewController: UIViewController {
     lazy var presenter = HomeViewPresenter(viewController: self)
         
@@ -44,7 +38,7 @@ final class HomeViewController: UIViewController {
     let requestMapClicked = NMFOverlayImage(name: "RequestMapClicked")
     
     // MARK: Marker Info
-    var markers: [(NMFMarker, Bool, Place)]? {
+    var markers: [(NMFMarker, Bool, MapPlace)]? {
         didSet {
             if afterSaveAllPlace {
                 guard let oldValue = oldValue?[selectedMarkerIndex],
@@ -56,7 +50,6 @@ final class HomeViewController: UIViewController {
                 let (newMarker, newBoolValue, _) = newValue
 
                 if oldBoolValue != newBoolValue {
-
                     if newBoolValue == false {
                         switch place {
                         case .All:
@@ -81,6 +74,7 @@ final class HomeViewController: UIViewController {
             }
         }
     }
+    
     var selectedMarkerIndex = 0
     var afterSaveAllPlace = false
     
@@ -313,7 +307,7 @@ extension HomeViewController: HomeViewProtocol {
     // MARK: 지도에 마크 표시하기 작업
     func makeMarker(_ veganList: [HomeMapData]) {
         afterSaveAllPlace = false
-        self.markers = [(NMFMarker, Bool, Place)]()
+        self.markers = [(NMFMarker, Bool, MapPlace)]()
         
         veganList.forEach { homeMapData in
             
@@ -325,13 +319,13 @@ extension HomeViewController: HomeViewProtocol {
             
             if homeMapData.allVegan {
                 marker.iconImage = allMap
-                markers?.append((marker, false, Place.All))
+                markers?.append((marker, false, MapPlace.All))
             } else if homeMapData.someMenuVegan {
                 marker.iconImage = someMap
-                markers?.append((marker, false, Place.Some))
+                markers?.append((marker, false, MapPlace.Some))
             } else {
                 marker.iconImage = requestMap
-                markers?.append((marker, false, Place.Request))
+                markers?.append((marker, false, MapPlace.Request))
             }
             // Marker 터치할 때
             marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
