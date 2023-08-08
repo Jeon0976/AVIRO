@@ -8,6 +8,8 @@
 import UIKit
 import CoreLocation
 
+import NMapsMap
+
 protocol HomeViewProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
@@ -64,9 +66,33 @@ final class HomeViewPresenter: NSObject {
             latitude: MyCoordinate.shared.latitudeString,
             wide: "0.0"
         ) { [weak self] mapDatas in
-            self?.homeMapData = mapDatas.data.placeData
-            self?.viewController?.makeMarker((self?.homeMapData)!)
+            self?.viewController?.makeMarker((mapDatas.data.placeData))
         }
+    }
+    
+    // MARK: Marker Data singleton에 저장하기
+    func saveMarkers(_ mapData: [HomeMapData]) {
+        mapData.forEach { data in
+            let latLng = NMGLatLng(lat: data.y, lng: data.x)
+            let marker = NMFMarker(position: latLng)
+            let placeId = data.placeId
+            var place: MapPlace
+            
+            if data.allVegan {
+                place = MapPlace.All
+            } else if data.someMenuVegan {
+                place = MapPlace.Some
+            } else {
+                place = MapPlace.Request
+            }
+            
+            marker.makeIcon(place)
+        }
+    }
+    
+    // MARK: Load Markers
+    func loadMarkers() {
+        
     }
     
     // MARK: Make Notification

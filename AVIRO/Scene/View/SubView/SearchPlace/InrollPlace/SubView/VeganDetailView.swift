@@ -77,6 +77,18 @@ final class VeganDetailView: UIView {
     // MARK: layout
     private func makeLayout() {
         [
+            allVeganButton,
+            someVeganButton,
+            requestVeganButton
+        ].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            buttonStackView.addArrangedSubview($0)
+        }
+        
+        buttonStackView.axis = .horizontal
+        buttonStackView.distribution = .equalSpacing
+        
+        [
             title,
             subTitle,
             buttonStackView
@@ -102,18 +114,7 @@ final class VeganDetailView: UIView {
             buttonStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             buttonStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
         ])
-        
-        [
-            allVeganButton,
-            someVeganButton,
-            requestVeganButton
-        ].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            buttonStackView.addArrangedSubview($0)
-        }
-        
-        buttonStackView.axis = .horizontal
-        buttonStackView.distribution = .equalSpacing
+    
     }
     
     // MARK: Attribute

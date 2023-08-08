@@ -10,13 +10,13 @@ import UIKit
 final class InrollPlaceViewController: UIViewController {
     lazy var presenter = InrollPlacePresenter(viewController: self)
     
-    var scrollView = UIScrollView()
+    private lazy var scrollView = UIScrollView()
     
-    lazy var storeInfoView = StoreInfoView(frame: CGRect(x: 0, y: 0, width: view.frame.width - 32, height: 200))
-    lazy var veganDetailView = VeganDetailView(frame: CGRect(x: 0, y: 0, width: view.frame.width - 32, height: 200))
-    lazy var menuTableView = MenuTableView(frame: CGRect(x: 0, y: 0, width: view.frame.width - 32, height: 200))
+    private lazy var storeInfoView = StoreInfoView()
+    private lazy var veganDetailView = VeganDetailView()
+    private lazy var menuTableView = MenuTableView()
     
-    var tapGesture = UITapGestureRecognizer()
+    private lazy var tapGesture = UITapGestureRecognizer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,20 +76,17 @@ extension InrollPlaceViewController: InrollPlaceProtocol {
             // storeInfoView
             storeInfoView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 15),
             storeInfoView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
-            storeInfoView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
             storeInfoView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32),
             
             // veganDetailView
             veganDetailView.topAnchor.constraint(equalTo: storeInfoView.bottomAnchor, constant: 15),
             veganDetailView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
-            veganDetailView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
             veganDetailView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32),
             
             // menuTableView
             menuTableView.topAnchor.constraint(equalTo: veganDetailView.bottomAnchor, constant: 15),
             menuTableView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -15),
             menuTableView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
-            menuTableView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
             menuTableView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32)
         ])
     }

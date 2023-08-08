@@ -9,7 +9,7 @@ import UIKit
 
 final class StoreInfoView: UIView {
     // MARK: Main Title
-    let title: UILabel = {
+    lazy var title: UILabel = {
         let label = UILabel()
         
         label.textColor = .registrationColor
@@ -19,10 +19,10 @@ final class StoreInfoView: UIView {
         return label
     }()
     
-    let titleField = InrollField()
+    lazy var titleField = InrollField()
     
     // MARK: Adderss
-    let address: UILabel = {
+    lazy var address: UILabel = {
         let label = UILabel()
         
         label.textColor = .registrationColor
@@ -32,10 +32,10 @@ final class StoreInfoView: UIView {
         return label
     }()
     
-    let addressField = InrollField()
+    lazy var addressField = InrollField()
     
     // MARK: Number
-    let number: UILabel = {
+    lazy var number: UILabel = {
         let label = UILabel()
         
         label.textColor = .registrationColor
@@ -45,10 +45,10 @@ final class StoreInfoView: UIView {
         return label
     }()
     
-    let numberField = InrollField()
+    lazy var numberField = InrollField()
     
     // MARK: Category
-    let categoryLabel: UILabel = {
+    lazy var categoryLabel: UILabel = {
         let label = UILabel()
         
         label.textColor = .registrationColor
@@ -58,19 +58,19 @@ final class StoreInfoView: UIView {
         return label
     }()
     
-    let restaurantButton = CategoryButton()
-    let cafeButton = CategoryButton()
-    let bakeryButton = CategoryButton()
-    let barButton = CategoryButton()
+    lazy var restaurantButton = CategoryButton()
+    lazy var cafeButton = CategoryButton()
+    lazy var bakeryButton = CategoryButton()
+    lazy var barButton = CategoryButton()
     
-    let buttonStackView = UIStackView()
+    lazy var buttonStackView = UIStackView()
     
     // 공통된 button action 작업을 위해 배열화
-    var categoryButtons = [CategoryButton]()
+    lazy var categoryButtons = [CategoryButton]()
 
     // MARK: Constraint 조절
-    var categoryTopConstraint: NSLayoutConstraint?
-    var viewHeightConstraint: NSLayoutConstraint?
+    private var categoryTopConstraint: NSLayoutConstraint?
+    private var viewHeightConstraint: NSLayoutConstraint?
     
     // MARK: View init
     override init(frame: CGRect) {
@@ -93,6 +93,7 @@ final class StoreInfoView: UIView {
         }
         
         initStoreInfoViewHeight()
+        print(self.frame)
     }
     
     // MARK: Layout

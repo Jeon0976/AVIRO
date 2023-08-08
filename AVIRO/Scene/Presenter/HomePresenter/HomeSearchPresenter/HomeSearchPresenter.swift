@@ -27,8 +27,9 @@ final class HomeSearchPresenter {
     var changedColorText = ""
     
     private var currentPage = 1
-    private var isEnd = false
+    /// 모든 필터링 결과 끝날 때 다른 함수 동작을 위한 변수
     private var isLoading = false
+    private var isEndCompare = false
     
     // MARK: Matched Place List Model 다루기
     var matchedPlaceModelCount: Int {
@@ -54,9 +55,6 @@ final class HomeSearchPresenter {
             viewController?.howToShowFirstView(haveHistoryTableValues)
         }
     }
-
-    // MARK: Start Searching
-    var startSearching = false
     
     init(viewController: HomeSearchProtocol) {
         self.viewController = viewController
@@ -94,9 +92,11 @@ final class HomeSearchPresenter {
     // TODO: textfield 데이터 지우고 클릭할 떄
     // MARK: HistoryTable에 데이터 저장하고 불러오기
     func insertHistoryModel(_ indexPath: IndexPath) {
-        let title = matchedPlaceModel[indexPath.row].title
-        let historyModel = HistoryTableModel(title: title)
-        userDefaultsManager.setHistoryModel(historyModel)
+        if isEndCompare {
+            let title = matchedPlaceModel[indexPath.row].title
+            let historyModel = HistoryTableModel(title: title)
+            userDefaultsManager.setHistoryModel(historyModel)
+        }
     }
     
     // MARK: HistoryTable에 데이터 삭제하고 불러오기
@@ -121,6 +121,7 @@ final class HomeSearchPresenter {
     
     // MARK: 최초 Search 후 KakaoMap Load -> AVIRO 데이터 비교
     func initialSearchDataAndCompareAVIROData(_ query: String) {
+        isEndCompare = false
         matchedPlaceModel.removeAll()
         
         initalSearchData(query: query) { [weak self] placeList in
@@ -148,7 +149,6 @@ final class HomeSearchPresenter {
             longitude = CenterCoordinate.shared.longitude ?? 0.0
             latitude = CenterCoordinate.shared.latitude ?? 0.0
         }
-        
         
         KakaoMapRequestManager().kakaoMapLocationSearch(
             query: query,
@@ -178,6 +178,8 @@ final class HomeSearchPresenter {
     
     // MARK: Paging후 KakaoMap Load -> AVIRO 데이터 비교
     func afterPagingSearchAndCompareAVIROData(_ query: String) {
+        isEndCompare = false
+        
         pagingSearchData(query: query) { [weak self] placeList in
             self?.makeToPlaceFromAVIROData(placeList: placeList)
         }
@@ -292,19 +294,23 @@ final class HomeSearchPresenter {
 
         viewController?.placeListTableReload()
         isLoading = false
+        isEndCompare = true
     }
     
+    // 선택된 것이 AVIRO에 있는지 확인하는 함수
     func checkIsInAVIRO(_ indexPath: IndexPath) {
-        let model = matchedPlaceModel[indexPath.row]
+        if isEndCompare {
+            let model = matchedPlaceModel[indexPath.row]
 
-        let userInfo: [String: Any] = ["checkIsInAVRIO": model]
+            let userInfo: [String: Any] = ["checkIsInAVRIO": model]
 
-        NotificationCenter.default.post(
-            name: NSNotification.Name("checkIsInAVRIO"),
-            object: nil,
-            userInfo: userInfo
-        )
-        
-        viewController?.popViewController()
+            NotificationCenter.default.post(
+                name: NSNotification.Name("checkIsInAVRIO"),
+                object: nil,
+                userInfo: userInfo
+            )
+            
+            viewController?.popViewController()
+        }
     }
 }

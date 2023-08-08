@@ -191,9 +191,6 @@ extension HomeSearchViewController {
     
     // MARK: 검색 시작할 때 메소드
     private func whenStartSearchingChangedView() {
-        guard !presenter.startSearching else { return }
-        presenter.startSearching = true
-        
         self.navigationController?.navigationBar.isHidden = true
         
         searchField.changeLeftButton()
@@ -207,9 +204,6 @@ extension HomeSearchViewController {
     
     // MARK: 검색 중 뒤로가기 버튼 누를 때 메소드
     private func whenSearchingAndTppedBackButton() {
-        guard presenter.startSearching else { return }
-        presenter.startSearching = false
-        
         self.navigationController?.navigationBar.isHidden = false
                 
         searchField.changeLeftButton()

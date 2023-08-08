@@ -20,6 +20,7 @@
 		C51132C12A559BCA006E1EC3 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51132C02A559BCA006E1EC3 /* AppController.swift */; };
 		C51B09B82A82155200916BBD /* MarkerModelArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B09B72A82155200916BBD /* MarkerModelArray.swift */; };
 		C51B09BA2A8215D800916BBD /* MarkerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B09B92A8215D800916BBD /* MarkerModel.swift */; };
+		C51B09BC2A82397800916BBD /* Marker+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B09BB2A82397800916BBD /* Marker+Extension.swift */; };
 		C51BBAD52A78D53D00BF5B7C /* AVIROCheckPlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51BBAD42A78D53D00BF5B7C /* AVIROCheckPlaceModel.swift */; };
 		C51BBAD72A78D5AB00BF5B7C /* PlaceCheckModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51BBAD62A78D5AB00BF5B7C /* PlaceCheckModel.swift */; };
 		C52066212A7CA9050038ECCD /* MainField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066202A7CA9050038ECCD /* MainField.swift */; };
@@ -137,6 +138,7 @@
 		C51132C02A559BCA006E1EC3 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		C51B09B72A82155200916BBD /* MarkerModelArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerModelArray.swift; sourceTree = "<group>"; };
 		C51B09B92A8215D800916BBD /* MarkerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerModel.swift; sourceTree = "<group>"; };
+		C51B09BB2A82397800916BBD /* Marker+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Marker+Extension.swift"; sourceTree = "<group>"; };
 		C51BBAD42A78D53D00BF5B7C /* AVIROCheckPlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROCheckPlaceModel.swift; sourceTree = "<group>"; };
 		C51BBAD62A78D5AB00BF5B7C /* PlaceCheckModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCheckModel.swift; sourceTree = "<group>"; };
 		C52066202A7CA9050038ECCD /* MainField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainField.swift; sourceTree = "<group>"; };
@@ -388,6 +390,7 @@
 				C54BC0DA2A2C2D0D00B65439 /* UIColor+Extension.swift */,
 				C5D8E8622A3DEC3900D88A43 /* String+Extension.swift */,
 				C5D36D2D2A76031E003328E8 /* Double+Extension.swift */,
+				C51B09BB2A82397800916BBD /* Marker+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1148,6 +1151,7 @@
 				C52066352A7F3FAE0038ECCD /* HistoryTableViewCell.swift in Sources */,
 				C528E4BA2A5F9A3E002BD72E /* ThridRegistrationViewController.swift in Sources */,
 				C528E4BC2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift in Sources */,
+				C51B09BC2A82397800916BBD /* Marker+Extension.swift in Sources */,
 				C5EB51162A21011C00B29CC1 /* DetailViewController.swift in Sources */,
 				C5EB51202A2118AB00B29CC1 /* MenuDetailView.swift in Sources */,
 				C528E4BE2A5FB816002BD72E /* TermsTableCell.swift in Sources */,

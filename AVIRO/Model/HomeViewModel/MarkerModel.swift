@@ -53,5 +53,5 @@ struct MarkerModel {
     let marker: NMFMarker
     let mapPlace: MapPlace
     var isSelected: Bool
-    var isStar: Bool?
+    var isStar: Bool? 
 }
