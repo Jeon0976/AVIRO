@@ -38,6 +38,15 @@ final class MarkerModelArray {
         return (nil, nil)
     }
     
+    func getMarkerWhenSearchAfter(_ lng: Double, _ lat: Double) -> (MarkerModel?, Int?) {
+        let position = NMGLatLng(lat: lat, lng: lng)
+        if let index = markers.enumerated().first(where: { $0.element.marker.position == position })?.offset {
+            return (markers[index], index)
+        }
+
+        return (nil, nil)
+    }
+    
     func setData(_ markerModel: MarkerModel) {
         guard !markers.contains(where: { $0.placeId == markerModel.placeId }) else { return }
         markers.append(markerModel)

@@ -206,7 +206,7 @@ extension HomeSearchViewController {
     private func whenSearchingAndTppedBackButton() {
         self.navigationController?.navigationBar.isHidden = false
                 
-        searchField.changeLeftButton()
+        searchField.initLeftButton()
         UIView.animate(withDuration: 0.2) {
             self.presenter.checkHistoryTableValues()
             self.placeListTableView.isHidden = true
@@ -272,7 +272,7 @@ extension HomeSearchViewController: UITableViewDataSource {
                 for: indexPath
             ) as? HomeSearchViewTableViewCell
 
-            let data = presenter.matchedPlaceListRow(indexPath.row)
+            guard let data = presenter.matchedPlaceListRow(indexPath.row) else { return UITableViewCell() }
 
             let title = data.title
             let address = data.address

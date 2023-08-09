@@ -116,6 +116,12 @@ final class HomeViewController: UIViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        presenter.viewWillDisappear()
+    }
+    
 }
 
 extension HomeViewController: HomeViewProtocol {
@@ -295,9 +301,18 @@ extension HomeViewController: HomeViewProtocol {
         CenterCoordinate.shared.latitude = center.lat
     }
     
-    // MARK: AVIRO에 데이터가 없을때 지도 이동
+    // MARK: AVIRO에 데이터가 없을 때 지도 이동
     func moveToCameraWhenNoAVIRO(_ lng: Double, _ lat: Double) {
         let latlng = NMGLatLng(lat: lat, lng: lng)
+        let cameraUpdate = NMFCameraUpdate(scrollTo: latlng, zoomTo: 14)
+        cameraUpdate.animation = .easeOut
+        
+        naverMapView.moveCamera(cameraUpdate)
+    }
+    
+    // MARK: AVIRO에 데이터가 있을 때 지도 이동
+    func moveToCameraWhenHasAVIRO(_ markerModel: MarkerModel) {
+        let latlng = markerModel.marker.position
         let cameraUpdate = NMFCameraUpdate(scrollTo: latlng, zoomTo: 14)
         cameraUpdate.animation = .easeOut
         
@@ -404,7 +419,7 @@ extension HomeViewController: HomeViewProtocol {
         }
     }
     
-    func saveMarkers() {
+    func loadMarkers() {
         DispatchQueue.main.async { [weak self] in
             let markers = MarkerModelArray.shared.getMarkers()
          

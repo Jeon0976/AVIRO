@@ -24,6 +24,7 @@ final class SearchField: UITextField {
     private var rightButton = UIButton()
     
     private var changedLeftButton = false
+    private var isNotChangedImageBeforeNextAction = false
     var didTappedLeftButton: (() -> Void)?
     
     var rightButtonHidden = false {
@@ -86,13 +87,16 @@ final class SearchField: UITextField {
     
     // MARK: Left button 바꾸기
     func changeLeftButton() {
-        changedLeftButton.toggle()
-        
         let changedImage = UIImage(named: "Back")?.withRenderingMode(.alwaysTemplate)
+        leftButton.setImage(changedImage, for: .normal)
         
+        changedLeftButton = true
+    }
+    
+    // MARK: Left Button 원 상태로 돌리기
+    func initLeftButton() {
         let initImage = UIImage(named: "Search")?.withRenderingMode(.alwaysTemplate)
-        
-        leftButton.setImage(changedLeftButton ? changedImage : initImage, for: .normal)
+        leftButton.setImage(initImage, for: .normal)
     }
     
     // MARK: Left Button이 바뀌었을 때만 활성화
@@ -101,6 +105,7 @@ final class SearchField: UITextField {
             return
         }
         
+        changedLeftButton = false
         self.didTappedLeftButton?()
     }
     

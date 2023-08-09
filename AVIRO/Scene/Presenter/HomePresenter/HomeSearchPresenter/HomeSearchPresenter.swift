@@ -36,7 +36,9 @@ final class HomeSearchPresenter {
         matchedPlaceModel.count
     }
     
-    func matchedPlaceListRow(_ row: Int) -> MatchedPlaceModel {
+    func matchedPlaceListRow(_ row: Int) -> MatchedPlaceModel? {
+        guard isEndCompare else { return nil }
+        
         return matchedPlaceModel[row]
     }
     
@@ -46,6 +48,7 @@ final class HomeSearchPresenter {
     }
     
     func historyPlaceListRow(_ row: Int) -> HistoryTableModel {
+        
         return historyPlaceModel[row]
     }
 
@@ -178,8 +181,6 @@ final class HomeSearchPresenter {
     
     // MARK: Paging후 KakaoMap Load -> AVIRO 데이터 비교
     func afterPagingSearchAndCompareAVIROData(_ query: String) {
-        isEndCompare = false
-        
         pagingSearchData(query: query) { [weak self] placeList in
             self?.makeToPlaceFromAVIROData(placeList: placeList)
         }
@@ -199,6 +200,8 @@ final class HomeSearchPresenter {
             return
         }
   
+        isEndCompare = false
+
         var longitude: Double
         var latitude: Double
         
@@ -299,6 +302,7 @@ final class HomeSearchPresenter {
     
     // 선택된 것이 AVIRO에 있는지 확인하는 함수
     func checkIsInAVIRO(_ indexPath: IndexPath) {
+        print(isEndCompare)
         if isEndCompare {
             let model = matchedPlaceModel[indexPath.row]
 

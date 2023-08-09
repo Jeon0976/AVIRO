@@ -21,7 +21,8 @@ protocol HomeViewProtocol: NSObject {
     func makeMarker(_ veganList: [HomeMapData])
     func pushDetailViewController(_ placeId: String)
     func moveToCameraWhenNoAVIRO(_ lng: Double, _ lat: Double)
-    func saveMarkers()
+    func moveToCameraWhenHasAVIRO(_ markerModel: MarkerModel)
+    func loadMarkers()
 }
 
 final class HomeViewPresenter: NSObject {
@@ -63,6 +64,10 @@ final class HomeViewPresenter: NSObject {
         viewController?.makeSlideView()
     }
     
+    func viewWillDisappear() {
+        initMarkerState()
+    }
+    
     // MARK: vegan Data 불러오기
     func loadVeganData() {
         aviroManager.getNerbyPlaceModels(
@@ -71,9 +76,15 @@ final class HomeViewPresenter: NSObject {
             latitude: MyCoordinate.shared.latitudeString,
             wide: "0.0"
         ) { [weak self] mapDatas in
-//            self?.viewController?.makeMarker((mapDatas.data.placeData))
             self?.saveMarkers(mapDatas.data.placeData)
         }
+    }
+    
+    // MARK: Marker 상태 초기화
+    func initMarkerState() {
+        guard let selectedMarkerModel = selectedMarkerModel else { return }
+        
+        selectedMarkerModel.marker.changeIcon(selectedMarkerModel.mapPlace, false)
     }
     
     // MARK: Marker Data singleton에 저장하기
@@ -108,19 +119,16 @@ final class HomeViewPresenter: NSObject {
             MarkerModelArray.shared.setData(markerModel)
             
         }
-        viewController?.saveMarkers()
+        viewController?.loadMarkers()
     }
     
-    // MARK: Load Markers
-    func loadMarkers() {
-        
-    }
-    
-    func touchedMarker(_ marker: NMFMarker) {
+    // MARK: Marker Touched Method
+    private func touchedMarker(_ marker: NMFMarker) {
         resetPreviouslyTouchedMarker()
         setMarkerToTouchedState(marker)
     }
     
+    // MARK: Reset Previous Marker
     private func resetPreviouslyTouchedMarker() {
         if hasTouchedMarkerBefore {
             let markerModel = MarkerModelArray.shared.getMarkerFromIndex(selectedMarkerIndex)
@@ -128,10 +136,10 @@ final class HomeViewPresenter: NSObject {
             guard let markerModel = markerModel else { return }
             markerModel.marker.changeIcon(markerModel.mapPlace, false)
 
-            MarkerModelArray.shared.change(selectedMarkerIndex, markerModel)
         }
     }
     
+    // MARK: setMarkerToTouchedState
     private func setMarkerToTouchedState(_ marker: NMFMarker) {
         let (markerModel, index) = MarkerModelArray.shared.getMarkerFromMarker(marker)
         
@@ -143,10 +151,10 @@ final class HomeViewPresenter: NSObject {
         selectedMarkerModel = validMarkerModel
         
         validMarkerModel.marker.changeIcon(validMarkerModel.mapPlace, true)
-        
-        MarkerModelArray.shared.change(selectedMarkerIndex, validMarkerModel)
-        
+
         hasTouchedMarkerBefore = true
+        
+        viewController?.moveToCameraWhenHasAVIRO(validMarkerModel)
     }
     
     // MARK: Make Notification
@@ -176,7 +184,21 @@ final class HomeViewPresenter: NSObject {
             )
         } else {
         // AVIRO에 데이터가 있을 때
+            let (markerModel, index) = MarkerModelArray.shared.getMarkerWhenSearchAfter(
+                afterSearchModel.x,
+                afterSearchModel.y
+            )
             
+            guard let markerModel = markerModel else { return }
+            guard let index = index else { return }
+            
+            markerModel.marker.changeIcon(markerModel.mapPlace, true)
+            
+            selectedMarkerIndex = index
+            selectedMarkerModel = markerModel
+            hasTouchedMarkerBefore = true
+            
+            viewController?.moveToCameraWhenHasAVIRO(markerModel)
         }
     }
 }
