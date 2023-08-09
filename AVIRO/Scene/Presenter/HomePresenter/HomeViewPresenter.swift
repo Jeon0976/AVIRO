@@ -21,6 +21,7 @@ protocol HomeViewProtocol: NSObject {
     func makeMarker(_ veganList: [HomeMapData])
     func pushDetailViewController(_ placeId: String)
     func moveToCameraWhenNoAVIRO(_ lng: Double, _ lat: Double)
+    func saveMarkers()
 }
 
 final class HomeViewPresenter: NSObject {
@@ -31,7 +32,11 @@ final class HomeViewPresenter: NSObject {
     
     var homeMapData: [HomeMapData]?
     
-    var firstLocation = true
+    private var hasTouchedMarkerBefore = false
+    private var selectedMarkerIndex = 0 
+    private var selectedMarkerModel: MarkerModel?
+    
+    private var firstLocation = true
     
     init(viewController: HomeViewProtocol) {
         self.viewController = viewController
@@ -66,7 +71,8 @@ final class HomeViewPresenter: NSObject {
             latitude: MyCoordinate.shared.latitudeString,
             wide: "0.0"
         ) { [weak self] mapDatas in
-            self?.viewController?.makeMarker((mapDatas.data.placeData))
+//            self?.viewController?.makeMarker((mapDatas.data.placeData))
+            self?.saveMarkers(mapDatas.data.placeData)
         }
     }
     
@@ -87,12 +93,60 @@ final class HomeViewPresenter: NSObject {
             }
             
             marker.makeIcon(place)
+            marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
+                self?.touchedMarker(marker)
+                
+                return true
+            }
+            
+            let markerModel = MarkerModel(
+                placeId: placeId,
+                marker: marker,
+                mapPlace: place
+            )
+            
+            MarkerModelArray.shared.setData(markerModel)
+            
         }
+        viewController?.saveMarkers()
     }
     
     // MARK: Load Markers
     func loadMarkers() {
         
+    }
+    
+    func touchedMarker(_ marker: NMFMarker) {
+        resetPreviouslyTouchedMarker()
+        setMarkerToTouchedState(marker)
+    }
+    
+    private func resetPreviouslyTouchedMarker() {
+        if hasTouchedMarkerBefore {
+            let markerModel = MarkerModelArray.shared.getMarkerFromIndex(selectedMarkerIndex)
+            
+            guard let markerModel = markerModel else { return }
+            markerModel.marker.changeIcon(markerModel.mapPlace, false)
+
+            MarkerModelArray.shared.change(selectedMarkerIndex, markerModel)
+        }
+    }
+    
+    private func setMarkerToTouchedState(_ marker: NMFMarker) {
+        let (markerModel, index) = MarkerModelArray.shared.getMarkerFromMarker(marker)
+        
+        guard let validMarkerModel = markerModel else { return }
+        
+        guard let validIndex = index else { return }
+        
+        selectedMarkerIndex = validIndex
+        selectedMarkerModel = validMarkerModel
+        
+        validMarkerModel.marker.changeIcon(validMarkerModel.mapPlace, true)
+        
+        MarkerModelArray.shared.change(selectedMarkerIndex, validMarkerModel)
+        
+        hasTouchedMarkerBefore = true
     }
     
     // MARK: Make Notification

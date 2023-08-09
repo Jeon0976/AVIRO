@@ -38,28 +38,28 @@ final class BottomButton: UIButton {
         self.layer.cornerRadius = 25
         self.contentEdgeInsets = UIEdgeInsets(top: 15, left: 25, bottom: 15, right: 25)
         self.clipsToBounds = true
-        self.backgroundColor = .allVegan
+        self.backgroundColor = .main
     }
      
-    func setGradient() {
-        let gradientLayer = CAGradientLayer()
-        
-        gradientLayer.frame = self.bounds
-        gradientLayer.colors = [
-            UIColor.allVegan?.cgColor ?? UIColor.purple.cgColor,
-            UIColor.allVeganGradient?.cgColor ?? UIColor.blue.cgColor
-        ]
-        gradientLayer.startPoint = CGPoint(x: 0, y: 1)
-        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
-        gradientLayer.cornerRadius = 26
-        
-        self.layer.insertSublayer(gradientLayer, at: 0)
-    }
-    
-    func removeGradient() {
-        self.layer.sublayers?.first(where: { $0 is CAGradientLayer })?.removeFromSuperlayer()
-    }
-    
+//    func setGradient() {
+//        let gradientLayer = CAGradientLayer()
+//        
+//        gradientLayer.frame = self.bounds
+//        gradientLayer.colors = [
+//            UIColor.allVegan?.cgColor ?? UIColor.purple.cgColor,
+//            UIColor.allVeganGradient?.cgColor ?? UIColor.blue.cgColor
+//        ]
+//        gradientLayer.startPoint = CGPoint(x: 0, y: 1)
+//        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+//        gradientLayer.cornerRadius = 26
+//
+//        self.layer.insertSublayer(gradientLayer, at: 0)
+//    }
+//
+//    func removeGradient() {
+//        self.layer.sublayers?.first(where: { $0 is CAGradientLayer })?.removeFromSuperlayer()
+//    }
+//
     override var isEnabled: Bool {
          didSet {
              self.backgroundColor = isEnabled ? .allVegan : .subTitle

@@ -52,6 +52,5 @@ struct MarkerModel {
     let placeId: String
     let marker: NMFMarker
     let mapPlace: MapPlace
-    var isSelected: Bool
     var isStar: Bool? 
 }

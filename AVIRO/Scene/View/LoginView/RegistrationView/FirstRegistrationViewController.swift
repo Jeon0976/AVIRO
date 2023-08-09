@@ -102,13 +102,13 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
         // titleLabel
         titleLabel.text = "반가워요!\n닉네임을 정해주세요."
         titleLabel.font = .systemFont(ofSize: 24, weight: .bold)
-        titleLabel.textColor = .allVegan
+        titleLabel.textColor = .main
         titleLabel.numberOfLines = 2
         
         // subTitle
         subTitleLabel.text = "어비로에 불릴 닉네임이에요."
         subTitleLabel.font = .systemFont(ofSize: 14, weight: .medium)
-        subTitleLabel.textColor = .subTitleColor
+        subTitleLabel.textColor = .gray1
         
         // nicNameField
         nicNameField.font = .systemFont(ofSize: 18)
@@ -120,12 +120,12 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
         subInfo.text = "이모지, 특수문자(-, _ 제외)를 사용할 수 없습니다."
         subInfo.font = .systemFont(ofSize: 13)
         subInfo.numberOfLines = 0
-        subInfo.textColor = .exampleRegistration
+        subInfo.textColor = .gray2
         
         // subInfo2
         subInfo2.text = "(0/15)"
         subInfo2.font = .systemFont(ofSize: 13)
-        subInfo2.textColor = .exampleRegistration
+        subInfo2.textColor = .gray2
         
         // nextButton
         nextButton.setTitle("다음으로", for: .normal)
@@ -217,3 +217,29 @@ extension FirstRegistrationViewController: UITextFieldDelegate {
         presenter.checkDuplication()
     }
 }
+
+// MARK: View Preview
+#if DEBUG
+import SwiftUI
+
+struct FirstRegistrationViewControllerPresentable: UIViewControllerRepresentable {
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+        
+    }
+    
+    func makeUIViewController(context: Context) -> some UIViewController {
+        let vc =  FirstRegistrationViewController()
+        
+        let presenter = FirstRegistrationPresenter(viewController: vc)
+        vc.presenter = presenter
+        
+        return vc
+    }
+}
+
+struct  FirstRegistrationViewControllerPresentablePreviewProvider: PreviewProvider {
+    static var previews: some View {
+        FirstRegistrationViewControllerPresentable()
+    }
+}
+#endif

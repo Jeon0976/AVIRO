@@ -49,12 +49,13 @@ final class TopCell: UICollectionViewCell {
         titleLabel.font = .systemFont(ofSize: 24, weight: .bold)
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .center
-        titleLabel.textColor = .allVegan
+        titleLabel.textColor = .main
         
         // subtitle 
         subTitleLabel.font = .systemFont(ofSize: 15, weight: .regular)
         subTitleLabel.numberOfLines = 0
         subTitleLabel.textAlignment = .center
+        subTitleLabel.textColor = .gray2
         
     }
     

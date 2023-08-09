@@ -112,12 +112,12 @@ final class TutorialViewController: UIViewController {
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.isHidden = true
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-        view.backgroundColor = .white
+        view.backgroundColor = .gray7
         
         // viewPageControl
         viewPageControl.numberOfPages = tutorial.count
         viewPageControl.currentPage = 0
-        viewPageControl.currentPageIndicatorTintColor = .allVegan
+        viewPageControl.currentPageIndicatorTintColor = .main
         viewPageControl.pageIndicatorTintColor = .separateLine
         
         // nextButton
@@ -145,10 +145,8 @@ final class TutorialViewController: UIViewController {
     private func changeButton() {
         if viewPageControl.currentPage == tutorial.count - 1 {
             nextButton.setTitle("어비로 바로 시작하기", for: .normal)
-            nextButton.setGradient()
         } else {
             nextButton.setTitle("다음으로", for: .normal)
-            nextButton.removeGradient()
         }
     }
     
@@ -213,3 +211,26 @@ extension TutorialViewController: UICollectionViewDataSource {
     }
     
 }
+
+// MARK: View Preview
+#if DEBUG
+import SwiftUI
+
+struct TutorialViewControllerPresentable: UIViewControllerRepresentable {
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+        
+    }
+    
+    func makeUIViewController(context: Context) -> some UIViewController {
+        let vc = TutorialViewController()
+        
+        return vc
+    }
+}
+
+struct TutorialViewControllerPresentablePreviewProvider: PreviewProvider {
+    static var previews: some View {
+        TutorialViewControllerPresentable()
+    }
+}
+#endif

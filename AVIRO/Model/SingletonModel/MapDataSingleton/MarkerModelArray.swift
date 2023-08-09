@@ -7,6 +7,8 @@
 
 import UIKit
 
+import NMapsMap
+
 final class MarkerModelArray {
     static let shared = MarkerModelArray()
     
@@ -14,13 +16,35 @@ final class MarkerModelArray {
     
     private init() {}
     
-    func getData() -> MarkerModel? {
-        return markers.last
+    func getMarkers() -> [NMFMarker] {
+        var nmfMarkers = [NMFMarker]()
+        
+        markers.forEach { nmfMarkers.append($0.marker)}
+        
+        return nmfMarkers
+    }
+    
+    func getMarkerFromIndex(_ index: Int) -> MarkerModel? {
+        guard index < markers.count else { return nil }
+                
+        return markers[index]
+    }
+    
+    func getMarkerFromMarker(_ marker: NMFMarker) -> (MarkerModel?, Int?) {
+        if let index = markers.enumerated().first(where: {$0.element.marker == marker})?.offset {
+            return (markers[index], index)
+        }
+        
+        return (nil, nil)
     }
     
     func setData(_ markerModel: MarkerModel) {
         guard !markers.contains(where: { $0.placeId == markerModel.placeId }) else { return }
         markers.append(markerModel)
+    }
+    
+    func change(_ index: Int, _ markerModel: MarkerModel) {
+        markers[index] = markerModel
     }
     
     func updateData(_ markerModel: MarkerModel) {

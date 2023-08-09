@@ -22,10 +22,6 @@ final class FinalRegistrationViewController: UIViewController {
         makeAttribute()
     }
     
-    override func viewDidLayoutSubviews() {
-        finalButton.setGradient()
-    }
-    
     private func makeLayout() {
         [
             fanfareAnimation,

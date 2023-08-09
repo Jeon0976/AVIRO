@@ -699,6 +699,15 @@
 			path = Mypage;
 			sourceTree = "<group>";
 		};
+		C5983B462A8337E8008F577A /* TutorialCell */ = {
+			isa = PBXGroup;
+			children = (
+				C567C14F2A56611500D4B426 /* TopCell.swift */,
+				C5B071E02A59454300AE709A /* BottomCell.swift */,
+			);
+			path = TutorialCell;
+			sourceTree = "<group>";
+		};
 		C5B071E22A59B3C200AE709A /* UITextField */ = {
 			isa = PBXGroup;
 			children = (
@@ -793,9 +802,8 @@
 		C5D93D9D2A581E9100629C39 /* TutorialView */ = {
 			isa = PBXGroup;
 			children = (
-				C567C14F2A56611500D4B426 /* TopCell.swift */,
-				C5B071E02A59454300AE709A /* BottomCell.swift */,
 				C58B9AAD2A5675B9008AEAC3 /* TutorialViewController.swift */,
+				C5983B462A8337E8008F577A /* TutorialCell */,
 			);
 			path = TutorialView;
 			sourceTree = "<group>";

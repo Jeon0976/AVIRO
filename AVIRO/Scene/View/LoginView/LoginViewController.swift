@@ -72,7 +72,7 @@ extension LoginViewController: LoginViewProtocol {
     
     // MARK: Make Attribute
     func makeAttribute() {
-        view.backgroundColor = .white
+        view.backgroundColor = .gray7
         
         // loginAnimation
         loginAnimation.play()
@@ -82,7 +82,7 @@ extension LoginViewController: LoginViewProtocol {
         titleLabel.text = "어디서든 비건으로\n어비로 시작하기"
         titleLabel.numberOfLines = 0
         titleLabel.font = .systemFont(ofSize: 30, weight: .bold)
-        titleLabel.textColor = .allVegan
+        titleLabel.textColor = .main
         titleLabel.textAlignment = .center
         
         // appleLoginButton
@@ -188,3 +188,28 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
         
     }
 }
+
+// MARK: View Preview
+#if DEBUG
+import SwiftUI
+
+struct LoginViewControllerPresentable: UIViewControllerRepresentable {
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+        
+    }
+    
+    func makeUIViewController(context: Context) -> some UIViewController {
+        let vc = LoginViewController()
+        let presenter = LoginViewPresenter(viewController: vc)
+        vc.presenter = presenter
+        
+        return vc
+    }
+}
+
+struct LoginViewControllerPresentablePreviewProvider: PreviewProvider {
+    static var previews: some View {
+        LoginViewControllerPresentable()
+    }
+}
+#endif

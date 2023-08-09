@@ -22,6 +22,7 @@ extension NMFMarker {
     }
     
     func changeIcon(_ place: MapPlace, _ isSelected: Bool) {
+        
         switch place {
         case .All:
             self.iconImage = isSelected ? MapIcon.allMapClicked.image : MapIcon.allMap.image
