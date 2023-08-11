@@ -428,7 +428,7 @@ extension HomeViewController: HomeViewProtocol {
             }
         }
     }
-    
+
     // MARK: pushDetailViewController
     func pushDetailViewController(_ placeId: String) {
         DispatchQueue.main.async { [weak self] in
@@ -463,28 +463,3 @@ extension HomeViewController: NMFMapViewCameraDelegate {
         saveCenterCoordinate()
     }
 }
-
-//// MARK: View Preview
-//#if DEBUG
-//import SwiftUI
-//
-//struct HomeViewControllerPresentable: UIViewControllerRepresentable {
-//    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-//
-//    }
-//
-//    func makeUIViewController(context: Context) -> some UIViewController {
-//        let vc = HomeViewController()
-//        let presenter = HomeViewPresenter(viewController: vc)
-//        vc.presenter = presenter
-//
-//        return vc
-//    }
-//}
-//
-//struct HomeViewControllerPresentablePreviewProvider: PreviewProvider {
-//    static var previews: some View {
-//        HomeViewControllerPresentable()
-//    }
-//}
-//#endif

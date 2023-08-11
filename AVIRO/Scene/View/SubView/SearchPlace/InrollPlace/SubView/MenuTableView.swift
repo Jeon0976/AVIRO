@@ -40,16 +40,27 @@ final class MenuTableView: UIView {
     var viewHeightConstraint: NSLayoutConstraint?
     
     var initialView = true
+    var constraintSet = true
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        makeLayout()
         makeAttribute()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: 학습 필요
+    override func updateConstraints() {
+        super.updateConstraints()
+        
+        if constraintSet {
+            makeLayout()
+            
+            constraintSet = !constraintSet
+        }
     }
     
     override func layoutSubviews() {
@@ -105,13 +116,13 @@ final class MenuTableView: UIView {
             normalTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             
             // requestTableView
-            requestTableView.topAnchor.constraint(equalTo: normalTableView.topAnchor),
-            requestTableView.leadingAnchor.constraint(equalTo: normalTableView.leadingAnchor),
-            requestTableView.trailingAnchor.constraint(equalTo: normalTableView.trailingAnchor),
+            requestTableView.topAnchor.constraint(equalTo: subTitle.bottomAnchor, constant: 20),
+            requestTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            requestTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             
             // menuPlusButton
-            menuPlusButton.leadingAnchor.constraint(equalTo: title.leadingAnchor),
-            menuPlusButton.trailingAnchor.constraint(equalTo: normalTableView.trailingAnchor),
+            menuPlusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            menuPlusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             menuPlusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -30)
         ])
         

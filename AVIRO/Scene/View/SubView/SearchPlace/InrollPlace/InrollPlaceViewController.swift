@@ -48,6 +48,34 @@ final class InrollPlaceViewController: UIViewController {
 extension InrollPlaceViewController: InrollPlaceProtocol {
     // MARK: Layout
     func makeLayout() {
+        
+        [
+            storeInfoView,
+            veganDetailView,
+            menuTableView
+        ].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            scrollView.addSubview($0)
+        }
+
+        NSLayoutConstraint.activate([
+            // storeInfoView
+            storeInfoView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 15),
+            storeInfoView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor, constant: 16),
+            storeInfoView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor, constant: -32),
+            
+            // veganDetailView
+            veganDetailView.topAnchor.constraint(equalTo: storeInfoView.bottomAnchor, constant: 15),
+            veganDetailView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor, constant: 16),
+            veganDetailView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor, constant: -32),
+            
+            // menuTableView
+            menuTableView.topAnchor.constraint(equalTo: veganDetailView.bottomAnchor, constant: 15),
+            menuTableView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -15),
+            menuTableView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor, constant: 16),
+            menuTableView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor, constant: -32)
+        ])
+        
         [
             scrollView
         ].forEach {
@@ -61,33 +89,6 @@ extension InrollPlaceViewController: InrollPlaceProtocol {
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-        
-        [
-            storeInfoView,
-            veganDetailView,
-            menuTableView
-        ].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            scrollView.addSubview($0)
-        }
-
-        NSLayoutConstraint.activate([
-            // storeInfoView
-            storeInfoView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 15),
-            storeInfoView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
-            storeInfoView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32),
-            
-            // veganDetailView
-            veganDetailView.topAnchor.constraint(equalTo: storeInfoView.bottomAnchor, constant: 15),
-            veganDetailView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
-            veganDetailView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32),
-            
-            // menuTableView
-            menuTableView.topAnchor.constraint(equalTo: veganDetailView.bottomAnchor, constant: 15),
-            menuTableView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -15),
-            menuTableView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
-            menuTableView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32)
         ])
     }
     
@@ -458,28 +459,3 @@ extension InrollPlaceViewController: UITableViewDataSource {
         }
     }
 }
-
-// MARK: View Preview
-#if DEBUG
-import SwiftUI
-
-struct InrollViewControllerPresentable: UIViewControllerRepresentable {
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        
-    }
-    
-    func makeUIViewController(context: Context) -> some UIViewController {
-        let vc = InrollPlaceViewController()
-        let presenter = InrollPlacePresenter(viewController: vc)
-        vc.presenter = presenter
-        
-        return vc
-    }
-}
-
-struct InrollViewControllerPresentablePreviewProvider: PreviewProvider {
-    static var previews: some View {
-        InrollViewControllerPresentable()
-    }
-}
-#endif

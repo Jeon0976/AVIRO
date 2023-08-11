@@ -172,6 +172,9 @@ final class StoreInfoView: UIView {
         titleField.addLeftImage()
         titleField.makePlaceHolder("가게 이름 검색")
         
+        numberField.textColor = .gray3
+        addressField.textColor = .gray3
+        
         restaurantButton.setButton(Category.restaurant.title)
         cafeButton.setButton(Category.cafe.title)
         bakeryButton.setButton(Category.bakery.title)

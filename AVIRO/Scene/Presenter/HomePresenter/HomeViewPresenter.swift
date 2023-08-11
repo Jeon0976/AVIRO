@@ -104,7 +104,7 @@ final class HomeViewPresenter: NSObject {
             }
             
             marker.makeIcon(place)
-            marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
+            marker.touchHandler = { [weak self] _ in
                 self?.touchedMarker(marker)
                 
                 return true
