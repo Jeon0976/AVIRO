@@ -199,13 +199,13 @@ extension HomeViewController: HomeViewProtocol {
         sender.isSelected.toggle()
         var tabBarHeight: CGFloat?
         
+        // TODO: popView 될 때
         if let tabBarController = self.tabBarController as? TabBarViewController {
             tabBarHeight = tabBarController.tabBar.frame.height
             tabBarController.hiddenTabBar(true)
         }
         
-        placeViewTopConstraint?.constant = -placeView.topView.frame.height + (tabBarHeight ?? CGFloat(5))
-//        placeViewTopConstraint?.constant = -placeView.topView.frame.height
+        placeViewTopConstraint?.constant = -placeView.topView.frame.height + (tabBarHeight ?? CGFloat(32))
         
     }
     

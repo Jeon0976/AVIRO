@@ -39,7 +39,7 @@ final class PlaceTopView: UIView {
         label.textColor = .gray0
         label.font = .systemFont(ofSize: 24, weight: .heavy)
         label.lineBreakMode = .byTruncatingTail
-        label.text = "러브얼스러브얼스러브얼스러브얼스"
+        label.text = "***"
         
         return label
     }()
@@ -48,12 +48,13 @@ final class PlaceTopView: UIView {
         let label = UILabel()
         
         label.textColor = .gray2
+        label.textAlignment = .left
         label.font = .systemFont(ofSize: 15, weight: .medium)
-        label.text = "식당입니다"
+        label.text = "**"
         
         return label
     }()
-    
+
     lazy var distanceIcon: UIImageView = {
         let icon = UIImageView()
         
@@ -95,7 +96,7 @@ final class PlaceTopView: UIView {
         
         label.textColor = .gray1
         label.font = .systemFont(ofSize: 14, weight: .medium)
-        label.text = "식당입니다식당입니다식당입니다식당입니다식당입니다식당입니다식당입니다식당입니다"
+        label.text = "*****"
         label.numberOfLines = 3
         label.textAlignment = .left
     
@@ -107,7 +108,6 @@ final class PlaceTopView: UIView {
         
         button.setImage(UIImage(named: "star"), for: .normal)
         button.setImage(UIImage(named: "selectedStar"), for: .selected)
-        button.contentEdgeInsets = UIEdgeInsets(top: 7, left: 7, bottom: 7, right: 7)
         
         return button
     }()
@@ -116,7 +116,6 @@ final class PlaceTopView: UIView {
         let button = UIButton()
         
         button.setImage(UIImage(named: "share"), for: .normal)
-        button.contentEdgeInsets = UIEdgeInsets(top: 7, left: 7, bottom: 7, right: 7)
         
         return button
     }()
@@ -170,7 +169,7 @@ final class PlaceTopView: UIView {
     }
     
     private func makeLayout() {
-        viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: 0)
+        viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: 350)
         viewHeightConstraint?.isActive = true
         
         whenPopUpViewLayout()
@@ -180,6 +179,9 @@ final class PlaceTopView: UIView {
     
     private func makeAttribute() {
         self.backgroundColor = .gray7
+        
+        self.layer.cornerRadius = 20
+        self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner] 
     }
     
     // MARK: When Popup View Layout
@@ -217,11 +219,11 @@ final class PlaceTopView: UIView {
             // placeTitle
             placeTitle.leadingAnchor.constraint(equalTo: placeIcon.trailingAnchor, constant: 15),
             placeTitle.topAnchor.constraint(equalTo: placeIcon.topAnchor),
-            
-            // placeCategory
-            placeCategory.leadingAnchor.constraint(equalTo: placeTitle.trailingAnchor, constant: 5),
-            placeCategory.centerYAnchor.constraint(equalTo: placeTitle.centerYAnchor),
+
+           // placeCategory
             placeCategory.trailingAnchor.constraint(equalTo: starButton.leadingAnchor, constant: -16),
+            placeCategory.centerYAnchor.constraint(equalTo: placeTitle.centerYAnchor),
+            placeCategory.leadingAnchor.constraint(equalTo: placeTitle.trailingAnchor, constant: 5),
             
             // distanceIcon
             distanceIcon.leadingAnchor.constraint(equalTo: placeIcon.trailingAnchor, constant: 15),
@@ -247,10 +249,14 @@ final class PlaceTopView: UIView {
             // star Button
             starButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
             starButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            starButton.widthAnchor.constraint(equalToConstant: 38),
+            starButton.heightAnchor.constraint(equalToConstant: 38),
 
             // share Button
             shareButton.topAnchor.constraint(equalTo: starButton.bottomAnchor),
-            shareButton.trailingAnchor.constraint(equalTo: starButton.trailingAnchor)
+            shareButton.trailingAnchor.constraint(equalTo: starButton.trailingAnchor),
+            shareButton.widthAnchor.constraint(equalToConstant: 38),
+            shareButton.heightAnchor.constraint(equalToConstant: 38)
         ])
     }
     
@@ -276,11 +282,11 @@ final class PlaceTopView: UIView {
         let guideBarHeight = guideBar.frame.height
         let placeIconHeight = placeIcon.frame.height
         let addressHeight = addressLabel.frame.height
-        // 5 + 20 + 7 + 7 + 35
+        // 5 + 20 + 7 + 7 + 15
         let inset: CGFloat = 74
         
         let totalHeight = guideBarHeight + placeIconHeight + addressHeight + inset
-        
+                
         viewHeightConstraint?.constant = totalHeight
     }
     
