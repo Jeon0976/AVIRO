@@ -18,7 +18,7 @@ protocol HomeViewProtocol: NSObject {
     func whenViewWillAppear()
     func ifDenied()
     func requestSuccess()
-    func makeMarker(_ veganList: [HomeMapData])
+//    func makeMarker(_ veganList: [HomeMapData])
     func pushDetailViewController(_ placeId: String)
     func moveToCameraWhenNoAVIRO(_ lng: Double, _ lat: Double)
     func moveToCameraWhenHasAVIRO(_ markerModel: MarkerModel)

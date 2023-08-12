@@ -163,7 +163,7 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
         birthField.isPossible = false
         birthExample.textColor = .explainImPossible
         birthExample.text = "올바른 형식으로 입력해주세요"
-        nextButton.isEnabled = false
+        presenter.isWrongBirth = true
     }
     
     // MARK: Birth Init
@@ -171,7 +171,7 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
         birthField.isPossible = nil
         birthExample.textColor = .exampleRegistration
         birthExample.text = "태어난 연도를 입력해주세요 (선택)"
-        nextButton.isEnabled = true
+        presenter.isWrongBirth = false
     }
     
     // MARK: Push Thrid RegistrationView

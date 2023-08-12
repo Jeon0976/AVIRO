@@ -12,14 +12,18 @@ import NMapsMap
 final class HomeViewController: UIViewController {
     lazy var presenter = HomeViewPresenter(viewController: self)
         
-    var naverMapView = NMFMapView()
+    lazy var naverMapView = NMFMapView()
     
     // 검색 기능 관련
-    var searchTextField = MainField()
+    lazy var searchTextField = MainField()
 
     // 내 위치 최신화 관련
-    var loadLocationButton = UIButton()
+    lazy var loadLocationButton = UIButton()
+    lazy var starButton = UIButton()
     
+    lazy var placeView = PlaceView()
+    private var placeViewTopConstraint: NSLayoutConstraint?
+
     // store 뷰 관련
     var storeInfoView = HomeInfoStoreView()
     var panGesture = UIPanGestureRecognizer()
@@ -29,51 +33,6 @@ final class HomeViewController: UIViewController {
     // 최초 화면 뷰
     var firstPopupView = HomeFirstPopUpView()
     var blurEffectView = UIVisualEffectView()
-    
-    let allMap = NMFOverlayImage(name: "AllMap")
-    let someMap = NMFOverlayImage(name: "SomeMap")
-    let requestMap = NMFOverlayImage(name: "RequestMap")
-    let allMapClicked = NMFOverlayImage(name: "AllMapClicked")
-    let someMapClicked = NMFOverlayImage(name: "SomeMapClicked")
-    let requestMapClicked = NMFOverlayImage(name: "RequestMapClicked")
-    
-    // MARK: Marker Info
-    var markers: [(NMFMarker, Bool, MapPlace)]? {
-        didSet {
-            if afterSaveAllPlace {
-                guard let oldValue = oldValue?[selectedMarkerIndex],
-                      let newValue = markers?[selectedMarkerIndex] else {
-                    return
-                }
-
-                let (oldMarker, oldBoolValue, place) = oldValue
-                let (newMarker, newBoolValue, _) = newValue
-
-                if oldBoolValue != newBoolValue {
-                    if newBoolValue == false {
-                        switch place {
-                        case .All:
-                            newMarker.iconImage = allMap
-                        case .Some:
-                            newMarker.iconImage = someMap
-                        case .Request:
-                            newMarker.iconImage = requestMap
-                        }
-                    } else {
-                        switch place {
-                        case .All:
-                            newMarker.iconImage = allMapClicked
-                        case .Some:
-                            newMarker.iconImage = someMapClicked
-                        case .Request:
-                            newMarker.iconImage = requestMapClicked
-                        }
-                    }
-                }
-
-            }
-        }
-    }
     
     var selectedMarkerIndex = 0
     var afterSaveAllPlace = false
@@ -108,12 +67,6 @@ final class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
 
         presenter.viewWillAppear()
-//        presenter.loadVeganData()
-        if let markers = self.markers {
-            for (index, _) in markers.enumerated() {
-                self.markers?[index].1 = false
-            }
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -130,12 +83,24 @@ extension HomeViewController: HomeViewProtocol {
         [
             naverMapView,
             loadLocationButton,
-            searchTextField
+            starButton,
+            searchTextField,
+            placeView
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
         
+        // TODO: Autolayout을 활용한 animation 구현 -> 정대리 강의 및 obisidan 정리 후 구현
+        placeViewTopConstraint = placeView.topAnchor.constraint(equalTo: self.view.bottomAnchor)
+        placeViewTopConstraint?.isActive = true
+
+//        placeViewTopConstraint?.constant = -self.view.frame.height * 2/3
+//        UIView.animate(withDuration: 0.3) {
+//              self.view.layoutIfNeeded()
+//          }
+//      }
+    
         NSLayoutConstraint.activate([
             // naverMapView
             naverMapView.topAnchor.constraint(
@@ -149,9 +114,13 @@ extension HomeViewController: HomeViewProtocol {
             
             // loadLoactionButton
             loadLocationButton.bottomAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: Layout.HomeView.minusLocationInset),
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
             loadLocationButton.trailingAnchor.constraint(
-                equalTo: naverMapView.trailingAnchor, constant: Layout.HomeView.minusLocationInset),
+                equalTo: naverMapView.trailingAnchor, constant: -20),
+            
+            // starButton
+            starButton.bottomAnchor.constraint(equalTo: loadLocationButton.topAnchor, constant: -10),
+            starButton.trailingAnchor.constraint(equalTo: loadLocationButton.trailingAnchor),
             
             // searchTextField
             searchTextField.topAnchor.constraint(
@@ -159,7 +128,12 @@ extension HomeViewController: HomeViewProtocol {
             searchTextField.leadingAnchor.constraint(
                 equalTo: naverMapView.leadingAnchor, constant: Layout.Inset.leadingTop),
             searchTextField.trailingAnchor.constraint(
-                equalTo: naverMapView.trailingAnchor, constant: Layout.Inset.trailingBottom)
+                equalTo: naverMapView.trailingAnchor, constant: Layout.Inset.trailingBottom),
+            
+            // placeView
+            placeView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            placeView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            placeView.heightAnchor.constraint(equalToConstant: self.view.frame.height)
         ])
     }
     
@@ -176,7 +150,15 @@ extension HomeViewController: HomeViewProtocol {
         naverMapView.addCameraDelegate(delegate: self)
 
         // lodeLocationButton
-        loadLocationButton.setImage(UIImage(named: Image.PersonalLocation), for: .normal)
+        loadLocationButton.setImage(UIImage(named: "current-location"), for: .normal)
+        loadLocationButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
+        loadLocationButton.backgroundColor = .gray7
+        loadLocationButton.layer.cornerRadius = 15
+        loadLocationButton.layer.shadowColor = UIColor.black.cgColor
+        loadLocationButton.layer.shadowOpacity = 0.15
+        loadLocationButton.layer.shadowOffset = .init(width: 1, height: 3)
+        loadLocationButton.layer.shadowRadius = 5
+        
         loadLocationButton.addTarget(
             self,
             action: #selector(refreshMyLocationTouchDown),
@@ -195,10 +177,35 @@ extension HomeViewController: HomeViewProtocol {
             for: .touchUpInside
         )
         
+        starButton.setImage(UIImage(named: "star"), for: .normal)
+        starButton.setImage(UIImage(named: "selectedStar"), for: .selected)
+        starButton.addTarget(self, action: #selector(starButtonTapped(sender:)), for: .touchUpInside)
+        starButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
+        starButton.backgroundColor = .gray7
+        starButton.layer.cornerRadius = 15
+        starButton.layer.shadowColor = UIColor.black.cgColor
+        starButton.layer.shadowOpacity = 0.15
+        starButton.layer.shadowOffset = .init(width: 1, height: 3)
+        starButton.layer.shadowRadius = 5
+        
         // searchTextField
         searchTextField.makePlaceHolder("어디로 이동할까요?")
         searchTextField.makeShadow()
         searchTextField.delegate = self
+        
+    }
+    
+    @objc func starButtonTapped(sender: UIButton) {
+        sender.isSelected.toggle()
+        var tabBarHeight: CGFloat?
+        
+        if let tabBarController = self.tabBarController as? TabBarViewController {
+            tabBarHeight = tabBarController.tabBar.frame.height
+            tabBarController.hiddenTabBar(true)
+        }
+        
+        placeViewTopConstraint?.constant = -placeView.topView.frame.height + (tabBarHeight ?? CGFloat(5))
+//        placeViewTopConstraint?.constant = -placeView.topView.frame.height
         
     }
     
@@ -266,7 +273,7 @@ extension HomeViewController: HomeViewProtocol {
         storeInfoView.entireView.alpha = 0
         storeInfoView.activityIndicator.alpha = 0
 
-        view.addSubview(storeInfoView)
+//        view.addSubview(storeInfoView)
     }
     
     // MARK: View Will Appear할 때 navigation & Tab Bar hidden Setting
@@ -317,106 +324,6 @@ extension HomeViewController: HomeViewProtocol {
         cameraUpdate.animation = .easeOut
         
         naverMapView.moveCamera(cameraUpdate)
-    }
-    
-    // MARK: 지도에 마크 표시하기 작업
-    func makeMarker(_ veganList: [HomeMapData]) {
-        afterSaveAllPlace = false
-        self.markers = [(NMFMarker, Bool, MapPlace)]()
-        
-        veganList.forEach { homeMapData in
-            
-            let title = homeMapData.title
-            let address = homeMapData.address
-            let latLng = NMGLatLng(lat: homeMapData.y, lng: homeMapData.x)
-            let marker = NMFMarker(position: latLng)
-            let placeId = homeMapData.placeId
-            
-            if homeMapData.allVegan {
-                marker.iconImage = allMap
-                markers?.append((marker, false, MapPlace.All))
-            } else if homeMapData.someMenuVegan {
-                marker.iconImage = someMap
-                markers?.append((marker, false, MapPlace.Some))
-            } else {
-                marker.iconImage = requestMap
-                markers?.append((marker, false, MapPlace.Request))
-            }
-            // Marker 터치할 때
-            marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
-                if nil != overlay as? NMFMarker {
-        
-                    let title = title
-                    let address = address
-                    guard let self = self else { return false }
-                    
-                    storeInfoView.title.text = title
-                    storeInfoView.address.text = address
-                    storeInfoView.placeId = placeId
-                    
-                    // 이전 선택된 마커를 원래 이미지로 되돌리기
-                    let prevSelectedIndex = self.selectedMarkerIndex
-                    if let prevMarker = self.markers?[prevSelectedIndex] {
-                        switch prevMarker.2 {
-                        case .All:
-                            prevMarker.0.iconImage = self.allMap
-                        case .Some:
-                            prevMarker.0.iconImage = self.someMap
-                        case .Request:
-                            prevMarker.0.iconImage = self.requestMap
-                        }
-                        // 이전 선택된 마커의 선택 상태 업데이트
-                        self.markers?[prevSelectedIndex].1 = false
-                    }
-                    
-                    let latLng = marker.position
-                    let cameraUpdate = NMFCameraUpdate(scrollTo: latLng, zoomTo: 14)
-                    cameraUpdate.animation = .easeOut
-                    naverMapView.moveCamera(cameraUpdate)
-                    
-                    if homeMapData.allVegan {
-                        storeInfoView.imageView.image = UIImage(
-                            named: Image.homeInfoVegan)
-                        storeInfoView.topImageView.image = UIImage(
-                            named: Image.homeInfoVeganTitle)
-                    } else if homeMapData.someMenuVegan {
-                        storeInfoView.imageView.image = UIImage(
-                            named: Image.homeInfoSomeVegan)
-                        storeInfoView.topImageView.image = UIImage(
-                            named: Image.homeInfoSomeVeganTitle)
-                    } else {
-                        storeInfoView.imageView.image = UIImage(
-                            named: Image.homeInfoRequestVegan)
-                        storeInfoView.topImageView.image = UIImage(
-                            named: Image.homeInfoRequestVeganTitle)
-                    }
-                    storeInfoView.imageView.contentMode = .scaleAspectFit
-                    storeInfoView.topImageView.contentMode = .scaleAspectFit
-                    
-                    UIView.animate(withDuration: 0.15) {
-                        let tabBarHeight = self.tabBarController?.tabBar.frame.size.height ?? 32
-                        self.storeInfoView.frame.origin.y =
-                        self.view.frame.height - Layout.SlideView.height
-                        self.storeInfoView.frame.size.height =
-                        Layout.SlideView.height + tabBarHeight
-                    }
-                    
-                    if let index = markers?.enumerated().first(where: { $0.element.0 == marker})?.offset {
-                        selectedMarkerIndex = index
-                        markers?[index].1 = true
-                    }
-                    
-                }
-                return true
-            }
-        }
-        afterSaveAllPlace = true
-        DispatchQueue.main.async { [weak self] in
-            guard let markers = self?.markers else { return }
-            for marker in markers {
-                marker.0.mapView = self?.naverMapView
-            }
-        }
     }
     
     func loadMarkers() {

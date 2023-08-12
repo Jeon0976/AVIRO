@@ -109,13 +109,6 @@ extension HomeViewController {
 
                     self.storeInfoView.entireView.alpha = 0
                     self.storeInfoView.activityIndicator.alpha = 0
-//                    if self.markers[self.selectedMarkerIndex].1 {
-//                        let image = NMFOverlayImage(name: Image.allVegan)
-//
-//                        self.markers[self.selectedMarkerIndex].0.iconImage = image
-//
-//                    }
-                    self.markers?[self.selectedMarkerIndex].1 = false
                 } else {
                     self.storeInfoView.frame.size.height = maxHeight + 32
                     self.storeInfoView.frame.origin.y = self.view.frame.origin.y

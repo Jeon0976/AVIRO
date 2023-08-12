@@ -53,6 +53,7 @@ final class PlaceSegmentedControlView: UIView {
         if !afterInitViewConstrait {
             initViewConstraint()
         }
+
     }
     
     private func makeLayout() {
@@ -78,6 +79,9 @@ final class PlaceSegmentedControlView: UIView {
             scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
         
+        homeView.backgroundColor = .red
+        menuView.backgroundColor = .gray
+        reviewView.backgroundColor = .magenta
     }
     
     private func makeLayoutInScrollView() {
@@ -92,12 +96,15 @@ final class PlaceSegmentedControlView: UIView {
         
         NSLayoutConstraint.activate([
             homeView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            homeView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             homeView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
             
             menuView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            menuView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             menuView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
 
             reviewView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            reviewView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             reviewView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor)
         ])
     }
@@ -108,6 +115,7 @@ final class PlaceSegmentedControlView: UIView {
         segmentedControl.setAttributedTitle()
         segmentedControl.addTarget(self, action: #selector(segmentedChanged(segment:)), for: .valueChanged)
         segmentedControl.selectedSegmentIndex = 0
+        
     }
     
     private func initViewConstraint() {
@@ -130,7 +138,7 @@ final class PlaceSegmentedControlView: UIView {
     }
     
     private func initMenuViewConstrait() {
-        let menuViewHeight = CGFloat(600)
+        let menuViewHeight = CGFloat(1000)
 
         menuHeightConstraint = menuView.heightAnchor.constraint(equalToConstant: menuViewHeight)
         menuHeightConstraint?.isActive = false

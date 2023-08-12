@@ -11,7 +11,7 @@ class TabBarViewController: UITabBarController {
     
     private let centerButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setImage(UIImage(named: "InrollTab"), for: .normal)
+        button.setImage(UIImage(named: "InrollTabBarIcon"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.shadowOpacity = 0.07
         button.layer.shadowColor = UIColor.black.cgColor

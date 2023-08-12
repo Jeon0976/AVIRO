@@ -22,6 +22,7 @@ final class SecondRegistrationPresenter {
     
     var birth = ""
     var gender: Gender?
+    var isWrongBirth = true
     
     private let aviroManager = AVIROAPIManager()
     
@@ -39,6 +40,10 @@ final class SecondRegistrationPresenter {
     // MARK: 생일, 성별 회원 데이터에 추가 후 다음 페이지
     func pushUserInfo() {
         guard var userInfoModel = userInfoModel else { return }
+        
+        if isWrongBirth {
+            birth = ""
+        }
 
         if let gender = gender {
             userInfoModel.gender = gender.rawValue
@@ -51,6 +56,7 @@ final class SecondRegistrationPresenter {
         userInfoModel.birthYear = birth
         
         viewController?.pushThridRegistrationView(userInfoModel)
+        print(userInfoModel)
     }
     
     // MARK: String to Int (DateFormatter 활용) & Check Invaild Date
