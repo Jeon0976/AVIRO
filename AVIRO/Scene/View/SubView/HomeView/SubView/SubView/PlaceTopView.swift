@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: Place View State
 enum PlaceViewState {
     case PopUp
     case SlideUp
@@ -15,6 +16,7 @@ enum PlaceViewState {
 
 final class PlaceTopView: UIView {
     
+    // MARK: When Pop Up
     lazy var guideBar: UIView = {
         let guide = UIView()
         
@@ -38,8 +40,7 @@ final class PlaceTopView: UIView {
         
         label.textColor = .gray0
         label.font = .systemFont(ofSize: 24, weight: .heavy)
-        label.lineBreakMode = .byTruncatingTail
-        label.text = "***"
+
         
         return label
     }()
@@ -50,7 +51,7 @@ final class PlaceTopView: UIView {
         label.textColor = .gray2
         label.textAlignment = .left
         label.font = .systemFont(ofSize: 15, weight: .medium)
-        label.text = "**"
+
         
         return label
     }()
@@ -96,10 +97,9 @@ final class PlaceTopView: UIView {
         
         label.textColor = .gray1
         label.font = .systemFont(ofSize: 14, weight: .medium)
-        label.text = "*****"
         label.numberOfLines = 3
         label.textAlignment = .left
-    
+
         return label
     }()
     
@@ -118,6 +118,52 @@ final class PlaceTopView: UIView {
         button.setImage(UIImage(named: "share"), for: .normal)
         
         return button
+    }()
+    
+    // MARK: When Slide Up
+    lazy var whenSlideTopLabel: UILabel = {
+        let label = UILabel()
+        
+        label.font = .systemFont(ofSize: 15, weight: .medium)
+        
+        return label
+    }()
+    
+    lazy var whenSlideMiddleLabel: UILabel = {
+        let label = UILabel()
+        
+        label.font = .systemFont(ofSize: 24, weight: .heavy)
+        label.textColor = .gray0
+        label.numberOfLines = 3
+        
+        return label
+    }()
+    
+    lazy var whenSlideBottomLabel: UILabel = {
+        let label = UILabel()
+        
+        label.font = .systemFont(ofSize: 14, weight: .medium)
+        
+        return label
+    }()
+    
+    // MARK: When Full
+    lazy var whenFullBackButton: UIButton = {
+        let button = UIButton()
+        
+        button.setImage(UIImage(named: "DownBack"), for: .normal)
+        
+        return button
+    }()
+    
+    lazy var whenFullTitle: UILabel = {
+        let label = UILabel()
+        
+        label.font = .systemFont(ofSize: 18, weight: .semibold)
+        label.textAlignment = .center
+        label.numberOfLines = 3
+        
+        return label
     }()
     
     private var viewHeightConstraint: NSLayoutConstraint?
@@ -169,7 +215,7 @@ final class PlaceTopView: UIView {
     }
     
     private func makeLayout() {
-        viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: 350)
+        viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: 200)
         viewHeightConstraint?.isActive = true
         
         whenPopUpViewLayout()
@@ -180,8 +226,16 @@ final class PlaceTopView: UIView {
     private func makeAttribute() {
         self.backgroundColor = .gray7
         
-        self.layer.cornerRadius = 20
-        self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner] 
+        switchViewCorners(true)
+    }
+    
+    private func switchViewCorners(_ switch: Bool) {
+        if `switch` {
+            self.layer.cornerRadius = 20
+            self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        } else {
+            self.layer.cornerRadius = 0
+        }
     }
     
     // MARK: When Popup View Layout
@@ -292,29 +346,96 @@ final class PlaceTopView: UIView {
     
     // MARK: When Slideup View Layout
     private func whenSlideUpViewLayout() {
+        [
+            whenSlideTopLabel,
+            whenSlideMiddleLabel,
+            whenSlideBottomLabel
+        ].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            self.addSubview($0)
+        }
         
+        NSLayoutConstraint.activate([
+            whenSlideTopLabel.topAnchor.constraint(equalTo: placeIcon.topAnchor),
+            whenSlideTopLabel.leadingAnchor.constraint(equalTo: placeIcon.trailingAnchor, constant: 15),
+            whenSlideTopLabel.trailingAnchor.constraint(equalTo: starButton.leadingAnchor, constant: -15),
+            
+            whenSlideMiddleLabel.topAnchor.constraint(equalTo: whenSlideTopLabel.bottomAnchor, constant: 5),
+            whenSlideMiddleLabel.leadingAnchor.constraint(equalTo: placeIcon.trailingAnchor, constant: 15),
+            whenSlideMiddleLabel.trailingAnchor.constraint(equalTo: starButton.leadingAnchor, constant: -15),
+            
+            whenSlideBottomLabel.topAnchor.constraint(equalTo: whenSlideMiddleLabel.bottomAnchor, constant: 7.5),
+            whenSlideBottomLabel.leadingAnchor.constraint(equalTo: placeIcon.trailingAnchor, constant: 15),
+            whenSlideBottomLabel.trailingAnchor.constraint(equalTo: starButton.leadingAnchor, constant: -15)
+        ])
+        
+        whenSlideTopLabel.isHidden = true
+        whenSlideMiddleLabel.isHidden = true
+        whenSlideBottomLabel.isHidden = true
     }
     
     private func whenSlideUpViewIsShowUI(show: Bool) {
         let show = !show
-
+        
+        guideBar.isHidden = show
+        placeIcon.isHidden = show
+        starButton.isHidden = show
+        shareButton.isHidden = show
+        whenSlideTopLabel.isHidden = show
+        whenSlideMiddleLabel.isHidden = show
+        whenSlideBottomLabel.isHidden = show
     }
     
     private func whenSlideUpViewHeight() {
+        let topHeight = whenSlideTopLabel.frame.height
+        let middleHeight = whenSlideMiddleLabel.frame.height
+        let bottomHeight = whenSlideBottomLabel.frame.height
+        // 30 + 5 + 7.5 + 28
+        let inset: CGFloat = 70.5
         
+        let totalHeight = topHeight + middleHeight + bottomHeight + inset
+        
+        viewHeightConstraint?.constant = topHeight
     }
     
     // MARK: When Full Height View
     private func whenFullHeightViewLayout() {
+        [
+            whenFullBackButton,
+            whenFullTitle
+        ].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            self.addSubview($0)
+        }
         
+        NSLayoutConstraint.activate([
+            whenFullBackButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            whenFullBackButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 18),
+            
+            whenFullTitle.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            whenFullTitle.topAnchor.constraint(equalTo: whenFullBackButton.topAnchor),
+            whenFullTitle.widthAnchor.constraint(equalToConstant: 120)
+        ])
+        
+        whenFullBackButton.isHidden = true
+        whenFullTitle.isHidden = true
     }
     
     private func whenFullHeightViewIsShowUI(show: Bool) {
         let show = !show
 
+        whenFullBackButton.isHidden = show
+        whenFullTitle.isHidden = show
     }
     
     private func whenFullHeightViewHeight() {
+        let titleHeight = whenFullTitle.frame.height
         
+        // 18 + 18
+        let inset: CGFloat = 36
+        
+        let totalHeight = titleHeight + inset
+        
+        viewHeightConstraint?.constant = totalHeight
     }
 }

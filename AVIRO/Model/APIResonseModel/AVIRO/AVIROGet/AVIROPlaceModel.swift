@@ -20,9 +20,12 @@ struct PlaceData: Decodable {
     let phone: String
     let url: String
     
-    let commentCount: Int
-    
+    let x: Double
+    let y: Double
+        
     let allVegan: Bool
     let someMenuVegan: Bool
     let ifRequestVegan: Bool
+    
+    let commentCount: Int
 }

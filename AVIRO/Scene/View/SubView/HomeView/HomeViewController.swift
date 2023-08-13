@@ -308,6 +308,17 @@ extension HomeViewController: HomeViewProtocol {
         CenterCoordinate.shared.latitude = center.lat
     }
     
+    // MARK: Marker Map에 대입하는 메소드
+    func loadMarkers() {
+        DispatchQueue.main.async { [weak self] in
+            let markers = MarkerModelArray.shared.getMarkers()
+         
+            markers.forEach {
+                $0.mapView = self?.naverMapView
+            }
+        }
+    }
+    
     // MARK: AVIRO에 데이터가 없을 때 지도 이동
     func moveToCameraWhenNoAVIRO(_ lng: Double, _ lat: Double) {
         let latlng = NMGLatLng(lat: lat, lng: lng)
@@ -326,16 +337,6 @@ extension HomeViewController: HomeViewProtocol {
         naverMapView.moveCamera(cameraUpdate)
     }
     
-    func loadMarkers() {
-        DispatchQueue.main.async { [weak self] in
-            let markers = MarkerModelArray.shared.getMarkers()
-         
-            markers.forEach {
-                $0.mapView = self?.naverMapView
-            }
-        }
-    }
-
     // MARK: pushDetailViewController
     func pushDetailViewController(_ placeId: String) {
         DispatchQueue.main.async { [weak self] in
@@ -349,6 +350,11 @@ extension HomeViewController: HomeViewProtocol {
                 animated: false
             )
         }
+    }
+    
+    // MARK: Clicked Marker Data Binding
+    func thenClickedMarker(_ placeModel: PlaceTopModel) {
+        print(placeModel)
     }
 }
 

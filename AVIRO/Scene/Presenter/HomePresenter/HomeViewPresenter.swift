@@ -18,18 +18,17 @@ protocol HomeViewProtocol: NSObject {
     func whenViewWillAppear()
     func ifDenied()
     func requestSuccess()
-//    func makeMarker(_ veganList: [HomeMapData])
     func pushDetailViewController(_ placeId: String)
     func moveToCameraWhenNoAVIRO(_ lng: Double, _ lat: Double)
     func moveToCameraWhenHasAVIRO(_ markerModel: MarkerModel)
     func loadMarkers()
+    func thenClickedMarker(_ placeModel: PlaceTopModel)
 }
 
 final class HomeViewPresenter: NSObject {
     weak var viewController: HomeViewProtocol?
     
     private let locationManager = CLLocationManager()
-    private let aviroManager = AVIROAPIManager()
     
     var homeMapData: [HomeMapData]?
     
@@ -70,7 +69,7 @@ final class HomeViewPresenter: NSObject {
     
     // MARK: vegan Data 불러오기
     func loadVeganData() {
-        aviroManager.getNerbyPlaceModels(
+        AVIROAPIManager().getNerbyPlaceModels(
             longitude: MyCoordinate.shared.longitudeString,
             
             latitude: MyCoordinate.shared.latitudeString,
@@ -135,7 +134,6 @@ final class HomeViewPresenter: NSObject {
             
             guard let markerModel = markerModel else { return }
             markerModel.marker.changeIcon(markerModel.mapPlace, false)
-
         }
     }
     
@@ -147,6 +145,8 @@ final class HomeViewPresenter: NSObject {
         
         guard let validIndex = index else { return }
         
+        getPlaceModel(validMarkerModel)
+
         selectedMarkerIndex = validIndex
         selectedMarkerModel = validMarkerModel
         
@@ -155,6 +155,31 @@ final class HomeViewPresenter: NSObject {
         hasTouchedMarkerBefore = true
         
         viewController?.moveToCameraWhenHasAVIRO(validMarkerModel)
+    }
+    
+    // MARK: Get PlaceModel
+    private func getPlaceModel(_ markerModel: MarkerModel) {
+        let mapPlace = markerModel.mapPlace
+        let placeId = markerModel.placeId
+        
+        AVIROAPIManager().getPlaceInfo(placeId: placeId) { placeModel in
+            let place = placeModel.data
+            
+            let distanceValue = LocationUtility.distanceMyLocation(x_lon: place.x, y_lat: place.y) * 1000
+            let distanceString = String(distanceValue).convertDistanceUnit()
+            let reviewsCoint = String(place.commentCount)
+            
+            let placeTopModel = PlaceTopModel(
+                placeState: mapPlace,
+                placeTitle: place.title,
+                distance: distanceString,
+                reviewsCount: reviewsCoint,
+                address: place.address)
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.viewController?.thenClickedMarker(placeTopModel)
+            }
+        }
     }
     
     // MARK: Make Notification
@@ -194,6 +219,7 @@ final class HomeViewPresenter: NSObject {
             
             markerModel.marker.changeIcon(markerModel.mapPlace, true)
             
+            getPlaceModel(markerModel)
             selectedMarkerIndex = index
             selectedMarkerModel = markerModel
             hasTouchedMarkerBefore = true

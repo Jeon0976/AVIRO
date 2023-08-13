@@ -67,9 +67,11 @@
 		C5732C732A41778A00CDC499 /* AVIROPostAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C722A41778A00CDC499 /* AVIROPostAPI.swift */; };
 		C5732C752A41962D00CDC499 /* AVIRORequestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C742A41962D00CDC499 /* AVIRORequestAPI.swift */; };
 		C5732C772A41A0A500CDC499 /* AVIROMapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C762A41A0A500CDC499 /* AVIROMapModel.swift */; };
-		C5732C792A41AD8100CDC499 /* HomeMapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C782A41AD8100CDC499 /* HomeMapData.swift */; };
 		C5732C7C2A41D41B00CDC499 /* VeganTableFieldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C7B2A41D41B00CDC499 /* VeganTableFieldModel.swift */; };
 		C5732C7E2A41D42700CDC499 /* RequestTableFieldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C7D2A41D42700CDC499 /* RequestTableFieldModel.swift */; };
+		C5803F582A88C1990064A853 /* PlaceTopModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5803F572A88C1990064A853 /* PlaceTopModel.swift */; };
+		C5803F5A2A88C1A50064A853 /* PlaceInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5803F592A88C1A50064A853 /* PlaceInfoModel.swift */; };
+		C5803F5D2A88C3C00064A853 /* LocationUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5803F5C2A88C3C00064A853 /* LocationUtility.swift */; };
 		C58B9AAE2A5675B9008AEAC3 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58B9AAD2A5675B9008AEAC3 /* TutorialViewController.swift */; };
 		C593B6472A4AB3A700D224CE /* PushCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593B6462A4AB3A700D224CE /* PushCommentView.swift */; };
 		C593B64B2A4AEA9800D224CE /* AVIROCommentPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593B64A2A4AEA9800D224CE /* AVIROCommentPost.swift */; };
@@ -197,9 +199,11 @@
 		C5732C722A41778A00CDC499 /* AVIROPostAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROPostAPI.swift; sourceTree = "<group>"; };
 		C5732C742A41962D00CDC499 /* AVIRORequestAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIRORequestAPI.swift; sourceTree = "<group>"; };
 		C5732C762A41A0A500CDC499 /* AVIROMapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROMapModel.swift; sourceTree = "<group>"; };
-		C5732C782A41AD8100CDC499 /* HomeMapData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMapData.swift; sourceTree = "<group>"; };
 		C5732C7B2A41D41B00CDC499 /* VeganTableFieldModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganTableFieldModel.swift; sourceTree = "<group>"; };
 		C5732C7D2A41D42700CDC499 /* RequestTableFieldModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTableFieldModel.swift; sourceTree = "<group>"; };
+		C5803F572A88C1990064A853 /* PlaceTopModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTopModel.swift; sourceTree = "<group>"; };
+		C5803F592A88C1A50064A853 /* PlaceInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceInfoModel.swift; sourceTree = "<group>"; };
+		C5803F5C2A88C3C00064A853 /* LocationUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationUtility.swift; sourceTree = "<group>"; };
 		C58B9AAD2A5675B9008AEAC3 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		C593B6462A4AB3A700D224CE /* PushCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushCommentView.swift; sourceTree = "<group>"; };
 		C593B64A2A4AEA9800D224CE /* AVIROCommentPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROCommentPost.swift; sourceTree = "<group>"; };
@@ -362,6 +366,7 @@
 			isa = PBXGroup;
 			children = (
 				C5B071E32A59B3CB00AE709A /* SubClass */,
+				C5803F5B2A88C3AF0064A853 /* Utility */,
 				C51132BD2A559826006E1EC3 /* Extension */,
 				C5CAAC432A39A92A008C5FDA /* StaticValue */,
 				C5351B552A19B67900116D50 /* CustomAlertController.swift */,
@@ -686,6 +691,23 @@
 			path = Deprecated;
 			sourceTree = "<group>";
 		};
+		C5803F562A88C1810064A853 /* PlaceViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C5803F572A88C1990064A853 /* PlaceTopModel.swift */,
+				C5803F592A88C1A50064A853 /* PlaceInfoModel.swift */,
+			);
+			path = PlaceViewModel;
+			sourceTree = "<group>";
+		};
+		C5803F5B2A88C3AF0064A853 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				C5803F5C2A88C3C00064A853 /* LocationUtility.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
 		C593B6482A4AEA6600D224CE /* AVIROPost */ = {
 			isa = PBXGroup;
 			children = (
@@ -930,8 +952,8 @@
 		C5EB51022A20927400B29CC1 /* HomeViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				C5732C782A41AD8100CDC499 /* HomeMapData.swift */,
 				C51B09B92A8215D800916BBD /* MarkerModel.swift */,
+				C5803F562A88C1810064A853 /* PlaceViewModel */,
 				C52066272A7CD5E60038ECCD /* HomeSearchViewModel */,
 			);
 			path = HomeViewModel;
@@ -1162,6 +1184,7 @@
 				C52066212A7CA9050038ECCD /* MainField.swift in Sources */,
 				C5EB510B2A209FD300B29CC1 /* HomeSearchPresenter.swift in Sources */,
 				C52066262A7CC3CE0038ECCD /* NoHistoryLabelView.swift in Sources */,
+				C5803F5D2A88C3C00064A853 /* LocationUtility.swift in Sources */,
 				C5F1014F2A6D19A800C53286 /* VeganOptionButton.swift in Sources */,
 				C52066292A7CD5FC0038ECCD /* HistoryTableModel.swift in Sources */,
 				C50F6AF52A68FD6300E942F5 /* InrollPlacePresenter.swift in Sources */,
@@ -1190,6 +1213,7 @@
 				C5D93D9F2A581EC800629C39 /* FirstRegistrationViewController.swift in Sources */,
 				C528E4C02A5FF1CB002BD72E /* FinalRegistrationViewController.swift in Sources */,
 				C5D93DA32A58718300629C39 /* BottomButton.swift in Sources */,
+				C5803F582A88C1990064A853 /* PlaceTopModel.swift in Sources */,
 				C5D36D2E2A76031E003328E8 /* Double+Extension.swift in Sources */,
 				C54BC0DD2A2C762C00B65439 /* CommentsLabel.swift in Sources */,
 				C5EB50E62A1C6FC700B29CC1 /* BookMarkViewController.swift in Sources */,
@@ -1201,6 +1225,7 @@
 				C5732C7E2A41D42700CDC499 /* RequestTableFieldModel.swift in Sources */,
 				C5CAAC472A39AEFE008C5FDA /* Image.swift in Sources */,
 				C5E7B7A92A4D3CDF00CA2090 /* UserInfoModel.swift in Sources */,
+				C5803F5A2A88C1A50064A853 /* PlaceInfoModel.swift in Sources */,
 				C52066232A7CAC910038ECCD /* NoHistoryView.swift in Sources */,
 				C5E306E72A6FB4ED00C11CF7 /* MenuField.swift in Sources */,
 				C5E430B32A5DADBE00CB67EC /* SecondRegistrationPresenter.swift in Sources */,
@@ -1218,7 +1243,6 @@
 				C520662D2A7CE1CC0038ECCD /* UserDefaultsManager.swift in Sources */,
 				C5A3C3C62A39659B0050AB3D /* LoginViewPresenter.swift in Sources */,
 				C58B9AAE2A5675B9008AEAC3 /* TutorialViewController.swift in Sources */,
-				C5732C792A41AD8100CDC499 /* HomeMapData.swift in Sources */,
 				C5D745912A225DE6006F9F31 /* CommentDetailViewController.swift in Sources */,
 				C5FF13552A42C88D0026981D /* AVIROMenuModel.swift in Sources */,
 				C52066332A7E80350038ECCD /* MatchedPlaceListCell.swift in Sources */,
