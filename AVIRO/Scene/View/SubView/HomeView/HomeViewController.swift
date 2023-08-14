@@ -21,10 +21,12 @@ final class HomeViewController: UIViewController {
     private lazy var loadLocationButton = UIButton()
     private lazy var starButton = UIButton()
     
+    private lazy var downBackButton = UIButton()
+    private lazy var flagButton = UIButton()
+    
     lazy var placeView = PlaceView()
     var placeViewTopConstraint: NSLayoutConstraint?
-    var placeViewHeightConstraint: NSLayoutConstraint?
-    private var viewHeight: CGFloat!
+    var searchTextFieldTopConstraint: NSLayoutConstraint?
     
     /// view 위 아래 움직일때마다 height값과 layout의 시간 차 발생?하는것 같음
     var placePopupViewHeight: CGFloat!
@@ -88,7 +90,9 @@ extension HomeViewController: HomeViewProtocol {
             loadLocationButton,
             starButton,
             searchTextField,
-            placeView
+            placeView,
+            flagButton,
+            downBackButton
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
@@ -115,8 +119,6 @@ extension HomeViewController: HomeViewProtocol {
             starButton.trailingAnchor.constraint(equalTo: loadLocationButton.trailingAnchor),
             
             // searchTextField
-            searchTextField.topAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Layout.Inset.leadingTop),
             searchTextField.leadingAnchor.constraint(
                 equalTo: naverMapView.leadingAnchor, constant: Layout.Inset.leadingTop),
             searchTextField.trailingAnchor.constraint(
@@ -124,13 +126,22 @@ extension HomeViewController: HomeViewProtocol {
             
             // placeView
             placeView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            placeView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            placeView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            placeView.heightAnchor.constraint(equalToConstant: self.view.frame.height),
+            
+            flagButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+            flagButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 18),
+            flagButton.widthAnchor.constraint(equalToConstant: 40),
+            flagButton.heightAnchor.constraint(equalToConstant: 40),
+            
+            downBackButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
+            downBackButton.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 18),
+            downBackButton.widthAnchor.constraint(equalToConstant: 40),
+            downBackButton.heightAnchor.constraint(equalToConstant: 40)
         ])
         
-        viewHeight = self.view.frame.height
-        
-        placeViewHeightConstraint = placeView.heightAnchor.constraint(equalToConstant: viewHeight)
-        placeViewHeightConstraint?.isActive = true
+        searchTextFieldTopConstraint = searchTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16)
+        searchTextFieldTopConstraint?.isActive = true
         
         placeViewTopConstraint = placeView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
         placeViewTopConstraint?.isActive = true
@@ -148,6 +159,28 @@ extension HomeViewController: HomeViewProtocol {
         // NFMAP
         naverMapView.addCameraDelegate(delegate: self)
         naverMapView.touchDelegate = self
+        
+        // downBack
+        downBackButton.setImage(UIImage(named: "DownBack"), for: .normal)
+        downBackButton.layer.cornerRadius = 20
+        downBackButton.backgroundColor = .gray7
+        downBackButton.isHidden = true
+        downBackButton.layer.shadowColor = UIColor.black.cgColor
+        downBackButton.layer.shadowRadius = 10
+        downBackButton.layer.shadowOpacity = 0.15
+        downBackButton.layer.shadowOffset = CGSize(width: 1, height: 3)
+        
+        // flag
+        flagButton.setImage(UIImage(named: "Flag"), for: .normal)
+        flagButton.layer.cornerRadius = 20
+        flagButton.backgroundColor = .gray7
+        flagButton.isHidden = true
+        flagButton.layer.shadowColor = UIColor.black.cgColor
+
+        flagButton.layer.shadowRadius = 10
+        flagButton.layer.shadowOpacity = 0.15
+        flagButton.layer.shadowOffset = CGSize(width: 1, height: 3)
+        
         // lodeLocationButton
         loadLocationButton.setImage(UIImage(named: "current-location"), for: .normal)
         loadLocationButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
@@ -396,6 +429,11 @@ extension HomeViewController {
     func homeButtonIsHidden(_ hidden: Bool) {
         loadLocationButton.isHidden = hidden
         starButton.isHidden = hidden
+    }
+    
+    func viewNaviButtonHidden(_ hidden: Bool) {
+        downBackButton.isHidden = hidden
+        flagButton.isHidden = hidden
     }
 }
 

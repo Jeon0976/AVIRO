@@ -16,6 +16,9 @@ extension HomeViewController {
         guard let tabBarController = self.tabBarController as? TabBarViewController else { return }
         
         presenter.resetPreviouslyTouchedMarker()
+        
+        searchTextFieldTopConstraint?.constant = 16
+
         tabBarController.hiddenTabBar(false)
         settingPlaceView()
         
@@ -26,7 +29,8 @@ extension HomeViewController {
     
     private func settingPlaceView() {
         homeButtonIsHidden(false)
-        
+        viewNaviButtonHidden(true)
+
         placeViewTopConstraint?.isActive = false
         placeViewTopConstraint = placeView.topAnchor.constraint(equalTo: self.view.bottomAnchor)
         placeViewTopConstraint?.isActive = true
@@ -55,7 +59,11 @@ extension HomeViewController {
 
         placeView.topView.placeViewStated = .SlideUp
         placeView.segmetedControlView.scrollView.isUserInteractionEnabled = false
+        
         placeViewTopConstraint?.constant = -self.view.frame.height * 2/3
+        
+        searchTextFieldTopConstraint?.constant = -100
+        viewNaviButtonHidden(false)
         
         UIView.animate(withDuration: 0.25) {
             self.view.layoutIfNeeded()
@@ -64,6 +72,7 @@ extension HomeViewController {
     
     func placeViewPopUpAfterInitPlacePopViewHeight() {
         homeButtonIsHidden(false)
+        viewNaviButtonHidden(true)
 
         placeView.topView.placeViewStated = .PopUp
         
@@ -71,6 +80,8 @@ extension HomeViewController {
         
         let tabBarHeight = tabBarController.tabBar.frame.height
         
+        searchTextFieldTopConstraint?.constant = 16
+
         placeViewTopConstraint?.constant = placePopupViewHeight + tabBarHeight
         
         UIView.animate(withDuration: 0.25) {
@@ -81,6 +92,8 @@ extension HomeViewController {
     func placeViewFullUp() {
         placeView.topView.placeViewStated = .Full
         placeView.segmetedControlView.scrollView.isUserInteractionEnabled = true
+
+        viewNaviButtonHidden(true)
 
         placeViewTopConstraint?.constant = -self.view.safeAreaLayoutGuide.layoutFrame.height
         
