@@ -10,6 +10,7 @@ import Foundation
 struct PlaceTopModel {
     let placeState: MapPlace
     let placeTitle: String
+    let placeCategory: String
     let distance: String
     let reviewsCount: String
     let address: String

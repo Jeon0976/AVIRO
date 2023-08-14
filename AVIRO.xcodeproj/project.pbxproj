@@ -18,6 +18,7 @@
 		C50F6B042A6BCD6900E942F5 /* CategoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6B032A6BCD6900E942F5 /* CategoryButton.swift */; };
 		C51132BF2A559838006E1EC3 /* NotificationCenter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51132BE2A559838006E1EC3 /* NotificationCenter+Extension.swift */; };
 		C51132C12A559BCA006E1EC3 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51132C02A559BCA006E1EC3 /* AppController.swift */; };
+		C51AED1D2A8A192D0015FBC2 /* ChangedViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51AED1C2A8A192D0015FBC2 /* ChangedViewAction.swift */; };
 		C51B09B82A82155200916BBD /* MarkerModelArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B09B72A82155200916BBD /* MarkerModelArray.swift */; };
 		C51B09BA2A8215D800916BBD /* MarkerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B09B92A8215D800916BBD /* MarkerModel.swift */; };
 		C51B09BC2A82397800916BBD /* Marker+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B09BB2A82397800916BBD /* Marker+Extension.swift */; };
@@ -147,6 +148,7 @@
 		C50F6B032A6BCD6900E942F5 /* CategoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryButton.swift; sourceTree = "<group>"; };
 		C51132BE2A559838006E1EC3 /* NotificationCenter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationCenter+Extension.swift"; sourceTree = "<group>"; };
 		C51132C02A559BCA006E1EC3 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
+		C51AED1C2A8A192D0015FBC2 /* ChangedViewAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangedViewAction.swift; sourceTree = "<group>"; };
 		C51B09B72A82155200916BBD /* MarkerModelArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerModelArray.swift; sourceTree = "<group>"; };
 		C51B09B92A8215D800916BBD /* MarkerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerModel.swift; sourceTree = "<group>"; };
 		C51B09BB2A82397800916BBD /* Marker+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Marker+Extension.swift"; sourceTree = "<group>"; };
@@ -416,6 +418,14 @@
 				C51B09BB2A82397800916BBD /* Marker+Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		C51AED1B2A8A19060015FBC2 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C51AED1C2A8A192D0015FBC2 /* ChangedViewAction.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		C51B09B62A82046000916BBD /* MapDataSingleton */ = {
@@ -909,6 +919,7 @@
 			isa = PBXGroup;
 			children = (
 				C52FA3462A175B20005E70DC /* HomeViewController.swift */,
+				C51AED1B2A8A19060015FBC2 /* ViewController */,
 				C5732C802A41E20800CDC499 /* Deprecated */,
 				C5EB51102A20CC6800B29CC1 /* SubView */,
 				C5EB51062A209F5700B29CC1 /* HomeSearchView */,
@@ -1257,6 +1268,7 @@
 				C528E4BA2A5F9A3E002BD72E /* ThridRegistrationViewController.swift in Sources */,
 				C528E4BC2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift in Sources */,
 				C5C290792A85E51000ED5DCE /* PlaceMenuView.swift in Sources */,
+				C51AED1D2A8A192D0015FBC2 /* ChangedViewAction.swift in Sources */,
 				C51B09BC2A82397800916BBD /* Marker+Extension.swift in Sources */,
 				C5EB51162A21011C00B29CC1 /* DetailViewController.swift in Sources */,
 				C5EB51202A2118AB00B29CC1 /* MenuDetailView.swift in Sources */,

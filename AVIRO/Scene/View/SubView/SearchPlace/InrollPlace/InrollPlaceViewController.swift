@@ -312,7 +312,7 @@ extension InrollPlaceViewController {
     // MARK: TabBar Attribute
     private func tabBarAttributed() {
         if let tabBarController = self.tabBarController as? TabBarViewController {
-            tabBarController.hiddenTabBar(true)
+            tabBarController.hiddenTabBarIncludeIsTranslucent(true)
         }
     }
     

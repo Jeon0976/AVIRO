@@ -10,7 +10,7 @@ import UIKit
 final class PlaceSegmentedControlView: UIView {
     private let home = "홈"
     private let menu = "메뉴"
-    var reviews = "후기 (0)"
+    private var reviews = "후기 (0)"
     
     private lazy var items = [self.home, self.menu, self.reviews]
     
@@ -20,7 +20,7 @@ final class PlaceSegmentedControlView: UIView {
     private lazy var menuView = PlaceMenuView()
     private lazy var reviewView = PlaceReviewsView()
     
-    private lazy var scrollView = UIScrollView()
+    lazy var scrollView = UIScrollView()
         
     // Home Constraint
     private var homeHeightConstraint: NSLayoutConstraint?
@@ -35,6 +35,8 @@ final class PlaceSegmentedControlView: UIView {
     private var reviewBottomConstraint: NSLayoutConstraint?
     
     private var afterInitViewConstrait = false
+    
+    var whenFullView: (() -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -107,6 +109,8 @@ final class PlaceSegmentedControlView: UIView {
             reviewView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             reviewView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor)
         ])
+        
+        initViewConstraint()
     }
     
     private func makeAttribute() {

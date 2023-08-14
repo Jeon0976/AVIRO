@@ -12,36 +12,39 @@ import NMapsMap
 final class HomeViewController: UIViewController {
     lazy var presenter = HomeViewPresenter(viewController: self)
         
-    lazy var naverMapView = NMFMapView()
+    private lazy var naverMapView = NMFMapView()
     
     // 검색 기능 관련
-    lazy var searchTextField = MainField()
+    private lazy var searchTextField = MainField()
 
     // 내 위치 최신화 관련
-    lazy var loadLocationButton = UIButton()
-    lazy var starButton = UIButton()
+    private lazy var loadLocationButton = UIButton()
+    private lazy var starButton = UIButton()
     
     lazy var placeView = PlaceView()
-    private var placeViewTopConstraint: NSLayoutConstraint?
-
+    var placeViewTopConstraint: NSLayoutConstraint?
+    var placeViewHeightConstraint: NSLayoutConstraint?
+    private var viewHeight: CGFloat!
+    
+    /// view 위 아래 움직일때마다 height값과 layout의 시간 차 발생?하는것 같음
+    var placePopupViewHeight: CGFloat!
+    private var isSlideUpView = false
+    private var isCanMoveCameraWhenSlideUpView = true
+    
     // store 뷰 관련
     var storeInfoView = HomeInfoStoreView()
-    var panGesture = UIPanGestureRecognizer()
-    var pageUpGesture = UISwipeGestureRecognizer()
-    var pageDownGesture = UISwipeGestureRecognizer()
-    
+    private var upGesture = UISwipeGestureRecognizer()
+    private var downGesture = UISwipeGestureRecognizer()
     // 최초 화면 뷰
     var firstPopupView = HomeFirstPopUpView()
     var blurEffectView = UIVisualEffectView()
-    
-    var selectedMarkerIndex = 0
-    var afterSaveAllPlace = false
-    
+        
     // TODO: zoom level
     var zoomLevel = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         presenter.locationAuthorization()
         presenter.viewDidLoad()
         presenter.makeNotification()
@@ -55,8 +58,9 @@ final class HomeViewController: UIViewController {
         zoomLevel.textColor = .black
         zoomLevel.font = .systemFont(ofSize: 20, weight: .bold)
         presenter.loadVeganData()
+
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
@@ -65,7 +69,7 @@ final class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
         presenter.viewWillAppear()
     }
     
@@ -74,7 +78,6 @@ final class HomeViewController: UIViewController {
         
         presenter.viewWillDisappear()
     }
-    
 }
 
 extension HomeViewController: HomeViewProtocol {
@@ -90,17 +93,7 @@ extension HomeViewController: HomeViewProtocol {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
-        
-        // TODO: Autolayout을 활용한 animation 구현 -> 정대리 강의 및 obisidan 정리 후 구현
-        placeViewTopConstraint = placeView.topAnchor.constraint(equalTo: self.view.bottomAnchor)
-        placeViewTopConstraint?.isActive = true
 
-//        placeViewTopConstraint?.constant = -self.view.frame.height * 2/3
-//        UIView.animate(withDuration: 0.3) {
-//              self.view.layoutIfNeeded()
-//          }
-//      }
-    
         NSLayoutConstraint.activate([
             // naverMapView
             naverMapView.topAnchor.constraint(
@@ -113,8 +106,7 @@ extension HomeViewController: HomeViewProtocol {
                 equalTo: view.trailingAnchor),
             
             // loadLoactionButton
-            loadLocationButton.bottomAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            loadLocationButton.bottomAnchor.constraint(equalTo: placeView.topAnchor, constant: -20),
             loadLocationButton.trailingAnchor.constraint(
                 equalTo: naverMapView.trailingAnchor, constant: -20),
             
@@ -131,16 +123,23 @@ extension HomeViewController: HomeViewProtocol {
                 equalTo: naverMapView.trailingAnchor, constant: Layout.Inset.trailingBottom),
             
             // placeView
-            placeView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            placeView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            placeView.heightAnchor.constraint(equalToConstant: self.view.frame.height)
+            placeView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            placeView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
+        
+        viewHeight = self.view.frame.height
+        
+        placeViewHeightConstraint = placeView.heightAnchor.constraint(equalToConstant: viewHeight)
+        placeViewHeightConstraint?.isActive = true
+        
+        placeViewTopConstraint = placeView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+        placeViewTopConstraint?.isActive = true
     }
     
     // MARK: Attribute
     func makeAttribute() {
         // Navigation, View, TabBar
-        view.backgroundColor = .white
+        view.backgroundColor = .gray7
 
         let backItem = UIBarButtonItem()
         backItem.title = ""
@@ -148,7 +147,7 @@ extension HomeViewController: HomeViewProtocol {
         
         // NFMAP
         naverMapView.addCameraDelegate(delegate: self)
-
+        naverMapView.touchDelegate = self
         // lodeLocationButton
         loadLocationButton.setImage(UIImage(named: "current-location"), for: .normal)
         loadLocationButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
@@ -193,29 +192,53 @@ extension HomeViewController: HomeViewProtocol {
         searchTextField.makeShadow()
         searchTextField.delegate = self
         
+        placeView.topView.whenFullBackButtonTapped = { [weak self] in
+            self?.naverMapView.isHidden = false
+            self?.placeViewPopUpAfterInitPlacePopViewHeight()
+        }
     }
     
+    // MARK: Star Button
     @objc func starButtonTapped(sender: UIButton) {
         sender.isSelected.toggle()
-        var tabBarHeight: CGFloat?
-        
-        // TODO: popView 될 때
-        if let tabBarController = self.tabBarController as? TabBarViewController {
-            tabBarHeight = tabBarController.tabBar.frame.height
-            tabBarController.hiddenTabBar(true)
-        }
-        
-        placeViewTopConstraint?.constant = -placeView.topView.frame.height + (tabBarHeight ?? CGFloat(32))
-        
     }
     
     // MARK: Gesture 설정
     func makeGesture() {
-        storeInfoView.addGestureRecognizer(panGesture)
-        panGesture.addTarget(
-            self,
-            action: #selector(panGestureHandler)
-        )
+        placeView.addGestureRecognizer(upGesture)
+        placeView.addGestureRecognizer(downGesture)
+
+        upGesture.direction = .up
+        downGesture.direction = .down
+        
+        upGesture.addTarget(self, action: #selector(swipeGestureTapped(_:)))
+        downGesture.addTarget(self, action: #selector(swipeGestureTapped(_:)))
+    }
+    
+    @objc func swipeGestureTapped(_ gesture: UISwipeGestureRecognizer) {
+        if gesture.direction == .up {
+            if isSlideUpView {
+                placeViewFullUp()
+                naverMapView.isHidden = true
+                isSlideUpView = false
+            } else {
+                placeViewSlideUp()
+                isSlideUpView = true
+            }
+        } else if gesture.direction == .down {
+            if isSlideUpView {
+                isCanMoveCameraWhenSlideUpView = false
+                placeViewPopUpAfterInitPlacePopViewHeight()
+                isSlideUpView = false
+            }
+        }
+    }
+    
+    // MARK: Clicked Marker Data Binding
+    func afterClickedMarker(_ placeModel: PlaceTopModel) {
+        placeView.topView.dataBinding(placeModel)
+        isCanMoveCameraWhenSlideUpView = true
+        placeViewPopUp()
     }
     
     // MARK: SlideView 설정
@@ -273,7 +296,6 @@ extension HomeViewController: HomeViewProtocol {
         storeInfoView.entireView.alpha = 0
         storeInfoView.activityIndicator.alpha = 0
 
-//        view.addSubview(storeInfoView)
     }
     
     // MARK: View Will Appear할 때 navigation & Tab Bar hidden Setting
@@ -282,10 +304,12 @@ extension HomeViewController: HomeViewProtocol {
         
         // TabBar Controller
         if let tabBarController = self.tabBarController as? TabBarViewController {
-            tabBarController.hiddenTabBar(false)
+            tabBarController.hiddenTabBarIncludeIsTranslucent(false)
         }
+        
+        whenViewWillAppearInitPlaceView()
     }
-    
+        
     // MARK: 위치 denided or approval
     // 위치 denied 할 때
     func ifDenied() {
@@ -337,6 +361,20 @@ extension HomeViewController: HomeViewProtocol {
         naverMapView.moveCamera(cameraUpdate)
     }
     
+    // MARK: Slide UP View 할때 지도 이동
+    func moveToCameraWhenSlideUpView() {
+        if isCanMoveCameraWhenSlideUpView {
+            let latitude = naverMapView.latitude - 0.006
+            let longitude = naverMapView.longitude
+
+            let latlng = NMGLatLng(lat: latitude, lng: longitude)
+
+            let cameraUpdate = NMFCameraUpdate(scrollTo: latlng)
+
+            naverMapView.moveCamera(cameraUpdate)
+        }
+    }
+    
     // MARK: pushDetailViewController
     func pushDetailViewController(_ placeId: String) {
         DispatchQueue.main.async { [weak self] in
@@ -351,10 +389,13 @@ extension HomeViewController: HomeViewProtocol {
             )
         }
     }
-    
-    // MARK: Clicked Marker Data Binding
-    func thenClickedMarker(_ placeModel: PlaceTopModel) {
-        print(placeModel)
+}
+
+// MARK: View Refer
+extension HomeViewController {
+    func homeButtonIsHidden(_ hidden: Bool) {
+        loadLocationButton.isHidden = hidden
+        starButton.isHidden = hidden
     }
 }
 
@@ -374,5 +415,13 @@ extension HomeViewController: NMFMapViewCameraDelegate {
         zoomLevel.text = String(mapView.zoomLevel)
         
         saveCenterCoordinate()
+    }
+}
+
+// MARK: Map 빈 공간 클릭 할 때
+extension HomeViewController: NMFMapViewTouchDelegate {
+    func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
+        whenClosedPlaceView()
+        isSlideUpView = false
     }
 }

@@ -22,7 +22,7 @@ protocol HomeViewProtocol: NSObject {
     func moveToCameraWhenNoAVIRO(_ lng: Double, _ lat: Double)
     func moveToCameraWhenHasAVIRO(_ markerModel: MarkerModel)
     func loadMarkers()
-    func thenClickedMarker(_ placeModel: PlaceTopModel)
+    func afterClickedMarker(_ placeModel: PlaceTopModel)
 }
 
 final class HomeViewPresenter: NSObject {
@@ -128,7 +128,7 @@ final class HomeViewPresenter: NSObject {
     }
     
     // MARK: Reset Previous Marker
-    private func resetPreviouslyTouchedMarker() {
+   func resetPreviouslyTouchedMarker() {
         if hasTouchedMarkerBefore {
             let markerModel = MarkerModelArray.shared.getMarkerFromIndex(selectedMarkerIndex)
             
@@ -166,18 +166,20 @@ final class HomeViewPresenter: NSObject {
             let place = placeModel.data
             
             let distanceValue = LocationUtility.distanceMyLocation(x_lon: place.x, y_lat: place.y) * 1000
+
             let distanceString = String(distanceValue).convertDistanceUnit()
             let reviewsCoint = String(place.commentCount)
             
             let placeTopModel = PlaceTopModel(
                 placeState: mapPlace,
                 placeTitle: place.title,
+                placeCategory: place.category,
                 distance: distanceString,
                 reviewsCount: reviewsCoint,
                 address: place.address)
             
             DispatchQueue.main.async { [weak self] in
-                self?.viewController?.thenClickedMarker(placeTopModel)
+                self?.viewController?.afterClickedMarker(placeTopModel)
             }
         }
     }

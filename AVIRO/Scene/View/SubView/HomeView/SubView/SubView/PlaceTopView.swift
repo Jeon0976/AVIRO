@@ -17,7 +17,7 @@ enum PlaceViewState {
 final class PlaceTopView: UIView {
     
     // MARK: When Pop Up
-    lazy var guideBar: UIView = {
+    private lazy var guideBar: UIView = {
         let guide = UIView()
         
         guide.backgroundColor = .gray3
@@ -26,7 +26,7 @@ final class PlaceTopView: UIView {
         return guide
     }()
     
-    lazy var placeIcon: UIImageView = {
+    private lazy var placeIcon: UIImageView = {
         let icon = UIImageView()
         
         icon.backgroundColor = .gray3
@@ -35,28 +35,26 @@ final class PlaceTopView: UIView {
         return icon
     }()
     
-    lazy var placeTitle: UILabel = {
+    private lazy var placeTitle: UILabel = {
         let label = UILabel()
         
         label.textColor = .gray0
         label.font = .systemFont(ofSize: 24, weight: .heavy)
 
-        
         return label
     }()
     
-    lazy var placeCategory: UILabel = {
+    private lazy var placeCategory: UILabel = {
         let label = UILabel()
         
         label.textColor = .gray2
         label.textAlignment = .left
         label.font = .systemFont(ofSize: 15, weight: .medium)
 
-        
         return label
     }()
 
-    lazy var distanceIcon: UIImageView = {
+    private lazy var distanceIcon: UIImageView = {
         let icon = UIImageView()
         
         icon.image = UIImage(named: "PlaceViewMap")
@@ -64,7 +62,7 @@ final class PlaceTopView: UIView {
         return icon
     }()
     
-    lazy var distanceLabel: UILabel = {
+    private lazy var distanceLabel: UILabel = {
         let label = UILabel()
         
         label.textColor = .gray1
@@ -74,7 +72,7 @@ final class PlaceTopView: UIView {
         return label
     }()
     
-    lazy var reviewsIcon: UIImageView = {
+    private lazy var reviewsIcon: UIImageView = {
         let icon = UIImageView()
         
         icon.image = UIImage(named: "PlaceReview")
@@ -82,7 +80,7 @@ final class PlaceTopView: UIView {
         return icon
     }()
     
-    lazy var reviewsLabel: UILabel = {
+    private lazy var reviewsLabel: UILabel = {
         let label = UILabel()
         
         label.textColor = .gray1
@@ -92,7 +90,7 @@ final class PlaceTopView: UIView {
         return label
     }()
 
-    lazy var addressLabel: UILabel = {
+    private lazy var addressLabel: UILabel = {
         let label = UILabel()
         
         label.textColor = .gray1
@@ -103,7 +101,7 @@ final class PlaceTopView: UIView {
         return label
     }()
     
-    lazy var starButton: UIButton = {
+    private lazy var starButton: UIButton = {
         let button = UIButton()
         
         button.setImage(UIImage(named: "star"), for: .normal)
@@ -112,7 +110,7 @@ final class PlaceTopView: UIView {
         return button
     }()
     
-    lazy var shareButton: UIButton = {
+    private lazy var shareButton: UIButton = {
         let button = UIButton()
         
         button.setImage(UIImage(named: "share"), for: .normal)
@@ -121,7 +119,7 @@ final class PlaceTopView: UIView {
     }()
     
     // MARK: When Slide Up
-    lazy var whenSlideTopLabel: UILabel = {
+    private lazy var whenSlideTopLabel: UILabel = {
         let label = UILabel()
         
         label.font = .systemFont(ofSize: 15, weight: .medium)
@@ -129,7 +127,7 @@ final class PlaceTopView: UIView {
         return label
     }()
     
-    lazy var whenSlideMiddleLabel: UILabel = {
+    private lazy var whenSlideMiddleLabel: UILabel = {
         let label = UILabel()
         
         label.font = .systemFont(ofSize: 24, weight: .heavy)
@@ -139,24 +137,26 @@ final class PlaceTopView: UIView {
         return label
     }()
     
-    lazy var whenSlideBottomLabel: UILabel = {
+    private lazy var whenSlideBottomLabel: UILabel = {
         let label = UILabel()
         
         label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.textColor = .gray2
         
         return label
     }()
     
     // MARK: When Full
-    lazy var whenFullBackButton: UIButton = {
+    private lazy var whenFullBackButton: UIButton = {
         let button = UIButton()
         
         button.setImage(UIImage(named: "DownBack"), for: .normal)
+        button.addTarget(self, action: #selector(fullBackButtonTapped), for: .touchUpInside)
         
         return button
     }()
     
-    lazy var whenFullTitle: UILabel = {
+    private lazy var whenFullTitle: UILabel = {
         let label = UILabel()
         
         label.font = .systemFont(ofSize: 18, weight: .semibold)
@@ -178,21 +178,27 @@ final class PlaceTopView: UIView {
                 whenPopUpViewIsShowUI(show: true)
                 
                 whenPopUpViewHeight()
+                switchViewCorners(true)
             case .SlideUp:
                 whenFullHeightViewIsShowUI(show: false)
                 whenPopUpViewIsShowUI(show: false)
                 whenSlideUpViewIsShowUI(show: true)
 
                 whenSlideUpViewHeight()
+                switchViewCorners(true)
             case .Full:
                 whenSlideUpViewIsShowUI(show: false)
                 whenPopUpViewIsShowUI(show: false)
                 whenFullHeightViewIsShowUI(show: true)
 
                 whenFullHeightViewHeight()
+                switchViewCorners(false)
             }
+            self.layoutIfNeeded()
         }
     }
+    
+    var whenFullBackButtonTapped: (() -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -273,11 +279,9 @@ final class PlaceTopView: UIView {
             // placeTitle
             placeTitle.leadingAnchor.constraint(equalTo: placeIcon.trailingAnchor, constant: 15),
             placeTitle.topAnchor.constraint(equalTo: placeIcon.topAnchor),
-
-           // placeCategory
-            placeCategory.trailingAnchor.constraint(equalTo: starButton.leadingAnchor, constant: -16),
+            
+            // placeCategory
             placeCategory.centerYAnchor.constraint(equalTo: placeTitle.centerYAnchor),
-            placeCategory.leadingAnchor.constraint(equalTo: placeTitle.trailingAnchor, constant: 5),
             
             // distanceIcon
             distanceIcon.leadingAnchor.constraint(equalTo: placeIcon.trailingAnchor, constant: 15),
@@ -305,13 +309,29 @@ final class PlaceTopView: UIView {
             starButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             starButton.widthAnchor.constraint(equalToConstant: 38),
             starButton.heightAnchor.constraint(equalToConstant: 38),
-
+            
             // share Button
             shareButton.topAnchor.constraint(equalTo: starButton.bottomAnchor),
             shareButton.trailingAnchor.constraint(equalTo: starButton.trailingAnchor),
             shareButton.widthAnchor.constraint(equalToConstant: 38),
             shareButton.heightAnchor.constraint(equalToConstant: 38)
         ])
+        
+        placeTitle.setContentHuggingPriority(UILayoutPriority(1000), for: .horizontal)
+        
+        placeTitle.setContentCompressionResistancePriority(UILayoutPriority(500), for: .horizontal)
+        
+        placeCategory.setContentCompressionResistancePriority(UILayoutPriority(1000), for: .horizontal)
+        
+        let categoryToTitleConstraint = placeCategory.leadingAnchor.constraint(equalTo: placeTitle.trailingAnchor, constant: 5)
+        
+        categoryToTitleConstraint.priority = UILayoutPriority(1000)
+        categoryToTitleConstraint.isActive = true
+        
+        let categoryToStarConstraint = placeCategory.trailingAnchor.constraint(equalTo: starButton.leadingAnchor, constant: -16)
+        
+        categoryToStarConstraint.priority = UILayoutPriority(750)
+        categoryToStarConstraint.isActive = true
     }
     
     // MARK: When PopUp View is Show UI
@@ -333,15 +353,18 @@ final class PlaceTopView: UIView {
     
     // MARK: When Popup View Height
     private func whenPopUpViewHeight() {
+        viewHeightConstraint?.isActive = false
+
         let guideBarHeight = guideBar.frame.height
         let placeIconHeight = placeIcon.frame.height
-        let addressHeight = addressLabel.frame.height
-        // 5 + 20 + 7 + 7 + 15
-        let inset: CGFloat = 74
+        let addressHeight: CGFloat = 30
+        // 5 + 20 + 7 + 7 + 30 + 20
+        let inset: CGFloat = 69
         
         let totalHeight = guideBarHeight + placeIconHeight + addressHeight + inset
                 
         viewHeightConstraint?.constant = totalHeight
+        viewHeightConstraint?.isActive = true
     }
     
     // MARK: When Slideup View Layout
@@ -395,7 +418,8 @@ final class PlaceTopView: UIView {
         
         let totalHeight = topHeight + middleHeight + bottomHeight + inset
         
-        viewHeightConstraint?.constant = topHeight
+        viewHeightConstraint?.constant = totalHeight
+        viewHeightConstraint?.isActive = true
     }
     
     // MARK: When Full Height View
@@ -437,5 +461,47 @@ final class PlaceTopView: UIView {
         let totalHeight = titleHeight + inset
         
         viewHeightConstraint?.constant = totalHeight
+        viewHeightConstraint?.isActive = true
+
+    }
+    
+    // MARK: Data Binding
+    func dataBinding(_ placeModel: PlaceTopModel) {
+        var placeIconImage: UIImage?
+        var whenSlideTopLabelString: String?
+
+        switch placeModel.placeState {
+        case .All:
+            placeIconImage = UIImage(named: "Allbox")
+            whenSlideTopLabel.textColor = .all
+            whenSlideTopLabelString = "모든 메뉴가 비건"
+        case .Some:
+            placeIconImage = UIImage(named: "Somebox")
+            whenSlideTopLabel.textColor = .some
+            whenSlideTopLabelString = "일부 메뉴만 비건"
+        case .Request:
+            placeIconImage = UIImage(named: "Requestbox")
+            whenSlideTopLabel.textColor = .request
+            whenSlideTopLabelString = "비건 메뉴로 요청 가능"
+        }
+                
+        placeIcon.image = placeIconImage
+        
+        placeTitle.text = placeModel.placeTitle
+        placeCategory.text = placeModel.placeCategory
+        distanceLabel.text = placeModel.distance
+        reviewsLabel.text = placeModel.reviewsCount + "개"
+        addressLabel.text = placeModel.address
+        
+        whenSlideMiddleLabel.text = placeModel.placeTitle
+        whenSlideTopLabel.text = whenSlideTopLabelString
+        whenSlideBottomLabel.text = placeModel.distance + " " + placeModel.placeCategory
+        
+        whenFullTitle.text = placeModel.placeTitle
+    }
+    
+    // MARK: Button Tapped Method
+    @objc private func fullBackButtonTapped() {
+        whenFullBackButtonTapped?()
     }
 }

@@ -137,7 +137,7 @@ extension DetailViewController: DetailViewProtocol {
         
         // TabBar Controller
         if let tabBarController = self.tabBarController as? TabBarViewController {
-            tabBarController.hiddenTabBar(true)
+            tabBarController.hiddenTabBarIncludeIsTranslucent(true)
         }
         
         // 최초 scrollView Hidden

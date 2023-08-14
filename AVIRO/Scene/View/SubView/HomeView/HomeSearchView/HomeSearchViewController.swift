@@ -150,7 +150,7 @@ extension HomeSearchViewController {
         
         // TabBar Controller
         if let tabBarController = self.tabBarController as? TabBarViewController {
-            tabBarController.hiddenTabBar(true)
+            tabBarController.hiddenTabBarIncludeIsTranslucent(true)
         }
     }
     

@@ -14,7 +14,7 @@ extension String {
         guard let number = Double(self) else { return "" }
         
         if number >= 1000 {
-            return "\(Int(number / 1000))km"
+            return String(format: "%.1fkm", number / 1000) 
         } else {
             return "\(Int(number))m"
         }

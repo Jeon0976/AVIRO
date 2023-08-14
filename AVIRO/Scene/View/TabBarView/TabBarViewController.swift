@@ -32,13 +32,13 @@ class TabBarViewController: UITabBarController {
                 image: tabCase.icon.default,
                 selectedImage: tabCase.icon.selected
             )
-        
+            
             viewController.tabBarItem = tabBarItem
             
             return viewController
         }
         self.viewControllers = tabBarViewControllers
-                
+        
         centerButton.addTarget(self, action:
                                 #selector(didTapPlusButton),
                                for: .touchUpInside
@@ -51,7 +51,7 @@ class TabBarViewController: UITabBarController {
     // MARK: 가운데 plus 버튼 만들기
     private func setupMiddleButton() {
         view.addSubview(centerButton)
-
+        
         NSLayoutConstraint.activate([
             centerButton.centerXAnchor.constraint(equalTo: tabBar.centerXAnchor),
             centerButton.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: -30),
@@ -78,17 +78,21 @@ class TabBarViewController: UITabBarController {
     @objc func didTapPlusButton(_ sender: UIButton) {
         selectedIndex = 1
     }
-
+    
     // MARK: tabBar 숨길때 사용하는 method
-    func hiddenTabBar(_ hidden: Bool) {
+    /// 처음 hidden으로 했다가 상태창 등이 나올때 view의 높이가 달라지는 버그가 생김
+    /// tabBar의 isTranslucent 때문인것 같음
+    ///
+    func hiddenTabBarIncludeIsTranslucent(_ hidden: Bool) {
         self.tabBar.isTranslucent = hidden
         self.tabBar.isHidden = hidden
         self.centerButton.isHidden = hidden
-        
-        if !hidden {
-            setupTabBar()
-            setupMiddleButton()
-        }
+    }
+    
+    /// Exclude IsTranslucent
+    func hiddenTabBar(_ hidden: Bool) {
+        self.tabBar.isHidden = hidden
+        self.centerButton.isHidden = hidden
     }
 }
 

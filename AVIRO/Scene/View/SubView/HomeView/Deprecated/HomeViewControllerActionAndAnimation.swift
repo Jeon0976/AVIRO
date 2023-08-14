@@ -79,50 +79,50 @@ extension HomeViewController {
         })
     }
 
-    // MARK: Pan Gesture 설정
-    @objc func panGestureHandler(recognizer: UIPanGestureRecognizer) {
-        let translation = recognizer.translation(in: storeInfoView)
-        let velocity = recognizer.velocity(in: storeInfoView)
-        
-        let minHeight = view.frame.minY
-        let maxHeight = view.frame.maxY
-        
-        let currentHeight = storeInfoView.frame.height
-        
-        if recognizer.state == .changed {
-            let newHeight = currentHeight - translation.y
-            if newHeight >= minHeight && newHeight <= maxHeight {
-                storeInfoView.frame.size.height = newHeight
-                storeInfoView.frame.origin.y = self.view.frame.height - newHeight + 32
-                
-                recognizer.setTranslation(CGPoint.zero, in: self.storeInfoView)
-                
-                let newAlpha = (newHeight - minHeight) / (maxHeight - minHeight)
-                
-                storeInfoView.entireView.alpha = newAlpha
-                storeInfoView.activityIndicator.alpha = newAlpha
-            }
-        } else if recognizer.state == .ended {
-            UIView.animate(withDuration: 0.3, animations: {
-                if velocity.y >= 0 {
-                    self.storeInfoView.frame.origin.y = self.view.frame.size.height
-
-                    self.storeInfoView.entireView.alpha = 0
-                    self.storeInfoView.activityIndicator.alpha = 0
-                } else {
-                    self.storeInfoView.frame.size.height = maxHeight + 32
-                    self.storeInfoView.frame.origin.y = self.view.frame.origin.y
-
-                    self.storeInfoView.entireView.alpha = 1
-                    self.storeInfoView.activityIndicator.alpha = 1
-                }
-                self.view.layoutIfNeeded()
-            }, completion: { [weak self] _ in
-                if !(velocity.y >= 0) {
-                    guard let placeId = self?.storeInfoView.placeId else { return }
-                    self?.pushDetailViewController(placeId)
-                }
-            })
-        }
-    }
+//    // MARK: Pan Gesture 설정
+//    @objc func panGestureHandler(recognizer: UIPanGestureRecognizer) {
+//        let translation = recognizer.translation(in: storeInfoView)
+//        let velocity = recognizer.velocity(in: storeInfoView)
+//        
+//        let minHeight = view.frame.minY
+//        let maxHeight = view.frame.maxY
+//        
+//        let currentHeight = storeInfoView.frame.height
+//        
+//        if recognizer.state == .changed {
+//            let newHeight = currentHeight - translation.y
+//            if newHeight >= minHeight && newHeight <= maxHeight {
+//                storeInfoView.frame.size.height = newHeight
+//                storeInfoView.frame.origin.y = self.view.frame.height - newHeight + 32
+//                
+//                recognizer.setTranslation(CGPoint.zero, in: self.storeInfoView)
+//                
+//                let newAlpha = (newHeight - minHeight) / (maxHeight - minHeight)
+//                
+//                storeInfoView.entireView.alpha = newAlpha
+//                storeInfoView.activityIndicator.alpha = newAlpha
+//            }
+//        } else if recognizer.state == .ended {
+//            UIView.animate(withDuration: 0.3, animations: {
+//                if velocity.y >= 0 {
+//                    self.storeInfoView.frame.origin.y = self.view.frame.size.height
+//
+//                    self.storeInfoView.entireView.alpha = 0
+//                    self.storeInfoView.activityIndicator.alpha = 0
+//                } else {
+//                    self.storeInfoView.frame.size.height = maxHeight + 32
+//                    self.storeInfoView.frame.origin.y = self.view.frame.origin.y
+//
+//                    self.storeInfoView.entireView.alpha = 1
+//                    self.storeInfoView.activityIndicator.alpha = 1
+//                }
+//                self.view.layoutIfNeeded()
+//            }, completion: { [weak self] _ in
+//                if !(velocity.y >= 0) {
+//                    guard let placeId = self?.storeInfoView.placeId else { return }
+//                    self?.pushDetailViewController(placeId)
+//                }
+//            })
+//        }
+//    }
 }
