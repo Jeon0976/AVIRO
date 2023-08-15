@@ -18,23 +18,21 @@ final class HomeViewController: UIViewController {
     private lazy var searchTextField = MainField()
 
     // 내 위치 최신화 관련
-    private lazy var loadLocationButton = UIButton()
-    private lazy var starButton = UIButton()
+    private lazy var loadLocationButton = HomeMapReferButton()
+    private lazy var starButton = HomeMapReferButton()
     
-    private lazy var downBackButton = UIButton()
-    private lazy var flagButton = UIButton()
+    private lazy var downBackButton = HomeTopButton()
+    private lazy var flagButton = HomeTopButton()
     
-    lazy var placeView = PlaceView()
-    var placeViewTopConstraint: NSLayoutConstraint?
-    var searchTextFieldTopConstraint: NSLayoutConstraint?
+    private(set) lazy var placeView = PlaceView()
+    private(set) var placeViewTopConstraint: NSLayoutConstraint?
+    private(set) var searchTextFieldTopConstraint: NSLayoutConstraint?
     
     /// view 위 아래 움직일때마다 height값과 layout의 시간 차 발생?하는것 같음
-    var placePopupViewHeight: CGFloat!
+    private(set) var placePopupViewHeight: CGFloat!
     private var isSlideUpView = false
-    private var isCanMoveCameraWhenSlideUpView = true
     
     // store 뷰 관련
-    var storeInfoView = HomeInfoStoreView()
     private var upGesture = UISwipeGestureRecognizer()
     private var downGesture = UISwipeGestureRecognizer()
     // 최초 화면 뷰
@@ -160,80 +158,36 @@ extension HomeViewController: HomeViewProtocol {
         naverMapView.addCameraDelegate(delegate: self)
         naverMapView.touchDelegate = self
         
-        // downBack
-        downBackButton.setImage(UIImage(named: "DownBack"), for: .normal)
-        downBackButton.layer.cornerRadius = 20
-        downBackButton.backgroundColor = .gray7
-        downBackButton.isHidden = true
-        downBackButton.layer.shadowColor = UIColor.black.cgColor
-        downBackButton.layer.shadowRadius = 10
-        downBackButton.layer.shadowOpacity = 0.15
-        downBackButton.layer.shadowOffset = CGSize(width: 1, height: 3)
-        
-        // flag
-        flagButton.setImage(UIImage(named: "Flag"), for: .normal)
-        flagButton.layer.cornerRadius = 20
-        flagButton.backgroundColor = .gray7
-        flagButton.isHidden = true
-        flagButton.layer.shadowColor = UIColor.black.cgColor
-
-        flagButton.layer.shadowRadius = 10
-        flagButton.layer.shadowOpacity = 0.15
-        flagButton.layer.shadowOffset = CGSize(width: 1, height: 3)
-        
-        // lodeLocationButton
-        loadLocationButton.setImage(UIImage(named: "current-location"), for: .normal)
-        loadLocationButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
-        loadLocationButton.backgroundColor = .gray7
-        loadLocationButton.layer.cornerRadius = 15
-        loadLocationButton.layer.shadowColor = UIColor.black.cgColor
-        loadLocationButton.layer.shadowOpacity = 0.15
-        loadLocationButton.layer.shadowOffset = .init(width: 1, height: 3)
-        loadLocationButton.layer.shadowRadius = 5
-        
-        loadLocationButton.addTarget(
-            self,
-            action: #selector(refreshMyLocationTouchDown),
-            for: .touchDown
-        )
-        
-        loadLocationButton.addTarget(
-            self,
-            action: #selector(refreshMyLocationOnlyPopUp),
-            for: .touchDragExit
-        )
-        
-        loadLocationButton.addTarget(
-            self,
-            action: #selector(refreshMyLocation),
-            for: .touchUpInside
-        )
-        
-        starButton.setImage(UIImage(named: "star"), for: .normal)
-        starButton.setImage(UIImage(named: "selectedStar"), for: .selected)
-        starButton.addTarget(self, action: #selector(starButtonTapped(sender:)), for: .touchUpInside)
-        starButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
-        starButton.backgroundColor = .gray7
-        starButton.layer.cornerRadius = 15
-        starButton.layer.shadowColor = UIColor.black.cgColor
-        starButton.layer.shadowOpacity = 0.15
-        starButton.layer.shadowOffset = .init(width: 1, height: 3)
-        starButton.layer.shadowRadius = 5
-        
         // searchTextField
         searchTextField.makePlaceHolder("어디로 이동할까요?")
         searchTextField.makeShadow()
         searchTextField.delegate = self
         
+        // downBack
+        downBackButton.setImage(UIImage(named: "DownBack"), for: .normal)
+        downBackButton.addTarget(self, action: #selector(downBackButtonTapped(_:)), for: .touchUpInside)
+        
+        // flag
+        flagButton.setImage(UIImage(named: "Flag"), for: .normal)
+        flagButton.addTarget(self, action: #selector(flagButtonTapped(_:)), for: .touchUpInside)
+        
+        // lodeLocationButton
+        loadLocationButton.setImage(UIImage(named: "current-location"), for: .normal)
+        loadLocationButton.addTarget(self, action: #selector(locationButtonTapped(_:)), for: .touchUpInside)
+        
+        // starButton
+        starButton.setImage(UIImage(named: "star"), for: .normal)
+        starButton.setImage(UIImage(named: "selectedStar"), for: .selected)
+        starButton.addTarget(self, action: #selector(starButtonTapped(_ :)), for: .touchUpInside)
+        
+    }
+    
+    // MARK: Data Binding
+    func dataBinding() {
         placeView.topView.whenFullBackButtonTapped = { [weak self] in
             self?.naverMapView.isHidden = false
             self?.placeViewPopUpAfterInitPlacePopViewHeight()
         }
-    }
-    
-    // MARK: Star Button
-    @objc func starButtonTapped(sender: UIButton) {
-        sender.isSelected.toggle()
     }
     
     // MARK: Gesture 설정
@@ -260,7 +214,6 @@ extension HomeViewController: HomeViewProtocol {
             }
         } else if gesture.direction == .down {
             if isSlideUpView {
-                isCanMoveCameraWhenSlideUpView = false
                 placeViewPopUpAfterInitPlacePopViewHeight()
                 isSlideUpView = false
             }
@@ -269,9 +222,9 @@ extension HomeViewController: HomeViewProtocol {
     
     // MARK: Clicked Marker Data Binding
     func afterClickedMarker(_ placeModel: PlaceTopModel) {
-        placeView.topView.dataBinding(placeModel)
-        isCanMoveCameraWhenSlideUpView = true
         placeViewPopUp()
+        placeView.topView.dataBinding(placeModel)
+        isSlideUpView = false
     }
     
     // MARK: SlideView 설정
@@ -285,14 +238,6 @@ extension HomeViewController: HomeViewProtocol {
         firstPopupView.cancelButton.addTarget(self,
                                               action: #selector(firstPopupViewDelete),
                                               for: .touchUpInside
-        )
-        firstPopupView.reportButton.addTarget(self,
-                                              action: #selector(firstPopupViewTouchDown(_:)),
-                                              for: .touchDown
-        )
-        firstPopupView.reportButton.addTarget(self,
-                                              action: #selector(firstPopupViewReportOnlyPopUp(_:)),
-                                              for: .touchDragExit
         )
         firstPopupView.reportButton.addTarget(self,
                                               action: #selector(firstPopupViewReport(_:)),
@@ -318,17 +263,6 @@ extension HomeViewController: HomeViewProtocol {
             firstPopupView.heightAnchor.constraint(
                 equalToConstant: Layout.SlideView.firstHeight)
         ])
-        
-        // store info view
-        storeInfoView.frame = CGRect(x: 0,
-                                     y: self.view.frame.height,
-                                     width: self.view.frame.width,
-                                     height: CGFloat(Layout.SlideView.height)
-        )
-                
-        storeInfoView.entireView.alpha = 0
-        storeInfoView.activityIndicator.alpha = 0
-
     }
     
     // MARK: View Will Appear할 때 navigation & Tab Bar hidden Setting
@@ -360,9 +294,8 @@ extension HomeViewController: HomeViewProtocol {
     // MARK: center 위치 coordinate 저장하기
     func saveCenterCoordinate() {
         let center = naverMapView.cameraPosition.target
-
-        CenterCoordinate.shared.longitude = center.lng
-        CenterCoordinate.shared.latitude = center.lat
+        
+        presenter.saveCenterCoordinate(center)
     }
     
     // MARK: Marker Map에 대입하는 메소드
@@ -380,8 +313,9 @@ extension HomeViewController: HomeViewProtocol {
     func moveToCameraWhenNoAVIRO(_ lng: Double, _ lat: Double) {
         let latlng = NMGLatLng(lat: lat, lng: lng)
         let cameraUpdate = NMFCameraUpdate(scrollTo: latlng, zoomTo: 14)
-        cameraUpdate.animation = .easeOut
-        
+        cameraUpdate.animation = .fly
+        cameraUpdate.animationDuration = 0.25
+
         naverMapView.moveCamera(cameraUpdate)
     }
     
@@ -389,42 +323,14 @@ extension HomeViewController: HomeViewProtocol {
     func moveToCameraWhenHasAVIRO(_ markerModel: MarkerModel) {
         let latlng = markerModel.marker.position
         let cameraUpdate = NMFCameraUpdate(scrollTo: latlng, zoomTo: 14)
-        cameraUpdate.animation = .easeOut
+        cameraUpdate.animation = .easeIn
+        cameraUpdate.animationDuration = 0.25
         
         naverMapView.moveCamera(cameraUpdate)
     }
-    
-    // MARK: Slide UP View 할때 지도 이동
-    func moveToCameraWhenSlideUpView() {
-        if isCanMoveCameraWhenSlideUpView {
-            let latitude = naverMapView.latitude - 0.006
-            let longitude = naverMapView.longitude
-
-            let latlng = NMGLatLng(lat: latitude, lng: longitude)
-
-            let cameraUpdate = NMFCameraUpdate(scrollTo: latlng)
-
-            naverMapView.moveCamera(cameraUpdate)
-        }
-    }
-    
-    // MARK: pushDetailViewController
-    func pushDetailViewController(_ placeId: String) {
-        DispatchQueue.main.async { [weak self] in
-            let viewController = DetailViewController()
-            let presenter = DetailViewPresenter(viewController: viewController,
-                                                placeId: placeId)
-            viewController.presenter = presenter
-            
-            self?.navigationController?.pushViewController(
-                viewController,
-                animated: false
-            )
-        }
-    }
 }
 
-// MARK: View Refer
+// MARK: View Refer & Objc Action
 extension HomeViewController {
     func homeButtonIsHidden(_ hidden: Bool) {
         loadLocationButton.isHidden = hidden
@@ -435,6 +341,56 @@ extension HomeViewController {
         downBackButton.isHidden = hidden
         flagButton.isHidden = hidden
     }
+    
+    // MARK: Slide UP View 할때 지도 이동
+    func moveToCameraWhenSlideUpView() {
+        let yPosition = naverMapView.frame.height * 1/4
+        let point = CGPoint(x: 0, y: -yPosition)
+        
+        let cameraUpdate = NMFCameraUpdate(scrollBy: point)
+        cameraUpdate.animation = .linear
+        cameraUpdate.animationDuration = 0.2
+
+        naverMapView.moveCamera(cameraUpdate)
+    }
+    
+    // MARK: Slide -> Pop Up View 할때 지도 이동
+    func moveToCameraWhenPopupView() {
+        let yPosition = naverMapView.frame.height * 1/4
+        let point = CGPoint(x: 0, y: yPosition)
+        
+        let cameraUpdate = NMFCameraUpdate(scrollBy: point)
+        cameraUpdate.animation = .linear
+        cameraUpdate.animationDuration = 0.2
+        
+        naverMapView.moveCamera(cameraUpdate)
+    }
+    
+    // MARK: Update Place PopupView Height
+    func updatePlacePopupViewHeight(_ height: CGFloat) {
+        placePopupViewHeight = height
+    }
+    
+    // MARK: Down Back Button Tapped
+    @objc private func downBackButtonTapped(_ sender: UIButton) {
+        placeViewPopUpAfterInitPlacePopViewHeight()
+        isSlideUpView = false
+    }
+    // MARK: Flag Button Tapped
+    @objc private func flagButtonTapped(_ sender: UIButton) {
+        
+    }
+    
+    // MARK: Star Button Tapped
+    @objc private func starButtonTapped(_ sender: UIButton) {
+        sender.isSelected.toggle()
+    }
+    
+    // MARK: Location Button Tapped
+    @objc private func locationButtonTapped(_ sender: UIButton) {
+        self.presenter.locationUpdate()
+    }
+    
 }
 
 // MARK: Text Field Delegate

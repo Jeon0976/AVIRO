@@ -18,11 +18,12 @@ protocol HomeViewProtocol: NSObject {
     func whenViewWillAppear()
     func ifDenied()
     func requestSuccess()
-    func pushDetailViewController(_ placeId: String)
+    func saveCenterCoordinate()
     func moveToCameraWhenNoAVIRO(_ lng: Double, _ lat: Double)
     func moveToCameraWhenHasAVIRO(_ markerModel: MarkerModel)
     func loadMarkers()
     func afterClickedMarker(_ placeModel: PlaceTopModel)
+    func dataBinding()
 }
 
 final class HomeViewPresenter: NSObject {
@@ -56,6 +57,7 @@ final class HomeViewPresenter: NSObject {
         viewController?.makeLayout()
         viewController?.makeAttribute()
         viewController?.makeGesture()
+        viewController?.dataBinding()
     }
     
     func viewWillAppear() {
@@ -161,27 +163,34 @@ final class HomeViewPresenter: NSObject {
     private func getPlaceModel(_ markerModel: MarkerModel) {
         let mapPlace = markerModel.mapPlace
         let placeId = markerModel.placeId
-        
+        print(placeId)
         AVIROAPIManager().getPlaceInfo(placeId: placeId) { placeModel in
             let place = placeModel.data
             
             let distanceValue = LocationUtility.distanceMyLocation(x_lon: place.x, y_lat: place.y) * 1000
 
             let distanceString = String(distanceValue).convertDistanceUnit()
-            let reviewsCoint = String(place.commentCount)
+            let reviewsCount = String(place.commentCount)
             
             let placeTopModel = PlaceTopModel(
                 placeState: mapPlace,
                 placeTitle: place.title,
                 placeCategory: place.category,
                 distance: distanceString,
-                reviewsCount: reviewsCoint,
+                reviewsCount: reviewsCount,
                 address: place.address)
             
+            print(placeTopModel)
             DispatchQueue.main.async { [weak self] in
                 self?.viewController?.afterClickedMarker(placeTopModel)
             }
         }
+    }
+    
+    // MARK: Save Center Coordinate
+    func saveCenterCoordinate(_ coordinate: NMGLatLng) {
+        CenterCoordinate.shared.longitude = coordinate.lng
+        CenterCoordinate.shared.latitude = coordinate.lat
     }
     
     // MARK: Make Notification

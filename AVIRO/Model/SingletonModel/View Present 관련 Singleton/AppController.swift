@@ -64,7 +64,7 @@ final class AppController {
     private func checkState() {
         setHomeView()
 
-        // 최초 튜토리얼 화면 안 봤을 때
+//         최초 튜토리얼 화면 안 봤을 때
 //        guard UserDefaults.standard.bool(forKey: "Tutorial") else {
 //            setTutorialView()
 //            return

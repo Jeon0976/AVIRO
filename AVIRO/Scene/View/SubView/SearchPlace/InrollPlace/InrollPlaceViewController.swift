@@ -302,11 +302,14 @@ extension InrollPlaceViewController {
         let rightBarButton = UIBarButtonItem(title: "등록하기", style: .plain, target: self, action: #selector(reportStore))
         navigationItem.rightBarButtonItem = rightBarButton
         navigationItem.rightBarButtonItem?.isEnabled = false
+        let backButton = UIButton()
+        backButton.setImage(UIImage(named: "Back"), for: .normal)
+        backButton.addTarget(self, action: #selector(backToMain), for: .touchUpInside)
+        backButton.frame = .init(x: 0, y: 0, width: 24, height: 24)
+        let backButtonItem = UIBarButtonItem(customView: backButton)
         
-        // TODO: 백버튼 커스텀 할때 수정
-        let leftBarButton = UIBarButtonItem(title: "<", style: .plain, target: self, action: #selector(backToMain))
-        
-        navigationItem.leftBarButtonItem = leftBarButton
+        self.navigationItem.leftBarButtonItem = backButtonItem
+
     }
     
     // MARK: TabBar Attribute
@@ -371,6 +374,7 @@ extension InrollPlaceViewController {
     
     // MARK: 홈 화면으로 돌아가기
     @objc func backToMain() {
+        initData()
         tabBarController?.selectedIndex = 0
     }
     
@@ -419,10 +423,14 @@ extension InrollPlaceViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textField == storeInfoView.titleField {
             let viewController = PlaceListSearchViewController()
+            let presenter =
+            PlaceListSearchViewPresenter(viewController: viewController)
+            viewController.presenter = presenter
             
             navigationController?.pushViewController(viewController, animated: true)
             return false
         } else if textField == storeInfoView.addressField  || textField == storeInfoView.numberField {
+
             return false
         }
         

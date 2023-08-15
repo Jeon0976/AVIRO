@@ -51,7 +51,6 @@ struct VeganModel: Codable {
     var category: String
     var address: String
     var phone: String
-    var url: String
     var x: Double
     var y: Double
     

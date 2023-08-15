@@ -433,9 +433,8 @@ extension InrollPlacePresenter {
         
         veganModel = VeganModel(title: storeNormalData?.title ?? "",
                                 category: category?.rawValue ?? "",
-                        address: storeNormalData?.address ?? "",
-                        phone: storeNormalData?.phone ?? "",
-                        url: storeNormalData?.url ?? "",
+                                address: storeNormalData?.address ?? "",
+                                phone: storeNormalData?.phone ?? "",
                                 x: storeNormalData?.x ?? 0.0,
                                 y: storeNormalData?.y ?? 0.0,
                         allVegan: allVegan,

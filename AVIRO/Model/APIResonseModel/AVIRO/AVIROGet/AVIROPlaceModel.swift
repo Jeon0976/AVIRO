@@ -17,8 +17,8 @@ struct PlaceData: Decodable {
     let title: String
     let category: String
     let address: String
-    let phone: String
-    let url: String
+    let phone: String?
+    let url: String?
     
     let x: Double
     let y: Double

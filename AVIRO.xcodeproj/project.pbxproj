@@ -19,6 +19,9 @@
 		C51132BF2A559838006E1EC3 /* NotificationCenter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51132BE2A559838006E1EC3 /* NotificationCenter+Extension.swift */; };
 		C51132C12A559BCA006E1EC3 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51132C02A559BCA006E1EC3 /* AppController.swift */; };
 		C51AED1D2A8A192D0015FBC2 /* ChangedViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51AED1C2A8A192D0015FBC2 /* ChangedViewAction.swift */; };
+		C51AED1F2A8B2BC80015FBC2 /* HomeTopButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51AED1E2A8B2BC80015FBC2 /* HomeTopButton.swift */; };
+		C51AED212A8B2BDB0015FBC2 /* HomeMapReferButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51AED202A8B2BDB0015FBC2 /* HomeMapReferButton.swift */; };
+		C51AED232A8B7B000015FBC2 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51AED222A8B7B000015FBC2 /* UIViewController+Extension.swift */; };
 		C51B09B82A82155200916BBD /* MarkerModelArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B09B72A82155200916BBD /* MarkerModelArray.swift */; };
 		C51B09BA2A8215D800916BBD /* MarkerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B09B92A8215D800916BBD /* MarkerModel.swift */; };
 		C51B09BC2A82397800916BBD /* Marker+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B09BB2A82397800916BBD /* Marker+Extension.swift */; };
@@ -149,6 +152,9 @@
 		C51132BE2A559838006E1EC3 /* NotificationCenter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationCenter+Extension.swift"; sourceTree = "<group>"; };
 		C51132C02A559BCA006E1EC3 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		C51AED1C2A8A192D0015FBC2 /* ChangedViewAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangedViewAction.swift; sourceTree = "<group>"; };
+		C51AED1E2A8B2BC80015FBC2 /* HomeTopButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTopButton.swift; sourceTree = "<group>"; };
+		C51AED202A8B2BDB0015FBC2 /* HomeMapReferButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMapReferButton.swift; sourceTree = "<group>"; };
+		C51AED222A8B7B000015FBC2 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		C51B09B72A82155200916BBD /* MarkerModelArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerModelArray.swift; sourceTree = "<group>"; };
 		C51B09B92A8215D800916BBD /* MarkerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerModel.swift; sourceTree = "<group>"; };
 		C51B09BB2A82397800916BBD /* Marker+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Marker+Extension.swift"; sourceTree = "<group>"; };
@@ -416,6 +422,7 @@
 				C5D8E8622A3DEC3900D88A43 /* String+Extension.swift */,
 				C5D36D2D2A76031E003328E8 /* Double+Extension.swift */,
 				C51B09BB2A82397800916BBD /* Marker+Extension.swift */,
+				C51AED222A8B7B000015FBC2 /* UIViewController+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -635,6 +642,8 @@
 				C50F6B032A6BCD6900E942F5 /* CategoryButton.swift */,
 				C5F1014E2A6D19A800C53286 /* VeganOptionButton.swift */,
 				C568577C2A70E1F600F52715 /* MenuPlusButton.swift */,
+				C51AED1E2A8B2BC80015FBC2 /* HomeTopButton.swift */,
+				C51AED202A8B2BDB0015FBC2 /* HomeMapReferButton.swift */,
 			);
 			path = UIButton;
 			sourceTree = "<group>";
@@ -1239,6 +1248,7 @@
 				C5803F5A2A88C1A50064A853 /* PlaceInfoModel.swift in Sources */,
 				C52066232A7CAC910038ECCD /* NoHistoryView.swift in Sources */,
 				C5E306E72A6FB4ED00C11CF7 /* MenuField.swift in Sources */,
+				C51AED212A8B2BDB0015FBC2 /* HomeMapReferButton.swift in Sources */,
 				C5E430B32A5DADBE00CB67EC /* SecondRegistrationPresenter.swift in Sources */,
 				C5EB510D2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift in Sources */,
 				C50367F52A1795D10020C6BB /* HomeViewPresenter.swift in Sources */,
@@ -1252,6 +1262,7 @@
 				C5D7458F2A224DCE006F9F31 /* HomeFirstPopUpView.swift in Sources */,
 				C51B09B82A82155200916BBD /* MarkerModelArray.swift in Sources */,
 				C520662D2A7CE1CC0038ECCD /* UserDefaultsManager.swift in Sources */,
+				C51AED232A8B7B000015FBC2 /* UIViewController+Extension.swift in Sources */,
 				C5A3C3C62A39659B0050AB3D /* LoginViewPresenter.swift in Sources */,
 				C58B9AAE2A5675B9008AEAC3 /* TutorialViewController.swift in Sources */,
 				C5D745912A225DE6006F9F31 /* CommentDetailViewController.swift in Sources */,
@@ -1298,6 +1309,7 @@
 				C51132C12A559BCA006E1EC3 /* AppController.swift in Sources */,
 				C5A03C122A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift in Sources */,
 				C593B6472A4AB3A700D224CE /* PushCommentView.swift in Sources */,
+				C51AED1F2A8B2BC80015FBC2 /* HomeTopButton.swift in Sources */,
 				C5EB511C2A21188D00B29CC1 /* TopDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

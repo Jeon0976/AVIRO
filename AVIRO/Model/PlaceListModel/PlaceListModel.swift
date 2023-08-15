@@ -17,7 +17,6 @@ struct PlaceListModel: Codable, Equatable {
     var distance: String
     var address: String
     var phone: String
-    var url: String
     let x: Double
     let y: Double
 }

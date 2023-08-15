@@ -166,7 +166,6 @@ final class HomeSearchPresenter {
                     distance: location.distance,
                     address: location.address,
                     phone: location.phone,
-                    url: location.url,
                     x: Double(location.xToLongitude)!,
                     y: Double(location.yToLatitude)!
                 )
@@ -228,7 +227,6 @@ final class HomeSearchPresenter {
                         distance: location.distance,
                         address: location.address,
                         phone: location.phone,
-                        url: location.url,
                         x: Double(location.xToLongitude)!,
                         y: Double(location.yToLatitude)!
                     )

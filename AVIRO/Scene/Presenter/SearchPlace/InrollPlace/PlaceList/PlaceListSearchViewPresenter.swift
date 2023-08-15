@@ -67,7 +67,6 @@ final class PlaceListSearchViewPresenter: NSObject {
                     distance: location.distance,
                     address: location.address,
                     phone: location.phone,
-                    url: location.url,
                     x: Double(location.xToLongitude)!,
                     y: Double(location.yToLatitude)!
                 )
@@ -113,7 +112,6 @@ final class PlaceListSearchViewPresenter: NSObject {
                     distance: location.distance,
                     address: location.address,
                     phone: location.phone,
-                    url: location.url,
                     x: Double(location.xToLongitude)!,
                     y: Double(location.yToLatitude)!
                 )
@@ -133,7 +131,7 @@ final class PlaceListSearchViewPresenter: NSObject {
     // MARK: Item 클릭 될 떄
     func didSelectRowAt(_ indexPath: IndexPath) {
         let selectedItem = placeList[indexPath.row]
-        
+        print(selectedItem)
         let placeModel = PlaceCheckModel(
             title: selectedItem.title,
             address: selectedItem.address,
@@ -142,7 +140,6 @@ final class PlaceListSearchViewPresenter: NSObject {
         )
         
         AVIROAPIManager().getCheckPlace(placeModel: placeModel) { [weak self] checkedPlace in
-            
             DispatchQueue.main.async {
                 if checkedPlace.registered {
                     self?.viewController?.pushAlertController()

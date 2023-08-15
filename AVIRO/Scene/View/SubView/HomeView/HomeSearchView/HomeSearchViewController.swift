@@ -144,16 +144,17 @@ extension HomeSearchViewController {
         tapGesture.delegate = self
         
         view.backgroundColor = .gray7
+        
         navigationItem.title = "가게•위치 검색"
-        
         navigationController?.navigationBar.isHidden = false
-        
+        setupCustomBackButton()
+
         // TabBar Controller
         if let tabBarController = self.tabBarController as? TabBarViewController {
             tabBarController.hiddenTabBarIncludeIsTranslucent(true)
         }
     }
-    
+
     // MARK: Search Field Attribute
     private func makeSearchFieldAttribute() {
         searchField.delegate = self

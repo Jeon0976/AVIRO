@@ -31,24 +31,27 @@ extension HomeViewController {
         homeButtonIsHidden(false)
         viewNaviButtonHidden(true)
 
-        placeViewTopConstraint?.isActive = false
-        placeViewTopConstraint = placeView.topAnchor.constraint(equalTo: self.view.bottomAnchor)
-        placeViewTopConstraint?.isActive = true
+        placeViewTopConstraint?.constant = 0
     }
     
     func placeViewPopUp() {
         placeView.topView.placeViewStated = .PopUp
-        
+        homeButtonIsHidden(false)
+        viewNaviButtonHidden(true)
+        searchTextFieldTopConstraint?.constant = 16
+
         guard let tabBarController = self.tabBarController as? TabBarViewController else { return }
         
         let tabBarHeight = tabBarController.tabBar.frame.height
     
         tabBarController.hiddenTabBar(true)
 
-        placePopupViewHeight = -placeView.topView.frame.height
+        let height = -placeView.topView.frame.height
+        updatePlacePopupViewHeight(height)
+        
         placeViewTopConstraint?.constant = placePopupViewHeight + tabBarHeight
         
-        UIView.animate(withDuration: 0.25) {
+        UIView.animate(withDuration: 0.1) {
             self.view.layoutIfNeeded()
         }
     }
@@ -62,10 +65,10 @@ extension HomeViewController {
         
         placeViewTopConstraint?.constant = -self.view.frame.height * 2/3
         
-        searchTextFieldTopConstraint?.constant = -100
+        searchTextFieldTopConstraint?.constant = -120
         viewNaviButtonHidden(false)
         
-        UIView.animate(withDuration: 0.25) {
+        UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
     }
@@ -73,7 +76,7 @@ extension HomeViewController {
     func placeViewPopUpAfterInitPlacePopViewHeight() {
         homeButtonIsHidden(false)
         viewNaviButtonHidden(true)
-
+        moveToCameraWhenPopupView()
         placeView.topView.placeViewStated = .PopUp
         
         guard let tabBarController = self.tabBarController as? TabBarViewController else { return }
@@ -84,7 +87,7 @@ extension HomeViewController {
 
         placeViewTopConstraint?.constant = placePopupViewHeight + tabBarHeight
         
-        UIView.animate(withDuration: 0.25) {
+        UIView.animate(withDuration: 0.1) {
             self.view.layoutIfNeeded()
         }
     }

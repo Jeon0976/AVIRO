@@ -38,7 +38,7 @@ final class HomeSearchViewTableViewCell: UITableViewCell {
             // title
             title.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 10),
             title.topAnchor.constraint(equalTo: icon.topAnchor),
-            title.widthAnchor.constraint(equalToConstant: contentView.frame.width - 105),
+            title.widthAnchor.constraint(equalToConstant: contentView.frame.width - 125),
             // address
             address.leadingAnchor.constraint(equalTo: title.leadingAnchor),
             address.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 11),
