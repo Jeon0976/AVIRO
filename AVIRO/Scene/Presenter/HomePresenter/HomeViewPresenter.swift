@@ -170,6 +170,7 @@ final class HomeViewPresenter: NSObject {
         AVIROAPIManager().getPlaceInfo(placeId: placeId) { placeModel in
             let place = placeModel.data
             
+            /// 소수점 수정을 위한 * 1000
             let distanceValue = LocationUtility.distanceMyLocation(x_lon: place.x, y_lat: place.y) * 1000
 
             let distanceString = String(distanceValue).convertDistanceUnit()

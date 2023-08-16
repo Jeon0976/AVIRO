@@ -61,7 +61,6 @@ extension HomeViewController {
         moveToCameraWhenSlideUpView()
         homeButtonIsHidden(true)
 
-        placeView.topView.shareButton.isUserInteractionEnabled = true
         placeView.topView.placeViewStated = .SlideUp
         placeView.segmetedControlView.scrollView.isUserInteractionEnabled = false
         

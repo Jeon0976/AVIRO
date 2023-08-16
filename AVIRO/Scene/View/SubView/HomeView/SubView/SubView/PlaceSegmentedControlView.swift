@@ -23,15 +23,12 @@ final class PlaceSegmentedControlView: UIView {
     lazy var scrollView = UIScrollView()
         
     // Home Constraint
-    private var homeHeightConstraint: NSLayoutConstraint?
     private var homeBottomConstraint: NSLayoutConstraint?
     
     // Menu Constraint
-    private var menuHeightConstraint: NSLayoutConstraint?
     private var menuBottomConstraint: NSLayoutConstraint?
     
     // Review Constraint
-    private var reviewHeightConstraint: NSLayoutConstraint?
     private var reviewBottomConstraint: NSLayoutConstraint?
     
     private var afterInitViewConstrait = false
@@ -47,15 +44,6 @@ final class PlaceSegmentedControlView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError()
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        if !afterInitViewConstrait {
-            initViewConstraint()
-        }
-
     }
     
     private func makeLayout() {
@@ -80,10 +68,6 @@ final class PlaceSegmentedControlView: UIView {
             scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
-        
-        homeView.backgroundColor = .red
-        menuView.backgroundColor = .gray
-        reviewView.backgroundColor = .magenta
     }
     
     private func makeLayoutInScrollView() {
@@ -104,22 +88,41 @@ final class PlaceSegmentedControlView: UIView {
             menuView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
             menuView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             menuView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
-
+        
             reviewView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
             reviewView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-            reviewView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor)
+            reviewView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
+            
+            // test
+            menuView.heightAnchor.constraint(equalToConstant: 400),
+            reviewView.heightAnchor.constraint(equalToConstant: 1000)
         ])
+        
+        menuView.backgroundColor = .red
+        reviewView.backgroundColor = .gray
         
         initViewConstraint()
     }
     
     private func makeAttribute() {
         self.backgroundColor = .gray7
+        scrollView.backgroundColor = .clear
         
         segmentedControl.setAttributedTitle()
         segmentedControl.addTarget(self, action: #selector(segmentedChanged(segment:)), for: .valueChanged)
         segmentedControl.selectedSegmentIndex = 0
+    }
+    
+    func dataBinding() {
+        homeView.dataBinding()
         
+        segmentedControlChange(65)
+    }
+    
+    private func segmentedControlChange(_ reviews: Int) {
+        let reviews = "후기 (\(reviews))"
+        
+        segmentedControl.setTitle(reviews, forSegmentAt: 2)
     }
     
     private func initViewConstraint() {
@@ -128,36 +131,23 @@ final class PlaceSegmentedControlView: UIView {
         initMenuViewConstrait()
         initReviewViewConstrait()
         
-        afterInitViewConstrait = true
+        menuView.isHidden = true
+        reviewView.isHidden = true
     }
     
     private func initHomeViewConstrait() {
-        let homeViewHeight = CGFloat(1500)
-
-        homeHeightConstraint = homeView.heightAnchor.constraint(equalToConstant: homeViewHeight)
-        homeHeightConstraint?.isActive = true
         
-        homeBottomConstraint = homeView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor)
+        homeBottomConstraint = homeView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -80)
         homeBottomConstraint?.isActive = true
     }
     
     private func initMenuViewConstrait() {
-        let menuViewHeight = CGFloat(1000)
-
-        menuHeightConstraint = menuView.heightAnchor.constraint(equalToConstant: menuViewHeight)
-        menuHeightConstraint?.isActive = false
-        
-        menuBottomConstraint = menuView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor)
+        menuBottomConstraint = menuView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -80)
         menuBottomConstraint?.isActive = false
     }
     
     private func initReviewViewConstrait() {
-        let reviewViewHeight = CGFloat(100)
-
-        reviewHeightConstraint = reviewView.heightAnchor.constraint(equalToConstant: reviewViewHeight)
-        reviewHeightConstraint?.isActive = false
-        
-        reviewBottomConstraint = reviewView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor)
+        reviewBottomConstraint = reviewView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -80)
         reviewBottomConstraint?.isActive = false
     }
     
@@ -175,46 +165,34 @@ final class PlaceSegmentedControlView: UIView {
     }
     
     private func activeHomeView() {
-        menuHeightConstraint?.isActive = false
         menuBottomConstraint?.isActive = false
-        
-        reviewHeightConstraint?.isActive = false
         reviewBottomConstraint?.isActive = false
         
         menuView.isHidden = true
         reviewView.isHidden = true
         
-        homeHeightConstraint?.isActive = true
         homeBottomConstraint?.isActive = true
         homeView.isHidden = false
     }
     
     private func activeMenuView() {
-        homeHeightConstraint?.isActive = false
-        homeHeightConstraint?.isActive = false
-        
-        reviewHeightConstraint?.isActive = false
+        homeBottomConstraint?.isActive = false
         reviewBottomConstraint?.isActive = false
         
         homeView.isHidden = true
         reviewView.isHidden = true
         
-        menuHeightConstraint?.isActive = true
         menuBottomConstraint?.isActive = true
         menuView.isHidden = false
     }
     
     private func activeReviewView() {
-        menuHeightConstraint?.isActive = false
         menuBottomConstraint?.isActive = false
-        
-        homeHeightConstraint?.isActive = false
-        homeHeightConstraint?.isActive = false
+        homeBottomConstraint?.isActive = false
         
         menuView.isHidden = true
         homeView.isHidden = true
         
-        reviewHeightConstraint?.isActive = true
         reviewBottomConstraint?.isActive = true
         reviewView.isHidden = false
     }

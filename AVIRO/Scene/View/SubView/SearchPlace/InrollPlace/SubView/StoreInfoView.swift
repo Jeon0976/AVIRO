@@ -107,7 +107,7 @@ final class StoreInfoView: UIView {
             buttonStackView.addArrangedSubview($0)
         }
         
-        viewHeightConstraint = heightAnchor.constraint(equalToConstant: self.frame.height)
+        viewHeightConstraint = heightAnchor.constraint(equalToConstant: 200)
         viewHeightConstraint?.isActive = true
         
         buttonStackView.axis = .horizontal

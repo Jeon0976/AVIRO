@@ -98,7 +98,7 @@ final class MenuTableView: UIView {
             self.addSubview($0)
         }
         
-        viewHeightConstraint = heightAnchor.constraint(equalToConstant: self.frame.height)
+        viewHeightConstraint = heightAnchor.constraint(equalToConstant: 200)
         viewHeightConstraint?.isActive = true
 
         NSLayoutConstraint.activate([

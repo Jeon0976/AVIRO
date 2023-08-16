@@ -123,4 +123,7 @@ extension UIColor {
     
     /// BG RED
     static let warningBack = UIColor(named: "BG RED")
+    
+    /// ChangeButtonColor
+    static let changeButton = UIColor(named: "ChangeButtonColor")
 }
