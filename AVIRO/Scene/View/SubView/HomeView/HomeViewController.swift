@@ -48,6 +48,8 @@ final class HomeViewController: UIViewController {
         presenter.locationAuthorization()
         presenter.viewDidLoad()
         presenter.makeNotification()
+        presenter.loadVeganData()
+
         view.addSubview(zoomLevel)
         zoomLevel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -57,7 +59,6 @@ final class HomeViewController: UIViewController {
         ])
         zoomLevel.textColor = .black
         zoomLevel.font = .systemFont(ofSize: 20, weight: .bold)
-        presenter.loadVeganData()
 
     }
 
@@ -138,10 +139,12 @@ extension HomeViewController: HomeViewProtocol {
             downBackButton.heightAnchor.constraint(equalToConstant: 40)
         ])
         
-        searchTextFieldTopConstraint = searchTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16)
+        searchTextFieldTopConstraint = searchTextField.topAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16)
         searchTextFieldTopConstraint?.isActive = true
         
-        placeViewTopConstraint = placeView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+        placeViewTopConstraint = placeView.topAnchor.constraint(
+            equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
         placeViewTopConstraint?.isActive = true
     }
     
@@ -182,11 +185,19 @@ extension HomeViewController: HomeViewProtocol {
         
     }
     
-    // MARK: Data Binding
+    // MARK: 클로저 함수 Binding 처리
     func dataBinding() {
         placeView.topView.whenFullBackButtonTapped = { [weak self] in
             self?.naverMapView.isHidden = false
             self?.placeViewPopUpAfterInitPlacePopViewHeight()
+        }
+        
+        placeView.topView.whenShareButtonTapped = { [weak self] shareObject in
+            let vc = UIActivityViewController(activityItems: shareObject, applicationActivities: nil)
+            vc.popoverPresentationController?.permittedArrowDirections = []
+            
+            vc.popoverPresentationController?.sourceView = self?.view
+            self?.present(vc, animated: true)
         }
     }
     
@@ -198,33 +209,13 @@ extension HomeViewController: HomeViewProtocol {
         upGesture.direction = .up
         downGesture.direction = .down
         
-        upGesture.addTarget(self, action: #selector(swipeGestureTapped(_:)))
-        downGesture.addTarget(self, action: #selector(swipeGestureTapped(_:)))
+        upGesture.addTarget(self, action: #selector(swipeGestureActived(_:)))
+        downGesture.addTarget(self, action: #selector(swipeGestureActived(_:)))
     }
     
-    @objc func swipeGestureTapped(_ gesture: UISwipeGestureRecognizer) {
-        if gesture.direction == .up {
-            if isSlideUpView {
-                placeViewFullUp()
-                naverMapView.isHidden = true
-                isSlideUpView = false
-            } else {
-                placeViewSlideUp()
-                isSlideUpView = true
-            }
-        } else if gesture.direction == .down {
-            if isSlideUpView {
-                placeViewPopUpAfterInitPlacePopViewHeight()
-                isSlideUpView = false
-            }
-        }
-    }
-    
-    // MARK: Clicked Marker Data Binding
+    // MARK: place view에 data binding
     func afterClickedMarker(_ placeModel: PlaceTopModel) {
-        placeViewPopUp()
-        placeView.topView.dataBinding(placeModel)
-        isSlideUpView = false
+        placeView.dataBinding(placeModel)
     }
     
     // MARK: SlideView 설정
@@ -326,7 +317,15 @@ extension HomeViewController: HomeViewProtocol {
         cameraUpdate.animation = .easeIn
         cameraUpdate.animationDuration = 0.25
         
+        popupPlaceView()
+        
         naverMapView.moveCamera(cameraUpdate)
+    }
+    
+    // 최초 데이터를 받기 전 popup
+    private func popupPlaceView() {
+        placeViewPopUp()
+        isSlideUpView = false
     }
 }
 
@@ -391,6 +390,24 @@ extension HomeViewController {
         self.presenter.locationUpdate()
     }
     
+    // MARK: Swipte Gestrue Actived
+    @objc private func swipeGestureActived(_ gesture: UISwipeGestureRecognizer) {
+        if gesture.direction == .up {
+            if isSlideUpView {
+                placeViewFullUp()
+                naverMapView.isHidden = true
+                isSlideUpView = false
+            } else {
+                placeViewSlideUp()
+                isSlideUpView = true
+            }
+        } else if gesture.direction == .down {
+            if isSlideUpView {
+                placeViewPopUpAfterInitPlacePopViewHeight()
+                isSlideUpView = false
+            }
+        }
+    }
 }
 
 // MARK: Text Field Delegate

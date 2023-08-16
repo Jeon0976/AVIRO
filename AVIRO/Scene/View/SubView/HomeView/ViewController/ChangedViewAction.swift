@@ -47,9 +47,10 @@ extension HomeViewController {
         tabBarController.hiddenTabBar(true)
 
         let height = -placeView.topView.frame.height
+        
         updatePlacePopupViewHeight(height)
         
-        placeViewTopConstraint?.constant = placePopupViewHeight + tabBarHeight
+        placeViewTopConstraint?.constant = placePopupViewHeight + tabBarHeight 
         
         UIView.animate(withDuration: 0.1) {
             self.view.layoutIfNeeded()
@@ -60,6 +61,7 @@ extension HomeViewController {
         moveToCameraWhenSlideUpView()
         homeButtonIsHidden(true)
 
+        placeView.topView.shareButton.isUserInteractionEnabled = true
         placeView.topView.placeViewStated = .SlideUp
         placeView.segmetedControlView.scrollView.isUserInteractionEnabled = false
         

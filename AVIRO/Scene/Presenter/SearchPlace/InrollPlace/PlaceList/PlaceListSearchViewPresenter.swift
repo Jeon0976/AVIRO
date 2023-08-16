@@ -131,7 +131,6 @@ final class PlaceListSearchViewPresenter: NSObject {
     // MARK: Item 클릭 될 떄
     func didSelectRowAt(_ indexPath: IndexPath) {
         let selectedItem = placeList[indexPath.row]
-        print(selectedItem)
         let placeModel = PlaceCheckModel(
             title: selectedItem.title,
             address: selectedItem.address,

@@ -14,7 +14,6 @@ struct PlaceModelBeforeMatchedAVIRO: Encodable {
 
 struct ForMatchedAVIRO: Encodable {
     let title: String
-    let address: String
     let x: Double
     let y: Double
 }
@@ -27,7 +26,7 @@ struct PlaceModelAfterMatchedAVIRO: Decodable {
 
 struct AfterMatchedAVIRO: Decodable {
     let index: Int
-    let allVegan: Int
-    let someMenuVegan: Int
-    let ifRequestVegan: Int
+    let allVegan: Bool
+    let someMenuVegan: Bool
+    let ifRequestVegan: Bool
 }

@@ -9,7 +9,7 @@ import Foundation
 
 struct PlaceCheckModel: Encodable {
     let title: String
-    let address: String
+    let address: String 
     let x: String
     let y: String
 }

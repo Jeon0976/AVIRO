@@ -131,6 +131,7 @@ final class HomeViewPresenter: NSObject {
     
     // MARK: Reset Previous Marker
    func resetPreviouslyTouchedMarker() {
+       /// 최초 터치 이후 작동을 위한 분기처리
         if hasTouchedMarkerBefore {
             let markerModel = MarkerModelArray.shared.getMarkerFromIndex(selectedMarkerIndex)
             
@@ -140,6 +141,7 @@ final class HomeViewPresenter: NSObject {
     }
     
     // MARK: setMarkerToTouchedState
+    /// 클릭한 마커 저장 후 viewController에 알리기
     private func setMarkerToTouchedState(_ marker: NMFMarker) {
         let (markerModel, index) = MarkerModelArray.shared.getMarkerFromMarker(marker)
         
@@ -160,6 +162,7 @@ final class HomeViewPresenter: NSObject {
     }
     
     // MARK: Get PlaceModel
+    /// 클릭 된 마커 데이터 받기 위한 api 호출
     private func getPlaceModel(_ markerModel: MarkerModel) {
         let mapPlace = markerModel.mapPlace
         let placeId = markerModel.placeId

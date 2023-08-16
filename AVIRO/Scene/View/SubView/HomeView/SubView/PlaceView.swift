@@ -44,4 +44,8 @@ final class PlaceView: UIView {
             segmetedControlView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
+    
+    func dataBinding(_ placeModel: PlaceTopModel) {
+        topView.dataBinding(placeModel)
+    }
 }

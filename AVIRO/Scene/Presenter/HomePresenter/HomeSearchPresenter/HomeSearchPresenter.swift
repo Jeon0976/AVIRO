@@ -246,12 +246,10 @@ final class HomeSearchPresenter {
         
         placeList.forEach {
             let title = $0.title
-            let address = $0.address
             let x = $0.x
             let y = $0.y
             let model = ForMatchedAVIRO(
                 title: title,
-                address: address,
                 x: x,
                 y: y
             )
@@ -283,9 +281,9 @@ final class HomeSearchPresenter {
                 title: place.title,
                 distance: place.distance,
                 address: place.address,
-                allVegan: matched?.allVegan == 1 ? true : false,
-                someVegan: matched?.someMenuVegan == 1 ? true : false,
-                requestVegan: matched?.ifRequestVegan == 1 ? true : false,
+                allVegan: matched?.allVegan ?? false,
+                someVegan: matched?.someMenuVegan ?? false,
+                requestVegan: matched?.ifRequestVegan ?? false,
                 x: place.x,
                 y: place.y
             )
@@ -300,7 +298,6 @@ final class HomeSearchPresenter {
     
     // 선택된 것이 AVIRO에 있는지 확인하는 함수
     func checkIsInAVIRO(_ indexPath: IndexPath) {
-        print(isEndCompare)
         if isEndCompare {
             let model = matchedPlaceModel[indexPath.row]
 
