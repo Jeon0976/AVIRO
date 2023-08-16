@@ -8,6 +8,7 @@
 import UIKit
 
 import NMapsMap
+import Toast_Swift
 
 final class HomeViewController: UIViewController {
     lazy var presenter = HomeViewPresenter(viewController: self)
@@ -198,6 +199,36 @@ extension HomeViewController: HomeViewProtocol {
             
             vc.popoverPresentationController?.sourceView = self?.view
             self?.present(vc, animated: true)
+        }
+        
+        placeView.topView.whenStarButtonTapped = { [weak self] selected in
+            var title = ""
+            if selected {
+                title = "즐겨찾기가 추가되었습니다."
+            } else {
+                title = "즐겨찾기가 삭제되었습니다."
+            }
+            
+            var style = ToastStyle()
+            style.cornerRadius = 14
+            style.backgroundColor = .gray3?.withAlphaComponent(0.7) ?? .lightGray
+            
+            style.titleColor = .gray7 ?? .white
+            style.titleFont = .systemFont(ofSize: 17, weight: .medium)
+            
+            let centerX = (self?.view.frame.size.width ?? 400) / 2
+            let viewHeight = self?.view.frame.height ?? 800
+            
+            let yPosition: CGFloat = viewHeight + 20
+            
+            self?.view.makeToast(title,
+                      duration: 1.0,
+                      point: CGPoint(x: centerX, y: yPosition),
+                      title: nil,
+                      image: nil,
+                      style: style,
+                      completion: nil
+            )
         }
     }
     

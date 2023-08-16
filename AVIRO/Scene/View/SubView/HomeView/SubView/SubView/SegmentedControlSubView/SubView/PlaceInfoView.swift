@@ -69,7 +69,6 @@ final class PlaceInfoView: UIView {
         
         imageView.image = UIImage(named: "TimeInfo")
 
-        
         return imageView
     }()
     
@@ -140,7 +139,6 @@ final class PlaceInfoView: UIView {
         button.setTitle("가게 정보 수정 요청하기", for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 5)
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0)
-        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         button.semanticContentAttribute = .forceLeftToRight
         
         return button

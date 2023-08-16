@@ -7,8 +7,6 @@
 
 import UIKit
 
-import Toast_Swift
-
 // MARK: Place View State
 enum PlaceViewState {
     case PopUp
@@ -205,7 +203,7 @@ final class PlaceTopView: UIView {
     }
     
     var whenFullBackButtonTapped: (() -> Void)?
-    var whenStarButtonTapped: (() -> Void)?
+    var whenStarButtonTapped: ((Bool) -> Void)?
     var whenShareButtonTapped: (([String]) -> Void)?
     
     override init(frame: CGRect) {
@@ -261,7 +259,8 @@ final class PlaceTopView: UIView {
     
     @objc func starButtonTapped() {
         starButton.isSelected.toggle()
-        whenStarButtonTapped?()
+        whenStarButtonTapped?(starButton.isSelected)
+        
     }
     
     @objc func shareButtonTapped() {
