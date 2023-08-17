@@ -24,6 +24,7 @@ final class PlaceView: UIView {
             switch placeViewStated {
             case .PopUp:
                 topView.placeViewStated = .PopUp
+                segmetedControlView.whenViewPopup()
             case .SlideUp:
                 topView.placeViewStated = .SlideUp
             case .Full:

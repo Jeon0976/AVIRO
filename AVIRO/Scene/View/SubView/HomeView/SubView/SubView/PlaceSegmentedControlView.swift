@@ -33,7 +33,6 @@ final class PlaceSegmentedControlView: UIView {
     
     private var afterInitViewConstrait = false
     
-    var whenFullView: (() -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -115,7 +114,7 @@ final class PlaceSegmentedControlView: UIView {
     // Popup할 때, Slide up 할 때 구분 필요
     func dataBinding() {
         let mock = [
-            MenuArray(menuType: "vegan", menu: "알리오 올리오ㅁㅈㅇㅁㅈㅇㅁㅈㅇㅁㄴㅇㅁㅈㅇㄴㅁㅇㅁㅈㅇ", price: "17,000", howToRequest: "", isCheck: false),
+            MenuArray(menuType: "vegan", menu: "사장님께 여쭤봤는데 파스타는 비건이 맞고 피자에는 새우가 들어간대요 참고하세요~! 버섯으로", price: "17,000", howToRequest: "", isCheck: false),
             MenuArray(menuType: "vegan", menu: "김치찌개", price: "17,000", howToRequest: "", isCheck: false),
             MenuArray(menuType: "needToRequest", menu: "알리오 올리오", price: "17,000", howToRequest: "테테테테", isCheck: true),
             MenuArray(menuType: "needToRequest", menu: "포테이토 피자", price: "17,000", howToRequest: "테스트\nㅌㅈㅁㅈㅇㅁㅈㅇㅁㅈㅇㅁㅈㅇㅇ", isCheck: true),
@@ -177,7 +176,14 @@ final class PlaceSegmentedControlView: UIView {
         }
     }
     
+    func whenViewPopup() {
+        segmentedControl.selectedSegmentIndex = 0
+        activeHomeView()
+    }
+    
     private func activeHomeView() {
+        scrollViewSetOffset()
+        
         menuBottomConstraint?.isActive = false
         reviewBottomConstraint?.isActive = false
         
@@ -189,6 +195,8 @@ final class PlaceSegmentedControlView: UIView {
     }
     
     private func activeMenuView() {
+        scrollViewSetOffset()
+        
         homeBottomConstraint?.isActive = false
         reviewBottomConstraint?.isActive = false
         
@@ -200,6 +208,8 @@ final class PlaceSegmentedControlView: UIView {
     }
     
     private func activeReviewView() {
+        scrollViewSetOffset()
+        
         menuBottomConstraint?.isActive = false
         homeBottomConstraint?.isActive = false
         
@@ -210,4 +220,7 @@ final class PlaceSegmentedControlView: UIView {
         reviewView.isHidden = false
     }
     
+    private func scrollViewSetOffset(_ x: Double = 0.0,_ y: Double = 0.0, _ animated: Bool = false) {
+        scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: animated)
+    }
 }

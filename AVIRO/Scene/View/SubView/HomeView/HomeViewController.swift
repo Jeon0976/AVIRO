@@ -245,6 +245,7 @@ extension HomeViewController: HomeViewProtocol {
     }
     
     // MARK: place view에 data binding
+    // TODO: 수정 예정
     func afterClickedMarker(_ placeModel: PlaceTopModel) {
         placeView.dataBinding(placeModel)
     }

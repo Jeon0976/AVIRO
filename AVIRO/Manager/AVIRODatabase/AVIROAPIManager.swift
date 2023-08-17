@@ -320,7 +320,10 @@ final class AVIROAPIManager {
     }
     
     // MARK: Post PlaceList Matched AVIRO
-    func postPlaceListMatched(_ placeArray: PlaceModelBeforeMatchedAVIRO, completionHandler: @escaping((PlaceModelAfterMatchedAVIRO) -> Void)) {
+    func postPlaceListMatched(
+        _ placeArray: PlaceModelBeforeMatchedAVIRO,
+        completionHandler: @escaping((PlaceModelAfterMatchedAVIRO) -> Void)
+    ) {
         guard let url = postAPI.placeListMatched().url else { print("url error"); return }
         
         guard let jsonData = try? JSONEncoder().encode(placeArray) else {

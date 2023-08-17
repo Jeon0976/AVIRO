@@ -167,28 +167,30 @@ final class HomeViewPresenter: NSObject {
         let mapPlace = markerModel.mapPlace
         let placeId = markerModel.placeId
         print(placeId)
-        AVIROAPIManager().getPlaceInfo(placeId: placeId) { placeModel in
-            let place = placeModel.data
-            
-            /// 소수점 수정을 위한 * 1000
-            let distanceValue = LocationUtility.distanceMyLocation(x_lon: place.x, y_lat: place.y) * 1000
-
-            let distanceString = String(distanceValue).convertDistanceUnit()
-            let reviewsCount = String(place.commentCount)
-            
-            let placeTopModel = PlaceTopModel(
-                placeState: mapPlace,
-                placeTitle: place.title,
-                placeCategory: place.category,
-                distance: distanceString,
-                reviewsCount: reviewsCount,
-                address: place.address)
-            
-            print(placeTopModel)
-            DispatchQueue.main.async { [weak self] in
-                self?.viewController?.afterClickedMarker(placeTopModel)
-            }
-        }
+        let test = PlaceTopModel(placeState: MapPlace.Request, placeTitle: "Test", placeCategory: "식당", distance: "400", reviewsCount: "5", address: "테스트 입니다.")
+        viewController?.afterClickedMarker(test)
+//        AVIROAPIManager().getPlaceInfo(placeId: placeId) { placeModel in
+//            let place = placeModel.data
+//
+//            /// 소수점 수정을 위한 * 1000
+//            let distanceValue = LocationUtility.distanceMyLocation(x_lon: place.x, y_lat: place.y) * 1000
+//
+//            let distanceString = String(distanceValue).convertDistanceUnit()
+//            let reviewsCount = String(place.commentCount)
+//
+//            let placeTopModel = PlaceTopModel(
+//                placeState: mapPlace,
+//                placeTitle: place.title,
+//                placeCategory: place.category,
+//                distance: distanceString,
+//                reviewsCount: reviewsCount,
+//                address: place.address)
+//
+//            print(placeTopModel)
+//            DispatchQueue.main.async { [weak self] in
+//                self?.viewController?.afterClickedMarker(placeTopModel)
+//            }
+//        }
     }
     
     // MARK: Save Center Coordinate

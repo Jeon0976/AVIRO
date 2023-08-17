@@ -36,6 +36,11 @@ final class PlaceReviewsView: UIView {
             PlaceReviewTableViewCell.self,
             forCellReuseIdentifier: PlaceReviewTableViewCell.identifier
         )
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.isScrollEnabled = false
+        tableView.separatorStyle = .none
+        tableView.estimatedRowHeight = 100
         
         return tableView
     }()
@@ -54,6 +59,13 @@ final class PlaceReviewsView: UIView {
         return button
     }()
     
+    private var viewHeightConstraint: NSLayoutConstraint?
+    private var reviewsHeightConstraint: NSLayoutConstraint?
+    
+    private var cellHeight: [IndexPath: CGFloat] = [:]
+    
+    private var reviewsArray = [CommentArray]()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -71,4 +83,18 @@ final class PlaceReviewsView: UIView {
     private func makeLayout() {
         
     }
+}
+
+extension PlaceReviewsView: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        UITableViewCell()
+    }
+}
+
+extension PlaceReviewsView: UITableViewDelegate {
+    
 }

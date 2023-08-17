@@ -35,8 +35,8 @@ final class PlaceMenuView: UIView {
             PlaceMenuTableViewCell.self,
             forCellReuseIdentifier: PlaceMenuTableViewCell.identifier
         )
-        tableView.delegate = self
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.isScrollEnabled = false
         tableView.separatorStyle = .singleLine
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
