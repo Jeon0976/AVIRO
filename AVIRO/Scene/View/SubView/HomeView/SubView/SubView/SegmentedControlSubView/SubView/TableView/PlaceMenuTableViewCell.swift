@@ -20,7 +20,7 @@ final class PlaceMenuTableViewCell: UITableViewCell {
         let label = UILabel()
         
         label.font = .systemFont(ofSize: 18, weight: .semibold)
-        label.numberOfLines = 1
+        label.numberOfLines = 2
         label.textColor = .gray0
         
         return label
@@ -40,7 +40,7 @@ final class PlaceMenuTableViewCell: UITableViewCell {
         
         label.font = .systemFont(ofSize: 15, weight: .medium)
         label.textColor = .gray1
-        label.numberOfLines = 1
+        label.numberOfLines = 2
         
         return label
     }()
@@ -82,12 +82,15 @@ final class PlaceMenuTableViewCell: UITableViewCell {
             
             menuTitle.topAnchor.constraint(equalTo: menuTypeLabel.bottomAnchor, constant: 10),
             menuTitle.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            menuTitle.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
             
             menuPrice.topAnchor.constraint(equalTo: menuTitle.bottomAnchor, constant: 10),
             menuPrice.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            menuPrice.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
             
             menuRequest.topAnchor.constraint(equalTo: menuPrice.bottomAnchor, constant: 10),
-            menuRequest.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor)
+            menuRequest.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            menuRequest.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor)
         ])
         
         menuPriceBottomConstraint = menuPrice.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10)

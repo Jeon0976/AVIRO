@@ -24,7 +24,7 @@ final class SecondRegistrationViewController: UIViewController {
     var genderStackView = UIStackView()
     var genderExample = UILabel()
     
-    var nextButton = BottomButton()
+    var nextButton = BottomButton1()
     
     var tapGesture = UITapGestureRecognizer()
     var timer: Timer?

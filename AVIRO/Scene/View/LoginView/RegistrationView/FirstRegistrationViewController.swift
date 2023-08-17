@@ -18,7 +18,7 @@ final class FirstRegistrationViewController: UIViewController {
     var subInfo = UILabel()
     var subInfo2 = UILabel()
     
-    var nextButton = BottomButton()
+    var nextButton = BottomButton1()
     
     var tapGesture = UITapGestureRecognizer()
     var timer: Timer?

@@ -7,14 +7,17 @@
 
 import UIKit
 
+// TODO: SegmentedControl의 메뉴뷰를 그대로 가져오는 방법은 없을까?
+
 final class PlaceHomeView: UIView {
     private lazy var placeInfoView = PlaceInfoView()
-    private lazy var placeMenuView = PlaceMenuView()
+     lazy var placeMenuView = PlaceMenuView()
     private lazy var placeReviewWriteView = PlaceReviewWriteView()
     private lazy var placeReviewsView = PlaceReviewsView()
     
     private var viewHeightConstraint: NSLayoutConstraint?
 
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -67,13 +70,10 @@ final class PlaceHomeView: UIView {
             
             // Test Coce
             
-            placeReviewWriteView.heightAnchor.constraint(equalToConstant: 250),
             placeReviewsView.heightAnchor.constraint(equalToConstant: 600)
         ])
         
-        placeMenuView.backgroundColor = .red
         placeReviewsView.backgroundColor = .brown
-        placeReviewWriteView.backgroundColor = .blue
     }
     
     private func initPlaceHomeView() {
@@ -90,7 +90,8 @@ final class PlaceHomeView: UIView {
 
     }
     
-    func dataBinding() {
+    func dataBinding(_ menu: [MenuArray]) {
         placeInfoView.dataBinding()
+        placeMenuView.dataBinding(menu)
     }
 }

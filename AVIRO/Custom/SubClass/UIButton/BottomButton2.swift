@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class MenuPlusButton: UIButton {
+final class BottomButton2: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -43,6 +43,6 @@ final class MenuPlusButton: UIButton {
         imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 10)
         titleEdgeInsets = .init(top: 0, left: 10, bottom: 0, right: 0)
         
-        contentEdgeInsets = .init(top: 14.5, left: 32, bottom: 14.5, right: 32)
+        contentEdgeInsets = .init(top: 14, left: 32, bottom: 14, right: 32)
     }
 }

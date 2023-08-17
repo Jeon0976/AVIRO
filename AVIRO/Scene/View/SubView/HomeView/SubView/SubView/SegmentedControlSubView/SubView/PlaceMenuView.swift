@@ -171,12 +171,7 @@ extension PlaceMenuView: UITableViewDataSource {
 }
 
 extension PlaceMenuView: UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return UITableView.automaticDimension
-//       }
-    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cellHeights[indexPath] = cell.frame.size.height
-        print(cellHeights)
     }
 }

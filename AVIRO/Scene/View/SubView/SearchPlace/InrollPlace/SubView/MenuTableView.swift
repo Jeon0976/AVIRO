@@ -31,7 +31,7 @@ final class MenuTableView: UIView {
     let normalTableView = UITableView()
     let requestTableView = UITableView()
     
-    let menuPlusButton = MenuPlusButton()
+    let menuPlusButton = BottomButton2()
 
     // MARK: Constraint 조절
     var menuPlusButtonTopConstraint: NSLayoutConstraint?

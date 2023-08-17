@@ -13,7 +13,7 @@ final class FinalRegistrationViewController: UIViewController {
     
     var fanfareAnimation = LottieAnimationView(name: "RegistrationCompleted")
     var titleLabel = UILabel()
-    var finalButton = BottomButton()
+    var finalButton = BottomButton1()
     
     override func viewDidLoad() {
         super.viewDidLoad()

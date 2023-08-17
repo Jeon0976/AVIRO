@@ -8,7 +8,7 @@
 import UIKit
 
 // Enable 일때 설정 다시
-final class BottomButton: UIButton {
+final class BottomButton1: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,7 +36,7 @@ final class BottomButton: UIButton {
     
     private func setupButton() {
         self.layer.cornerRadius = 25
-        self.contentEdgeInsets = UIEdgeInsets(top: 15, left: 25, bottom: 15, right: 25)
+        self.contentEdgeInsets = UIEdgeInsets(top: 14, left: 25, bottom: 14, right: 25)
         self.clipsToBounds = true
         self.backgroundColor = .main
     }

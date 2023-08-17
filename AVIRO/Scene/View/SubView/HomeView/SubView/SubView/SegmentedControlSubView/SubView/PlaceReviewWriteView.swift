@@ -10,29 +10,31 @@ import UIKit
 final class PlaceReviewWriteView: UIView {
     private lazy var mainImage: UIImageView = {
         let imageView = UIImageView()
-        
+
+        imageView.backgroundColor = .gray5
+
         return imageView
     }()
     
     private lazy var title: UILabel = {
         let label = UILabel()
         
+        label.text = "oo님의 후기를 들려주세요!"
+        label.font = .systemFont(ofSize: 17, weight: .semibold)
+        label.textColor = .gray0
+        
         return label
     }()
     
-    private lazy var writeReviewButton: UIButton = {
-        let button = UIButton()
+    private lazy var writeReviewButton: ReviewWriteButton = {
+        let button = ReviewWriteButton()
+        
+        button.setButton()
         
         return button
     }()
     
-    private lazy var showMoreMenuButton: ShowMoreButton = {
-        let button = ShowMoreButton()
-        
-        button.setButton("메뉴 더보기")
-        
-        return button
-    }()
+    private var viewHeightConstraint: NSLayoutConstraint?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -46,9 +48,50 @@ final class PlaceReviewWriteView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        makeViewHeight()
     }
     
     private func makeLayout() {
+        self.backgroundColor = .gray7
         
+        [
+            mainImage,
+            title,
+            writeReviewButton
+        ].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            self.addSubview($0)
+        }
+        
+        viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: 375)
+        viewHeightConstraint?.isActive = true
+        
+        NSLayoutConstraint.activate([
+            mainImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
+            mainImage.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            mainImage.widthAnchor.constraint(equalToConstant: 80),
+            mainImage.heightAnchor.constraint(equalToConstant: 80),
+            
+            title.topAnchor.constraint(equalTo: mainImage.bottomAnchor, constant: 20),
+            title.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            
+            writeReviewButton.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 20),
+            writeReviewButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            writeReviewButton.widthAnchor.constraint(equalToConstant: 220)
+        ])
+    }
+    
+    private func makeViewHeight() {
+        let mainImageHeight = mainImage.frame.height
+        let titleHeight = title.frame.height
+        let writeReviewButtonHeight = writeReviewButton.frame.height
+        
+        // 30 20 20 30
+        let inset: CGFloat = 100
+        
+        let totalHeight = mainImageHeight + titleHeight + writeReviewButtonHeight + inset
+        
+        viewHeightConstraint?.constant = totalHeight
     }
 }

@@ -112,18 +112,21 @@ final class PlaceSegmentedControlView: UIView {
     }
     
     // TODO: API 연결되면 수정 예정
+    // Popup할 때, Slide up 할 때 구분 필요
     func dataBinding() {
         let mock = [
-            MenuArray(menuType: "vegan", menu: "알리오 올리오", price: "17,000", howToRequest: "", isCheck: false),
+            MenuArray(menuType: "vegan", menu: "알리오 올리오ㅁㅈㅇㅁㅈㅇㅁㅈㅇㅁㄴㅇㅁㅈㅇㄴㅁㅇㅁㅈㅇ", price: "17,000", howToRequest: "", isCheck: false),
             MenuArray(menuType: "vegan", menu: "김치찌개", price: "17,000", howToRequest: "", isCheck: false),
             MenuArray(menuType: "needToRequest", menu: "알리오 올리오", price: "17,000", howToRequest: "테테테테", isCheck: true),
-            MenuArray(menuType: "needToRequest", menu: "포테이토 피자", price: "17,000", howToRequest: "테스트\nㅌㅈㅇ", isCheck: true),
+            MenuArray(menuType: "needToRequest", menu: "포테이토 피자", price: "17,000", howToRequest: "테스트\nㅌㅈㅁㅈㅇㅁㅈㅇㅁㅈㅇㅁㅈㅇㅇ", isCheck: true),
             MenuArray(menuType: "needToRequest", menu: "포테이토 피자", price: "17,000", howToRequest: "테스트", isCheck: true),
             MenuArray(menuType: "needToRequest", menu: "포테이토 피자", price: "17,000", howToRequest: "테스트", isCheck: true),
             MenuArray(menuType: "needToRequest", menu: "포테이토 피자", price: "17,000", howToRequest: "테스트", isCheck: true)
         ]
-        homeView.dataBinding()
         menuView.dataBinding(mock)
+        
+        homeView.dataBinding(mock)
+
         segmentedControlLabelChange(65)
     }
     
