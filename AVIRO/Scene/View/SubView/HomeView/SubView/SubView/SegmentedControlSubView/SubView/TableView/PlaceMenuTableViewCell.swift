@@ -20,7 +20,7 @@ final class PlaceMenuTableViewCell: UITableViewCell {
         let label = UILabel()
         
         label.font = .systemFont(ofSize: 18, weight: .semibold)
-        label.numberOfLines = 2
+        label.numberOfLines = 1
         label.textColor = .gray0
         
         return label
@@ -40,11 +40,13 @@ final class PlaceMenuTableViewCell: UITableViewCell {
         
         label.font = .systemFont(ofSize: 15, weight: .medium)
         label.textColor = .gray1
-        label.numberOfLines = 3
+        label.numberOfLines = 1
         
         return label
     }()
 
+    var test: ((CGFloat) -> Void)?
+    
     private var menuPriceBottomConstraint: NSLayoutConstraint?
     private var menuRequestBottomConstraint: NSLayoutConstraint?
     
@@ -56,6 +58,11 @@ final class PlaceMenuTableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
     }
     
     private func makeLayout() {
@@ -112,6 +119,8 @@ final class PlaceMenuTableViewCell: UITableViewCell {
             menuPriceBottomConstraint?.isActive = false
             menuRequestBottomConstraint?.isActive = true
         }
+        
+        test?(self.frame.height)
     }
     
 }

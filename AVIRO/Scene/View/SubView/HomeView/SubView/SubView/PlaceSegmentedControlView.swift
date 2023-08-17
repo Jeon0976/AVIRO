@@ -116,11 +116,11 @@ final class PlaceSegmentedControlView: UIView {
         let mock = [
             MenuArray(menuType: "vegan", menu: "알리오 올리오", price: "17,000", howToRequest: "", isCheck: false),
             MenuArray(menuType: "vegan", menu: "김치찌개", price: "17,000", howToRequest: "", isCheck: false),
-            MenuArray(menuType: "needToRequest", menu: "알리오 올리오", price: "17,000", howToRequest: "테테테테슽세ㅡ테스ㅔㅌ스테ㅔ트스트ㅡ\nㅁㅈㅇㅁㅈㅇ\nㅁㅈawdawdawdawdawdaw", isCheck: true),
-            MenuArray(menuType: "needToRequest", menu: "포테이토 피자", price: "17,000", howToRequest: "테스트\n테스트", isCheck: true),
-            MenuArray(menuType: "needToRequest", menu: "포테이토 피자", price: "17,000", howToRequest: "테스트\n테스트", isCheck: true),
-            MenuArray(menuType: "needToRequest", menu: "포테이토 피자", price: "17,000", howToRequest: "테스트\n테스트", isCheck: true),
-            MenuArray(menuType: "needToRequest", menu: "포테이토 피자", price: "17,000", howToRequest: "테스트\n테스트", isCheck: true)
+            MenuArray(menuType: "needToRequest", menu: "알리오 올리오", price: "17,000", howToRequest: "테테테테", isCheck: true),
+            MenuArray(menuType: "needToRequest", menu: "포테이토 피자", price: "17,000", howToRequest: "테스트\nㅌㅈㅇ", isCheck: true),
+            MenuArray(menuType: "needToRequest", menu: "포테이토 피자", price: "17,000", howToRequest: "테스트", isCheck: true),
+            MenuArray(menuType: "needToRequest", menu: "포테이토 피자", price: "17,000", howToRequest: "테스트", isCheck: true),
+            MenuArray(menuType: "needToRequest", menu: "포테이토 피자", price: "17,000", howToRequest: "테스트", isCheck: true)
         ]
         homeView.dataBinding()
         menuView.dataBinding(mock)
