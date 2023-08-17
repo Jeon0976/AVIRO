@@ -7,13 +7,6 @@
 
 import UIKit
 
-// MARK: Place View State
-enum PlaceViewState {
-    case PopUp
-    case SlideUp
-    case Full
-}
-
 final class PlaceTopView: UIView {
     // MARK: When Pop Up
     private lazy var guideBar: UIView = {
@@ -198,7 +191,6 @@ final class PlaceTopView: UIView {
                 whenFullHeightViewHeight()
                 switchViewCorners(false)
             }
-            self.layoutIfNeeded()
         }
     }
     

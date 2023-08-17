@@ -129,17 +129,10 @@ final class PlaceInfoView: UIView {
         return view
     }()
     
-    private lazy var changingInfoButton: UIButton = {
-        let button = UIButton()
+    private lazy var editInfoButton: EditButton = {
+        let button = EditButton()
         
-        button.setTitleColor(.changeButton, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
-        button.backgroundColor = .gray7
-        button.setImage(UIImage(named: "Edit"), for: .normal)
-        button.setTitle("가게 정보 수정 요청하기", for: .normal)
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 5)
-        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0)
-        button.semanticContentAttribute = .forceLeftToRight
+        button.setButton("가게 정보 수정 요청하기")
         
         return button
     }()
@@ -178,7 +171,7 @@ final class PlaceInfoView: UIView {
             homePageIcon,
             homePageButton,
             separatorLine,
-            changingInfoButton
+            editInfoButton
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             addSubview($0)
@@ -240,9 +233,9 @@ final class PlaceInfoView: UIView {
             separatorLine.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             separatorLine.heightAnchor.constraint(equalToConstant: 1),
             
-            changingInfoButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            changingInfoButton.topAnchor.constraint(equalTo: separatorLine.bottomAnchor, constant: 20),
-            changingInfoButton.widthAnchor.constraint(equalToConstant: 160)
+            editInfoButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            editInfoButton.topAnchor.constraint(equalTo: separatorLine.bottomAnchor, constant: 20),
+            editInfoButton.widthAnchor.constraint(equalToConstant: 160)
         ])
     
     }
@@ -255,7 +248,7 @@ final class PlaceInfoView: UIView {
         let homePageHeight = homePageIcon.frame.height
         
         let lineHeight = separatorLine.frame.height
-        let changeButtonHeight = changingInfoButton.frame.height
+        let changeButtonHeight = editInfoButton.frame.height
         
         // 20 30 20 20 20 10 20 20
         let inset: CGFloat = 160

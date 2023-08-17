@@ -7,11 +7,32 @@
 
 import UIKit
 
+// MARK: Place View State
+enum PlaceViewState {
+    case PopUp
+    case SlideUp
+    case Full
+}
+
 final class PlaceView: UIView {
     lazy var topView = PlaceTopView()
     
     lazy var segmetedControlView = PlaceSegmentedControlView()
         
+    var placeViewStated: PlaceViewState = PlaceViewState.PopUp {
+        didSet {
+            switch placeViewStated {
+            case .PopUp:
+                topView.placeViewStated = .PopUp
+            case .SlideUp:
+                topView.placeViewStated = .SlideUp
+            case .Full:
+                topView.placeViewStated = .Full
+            }
+            self.layoutIfNeeded()
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -45,6 +66,7 @@ final class PlaceView: UIView {
         ])
     }
     
+    // TODO: slide up 일때 세부내용 api 호출 후 데이터 바인딩 되는거 만들기
     func dataBinding(_ placeModel: PlaceTopModel) {
         topView.dataBinding(placeModel)
         segmetedControlView.dataBinding()

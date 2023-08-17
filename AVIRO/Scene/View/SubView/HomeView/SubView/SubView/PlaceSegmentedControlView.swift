@@ -94,11 +94,9 @@ final class PlaceSegmentedControlView: UIView {
             reviewView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
             
             // test
-            menuView.heightAnchor.constraint(equalToConstant: 400),
             reviewView.heightAnchor.constraint(equalToConstant: 1000)
         ])
         
-        menuView.backgroundColor = .red
         reviewView.backgroundColor = .gray
         
         initViewConstraint()
@@ -113,20 +111,30 @@ final class PlaceSegmentedControlView: UIView {
         segmentedControl.selectedSegmentIndex = 0
     }
     
+    // TODO: API 연결되면 수정 예정
     func dataBinding() {
+        let mock = [
+            MenuArray(menuType: "vegan", menu: "알리오 올리오", price: "17,000", howToRequest: "", isCheck: false),
+            MenuArray(menuType: "vegan", menu: "김치찌개", price: "17,000", howToRequest: "", isCheck: false),
+            MenuArray(menuType: "needToRequest", menu: "알리오 올리오", price: "17,000", howToRequest: "테테테테슽세ㅡ테스ㅔㅌ스테ㅔ트스트ㅡ\nㅁㅈㅇㅁㅈㅇ\nㅁㅈawdawdawdawdawdaw", isCheck: true),
+            MenuArray(menuType: "needToRequest", menu: "포테이토 피자", price: "17,000", howToRequest: "테스트\n테스트", isCheck: true),
+            MenuArray(menuType: "needToRequest", menu: "포테이토 피자", price: "17,000", howToRequest: "테스트\n테스트", isCheck: true),
+            MenuArray(menuType: "needToRequest", menu: "포테이토 피자", price: "17,000", howToRequest: "테스트\n테스트", isCheck: true),
+            MenuArray(menuType: "needToRequest", menu: "포테이토 피자", price: "17,000", howToRequest: "테스트\n테스트", isCheck: true)
+        ]
         homeView.dataBinding()
-        
-        segmentedControlChange(65)
+        menuView.dataBinding(mock)
+        segmentedControlLabelChange(65)
     }
     
-    private func segmentedControlChange(_ reviews: Int) {
+    // TODO: API 완료 되면 변경 예정
+    private func segmentedControlLabelChange(_ reviews: Int) {
         let reviews = "후기 (\(reviews))"
         
         segmentedControl.setTitle(reviews, forSegmentAt: 2)
     }
     
     private func initViewConstraint() {
-        // TODO: 각 각 view 설정 후 적용 예정
         initHomeViewConstrait()
         initMenuViewConstrait()
         initReviewViewConstrait()
@@ -136,18 +144,20 @@ final class PlaceSegmentedControlView: UIView {
     }
     
     private func initHomeViewConstrait() {
-        
-        homeBottomConstraint = homeView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -80)
+        homeBottomConstraint = homeView.bottomAnchor.constraint(
+            equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -80)
         homeBottomConstraint?.isActive = true
     }
     
     private func initMenuViewConstrait() {
-        menuBottomConstraint = menuView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -80)
+        menuBottomConstraint = menuView.bottomAnchor.constraint(
+            equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -80)
         menuBottomConstraint?.isActive = false
     }
     
     private func initReviewViewConstrait() {
-        reviewBottomConstraint = reviewView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -80)
+        reviewBottomConstraint = reviewView.bottomAnchor.constraint(
+            equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -80)
         reviewBottomConstraint?.isActive = false
     }
     

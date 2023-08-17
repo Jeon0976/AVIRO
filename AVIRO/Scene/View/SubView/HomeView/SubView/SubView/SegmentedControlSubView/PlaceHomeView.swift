@@ -66,7 +66,7 @@ final class PlaceHomeView: UIView {
             placeReviewsView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             
             // Test Coce
-            placeMenuView.heightAnchor.constraint(equalToConstant: 200),
+            
             placeReviewWriteView.heightAnchor.constraint(equalToConstant: 250),
             placeReviewsView.heightAnchor.constraint(equalToConstant: 600)
         ])

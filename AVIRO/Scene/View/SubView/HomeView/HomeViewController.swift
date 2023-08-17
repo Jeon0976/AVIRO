@@ -428,7 +428,7 @@ extension HomeViewController {
                 placeViewFullUp()
                 naverMapView.isHidden = true
                 isSlideUpView = false
-            } else if !isSlideUpView && placeView.topView.placeViewStated == .PopUp {
+            } else if !isSlideUpView && placeView.placeViewStated == .PopUp {
                 placeViewSlideUp()
                 isSlideUpView = true
             }

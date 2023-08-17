@@ -35,7 +35,7 @@ extension HomeViewController {
     }
     
     func placeViewPopUp() {
-        placeView.topView.placeViewStated = .PopUp
+        placeView.placeViewStated = .PopUp
         homeButtonIsHidden(false)
         viewNaviButtonHidden(true)
         searchTextFieldTopConstraint?.constant = 16
@@ -61,7 +61,7 @@ extension HomeViewController {
         moveToCameraWhenSlideUpView()
         homeButtonIsHidden(true)
 
-        placeView.topView.placeViewStated = .SlideUp
+        placeView.placeViewStated = .SlideUp
         placeView.segmetedControlView.scrollView.isUserInteractionEnabled = false
         
         placeViewTopConstraint?.constant = -self.view.frame.height * 2/3
@@ -78,7 +78,7 @@ extension HomeViewController {
         homeButtonIsHidden(false)
         viewNaviButtonHidden(true)
         moveToCameraWhenPopupView()
-        placeView.topView.placeViewStated = .PopUp
+        placeView.placeViewStated = .PopUp
         
         guard let tabBarController = self.tabBarController as? TabBarViewController else { return }
         
@@ -94,7 +94,7 @@ extension HomeViewController {
     }
     
     func placeViewFullUp() {
-        placeView.topView.placeViewStated = .Full
+        placeView.placeViewStated = .Full
         placeView.segmetedControlView.scrollView.isUserInteractionEnabled = true
 
         viewNaviButtonHidden(true)

@@ -65,7 +65,7 @@ final class MenuDetailView: UIView {
         
         // tableView
         tableView.dataSource = self
-        tableView.delegate = self
+//        tableView.delegate = self
         tableView.register(
             DetailMenuTableCell.self,
             forCellReuseIdentifier: DetailMenuTableCell.idendifier
