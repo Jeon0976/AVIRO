@@ -50,7 +50,6 @@ final class PlaceHomeView: UIView {
             self.addSubview($0)
         }
         
-        
         NSLayoutConstraint.activate([
             placeInfoView.topAnchor.constraint(equalTo: self.topAnchor),
             placeInfoView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -92,6 +91,7 @@ final class PlaceHomeView: UIView {
     
     func dataBinding(_ menu: [MenuArray]) {
         placeInfoView.dataBinding()
-        placeMenuView.dataBinding(menu)
+        placeMenuView.dataBindingWhenInHomeView(menu)
+        
     }
 }

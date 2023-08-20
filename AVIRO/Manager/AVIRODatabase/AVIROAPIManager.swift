@@ -7,7 +7,11 @@
 
 import Foundation
 
-final class AVIROAPIManager {
+protocol AVIROAPIMangerProtocol {
+    
+}
+
+final class AVIROAPIManager: AVIROAPIMangerProtocol {
     private let session: URLSession
     
     var postAPI = AVIROPostAPI()

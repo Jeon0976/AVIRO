@@ -14,7 +14,7 @@ class TabBarViewController: UITabBarController {
         button.setImage(UIImage(named: "InrollTabBarIcon"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.shadowOpacity = 0.07
-        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowColor = UIColor.gray0?.cgColor
         button.layer.shadowRadius = 5
         button.layer.shadowOffset = CGSize(width: 1, height: 3)
         
@@ -54,9 +54,9 @@ class TabBarViewController: UITabBarController {
         
         NSLayoutConstraint.activate([
             centerButton.centerXAnchor.constraint(equalTo: tabBar.centerXAnchor),
-            centerButton.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: -30),
-            centerButton.widthAnchor.constraint(equalToConstant: 80),
-            centerButton.heightAnchor.constraint(equalToConstant: 80)
+            centerButton.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: -40),
+            centerButton.widthAnchor.constraint(equalToConstant: 90),
+            centerButton.heightAnchor.constraint(equalToConstant: 90)
         ])
     }
     
@@ -67,7 +67,7 @@ class TabBarViewController: UITabBarController {
         tabBar.isTranslucent = false
         tabBar.layer.cornerRadius = tabBar.frame.height * 0.41
         tabBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        tabBar.layer.borderWidth = 1
+        tabBar.layer.borderWidth = 0.5
         tabBar.layer.borderColor = UIColor.gray6?.cgColor
         
         tabBar.layer.shadowColor = UIColor.black.cgColor

@@ -220,9 +220,6 @@ final class PlaceTopView: UIView {
     
     // MARK: Layout & Attribute
     private func makeLayout() {
-        viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: 200)
-        viewHeightConstraint?.isActive = true
-        
         whenPopUpViewLayout()
         whenSlideUpViewLayout()
         whenFullHeightViewLayout()
@@ -428,10 +425,10 @@ extension PlaceTopView {
         if let boundsHeight = self.window?.windowScene?.screen.bounds.height {
             boundsPlusHeight = boundsHeight * 1/20
         }
-                
+
         let totalHeight = guideBarHeight + placeIconHeight + addressHeight + inset + boundsPlusHeight
-                
-        viewHeightConstraint?.constant = totalHeight
+
+        viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: totalHeight)
         viewHeightConstraint?.isActive = true
     }
 }

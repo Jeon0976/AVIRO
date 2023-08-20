@@ -214,7 +214,7 @@ extension HomeViewController: HomeViewProtocol {
             style.backgroundColor = .gray3?.withAlphaComponent(0.7) ?? .lightGray
             
             style.titleColor = .gray7 ?? .white
-            style.titleFont = .systemFont(ofSize: 17, weight: .medium)
+            style.titleFont = .systemFont(ofSize: 17, weight: .semibold)
             
             let centerX = (self?.view.frame.size.width ?? 400) / 2
             let viewHeight = self?.view.frame.height ?? 800

@@ -55,6 +55,7 @@ final class UnderlineSegmentedControl: UISegmentedControl {
     
     override init(items: [Any]?) {
         super.init(items: items)
+        
         removeBackgroundAndDivider()
     }
     

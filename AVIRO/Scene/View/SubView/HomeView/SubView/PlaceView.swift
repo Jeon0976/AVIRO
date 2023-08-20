@@ -63,7 +63,7 @@ final class PlaceView: UIView {
             segmetedControlView.topAnchor.constraint(equalTo: topView.bottomAnchor),
             segmetedControlView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             segmetedControlView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            segmetedControlView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            segmetedControlView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
     

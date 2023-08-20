@@ -13,6 +13,7 @@ final class PlaceReviewsView: UIView {
         
         label.font = .systemFont(ofSize: 20, weight: .bold)
         label.textColor = .gray0
+        label.numberOfLines = 1
         label.text = "후기"
         
         return label
@@ -23,13 +24,14 @@ final class PlaceReviewsView: UIView {
         
         label.font = .systemFont(ofSize: 13, weight: .medium)
         label.textAlignment = .right
+        label.numberOfLines = 1
         label.textColor = .gray0
         label.text = "0개"
         
         return label
     }()
     
-    private lazy var reviewsTableView: UITableView = {
+    private lazy var reviewsTable: UITableView = {
         let tableView = UITableView()
         
         tableView.register(
@@ -47,6 +49,8 @@ final class PlaceReviewsView: UIView {
     
     private lazy var separatedLine: UIView = {
         let view = UIView()
+        
+        view.backgroundColor = .separateLine
         
         return view
     }()
@@ -81,7 +85,43 @@ final class PlaceReviewsView: UIView {
     }
     
     private func makeLayout() {
+        [
+            title,
+            subTitle,
+            reviewsTable,
+            separatedLine,
+            showMoreReviewsButton
+        ].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            self.addSubview($0)
+        }
         
+//        viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: 150)
+//        viewHeightConstraint?.isActive = true
+//        
+//        reviewsHeightConstraint = reviewsTable.heightAnchor.constraint(equalToConstant: 1000)
+//        reviewsHeightConstraint?.isActive = true
+        
+        NSLayoutConstraint.activate([
+            title.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+            title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            
+            subTitle.bottomAnchor.constraint(equalTo: self.title.bottomAnchor),
+            subTitle.leadingAnchor.constraint(equalTo: title.trailingAnchor, constant: 7),
+            
+            reviewsTable.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 20),
+            reviewsTable.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            reviewsTable.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            
+            separatedLine.topAnchor.constraint(equalTo: reviewsTable.topAnchor, constant: 15),
+            separatedLine.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            separatedLine.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            separatedLine.heightAnchor.constraint(equalToConstant: 2),
+            
+            showMoreReviewsButton.topAnchor.constraint(equalTo: separatedLine.bottomAnchor, constant: 20),
+            showMoreReviewsButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            showMoreReviewsButton.widthAnchor.constraint(equalToConstant: 100)
+        ])
     }
 }
 

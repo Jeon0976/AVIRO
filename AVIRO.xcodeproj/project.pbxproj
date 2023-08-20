@@ -10,6 +10,7 @@
 		A156F24E1DC1F5FA54D44A76 /* Pods_AVIRO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 796022A3066B91147B712BB4 /* Pods_AVIRO.framework */; };
 		C50367F52A1795D10020C6BB /* HomeViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */; };
 		C50E6F6D2A8E5AAC00703B9E /* ReviewLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50E6F6C2A8E5AAC00703B9E /* ReviewLabel.swift */; };
+		C50E6F6F2A8F10B500703B9E /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50E6F6E2A8F10B500703B9E /* UILabel+Extension.swift */; };
 		C50F6AF32A68FD0A00E942F5 /* InrollPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6AF22A68FD0A00E942F5 /* InrollPlaceViewController.swift */; };
 		C50F6AF52A68FD6300E942F5 /* InrollPlacePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6AF42A68FD6300E942F5 /* InrollPlacePresenter.swift */; };
 		C50F6AF92A68FFBB00E942F5 /* StoreInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6AF82A68FFBB00E942F5 /* StoreInfoView.swift */; };
@@ -148,6 +149,7 @@
 		B57500A8C1EA6C6CFDED2C4C /* Pods-AVIRO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AVIRO.debug.xcconfig"; path = "Target Support Files/Pods-AVIRO/Pods-AVIRO.debug.xcconfig"; sourceTree = "<group>"; };
 		C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewPresenter.swift; sourceTree = "<group>"; };
 		C50E6F6C2A8E5AAC00703B9E /* ReviewLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewLabel.swift; sourceTree = "<group>"; };
+		C50E6F6E2A8F10B500703B9E /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		C50F6AF22A68FD0A00E942F5 /* InrollPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlaceViewController.swift; sourceTree = "<group>"; };
 		C50F6AF42A68FD6300E942F5 /* InrollPlacePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InrollPlacePresenter.swift; sourceTree = "<group>"; };
 		C50F6AF82A68FFBB00E942F5 /* StoreInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreInfoView.swift; sourceTree = "<group>"; };
@@ -433,6 +435,7 @@
 				C5D36D2D2A76031E003328E8 /* Double+Extension.swift */,
 				C51B09BB2A82397800916BBD /* Marker+Extension.swift */,
 				C51AED222A8B7B000015FBC2 /* UIViewController+Extension.swift */,
+				C50E6F6E2A8F10B500703B9E /* UILabel+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1300,6 +1303,7 @@
 				C51132BF2A559838006E1EC3 /* NotificationCenter+Extension.swift in Sources */,
 				C5FF13532A42C8810026981D /* AVIROPlaceModel.swift in Sources */,
 				C5351B5C2A19F60200116D50 /* PlaceListSearchViewPresenter.swift in Sources */,
+				C50E6F6F2A8F10B500703B9E /* UILabel+Extension.swift in Sources */,
 				C52066352A7F3FAE0038ECCD /* HistoryTableViewCell.swift in Sources */,
 				C528E4BA2A5F9A3E002BD72E /* ThridRegistrationViewController.swift in Sources */,
 				C528E4BC2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift in Sources */,

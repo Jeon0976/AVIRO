@@ -9,8 +9,8 @@ import UIKit
 
 final class ReviewLabel: UILabel {
     
-    private var topInset: CGFloat = 10.0
-    private var bottomInset: CGFloat = 10.0
+    private var topInset: CGFloat = 12.0
+    private var bottomInset: CGFloat = 12.0
     private var leftInset: CGFloat = 16.0
     private var rightInset: CGFloat = 16.0
     
@@ -19,7 +19,7 @@ final class ReviewLabel: UILabel {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
     
     override func drawText(in rect: CGRect) {
@@ -35,11 +35,41 @@ final class ReviewLabel: UILabel {
     
     private func setAttribute() {
         self.font = .systemFont(ofSize: 15, weight: .medium)
-        self.textColor = .gray0
-        self.backgroundColor = .gray6 
+        self.layer.cornerRadius = 10
+        self.layer.masksToBounds = true
     }
     
-    func setLabel(_ text: String) {
+    func setLabel(text: String, isAbbreviated: Bool, isMyReview: Bool) {
+        if isMyReview {
+            changedReviewColor()
+        } else {
+            normalColorReview()
+        }
         
+        if isAbbreviated {
+            whenIsAbbreviated(text)
+        } else {
+            whenShowAllLabel(text)
+        }
+    }
+    
+    private func whenIsAbbreviated(_ text: String) {
+        self.numberOfLines = 4
+        self.text = text
+    }
+    
+    private func whenShowAllLabel(_ text: String) {
+        self.numberOfLines = 0
+        self.text = text
+    }
+    
+    private func normalColorReview() {
+        self.textColor = .gray0
+        self.backgroundColor = .gray6
+    }
+    
+    private func changedReviewColor() {
+        self.textColor = .main
+        self.backgroundColor = .approveBack
     }
 }

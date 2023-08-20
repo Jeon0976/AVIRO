@@ -18,7 +18,7 @@ final class PlaceInfoView: UIView {
         return label
     }()
     
-    private lazy var subTitle: UILabel = {
+    private lazy var updatedTimeLabel: UILabel = {
         let label = UILabel()
         
         label.font = .systemFont(ofSize: 13, weight: .medium)
@@ -159,7 +159,7 @@ final class PlaceInfoView: UIView {
         self.backgroundColor = .gray7
         [
             title,
-            subTitle,
+            updatedTimeLabel,
             addressIcon,
             addressLabel,
             phoneIcon,
@@ -184,8 +184,8 @@ final class PlaceInfoView: UIView {
             title.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
             title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             
-            subTitle.centerYAnchor.constraint(equalTo: title.centerYAnchor),
-            subTitle.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            updatedTimeLabel.topAnchor.constraint(equalTo: title.topAnchor),
+            updatedTimeLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             
             addressIcon.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 30),
             addressIcon.leadingAnchor.constraint(equalTo: title.leadingAnchor),
@@ -263,7 +263,7 @@ final class PlaceInfoView: UIView {
     // TODO: Back end 수정 되면 수정
     func dataBinding() {
         addressLabel.text = "테스트입니다."
-        subTitle.text = "2000000"
+        updatedTimeLabel.text = "업데이트 2023.07.08"
         phoneButton.setTitle("010-6601-0976", for: .normal)
         timeButton.setTitle("영업 시간 추가", for: .normal)
         timeLabel.isHidden = true

@@ -13,12 +13,22 @@ final class PlaceMenuView: UIView {
         
         label.font = .systemFont(ofSize: 20, weight: .bold)
         label.textColor = .gray0
-        label.text = "메뉴 정보"
+        label.text = "메뉴"
         
         return label
     }()
     
     private lazy var subTitle: UILabel = {
+        let label = UILabel()
+        
+        label.font = .systemFont(ofSize: 13, weight: .medium)
+        label.textAlignment = .left
+        label.textColor = .gray2
+        
+        return label
+    }()
+    
+    private lazy var updatedTimeLabel: UILabel = {
         let label = UILabel()
         
         label.font = .systemFont(ofSize: 13, weight: .medium)
@@ -37,30 +47,42 @@ final class PlaceMenuView: UIView {
         )
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.isScrollEnabled = false
         tableView.separatorStyle = .singleLine
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.separatorColor = .gray5
-        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
+        tableView.rowHeight = UITableView.automaticDimension
         
         return tableView
     }()
     
-    private lazy var editMenuButton: EditButton = {
+    private lazy var editButton: EditButton = {
         let button = EditButton()
-        
         button.setButton("메뉴 정보 수정하기")
-        
+        return button
+    }()
+
+    private lazy var showMoreButton: ShowMoreButton = {
+        let button = ShowMoreButton()
+        button.setButton("메뉴 더보기")
         return button
     }()
     
-    private lazy var moreShowMenuButton: ShowMoreButton = {
-        let button = ShowMoreButton()
+    private lazy var footerView: UIView = {
+        let width = self.frame.width - 32
         
-        button.setButton("메뉴 더보기")
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: width, height: 60))
         
-        return button
+        let xFrame = view.frame.width - 100
+
+        editButton.frame = CGRect(x: 0, y: 20, width: 130, height: 20)
+        showMoreButton.frame = CGRect(x: xFrame, y: 20, width: 100, height: 20)
+        
+        view.backgroundColor = .gray7
+        view.addSubview(editButton)
+        view.addSubview(showMoreButton)
+        
+        return view
     }()
     
     private var viewHeightConstraint: NSLayoutConstraint?
@@ -69,7 +91,7 @@ final class PlaceMenuView: UIView {
     private var cellHeights: [IndexPath: CGFloat] = [:]
 
     private var menuArray = [MenuArray]()
-        
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -77,7 +99,7 @@ final class PlaceMenuView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
     
     private func makeLayout() {
@@ -86,67 +108,80 @@ final class PlaceMenuView: UIView {
         [
             title,
             subTitle,
-            menuTable,
-            editMenuButton,
-            moreShowMenuButton
+            updatedTimeLabel,
+            menuTable
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview($0)
         }
-        
-        viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: 150)
-        viewHeightConstraint?.isActive = true
-        
-        menuTableHeightConstraint = menuTable.heightAnchor.constraint(equalToConstant: 2000)
-        menuTableHeightConstraint?.isActive = true
-        
+
         NSLayoutConstraint.activate([
             title.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
             title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             
-            subTitle.centerYAnchor.constraint(equalTo: title.centerYAnchor),
-            subTitle.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            subTitle.bottomAnchor.constraint(equalTo: title.bottomAnchor),
+            subTitle.leadingAnchor.constraint(equalTo: title.trailingAnchor, constant: 7),
+            
+            updatedTimeLabel.topAnchor.constraint(equalTo: title.topAnchor),
+            updatedTimeLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             
             menuTable.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 20),
             menuTable.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            menuTable.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            
-            editMenuButton.topAnchor.constraint(equalTo: menuTable.bottomAnchor, constant: 20),
-            editMenuButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            editMenuButton.widthAnchor.constraint(equalToConstant: 130),
-            
-            moreShowMenuButton.topAnchor.constraint(equalTo: editMenuButton.topAnchor),
-            moreShowMenuButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            moreShowMenuButton.widthAnchor.constraint(equalToConstant: 100)
+            menuTable.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
         ])
-        
-        moreShowMenuButton.isHidden = false
     }
     
     func dataBinding(_ menu: [MenuArray]) {
         self.menuArray = menu
+        self.subTitle.text = "\(menu.count)개"
+        self.updatedTimeLabel.text = "업데이트 2023.07.08"
         
+        menuTable.isScrollEnabled = true
+        menuTable.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         menuTable.reloadData()
+        menuTable.layoutIfNeeded()
         
-        updateTableViewHeight()
+        showMoreButton.isHidden = true
+    }
+        
+    func dataBindingWhenInHomeView(_ menu: [MenuArray]) {
+        self.subTitle.text = "\(menu.count)개"
+        self.updatedTimeLabel.text = "업데이트 2023.07.08"
+
+        if menu.count > 5 {
+            self.menuArray = Array(menu.prefix(5))
+            showMoreButton.isHidden = false
+        } else {
+            self.menuArray = menu
+            showMoreButton.isHidden = true
+        }
+    
+        menuTable.isScrollEnabled = false
+        // 최대 갯수의 맞는 최대 높이값 -> 5개
+        updateTableViewHeight(700)
     }
     
-    func updateTableViewHeight() {
-        menuTable.layoutIfNeeded()
-        let height = cellHeights.values.reduce(0, +)
+    private func updateTableViewHeight(_ tableHeight: CGFloat) {
+        menuTableHeightConstraint = menuTable.heightAnchor.constraint(equalToConstant: tableHeight)
+        menuTableHeightConstraint?.isActive = true
         
-        menuTableHeightConstraint?.constant = height
+        menuTable.reloadData()
+        menuTable.layoutIfNeeded()
+        
+        let height = cellHeights.values.reduce(0, +)
+        let footerViewHeight: CGFloat = 60
+        
+        menuTableHeightConstraint?.constant = height + footerViewHeight
 
         let titleHeight = title.frame.height
-        let subTitleHeight = subTitle.frame.height
-        let editMenuHeight = editMenuButton.frame.height
         
-        // 20 20 20 20
-        let inset: CGFloat = 80
-
-        let totalHeight = titleHeight + subTitleHeight + height + editMenuHeight + inset
+        // 20 20
+        let inset: CGFloat = 40
+                
+        let totalHeight = titleHeight + height + footerViewHeight + inset
         
-        viewHeightConstraint?.constant = totalHeight
+        viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: totalHeight)
+        viewHeightConstraint?.isActive = true
     }
 }
 
@@ -165,7 +200,7 @@ extension PlaceMenuView: UITableViewDataSource {
         cell?.selectionStyle = .none
         
         cell?.dataBinding(menuData)
-    
+        
         return cell ?? UITableViewCell()
     }
 }
@@ -173,5 +208,14 @@ extension PlaceMenuView: UITableViewDataSource {
 extension PlaceMenuView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cellHeights[indexPath] = cell.frame.size.height
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+
+        return footerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        60
     }
 }
