@@ -22,7 +22,7 @@ final class DetailViewPresenter {
     
     var placeId: String?
     
-    var placeModel: PlaceData?
+    var placeModel: PlaceInfoData?
     var menuModel: [MenuArray]?
     var commentModel: [CommentArray]?
     
@@ -39,7 +39,7 @@ final class DetailViewPresenter {
     }
     
     // MARK: Place Info 불러오기
-    func loadPlaceInfo(completionHandler: @escaping ((PlaceData) -> Void)) {
+    func loadPlaceInfo(completionHandler: @escaping ((PlaceInfoData) -> Void)) {
         guard let placeId = placeId else { return }
         aviroManager.getPlaceInfo(placeId: placeId
         ) { [weak self] placeModel in

@@ -72,10 +72,11 @@ final class HomeViewPresenter: NSObject {
     // MARK: vegan Data 불러오기
     func loadVeganData() {
         AVIROAPIManager().getNerbyPlaceModels(
+            userId: "test",
             longitude: MyCoordinate.shared.longitudeString,
-            
             latitude: MyCoordinate.shared.latitudeString,
-            wide: "0.0"
+            wide: "100",
+            time: nil
         ) { [weak self] mapDatas in
             self?.saveMarkers(mapDatas.data.placeData)
         }
@@ -165,15 +166,16 @@ final class HomeViewPresenter: NSObject {
     /// 클릭 된 마커 데이터 받기 위한 api 호출
     private func getPlaceModel(_ markerModel: MarkerModel) {
         let mapPlace = markerModel.mapPlace
+        let placeX = markerModel.marker.position.lng
+        let placeY = markerModel.marker.position.lat
         let placeId = markerModel.placeId
-        print(placeId)
-//        let test = PlaceTopModel(placeState: MapPlace.Request, placeTitle: "Test", placeCategory: "식당", distance: "400", reviewsCount: "5", address: "테스트 입니다.")
-//        viewController?.afterClickedMarker(test)
-        AVIROAPIManager().getPlaceInfo(placeId: placeId) { placeModel in
-            let place = placeModel.data
 
-            /// 소수점 수정을 위한 * 1000
-            let distanceValue = LocationUtility.distanceMyLocation(x_lon: place.x, y_lat: place.y) * 1000
+        //        let test = PlaceTopModel(placeState: MapPlace.Request, placeTitle: "Test", placeCategory: "식당", distance: "400", reviewsCount: "5", address: "테스트 입니다.")
+//        viewController?.afterClickedMarker(test)
+        AVIROAPIManager().getPlaceSummary(placeId: placeId) { summary in
+            let place = summary.data
+
+            let distanceValue = LocationUtility.distanceMyLocation(x_lng: placeX, y_lat: placeY)
 
             let distanceString = String(distanceValue).convertDistanceUnit()
             let reviewsCount = String(place.commentCount)
@@ -186,7 +188,6 @@ final class HomeViewPresenter: NSObject {
                 reviewsCount: reviewsCount,
                 address: place.address)
 
-            print(placeTopModel)
             DispatchQueue.main.async { [weak self] in
                 self?.viewController?.afterClickedMarker(placeTopModel)
             }

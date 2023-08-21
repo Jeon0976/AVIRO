@@ -22,15 +22,19 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
     }
     
     // MARK: Get Place Models
-    func getNerbyPlaceModels(longitude: String,
+    func getNerbyPlaceModels(userId: String,
+                             longitude: String,
                              latitude: String,
                              wide: String,
+                             time: String?,
                              completionHandler: @escaping((AVIROMapModel) -> Void)
     ) {
         guard let url = requestAPI.getNerbyStore(
+            userId: userId,
             longitude: longitude,
             latitude: latitude,
-            wide: wide
+            wide: wide,
+            time: time
         ).url else {
             print("url error")
             return
@@ -47,6 +51,31 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
             if let data = data {
                 if let mapDatas = try? JSONDecoder().decode(AVIROMapModel.self, from: data) {
                     completionHandler(mapDatas)
+                }
+            }
+        }.resume()
+    }
+    
+    // MARK: Get Place Summary
+    func getPlaceSummary(placeId: String,
+                         completionHandler: @escaping((AVIROSummaryModel) -> Void)
+    ) {
+        guard let url = requestAPI.getPlaceSummary(placeId: placeId).url else {
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        
+        request.httpMethod = "GET"
+        
+        session.dataTask(with: request) { data, _, error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            if let data = data {
+                if let placeSummary = try? JSONDecoder().decode(AVIROSummaryModel.self, from: data) {
+                    completionHandler(placeSummary)
                 }
             }
         }.resume()

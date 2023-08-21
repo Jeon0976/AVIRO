@@ -9,13 +9,16 @@ import UIKit
 
 final class LocationUtility {
     /// 내 위치로부터 얼마나 떨어져있는지 확인 하는 함수
-   static func distanceMyLocation(x_lon: Double, y_lat: Double) -> Double {
+   static func distanceMyLocation(x_lng: Double, y_lat: Double) -> Double {
         guard let latitude = MyCoordinate.shared.latitude,
               let longitude = MyCoordinate.shared.longitude else {
-            let calculatedDistance = distanceBetweenPoints(lat1: 35.153354, lon1: 129.118924, lat2: y_lat, lon2: x_lon)
+            let calculatedDistance = distanceBetweenPoints(lat1: 35.153354, lon1: 129.118924, lat2: y_lat, lon2: x_lng)
             return calculatedDistance
         }
-        let calculatedDistance = distanceBetweenPoints(lat1: latitude, lon1: longitude, lat2: y_lat, lon2: x_lon)
+       
+        /// 소수점 수정을 위한 * 1000
+        let calculatedDistance = distanceBetweenPoints(lat1: latitude, lon1: longitude, lat2: y_lat, lon2: x_lng) * 1000
+       
         return calculatedDistance
     }
     

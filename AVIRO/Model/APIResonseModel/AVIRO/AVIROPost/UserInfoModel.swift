@@ -40,6 +40,7 @@ struct UserCheckInput: Encodable {
 struct CheckUser: Codable {
     let statusCode: Int
     let isMember: Bool
+    let user_id: String
     let message: String?
 }
 

@@ -69,6 +69,7 @@ final class ReviewLabel: UILabel {
     }
     
     private func changedReviewColor() {
+        self.font = .systemFont(ofSize: 15, weight: .semibold)
         self.textColor = .main
         self.backgroundColor = .approveBack
     }

@@ -23,12 +23,11 @@ final class PlaceView: UIView {
         didSet {
             switch placeViewStated {
             case .PopUp:
-                topView.placeViewStated = .PopUp
-                segmetedControlView.whenViewPopup()
+                whenViewPopUp()
             case .SlideUp:
-                topView.placeViewStated = .SlideUp
+                whenViewSlideUp()
             case .Full:
-                topView.placeViewStated = .Full
+                whenViewFullUp()
             }
             self.layoutIfNeeded()
         }
@@ -71,5 +70,20 @@ final class PlaceView: UIView {
     func dataBinding(_ placeModel: PlaceTopModel) {
         topView.dataBinding(placeModel)
         segmetedControlView.dataBinding()
+    }
+    
+    private func whenViewPopUp() {
+        topView.placeViewStated = .PopUp
+        segmetedControlView.whenViewPopup()
+    }
+    
+    private func whenViewSlideUp() {
+        topView.placeViewStated = .SlideUp
+        segmetedControlView.scrollViewIsUserIneraction(false)
+    }
+    
+    private func whenViewFullUp() {
+        topView.placeViewStated = .Full
+        segmetedControlView.scrollViewIsUserIneraction(true)
     }
 }

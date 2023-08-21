@@ -63,6 +63,8 @@ final class PlaceReviewsView: UIView {
         return button
     }()
     
+    private lazy var reviewInputView = PushCommentView()
+        
     private var viewHeightConstraint: NSLayoutConstraint?
     private var reviewsHeightConstraint: NSLayoutConstraint?
     
@@ -90,17 +92,12 @@ final class PlaceReviewsView: UIView {
             subTitle,
             reviewsTable,
             separatedLine,
-            showMoreReviewsButton
+            showMoreReviewsButton,
+            reviewInputView
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview($0)
         }
-        
-//        viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: 150)
-//        viewHeightConstraint?.isActive = true
-//        
-//        reviewsHeightConstraint = reviewsTable.heightAnchor.constraint(equalToConstant: 1000)
-//        reviewsHeightConstraint?.isActive = true
         
         NSLayoutConstraint.activate([
             title.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
@@ -120,7 +117,11 @@ final class PlaceReviewsView: UIView {
             
             showMoreReviewsButton.topAnchor.constraint(equalTo: separatedLine.bottomAnchor, constant: 20),
             showMoreReviewsButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            showMoreReviewsButton.widthAnchor.constraint(equalToConstant: 100)
+            showMoreReviewsButton.widthAnchor.constraint(equalToConstant: 100),
+            
+            reviewInputView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0),
+            reviewInputView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            reviewInputView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
     }
 }

@@ -17,8 +17,6 @@ extension HomeViewController {
         
         presenter.resetPreviouslyTouchedMarker()
         
-        searchTextFieldTopConstraint?.constant = 16
-
         tabBarController.hiddenTabBar(false)
         settingPlaceView()
         
@@ -28,8 +26,10 @@ extension HomeViewController {
     }
     
     private func settingPlaceView() {
+        
         homeButtonIsHidden(false)
         viewNaviButtonHidden(true)
+        searchTextFieldTopConstraint?.constant = 16
 
         placeViewTopConstraint?.constant = 0
     }
@@ -40,17 +40,20 @@ extension HomeViewController {
         viewNaviButtonHidden(true)
         searchTextFieldTopConstraint?.constant = 16
 
-        guard let tabBarController = self.tabBarController as? TabBarViewController else { return }
+//        guard let tabBarController = self.tabBarController as? TabBarViewController else { return }
+//
+//        let tabBarHeight = tabBarController.tabBar.frame.height
+//
+//        let screenSize = self.view.window?.windowScene?.screen.bounds.size
+//        tabBarController.hiddenTabBar(true)
+////
+//        let height = -placeView.topView.frame.height
+//
+//        updatePlacePopupViewHeight(height)
         
-        let tabBarHeight = tabBarController.tabBar.frame.height
-    
-        tabBarController.hiddenTabBar(true)
-
         let height = -placeView.topView.frame.height
         
-        updatePlacePopupViewHeight(height)
-        
-        placeViewTopConstraint?.constant = placePopupViewHeight + tabBarHeight 
+        placeViewTopConstraint?.constant = height
         
         UIView.animate(withDuration: 0.1) {
             self.view.layoutIfNeeded()
@@ -62,7 +65,6 @@ extension HomeViewController {
         homeButtonIsHidden(true)
 
         placeView.placeViewStated = .SlideUp
-        placeView.segmetedControlView.scrollView.isUserInteractionEnabled = false
         
         placeViewTopConstraint?.constant = -self.view.frame.height * 2/3
         
@@ -80,13 +82,17 @@ extension HomeViewController {
         moveToCameraWhenPopupView()
         placeView.placeViewStated = .PopUp
         
-        guard let tabBarController = self.tabBarController as? TabBarViewController else { return }
+//        guard let tabBarController = self.tabBarController as? TabBarViewController else { return }
+//
+//        let tabBarHeight = tabBarController.tabBar.frame.height
         
-        let tabBarHeight = tabBarController.tabBar.frame.height
+        
         
         searchTextFieldTopConstraint?.constant = 16
 
-        placeViewTopConstraint?.constant = placePopupViewHeight + tabBarHeight
+        let height = -placeView.topView.frame.height
+        
+        placeViewTopConstraint?.constant = height
         
         UIView.animate(withDuration: 0.1) {
             self.view.layoutIfNeeded()
@@ -95,10 +101,9 @@ extension HomeViewController {
     
     func placeViewFullUp() {
         placeView.placeViewStated = .Full
-        placeView.segmetedControlView.scrollView.isUserInteractionEnabled = true
 
         viewNaviButtonHidden(true)
-
+        
         placeViewTopConstraint?.constant = -self.view.safeAreaLayoutGuide.layoutFrame.height
         
         UIView.animate(withDuration: 0.25) {

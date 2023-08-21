@@ -20,6 +20,7 @@
 		C50F6B042A6BCD6900E942F5 /* CategoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6B032A6BCD6900E942F5 /* CategoryButton.swift */; };
 		C51132BF2A559838006E1EC3 /* NotificationCenter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51132BE2A559838006E1EC3 /* NotificationCenter+Extension.swift */; };
 		C51132C12A559BCA006E1EC3 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51132C02A559BCA006E1EC3 /* AppController.swift */; };
+		C5166E492A9305A9003495AA /* AVIROSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5166E482A9305A9003495AA /* AVIROSummaryModel.swift */; };
 		C51AED1D2A8A192D0015FBC2 /* ChangedViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51AED1C2A8A192D0015FBC2 /* ChangedViewAction.swift */; };
 		C51AED1F2A8B2BC80015FBC2 /* HomeTopButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51AED1E2A8B2BC80015FBC2 /* HomeTopButton.swift */; };
 		C51AED212A8B2BDB0015FBC2 /* HomeMapReferButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51AED202A8B2BDB0015FBC2 /* HomeMapReferButton.swift */; };
@@ -159,6 +160,7 @@
 		C50F6B032A6BCD6900E942F5 /* CategoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryButton.swift; sourceTree = "<group>"; };
 		C51132BE2A559838006E1EC3 /* NotificationCenter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationCenter+Extension.swift"; sourceTree = "<group>"; };
 		C51132C02A559BCA006E1EC3 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
+		C5166E482A9305A9003495AA /* AVIROSummaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROSummaryModel.swift; sourceTree = "<group>"; };
 		C51AED1C2A8A192D0015FBC2 /* ChangedViewAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangedViewAction.swift; sourceTree = "<group>"; };
 		C51AED1E2A8B2BC80015FBC2 /* HomeTopButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTopButton.swift; sourceTree = "<group>"; };
 		C51AED202A8B2BDB0015FBC2 /* HomeMapReferButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMapReferButton.swift; sourceTree = "<group>"; };
@@ -438,6 +440,17 @@
 				C50E6F6E2A8F10B500703B9E /* UILabel+Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		C5166E472A930583003495AA /* AVIRODetailPlace */ = {
+			isa = PBXGroup;
+			children = (
+				C5166E482A9305A9003495AA /* AVIROSummaryModel.swift */,
+				C5FF13522A42C8810026981D /* AVIROPlaceModel.swift */,
+				C5FF13542A42C88D0026981D /* AVIROMenuModel.swift */,
+				C5FF13562A42C8970026981D /* AVIROCommentModel.swift */,
+			);
+			path = AVIRODetailPlace;
 			sourceTree = "<group>";
 		};
 		C51AED1B2A8A19060015FBC2 /* ViewController */ = {
@@ -754,11 +767,9 @@
 		C593B6492A4AEA7400D224CE /* AVIROGet */ = {
 			isa = PBXGroup;
 			children = (
-				C5732C762A41A0A500CDC499 /* AVIROMapModel.swift */,
-				C5FF13522A42C8810026981D /* AVIROPlaceModel.swift */,
-				C5FF13542A42C88D0026981D /* AVIROMenuModel.swift */,
-				C5FF13562A42C8970026981D /* AVIROCommentModel.swift */,
 				C51BBAD42A78D53D00BF5B7C /* AVIROCheckPlaceModel.swift */,
+				C5732C762A41A0A500CDC499 /* AVIROMapModel.swift */,
+				C5166E472A930583003495AA /* AVIRODetailPlace */,
 			);
 			path = AVIROGet;
 			sourceTree = "<group>";
@@ -1251,6 +1262,7 @@
 				C52066412A8129510038ECCD /* KakaoAPISortingQuery.swift in Sources */,
 				C5351B4D2A19223300116D50 /* KakaoMapRequestAPI.swift in Sources */,
 				C520662F2A7E485B0038ECCD /* MatchedPlaceModel.swift in Sources */,
+				C5166E492A9305A9003495AA /* AVIROSummaryModel.swift in Sources */,
 				C5EB511E2A21189B00B29CC1 /* StoreDetailView.swift in Sources */,
 				C5D745962A2277A4006F9F31 /* CommentsViewCell.swift in Sources */,
 				C50F6AFB2A68FFC300E942F5 /* VeganDetailView.swift in Sources */,

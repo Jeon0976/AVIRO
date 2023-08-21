@@ -70,8 +70,8 @@ class TabBarViewController: UITabBarController {
         tabBar.layer.borderWidth = 0.5
         tabBar.layer.borderColor = UIColor.gray6?.cgColor
         
-        tabBar.layer.shadowColor = UIColor.black.cgColor
-        
+//        tabBar.layer.shadowColor = UIColor.gray2?.cgColor
+//        tabBar.layer.shadowOpacity = 0.9
     }
     
     // MARK: button touch method
@@ -91,8 +91,8 @@ class TabBarViewController: UITabBarController {
     
     /// Exclude IsTranslucent
     func hiddenTabBar(_ hidden: Bool) {
-        self.tabBar.isHidden = hidden
-        self.centerButton.isHidden = hidden
+//        tabBar.isHidden = hidden
+//        centerButton.isHidden = hidden
     }
 }
 

@@ -185,40 +185,40 @@ extension DetailViewController: DetailViewProtocol {
     }
     
     // MARK: TopDetailView data binding
-    private func bindingTopDetailView(_ placeModel: PlaceData) {
-        topDetail.title.text = placeModel.title
-        topDetail.address.text = placeModel.address
-        
-        if placeModel.allVegan {
-            topDetail.imageView.image = UIImage(
-                named: Image.homeInfoVegan
-            )
-            topDetail.topImageView.image = UIImage(
-                named: Image.homeInfoVeganTitle
-            )
-        } else if placeModel.someMenuVegan {
-            topDetail.imageView.image = UIImage(
-                named: Image.homeInfoSomeVegan
-            )
-            topDetail.topImageView.image = UIImage(
-                named: Image.homeInfoSomeVeganTitle
-            )
-        } else {
-            topDetail.imageView.image = UIImage(
-                named: Image.homeInfoRequestVegan
-            )
-            topDetail.topImageView.image = UIImage(
-                named: Image.homeInfoRequestVeganTitle
-            )
-        }
+    private func bindingTopDetailView(_ placeModel: PlaceInfoData) {
+//        topDetail.title.text = placeModel.title
+//        topDetail.address.text = placeModel.address
+//
+//        if placeModel.allVegan {
+//            topDetail.imageView.image = UIImage(
+//                named: Image.homeInfoVegan
+//            )
+//            topDetail.topImageView.image = UIImage(
+//                named: Image.homeInfoVeganTitle
+//            )
+//        } else if placeModel.someMenuVegan {
+//            topDetail.imageView.image = UIImage(
+//                named: Image.homeInfoSomeVegan
+//            )
+//            topDetail.topImageView.image = UIImage(
+//                named: Image.homeInfoSomeVeganTitle
+//            )
+//        } else {
+//            topDetail.imageView.image = UIImage(
+//                named: Image.homeInfoRequestVegan
+//            )
+//            topDetail.topImageView.image = UIImage(
+//                named: Image.homeInfoRequestVeganTitle
+//            )
+//        }
     }
     
     // MARK: StoreDetail data binding
-    private func bindingStoreDetail(_ placeModel: PlaceData) {
-        storeDetail.addressLabel.text = placeModel.address
-        storeDetail.phoneLabel.text = placeModel.phone == "" ? StringValue.DetailView.noInfo : placeModel.phone
-        storeDetail.phoneLabel.textColor = placeModel.phone == "" ? .separateLine : .mainTitle
-         storeDetail.categoryLabel.text = placeModel.category
+    private func bindingStoreDetail(_ placeModel: PlaceInfoData) {
+//        storeDetail.addressLabel.text = placeModel.address
+//        storeDetail.phoneLabel.text = placeModel.phone == "" ? StringValue.DetailView.noInfo : placeModel.phone
+//        storeDetail.phoneLabel.textColor = placeModel.phone == "" ? .separateLine : .mainTitle
+//         storeDetail.categoryLabel.text = placeModel.category
     }
     
     // MARK: MenuDetail data binding

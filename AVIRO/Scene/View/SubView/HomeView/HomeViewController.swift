@@ -30,7 +30,7 @@ final class HomeViewController: UIViewController {
     private(set) var searchTextFieldTopConstraint: NSLayoutConstraint?
     
     /// view 위 아래 움직일때마다 height값과 layout의 시간 차 발생?하는것 같음
-    private(set) var placePopupViewHeight: CGFloat!
+//    private(set) var placePopupViewHeight: CGFloat!
     private var isSlideUpView = false
     
     // store 뷰 관련
@@ -127,7 +127,7 @@ extension HomeViewController: HomeViewProtocol {
             // placeView
             placeView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             placeView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            placeView.heightAnchor.constraint(equalToConstant: self.view.frame.height),
+            placeView.heightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor),
             
             flagButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
             flagButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 18),
@@ -157,7 +157,7 @@ extension HomeViewController: HomeViewProtocol {
         let backItem = UIBarButtonItem()
         backItem.title = ""
         navigationItem.backBarButtonItem = backItem
-        
+
         // NFMAP
         naverMapView.addCameraDelegate(delegate: self)
         naverMapView.touchDelegate = self
@@ -297,6 +297,7 @@ extension HomeViewController: HomeViewProtocol {
             tabBarController.hiddenTabBarIncludeIsTranslucent(false)
         }
         
+        naverMapView.isHidden = false
         whenViewWillAppearInitPlaceView()
     }
         
@@ -350,7 +351,6 @@ extension HomeViewController: HomeViewProtocol {
         cameraUpdate.animationDuration = 0.25
         
         popupPlaceView()
-        
         naverMapView.moveCamera(cameraUpdate)
     }
     
@@ -398,9 +398,9 @@ extension HomeViewController {
     }
     
     // MARK: Update Place PopupView Height
-    func updatePlacePopupViewHeight(_ height: CGFloat) {
-        placePopupViewHeight = height
-    }
+//    func updatePlacePopupViewHeight(_ height: CGFloat) {
+//        placePopupViewHeight = height
+//    }
     
     // MARK: Down Back Button Tapped
     @objc private func downBackButtonTapped(_ sender: UIButton) {

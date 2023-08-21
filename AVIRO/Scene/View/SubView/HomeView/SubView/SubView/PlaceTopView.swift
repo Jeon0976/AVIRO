@@ -417,8 +417,8 @@ extension PlaceTopView {
         let guideBarHeight = guideBar.frame.height
         let placeIconHeight = placeIcon.frame.height
         let addressHeight: CGFloat = 30
-        // 5 + 20 + 7 + 7 + 30 + 20
-        let inset: CGFloat = 49
+        // 5 + 20 + 7 + 7 + 30 + 20 + 30
+        let inset: CGFloat = 79 
 
         var boundsPlusHeight: CGFloat = 0
         // tabBar 때문에 share button이 클릭이 안 되는것을 막기 위한 조치
@@ -426,7 +426,7 @@ extension PlaceTopView {
             boundsPlusHeight = boundsHeight * 1/20
         }
 
-        let totalHeight = guideBarHeight + placeIconHeight + addressHeight + inset + boundsPlusHeight
+        let totalHeight = guideBarHeight + placeIconHeight + addressHeight + inset
 
         viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: totalHeight)
         viewHeightConstraint?.isActive = true

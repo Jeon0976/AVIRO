@@ -8,23 +8,25 @@
 import UIKit
 
 final class PushCommentView: UIView {
-    let textView: UITextView = {
+    lazy var textView: UITextView = {
         let textView = UITextView()
         
         textView.text = StringValue.CommentView.commentPlaceHolder
-        textView.font = Layout.Label.commentTextView
-        textView.textColor = .separateLine
+        textView.font = .systemFont(ofSize: 16, weight: .medium)
+        textView.textColor = .gray4
         
         textView.isEditable = true
         textView.isScrollEnabled = false
-        
+
+        textView.delegate = self
+
         textView.textContainer.lineBreakMode = .byWordWrapping
         textView.textContainer.lineFragmentPadding = 0
    
         return textView
     }()
     
-    let button: UIButton = {
+    lazy var button: UIButton = {
         let button = UIButton()
         
         button.setTitle(StringValue.CommentView.reportButton, for: .normal)
@@ -33,11 +35,10 @@ final class PushCommentView: UIView {
         return button
     }()
     
-    let separator: UIView = {
+    lazy var separator: UIView = {
        let separator = UIView()
         
-        separator.backgroundColor = .separateLine
-        separator.layer.cornerRadius = Layout.Inset.separatorCornerRadius
+        separator.backgroundColor = .gray3
         separator.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
         return separator
@@ -100,5 +101,37 @@ final class PushCommentView: UIView {
         let textView = textView.frame.height
         
         viewHeight?.constant = separatorHeight + textView
+    }
+}
+
+extension PushCommentView: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == .gray4 {
+            textView.textColor = .gray0
+            textView.text = ""
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if textView.text != "" {
+            button.setTitleColor(.gray0, for: .normal)
+        } else {
+            button.setTitleColor(.gray3, for: .normal)
+        }
+        
+        let size = CGSize(width: textView.frame.width, height: .infinity)
+        let estimatedSize = textView.sizeThatFits(size)
+        
+        if estimatedSize.height <= textView.font!.lineHeight * 5 {
+            textView.isScrollEnabled = false
+
+            textView.constraints.forEach { constraint in
+                if constraint.firstAttribute == .height {
+                    constraint.constant = estimatedSize.height
+                }
+            }
+        } else {
+            textView.isScrollEnabled = true
+        }
     }
 }

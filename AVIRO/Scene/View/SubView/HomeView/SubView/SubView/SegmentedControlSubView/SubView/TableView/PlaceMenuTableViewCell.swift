@@ -42,7 +42,6 @@ final class PlaceMenuTableViewCell: UITableViewCell {
         label.font = .systemFont(ofSize: 15, weight: .medium)
         label.textColor = .gray1
         label.numberOfLines = 2
-//        label.
         
         return label
     }()

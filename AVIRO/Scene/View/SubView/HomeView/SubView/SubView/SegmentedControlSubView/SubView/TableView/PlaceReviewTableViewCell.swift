@@ -22,7 +22,7 @@ final class PlaceReviewTableViewCell: UITableViewCell {
     private lazy var createdTime: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 13, weight: .semibold)
+        label.font = .systemFont(ofSize: 13, weight: .medium)
         label.textColor = .gray2
         
         return label
@@ -47,7 +47,6 @@ final class PlaceReviewTableViewCell: UITableViewCell {
     private lazy var topStackView: UIStackView = {
         let stackView = UIStackView()
         
-        stackView.spacing = 15
         stackView.axis = .horizontal
         stackView.distribution = .equalCentering
         
@@ -102,7 +101,6 @@ final class PlaceReviewTableViewCell: UITableViewCell {
             topStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             topStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
 
-            
             review.topAnchor.constraint(equalTo: topLabelStack.bottomAnchor, constant: 10),
             review.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             review.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
@@ -110,10 +108,16 @@ final class PlaceReviewTableViewCell: UITableViewCell {
         ])
     }
     
-    func bindingData(_ comment: CommentArray) {
+    func bindingData(comment: CommentArray,
+                     isAbbreviated: Bool,
+                     isMyReview: Bool
+    ) {
         userId.text = comment.userId
         createdTime.text = comment.createdTime
         
-        review.setLabel(text: comment.content, isAbbreviated: true, isMyReview: false)
+        review.setLabel(
+            text: comment.content,
+            isAbbreviated: isAbbreviated,
+            isMyReview: isMyReview)
     }
 }
