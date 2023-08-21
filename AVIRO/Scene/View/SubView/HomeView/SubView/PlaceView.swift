@@ -33,6 +33,16 @@ final class PlaceView: UIView {
         }
     }
     
+    var isLoadingDetail: Bool = true {
+        didSet {
+            if isLoadingDetail {
+                segmetedControlView.isLoading = true
+            } else {
+                segmetedControlView.isLoading = false
+            }
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -67,9 +77,20 @@ final class PlaceView: UIView {
     }
     
     // TODO: slide up 일때 세부내용 api 호출 후 데이터 바인딩 되는거 만들기
-    func dataBinding(_ placeModel: PlaceTopModel) {
+    func summaryDataBinding(_ placeModel: PlaceTopModel) {
         topView.dataBinding(placeModel)
-        segmetedControlView.dataBinding()
+    }
+    
+    func allDataBinding(infoModel: PlaceInfoData?,
+                        menuModel: PlaceMenuData?,
+                        reviewsModel: PlaceReviewsData?
+    ) {
+        segmetedControlView.allDataBinding(
+            infoModel: infoModel,
+            menuModel: menuModel,
+            reviewsModel: reviewsModel
+        )
+        isLoadingDetail = false
     }
     
     private func whenViewPopUp() {

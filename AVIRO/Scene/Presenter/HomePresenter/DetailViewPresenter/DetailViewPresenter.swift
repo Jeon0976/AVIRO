@@ -12,7 +12,7 @@ protocol DetailViewProtocol: NSObject {
     func makeAttribute()
     func showOthers()
     func bindingData()
-    func updateComment(_ model: [CommentArray])
+    func updateComment(_ model: [ReviewData])
 }
 
 final class DetailViewPresenter {
@@ -24,7 +24,7 @@ final class DetailViewPresenter {
     
     var placeModel: PlaceInfoData?
     var menuModel: [MenuArray]?
-    var commentModel: [CommentArray]?
+    var commentModel: [ReviewData]?
     
     init(viewController: DetailViewProtocol, placeId: String? = nil) {
         self.viewController = viewController
@@ -63,7 +63,7 @@ final class DetailViewPresenter {
     }
     
     // MARK: Comment Info 불러오기
-    func loadCommentInfo(completionHandler: @escaping (([CommentArray]) -> Void)) {
+    func loadCommentInfo(completionHandler: @escaping (([ReviewData]) -> Void)) {
         guard let placeId = placeId else { return }
         aviroManager.getCommentInfo(placeId: placeId
         ) { [weak self] commentModel in
@@ -74,7 +74,7 @@ final class DetailViewPresenter {
         }
     }
 
-    func reloadComment(_ model: [CommentArray]) {
+    func reloadComment(_ model: [ReviewData]) {
         commentModel = model
         viewController?.updateComment(model)
     }

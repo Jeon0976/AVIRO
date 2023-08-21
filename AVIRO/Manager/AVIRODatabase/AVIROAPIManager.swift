@@ -135,7 +135,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
     }
     // MARK: Get Comment Info
     func getCommentInfo(placeId: String,
-                        completionHandler: @escaping((AVIROCommentModel) -> Void)
+                        completionHandler: @escaping((AVIROReviewsModel) -> Void)
     ) {
         guard let url = requestAPI.getCommentInfo(placeId: placeId).url else {
             print("url Error")
@@ -152,7 +152,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
             }
 
             if let data = data {
-                if let commentData = try? JSONDecoder().decode(AVIROCommentModel.self, from: data) {
+                if let commentData = try? JSONDecoder().decode(AVIROReviewsModel.self, from: data) {
                     completionHandler(commentData)
                 }
             }

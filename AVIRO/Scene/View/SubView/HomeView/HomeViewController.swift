@@ -29,8 +29,9 @@ final class HomeViewController: UIViewController {
     private(set) var placeViewTopConstraint: NSLayoutConstraint?
     private(set) var searchTextFieldTopConstraint: NSLayoutConstraint?
     
+    private lazy var tapGesture = UITapGestureRecognizer()
+
     /// view 위 아래 움직일때마다 height값과 layout의 시간 차 발생?하는것 같음
-//    private(set) var placePopupViewHeight: CGFloat!
     private var isSlideUpView = false
     
     // store 뷰 관련
@@ -50,7 +51,8 @@ final class HomeViewController: UIViewController {
         presenter.viewDidLoad()
         presenter.makeNotification()
         presenter.loadVeganData()
-
+        viewDataBinding()
+        
         view.addSubview(zoomLevel)
         zoomLevel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -186,52 +188,6 @@ extension HomeViewController: HomeViewProtocol {
         
     }
     
-    // MARK: 클로저 함수 Binding 처리
-    func dataBinding() {
-        placeView.topView.whenFullBackButtonTapped = { [weak self] in
-            self?.naverMapView.isHidden = false
-            self?.placeViewPopUpAfterInitPlacePopViewHeight()
-        }
-        
-        placeView.topView.whenShareButtonTapped = { [weak self] shareObject in
-            let vc = UIActivityViewController(activityItems: shareObject, applicationActivities: nil)
-            vc.popoverPresentationController?.permittedArrowDirections = []
-            
-            vc.popoverPresentationController?.sourceView = self?.view
-            self?.present(vc, animated: true)
-        }
-        
-        placeView.topView.whenStarButtonTapped = { [weak self] selected in
-            var title = ""
-            if selected {
-                title = "즐겨찾기가 추가되었습니다."
-            } else {
-                title = "즐겨찾기가 삭제되었습니다."
-            }
-            
-            var style = ToastStyle()
-            style.cornerRadius = 14
-            style.backgroundColor = .gray3?.withAlphaComponent(0.7) ?? .lightGray
-            
-            style.titleColor = .gray7 ?? .white
-            style.titleFont = .systemFont(ofSize: 17, weight: .semibold)
-            
-            let centerX = (self?.view.frame.size.width ?? 400) / 2
-            let viewHeight = self?.view.frame.height ?? 800
-            
-            let yPosition: CGFloat = viewHeight + 20
-            
-            self?.view.makeToast(title,
-                      duration: 1.0,
-                      point: CGPoint(x: centerX, y: yPosition),
-                      title: nil,
-                      image: nil,
-                      style: style,
-                      completion: nil
-            )
-        }
-    }
-    
     // MARK: Gesture 설정
     func makeGesture() {
         placeView.addGestureRecognizer(upGesture)
@@ -242,12 +198,9 @@ extension HomeViewController: HomeViewProtocol {
         
         upGesture.addTarget(self, action: #selector(swipeGestureActived(_:)))
         downGesture.addTarget(self, action: #selector(swipeGestureActived(_:)))
-    }
-    
-    // MARK: place view에 data binding
-    // TODO: 수정 예정
-    func afterClickedMarker(_ placeModel: PlaceTopModel) {
-        placeView.dataBinding(placeModel)
+        
+        view.addGestureRecognizer(tapGesture)
+        tapGesture.delegate = self
     }
     
     // MARK: SlideView 설정
@@ -286,6 +239,22 @@ extension HomeViewController: HomeViewProtocol {
             firstPopupView.heightAnchor.constraint(
                 equalToConstant: Layout.SlideView.firstHeight)
         ])
+    }
+    
+    // MARK: Keyboard Will Show
+    func keyboardWillShow(height: CGFloat) {
+        UIView.animate(
+            withDuration: 0.3,
+            animations: { self.view.transform = CGAffineTransform(
+                translationX: 0,
+                y: -(height))
+            }
+        )
+    }
+    
+    // MARK: Keyboard Will Hide
+    func keyboardWillHide() {
+        self.view.transform = .identity
     }
     
     // MARK: View Will Appear할 때 navigation & Tab Bar hidden Setting
@@ -359,6 +328,22 @@ extension HomeViewController: HomeViewProtocol {
         placeViewPopUp()
         isSlideUpView = false
     }
+    
+    // MARK: place view에 data binding
+    // TODO: 수정 예정
+    func afterClickedMarker(_ placeModel: PlaceTopModel) {
+        placeView.summaryDataBinding(placeModel)
+    }
+    
+    func afterSlideupPlaceView(infoModel: PlaceInfoData?,
+                               menuModel: PlaceMenuData?,
+                               reviewsModel: PlaceReviewsData?
+    ) {
+        placeView.allDataBinding(infoModel: infoModel,
+                                 menuModel: menuModel,
+                                 reviewsModel: reviewsModel
+        )
+    }
 }
 
 // MARK: View Refer & Objc Action
@@ -397,10 +382,51 @@ extension HomeViewController {
         naverMapView.moveCamera(cameraUpdate)
     }
     
-    // MARK: Update Place PopupView Height
-//    func updatePlacePopupViewHeight(_ height: CGFloat) {
-//        placePopupViewHeight = height
-//    }
+    // MARK: 클로저 함수 Binding 처리
+    func viewDataBinding() {
+        placeView.topView.whenFullBackButtonTapped = { [weak self] in
+            self?.naverMapView.isHidden = false
+            self?.placeViewPopUpAfterInitPlacePopViewHeight()
+        }
+        
+        placeView.topView.whenShareButtonTapped = { [weak self] shareObject in
+            let vc = UIActivityViewController(activityItems: shareObject, applicationActivities: nil)
+            vc.popoverPresentationController?.permittedArrowDirections = []
+            
+            vc.popoverPresentationController?.sourceView = self?.view
+            self?.present(vc, animated: true)
+        }
+        
+        placeView.topView.whenStarButtonTapped = { [weak self] selected in
+            var title = ""
+            if selected {
+                title = "즐겨찾기가 추가되었습니다."
+            } else {
+                title = "즐겨찾기가 삭제되었습니다."
+            }
+            
+            var style = ToastStyle()
+            style.cornerRadius = 14
+            style.backgroundColor = .gray3?.withAlphaComponent(0.7) ?? .lightGray
+            
+            style.titleColor = .gray7 ?? .white
+            style.titleFont = .systemFont(ofSize: 17, weight: .semibold)
+            
+            let centerX = (self?.view.frame.size.width ?? 400) / 2
+            let viewHeight = self?.view.safeAreaLayoutGuide.layoutFrame.height ?? 800
+            
+            let yPosition: CGFloat = viewHeight
+            
+            self?.view.makeToast(title,
+                      duration: 1.0,
+                      point: CGPoint(x: centerX, y: yPosition),
+                      title: nil,
+                      image: nil,
+                      style: style,
+                      completion: nil
+            )
+        }
+    }
     
     // MARK: Down Back Button Tapped
     @objc private func downBackButtonTapped(_ sender: UIButton) {
@@ -425,12 +451,13 @@ extension HomeViewController {
     // MARK: Swipte Gestrue Actived
     @objc private func swipeGestureActived(_ gesture: UISwipeGestureRecognizer) {
         if gesture.direction == .up {
-            if isSlideUpView {
+            if isSlideUpView && !placeView.isLoadingDetail {
                 placeViewFullUp()
                 naverMapView.isHidden = true
                 isSlideUpView = false
             } else if !isSlideUpView && placeView.placeViewStated == .PopUp {
                 placeViewSlideUp()
+                presenter.getPlaceModelDetail()
                 isSlideUpView = true
             }
         } else if gesture.direction == .down {
@@ -453,6 +480,17 @@ extension HomeViewController: UITextFieldDelegate {
     }
 }
 
+// MARK: TapGestureDelegate
+extension HomeViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if touch.view is UITextView || touch.view is UIButton {
+            return false
+        }
+        
+        view.endEditing(true)
+        return true
+    }
+}
 extension HomeViewController: NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
         zoomLevel.text = String(mapView.zoomLevel)

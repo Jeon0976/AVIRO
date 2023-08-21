@@ -20,11 +20,11 @@ final class CommentDetailPresenter {
     private let aviroAPIManager = AVIROAPIManager()
     
     private var placeId: String?
-    private var commentItems: [CommentArray]?
+    private var commentItems: [ReviewData]?
         
     init(viewController: CommentDetailProtocol,
          placeId: String? = nil,
-         commentItems: [CommentArray]? = nil
+         commentItems: [ReviewData]? = nil
     ) {
         self.viewController = viewController
         self.placeId = placeId
@@ -61,7 +61,7 @@ final class CommentDetailPresenter {
         return count
     }
     
-    func commentRow(_ indexPath: IndexPath) -> CommentArray? {
+    func commentRow(_ indexPath: IndexPath) -> ReviewData? {
         guard let commentItems = commentItems else { return nil }
         
         return commentItems[indexPath.row]
@@ -76,7 +76,7 @@ final class CommentDetailPresenter {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateString = dateFormatter.string(from: date)
         
-        let commentArrayValue = CommentArray(
+        let commentArrayValue = ReviewData(
             commentId: commentModel.commentId,
             userId: commentModel.userId,
             content: comment,

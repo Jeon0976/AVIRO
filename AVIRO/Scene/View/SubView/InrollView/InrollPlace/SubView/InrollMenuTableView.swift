@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class MenuTableView: UIView {
+final class InrollMenuTableView: UIView {
     let title: UILabel = {
         let label = UILabel()
         
@@ -172,7 +172,6 @@ final class MenuTableView: UIView {
             normalTableViewHeight?.constant = height
             viewHeightConstraint?.constant = defaultTotalHeight + height
             self.layoutIfNeeded()
-            
         } else {
             let height = CGFloat(110 * count)
             requestTableViewHeight?.constant = height

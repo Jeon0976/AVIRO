@@ -78,7 +78,7 @@ final class CommentDetailView: UIView {
     var tableViewHeightConstraint: NSLayoutConstraint?
     var viewHeightConstraint: NSLayoutConstraint?
     
-    var commentArray = [CommentArray]()
+    var commentArray = [ReviewData]()
     var cellHeights = [CGFloat]()
     
     override init(frame: CGRect) {
@@ -184,7 +184,7 @@ final class CommentDetailView: UIView {
         }
     }
     
-    func bindingCommentData(_ commentData: [CommentArray]) {
+    func bindingCommentData(_ commentData: [ReviewData]) {
         commentArray = commentData
         commentCount.text = String(commentArray.count) + StringValue.DetailView.commentCount
 

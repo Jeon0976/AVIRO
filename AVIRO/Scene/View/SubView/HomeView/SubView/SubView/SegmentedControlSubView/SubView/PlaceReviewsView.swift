@@ -40,7 +40,6 @@ final class PlaceReviewsView: UIView {
         )
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.isScrollEnabled = false
         tableView.separatorStyle = .none
         tableView.estimatedRowHeight = 100
         
@@ -68,9 +67,11 @@ final class PlaceReviewsView: UIView {
     private var viewHeightConstraint: NSLayoutConstraint?
     private var reviewsHeightConstraint: NSLayoutConstraint?
     
-    private var cellHeight: [IndexPath: CGFloat] = [:]
+    private var cellHeights: [IndexPath: CGFloat] = [:]
     
-    private var reviewsArray = [CommentArray]()
+    private var reviewsArray = [ReviewData]()
+    
+    private var whenReviewView = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -87,6 +88,8 @@ final class PlaceReviewsView: UIView {
     }
     
     private func makeLayout() {
+        self.backgroundColor = .gray7
+        
         [
             title,
             subTitle,
@@ -110,10 +113,10 @@ final class PlaceReviewsView: UIView {
             reviewsTable.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             reviewsTable.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             
-            separatedLine.topAnchor.constraint(equalTo: reviewsTable.topAnchor, constant: 15),
+            separatedLine.topAnchor.constraint(equalTo: reviewsTable.bottomAnchor, constant: 15),
             separatedLine.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             separatedLine.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            separatedLine.heightAnchor.constraint(equalToConstant: 2),
+            separatedLine.heightAnchor.constraint(equalToConstant: 0.5),
             
             showMoreReviewsButton.topAnchor.constraint(equalTo: separatedLine.bottomAnchor, constant: 20),
             showMoreReviewsButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
@@ -124,18 +127,116 @@ final class PlaceReviewsView: UIView {
             reviewInputView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
     }
+    
+    func dataBinding(_ reviewsModel: PlaceReviewsData?) {
+        guard let reviews = reviewsModel?.commentArray else { return }
+        
+        self.reviewsArray = reviews
+        self.subTitle.text = "\(reviews.count)개"
+        
+        whenReviewView = true
+
+        reviewsTable.isScrollEnabled = true
+        
+        reviewsTable.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+
+        separatedLine.isHidden = true
+        showMoreReviewsButton.isHidden = true
+        reviewInputView.isHidden = false
+        
+        reviewsTable.bottomAnchor.constraint(equalTo: reviewInputView.topAnchor).isActive = true
+
+        reviewsTable.reloadData()
+        
+    }
+    
+    func dataBindingWhenInHomeView(_ reviewsModel: PlaceReviewsData?) {
+        guard let reviews = reviewsModel?.commentArray else { return }
+        
+        self.subTitle.text = "\(reviews.count)개"
+        
+        if reviews.count > 4 {
+            self.reviewsArray = Array(reviews.prefix(4))
+        } else {
+            self.reviewsArray = reviews
+        }
+        
+        reviewInputView.isHidden = true
+        
+        reviewsTable.reloadData()
+        
+        reviewsTable.isScrollEnabled = false
+        
+        reviewsHeightConstraint?.isActive = false
+        viewHeightConstraint?.isActive = false
+        
+        reviewsHeightConstraint = reviewsTable.heightAnchor.constraint(equalToConstant: 600)
+        reviewsHeightConstraint?.isActive = true
+    }
+    
+    private func updateTableViewHeight() {
+        let indexPathsToRemove = cellHeights.keys.filter { $0.row >= reviewsArray.count }
+        
+        indexPathsToRemove.forEach {
+            cellHeights.removeValue(forKey: $0)
+        }
+        
+        let tableViewHeight = cellHeights.values.reduce(0, +)
+        
+        reviewsHeightConstraint?.constant = tableViewHeight
+        
+        let titleHeight = title.frame.height
+        let separtedLineHeight = separatedLine.frame.height
+        let showMoreButtonHeight = showMoreReviewsButton.frame.height
+        
+        // 20 20 15 20 20
+        let inset: CGFloat = 95
+        
+        let totalHeight = tableViewHeight + titleHeight + separtedLineHeight + showMoreButtonHeight + inset
+        
+        viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: totalHeight)
+        viewHeightConstraint?.isActive = true
+    }
 }
 
 extension PlaceReviewsView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        0
+        reviewsArray.count
     }
     
+    // TODO: Place ID에 맞춰서 색상 변경하는거 업데이트!
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        UITableViewCell()
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: PlaceReviewTableViewCell.identifier,
+            for: indexPath
+        ) as? PlaceReviewTableViewCell
+        
+        guard reviewsArray.count > indexPath.row else {
+            return UITableViewCell()
+        }
+        
+        let reviewData = reviewsArray[indexPath.row]
+        
+        cell?.selectionStyle = .none
+        
+        if whenReviewView {
+            cell?.bindingData(comment: reviewData, isAbbreviated: false, isMyReview: false)
+        } else {
+            cell?.bindingData(comment: reviewData, isAbbreviated: true, isMyReview: false)
+        }
+        
+        return cell ?? UITableViewCell()
     }
 }
 
 extension PlaceReviewsView: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if !whenReviewView {
+            cellHeights[indexPath] = cell.frame.size.height
+            
+            if indexPath.row == reviewsArray.count - 1 {
+                updateTableViewHeight()
+            }
+        }
+    }
 }

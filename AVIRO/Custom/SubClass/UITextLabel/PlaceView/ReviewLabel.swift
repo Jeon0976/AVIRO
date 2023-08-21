@@ -16,6 +16,8 @@ final class ReviewLabel: UILabel {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        setAttribute()
     }
     
     required init?(coder: NSCoder) {
@@ -35,6 +37,7 @@ final class ReviewLabel: UILabel {
     
     private func setAttribute() {
         self.font = .systemFont(ofSize: 15, weight: .medium)
+        
         self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
     }

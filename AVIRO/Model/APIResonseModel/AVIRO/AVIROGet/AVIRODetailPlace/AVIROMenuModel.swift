@@ -9,9 +9,9 @@ import Foundation
 
 struct AVIROMenuModel: Decodable {
     let statusCode: Int
-    let data: AVIROMenuData
+    let data: PlaceMenuData
 }
 
-struct AVIROMenuData: Decodable {
+struct PlaceMenuData: Decodable {
     let menuArray: [MenuArray]
 }

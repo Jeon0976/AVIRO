@@ -82,7 +82,7 @@ final class PlaceReviewTableViewCell: UITableViewCell {
         
         [
             topLabelStack,
-            review
+            reportButton
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             topStackView.addArrangedSubview($0)
@@ -108,7 +108,7 @@ final class PlaceReviewTableViewCell: UITableViewCell {
         ])
     }
     
-    func bindingData(comment: CommentArray,
+    func bindingData(comment: ReviewData,
                      isAbbreviated: Bool,
                      isMyReview: Bool
     ) {

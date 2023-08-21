@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class StoreInfoView: UIView {
+final class InrollStoreInfoView: UIView {
     // MARK: Main Title
     lazy var title: UILabel = {
         let label = UILabel()

@@ -1,5 +1,5 @@
 //
-//  AVIROCommentModel.swift
+//  AVIROReviewsModel.swift
 //  AVIRO
 //
 //  Created by 전성훈 on 2023/06/21.
@@ -7,16 +7,16 @@
 
 import Foundation
 
-struct AVIROCommentModel: Decodable {
+struct AVIROReviewsModel: Decodable {
     let statusCode: Int
-    let data: AVIROCommentData
+    let data: PlaceReviewsData
 }
 
-struct AVIROCommentData: Decodable {
-    let commentArray: [CommentArray]
+struct PlaceReviewsData: Decodable {
+    let commentArray: [ReviewData]
 }
 
-struct CommentArray: Codable {
+struct ReviewData: Codable {
     var commentId: String
     var userId: String
     var content: String

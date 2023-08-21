@@ -12,9 +12,9 @@ final class InrollPlaceViewController: UIViewController {
     
     private lazy var scrollView = UIScrollView()
     
-    private lazy var storeInfoView = StoreInfoView()
-    private lazy var veganDetailView = VeganDetailView()
-    private lazy var menuTableView = MenuTableView()
+    private lazy var storeInfoView = InrollStoreInfoView()
+    private lazy var veganDetailView = InrollVeganDetailView()
+    private lazy var menuTableView = InrollMenuTableView()
     
     private lazy var tapGesture = UITapGestureRecognizer()
     

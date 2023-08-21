@@ -16,6 +16,8 @@ protocol HomeViewProtocol: NSObject {
     func makeGesture()
     func makeSlideView()
     func whenViewWillAppear()
+    func keyboardWillShow(height: CGFloat)
+    func keyboardWillHide()
     func ifDenied()
     func requestSuccess()
     func saveCenterCoordinate()
@@ -23,7 +25,10 @@ protocol HomeViewProtocol: NSObject {
     func moveToCameraWhenHasAVIRO(_ markerModel: MarkerModel)
     func loadMarkers()
     func afterClickedMarker(_ placeModel: PlaceTopModel)
-    func dataBinding()
+    func afterSlideupPlaceView(infoModel: PlaceInfoData?,
+                               menuModel: PlaceMenuData?,
+                               reviewsModel: PlaceReviewsData?
+    )
 }
 
 final class HomeViewPresenter: NSObject {
@@ -38,6 +43,8 @@ final class HomeViewPresenter: NSObject {
     private var selectedMarkerModel: MarkerModel?
     
     private var firstLocation = true
+    
+    private var selectedPlaceId: String?
     
     init(viewController: HomeViewProtocol) {
         self.viewController = viewController
@@ -57,16 +64,57 @@ final class HomeViewPresenter: NSObject {
         viewController?.makeLayout()
         viewController?.makeAttribute()
         viewController?.makeGesture()
-        viewController?.dataBinding()
     }
     
     func viewWillAppear() {
         viewController?.whenViewWillAppear()
         viewController?.makeSlideView()
+        addKeyboardNotification()
     }
     
     func viewWillDisappear() {
         initMarkerState()
+        removeKeyboardNotification()
+    }
+    
+    // MARK: Keyboard에 따른 view 높이 변경 Notification
+    func addKeyboardNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    func removeKeyboardNotification() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+           let keyboardRectangle = keyboardFrame.cgRectValue
+            viewController?.keyboardWillShow(height: keyboardRectangle.height - 50)
+        }
+    }
+    
+    @objc func keyboardWillHide() {
+        viewController?.keyboardWillHide()
     }
     
     // MARK: vegan Data 불러오기
@@ -150,7 +198,7 @@ final class HomeViewPresenter: NSObject {
         
         guard let validIndex = index else { return }
         
-        getPlaceModel(validMarkerModel)
+        getPlaceSummaryModel(validMarkerModel)
 
         selectedMarkerIndex = validIndex
         selectedMarkerModel = validMarkerModel
@@ -164,14 +212,14 @@ final class HomeViewPresenter: NSObject {
     
     // MARK: Get PlaceModel
     /// 클릭 된 마커 데이터 받기 위한 api 호출
-    private func getPlaceModel(_ markerModel: MarkerModel) {
+    private func getPlaceSummaryModel(_ markerModel: MarkerModel) {
         let mapPlace = markerModel.mapPlace
         let placeX = markerModel.marker.position.lng
         let placeY = markerModel.marker.position.lat
         let placeId = markerModel.placeId
 
-        //        let test = PlaceTopModel(placeState: MapPlace.Request, placeTitle: "Test", placeCategory: "식당", distance: "400", reviewsCount: "5", address: "테스트 입니다.")
-//        viewController?.afterClickedMarker(test)
+        selectedPlaceId = placeId
+        
         AVIROAPIManager().getPlaceSummary(placeId: placeId) { summary in
             let place = summary.data
 
@@ -191,6 +239,49 @@ final class HomeViewPresenter: NSObject {
             DispatchQueue.main.async { [weak self] in
                 self?.viewController?.afterClickedMarker(placeTopModel)
             }
+        }
+    }
+    
+    // MARK: Get Place Model Detail
+    func getPlaceModelDetail() {
+        guard let placeId = selectedPlaceId else { return }
+        
+        let dispatchGroup = DispatchGroup()
+        
+        var infoModel: PlaceInfoData?
+        var menuModel: PlaceMenuData?
+        var reviewsModel: PlaceReviewsData?
+        
+        dispatchGroup.enter()
+        AVIROAPIManager().getPlaceInfo(placeId: placeId) { placeInfoModel in
+            
+            infoModel = placeInfoModel.data
+            
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.enter()
+        AVIROAPIManager().getMenuInfo(placeId: placeId) { placeMenuModel in
+            
+            menuModel = placeMenuModel.data
+            
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.enter()
+        AVIROAPIManager().getCommentInfo(placeId: placeId) { placeReviewsModel in
+            
+            reviewsModel = placeReviewsModel.data
+            
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            self?.viewController?.afterSlideupPlaceView(
+                infoModel: infoModel,
+                menuModel: menuModel,
+                reviewsModel: reviewsModel
+            )
         }
     }
     
@@ -237,7 +328,7 @@ final class HomeViewPresenter: NSObject {
             
             markerModel.marker.changeIcon(markerModel.mapPlace, true)
             
-            getPlaceModel(markerModel)
+            getPlaceSummaryModel(markerModel)
             selectedMarkerIndex = index
             selectedMarkerModel = markerModel
             hasTouchedMarkerBefore = true

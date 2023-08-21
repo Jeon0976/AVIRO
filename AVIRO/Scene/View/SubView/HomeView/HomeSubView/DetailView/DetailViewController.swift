@@ -239,7 +239,7 @@ extension DetailViewController: DetailViewProtocol {
     }
     
     // MARK: CommentDetail data binding
-    private func bindingComment(_ commentModel: [CommentArray]) {
+    private func bindingComment(_ commentModel: [ReviewData]) {
         let sortedData = commentModel.sorted(by: { $0.createdTime > $1.createdTime})
         
         comment.bindingCommentData(sortedData)
@@ -248,13 +248,13 @@ extension DetailViewController: DetailViewProtocol {
     // MARK: CommentDetailView Dismiss 될 때
     // comment data update
     @objc func handleDismissNotification(_ notification: Notification) {
-        if let commnet = notification.userInfo?["comment"] as? [CommentArray] {
+        if let commnet = notification.userInfo?["comment"] as? [ReviewData] {
             presenter.reloadComment(commnet)
         }
     }
     
     // MARK: UpdateComment
-    func updateComment(_ model: [CommentArray]) {
+    func updateComment(_ model: [ReviewData]) {
         comment.commentCount.text = "\(model.count)개"
         comment.bindingCommentData(model)
     }

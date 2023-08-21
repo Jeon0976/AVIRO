@@ -11,9 +11,14 @@ final class PushCommentView: UIView {
     lazy var textView: UITextView = {
         let textView = UITextView()
         
-        textView.text = StringValue.CommentView.commentPlaceHolder
+        textView.text = "식당에 대한 경험과 팁을 알려주세요!"
         textView.font = .systemFont(ofSize: 16, weight: .medium)
         textView.textColor = .gray4
+        textView.textContainerInset = UIEdgeInsets(top: 8, left: 10, bottom: 8, right: 10)
+        
+        textView.layer.cornerRadius = 5
+        textView.layer.borderColor = UIColor.gray4?.cgColor
+        textView.layer.borderWidth = 0.5
         
         textView.isEditable = true
         textView.isScrollEnabled = false
@@ -29,8 +34,8 @@ final class PushCommentView: UIView {
     lazy var button: UIButton = {
         let button = UIButton()
         
-        button.setTitle(StringValue.CommentView.reportButton, for: .normal)
-        button.setTitleColor(.separateLine, for: .normal)
+        button.setTitle("등록", for: .normal)
+        button.setTitleColor(.gray4, for: .normal)
         
         return button
     }()
@@ -44,7 +49,7 @@ final class PushCommentView: UIView {
         return separator
     }()
     
-    var viewHeight: NSLayoutConstraint?
+    private var viewHeight: NSLayoutConstraint?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -74,19 +79,17 @@ final class PushCommentView: UIView {
             
             // textView
             textView.topAnchor.constraint(
-                equalTo: separator.bottomAnchor),
+                equalTo: separator.bottomAnchor, constant: 12.5),
             textView.leadingAnchor.constraint(
-                equalTo: self.leadingAnchor, constant: Layout.Inset.leadingTop),
+                equalTo: self.leadingAnchor, constant: 16),
             textView.trailingAnchor.constraint(
-                equalTo: button.leadingAnchor, constant: Layout.Inset.trailingBottom),
+                equalTo: button.leadingAnchor, constant: -10),
             
             // button
             button.topAnchor.constraint(
-                equalTo: separator.bottomAnchor),
+                equalTo: textView.contentLayoutGuide.topAnchor),
             button.trailingAnchor.constraint(
-                equalTo: self.trailingAnchor, constant: Layout.Inset.trailingBottom),
-            button.widthAnchor.constraint(
-                equalTo: button.heightAnchor)
+                equalTo: self.trailingAnchor, constant: Layout.Inset.trailingBottom)
         ])
     }
     
@@ -96,11 +99,13 @@ final class PushCommentView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+
         let separatorHeight = separator.frame.height
         let textView = textView.frame.height
+
+        let inset: CGFloat = 25
         
-        viewHeight?.constant = separatorHeight + textView
+        viewHeight?.constant = separatorHeight + textView + inset
     }
 }
 
@@ -117,6 +122,7 @@ extension PushCommentView: UITextViewDelegate {
             button.setTitleColor(.gray0, for: .normal)
         } else {
             button.setTitleColor(.gray3, for: .normal)
+            
         }
         
         let size = CGSize(width: textView.frame.width, height: .infinity)

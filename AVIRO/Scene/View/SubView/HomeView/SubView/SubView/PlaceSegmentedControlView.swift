@@ -20,19 +20,31 @@ final class PlaceSegmentedControlView: UIView {
     private lazy var menuView = PlaceMenuView()
     private lazy var reviewView = PlaceReviewsView()
     
-    private lazy var indicatorView = UIActivityIndicatorView()
+    private lazy var indicatorView: UIActivityIndicatorView = {
+        let indicatorView = UIActivityIndicatorView()
+        
+        indicatorView.color = .gray1
+        indicatorView.style = UIActivityIndicatorView.Style.large
+        indicatorView.startAnimating()
+        
+        return indicatorView
+    }()
     
     private lazy var scrollView = UIScrollView()
-        
-    // Home Constraint
-//    private var homeBottomConstraint: NSLayoutConstraint?
-        
-    // Review Constraint
-//    private var reviewBottomConstraint: NSLayoutConstraint?
     
     private var homeBottomConstraint: NSLayoutConstraint?
 
     private var afterInitViewConstrait = false
+    
+    var isLoading = true {
+        didSet {
+            if isLoading {
+                whenIsLoading()
+            } else {
+                whenIsEndLoading()
+            }
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,16 +57,7 @@ final class PlaceSegmentedControlView: UIView {
         fatalError()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        
-//        print(self.frame.height - segmentedControl.frame.height)
-//        homeBottomConstraint?.constant = self.frame.height - segmentedControl.frame.height
-    }
-    
     private func makeLayout() {
-        makeLayoutInScrollView()
         
         [
             segmentedControl,
@@ -80,14 +83,16 @@ final class PlaceSegmentedControlView: UIView {
             menuView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor),
             menuView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             menuView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            menuView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0),
+            menuView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             
             reviewView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor),
             reviewView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             reviewView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            reviewView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0)
+            reviewView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16)
         ])
 
+        makeLayoutInScrollView()
+        makeLayoutIndicatorView()
     }
     
     private func makeLayoutInScrollView() {
@@ -103,9 +108,22 @@ final class PlaceSegmentedControlView: UIView {
             homeView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             homeView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
             homeView.bottomAnchor.constraint(
-                equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -80)
+                equalTo: scrollView.contentLayoutGuide.bottomAnchor)
         ])
+    }
+    
+    private func makeLayoutIndicatorView() {
+        [
+            indicatorView
+        ].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            self.addSubview($0)
+        }
         
+        NSLayoutConstraint.activate([
+            indicatorView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 32),
+            indicatorView.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+        ])
     }
     
     private func makeAttribute() {
@@ -116,37 +134,45 @@ final class PlaceSegmentedControlView: UIView {
         segmentedControl.addTarget(self, action: #selector(segmentedChanged(segment:)), for: .valueChanged)
         segmentedControl.selectedSegmentIndex = 0
     }
-    
-    var test = true
+        
     // TODO: API 연결되면 수정 예정
     // Popup할 때, Slide up 할 때 구분 필요
-    func dataBinding() {
-        let mock = [
-            MenuArray(menuType: "vegan", menu: "11", price: "11", howToRequest: "한줄\n두줄dawdawdawdawdawdawdawdklajwdlkjawdlkjawkdlwaj", isCheck: true),
-            MenuArray(menuType: "vegan", menu: "22", price: "11", howToRequest: "한줄\n두줄dawdawdawdawdawdawdawdklajwdlkjawdlkjawkdlwaj", isCheck: true),
-            MenuArray(menuType: "vegan", menu: "33", price: "11", howToRequest: "한줄\n두줄dawdawdawdawdawdawdawdklajwdlkjawdlkjawkdlwaj", isCheck: true),
-            MenuArray(menuType: "vegan", menu: "44", price: "11", howToRequest: "한줄\n두줄dawdawdawdawdawdawdawdklajwdlkjawdlkjawkdlwaj", isCheck: true),
-            MenuArray(menuType: "vegan", menu: "55", price: "11", howToRequest: "한줄\n두줄dawdawdawdawdawdawdawdklajwdlkjawdlkjawkdlwaj", isCheck: true),
-            MenuArray(menuType: "needToRequest", menu: "포테이토 피자", price: "17,000", howToRequest: "테스트", isCheck: true),
-            MenuArray(menuType: "needToRequest", menu: "포테이토 피자", price: "17,000", howToRequest: "테스트", isCheck: true),
-            MenuArray(menuType: "needToRequest", menu: "포테이22토 피자", price: "17,000", howToRequest: "테스트", isCheck: true),
-            MenuArray(menuType: "needToRequest", menu: "포테이토11 피자", price: "17,000", howToRequest: "테스트", isCheck: true),
-            MenuArray(menuType: "needToRequest", menu: "포테33이토 피자", price: "17,000", howToRequest: "테스트", isCheck: true)
-        ]
+    func allDataBinding(infoModel: PlaceInfoData?,
+                        menuModel: PlaceMenuData?,
+                        reviewsModel: PlaceReviewsData?
+    ) {
+        homeView.dataBinding(infoModel: infoModel,
+                             menuModel: menuModel,
+                             reviewsModel: reviewsModel
+        )
         
-        menuView.dataBinding(mock)
+        menuView.dataBinding(menuModel)
+        reviewView.dataBinding(reviewsModel)
         
-        homeView.dataBinding(mock)
+        guard let reviewsCount = reviewsModel?.commentArray.count else { return }
         
-        segmentedControlLabelChange(65)
+        segmentedControlLabelChange(reviewsCount)
         
     }
     
-    // TODO: API 완료 되면 변경 예정
     private func segmentedControlLabelChange(_ reviews: Int) {
         let reviews = "후기 (\(reviews))"
         
         segmentedControl.setTitle(reviews, forSegmentAt: 2)
+    }
+    
+    private func whenIsLoading() {
+        homeView.isHidden = true
+        menuView.isHidden = true
+        reviewView.isHidden = true
+        segmentedControl.isUserInteractionEnabled = false
+        indicatorView.isHidden = false
+    }
+    
+    private func whenIsEndLoading() {
+        homeView.isHidden = false
+        segmentedControl.isUserInteractionEnabled = true
+        indicatorView.isHidden = true
     }
     
     @objc private func segmentedChanged(segment: UISegmentedControl) {
@@ -164,7 +190,7 @@ final class PlaceSegmentedControlView: UIView {
     
     func whenViewPopup() {
         segmentedControl.selectedSegmentIndex = 0
-        activeHomeView()
+        scrollViewSetOffset()
     }
     
     private func activeHomeView() {
@@ -190,7 +216,10 @@ final class PlaceSegmentedControlView: UIView {
         reviewView.isHidden = false
     }
     
-    private func scrollViewSetOffset(_ x: Double = 0.0,_ y: Double = 0.0, _ animated: Bool = false) {
+    private func scrollViewSetOffset(_ x: Double = 0.0,
+                                     _ y: Double = 0.0,
+                                     _ animated: Bool = false
+    ) {
         scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: animated)
     }
     

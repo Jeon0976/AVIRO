@@ -65,6 +65,7 @@ extension HomeViewController {
         homeButtonIsHidden(true)
 
         placeView.placeViewStated = .SlideUp
+        placeView.isLoadingDetail = true
         
         placeViewTopConstraint?.constant = -self.view.frame.height * 2/3
         

@@ -196,7 +196,7 @@ final class PlaceInfoView: UIView {
             addressLabel.leadingAnchor.constraint(equalTo: addressIcon.trailingAnchor, constant: 10),
             addressLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             
-            phoneIcon.topAnchor.constraint(equalTo: addressLabel.bottomAnchor, constant: 20),
+            phoneIcon.topAnchor.constraint(equalTo: addressIcon.bottomAnchor, constant: 20),
             phoneIcon.leadingAnchor.constraint(equalTo: addressIcon.leadingAnchor),
             phoneIcon.widthAnchor.constraint(equalToConstant: 24),
             phoneIcon.heightAnchor.constraint(equalToConstant: 24),
@@ -204,7 +204,7 @@ final class PlaceInfoView: UIView {
             phoneButton.centerYAnchor.constraint(equalTo: phoneIcon.centerYAnchor),
             phoneButton.leadingAnchor.constraint(equalTo: phoneIcon.trailingAnchor, constant: 10),
             
-            timeIcon.topAnchor.constraint(equalTo: phoneButton.bottomAnchor, constant: 20),
+            timeIcon.topAnchor.constraint(equalTo: phoneIcon.bottomAnchor, constant: 20),
             timeIcon.leadingAnchor.constraint(equalTo: addressIcon.leadingAnchor),
             timeIcon.widthAnchor.constraint(equalToConstant: 24),
             timeIcon.heightAnchor.constraint(equalToConstant: 24),
@@ -261,10 +261,18 @@ final class PlaceInfoView: UIView {
     }
     
     // TODO: Back end 수정 되면 수정
-    func dataBinding() {
-        addressLabel.text = "테스트입니다."
-        updatedTimeLabel.text = "업데이트 2023.07.08"
-        phoneButton.setTitle("010-6601-0976", for: .normal)
+    func dataBindingWhenInHomeView(_ infoModel: PlaceInfoData?) {
+        guard let infoModel = infoModel else { return }
+        
+        addressLabel.text = infoModel.address
+        updatedTimeLabel.text = "업데이트 " + infoModel.updatedTime
+        
+        if infoModel.phone == "" {
+            phoneButton.setTitle("전화번호 추가", for: .normal)
+        } else {
+            phoneButton.setTitle(infoModel.phone, for: .normal)
+        }
+
         timeButton.setTitle("영업 시간 추가", for: .normal)
         timeLabel.isHidden = true
         timePlusButton.isHidden = true

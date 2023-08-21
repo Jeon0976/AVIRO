@@ -11,7 +11,7 @@ import UIKit
 
 final class PlaceHomeView: UIView {
     private lazy var placeInfoView = PlaceInfoView()
-     lazy var placeMenuView = PlaceMenuView()
+    private lazy var placeMenuView = PlaceMenuView()
     private lazy var placeReviewWriteView = PlaceReviewWriteView()
     private lazy var placeReviewsView = PlaceReviewsView()
     
@@ -65,14 +65,8 @@ final class PlaceHomeView: UIView {
             
             placeReviewsView.topAnchor.constraint(equalTo: placeReviewWriteView.bottomAnchor, constant: 15),
             placeReviewsView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            placeReviewsView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            
-            // Test Coce
-            
-            placeReviewsView.heightAnchor.constraint(equalToConstant: 600)
+            placeReviewsView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
-        
-        placeReviewsView.backgroundColor = .brown
     }
     
     private func initPlaceHomeView() {
@@ -89,9 +83,12 @@ final class PlaceHomeView: UIView {
 
     }
     
-    func dataBinding(_ menu: [MenuArray]) {
-        placeInfoView.dataBinding()
-        placeMenuView.dataBindingWhenInHomeView(menu)
-        
+    func dataBinding(infoModel: PlaceInfoData?,
+                     menuModel: PlaceMenuData?,
+                     reviewsModel: PlaceReviewsData?
+    ) {
+        placeInfoView.dataBindingWhenInHomeView(infoModel)
+        placeMenuView.dataBindingWhenInHomeView(menuModel)
+        placeReviewsView.dataBindingWhenInHomeView(reviewsModel)
     }
 }

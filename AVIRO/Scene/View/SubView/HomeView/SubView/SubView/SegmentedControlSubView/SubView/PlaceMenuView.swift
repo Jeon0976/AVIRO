@@ -92,6 +92,8 @@ final class PlaceMenuView: UIView {
 
     private var menuArray = [MenuArray]()
     
+    private var whenMenuView = false
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -131,11 +133,15 @@ final class PlaceMenuView: UIView {
         ])
     }
     
-    func dataBinding(_ menu: [MenuArray]) {
+    func dataBinding(_ menuModel: PlaceMenuData?) {
+        guard let menu = menuModel?.menuArray else { return }
+        
+        whenMenuView = true
+        
         self.menuArray = menu
         self.subTitle.text = "\(menu.count)개"
         self.updatedTimeLabel.text = "업데이트 2023.07.08"
-        
+                
         menuTable.isScrollEnabled = true
         menuTable.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         menuTable.reloadData()
@@ -144,10 +150,12 @@ final class PlaceMenuView: UIView {
         showMoreButton.isHidden = true
     }
         
-    func dataBindingWhenInHomeView(_ menu: [MenuArray]) {
+    func dataBindingWhenInHomeView(_ menuModel: PlaceMenuData?) {
+        guard let menu = menuModel?.menuArray else { return }
+        
         self.subTitle.text = "\(menu.count)개"
         self.updatedTimeLabel.text = "업데이트 2023.07.08"
-
+        
         if menu.count > 5 {
             self.menuArray = Array(menu.prefix(5))
             showMoreButton.isHidden = false
@@ -156,17 +164,21 @@ final class PlaceMenuView: UIView {
             showMoreButton.isHidden = true
         }
     
+        menuTable.reloadData()
+
         menuTable.isScrollEnabled = false
-        // 최대 갯수의 맞는 최대 높이값 -> 5개
-        updateTableViewHeight(700)
+
+        menuTableHeightConstraint?.isActive = false
+        viewHeightConstraint?.isActive = false
+
+        menuTableHeightConstraint = menuTable.heightAnchor.constraint(equalToConstant: 800)
+        menuTableHeightConstraint?.isActive = true
     }
     
-    private func updateTableViewHeight(_ tableHeight: CGFloat) {
-        menuTableHeightConstraint = menuTable.heightAnchor.constraint(equalToConstant: tableHeight)
-        menuTableHeightConstraint?.isActive = true
+    private func updateTableViewHeight() {
+        let indexPathsToRemove = cellHeights.keys.filter { $0.row >= menuArray.count }
         
-        menuTable.reloadData()
-        menuTable.layoutIfNeeded()
+        indexPathsToRemove.forEach { cellHeights.removeValue(forKey: $0) }
         
         let height = cellHeights.values.reduce(0, +)
         let footerViewHeight: CGFloat = 60
@@ -196,9 +208,13 @@ extension PlaceMenuView: UITableViewDataSource {
             for: indexPath
         ) as? PlaceMenuTableViewCell
         
-        let menuData = menuArray[indexPath.row]
-        cell?.selectionStyle = .none
+        guard menuArray.count > indexPath.row else {
+            return UITableViewCell()
+        }
         
+        let menuData = menuArray[indexPath.row]
+        
+        cell?.selectionStyle = .none
         cell?.dataBinding(menuData)
         
         return cell ?? UITableViewCell()
@@ -207,7 +223,13 @@ extension PlaceMenuView: UITableViewDataSource {
 
 extension PlaceMenuView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cellHeights[indexPath] = cell.frame.size.height
+        if !whenMenuView {
+            cellHeights[indexPath] = cell.frame.size.height
+            
+            if indexPath.row == menuArray.count - 1 {
+                updateTableViewHeight()
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
