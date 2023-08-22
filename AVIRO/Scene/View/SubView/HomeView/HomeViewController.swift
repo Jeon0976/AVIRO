@@ -331,8 +331,12 @@ extension HomeViewController: HomeViewProtocol {
     
     // MARK: place view에 data binding
     // TODO: 수정 예정
-    func afterClickedMarker(_ placeModel: PlaceTopModel) {
-        placeView.summaryDataBinding(placeModel)
+    func afterClickedMarker(placeModel: PlaceTopModel,
+                            placeId: String
+    ) {
+        placeView.summaryDataBinding(placeModel: placeModel,
+                                     placeId: placeId
+        )
     }
     
     func afterSlideupPlaceView(infoModel: PlaceInfoData?,
@@ -415,7 +419,7 @@ extension HomeViewController {
             let centerX = (self?.view.frame.size.width ?? 400) / 2
             let viewHeight = self?.view.safeAreaLayoutGuide.layoutFrame.height ?? 800
             
-            let yPosition: CGFloat = viewHeight
+            let yPosition: CGFloat = viewHeight - 32
             
             self?.view.makeToast(title,
                       duration: 1.0,

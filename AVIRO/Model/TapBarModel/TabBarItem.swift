@@ -43,7 +43,7 @@ enum TabBarItem: CaseIterable {
     var viewController: UIViewController {
         switch self {
         case .home: return UINavigationController(rootViewController: HomeViewController())
-        case .plus: return UINavigationController(rootViewController: InrollPlaceViewController())
+        case .plus: return UINavigationController(rootViewController: EnrollPlaceViewController())
         case .myPage: return UINavigationController(rootViewController: MyPageViewController())
         }
     }

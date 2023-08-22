@@ -8,7 +8,7 @@
 import UIKit
 
 final class PushCommentView: UIView {
-    lazy var textView: UITextView = {
+    private lazy var textView: UITextView = {
         let textView = UITextView()
         
         textView.text = "식당에 대한 경험과 팁을 알려주세요!"
@@ -31,16 +31,17 @@ final class PushCommentView: UIView {
         return textView
     }()
     
-    lazy var button: UIButton = {
+    private lazy var button: UIButton = {
         let button = UIButton()
         
         button.setTitle("등록", for: .normal)
         button.setTitleColor(.gray4, for: .normal)
+        button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
         
         return button
     }()
     
-    lazy var separator: UIView = {
+    private lazy var separator: UIView = {
        let separator = UIView()
         
         separator.backgroundColor = .gray3
@@ -50,6 +51,8 @@ final class PushCommentView: UIView {
     }()
     
     private var viewHeight: NSLayoutConstraint?
+    
+    var enrollReview: ((String) -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -94,7 +97,7 @@ final class PushCommentView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
     
     override func layoutSubviews() {
@@ -106,6 +109,19 @@ final class PushCommentView: UIView {
         let inset: CGFloat = 25
         
         viewHeight?.constant = separatorHeight + textView + inset
+    }
+    
+    @objc private func buttonTapped(_ sender: UIButton) {
+        if sender.titleLabel?.textColor == .gray0 {
+            guard let text = textView.text else { return }
+            enrollReview?(text)
+            textView.text = "식당에 대한 경험과 팁을 알려주세요!"
+            textView.textColor = .gray4
+            textView.resignFirstResponder()
+            button.setTitleColor(.gray4, for: .normal)
+        } else {
+            return
+        }
     }
 }
 
@@ -121,7 +137,7 @@ extension PushCommentView: UITextViewDelegate {
         if textView.text != "" {
             button.setTitleColor(.gray0, for: .normal)
         } else {
-            button.setTitleColor(.gray3, for: .normal)
+            button.setTitleColor(.gray4, for: .normal)
             
         }
         

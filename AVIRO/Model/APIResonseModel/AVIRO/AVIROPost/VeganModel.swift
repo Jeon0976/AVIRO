@@ -47,6 +47,7 @@ enum MenuType: String {
 /// 옵셔널 데이터는 검색으로 입력, 좌표로 입력에 따라 값이 있고 없을 수 있기 때문
 struct VeganModel: Codable {
     var placeId = UUID().uuidString
+    var userId: String
     var title: String
     var category: String
     var address: String

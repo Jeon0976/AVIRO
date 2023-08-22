@@ -36,6 +36,8 @@ final class PlaceSegmentedControlView: UIView {
 
     private var afterInitViewConstrait = false
     
+    private var placeId = ""
+    
     var isLoading = true {
         didSet {
             if isLoading {
@@ -51,6 +53,7 @@ final class PlaceSegmentedControlView: UIView {
         
         makeLayout()
         makeAttribute()
+        handleClosure()
     }
     
     required init?(coder: NSCoder) {
@@ -137,17 +140,23 @@ final class PlaceSegmentedControlView: UIView {
         
     // TODO: API 연결되면 수정 예정
     // Popup할 때, Slide up 할 때 구분 필요
-    func allDataBinding(infoModel: PlaceInfoData?,
+    func allDataBinding(placeId: String,
+                        infoModel: PlaceInfoData?,
                         menuModel: PlaceMenuData?,
                         reviewsModel: PlaceReviewsData?
     ) {
+        self.placeId = placeId
+        
         homeView.dataBinding(infoModel: infoModel,
                              menuModel: menuModel,
                              reviewsModel: reviewsModel
         )
         
         menuView.dataBinding(menuModel)
-        reviewView.dataBinding(reviewsModel)
+        
+        reviewView.dataBinding(placeId: placeId,
+                               reviewsModel: reviewsModel
+        )
         
         guard let reviewsCount = reviewsModel?.commentArray.count else { return }
         
@@ -225,5 +234,12 @@ final class PlaceSegmentedControlView: UIView {
     
     func scrollViewIsUserIneraction(_ enabled: Bool) {
         scrollView.isUserInteractionEnabled = enabled
+    }
+    
+    private func handleClosure() {
+        homeView.showMoreReviews = { [weak self] in
+            self?.segmentedControl.selectedSegmentIndex = 2
+            self?.activeReviewView()
+        }
     }
 }

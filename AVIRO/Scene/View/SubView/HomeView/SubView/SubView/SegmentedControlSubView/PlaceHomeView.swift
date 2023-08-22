@@ -8,7 +8,6 @@
 import UIKit
 
 // TODO: SegmentedControl의 메뉴뷰를 그대로 가져오는 방법은 없을까?
-
 final class PlaceHomeView: UIView {
     private lazy var placeInfoView = PlaceInfoView()
     private lazy var placeMenuView = PlaceMenuView()
@@ -17,11 +16,13 @@ final class PlaceHomeView: UIView {
     
     private var viewHeightConstraint: NSLayoutConstraint?
 
-    
+    var showMoreReviews: (() -> Void)?
+        
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         makeLayout()
+        handleClosure()
     }
     
     required init?(coder: NSCoder) {
@@ -90,5 +91,12 @@ final class PlaceHomeView: UIView {
         placeInfoView.dataBindingWhenInHomeView(infoModel)
         placeMenuView.dataBindingWhenInHomeView(menuModel)
         placeReviewsView.dataBindingWhenInHomeView(reviewsModel)
+    }
+    
+    // MARK: 클로저 처리
+    private func handleClosure() {
+        placeReviewsView.whenTappedShowMoreButton = { [weak self] in
+            self?.showMoreReviews?()
+        }
     }
 }

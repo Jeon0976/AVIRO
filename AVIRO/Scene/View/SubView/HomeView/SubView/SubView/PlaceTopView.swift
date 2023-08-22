@@ -130,6 +130,7 @@ final class PlaceTopView: UIView {
         label.font = .systemFont(ofSize: 24, weight: .heavy)
         label.textColor = .gray0
         label.numberOfLines = 3
+        label.lineBreakMode = .byCharWrapping
         
         return label
     }()
@@ -158,7 +159,8 @@ final class PlaceTopView: UIView {
         
         label.font = .systemFont(ofSize: 18, weight: .semibold)
         label.textAlignment = .center
-        label.numberOfLines = 3
+        label.numberOfLines = 2
+        label.lineBreakMode = .byCharWrapping
         
         return label
     }()
@@ -510,7 +512,8 @@ extension PlaceTopView {
             
             whenFullTitle.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             whenFullTitle.topAnchor.constraint(equalTo: whenFullBackButton.topAnchor),
-            whenFullTitle.widthAnchor.constraint(equalToConstant: 120)
+            whenFullTitle.leadingAnchor.constraint(equalTo: whenFullBackButton.trailingAnchor, constant: 16),
+            whenFullTitle.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -56)
         ])
         
         whenFullBackButton.isHidden = true

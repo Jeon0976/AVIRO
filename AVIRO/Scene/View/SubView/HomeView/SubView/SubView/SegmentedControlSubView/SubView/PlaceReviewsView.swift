@@ -31,6 +31,16 @@ final class PlaceReviewsView: UIView {
         return label
     }()
     
+    private lazy var noReviews: UILabel = {
+        let label = UILabel()
+        
+        label.font = .systemFont(ofSize: 17, weight: .medium)
+        label.textColor = .gray3
+        label.text = "등록된 후기가 없어요"
+        
+        return label
+    }()
+    
     private lazy var reviewsTable: UITableView = {
         let tableView = UITableView()
         
@@ -58,6 +68,7 @@ final class PlaceReviewsView: UIView {
         let button = ShowMoreButton()
         
         button.setButton("후기 더보기")
+        button.addTarget(self, action: #selector(showMoreButtonTapped), for: .touchUpInside)
         
         return button
     }()
@@ -73,10 +84,16 @@ final class PlaceReviewsView: UIView {
     
     private var whenReviewView = false
     
+    var whenTappedShowMoreButton: (() -> Void)?
+    var whenEnrollReview: ((String) -> Void)?
+    
+    private var placeId = ""
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         makeLayout()
+        handleClosure()
     }
     
     required init?(coder: NSCoder) {
@@ -96,7 +113,8 @@ final class PlaceReviewsView: UIView {
             reviewsTable,
             separatedLine,
             showMoreReviewsButton,
-            reviewInputView
+            reviewInputView,
+            noReviews
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview($0)
@@ -124,29 +142,50 @@ final class PlaceReviewsView: UIView {
             
             reviewInputView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0),
             reviewInputView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            reviewInputView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+            reviewInputView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            
+            noReviews.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            noReviews.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
     }
     
-    func dataBinding(_ reviewsModel: PlaceReviewsData?) {
+    func dataBinding(placeId: String,
+                     reviewsModel: PlaceReviewsData?
+    ) {
         guard let reviews = reviewsModel?.commentArray else { return }
         
-        self.reviewsArray = reviews
         self.subTitle.text = "\(reviews.count)개"
-        
         whenReviewView = true
 
-        reviewsTable.isScrollEnabled = true
+        if reviews.count > 0 {
+            whenHaveReviews(reviews)
+        } else {
+            whenNotHaveReviews()
+        }
         
-        reviewsTable.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
-
         separatedLine.isHidden = true
         showMoreReviewsButton.isHidden = true
         reviewInputView.isHidden = false
         
+    }
+    
+    private func whenHaveReviews(_ reviews: [ReviewData]) {
+        self.reviewsArray = reviews
+        
+        noReviews.isHidden = true
+        reviewsTable.isHidden = false
+        
+        reviewsTable.isScrollEnabled = true
+        reviewsTable.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+
         reviewsTable.bottomAnchor.constraint(equalTo: reviewInputView.topAnchor).isActive = true
 
         reviewsTable.reloadData()
+    }
+    
+    private func whenNotHaveReviews() {
+        noReviews.isHidden = false
+        reviewsTable.isHidden = true
         
     }
     
@@ -155,16 +194,29 @@ final class PlaceReviewsView: UIView {
         
         self.subTitle.text = "\(reviews.count)개"
         
+        if reviews.count > 0 {
+            whenHaveReviewsInHomeView(reviews)
+        } else {
+            whenNotHaveReviewsInHomeView()
+        }
+        
+        reviewInputView.isHidden = true
+    
+    }
+    
+    private func whenHaveReviewsInHomeView(_ reviews: [ReviewData]) {
+        noReviews.isHidden = true
+        reviewsTable.isHidden = false
+        showMoreReviewsButton.isHidden = false
+        separatedLine.isHidden = false
+        
         if reviews.count > 4 {
             self.reviewsArray = Array(reviews.prefix(4))
         } else {
             self.reviewsArray = reviews
         }
         
-        reviewInputView.isHidden = true
-        
         reviewsTable.reloadData()
-        
         reviewsTable.isScrollEnabled = false
         
         reviewsHeightConstraint?.isActive = false
@@ -172,6 +224,17 @@ final class PlaceReviewsView: UIView {
         
         reviewsHeightConstraint = reviewsTable.heightAnchor.constraint(equalToConstant: 600)
         reviewsHeightConstraint?.isActive = true
+    }
+    
+    private func whenNotHaveReviewsInHomeView() {
+        noReviews.isHidden = false
+        reviewsTable.isHidden = true
+        showMoreReviewsButton.isHidden = true
+        separatedLine.isHidden = true
+        
+        viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: 250)
+        viewHeightConstraint?.isActive = true
+        
     }
     
     private func updateTableViewHeight() {
@@ -196,6 +259,22 @@ final class PlaceReviewsView: UIView {
         
         viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: totalHeight)
         viewHeightConstraint?.isActive = true
+    }
+    
+    @objc private func showMoreButtonTapped() {
+        whenTappedShowMoreButton?()
+    }
+    
+    private func handleClosure() {
+        reviewInputView.enrollReview = { [weak self] text in
+            guard let placeId = self?.placeId else { return }
+            let reviewModel = AVIROCommentPost(
+                placeId: placeId,
+                userId: UserId.shared.userId,
+                content: text
+            )
+            
+        }
     }
 }
 

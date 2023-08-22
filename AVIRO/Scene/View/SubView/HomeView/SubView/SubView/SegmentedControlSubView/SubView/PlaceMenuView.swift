@@ -134,13 +134,13 @@ final class PlaceMenuView: UIView {
     }
     
     func dataBinding(_ menuModel: PlaceMenuData?) {
-        guard let menu = menuModel?.menuArray else { return }
+        guard let menuModel = menuModel else { return }
         
         whenMenuView = true
         
-        self.menuArray = menu
-        self.subTitle.text = "\(menu.count)개"
-        self.updatedTimeLabel.text = "업데이트 2023.07.08"
+        self.subTitle.text = "\(menuModel.count)개"
+        self.updatedTimeLabel.text = "업데이트" + menuModel.updatedTime
+        self.menuArray = menuModel.menuArray
                 
         menuTable.isScrollEnabled = true
         menuTable.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
@@ -151,16 +151,18 @@ final class PlaceMenuView: UIView {
     }
         
     func dataBindingWhenInHomeView(_ menuModel: PlaceMenuData?) {
-        guard let menu = menuModel?.menuArray else { return }
         
-        self.subTitle.text = "\(menu.count)개"
-        self.updatedTimeLabel.text = "업데이트 2023.07.08"
+        guard let menuModel = menuModel else { return }
         
-        if menu.count > 5 {
-            self.menuArray = Array(menu.prefix(5))
+        
+        self.subTitle.text = "\(menuModel.count)개"
+        self.updatedTimeLabel.text = "업데이트" + menuModel.updatedTime
+        
+        if menuModel.menuArray.count > 5 {
+            self.menuArray = Array(menuModel.menuArray.prefix(5))
             showMoreButton.isHidden = false
         } else {
-            self.menuArray = menu
+            self.menuArray = menuModel.menuArray
             showMoreButton.isHidden = true
         }
     

@@ -62,6 +62,8 @@ final class AppController {
     
     // MARK: 불러올 view 확인 메서드
     private func checkState() {
+        UserId.shared.userId = "test"
+        
         setHomeView()
 
 //         최초 튜토리얼 화면 안 봤을 때

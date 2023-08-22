@@ -13,5 +13,7 @@ struct AVIROMenuModel: Decodable {
 }
 
 struct PlaceMenuData: Decodable {
+    let count: Int
+    let updatedTime: String
     let menuArray: [MenuArray]
 }

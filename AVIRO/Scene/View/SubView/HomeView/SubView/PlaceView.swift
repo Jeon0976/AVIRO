@@ -43,6 +43,8 @@ final class PlaceView: UIView {
         }
     }
     
+    private var placeId = ""
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -77,15 +79,20 @@ final class PlaceView: UIView {
     }
     
     // TODO: slide up 일때 세부내용 api 호출 후 데이터 바인딩 되는거 만들기
-    func summaryDataBinding(_ placeModel: PlaceTopModel) {
+    func summaryDataBinding(placeModel: PlaceTopModel,
+                            placeId: String
+    ) {
         topView.dataBinding(placeModel)
+        self.placeId = placeId
     }
     
     func allDataBinding(infoModel: PlaceInfoData?,
                         menuModel: PlaceMenuData?,
                         reviewsModel: PlaceReviewsData?
     ) {
+        
         segmetedControlView.allDataBinding(
+            placeId: self.placeId,
             infoModel: infoModel,
             menuModel: menuModel,
             reviewsModel: reviewsModel

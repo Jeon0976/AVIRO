@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class InrollMenuTableView: UIView {
+final class EnrollMenuTableView: UIView {
     let title: UILabel = {
         let label = UILabel()
         

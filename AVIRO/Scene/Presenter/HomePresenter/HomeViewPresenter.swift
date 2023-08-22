@@ -24,7 +24,9 @@ protocol HomeViewProtocol: NSObject {
     func moveToCameraWhenNoAVIRO(_ lng: Double, _ lat: Double)
     func moveToCameraWhenHasAVIRO(_ markerModel: MarkerModel)
     func loadMarkers()
-    func afterClickedMarker(_ placeModel: PlaceTopModel)
+    func afterClickedMarker(placeModel: PlaceTopModel,
+                            placeId: String
+    )
     func afterSlideupPlaceView(infoModel: PlaceInfoData?,
                                menuModel: PlaceMenuData?,
                                reviewsModel: PlaceReviewsData?
@@ -237,7 +239,10 @@ final class HomeViewPresenter: NSObject {
                 address: place.address)
 
             DispatchQueue.main.async { [weak self] in
-                self?.viewController?.afterClickedMarker(placeTopModel)
+                self?.viewController?.afterClickedMarker(
+                    placeModel: placeTopModel,
+                    placeId: placeId
+                )
             }
         }
     }

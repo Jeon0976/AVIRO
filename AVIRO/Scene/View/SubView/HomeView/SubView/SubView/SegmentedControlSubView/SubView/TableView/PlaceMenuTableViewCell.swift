@@ -107,7 +107,12 @@ final class PlaceMenuTableViewCell: UITableViewCell {
         
         menuTypeLabel.type = type ?? MenuType.vegan
         menuTitle.text = menu.menu
-        menuPrice.text = menu.price
+        
+        if menu.price != "변동가" {
+            menuPrice.text = menu.price + "원"
+        } else {
+            menuPrice.text = menu.price
+        }
         
         if menu.isCheck {
             menuRequest.isHidden = false

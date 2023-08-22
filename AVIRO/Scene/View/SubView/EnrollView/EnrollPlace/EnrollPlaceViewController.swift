@@ -1,5 +1,5 @@
 //
-//  InrollPlaceViewController.swift
+//  EnrollPlaceViewController.swift
 //  AVIRO
 //
 //  Created by 전성훈 on 2023/07/20.
@@ -7,14 +7,14 @@
 
 import UIKit
 
-final class InrollPlaceViewController: UIViewController {
-    lazy var presenter = InrollPlacePresenter(viewController: self)
+final class EnrollPlaceViewController: UIViewController {
+    lazy var presenter = EnrollPlacePresenter(viewController: self)
     
     private lazy var scrollView = UIScrollView()
     
-    private lazy var storeInfoView = InrollStoreInfoView()
-    private lazy var veganDetailView = InrollVeganDetailView()
-    private lazy var menuTableView = InrollMenuTableView()
+    private lazy var storeInfoView = EnrollStoreInfoView()
+    private lazy var veganDetailView = EnrollVeganDetailView()
+    private lazy var menuTableView = EnrollMenuTableView()
     
     private lazy var tapGesture = UITapGestureRecognizer()
     
@@ -45,7 +45,7 @@ final class InrollPlaceViewController: UIViewController {
     }
 }
 
-extension InrollPlaceViewController: InrollPlaceProtocol {
+extension EnrollPlaceViewController: EnrollPlaceProtocol {
     // MARK: Layout
     func makeLayout() {
         
@@ -245,7 +245,7 @@ extension InrollPlaceViewController: InrollPlaceProtocol {
 }
 
 // MARK: Private Method
-extension InrollPlaceViewController {
+extension EnrollPlaceViewController {
     // MARK: Init Data
     private func initData() {
         presenter.initData()
@@ -366,7 +366,7 @@ extension InrollPlaceViewController {
     }
 }
 
-extension InrollPlaceViewController {
+extension EnrollPlaceViewController {
     // MARK: Report Button Tapped
     @objc func reportStore() {
         presenter.reportStore()
@@ -407,7 +407,7 @@ extension InrollPlaceViewController {
 }
 
 // MARK: TapGestureDelegate
-extension InrollPlaceViewController: UIGestureRecognizerDelegate {
+extension EnrollPlaceViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         if touch.view is MenuField || touch.view is UIButton {
             return false
@@ -419,7 +419,7 @@ extension InrollPlaceViewController: UIGestureRecognizerDelegate {
 }
 
 // MARK: TextField가 선택되었을 때 Method
-extension InrollPlaceViewController: UITextFieldDelegate {
+extension EnrollPlaceViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textField == storeInfoView.titleField {
             let viewController = PlaceListSearchViewController()
@@ -438,7 +438,7 @@ extension InrollPlaceViewController: UITextFieldDelegate {
     }
 }
 
-extension InrollPlaceViewController: UITableViewDataSource {
+extension EnrollPlaceViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch tableView.tag {
         case 0:

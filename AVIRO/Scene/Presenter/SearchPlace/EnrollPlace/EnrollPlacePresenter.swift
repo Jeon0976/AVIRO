@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol InrollPlaceProtocol: NSObject {
+protocol EnrollPlaceProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
     func makeAttributeWhenViewWillAppear()
@@ -25,8 +25,8 @@ protocol InrollPlaceProtocol: NSObject {
     func pushAlertController()
 }
 
-final class InrollPlacePresenter {
-    weak var viewController: InrollPlaceProtocol?
+final class EnrollPlacePresenter {
+    weak var viewController: EnrollPlaceProtocol?
         
     private var storeNormalData: PlaceListModel?
     private var category: Category?
@@ -84,7 +84,7 @@ final class InrollPlacePresenter {
     // MARK: 최종 데이터
     private var veganModel: VeganModel?
     
-    init(viewController: InrollPlaceProtocol) {
+    init(viewController: EnrollPlaceProtocol) {
         self.viewController = viewController
     }
     
@@ -113,6 +113,9 @@ final class InrollPlacePresenter {
             return
         }
         
+        print(veganModel)
+        
+        // TODO: 수정 예정
         AVIROAPIManager().postPlaceModel(veganModel) { [weak self] responseModel in
             DispatchQueue.main.async {
                 if responseModel.statusCode == 200 {
@@ -395,7 +398,7 @@ final class InrollPlacePresenter {
     }
 }
 
-extension InrollPlacePresenter {
+extension EnrollPlacePresenter {
     // MARK: Data 추가 될 때 마다 발동
    private func updateData(key: String, value: Any?) {
         totalData[key] = value
@@ -431,15 +434,17 @@ extension InrollPlacePresenter {
             return
         }
         
-        veganModel = VeganModel(title: storeNormalData?.title ?? "",
-                                category: category?.rawValue ?? "",
-                                address: storeNormalData?.address ?? "",
-                                phone: storeNormalData?.phone ?? "",
-                                x: storeNormalData?.x ?? 0.0,
-                                y: storeNormalData?.y ?? 0.0,
-                        allVegan: allVegan,
-                        someMenuVegan: someVegan,
-                        ifRequestVegan: requestVegan
+        veganModel = VeganModel(
+            userId: UserId.shared.userId,
+            title: storeNormalData?.title ?? "",
+            category: category?.title ?? "",
+            address: storeNormalData?.address ?? "",
+            phone: storeNormalData?.phone ?? "",
+            x: storeNormalData?.x ?? 0.0,
+            y: storeNormalData?.y ?? 0.0,
+            allVegan: allVegan,
+            someMenuVegan: someVegan,
+            ifRequestVegan: requestVegan
         )
         
         let normalTableModel = totalData["normalTableModel"] as? [VeganTableFieldModel] ?? []

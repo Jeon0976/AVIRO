@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class InrollVeganDetailView: UIView {
+final class EnrollVeganDetailView: UIView {
     // MARK: Main Title
     private lazy var title: UILabel = {
         let label = UILabel()
