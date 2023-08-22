@@ -31,7 +31,7 @@ final class PlaceTopView: UIView {
         let label = UILabel()
         
         label.textColor = .gray0
-        label.text = "ooo"
+        label.text = "OOO"
         label.font = .systemFont(ofSize: 24, weight: .heavy)
 
         return label
@@ -41,7 +41,7 @@ final class PlaceTopView: UIView {
         let label = UILabel()
         
         label.textColor = .gray2
-        label.text = ".."
+        label.text = "oo"
         label.textAlignment = .left
         label.font = .systemFont(ofSize: 15, weight: .medium)
 
@@ -199,6 +199,23 @@ final class PlaceTopView: UIView {
     var whenFullBackButtonTapped: (() -> Void)?
     var whenStarButtonTapped: ((Bool) -> Void)?
     var whenShareButtonTapped: (([String]) -> Void)?
+    
+    var isLoadingTopView: Bool = true {
+        didSet {
+            if isLoadingTopView {
+                isLoadingView()
+            }
+        }
+    }
+    
+    private func isLoadingView() {
+        placeIcon.image = nil
+        placeTitle.text = "OOO"
+        placeCategory.text = "oo"
+        distanceLabel.text = "0m"
+        reviewsLabel.text = "0개"
+        addressLabel.text = "oo"
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -37,6 +37,7 @@ final class PlaceSegmentedControlView: UIView {
     private var afterInitViewConstrait = false
     
     private var placeId = ""
+    
     private var reviewsCount = 0 {
         didSet {
             segmentedControlLabelChange(reviewsCount)
@@ -242,6 +243,8 @@ final class PlaceSegmentedControlView: UIView {
     
     func scrollViewIsUserIneraction(_ enabled: Bool) {
         scrollView.isUserInteractionEnabled = enabled
+        menuView.isUserInteractionEnabled = enabled
+        reviewView.isUserInteractionEnabled = enabled
     }
     
     private func handleClosure() {

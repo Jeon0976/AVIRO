@@ -33,12 +33,22 @@ final class PlaceView: UIView {
         }
     }
     
+    var isLoadingTopView: Bool = true {
+        didSet {
+            if isLoadingTopView {
+                topView.isLoadingTopView = isLoadingTopView
+            } else {
+                topView.isLoadingTopView = isLoadingTopView
+            }
+        }
+    }
+    
     var isLoadingDetail: Bool = true {
         didSet {
             if isLoadingDetail {
-                segmetedControlView.isLoading = true
+                segmetedControlView.isLoading = isLoadingDetail
             } else {
-                segmetedControlView.isLoading = false
+                segmetedControlView.isLoading = isLoadingDetail
             }
         }
     }
@@ -87,6 +97,7 @@ final class PlaceView: UIView {
     ) {
         topView.dataBinding(placeModel)
         self.placeId = placeId
+        isLoadingTopView = false
     }
     
     func allDataBinding(infoModel: PlaceInfoData?,
@@ -111,6 +122,7 @@ final class PlaceView: UIView {
     private func whenViewSlideUp() {
         topView.placeViewStated = .SlideUp
         segmetedControlView.scrollViewIsUserIneraction(false)
+        
     }
     
     private func whenViewFullUp() {

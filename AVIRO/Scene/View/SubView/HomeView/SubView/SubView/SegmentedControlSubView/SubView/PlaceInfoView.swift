@@ -59,10 +59,23 @@ final class PlaceInfoView: UIView {
         button.setTitleColor(.changeButton, for: .normal)
         button.backgroundColor = .gray7
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-        button.titleLabel?.textAlignment = .left
+        button.addTarget(self, action: #selector(phoneButtonTapped(_:)), for: .touchUpInside)
         
         return button
     }()
+    
+    @objc private func phoneButtonTapped(_ sender: UIButton) {
+        guard let text = sender.titleLabel?.text else { return }
+        if text != "전화번호 추가" {
+            let urlPhone = "tel:" + text
+            
+            guard let url = URL(string: urlPhone) else { return }
+            
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        }
+    }
     
     private lazy var timeIcon: UIImageView = {
         let imageView = UIImageView()

@@ -19,9 +19,11 @@ final class PlaceReviewWriteView: UIView {
     private lazy var title: UILabel = {
         let label = UILabel()
         
-        label.text = "oo님의 후기를 들려주세요!"
+        let userId = UserId.shared.userId
+        label.text = userId + "님의 후기를 들려주세요!"
         label.font = .systemFont(ofSize: 17, weight: .semibold)
         label.textColor = .gray0
+        label.numberOfLines = 2
         
         return label
     }()
@@ -30,11 +32,18 @@ final class PlaceReviewWriteView: UIView {
         let button = ReviewWriteButton()
         
         button.setButton()
+        button.addTarget(self, action: #selector(writeReviewButtonTapped), for: .touchUpInside)
         
         return button
     }()
     
+    @objc private func writeReviewButtonTapped() {
+        whenWriteReviewButtonTapped?()
+    }
+    
     private var viewHeightConstraint: NSLayoutConstraint?
+    
+    var whenWriteReviewButtonTapped: (() -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)

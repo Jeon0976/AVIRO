@@ -39,17 +39,6 @@ extension HomeViewController {
         homeButtonIsHidden(false)
         viewNaviButtonHidden(true)
         searchTextFieldTopConstraint?.constant = 16
-
-//        guard let tabBarController = self.tabBarController as? TabBarViewController else { return }
-//
-//        let tabBarHeight = tabBarController.tabBar.frame.height
-//
-//        let screenSize = self.view.window?.windowScene?.screen.bounds.size
-//        tabBarController.hiddenTabBar(true)
-////
-//        let height = -placeView.topView.frame.height
-//
-//        updatePlacePopupViewHeight(height)
         
         let height = -placeView.topView.frame.height
         
@@ -82,12 +71,6 @@ extension HomeViewController {
         viewNaviButtonHidden(true)
         moveToCameraWhenPopupView()
         placeView.placeViewStated = .PopUp
-        
-//        guard let tabBarController = self.tabBarController as? TabBarViewController else { return }
-//
-//        let tabBarHeight = tabBarController.tabBar.frame.height
-        
-        
         
         searchTextFieldTopConstraint?.constant = 16
 

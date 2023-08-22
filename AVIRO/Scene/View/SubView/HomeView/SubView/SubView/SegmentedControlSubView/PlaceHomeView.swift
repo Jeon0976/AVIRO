@@ -98,6 +98,10 @@ final class PlaceHomeView: UIView {
         placeReviewsView.whenTappedShowMoreButton = { [weak self] in
             self?.showMoreReviews?()
         }
+        
+        placeReviewWriteView.whenWriteReviewButtonTapped = { [weak self] in
+            self?.showMoreReviews?()
+        }
     }
     
     func updateReview(_ postModel: AVIROCommentPost) {

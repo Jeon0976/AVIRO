@@ -327,6 +327,7 @@ extension HomeViewController: HomeViewProtocol {
     private func popupPlaceView() {
         placeViewPopUp()
         isSlideUpView = false
+        placeView.isLoadingTopView = true
     }
     
     // MARK: place view에 data binding
@@ -463,14 +464,16 @@ extension HomeViewController {
     // MARK: Swipte Gestrue Actived
     @objc private func swipeGestureActived(_ gesture: UISwipeGestureRecognizer) {
         if gesture.direction == .up {
-            if isSlideUpView && !placeView.isLoadingDetail {
-                placeViewFullUp()
-                naverMapView.isHidden = true
-                isSlideUpView = false
-            } else if !isSlideUpView && placeView.placeViewStated == .PopUp {
-                placeViewSlideUp()
-                presenter.getPlaceModelDetail()
-                isSlideUpView = true
+            if !placeView.isLoadingTopView {
+                if isSlideUpView && !placeView.isLoadingDetail {
+                    placeViewFullUp()
+                    naverMapView.isHidden = true
+                    isSlideUpView = false
+                } else if !isSlideUpView && placeView.placeViewStated == .PopUp {
+                    placeViewSlideUp()
+                    presenter.getPlaceModelDetail()
+                    isSlideUpView = true
+                }
             }
         } else if gesture.direction == .down {
             if isSlideUpView {

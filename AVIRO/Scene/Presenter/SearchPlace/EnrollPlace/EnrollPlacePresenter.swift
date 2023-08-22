@@ -506,9 +506,13 @@ extension EnrollPlacePresenter {
     }
     
     private func deleteNormalData(_ indexPath: IndexPath) {
-        normalTableModel.remove(at: indexPath.row)
-        viewController?.menuTableReload(isPresentingDefaultTable: isPresentingDefaultTable)
-        updateData(key: "normalTableModel", value: self.normalTableModel)
+        if normalTableModel.count > 1 {
+            normalTableModel.remove(at: indexPath.row)
+            viewController?.menuTableReload(isPresentingDefaultTable: isPresentingDefaultTable)
+            updateData(key: "normalTableModel", value: self.normalTableModel)
+        } else {
+           return
+        }
     }
     
     // MARK: Binding Request Data
@@ -536,9 +540,13 @@ extension EnrollPlacePresenter {
     }
     
     private func deleteRequestCell(_ indexPath: IndexPath) {
-        requestTableModel.remove(at: indexPath.row)
-        viewController?.menuTableReload(isPresentingDefaultTable: isPresentingDefaultTable)
-        updateData(key: "requestTableModel", value: self.requestTableModel)
+        if requestTableModel.count > 1 {
+            requestTableModel.remove(at: indexPath.row)
+            viewController?.menuTableReload(isPresentingDefaultTable: isPresentingDefaultTable)
+            updateData(key: "requestTableModel", value: self.requestTableModel)
+        } else {
+            return
+        }
     }
     
     private func deleteOnlyRequestString(_ indexPath: IndexPath) {
