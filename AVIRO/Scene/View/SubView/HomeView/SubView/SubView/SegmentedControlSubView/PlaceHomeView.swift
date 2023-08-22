@@ -38,7 +38,7 @@ final class PlaceHomeView: UIView {
     private func makeLayout() {
         self.backgroundColor = .gray6
         // 300 + 200 + 250 + 200
-        viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: 950)
+        viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: 0)
         viewHeightConstraint?.isActive = true
         
         [
@@ -98,5 +98,9 @@ final class PlaceHomeView: UIView {
         placeReviewsView.whenTappedShowMoreButton = { [weak self] in
             self?.showMoreReviews?()
         }
+    }
+    
+    func updateReview(_ postModel: AVIROCommentPost) {
+        placeReviewsView.afterUpdateReviewAndUpdateInHomeView(postModel)
     }
 }

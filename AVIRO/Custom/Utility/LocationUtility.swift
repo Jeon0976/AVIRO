@@ -36,4 +36,16 @@ final class LocationUtility {
         
         return R * c
     }
+    
+    /// 현재 날짜 데이터 불러오기
+    static func nowDate() -> String {
+        let date = Date()
+        let formatter = DateFormatter()
+        
+        formatter.dateFormat = "yyyy.MM.dd"
+        
+        let formattedDate = formatter.string(from: date)
+        
+        return formattedDate
+    }
 }

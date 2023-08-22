@@ -265,7 +265,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
     
     // MARK: Post Comment Model
     func postCommentModel(_ commentModel: AVIROCommentPost) {
-        guard let url = postAPI.commentInroll().url else { return }
+        guard let url = postAPI.commentUpload().url else { return }
         
         guard let jsonData = try? JSONEncoder().encode(commentModel) else {
             return

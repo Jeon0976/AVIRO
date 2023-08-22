@@ -51,7 +51,7 @@ final class HomeViewController: UIViewController {
         presenter.viewDidLoad()
         presenter.makeNotification()
         presenter.loadVeganData()
-        viewDataBinding()
+        handleClosure()
         
         view.addSubview(zoomLevel)
         zoomLevel.translatesAutoresizingMaskIntoConstraints = false
@@ -387,7 +387,7 @@ extension HomeViewController {
     }
     
     // MARK: 클로저 함수 Binding 처리
-    func viewDataBinding() {
+    private func handleClosure() {
         placeView.topView.whenFullBackButtonTapped = { [weak self] in
             self?.naverMapView.isHidden = false
             self?.placeViewPopUpAfterInitPlacePopViewHeight()
@@ -402,34 +402,42 @@ extension HomeViewController {
         }
         
         placeView.topView.whenStarButtonTapped = { [weak self] selected in
-            var title = ""
-            if selected {
-                title = "즐겨찾기가 추가되었습니다."
-            } else {
-                title = "즐겨찾기가 삭제되었습니다."
-            }
-            
-            var style = ToastStyle()
-            style.cornerRadius = 14
-            style.backgroundColor = .gray3?.withAlphaComponent(0.7) ?? .lightGray
-            
-            style.titleColor = .gray7 ?? .white
-            style.titleFont = .systemFont(ofSize: 17, weight: .semibold)
-            
-            let centerX = (self?.view.frame.size.width ?? 400) / 2
-            let viewHeight = self?.view.safeAreaLayoutGuide.layoutFrame.height ?? 800
-            
-            let yPosition: CGFloat = viewHeight - 32
-            
-            self?.view.makeToast(title,
-                      duration: 1.0,
-                      point: CGPoint(x: centerX, y: yPosition),
-                      title: nil,
-                      image: nil,
-                      style: style,
-                      completion: nil
-            )
+            self?.makeToastButton(selected)
         }
+        
+        placeView.whenUploadReview = { [weak self] postReviewModel in
+            self?.presenter.postReviewModel(postReviewModel)
+        }
+    }
+    
+    private func makeToastButton(_ selected: Bool) {
+        var title = ""
+        if selected {
+            title = "즐겨찾기가 추가되었습니다."
+        } else {
+            title = "즐겨찾기가 삭제되었습니다."
+        }
+        
+        var style = ToastStyle()
+        style.cornerRadius = 14
+        style.backgroundColor = .gray3?.withAlphaComponent(0.7) ?? .lightGray
+        
+        style.titleColor = .gray7 ?? .white
+        style.titleFont = .systemFont(ofSize: 17, weight: .semibold)
+        
+        let centerX = (self.view.frame.size.width ?? 400) / 2
+        let viewHeight = self.view.safeAreaLayoutGuide.layoutFrame.height ?? 800
+        
+        let yPosition: CGFloat = viewHeight - 32
+        
+        self.view.makeToast(title,
+                  duration: 1.0,
+                  point: CGPoint(x: centerX, y: yPosition),
+                  title: nil,
+                  image: nil,
+                  style: style,
+                  completion: nil
+        )
     }
     
     // MARK: Down Back Button Tapped

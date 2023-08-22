@@ -37,6 +37,12 @@ final class PlaceSegmentedControlView: UIView {
     private var afterInitViewConstrait = false
     
     private var placeId = ""
+    private var reviewsCount = 0 {
+        didSet {
+            segmentedControlLabelChange(reviewsCount)
+            updateReviewsCount?(reviewsCount)
+        }
+    }
     
     var isLoading = true {
         didSet {
@@ -47,6 +53,9 @@ final class PlaceSegmentedControlView: UIView {
             }
         }
     }
+    
+    var whenUploadReview: ((AVIROCommentPost) -> Void)?
+    var updateReviewsCount: ((Int) -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -160,8 +169,7 @@ final class PlaceSegmentedControlView: UIView {
         
         guard let reviewsCount = reviewsModel?.commentArray.count else { return }
         
-        segmentedControlLabelChange(reviewsCount)
-        
+        self.reviewsCount = reviewsCount
     }
     
     private func segmentedControlLabelChange(_ reviews: Int) {
@@ -240,6 +248,14 @@ final class PlaceSegmentedControlView: UIView {
         homeView.showMoreReviews = { [weak self] in
             self?.segmentedControl.selectedSegmentIndex = 2
             self?.activeReviewView()
+        }
+        
+        reviewView.whenUploadReview = { [weak self] postReviewModel in
+            
+            // TODO: HomeView 내부에있는 review view도 layout update 해야할까??
+            self?.reviewsCount += 1
+            self?.homeView.updateReview(postReviewModel)
+            self?.whenUploadReview?(postReviewModel)
         }
     }
 }

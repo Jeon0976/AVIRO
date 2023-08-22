@@ -45,10 +45,13 @@ final class PlaceView: UIView {
     
     private var placeId = ""
     
+    var whenUploadReview: ((AVIROCommentPost) -> Void)?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         makeLayout()
+        handleClosure()
     }
     
     required init?(coder: NSCoder) {
@@ -90,7 +93,7 @@ final class PlaceView: UIView {
                         menuModel: PlaceMenuData?,
                         reviewsModel: PlaceReviewsData?
     ) {
-        
+        print(placeId)
         segmetedControlView.allDataBinding(
             placeId: self.placeId,
             infoModel: infoModel,
@@ -113,5 +116,15 @@ final class PlaceView: UIView {
     private func whenViewFullUp() {
         topView.placeViewStated = .Full
         segmetedControlView.scrollViewIsUserIneraction(true)
+    }
+    
+    private func handleClosure() {
+        segmetedControlView.whenUploadReview = { [weak self] postReviewModel in
+            self?.whenUploadReview?(postReviewModel)
+        }
+        
+        segmetedControlView.updateReviewsCount = { [weak self] reviewsCount in
+            self?.topView.updateReviewsCount(reviewsCount)
+        }
     }
 }

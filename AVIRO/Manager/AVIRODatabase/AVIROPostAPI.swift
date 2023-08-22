@@ -21,7 +21,7 @@ struct AVIROPostAPI {
     }()
     
     static let placeInrollPath = "/prod/map/add/place"
-    static let commentInrollPath = "/prod/map/add/comment"
+    static let commentUploadPath = "/prod/map/add/comment"
     static let userInfo = "/prod/member/sign-up"
     static let userCheck = "/prod/member"
     static let userNicNameCheck = "/prod/member/check"
@@ -39,11 +39,11 @@ struct AVIROPostAPI {
     }
     
     // MARK: CommentInroll
-    mutating func commentInroll() -> URLComponents {
+    mutating func commentUpload() -> URLComponents {
         var components = URLComponents()
         components.scheme = AVIROPostAPI.scheme
         components.host = host
-        components.path = AVIROPostAPI.commentInrollPath
+        components.path = AVIROPostAPI.commentUploadPath
         
         return components
     }

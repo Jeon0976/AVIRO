@@ -86,6 +86,7 @@ final class PlaceReviewsView: UIView {
     
     var whenTappedShowMoreButton: (() -> Void)?
     var whenEnrollReview: ((String) -> Void)?
+    var whenUploadReview: ((AVIROCommentPost) -> Void)?
     
     private var placeId = ""
     
@@ -154,9 +155,16 @@ final class PlaceReviewsView: UIView {
     ) {
         guard let reviews = reviewsModel?.commentArray else { return }
         
+        self.placeId = placeId
+        
         self.subTitle.text = "\(reviews.count)개"
         whenReviewView = true
 
+        reviewsTable.isScrollEnabled = true
+        reviewsTable.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+
+        reviewsTable.bottomAnchor.constraint(equalTo: reviewInputView.topAnchor).isActive = true
+        
         if reviews.count > 0 {
             whenHaveReviews(reviews)
         } else {
@@ -174,19 +182,15 @@ final class PlaceReviewsView: UIView {
         
         noReviews.isHidden = true
         reviewsTable.isHidden = false
-        
-        reviewsTable.isScrollEnabled = true
-        reviewsTable.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
-
-        reviewsTable.bottomAnchor.constraint(equalTo: reviewInputView.topAnchor).isActive = true
 
         reviewsTable.reloadData()
     }
     
     private func whenNotHaveReviews() {
+        self.reviewsArray = [ReviewData]()
+        
         noReviews.isHidden = false
         reviewsTable.isHidden = true
-        
     }
     
     func dataBindingWhenInHomeView(_ reviewsModel: PlaceReviewsData?) {
@@ -227,6 +231,9 @@ final class PlaceReviewsView: UIView {
     }
     
     private func whenNotHaveReviewsInHomeView() {
+        reviewsHeightConstraint?.isActive = false
+        viewHeightConstraint?.isActive = false
+        
         noReviews.isHidden = false
         reviewsTable.isHidden = true
         showMoreReviewsButton.isHidden = true
@@ -261,6 +268,11 @@ final class PlaceReviewsView: UIView {
         viewHeightConstraint?.isActive = true
     }
     
+    func afterUpdateReviewAndUpdateInHomeView(_ reviewModel: AVIROCommentPost) {
+        updateReviewArray(reviewModel)
+        whenHaveReviewsInHomeView(self.reviewsArray)
+    }
+    
     @objc private func showMoreButtonTapped() {
         whenTappedShowMoreButton?()
     }
@@ -268,13 +280,35 @@ final class PlaceReviewsView: UIView {
     private func handleClosure() {
         reviewInputView.enrollReview = { [weak self] text in
             guard let placeId = self?.placeId else { return }
-            let reviewModel = AVIROCommentPost(
+            
+            let reviewPostModel = AVIROCommentPost(
                 placeId: placeId,
                 userId: UserId.shared.userId,
                 content: text
             )
-            
+            self?.whenUploadReview?(reviewPostModel)
+            self?.updateReviewArray(reviewPostModel)
         }
+    }
+    
+    private func updateReviewArray(_ postModel: AVIROCommentPost) {
+        let nowDate = LocationUtility.nowDate()
+        
+        let reviewModel = ReviewData(
+            commentId: postModel.commentId,
+            userId: postModel.userId,
+            content: postModel.content,
+            createdTime: nowDate)
+        
+        if reviewsArray.count == 0 {
+            noReviews.isHidden = true
+            reviewsTable.isHidden = false
+        }
+        
+        reviewsArray.insert(reviewModel, at: 0)
+        reviewsTable.reloadData()
+        
+        subTitle.text = "\(reviewsArray.count)개"
     }
 }
 
@@ -299,9 +333,17 @@ extension PlaceReviewsView: UITableViewDataSource {
         cell?.selectionStyle = .none
         
         if whenReviewView {
-            cell?.bindingData(comment: reviewData, isAbbreviated: false, isMyReview: false)
+            if UserId.shared.userId == reviewData.userId {
+                cell?.bindingData(comment: reviewData, isAbbreviated: false, isMyReview: true)
+            } else {
+                cell?.bindingData(comment: reviewData, isAbbreviated: false, isMyReview: false)
+            }
         } else {
-            cell?.bindingData(comment: reviewData, isAbbreviated: true, isMyReview: false)
+            if UserId.shared.userId == reviewData.userId {
+                cell?.bindingData(comment: reviewData, isAbbreviated: true, isMyReview: true)
+            } else {
+                cell?.bindingData(comment: reviewData, isAbbreviated: true, isMyReview: false)
+            }
         }
         
         return cell ?? UITableViewCell()

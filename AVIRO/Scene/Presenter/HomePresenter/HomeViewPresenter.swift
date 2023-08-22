@@ -247,49 +247,6 @@ final class HomeViewPresenter: NSObject {
         }
     }
     
-    // MARK: Get Place Model Detail
-    func getPlaceModelDetail() {
-        guard let placeId = selectedPlaceId else { return }
-        
-        let dispatchGroup = DispatchGroup()
-        
-        var infoModel: PlaceInfoData?
-        var menuModel: PlaceMenuData?
-        var reviewsModel: PlaceReviewsData?
-        
-        dispatchGroup.enter()
-        AVIROAPIManager().getPlaceInfo(placeId: placeId) { placeInfoModel in
-            
-            infoModel = placeInfoModel.data
-            
-            dispatchGroup.leave()
-        }
-        
-        dispatchGroup.enter()
-        AVIROAPIManager().getMenuInfo(placeId: placeId) { placeMenuModel in
-            
-            menuModel = placeMenuModel.data
-            
-            dispatchGroup.leave()
-        }
-        
-        dispatchGroup.enter()
-        AVIROAPIManager().getCommentInfo(placeId: placeId) { placeReviewsModel in
-            
-            reviewsModel = placeReviewsModel.data
-            
-            dispatchGroup.leave()
-        }
-        
-        dispatchGroup.notify(queue: .main) { [weak self] in
-            self?.viewController?.afterSlideupPlaceView(
-                infoModel: infoModel,
-                menuModel: menuModel,
-                reviewsModel: reviewsModel
-            )
-        }
-    }
-    
     // MARK: Save Center Coordinate
     func saveCenterCoordinate(_ coordinate: NMGLatLng) {
         CenterCoordinate.shared.longitude = coordinate.lng
@@ -340,6 +297,54 @@ final class HomeViewPresenter: NSObject {
             
             viewController?.moveToCameraWhenHasAVIRO(markerModel)
         }
+    }
+    
+    // MARK: Get Place Model Detail
+    func getPlaceModelDetail() {
+        guard let placeId = selectedPlaceId else { return }
+        
+        let dispatchGroup = DispatchGroup()
+        
+        var infoModel: PlaceInfoData?
+        var menuModel: PlaceMenuData?
+        var reviewsModel: PlaceReviewsData?
+        
+        dispatchGroup.enter()
+        AVIROAPIManager().getPlaceInfo(placeId: placeId) { placeInfoModel in
+            
+            infoModel = placeInfoModel.data
+            
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.enter()
+        AVIROAPIManager().getMenuInfo(placeId: placeId) { placeMenuModel in
+            
+            menuModel = placeMenuModel.data
+            
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.enter()
+        AVIROAPIManager().getCommentInfo(placeId: placeId) { placeReviewsModel in
+            
+            reviewsModel = placeReviewsModel.data
+            
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            self?.viewController?.afterSlideupPlaceView(
+                infoModel: infoModel,
+                menuModel: menuModel,
+                reviewsModel: reviewsModel
+            )
+        }
+    }
+  
+    func postReviewModel(_ postReviewModel: AVIROCommentPost) {
+        print("Test")
+        AVIROAPIManager().postCommentModel(postReviewModel)
     }
 }
 

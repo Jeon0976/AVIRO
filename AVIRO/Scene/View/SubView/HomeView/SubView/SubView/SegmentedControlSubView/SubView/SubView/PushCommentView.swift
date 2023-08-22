@@ -51,6 +51,7 @@ final class PushCommentView: UIView {
     }()
     
     private var viewHeight: NSLayoutConstraint?
+    private var originalTextViewHeight: CGFloat?    
     
     var enrollReview: ((String) -> Void)?
     
@@ -103,6 +104,14 @@ final class PushCommentView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
 
+        makeViewHeight()
+        
+        if originalTextViewHeight == nil {
+            originalTextViewHeight = textView.frame.height
+        }
+    }
+    
+    private func makeViewHeight() {
         let separatorHeight = separator.frame.height
         let textView = textView.frame.height
 
@@ -119,8 +128,20 @@ final class PushCommentView: UIView {
             textView.textColor = .gray4
             textView.resignFirstResponder()
             button.setTitleColor(.gray4, for: .normal)
+            
+            resetTextViewHeight()
         } else {
             return
+        }
+    }
+    
+    private func resetTextViewHeight() {
+        guard let originalHeight = originalTextViewHeight else { return }
+
+        textView.constraints.forEach { constraint in
+            if constraint.firstAttribute == .height {
+                constraint.constant = originalHeight
+            }
         }
     }
 }

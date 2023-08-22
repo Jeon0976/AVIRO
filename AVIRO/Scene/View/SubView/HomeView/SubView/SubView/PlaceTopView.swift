@@ -299,6 +299,10 @@ final class PlaceTopView: UIView {
         
         whenFullTitle.text = placeModel.placeTitle
     }
+    
+    func updateReviewsCount(_ count: Int) {
+        self.reviewsLabel.text = "\(count)개"
+    }
 }
 
 // MARK: When View Pop up
@@ -537,6 +541,5 @@ extension PlaceTopView {
         
         viewHeightConstraint?.constant = totalHeight
         viewHeightConstraint?.isActive = true
-
     }
 }
