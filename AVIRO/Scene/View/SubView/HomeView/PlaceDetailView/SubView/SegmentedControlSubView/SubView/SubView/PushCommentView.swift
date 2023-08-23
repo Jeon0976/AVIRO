@@ -109,6 +109,7 @@ final class PushCommentView: UIView {
         if originalTextViewHeight == nil {
             originalTextViewHeight = textView.frame.height
         }
+        
     }
     
     private func makeViewHeight() {
@@ -144,6 +145,30 @@ final class PushCommentView: UIView {
             }
         }
     }
+    
+    func editMyReview(_ text: String) {
+        textView.text = text
+        textView.textColor = .gray0
+        button.setTitleColor(.gray0, for: .normal)
+    }
+    
+    private func updateTextviewHeight() {
+        let size = CGSize(width: textView.frame.width, height: .infinity)
+        let estimatedSize = textView.sizeThatFits(size)
+        
+        if estimatedSize.height <= textView.font!.lineHeight * 5 {
+            textView.isScrollEnabled = false
+
+            textView.constraints.forEach { constraint in
+                if constraint.firstAttribute == .height {
+                    constraint.constant = estimatedSize.height
+                }
+            }
+        } else {
+            textView.isScrollEnabled = true
+        }
+
+    }
 }
 
 extension PushCommentView: UITextViewDelegate {
@@ -162,19 +187,6 @@ extension PushCommentView: UITextViewDelegate {
             
         }
         
-        let size = CGSize(width: textView.frame.width, height: .infinity)
-        let estimatedSize = textView.sizeThatFits(size)
-        
-        if estimatedSize.height <= textView.font!.lineHeight * 5 {
-            textView.isScrollEnabled = false
-
-            textView.constraints.forEach { constraint in
-                if constraint.firstAttribute == .height {
-                    constraint.constant = estimatedSize.height
-                }
-            }
-        } else {
-            textView.isScrollEnabled = true
-        }
+        updateTextviewHeight()
     }
 }

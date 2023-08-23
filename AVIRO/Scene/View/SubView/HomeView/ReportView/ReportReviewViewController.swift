@@ -34,9 +34,6 @@ final class ReportReviewViewController: UIViewController {
         return view
     }()
     
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         

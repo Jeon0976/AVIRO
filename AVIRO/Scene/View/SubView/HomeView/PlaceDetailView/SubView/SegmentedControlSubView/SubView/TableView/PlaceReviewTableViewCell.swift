@@ -63,7 +63,8 @@ final class PlaceReviewTableViewCell: UITableViewCell {
     }()
     
     private var commentId = ""
-    var reportButtonTapped: ((String) -> Void)?
+    
+    var reportButtonTapped: ((String, String) -> Void)?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -127,6 +128,8 @@ final class PlaceReviewTableViewCell: UITableViewCell {
     }
     
     @objc private func buttonTapped() {
-        reportButtonTapped?(commentId)
+        guard let userId = userId.text else { return }
+        print(commentId, userId)
+        reportButtonTapped?(commentId, userId)
     }
 }

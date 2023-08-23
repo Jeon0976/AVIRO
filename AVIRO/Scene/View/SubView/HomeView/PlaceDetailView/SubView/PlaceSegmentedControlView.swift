@@ -58,6 +58,7 @@ final class PlaceSegmentedControlView: UIView {
     var whenUploadReview: ((AVIROCommentPost) -> Void)?
     var updateReviewsCount: ((Int) -> Void)?
     var reportReview: ((String) -> Void)?
+    var editMyReview: ((String) -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -174,6 +175,10 @@ final class PlaceSegmentedControlView: UIView {
         self.reviewsCount = reviewsCount
     }
     
+    func editMyReview(_ commentId: String) {
+        reviewView.editMyReview(commentId)
+    }
+    
     private func segmentedControlLabelChange(_ reviews: Int) {
         let reviews = "후기 (\(reviews))"
         
@@ -267,6 +272,14 @@ final class PlaceSegmentedControlView: UIView {
         
         homeView.reportReview = { [weak self] commentId in
             self?.reportReview?(commentId)
+        }
+        
+        reviewView.whenEditMyReview = { [weak self] commentId in
+            self?.editMyReview?(commentId)
+        }
+        
+        homeView.editMyReview = { [weak self] commentId in
+            self?.editMyReview?(commentId)
         }
     }
 }

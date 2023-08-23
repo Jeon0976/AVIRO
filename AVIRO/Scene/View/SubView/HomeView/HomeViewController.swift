@@ -426,7 +426,11 @@ extension HomeViewController {
         }
         
         placeView.reportReview = { [weak self] commentId in
-            self?.makeReportAlert(commentId)
+            self?.makeReportReviewAlert(commentId)
+        }
+        
+        placeView.editMyReview = { [weak self] commentId in
+            self?.makeEditMyReviewAlert(commentId)
         }
         
     }
@@ -439,8 +443,8 @@ extension HomeViewController {
         style.titleColor = .gray7 ?? .white
         style.titleFont = .systemFont(ofSize: 17, weight: .semibold)
         
-        let centerX = (self.view.frame.size.width ?? 400) / 2
-        let viewHeight = self.view.safeAreaLayoutGuide.layoutFrame.height ?? 800
+        let centerX = (self.view.frame.size.width) / 2
+        let viewHeight = self.view.safeAreaLayoutGuide.layoutFrame.height
         
         let yPosition: CGFloat = viewHeight - 32
         
@@ -454,8 +458,12 @@ extension HomeViewController {
         )
     }
     
-    private func makeReportAlert(_ commentId: String) {
-        let alertController = UIAlertController(title: nil, message: "더보기", preferredStyle: .actionSheet)
+    private func makeReportReviewAlert(_ commentId: String) {
+        let alertController = UIAlertController(
+            title: nil,
+            message: "더보기",
+            preferredStyle: .actionSheet
+        )
         
         let reportAction = UIAlertAction(title: "후기 신고하기", style: .destructive) { _ in
             self.presentReportReview(commentId)
@@ -465,6 +473,63 @@ extension HomeViewController {
         
         [
             reportAction,
+            cancel
+        ].forEach {
+            alertController.addAction($0)
+        }
+        
+        present(alertController, animated: true)
+    }
+    
+    private func makeEditMyReviewAlert(_ commentId: String) {
+        let alertController = UIAlertController(
+            title: nil,
+            message: "댓글 더보기",
+            preferredStyle: .actionSheet
+        )
+        
+        let editMyReview = UIAlertAction(title: "수정하기", style: .default) { _ in
+            self.editMyReview(commentId)
+        }
+        
+        let deleteMyReview = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
+            self.makeDeleteMyReviewAlert(commentId)
+        }
+        
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        
+        [
+            editMyReview,
+            deleteMyReview,
+            cancel
+        ].forEach {
+            alertController.addAction($0)
+        }
+        
+        present(alertController, animated: true)
+    }
+    
+    private func editMyReview(_ commentId: String) {
+        placeView.editMyReview(commentId)
+    }
+    
+    private func makeDeleteMyReviewAlert(_ commentId: String) {
+        let alertController = UIAlertController(
+            title: "삭제하기",
+            message: "정말로 삭제하시겠어요?\n삭제하면 다시 복구할 수 없어요.",
+            preferredStyle: .alert
+        )
+        
+        let deleteMyReview = UIAlertAction(title: "예", style: .default) { _ in
+            
+        }
+        
+        deleteMyReview.setValue(UIColor.red, forKey: "titleTextColor")
+        
+        let cancel = UIAlertAction(title: "아니오", style: .default)
+        
+        [
+            deleteMyReview,
             cancel
         ].forEach {
             alertController.addAction($0)

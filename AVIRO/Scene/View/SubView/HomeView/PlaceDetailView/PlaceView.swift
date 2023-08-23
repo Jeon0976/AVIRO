@@ -65,6 +65,7 @@ final class PlaceView: UIView {
     // MARK: SegmentedControl
     var whenUploadReview: ((AVIROCommentPost) -> Void)?
     var reportReview: ((String) -> Void)?
+    var editMyReview: ((String) -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -128,6 +129,10 @@ final class PlaceView: UIView {
         isLoadingDetail = false
     }
     
+    func editMyReview(_ commentId: String) {
+        segmentedControlView.editMyReview(commentId)
+    }
+    
     private func whenViewPopUp() {
         topView.placeViewStated = .PopUp
         segmentedControlView.whenViewPopup()
@@ -169,6 +174,10 @@ final class PlaceView: UIView {
         
         segmentedControlView.reportReview = { [weak self] commentId in
             self?.reportReview?(commentId)
+        }
+        
+        segmentedControlView.editMyReview = { [weak self] commentId in
+            self?.editMyReview?(commentId)
         }
     }
 }

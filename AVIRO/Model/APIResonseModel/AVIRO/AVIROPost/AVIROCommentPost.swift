@@ -8,7 +8,7 @@
 import Foundation
 
 struct AVIROCommentPost: Encodable {
-    let commentId = UUID().uuidString
+    var commentId = UUID().uuidString
     let placeId: String
     let userId: String
     let content: String

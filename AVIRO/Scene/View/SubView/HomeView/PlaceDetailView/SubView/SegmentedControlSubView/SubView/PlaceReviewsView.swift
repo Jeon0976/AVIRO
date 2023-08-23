@@ -85,11 +85,16 @@ final class PlaceReviewsView: UIView {
     private var whenReviewView = false
     
     var whenTappedShowMoreButton: (() -> Void)?
-    var whenEnrollReview: ((String) -> Void)?
+    
     var whenUploadReview: ((AVIROCommentPost) -> Void)?
+    
     var whenReportReview: ((String) -> Void)?
+    var whenEditMyReview: ((String) -> Void)?
     
     private var placeId = ""
+    private var isEditedAfter = false
+    private var editedReviewId = ""
+    private var whenHomeViewReviewsCount = 0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -175,7 +180,6 @@ final class PlaceReviewsView: UIView {
         separatedLine.isHidden = true
         showMoreReviewsButton.isHidden = true
         reviewInputView.isHidden = false
-        
     }
     
     private func whenHaveReviews(_ reviews: [ReviewData]) {
@@ -198,7 +202,7 @@ final class PlaceReviewsView: UIView {
         guard let reviews = reviewsModel?.commentArray else { return }
         
         self.subTitle.text = "\(reviews.count)개"
-        
+        whenHomeViewReviewsCount = reviews.count
         if reviews.count > 0 {
             whenHaveReviewsInHomeView(reviews)
         } else {
@@ -270,31 +274,101 @@ final class PlaceReviewsView: UIView {
     }
     
     func afterUpdateReviewAndUpdateInHomeView(_ reviewModel: AVIROCommentPost) {
-        updateReviewArray(reviewModel)
+        reviewsUpdateInHomeView(reviewModel)
         whenHaveReviewsInHomeView(self.reviewsArray)
+    }
+    
+    // TODO: Edit API 생기면 수정
+    private func reviewsUpdateInHomeView(_ reviewModel: AVIROCommentPost) {
+        let nowDate = LocationUtility.nowDate()
+
+        let reviewModel = ReviewData(
+            commentId: reviewModel.commentId,
+            userId: reviewModel.userId,
+            content: reviewModel.content,
+            createdTime: nowDate)
+        
+        reviewsArray.insert(reviewModel, at: 0)
+        reviewsTable.reloadData()
+        
+        subTitle.text = "\(whenHomeViewReviewsCount + 1)개"
     }
     
     @objc private func showMoreButtonTapped() {
         whenTappedShowMoreButton?()
     }
     
+    // MARK: Edit My Review
+    func editMyReview(_ commentId: String) {
+        var text = ""
+        reviewsArray.forEach {
+            if $0.commentId == commentId {
+                text = $0.content
+            }
+        }
+        
+        isEditedAfter = true
+        editedReviewId = commentId
+        
+        reviewInputView.editMyReview(text)
+    }
+    
     private func handleClosure() {
         reviewInputView.enrollReview = { [weak self] text in
             guard let placeId = self?.placeId else { return }
             
-            let reviewPostModel = AVIROCommentPost(
-                placeId: placeId,
-                userId: UserId.shared.userId,
-                content: text
-            )
-            self?.whenUploadReview?(reviewPostModel)
-            self?.updateReviewArray(reviewPostModel)
+            self?.updateReviewArray(text)
         }
     }
     
-    private func updateReviewArray(_ postModel: AVIROCommentPost) {
+    private func updateReviewArray(_ text: String) {
+        if isEditedAfter {
+           whenEditedAfterUpdateReviewArray(text)
+        } else {
+            whenUpdateReviewArray(text)
+        }
+        
+    }
+    
+    private func whenEditedAfterUpdateReviewArray(_ text: String) {
+        isEditedAfter = false
+        
+        let nowDate = LocationUtility.nowDate()
+
+        guard let index = reviewsArray.firstIndex(where: {$0.commentId == editedReviewId}) else {
+            return
+        }
+        
+        reviewsArray.remove(at: index)
+        
+        var postModel = AVIROCommentPost(placeId: placeId, userId: UserId.shared.userId, content: text)
+        postModel.commentId = editedReviewId
+        
+        let reviewModel = ReviewData(
+            commentId: postModel.commentId,
+            userId: postModel.userId,
+            content: postModel.content,
+            createdTime: nowDate)
+        
+        reviewsArray.insert(reviewModel, at: 0)
+        reviewsTable.reloadData()
+        
+        subTitle.text = "\(reviewsArray.count)개"
+        editedReviewId = ""
+        
+    }
+    
+    private func whenUpdateReviewArray(_ text: String) {
+        isEditedAfter = false
+        
         let nowDate = LocationUtility.nowDate()
         
+        let postModel = AVIROCommentPost(
+            placeId: placeId,
+            userId: UserId.shared.userId,
+            content: text
+        )
+                
         let reviewModel = ReviewData(
             commentId: postModel.commentId,
             userId: postModel.userId,
@@ -310,6 +384,8 @@ final class PlaceReviewsView: UIView {
         reviewsTable.reloadData()
         
         subTitle.text = "\(reviewsArray.count)개"
+        
+        self.whenUploadReview?(postModel)
     }
 }
 
@@ -332,8 +408,12 @@ extension PlaceReviewsView: UITableViewDataSource {
         let reviewData = reviewsArray[indexPath.row]
         
         cell?.selectionStyle = .none
-        cell?.reportButtonTapped = { [weak self] commentId in
-            self?.whenReportReview?(commentId)
+        cell?.reportButtonTapped = { [weak self] (commentId, userId) in
+            if userId != UserId.shared.userId {
+                self?.whenReportReview?(commentId)
+            } else {
+                self?.whenEditMyReview?(commentId)
+            }
         }
         
         if whenReviewView {
