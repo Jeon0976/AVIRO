@@ -283,7 +283,13 @@ final class PlaceTopView: UIView {
     }
 
     // MARK: Data Binding
-    func dataBinding(_ placeModel: PlaceTopModel) {
+    func dataBinding(_ placeModel: PlaceTopModel,_ isStar: Bool) {
+        if isStar {
+            starButton.isSelected = true
+        } else {
+            starButton.isSelected = false
+        }
+        
         var placeIconImage: UIImage?
         var whenSlideTopLabelString: String?
 

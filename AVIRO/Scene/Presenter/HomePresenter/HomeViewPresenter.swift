@@ -22,11 +22,17 @@ protocol HomeViewProtocol: NSObject {
     func ifDenied()
     func requestSuccess()
     func saveCenterCoordinate()
-    func moveToCameraWhenNoAVIRO(_ lng: Double, _ lat: Double)
-    func moveToCameraWhenHasAVIRO(_ markerModel: MarkerModel)
+    func moveToCameraWhenNoAVIRO(_ lng: Double,
+                                 _ lat: Double)
+    func moveToCameraWhenHasAVIRO(_ markerModel:
+                                  MarkerModel)
     func loadMarkers(_ markers: [NMFMarker])
+    func afterLoadStarButton(noMarkers: [NMFMarker],
+                             starMarkers: [NMFMarker]
+    )
     func afterClickedMarker(placeModel: PlaceTopModel,
-                            placeId: String
+                            placeId: String,
+                            isStar: Bool
     )
     func afterSlideupPlaceView(infoModel: PlaceInfoData?,
                                menuModel: PlaceMenuData?,
@@ -142,6 +148,7 @@ final class HomeViewPresenter: NSObject {
             self?.saveMarkers(mapDatas.data.placeData)
         }
         
+        /// bookmark 초기 데이터 불러오기
         bookmarkManager.fetchAllData()
     }
     
@@ -203,7 +210,11 @@ final class HomeViewPresenter: NSObject {
             let markerModel = MarkerModelArray.shared.getMarkerFromIndex(selectedMarkerIndex)
             
             guard let markerModel = markerModel else { return }
-            markerModel.marker.changeIcon(markerModel.mapPlace, false)
+            if markerModel.isStar {
+                markerModel.marker.changeStarIcon(markerModel.mapPlace, false)
+            } else {
+                markerModel.marker.changeIcon(markerModel.mapPlace, false)
+            }
         }
     }
     
@@ -221,8 +232,12 @@ final class HomeViewPresenter: NSObject {
         selectedMarkerIndex = validIndex
         selectedMarkerModel = validMarkerModel
         
-        validMarkerModel.marker.changeIcon(validMarkerModel.mapPlace, true)
-
+        if validMarkerModel.isStar {
+            validMarkerModel.marker.changeStarIcon(validMarkerModel.mapPlace, true)
+        } else {
+            validMarkerModel.marker.changeIcon(validMarkerModel.mapPlace, true)
+        }
+        
         hasTouchedMarkerBefore = true
         
         viewController?.moveToCameraWhenHasAVIRO(validMarkerModel)
@@ -255,9 +270,11 @@ final class HomeViewPresenter: NSObject {
                 address: place.address)
 
             DispatchQueue.main.async { [weak self] in
+                let isStar = self?.bookmarkManager.checkData(placeId)
                 self?.viewController?.afterClickedMarker(
                     placeModel: placeTopModel,
-                    placeId: placeId
+                    placeId: placeId,
+                    isStar: isStar ?? false
                 )
             }
         }
@@ -315,6 +332,87 @@ final class HomeViewPresenter: NSObject {
             
             viewController?.moveToCameraWhenHasAVIRO(markerModel)
         }
+    }
+    
+    // MARK: Bookmark Load Method
+    func loadBookmark(_ isSelected: Bool) {
+        if isSelected {
+            whenAfterLoadStarButtonTapped()
+        } else {
+            whenAfterLoadNotStarButtonTapped()
+        }
+    }
+    
+    private func whenAfterLoadStarButtonTapped() {
+        let markersModel = MarkerModelArray.shared.getMarkerModels()
+
+        let bookmarks = bookmarkManager.loadAllData()
+        
+        var starMarkersModel: [MarkerModel] = []
+        var noMarkers: [NMFMarker] = []
+        
+        markersModel.forEach { model in
+            if bookmarks.contains(model.placeId) {
+                var model = model
+                model.isStar = true
+                starMarkersModel.append(model)
+            } else {
+                noMarkers.append(model.marker)
+            }
+        }
+        
+        var starMarkers: [NMFMarker] = []
+        
+        starMarkersModel.forEach { markerModel in
+            switch markerModel.mapPlace {
+            case .All:
+                markerModel.marker.makeStarIcon(.All)
+            case .Some:
+                markerModel.marker.makeStarIcon(.Some)
+            case .Request:
+                markerModel.marker.makeStarIcon(.Request)
+            }
+            
+            starMarkers.append(markerModel.marker)
+        }
+
+        MarkerModelArray.shared.updateWhenStarButton(starMarkersModel)
+        viewController?.afterLoadStarButton(noMarkers: noMarkers, starMarkers: starMarkers)
+    }
+    
+    private func whenAfterLoadNotStarButtonTapped() {
+        var starMarkersModel = MarkerModelArray.shared.getOnlyStarMarkerModels()
+                
+        for index in 0..<starMarkersModel.count {
+            switch starMarkersModel[index].mapPlace {
+            case .All:
+                starMarkersModel[index].marker.makeIcon(.All)
+            case .Some:
+                starMarkersModel[index].marker.makeIcon(.Some)
+            case .Request:
+                starMarkersModel[index].marker.makeIcon(.Request)
+            }
+            starMarkersModel[index].isStar = false
+        }
+        
+        MarkerModelArray.shared.updateWhenStarButton(starMarkersModel)
+        print(starMarkersModel)
+        let markers = MarkerModelArray.shared.getMarkers()
+        
+        viewController?.loadMarkers(markers)
+    }
+    
+    // MARK: Bookmark Upload & Delete Method
+    func updateBookmark(_ isSelected: Bool) {
+        guard let placeId = selectedPlaceId else { return }
+        
+        if isSelected {
+            bookmarkManager.updateData(placeId)
+        } else {
+            bookmarkManager.deleteData(placeId)
+        }
+        
+        print(bookmarkManager.loadAllData())
     }
     
     // MARK: Get Place Model Detail

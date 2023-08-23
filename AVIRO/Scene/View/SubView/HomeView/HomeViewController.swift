@@ -302,17 +302,18 @@ extension HomeViewController: HomeViewProtocol {
     }
     
     // MARK: Map Star button True
-    func afterIsSelectedStarButton(noMarkers: [NMFMarker],
-                                   markers: [NMFMarker]
+    func afterLoadStarButton(noMarkers: [NMFMarker],
+                             starMarkers: [NMFMarker]
     ) {
+        noMarkers.forEach {
+            $0.mapView = nil
+        }
         
+        starMarkers.forEach {
+            $0.mapView = naverMapView
+        }
     }
-    
-    // MARK: Map Star button False
-    func afterIsNotSelectedStarButton(markers: [NMFMarker]) {
-        
-    }
-    
+
     // MARK: AVIRO에 데이터가 없을 때 지도 이동
     func moveToCameraWhenNoAVIRO(_ lng: Double, _ lat: Double) {
         let latlng = NMGLatLng(lat: lat, lng: lng)
@@ -343,10 +344,12 @@ extension HomeViewController: HomeViewProtocol {
     // MARK: place view에 data binding
     // TODO: 수정 예정
     func afterClickedMarker(placeModel: PlaceTopModel,
-                            placeId: String
+                            placeId: String,
+                            isStar: Bool
     ) {
         placeView.summaryDataBinding(placeModel: placeModel,
-                                     placeId: placeId
+                                     placeId: placeId,
+                                     isStar: isStar
         )
     }
     
@@ -415,6 +418,7 @@ extension HomeViewController {
         placeView.whenTopViewStarTapped = { [weak self] selected in
             let title: String = selected ? "즐겨찾기가 추가되었습니다." : "즐겨찾기가 삭제되었습니다."
             self?.makeToastButton(title)
+            self?.presenter.updateBookmark(selected)
         }
 
         placeView.whenUploadReview = { [weak self] postReviewModel in
@@ -494,6 +498,7 @@ extension HomeViewController {
     // MARK: Star Button Tapped
     @objc private func starButtonTapped(_ sender: UIButton) {
         sender.isSelected.toggle()
+        presenter.loadBookmark(sender.isSelected)
     }
     
     // MARK: Location Button Tapped

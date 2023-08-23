@@ -24,6 +24,22 @@ final class MarkerModelArray {
         return nmfMarkers
     }
     
+    func getMarkerModels() -> [MarkerModel] {
+        return markers
+    }
+    
+    func getOnlyStarMarkerModels() -> [MarkerModel] {
+        var markers: [MarkerModel] = []
+        
+        self.markers.forEach {
+            if $0.isStar {
+                markers.append($0)
+            }
+        }
+        
+        return markers
+    }
+    
     func getMarkerFromIndex(_ index: Int) -> MarkerModel? {
         guard index < markers.count else { return nil }
                 
@@ -70,6 +86,14 @@ final class MarkerModelArray {
         } else {
             // placeId가 일치하는 마커가 존재하지 않는 경우, 추가
             markers.append(markerModel)
+        }
+    }
+    
+    func updateWhenStarButton(_ makerModel: [MarkerModel]) {
+        makerModel.forEach { model in
+            if let index = markers.firstIndex(where: { $0.placeId == model.placeId}) {
+                markers[index] = model
+            }
         }
     }
 }

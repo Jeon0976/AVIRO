@@ -29,15 +29,13 @@ final class BookmarkFacadeManager {
         let postModel = BookmarkPostModel(placeList: bookmarks, userId: userId)
         
         // MARK: Error 처리
-        AVIROAPIManager().postBookmarkModel(bookmarkModel: postModel) { _ in
-            
+        AVIROAPIManager().postBookmarkModel(bookmarkModel: postModel) { statusCode in
         }
     }
     
     func checkData(_ placeId: String) -> Bool {
         bookmarkArray.checkData(placeId)
     }
-    
     
     func updateData(_ placeId: String) {
         bookmarkArray.updateData(placeId)

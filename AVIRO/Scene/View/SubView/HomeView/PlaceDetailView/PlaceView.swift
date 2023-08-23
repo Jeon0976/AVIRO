@@ -106,11 +106,12 @@ final class PlaceView: UIView {
     
     // TODO: slide up 일때 세부내용 api 호출 후 데이터 바인딩 되는거 만들기
     func summaryDataBinding(placeModel: PlaceTopModel,
-                            placeId: String
+                            placeId: String,
+                            isStar: Bool
     ) {
         self.placeId = placeId
 
-        topView.dataBinding(placeModel)
+        topView.dataBinding(placeModel, isStar)
         isLoadingTopView = false
     }
     

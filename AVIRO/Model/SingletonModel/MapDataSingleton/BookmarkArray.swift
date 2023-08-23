@@ -27,7 +27,9 @@ final class BookmarkArray {
     }
     
     func updateData(_ placeId: String) {
-        bookmarkList.append(placeId)
+        if !bookmarkList.contains(placeId) {
+            bookmarkList.append(placeId)
+        }
     }
     
     func deleteData(_ placeId: String) {
