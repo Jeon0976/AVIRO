@@ -267,9 +267,12 @@ extension HomeViewController: HomeViewProtocol {
         }
         
         naverMapView.isHidden = false
-        whenViewWillAppearInitPlaceView()
     }
         
+    func whenViewWillAppearAfterSearchDataNotInAVIRO() {
+        whenViewWillAppearInitPlaceView()
+    }
+    
     // MARK: 위치 denided or approval
     // 위치 denied 할 때
     func ifDenied() {
@@ -292,14 +295,22 @@ extension HomeViewController: HomeViewProtocol {
     }
     
     // MARK: Marker Map에 대입하는 메소드
-    func loadMarkers() {
-        DispatchQueue.main.async { [weak self] in
-            let markers = MarkerModelArray.shared.getMarkers()
-         
-            markers.forEach {
-                $0.mapView = self?.naverMapView
-            }
+    func loadMarkers(_ markers: [NMFMarker]) {
+        markers.forEach {
+            $0.mapView = naverMapView
         }
+    }
+    
+    // MARK: Map Star button True
+    func afterIsSelectedStarButton(noMarkers: [NMFMarker],
+                                   markers: [NMFMarker]
+    ) {
+        
+    }
+    
+    // MARK: Map Star button False
+    func afterIsNotSelectedStarButton(markers: [NMFMarker]) {
+        
     }
     
     // MARK: AVIRO에 데이터가 없을 때 지도 이동
@@ -318,7 +329,6 @@ extension HomeViewController: HomeViewProtocol {
         let cameraUpdate = NMFCameraUpdate(scrollTo: latlng, zoomTo: 14)
         cameraUpdate.animation = .easeIn
         cameraUpdate.animationDuration = 0.25
-        
         popupPlaceView()
         naverMapView.moveCamera(cameraUpdate)
     }
@@ -389,36 +399,35 @@ extension HomeViewController {
     
     // MARK: 클로저 함수 Binding 처리
     private func handleClosure() {
-        placeView.topView.whenFullBackButtonTapped = { [weak self] in
+        placeView.whenFullBack = { [weak self] in
             self?.naverMapView.isHidden = false
             self?.placeViewPopUpAfterInitPlacePopViewHeight()
         }
-        
-        placeView.topView.whenShareButtonTapped = { [weak self] shareObject in
+
+        placeView.whenShareTapped = { [weak self] shareObject in
             let vc = UIActivityViewController(activityItems: shareObject, applicationActivities: nil)
             vc.popoverPresentationController?.permittedArrowDirections = []
-            
+
             vc.popoverPresentationController?.sourceView = self?.view
             self?.present(vc, animated: true)
         }
-        
-        placeView.topView.whenStarButtonTapped = { [weak self] selected in
-            self?.makeToastButton(selected)
+
+        placeView.whenTopViewStarTapped = { [weak self] selected in
+            let title: String = selected ? "즐겨찾기가 추가되었습니다." : "즐겨찾기가 삭제되었습니다."
+            self?.makeToastButton(title)
         }
-        
+
         placeView.whenUploadReview = { [weak self] postReviewModel in
             self?.presenter.postReviewModel(postReviewModel)
         }
-    }
-    
-    private func makeToastButton(_ selected: Bool) {
-        var title = ""
-        if selected {
-            title = "즐겨찾기가 추가되었습니다."
-        } else {
-            title = "즐겨찾기가 삭제되었습니다."
+        
+        placeView.reportReview = { [weak self] commentId in
+            self?.makeReportAlert(commentId)
         }
         
+    }
+    
+    private func makeToastButton(_ title: String) {
         var style = ToastStyle()
         style.cornerRadius = 14
         style.backgroundColor = .gray3?.withAlphaComponent(0.7) ?? .lightGray
@@ -439,6 +448,37 @@ extension HomeViewController {
                   style: style,
                   completion: nil
         )
+    }
+    
+    private func makeReportAlert(_ commentId: String) {
+        let alertController = UIAlertController(title: nil, message: "더보기", preferredStyle: .actionSheet)
+        
+        let reportAction = UIAlertAction(title: "후기 신고하기", style: .destructive) { _ in
+            self.presentReportReview(commentId)
+        }
+        
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        
+        [
+            reportAction,
+            cancel
+        ].forEach {
+            alertController.addAction($0)
+        }
+        
+        present(alertController, animated: true)
+    }
+    
+    private func presentReportReview(_ commentId: String) {
+        let vc = ReportReviewViewController()
+        let presenter = ReportReviewPresenter(
+            viewController: vc,
+            reviewId: commentId
+        )
+        
+        vc.presenter = presenter
+        
+        present(vc, animated: true)
     }
     
     // MARK: Down Back Button Tapped

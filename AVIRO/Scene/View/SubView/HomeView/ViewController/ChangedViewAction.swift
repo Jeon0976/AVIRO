@@ -40,7 +40,7 @@ extension HomeViewController {
         viewNaviButtonHidden(true)
         searchTextFieldTopConstraint?.constant = 16
         
-        let height = -placeView.topView.frame.height
+        let height = -placeView.topViewHeight()
         
         placeViewTopConstraint?.constant = height
         
@@ -74,7 +74,7 @@ extension HomeViewController {
         
         searchTextFieldTopConstraint?.constant = 16
 
-        let height = -placeView.topView.frame.height
+        let height = -placeView.topViewHeight()
         
         placeViewTopConstraint?.constant = height
         

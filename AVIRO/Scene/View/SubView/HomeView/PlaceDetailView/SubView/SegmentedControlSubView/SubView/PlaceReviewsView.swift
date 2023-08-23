@@ -87,6 +87,7 @@ final class PlaceReviewsView: UIView {
     var whenTappedShowMoreButton: (() -> Void)?
     var whenEnrollReview: ((String) -> Void)?
     var whenUploadReview: ((AVIROCommentPost) -> Void)?
+    var whenReportReview: ((String) -> Void)?
     
     private var placeId = ""
     
@@ -331,6 +332,9 @@ extension PlaceReviewsView: UITableViewDataSource {
         let reviewData = reviewsArray[indexPath.row]
         
         cell?.selectionStyle = .none
+        cell?.reportButtonTapped = { [weak self] commentId in
+            self?.whenReportReview?(commentId)
+        }
         
         if whenReviewView {
             if UserId.shared.userId == reviewData.userId {

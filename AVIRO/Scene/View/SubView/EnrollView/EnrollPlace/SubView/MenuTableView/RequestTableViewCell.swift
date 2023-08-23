@@ -47,7 +47,7 @@ final class RequestTableViewCell: UITableViewCell {
         editingRequestField = nil
         onMinusButtonTapped = nil
         onRequestButtonTapped = nil
-        priceField.variblePriceChanged = nil
+        priceField.variablePriceChanged = nil
     }
 
     // MARK: Set Data
@@ -167,7 +167,7 @@ extension RequestTableViewCell: UITextFieldDelegate {
                    replacementString string: String
     ) -> Bool {
         if textField == priceField {
-            if textField.text == "변동" {
+            if textField.text == "변동가" {
                 textField.endEditing(true)
                 return false
             } else if let result = textField.text, let textRange = Range(range, in: result) {

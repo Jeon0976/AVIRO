@@ -16,8 +16,11 @@ final class PlaceHomeView: UIView {
     
     private var viewHeightConstraint: NSLayoutConstraint?
 
+    
+    // review 관련 클로저
     var showMoreReviews: (() -> Void)?
-        
+    var reportReview: ((String) -> Void)?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -95,12 +98,16 @@ final class PlaceHomeView: UIView {
     
     // MARK: 클로저 처리
     private func handleClosure() {
+        placeReviewWriteView.whenWriteReviewButtonTapped = { [weak self] in
+            self?.showMoreReviews?()
+        }
+        
         placeReviewsView.whenTappedShowMoreButton = { [weak self] in
             self?.showMoreReviews?()
         }
         
-        placeReviewWriteView.whenWriteReviewButtonTapped = { [weak self] in
-            self?.showMoreReviews?()
+        placeReviewsView.whenReportReview = { [weak self] commentId in
+            self?.reportReview?(commentId)
         }
     }
     

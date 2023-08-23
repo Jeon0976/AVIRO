@@ -20,7 +20,7 @@ protocol HomeSearchProtocol: NSObject {
 final class HomeSearchPresenter {
     weak var viewController: HomeSearchProtocol?
 
-    private let userDefaultsManager = UserDefalutsManager()
+    private let userDefaultsManager = SearchHistoryManager()
     private var historyPlaceModel = [HistoryTableModel]()
     private var matchedPlaceModel = [MatchedPlaceModel]()
     

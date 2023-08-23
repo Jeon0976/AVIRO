@@ -16,6 +16,7 @@ protocol HomeViewProtocol: NSObject {
     func makeGesture()
     func makeSlideView()
     func whenViewWillAppear()
+    func whenViewWillAppearAfterSearchDataNotInAVIRO()
     func keyboardWillShow(height: CGFloat)
     func keyboardWillHide()
     func ifDenied()
@@ -23,7 +24,7 @@ protocol HomeViewProtocol: NSObject {
     func saveCenterCoordinate()
     func moveToCameraWhenNoAVIRO(_ lng: Double, _ lat: Double)
     func moveToCameraWhenHasAVIRO(_ markerModel: MarkerModel)
-    func loadMarkers()
+    func loadMarkers(_ markers: [NMFMarker])
     func afterClickedMarker(placeModel: PlaceTopModel,
                             placeId: String
     )
@@ -37,10 +38,12 @@ final class HomeViewPresenter: NSObject {
     weak var viewController: HomeViewProtocol?
     
     private let locationManager = CLLocationManager()
+    private let bookmarkManager = BookmarkFacadeManager()
     
     var homeMapData: [HomeMapData]?
     
     private var hasTouchedMarkerBefore = false
+    private var afterSearchDataInAVIRO = false
     private var selectedMarkerIndex = 0 
     private var selectedMarkerModel: MarkerModel?
     
@@ -72,6 +75,12 @@ final class HomeViewPresenter: NSObject {
         viewController?.whenViewWillAppear()
         viewController?.makeSlideView()
         addKeyboardNotification()
+        
+        if !afterSearchDataInAVIRO {
+            viewController?.whenViewWillAppearAfterSearchDataNotInAVIRO()
+        } else {
+            afterSearchDataInAVIRO.toggle()
+        }
     }
     
     func viewWillDisappear() {
@@ -121,8 +130,10 @@ final class HomeViewPresenter: NSObject {
     
     // MARK: vegan Data 불러오기
     func loadVeganData() {
+        let userId = UserId.shared.userId
+        
         AVIROAPIManager().getNerbyPlaceModels(
-            userId: "test",
+            userId: userId,
             longitude: MyCoordinate.shared.longitudeString,
             latitude: MyCoordinate.shared.latitudeString,
             wide: "100",
@@ -130,6 +141,8 @@ final class HomeViewPresenter: NSObject {
         ) { [weak self] mapDatas in
             self?.saveMarkers(mapDatas.data.placeData)
         }
+        
+        bookmarkManager.fetchAllData()
     }
     
     // MARK: Marker 상태 초기화
@@ -169,9 +182,12 @@ final class HomeViewPresenter: NSObject {
             )
             
             MarkerModelArray.shared.setData(markerModel)
-            
         }
-        viewController?.loadMarkers()
+        
+        DispatchQueue.main.async { [weak self] in
+            let markers = MarkerModelArray.shared.getMarkers()
+            self?.viewController?.loadMarkers(markers)
+        }
     }
     
     // MARK: Marker Touched Method
@@ -201,7 +217,7 @@ final class HomeViewPresenter: NSObject {
         guard let validIndex = index else { return }
         
         getPlaceSummaryModel(validMarkerModel)
-
+        
         selectedMarkerIndex = validIndex
         selectedMarkerModel = validMarkerModel
         
@@ -221,7 +237,7 @@ final class HomeViewPresenter: NSObject {
         let placeId = markerModel.placeId
 
         selectedPlaceId = placeId
-        
+                
         AVIROAPIManager().getPlaceSummary(placeId: placeId) { summary in
             let place = summary.data
 
@@ -289,8 +305,10 @@ final class HomeViewPresenter: NSObject {
             guard let index = index else { return }
             
             markerModel.marker.changeIcon(markerModel.mapPlace, true)
+            afterSearchDataInAVIRO = true
             
             getPlaceSummaryModel(markerModel)
+            
             selectedMarkerIndex = index
             selectedMarkerModel = markerModel
             hasTouchedMarkerBefore = true

@@ -57,6 +57,7 @@ final class PlaceSegmentedControlView: UIView {
     
     var whenUploadReview: ((AVIROCommentPost) -> Void)?
     var updateReviewsCount: ((Int) -> Void)?
+    var reportReview: ((String) -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -254,11 +255,18 @@ final class PlaceSegmentedControlView: UIView {
         }
         
         reviewView.whenUploadReview = { [weak self] postReviewModel in
-            
             // TODO: HomeView 내부에있는 review view도 layout update 해야할까??
             self?.reviewsCount += 1
             self?.homeView.updateReview(postReviewModel)
             self?.whenUploadReview?(postReviewModel)
+        }
+        
+        reviewView.whenReportReview = { [weak self] commentId in
+            self?.reportReview?(commentId)
+        }
+        
+        homeView.reportReview = { [weak self] commentId in
+            self?.reportReview?(commentId)
         }
     }
 }

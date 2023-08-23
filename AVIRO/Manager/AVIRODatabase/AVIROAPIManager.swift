@@ -36,7 +36,6 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
             wide: wide,
             time: time
         ).url else {
-            print("url error")
             return
         }
         
@@ -53,6 +52,60 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
                     completionHandler(mapDatas)
                 }
             }
+        }.resume()
+    }
+    
+    // MARK: Get Bookmark
+    func getBookmarkModels(userId: String, completionHandler: @escaping(AVIROBookmarkModel) -> Void) {
+        guard let url = requestAPI.getBookmark(userId: userId).url else { return }
+        
+        var request = URLRequest(url: url)
+        
+        request.httpMethod = "GET"
+        session.dataTask(with: request) { data, _, error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            if let data = data {
+                if let bookmarkModel = try? JSONDecoder().decode(AVIROBookmarkModel.self, from: data) {
+                    completionHandler(bookmarkModel)
+                }
+            }
+        }.resume()
+    }
+    
+    // MARK: Post Bookmark
+    func postBookmarkModel(bookmarkModel: BookmarkPostModel, completionHandler: @escaping((Int) -> Void)) {
+        
+        guard let url = postAPI.bookmarkPost().url else { return }
+
+        guard let jsonData = try? JSONEncoder().encode(bookmarkModel) else { return }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        session.dataTask(with: request) { data, response, error in
+            guard error == nil else {
+                print("error")
+                return
+            }
+            
+            if let data = data {
+                if let afterData = try? JSONDecoder().decode(BookmarkPostAfterData.self, from: data) {
+                    let statusCode = afterData.statusCode
+                    completionHandler(statusCode)
+                }
+                return
+            }
+            
+            guard response != nil else {
+                print("respose error")
+                return
+            }
+            print(response ?? "")
         }.resume()
     }
     
@@ -76,6 +129,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
             if let data = data {
                 if let placeSummary = try? JSONDecoder().decode(AVIROSummaryModel.self, from: data) {
                     completionHandler(placeSummary)
+                    print(placeSummary.data)
                 }
             }
         }.resume()
@@ -197,7 +251,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
     // MARK: Post UserInfo Model
     func postUserModel(_ userModel: UserInfoModel,
                        completionHandler: @escaping((UserInrollResponse) -> Void)) {
-        guard let url = postAPI.userInfoInroll().url else { print("url error"); return}
+        guard let url = postAPI.userInfoEnroll().url else { print("url error"); return}
         
         guard let jsonData = try? JSONEncoder().encode(userModel) else {
             print("JSON Encode Error")
@@ -231,7 +285,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
     
     // MARK: Post Place Model
     func postPlaceModel(_ veganModel: VeganModel, completionHandler: @escaping((VeganPlaceResponse) -> Void)) {
-        guard let url = postAPI.placeInroll().url else { print("url error"); return }
+        guard let url = postAPI.placeEnroll().url else { print("url error"); return }
         
         guard let jsonData = try? JSONEncoder().encode(veganModel) else {
             print("JSOE Encode ERROR")

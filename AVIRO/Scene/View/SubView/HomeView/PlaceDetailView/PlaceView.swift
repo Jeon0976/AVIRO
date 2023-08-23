@@ -15,9 +15,9 @@ enum PlaceViewState {
 }
 
 final class PlaceView: UIView {
-    lazy var topView = PlaceTopView()
+    private lazy var topView = PlaceTopView()
     
-    lazy var segmetedControlView = PlaceSegmentedControlView()
+    private lazy var segmentedControlView = PlaceSegmentedControlView()
         
     var placeViewStated: PlaceViewState = PlaceViewState.PopUp {
         didSet {
@@ -37,8 +37,10 @@ final class PlaceView: UIView {
         didSet {
             if isLoadingTopView {
                 topView.isLoadingTopView = isLoadingTopView
+                topView.isUserInteractionEnabled = false
             } else {
                 topView.isLoadingTopView = isLoadingTopView
+                topView.isUserInteractionEnabled = true
             }
         }
     }
@@ -46,16 +48,23 @@ final class PlaceView: UIView {
     var isLoadingDetail: Bool = true {
         didSet {
             if isLoadingDetail {
-                segmetedControlView.isLoading = isLoadingDetail
+                segmentedControlView.isLoading = isLoadingDetail
             } else {
-                segmetedControlView.isLoading = isLoadingDetail
+                segmentedControlView.isLoading = isLoadingDetail
             }
         }
     }
     
     private var placeId = ""
     
+    // MARK: Top View
+    var whenFullBack: (() -> Void)?
+    var whenShareTapped: (([String]) -> Void)?
+    var whenTopViewStarTapped: ((Bool) -> Void)?
+    
+    // MARK: SegmentedControl
     var whenUploadReview: ((AVIROCommentPost) -> Void)?
+    var reportReview: ((String) -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -73,7 +82,7 @@ final class PlaceView: UIView {
         
         [
             topView,
-            segmetedControlView
+            segmentedControlView
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview($0)
@@ -84,19 +93,24 @@ final class PlaceView: UIView {
             topView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             topView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             
-            segmetedControlView.topAnchor.constraint(equalTo: topView.bottomAnchor),
-            segmetedControlView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            segmetedControlView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            segmetedControlView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            segmentedControlView.topAnchor.constraint(equalTo: topView.bottomAnchor),
+            segmentedControlView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            segmentedControlView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            segmentedControlView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
+    }
+    
+    func topViewHeight() -> CGFloat {
+        return topView.frame.height
     }
     
     // TODO: slide up 일때 세부내용 api 호출 후 데이터 바인딩 되는거 만들기
     func summaryDataBinding(placeModel: PlaceTopModel,
                             placeId: String
     ) {
-        topView.dataBinding(placeModel)
         self.placeId = placeId
+
+        topView.dataBinding(placeModel)
         isLoadingTopView = false
     }
     
@@ -104,8 +118,7 @@ final class PlaceView: UIView {
                         menuModel: PlaceMenuData?,
                         reviewsModel: PlaceReviewsData?
     ) {
-        print(placeId)
-        segmetedControlView.allDataBinding(
+        segmentedControlView.allDataBinding(
             placeId: self.placeId,
             infoModel: infoModel,
             menuModel: menuModel,
@@ -116,27 +129,45 @@ final class PlaceView: UIView {
     
     private func whenViewPopUp() {
         topView.placeViewStated = .PopUp
-        segmetedControlView.whenViewPopup()
+        segmentedControlView.whenViewPopup()
     }
     
     private func whenViewSlideUp() {
         topView.placeViewStated = .SlideUp
-        segmetedControlView.scrollViewIsUserIneraction(false)
+        segmentedControlView.scrollViewIsUserIneraction(false)
         
     }
     
     private func whenViewFullUp() {
         topView.placeViewStated = .Full
-        segmetedControlView.scrollViewIsUserIneraction(true)
+        segmentedControlView.scrollViewIsUserIneraction(true)
     }
     
     private func handleClosure() {
-        segmetedControlView.whenUploadReview = { [weak self] postReviewModel in
+        // MARK: Top View
+        topView.whenFullBackButtonTapped = { [weak self] in
+            self?.whenFullBack?()
+        }
+        
+        topView.whenShareButtonTapped = { [weak self] shareObject in
+            self?.whenShareTapped?(shareObject)
+        }
+        
+        topView.whenStarButtonTapped = { [weak self] selected in
+            self?.whenTopViewStarTapped?(selected)
+        }
+        
+        // MARK: Segmented
+        segmentedControlView.whenUploadReview = { [weak self] postReviewModel in
             self?.whenUploadReview?(postReviewModel)
         }
         
-        segmetedControlView.updateReviewsCount = { [weak self] reviewsCount in
+        segmentedControlView.updateReviewsCount = { [weak self] reviewsCount in
             self?.topView.updateReviewsCount(reviewsCount)
+        }
+        
+        segmentedControlView.reportReview = { [weak self] commentId in
+            self?.reportReview?(commentId)
         }
     }
 }

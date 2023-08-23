@@ -32,8 +32,8 @@ final class AppController {
     // MARK: 외부랑 소통할 메서드
     func show(in window: UIWindow) {
         self.window = window
-        window.backgroundColor = .white
-        window.tintColor = .mainTitle
+        window.backgroundColor = .gray7
+//        window.tintColor = .mainTitle
         window.makeKeyAndVisible()
         
         checkState()

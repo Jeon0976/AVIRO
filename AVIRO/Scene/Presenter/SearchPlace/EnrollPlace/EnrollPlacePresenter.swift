@@ -112,9 +112,7 @@ final class EnrollPlacePresenter {
         guard let veganModel = veganModel else {
             return
         }
-        
-        print(veganModel)
-        
+                
         // TODO: 수정 예정
         AVIROAPIManager().postPlaceModel(veganModel) { [weak self] responseModel in
             DispatchQueue.main.async {
@@ -343,7 +341,7 @@ final class EnrollPlacePresenter {
             self?.bindingNormalPriceData(price, indexPath)
         }
         
-        cell?.priceField.variblePriceChanged = { [weak self] price in
+        cell?.priceField.variablePriceChanged = { [weak self] price in
             self?.bindingNormalPriceData(price, indexPath)
         }
         
@@ -378,7 +376,7 @@ final class EnrollPlacePresenter {
             self?.bindingRequestPrice(price, indexPath)
         }
         
-        cell?.priceField.variblePriceChanged = { [weak self] price in
+        cell?.priceField.variablePriceChanged = { [weak self] price in
             self?.bindingRequestPrice(price, indexPath)
         }
         
@@ -554,5 +552,4 @@ extension EnrollPlacePresenter {
         updateData(key: "requestTableModel", value: self.requestTableModel)
         viewController?.menuTableReload(isPresentingDefaultTable: isPresentingDefaultTable)
     }
-
 }

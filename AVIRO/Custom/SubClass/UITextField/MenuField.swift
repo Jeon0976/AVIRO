@@ -15,7 +15,7 @@ final class MenuField: UITextField {
     
     private var isAddRightButton = false
         
-    var variblePriceChanged: ((String) -> Void)?
+    var variablePriceChanged: ((String) -> Void)?
     
     override var text: String? {
         didSet {
@@ -127,15 +127,15 @@ final class MenuField: UITextField {
     private func setButtonMenu() -> UIMenu {
         var variablePrice: UIAction
 
-        if self.text == "변동" {
+        if self.text == "변동가" {
             variablePrice = UIAction(title: "변동취소", handler: { [weak self] _ in
                 self?.text = ""
-                self?.variblePriceChanged?("")
+                self?.variablePriceChanged?("")
             })
         } else {
-            variablePrice = UIAction(title: "변동", handler: { [weak self] _ in
-                self?.text = "변동"
-                self?.variblePriceChanged?("변동")
+            variablePrice = UIAction(title: "변동가", handler: { [weak self] _ in
+                self?.text = "변동가"
+                self?.variablePriceChanged?("변동가")
             })
         }
 

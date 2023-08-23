@@ -57,9 +57,13 @@ final class PlaceReviewTableViewCell: UITableViewCell {
         let button = UIButton()
         
         button.setImage(UIImage(named: "Dots"), for: .normal)
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         
         return button
     }()
+    
+    private var commentId = ""
+    var reportButtonTapped: ((String) -> Void)?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -112,6 +116,7 @@ final class PlaceReviewTableViewCell: UITableViewCell {
                      isAbbreviated: Bool,
                      isMyReview: Bool
     ) {
+        commentId = comment.commentId
         userId.text = comment.userId
         createdTime.text = comment.createdTime
         
@@ -119,5 +124,9 @@ final class PlaceReviewTableViewCell: UITableViewCell {
             text: comment.content,
             isAbbreviated: isAbbreviated,
             isMyReview: isMyReview)
+    }
+    
+    @objc private func buttonTapped() {
+        reportButtonTapped?(commentId)
     }
 }

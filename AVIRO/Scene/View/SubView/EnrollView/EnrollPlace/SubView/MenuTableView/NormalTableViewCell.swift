@@ -40,7 +40,7 @@ final class NormalTableViewCell: UITableViewCell {
         editingMenuField = nil
         editingPriceField = nil
         onMinusButtonTapped = nil
-        priceField.variblePriceChanged = nil
+        priceField.variablePriceChanged = nil
     }
     
     // MARK: Set Data
@@ -117,7 +117,7 @@ extension NormalTableViewCell: UITextFieldDelegate {
                    replacementString string: String
     ) -> Bool {
         if textField == priceField {
-            if textField.text == "변동" {
+            if textField.text == "변동가" {
                 textField.endEditing(true)
                 return false
             } else if let result = textField.text, let textRange = Range(range, in: result) {

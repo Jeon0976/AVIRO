@@ -223,8 +223,8 @@ extension EnrollPlaceViewController: EnrollPlaceProtocol {
     
     // MARK: Pop View Controller
     func popViewController() {
-        tabBarController?.selectedIndex = 0
         initData()
+        tabBarController?.selectedIndex = 0
     }
     
     // MARK: Push Alert Controller
