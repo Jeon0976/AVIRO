@@ -183,6 +183,13 @@ final class PushCommentView: UIView {
     func keyboardWillHide() {
         self.transform = .identity
     }
+    
+    func initTextView() {
+        textView.text = "식당에 대한 경험과 팁을 알려주세요!"
+        textView.textColor = .gray4
+        button.setTitleColor(.gray4, for: .normal)
+    }
+    
 }
 
 extension PushCommentView: UITextViewDelegate {

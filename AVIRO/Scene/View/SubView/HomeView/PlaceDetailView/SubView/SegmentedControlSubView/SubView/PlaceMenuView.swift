@@ -154,9 +154,8 @@ final class PlaceMenuView: UIView {
         
         guard let menuModel = menuModel else { return }
         
-        
         self.subTitle.text = "\(menuModel.count)개"
-        self.updatedTimeLabel.text = "업데이트" + menuModel.updatedTime
+        self.updatedTimeLabel.text = "업데이트 " + menuModel.updatedTime
         
         if menuModel.menuArray.count > 5 {
             self.menuArray = Array(menuModel.menuArray.prefix(5))

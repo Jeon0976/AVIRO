@@ -13,7 +13,7 @@ extension HomeViewController {
     }
     
     func whenClosedPlaceView() {
-        guard let tabBarController = self.tabBarController as? TabBarViewController else { return }
+//        guard let tabBarController = self.tabBarController as? TabBarViewController else { return }
 //        tabBarController.hiddenTabBarIncludeIsTranslucent(false)
         
         presenter.resetPreviouslyTouchedMarker()
@@ -34,11 +34,11 @@ extension HomeViewController {
     }
     
     func placeViewPopUp() {
-        guard let tabBarController = self.tabBarController as? TabBarViewController else { return }
+//        guard let tabBarController = self.tabBarController as? TabBarViewController else { return }
 //        tabBarController.hiddenTabBarIncludeIsTranslucent(true)
         
         placeView.placeViewStated = .PopUp
-
+      
         homeButtonIsHidden(false)
         viewNaviButtonHidden(true)
         searchTextFieldTopConstraint?.constant = 16

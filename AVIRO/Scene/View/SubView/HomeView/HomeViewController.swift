@@ -62,8 +62,10 @@ final class HomeViewController: UIViewController {
         ])
         zoomLevel.textColor = .black
         zoomLevel.font = .systemFont(ofSize: 20, weight: .bold)
-    }
 
+
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
@@ -129,7 +131,7 @@ extension HomeViewController: HomeViewProtocol {
             placeView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             placeView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             placeView.heightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor),
-            
+//
             flagButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
             flagButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 18),
             flagButton.widthAnchor.constraint(equalToConstant: 40),

@@ -88,12 +88,6 @@ class TabBarViewController: UITabBarController {
         self.tabBar.isHidden = hidden
         self.centerButton.isHidden = hidden
     }
-    
-    /// Exclude IsTranslucent
-    func hiddenTabBar(_ hidden: Bool) {
-//        tabBar.isHidden = hidden
-//        centerButton.isHidden = hidden
-    }
 }
 
 // MARK: View Preview

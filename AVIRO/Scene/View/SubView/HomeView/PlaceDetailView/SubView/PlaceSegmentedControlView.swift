@@ -120,7 +120,6 @@ final class PlaceSegmentedControlView: UIView {
         
         NSLayoutConstraint.activate([
             homeView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-            homeView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             homeView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
             homeView.bottomAnchor.constraint(
                 equalTo: scrollView.contentLayoutGuide.bottomAnchor)
@@ -176,6 +175,10 @@ final class PlaceSegmentedControlView: UIView {
     }
     
     func editMyReview(_ commentId: String) {
+        if segmentedControl.selectedSegmentIndex == 0 {
+            self.segmentedControl.selectedSegmentIndex = 2
+            self.activeReviewView()
+        }
         reviewView.editMyReview(commentId)
     }
     

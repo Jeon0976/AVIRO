@@ -128,7 +128,7 @@ extension EnrollPlaceViewController: EnrollPlaceProtocol {
     }
     
     @objc func appWillResignActive() {
-        self.view.transform = .identity
+        self.scrollView.transform = .identity
     }
     
     // MARK: After Search
@@ -214,7 +214,7 @@ extension EnrollPlaceViewController: EnrollPlaceProtocol {
         
         UIView.animate(
             withDuration: 0.3,
-            animations: { self.view.transform = CGAffineTransform(
+            animations: { self.scrollView.transform = CGAffineTransform(
                 translationX: 0,
                 y: -(result))
             }
@@ -223,7 +223,7 @@ extension EnrollPlaceViewController: EnrollPlaceProtocol {
     
     // MARK: Keyboard Will Hide
     func keyboardWillHide() {
-        self.view.transform = .identity
+        self.scrollView.transform = .identity
     }
     
     // MARK: Enable Right Button
