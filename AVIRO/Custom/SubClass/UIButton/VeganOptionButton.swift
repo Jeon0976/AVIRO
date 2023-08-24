@@ -45,7 +45,7 @@ final class VeganOptionButton: UIButton {
         super.layoutSubviews()
         
         if !change {
-            change = !change
+            change.toggle()
             setButtonSize()
             verticalTitleToImage()
         }

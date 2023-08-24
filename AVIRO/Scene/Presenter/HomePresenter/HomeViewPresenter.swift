@@ -126,7 +126,7 @@ final class HomeViewPresenter: NSObject {
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
            let keyboardRectangle = keyboardFrame.cgRectValue
-            viewController?.keyboardWillShow(height: keyboardRectangle.height - 50)
+            viewController?.keyboardWillShow(height: keyboardRectangle.height)
         }
     }
     

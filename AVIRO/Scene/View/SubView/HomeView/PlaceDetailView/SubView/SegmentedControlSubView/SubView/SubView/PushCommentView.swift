@@ -58,7 +58,7 @@ final class PushCommentView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.backgroundColor = .white
+        self.backgroundColor = .gray7
         
         [
             separator,
@@ -167,7 +167,21 @@ final class PushCommentView: UIView {
         } else {
             textView.isScrollEnabled = true
         }
-
+    }
+    
+    // MARK: Keyboard Method 처리
+    func keyboardWillShow(height: CGFloat) {
+        UIView.animate(
+            withDuration: 0.3,
+            animations: { self.transform = CGAffineTransform(
+                translationX: 0,
+                y: -(height))
+            }
+        )
+    }
+    
+    func keyboardWillHide() {
+        self.transform = .identity
     }
 }
 

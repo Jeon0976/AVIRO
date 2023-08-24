@@ -40,10 +40,10 @@ final class HomeViewController: UIViewController {
     // 최초 화면 뷰
     var firstPopupView = HomeFirstPopUpView()
     var blurEffectView = UIVisualEffectView()
-        
+    
     // TODO: zoom level
     var zoomLevel = UILabel()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -62,7 +62,6 @@ final class HomeViewController: UIViewController {
         ])
         zoomLevel.textColor = .black
         zoomLevel.font = .systemFont(ofSize: 20, weight: .bold)
-
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -73,7 +72,7 @@ final class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+    
         presenter.viewWillAppear()
     }
     
@@ -105,7 +104,7 @@ extension HomeViewController: HomeViewProtocol {
             naverMapView.topAnchor.constraint(
                 equalTo: view.topAnchor),
             naverMapView.bottomAnchor.constraint(
-                equalTo: view.bottomAnchor, constant: 40),
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 40),
             naverMapView.leadingAnchor.constraint(
                 equalTo: view.leadingAnchor),
             naverMapView.trailingAnchor.constraint(
@@ -243,18 +242,15 @@ extension HomeViewController: HomeViewProtocol {
     
     // MARK: Keyboard Will Show
     func keyboardWillShow(height: CGFloat) {
-        UIView.animate(
-            withDuration: 0.3,
-            animations: { self.view.transform = CGAffineTransform(
-                translationX: 0,
-                y: -(height))
-            }
-        )
+        let tabbarHeight = tabBarController?.tabBar.frame.height ?? 0
+        let result = height - tabbarHeight
+        
+        placeView.keyboardWillShow(height: result)
     }
     
     // MARK: Keyboard Will Hide
     func keyboardWillHide() {
-        self.view.transform = .identity
+        placeView.keyboardWillHide()
     }
     
     // MARK: View Will Appear할 때 navigation & Tab Bar hidden Setting

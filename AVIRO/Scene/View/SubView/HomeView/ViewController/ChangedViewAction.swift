@@ -14,10 +14,10 @@ extension HomeViewController {
     
     func whenClosedPlaceView() {
         guard let tabBarController = self.tabBarController as? TabBarViewController else { return }
+//        tabBarController.hiddenTabBarIncludeIsTranslucent(false)
         
         presenter.resetPreviouslyTouchedMarker()
         
-        tabBarController.hiddenTabBar(false)
         settingPlaceView()
         
         UIView.animate(withDuration: 0.25) {
@@ -26,7 +26,6 @@ extension HomeViewController {
     }
     
     private func settingPlaceView() {
-        
         homeButtonIsHidden(false)
         viewNaviButtonHidden(true)
         searchTextFieldTopConstraint?.constant = 16
@@ -35,7 +34,11 @@ extension HomeViewController {
     }
     
     func placeViewPopUp() {
+        guard let tabBarController = self.tabBarController as? TabBarViewController else { return }
+//        tabBarController.hiddenTabBarIncludeIsTranslucent(true)
+        
         placeView.placeViewStated = .PopUp
+
         homeButtonIsHidden(false)
         viewNaviButtonHidden(true)
         searchTextFieldTopConstraint?.constant = 16
@@ -87,8 +90,9 @@ extension HomeViewController {
         placeView.placeViewStated = .Full
 
         viewNaviButtonHidden(true)
-        
-        placeViewTopConstraint?.constant = -self.view.safeAreaLayoutGuide.layoutFrame.height
+         
+        let constant = -self.view.safeAreaLayoutGuide.layoutFrame.height
+        placeViewTopConstraint?.constant = constant
         
         UIView.animate(withDuration: 0.25) {
             self.view.layoutIfNeeded()

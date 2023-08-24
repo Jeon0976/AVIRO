@@ -180,4 +180,13 @@ final class PlaceView: UIView {
             self?.editMyReview?(commentId)
         }
     }
+    
+    func keyboardWillShow(height: CGFloat) {
+        segmentedControlView.keyboardWillShow(height: height)
+    }
+    
+    func keyboardWillHide() {
+        segmentedControlView.keyboardWillHide()
+    }
+
 }

@@ -387,6 +387,14 @@ final class PlaceReviewsView: UIView {
         
         self.whenUploadReview?(postModel)
     }
+    
+    func keyboardWillShow(height: CGFloat) {
+        reviewInputView.keyboardWillShow(height: height)
+    }
+    
+    func keyboardWillHide() {
+        reviewInputView.keyboardWillHide()
+    }
 }
 
 extension PlaceReviewsView: UITableViewDataSource {

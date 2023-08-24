@@ -122,6 +122,13 @@ extension EnrollPlaceViewController: EnrollPlaceProtocol {
             name: NSNotification.Name("selectedPlace"),
             object: nil
         )
+        
+        // keyboard가 보이는 중에 resign해서 view의 높이가 변경되는 버그 수정을 위한 notification
+        NotificationCenter.default.addObserver(self, selector: #selector(appWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+    }
+    
+    @objc func appWillResignActive() {
+        self.view.transform = .identity
     }
     
     // MARK: After Search
@@ -202,11 +209,14 @@ extension EnrollPlaceViewController: EnrollPlaceProtocol {
     
     // MARK: Keyboard Will Show
     func keyboardWillShow(height: CGFloat) {
+        let tabBarHeight = tabBarController?.tabBar.frame.height ?? 0
+        let result = height
+        
         UIView.animate(
             withDuration: 0.3,
             animations: { self.view.transform = CGAffineTransform(
                 translationX: 0,
-                y: -(height))
+                y: -(result))
             }
         )
     }

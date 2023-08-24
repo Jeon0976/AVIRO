@@ -103,7 +103,7 @@ final class PlaceSegmentedControlView: UIView {
             reviewView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor),
             reviewView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             reviewView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            reviewView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16)
+            reviewView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
 
         makeLayoutInScrollView()
@@ -281,5 +281,13 @@ final class PlaceSegmentedControlView: UIView {
         homeView.editMyReview = { [weak self] commentId in
             self?.editMyReview?(commentId)
         }
+    }
+    
+    func keyboardWillShow(height: CGFloat) {
+        reviewView.keyboardWillShow(height: height)
+    }
+    
+    func keyboardWillHide() {
+        reviewView.keyboardWillHide()
     }
 }
