@@ -61,9 +61,9 @@ extension HomeSearchViewController: HomeSearchProtocol {
             placeListTableView.topAnchor.constraint(
                 equalTo: searchField.bottomAnchor),
             placeListTableView.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor, constant: 20),
+                equalTo: view.leadingAnchor),
             placeListTableView.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor, constant: -20),
+                equalTo: view.trailingAnchor),
             placeListTableView.bottomAnchor.constraint(
                 equalTo: view.bottomAnchor),
             
@@ -145,7 +145,7 @@ extension HomeSearchViewController {
         
         view.backgroundColor = .gray7
         
-        navigationItem.title = "가게•위치 검색"
+        navigationItem.title = "검색하기"
         navigationController?.navigationBar.isHidden = false
         setupCustomBackButton()
 
@@ -173,7 +173,8 @@ extension HomeSearchViewController {
             HomeSearchViewTableViewCell.self,
             forCellReuseIdentifier: HomeSearchViewTableViewCell.identifier
         )
-        placeListTableView.separatorStyle = .none
+        placeListTableView.separatorStyle = .singleLine
+        placeListTableView.separatorColor = .gray5
         placeListTableView.isHidden = true
         placeListTableView.tag = 0
     }
@@ -361,6 +362,17 @@ extension HomeSearchViewController: UITableViewDataSource {
             return headerView
         default:
             return UIView()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch tableView.tag {
+        case 0:
+            return 50
+        case 1:
+            return 50
+        default:
+            return 50
         }
     }
 }

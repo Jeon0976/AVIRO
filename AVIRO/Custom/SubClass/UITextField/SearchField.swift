@@ -58,7 +58,7 @@ final class SearchField: UITextField {
     // MARK: Configuration
     private func configuration() {
         textColor = .gray0
-        font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        font = UIFont.systemFont(ofSize: 18, weight: .medium)
         backgroundColor = .gray6
         layer.cornerRadius = 10
     }

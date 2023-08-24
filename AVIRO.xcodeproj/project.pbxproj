@@ -949,8 +949,8 @@
 		C5D36D2F2A76BA65003328E8 /* PlaceList */ = {
 			isa = PBXGroup;
 			children = (
-				C5D36D302A76BA65003328E8 /* PlaceListCell.swift */,
 				C5D36D312A76BA65003328E8 /* PlaceListSearchViewController.swift */,
+				C5D36D302A76BA65003328E8 /* PlaceListCell.swift */,
 			);
 			name = PlaceList;
 			path = "../../../../../../../AVIRO deprecated/InrollPlace/PlaceList";

@@ -59,6 +59,7 @@ final class PlaceListHeaderView: UIView {
     
     private func makeLayout() {
         self.backgroundColor = .gray7
+//        self.heightAnchor.constraint(equalToConstant: 50).isActive = true
         [
             locationPositionButton,
             sortingByButton
@@ -69,11 +70,11 @@ final class PlaceListHeaderView: UIView {
         
         NSLayoutConstraint.activate([
             locationPositionButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            locationPositionButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            locationPositionButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
             locationPositionButton.widthAnchor.constraint(equalToConstant: 110),
             
             sortingByButton.leadingAnchor.constraint(equalTo: locationPositionButton.trailingAnchor, constant: 10),
-            sortingByButton.centerYAnchor.constraint(equalTo: locationPositionButton.centerYAnchor),
+            sortingByButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
             sortingByButton.widthAnchor.constraint(equalToConstant: 90)
         ])
     }

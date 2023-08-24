@@ -139,7 +139,7 @@ final class PlaceMenuView: UIView {
         whenMenuView = true
         
         self.subTitle.text = "\(menuModel.count)개"
-        self.updatedTimeLabel.text = "업데이트" + menuModel.updatedTime
+        self.updatedTimeLabel.text = "업데이트 " + menuModel.updatedTime
         self.menuArray = menuModel.menuArray
                 
         menuTable.isScrollEnabled = true

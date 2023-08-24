@@ -33,20 +33,20 @@ final class HomeSearchViewTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             // icon
             icon.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            icon.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 25),
+            icon.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
             
             // title
             title.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 10),
             title.topAnchor.constraint(equalTo: icon.topAnchor),
-            title.widthAnchor.constraint(equalToConstant: contentView.frame.width - 125),
+            title.widthAnchor.constraint(equalToConstant: contentView.frame.width - 105),
             // address
             address.leadingAnchor.constraint(equalTo: title.leadingAnchor),
             address.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 11),
-            address.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -25),
+            address.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15),
             address.widthAnchor.constraint(equalTo: title.widthAnchor, multiplier: 1),
             
             // distance
-            distance.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 30),
+            distance.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
             distance.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
 
         ])
@@ -61,7 +61,7 @@ final class HomeSearchViewTableViewCell: UITableViewCell {
     // MARK: Attribute
     private func makeAttribute() {
         title.numberOfLines = 0
-        title.font = .systemFont(ofSize: 17, weight: .semibold)
+        title.font = .systemFont(ofSize: 18, weight: .medium)
         
         address.numberOfLines = 0
         address.font = .systemFont(ofSize: 15, weight: .medium)
@@ -71,7 +71,7 @@ final class HomeSearchViewTableViewCell: UITableViewCell {
         
         title.textColor = .gray0
         address.textColor = .gray3
-        distance.textColor = .gray3
+        distance.textColor = .gray2
     }
     
     // MARK: cell data 바인딩
