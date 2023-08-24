@@ -35,22 +35,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // MARK: App 종료 & 백그라운드 갈때 star data 서버에 저장
-    func applicationWillResignActive(_ application: UIApplication) {
-        let bookmarkManager = BookmarkFacadeManager()
+//    func applicationWillResignActive(_ application: UIApplication) {
+//        print("test3")
+//        let bookmarkManager = BookmarkFacadeManager()
+//
+//        bookmarkManager.updateAllData()
+//    }
+//
+//    func applicationDidEnterBackground(_ application: UIApplication) {
+//        print("Test2")
+//        let bookmarkManager = BookmarkFacadeManager()
+//
+//        bookmarkManager.updateAllData()
+//    }
 
-        bookmarkManager.updateAllData()
-    }
-
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        let bookmarkManager = BookmarkFacadeManager()
-
-        bookmarkManager.updateAllData()
-    }
-
-    func applicationWillTerminate(_ application: UIApplication) {
-        let bookmarkManager = BookmarkFacadeManager()
-
-        bookmarkManager.updateAllData()
-    }
+//    func applicationWillTerminate(_ application: UIApplication) {
+//        print("Test")
+//        let bookmarkManager = BookmarkFacadeManager()
+//
+//        print(bookmarkManager.loadAllData())
+//        bookmarkManager.updateAllData()
+//    }
 
 }

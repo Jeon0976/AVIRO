@@ -27,7 +27,7 @@ struct AVIROPostAPI {
 
     static let bookmarkPostPath = "/prod/map/add/bookmark"
     
-    static let userInfoPath = "/prod/member/sign-up"
+    static let userSignUpPath = "/prod/member/sign-up"
     static let userCheckPath = "/prod/member"
     static let userNicNameCheckPath = "/prod/member/check"
     static let userWithdrawPath = "/prod/member/withdraw"
@@ -82,7 +82,7 @@ struct AVIROPostAPI {
         
         components.scheme = AVIROPostAPI.scheme
         components.host = host
-        components.path = AVIROPostAPI.userInfoPath
+        components.path = AVIROPostAPI.userSignUpPath
         
         return components
     }

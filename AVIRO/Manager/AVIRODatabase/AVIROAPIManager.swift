@@ -76,7 +76,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
     }
     
     // MARK: Post Bookmark
-    func postBookmarkModel(bookmarkModel: BookmarkPostModel, completionHandler: @escaping((Int) -> Void)) {
+    func postBookmarkModel(bookmarkModel: BookmarkPostModel, completionHandler: @escaping((BookmarkPostAfterData) -> Void)) {
         
         guard let url = postAPI.bookmarkPost().url else { return }
 
@@ -95,8 +95,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
             
             if let data = data {
                 if let afterData = try? JSONDecoder().decode(BookmarkPostAfterData.self, from: data) {
-                    let statusCode = afterData.statusCode
-                    completionHandler(statusCode)
+                    completionHandler(afterData)
                 }
                 return
             }
@@ -181,7 +180,6 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
 
             if let data = data {
                 if let menuData = try? JSONDecoder().decode(AVIROMenuModel.self, from: data) {
-                    print(menuData)
                     completionHandler(menuData)
                 }
             }
@@ -207,6 +205,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
 
             if let data = data {
                 if let commentData = try? JSONDecoder().decode(AVIROReviewsModel.self, from: data) {
+                    print(commentData)
                     completionHandler(commentData)
                 }
             }

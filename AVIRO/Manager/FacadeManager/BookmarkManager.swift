@@ -39,9 +39,13 @@ final class BookmarkFacadeManager {
     
     func updateData(_ placeId: String) {
         bookmarkArray.updateData(placeId)
+        
+        self.updateAllData()
     }
     
     func deleteData(_ placeId: String) {
         bookmarkArray.deleteData(placeId)
+        
+        self.updateAllData()
     }
 }

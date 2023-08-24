@@ -418,7 +418,7 @@ final class HomeViewPresenter: NSObject {
     // MARK: Get Place Model Detail
     func getPlaceModelDetail() {
         guard let placeId = selectedPlaceId else { return }
-        
+        print(placeId)
         let dispatchGroup = DispatchGroup()
         
         var infoModel: PlaceInfoData?
@@ -428,6 +428,7 @@ final class HomeViewPresenter: NSObject {
         dispatchGroup.enter()
         AVIROAPIManager().getPlaceInfo(placeId: placeId) { placeInfoModel in
             
+            print("1:  ",placeInfoModel)
             infoModel = placeInfoModel.data
             
             dispatchGroup.leave()
@@ -435,7 +436,7 @@ final class HomeViewPresenter: NSObject {
         
         dispatchGroup.enter()
         AVIROAPIManager().getMenuInfo(placeId: placeId) { placeMenuModel in
-            
+            print("2:   ",placeMenuModel)
             menuModel = placeMenuModel.data
             
             dispatchGroup.leave()
@@ -443,7 +444,7 @@ final class HomeViewPresenter: NSObject {
         
         dispatchGroup.enter()
         AVIROAPIManager().getCommentInfo(placeId: placeId) { placeReviewsModel in
-            
+            print("3:  ",placeReviewsModel)
             reviewsModel = placeReviewsModel.data
             
             dispatchGroup.leave()

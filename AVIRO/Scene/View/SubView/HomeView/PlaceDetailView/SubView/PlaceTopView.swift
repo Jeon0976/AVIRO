@@ -203,18 +203,21 @@ final class PlaceTopView: UIView {
     var isLoadingTopView: Bool = true {
         didSet {
             if isLoadingTopView {
-                isLoadingView()
+                    isLoadingView()
             }
         }
     }
     
     private func isLoadingView() {
         placeIcon.image = nil
-        placeTitle.text = "OOO"
-        placeCategory.text = "oo"
+        placeTitle.text = "            "
+        placeTitle.backgroundColor = .gray5
+        placeCategory.text = "  "
+        placeCategory.backgroundColor = .gray5
         distanceLabel.text = "0m"
         reviewsLabel.text = "0개"
-        addressLabel.text = "oo"
+        addressLabel.text = "  "
+        addressLabel.backgroundColor = .gray5
     }
     
     override init(frame: CGRect) {
@@ -283,7 +286,10 @@ final class PlaceTopView: UIView {
     }
 
     // MARK: Data Binding
-    func dataBinding(_ placeModel: PlaceTopModel,_ isStar: Bool) {
+    func dataBinding(_ placeModel: PlaceTopModel, _ isStar: Bool) {
+        placeTitle.backgroundColor = .gray7
+        placeCategory.backgroundColor = .gray7
+        addressLabel.backgroundColor = .gray7
         if isStar {
             starButton.isSelected = true
         } else {
