@@ -41,7 +41,10 @@ protocol HomeViewProtocol: NSObject {
     )
     func showReportPlaceAlert(_ placeId: String)
     func isSuccessReportPlaceActionSheet()
-    func pushEditPlaceInfoViewController(placeId: String, placeInfo: PlaceInfoData)
+    func pushEditPlaceInfoViewController(placeId: String,
+                                         placeSummary: PlaceSummaryData,
+                                         placeInfo: PlaceInfoData
+    )
 }
 
 final class HomeViewPresenter: NSObject {
@@ -59,6 +62,7 @@ final class HomeViewPresenter: NSObject {
     
     private var selectedMarkerIndex = 0 
     private var selectedMarkerModel: MarkerModel?
+    private var selectedSummaryModel: PlaceSummaryData?
     private var selectedInfoModel: PlaceInfoData?
     private var selectedMenuModel: PlaceMenuData?
     private var selectedReviewsModel: PlaceReviewsData?
@@ -312,6 +316,8 @@ final class HomeViewPresenter: NSObject {
             let distanceString = String(distanceValue).convertDistanceUnit()
             let reviewsCount = String(place.commentCount)
             
+            self.selectedSummaryModel = place
+            
             let placeTopModel = PlaceTopModel(
                 placeState: mapPlace,
                 placeTitle: place.title,
@@ -319,7 +325,6 @@ final class HomeViewPresenter: NSObject {
                 distance: distanceString,
                 reviewsCount: reviewsCount,
                 address: place.address)
-
             DispatchQueue.main.async { [weak self] in
                 let isStar = self?.bookmarkManager.checkData(placeId)
                 self?.viewController?.afterClickedMarker(
@@ -521,12 +526,17 @@ final class HomeViewPresenter: NSObject {
     
     func editPlaceInfo() {
         guard let placeId = selectedPlaceId,
+              let placeSummary = selectedSummaryModel,
               let placeInfo = selectedInfoModel
         else { return }
         
         isShowEditPage = true
         
-        viewController?.pushEditPlaceInfoViewController(placeId: placeId, placeInfo: placeInfo)
+        viewController?.pushEditPlaceInfoViewController(
+            placeId: placeId,
+            placeSummary: placeSummary,
+            placeInfo: placeInfo
+        )
     }
 }
 

@@ -1,5 +1,5 @@
 //
-//  MenuEditViewController.swift
+//  EditMenuViewController.swift
 //  AVIRO
 //
 //  Created by 전성훈 on 2023/08/25.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-final class MenuEditViewController: UIViewController {
-    lazy var presenter = MenuEditPresenter(viewController: self)
+final class EditMenuViewController: UIViewController {
+    lazy var presenter = EditMenuPresenter(viewController: self)
     
     
     override func viewDidLoad() {
@@ -18,7 +18,7 @@ final class MenuEditViewController: UIViewController {
     }
 }
 
-extension MenuEditViewController: MenuEditProtocol {
+extension EditMenuViewController: EditMenuProtocol {
     func makeLayout() {
         
     }

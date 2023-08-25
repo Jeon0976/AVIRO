@@ -7,15 +7,15 @@
 
 import Foundation
 
-protocol MenuEditProtocol: NSObject {
+protocol EditMenuProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
 }
 
-final class MenuEditPresenter {
-    weak var viewController: MenuEditProtocol?
+final class EditMenuPresenter {
+    weak var viewController: EditMenuProtocol?
     
-    init(viewController: MenuEditProtocol) {
+    init(viewController: EditMenuProtocol) {
         self.viewController = viewController
     }
     
