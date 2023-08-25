@@ -112,7 +112,7 @@ final class EnrollPlacePresenter {
         guard let veganModel = veganModel else {
             return
         }
-                
+         
         // TODO: 수정 예정
         AVIROAPIManager().postPlaceModel(veganModel) { [weak self] responseModel in
             DispatchQueue.main.async {
@@ -444,6 +444,9 @@ extension EnrollPlacePresenter {
             someMenuVegan: someVegan,
             ifRequestVegan: requestVegan
         )
+        print("all", allVegan)
+        print("some", someVegan)
+        print("request", requestVegan)
         
         let normalTableModel = totalData["normalTableModel"] as? [VeganTableFieldModel] ?? []
         let requestTableModel = totalData["requestTableModel"] as? [RequestTableFieldModel] ?? []

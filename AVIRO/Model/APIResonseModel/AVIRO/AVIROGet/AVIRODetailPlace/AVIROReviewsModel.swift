@@ -20,5 +20,6 @@ struct ReviewData: Codable {
     var commentId: String
     var userId: String
     var content: String
-    var createdTime: String
+    var updatedTime: String
+    var nickname: String?
 }

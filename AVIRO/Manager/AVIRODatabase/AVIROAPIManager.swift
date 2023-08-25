@@ -205,7 +205,6 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
 
             if let data = data {
                 if let commentData = try? JSONDecoder().decode(AVIROReviewsModel.self, from: data) {
-                    print(commentData)
                     completionHandler(commentData)
                 }
             }

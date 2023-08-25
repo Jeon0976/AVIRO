@@ -38,6 +38,8 @@ protocol HomeViewProtocol: NSObject {
                                menuModel: PlaceMenuData?,
                                reviewsModel: PlaceReviewsData?
     )
+    func showReportPlaceAlert(_ placeId: String)
+    func isSuccessReportPlaceActionSheet()
 }
 
 final class HomeViewPresenter: NSObject {
@@ -50,6 +52,8 @@ final class HomeViewPresenter: NSObject {
     
     private var hasTouchedMarkerBefore = false
     private var afterSearchDataInAVIRO = false
+    private var isFirstViewWillappear = true
+    
     private var selectedMarkerIndex = 0 
     private var selectedMarkerModel: MarkerModel?
     
@@ -86,6 +90,27 @@ final class HomeViewPresenter: NSObject {
             viewController?.whenViewWillAppearAfterSearchDataNotInAVIRO()
         } else {
             afterSearchDataInAVIRO.toggle()
+        }
+        
+        if !isFirstViewWillappear {
+            updateMarkerWhenViewWillAppear()
+        } else {
+            isFirstViewWillappear.toggle()
+        }
+    }
+    
+    private func updateMarkerWhenViewWillAppear() {
+        let dateTime = TimeUtility.nowDateTime()
+        let userId = UserId.shared.userId
+        
+        AVIROAPIManager().getNerbyPlaceModels(
+            userId: userId,
+            longitude: MyCoordinate.shared.longitudeString,
+            latitude: MyCoordinate.shared.latitudeString,
+            wide: "100",
+            time: dateTime
+        ) { [weak self] mapDatas in
+            self?.saveMarkers(mapDatas.data.placeData)
         }
     }
     
@@ -185,7 +210,10 @@ final class HomeViewPresenter: NSObject {
             let markerModel = MarkerModel(
                 placeId: placeId,
                 marker: marker,
-                mapPlace: place
+                mapPlace: place,
+                isAll: data.allVegan,
+                isSome: data.someMenuVegan,
+                isRequest: data.ifRequestVegan
             )
             
             MarkerModelArray.shared.setData(markerModel)
@@ -260,7 +288,7 @@ final class HomeViewPresenter: NSObject {
 
             let distanceString = String(distanceValue).convertDistanceUnit()
             let reviewsCount = String(place.commentCount)
-
+            
             let placeTopModel = PlaceTopModel(
                 placeState: mapPlace,
                 placeTitle: place.title,
@@ -396,7 +424,7 @@ final class HomeViewPresenter: NSObject {
         }
         
         MarkerModelArray.shared.updateWhenStarButton(starMarkersModel)
-        print(starMarkersModel)
+
         let markers = MarkerModelArray.shared.getMarkers()
         
         viewController?.loadMarkers(markers)
@@ -411,14 +439,12 @@ final class HomeViewPresenter: NSObject {
         } else {
             bookmarkManager.deleteData(placeId)
         }
-        
-        print(bookmarkManager.loadAllData())
     }
     
     // MARK: Get Place Model Detail
     func getPlaceModelDetail() {
         guard let placeId = selectedPlaceId else { return }
-        print(placeId)
+
         let dispatchGroup = DispatchGroup()
         
         var infoModel: PlaceInfoData?
@@ -428,7 +454,6 @@ final class HomeViewPresenter: NSObject {
         dispatchGroup.enter()
         AVIROAPIManager().getPlaceInfo(placeId: placeId) { placeInfoModel in
             
-            print("1:  ",placeInfoModel)
             infoModel = placeInfoModel.data
             
             dispatchGroup.leave()
@@ -436,7 +461,6 @@ final class HomeViewPresenter: NSObject {
         
         dispatchGroup.enter()
         AVIROAPIManager().getMenuInfo(placeId: placeId) { placeMenuModel in
-            print("2:   ",placeMenuModel)
             menuModel = placeMenuModel.data
             
             dispatchGroup.leave()
@@ -444,7 +468,6 @@ final class HomeViewPresenter: NSObject {
         
         dispatchGroup.enter()
         AVIROAPIManager().getCommentInfo(placeId: placeId) { placeReviewsModel in
-            print("3:  ",placeReviewsModel)
             reviewsModel = placeReviewsModel.data
             
             dispatchGroup.leave()
@@ -460,8 +483,21 @@ final class HomeViewPresenter: NSObject {
     }
   
     func postReviewModel(_ postReviewModel: AVIROCommentPost) {
-        print("Test")
         AVIROAPIManager().postCommentModel(postReviewModel)
+    }
+    
+    // MARK: Place Id 불러오기
+    func checkPlaceId() {
+        guard let placeId = selectedPlaceId else { return }
+        
+        viewController?.showReportPlaceAlert(placeId)
+    }
+    
+    // TODO: 나중에 작업
+    func reportPlace(_ type: String?) {
+        guard let type = type else { return }
+        print(type)
+        viewController?.isSuccessReportPlaceActionSheet()
     }
 }
 

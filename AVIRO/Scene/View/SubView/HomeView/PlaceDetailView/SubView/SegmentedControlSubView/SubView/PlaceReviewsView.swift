@@ -285,13 +285,13 @@ final class PlaceReviewsView: UIView {
     
     // TODO: Edit API 생기면 수정
     private func reviewsUpdateInHomeView(_ reviewModel: AVIROCommentPost) {
-        let nowDate = LocationUtility.nowDate()
+        let nowDate = TimeUtility.nowDate()
 
         let reviewModel = ReviewData(
             commentId: reviewModel.commentId,
             userId: reviewModel.userId,
             content: reviewModel.content,
-            createdTime: nowDate)
+            updatedTime: nowDate)
         
         reviewsArray.insert(reviewModel, at: 0)
         reviewsTable.reloadData()
@@ -338,7 +338,7 @@ final class PlaceReviewsView: UIView {
     private func whenEditedAfterUpdateReviewArray(_ text: String) {
         isEditedAfter = false
         
-        let nowDate = LocationUtility.nowDate()
+        let nowDate = TimeUtility.nowDate()
 
         guard let index = reviewsArray.firstIndex(where: {$0.commentId == editedReviewId}) else {
             return
@@ -353,7 +353,7 @@ final class PlaceReviewsView: UIView {
             commentId: postModel.commentId,
             userId: postModel.userId,
             content: postModel.content,
-            createdTime: nowDate)
+            updatedTime: nowDate)
         
         reviewsArray.insert(reviewModel, at: 0)
         reviewsTable.reloadData()
@@ -366,7 +366,7 @@ final class PlaceReviewsView: UIView {
     private func whenUpdateReviewArray(_ text: String) {
         isEditedAfter = false
         
-        let nowDate = LocationUtility.nowDate()
+        let nowDate = TimeUtility.nowDate()
         
         let postModel = AVIROCommentPost(
             placeId: placeId,
@@ -378,7 +378,7 @@ final class PlaceReviewsView: UIView {
             commentId: postModel.commentId,
             userId: postModel.userId,
             content: postModel.content,
-            createdTime: nowDate)
+            updatedTime: nowDate)
         
         if reviewsArray.count == 0 {
             noReviews.isHidden = true

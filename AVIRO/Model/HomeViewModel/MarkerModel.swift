@@ -87,4 +87,8 @@ struct MarkerModel {
     let marker: NMFMarker
     let mapPlace: MapPlace
     var isStar = false
+    
+    var isAll = false
+    var isSome = false
+    var isRequest = false
 }

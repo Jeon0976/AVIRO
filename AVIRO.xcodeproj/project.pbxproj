@@ -87,6 +87,7 @@
 		C595ACCD2A84A1A200D35123 /* PlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C595ACCC2A84A1A200D35123 /* PlaceView.swift */; };
 		C595ACD12A84A4EB00D35123 /* PlaceTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C595ACD02A84A4EB00D35123 /* PlaceTopView.swift */; };
 		C5A03C122A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A03C112A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift */; };
+		C5A201B22A98502500A54381 /* TimeUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A201B12A98502500A54381 /* TimeUtility.swift */; };
 		C5A3C3C42A39658A0050AB3D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A3C3C32A39658A0050AB3D /* LoginViewController.swift */; };
 		C5A3C3C62A39659B0050AB3D /* LoginViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A3C3C52A39659B0050AB3D /* LoginViewPresenter.swift */; };
 		C5A989972A959D920021B7C3 /* BookmarkPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A989962A959D920021B7C3 /* BookmarkPostModel.swift */; };
@@ -118,7 +119,6 @@
 		C5D6E19F2A17B4410042679C /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5D6E19E2A17B4410042679C /* API.plist */; };
 		C5D7458F2A224DCE006F9F31 /* HomeFirstPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D7458E2A224DCE006F9F31 /* HomeFirstPopUpView.swift */; };
 		C5D745912A225DE6006F9F31 /* CommentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D745902A225DE6006F9F31 /* CommentDetailViewController.swift */; };
-		C5D745942A2267C7006F9F31 /* CommentDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D745932A2267C7006F9F31 /* CommentDetailPresenter.swift */; };
 		C5D745962A2277A4006F9F31 /* CommentsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D745952A2277A4006F9F31 /* CommentsViewCell.swift */; };
 		C5D8E8632A3DEC3900D88A43 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D8E8622A3DEC3900D88A43 /* String+Extension.swift */; };
 		C5D93D9F2A581EC800629C39 /* FirstRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D93D9E2A581EC800629C39 /* FirstRegistrationViewController.swift */; };
@@ -138,7 +138,6 @@
 		C5EB510D2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB510C2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift */; };
 		C5EB51122A20CC7D00B29CC1 /* HomeInfoStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB51112A20CC7D00B29CC1 /* HomeInfoStoreView.swift */; };
 		C5EB51162A21011C00B29CC1 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB51152A21011C00B29CC1 /* DetailViewController.swift */; };
-		C5EB51182A21016600B29CC1 /* DetailViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB51172A21016600B29CC1 /* DetailViewPresenter.swift */; };
 		C5EB511C2A21188D00B29CC1 /* TopDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB511B2A21188D00B29CC1 /* TopDetailView.swift */; };
 		C5EB511E2A21189B00B29CC1 /* StoreDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB511D2A21189B00B29CC1 /* StoreDetailView.swift */; };
 		C5EB51202A2118AB00B29CC1 /* MenuDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB511F2A2118AB00B29CC1 /* MenuDetailView.swift */; };
@@ -239,6 +238,7 @@
 		C595ACCC2A84A1A200D35123 /* PlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceView.swift; sourceTree = "<group>"; };
 		C595ACD02A84A4EB00D35123 /* PlaceTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTopView.swift; sourceTree = "<group>"; };
 		C5A03C112A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerActionAndAnimation.swift; sourceTree = "<group>"; };
+		C5A201B12A98502500A54381 /* TimeUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeUtility.swift; sourceTree = "<group>"; };
 		C5A3C3C32A39658A0050AB3D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C5A3C3C52A39659B0050AB3D /* LoginViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewPresenter.swift; sourceTree = "<group>"; };
 		C5A989962A959D920021B7C3 /* BookmarkPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkPostModel.swift; sourceTree = "<group>"; };
@@ -270,7 +270,6 @@
 		C5D6E19E2A17B4410042679C /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = API.plist; sourceTree = "<group>"; };
 		C5D7458E2A224DCE006F9F31 /* HomeFirstPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFirstPopUpView.swift; sourceTree = "<group>"; };
 		C5D745902A225DE6006F9F31 /* CommentDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDetailViewController.swift; sourceTree = "<group>"; };
-		C5D745932A2267C7006F9F31 /* CommentDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDetailPresenter.swift; sourceTree = "<group>"; };
 		C5D745952A2277A4006F9F31 /* CommentsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsViewCell.swift; sourceTree = "<group>"; };
 		C5D8E8622A3DEC3900D88A43 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		C5D93D9E2A581EC800629C39 /* FirstRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstRegistrationViewController.swift; sourceTree = "<group>"; };
@@ -290,7 +289,6 @@
 		C5EB510C2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchViewTableViewCell.swift; sourceTree = "<group>"; };
 		C5EB51112A20CC7D00B29CC1 /* HomeInfoStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInfoStoreView.swift; sourceTree = "<group>"; };
 		C5EB51152A21011C00B29CC1 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
-		C5EB51172A21016600B29CC1 /* DetailViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewPresenter.swift; sourceTree = "<group>"; };
 		C5EB511B2A21188D00B29CC1 /* TopDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopDetailView.swift; sourceTree = "<group>"; };
 		C5EB511D2A21189B00B29CC1 /* StoreDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailView.swift; sourceTree = "<group>"; };
 		C5EB511F2A2118AB00B29CC1 /* MenuDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetailView.swift; sourceTree = "<group>"; };
@@ -394,9 +392,9 @@
 				C5EB51012A20926800B29CC1 /* TapBarModel */,
 				C5EB51022A20927400B29CC1 /* HomeViewModel */,
 				C5732C7A2A41D3F800CDC499 /* EnrollViewModel */,
+				C5351B7B2A1B52A000116D50 /* PlaceListModel */,
 				C5351B782A1B437600116D50 /* APIResonseModel */,
 				C5351B652A1A128D00116D50 /* SingletonModel */,
-				C5351B7B2A1B52A000116D50 /* PlaceListModel */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -523,15 +521,6 @@
 				C52066322A7E80350038ECCD /* MatchedPlaceListCell.swift */,
 			);
 			path = HomeSearchViewModel;
-			sourceTree = "<group>";
-		};
-		C520662A2A7CD9AC0038ECCD /* DetailViewPresenter */ = {
-			isa = PBXGroup;
-			children = (
-				C5D745922A22679E006F9F31 /* CommentDetailPresenter */,
-				C5EB51172A21016600B29CC1 /* DetailViewPresenter.swift */,
-			);
-			path = DetailViewPresenter;
 			sourceTree = "<group>";
 		};
 		C520662B2A7CE19F0038ECCD /* UserDefaultsManager */ = {
@@ -783,6 +772,7 @@
 			isa = PBXGroup;
 			children = (
 				C5803F5C2A88C3C00064A853 /* LocationUtility.swift */,
+				C5A201B12A98502500A54381 /* TimeUtility.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -956,14 +946,6 @@
 			path = "../../../../../../../AVIRO deprecated/InrollPlace/PlaceList";
 			sourceTree = "<group>";
 		};
-		C5D745922A22679E006F9F31 /* CommentDetailPresenter */ = {
-			isa = PBXGroup;
-			children = (
-				C5D745932A2267C7006F9F31 /* CommentDetailPresenter.swift */,
-			);
-			path = CommentDetailPresenter;
-			sourceTree = "<group>";
-		};
 		C5D93D962A56C6ED00629C39 /* RegistrationView */ = {
 			isa = PBXGroup;
 			children = (
@@ -991,7 +973,6 @@
 				C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */,
 				C5EB51092A209FC000B29CC1 /* HomeSearchPresenter */,
 				C5FA0EA62A94D88D004AD8B4 /* ReportPresenter */,
-				C520662A2A7CD9AC0038ECCD /* DetailViewPresenter */,
 			);
 			path = HomePresenter;
 			sourceTree = "<group>";
@@ -1305,7 +1286,6 @@
 				C5D36D332A76BA65003328E8 /* PlaceListSearchViewController.swift in Sources */,
 				C5732C7C2A41D41B00CDC499 /* VeganTableFieldModel.swift in Sources */,
 				C5732C752A41962D00CDC499 /* AVIRORequestAPI.swift in Sources */,
-				C5EB51182A21016600B29CC1 /* DetailViewPresenter.swift in Sources */,
 				C5D93DA12A581F5A00629C39 /* FirstRegistrationPresenter.swift in Sources */,
 				C567C1502A56611500D4B426 /* TopCell.swift in Sources */,
 				C50F6B042A6BCD6900E942F5 /* CategoryButton.swift in Sources */,
@@ -1352,7 +1332,6 @@
 				C54BC0DD2A2C762C00B65439 /* CommentsLabel.swift in Sources */,
 				C5EB51082A209F6900B29CC1 /* HomeSearchViewController.swift in Sources */,
 				C5351B562A19B67900116D50 /* CustomAlertController.swift in Sources */,
-				C5D745942A2267C7006F9F31 /* CommentDetailPresenter.swift in Sources */,
 				C5538AAF2A1BB81200661DE2 /* VeganModel.swift in Sources */,
 				C50F6AF32A68FD0A00E942F5 /* EnrollPlaceViewController.swift in Sources */,
 				C5732C7E2A41D42700CDC499 /* RequestTableFieldModel.swift in Sources */,
@@ -1435,6 +1414,7 @@
 				C51AED1F2A8B2BC80015FBC2 /* HomeTopButton.swift in Sources */,
 				C5EB511C2A21188D00B29CC1 /* TopDetailView.swift in Sources */,
 				C5FA0EAC2A94DF39004AD8B4 /* ReportReviewPresenter.swift in Sources */,
+				C5A201B22A98502500A54381 /* TimeUtility.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

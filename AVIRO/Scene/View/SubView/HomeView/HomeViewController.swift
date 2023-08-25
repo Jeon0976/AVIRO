@@ -360,6 +360,24 @@ extension HomeViewController: HomeViewProtocol {
                                  reviewsModel: reviewsModel
         )
     }
+    
+    func isSuccessReportPlaceActionSheet() {
+        let alertController = UIAlertController(
+            title: "신고가 완료되었어요",
+            message: "3건 이상의 신고가 들어오면\n가게는 자동으로 삭제돼요.",
+            preferredStyle: .alert
+        )
+        
+        let check = UIAlertAction(title: "확인", style: .cancel)
+        
+        [
+            check
+        ].forEach {
+            alertController.addAction($0)
+        }
+        
+        present(alertController, animated: true)
+    }
 }
 
 // MARK: View Refer & Objc Action
@@ -382,7 +400,7 @@ extension HomeViewController {
         let cameraUpdate = NMFCameraUpdate(scrollBy: point)
         cameraUpdate.animation = .linear
         cameraUpdate.animationDuration = 0.2
-
+        
         naverMapView.moveCamera(cameraUpdate)
     }
     
@@ -404,21 +422,21 @@ extension HomeViewController {
             self?.naverMapView.isHidden = false
             self?.placeViewPopUpAfterInitPlacePopViewHeight()
         }
-
+        
         placeView.whenShareTapped = { [weak self] shareObject in
             let vc = UIActivityViewController(activityItems: shareObject, applicationActivities: nil)
             vc.popoverPresentationController?.permittedArrowDirections = []
-
+            
             vc.popoverPresentationController?.sourceView = self?.view
             self?.present(vc, animated: true)
         }
-
+        
         placeView.whenTopViewStarTapped = { [weak self] selected in
             let title: String = selected ? "즐겨찾기가 추가되었습니다." : "즐겨찾기가 삭제되었습니다."
             self?.makeToastButton(title)
             self?.presenter.updateBookmark(selected)
         }
-
+        
         placeView.whenUploadReview = { [weak self] postReviewModel in
             self?.presenter.postReviewModel(postReviewModel)
         }
@@ -447,12 +465,12 @@ extension HomeViewController {
         let yPosition: CGFloat = viewHeight - 32
         
         self.view.makeToast(title,
-                  duration: 1.0,
-                  point: CGPoint(x: centerX, y: yPosition),
-                  title: nil,
-                  image: nil,
-                  style: style,
-                  completion: nil
+                            duration: 1.0,
+                            point: CGPoint(x: centerX, y: yPosition),
+                            title: nil,
+                            image: nil,
+                            style: style,
+                            completion: nil
         )
     }
     
@@ -491,7 +509,7 @@ extension HomeViewController {
         }
         
         let deleteMyReview = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
-            self.makeDeleteMyReviewAlert(commentId)
+            self.showDeleteMyReviewAlert(commentId)
         }
         
         let cancel = UIAlertAction(title: "취소", style: .cancel)
@@ -511,7 +529,7 @@ extension HomeViewController {
         placeView.editMyReview(commentId)
     }
     
-    private func makeDeleteMyReviewAlert(_ commentId: String) {
+    private func showDeleteMyReviewAlert(_ commentId: String) {
         let alertController = UIAlertController(
             title: "삭제하기",
             message: "정말로 삭제하시겠어요?\n삭제하면 다시 복구할 수 없어요.",
@@ -555,7 +573,63 @@ extension HomeViewController {
     }
     // MARK: Flag Button Tapped
     @objc private func flagButtonTapped(_ sender: UIButton) {
+        presenter.checkPlaceId()
+    }
+    
+    func showReportPlaceAlert(_ placeId: String) {
+        let alertController = UIAlertController(
+            title: nil,
+            message: "신고하기",
+            preferredStyle: .actionSheet
+        )
+            
+        let reportPlace = UIAlertAction(title: "가게 신고하기", style: .destructive) { _ in
+            self.reasonForReportPlaceActionSheet(placeId)
+        }
         
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        
+        [
+            reportPlace,
+            cancel
+        ].forEach {
+            alertController.addAction($0)
+        }
+        
+        present(alertController, animated: true)
+    }
+    
+    private func reasonForReportPlaceActionSheet(_ placeId: String) {
+        let alertController = UIAlertController(
+            title: "신고 이유가 궁금해요!",
+            message: "3건 이상의 신고가 들어오면\n가게는 자동으로 삭제돼요.",
+            preferredStyle: .alert
+        )
+        
+        let lostPlace = UIAlertAction(title: "없어진 가게예요", style: .default) { action in
+            self.presenter.reportPlace(action.title)
+        }
+        
+        let notVeganPlace = UIAlertAction(title: "비건 가게가 아니예요", style: .default) { action in
+            self.presenter.reportPlace(action.title)
+        }
+         
+        let duplicatedPlace = UIAlertAction(title: "중복 등록된 가게예요", style: .default) { action in
+            self.presenter.reportPlace(action.title)
+        }
+        
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        
+        [
+            lostPlace,
+            notVeganPlace,
+            duplicatedPlace,
+            cancel
+        ].forEach {
+            alertController.addAction($0)
+        }
+        
+        present(alertController, animated: true)
     }
     
     // MARK: Star Button Tapped
@@ -572,11 +646,14 @@ extension HomeViewController {
     // MARK: Swipte Gestrue Actived
     @objc private func swipeGestureActived(_ gesture: UISwipeGestureRecognizer) {
         if gesture.direction == .up {
+            // TopView가 로딩이 다 끝난 후 가능
             if !placeView.isLoadingTopView {
+                // view가 slideup되고, detail view가 loading이 끝난 후 가능
                 if isSlideUpView && !placeView.isLoadingDetail {
                     placeViewFullUp()
                     naverMapView.isHidden = true
                     isSlideUpView = false
+                // view가 아직 slideup 안 되었고, popup일때 가능
                 } else if !isSlideUpView && placeView.placeViewStated == .PopUp {
                     placeViewSlideUp()
                     presenter.getPlaceModelDetail()
@@ -584,6 +661,7 @@ extension HomeViewController {
                 }
             }
         } else if gesture.direction == .down {
+            // view가 slideup일때만 down gesture 가능
             if isSlideUpView {
                 placeViewPopUpAfterInitPlacePopViewHeight()
                 isSlideUpView = false

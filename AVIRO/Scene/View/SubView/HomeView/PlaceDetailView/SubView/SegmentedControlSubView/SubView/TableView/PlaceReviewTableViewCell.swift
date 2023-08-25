@@ -119,7 +119,7 @@ final class PlaceReviewTableViewCell: UITableViewCell {
     ) {
         commentId = comment.commentId
         userId.text = comment.userId
-        createdTime.text = comment.createdTime
+        createdTime.text = comment.updatedTime
         
         review.setLabel(
             text: comment.content,
