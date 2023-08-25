@@ -40,6 +40,7 @@ final class PlaceSegmentedControlView: UIView {
     
     private var reviewsCount = 0 {
         didSet {
+            // segmented에 있는 count, top view에 있는 count 최신화
             segmentedControlLabelChange(reviewsCount)
             updateReviewsCount?(reviewsCount)
         }
@@ -55,6 +56,10 @@ final class PlaceSegmentedControlView: UIView {
         }
     }
     
+    // placeInfo
+    var editPlaceInfo: (() -> Void)?
+    
+    // review
     var whenUploadReview: ((AVIROCommentPost) -> Void)?
     var updateReviewsCount: ((Int) -> Void)?
     var reportReview: ((String) -> Void)?
@@ -257,6 +262,13 @@ final class PlaceSegmentedControlView: UIView {
     }
     
     private func handleClosure() {
+        // Place Info 관련 클로저
+        homeView.editPlaceInfo = { [weak self] in
+            self?.editPlaceInfo?()
+        }
+        
+        
+        // Review 관련 클로저
         homeView.showMoreReviews = { [weak self] in
             self?.segmentedControl.selectedSegmentIndex = 2
             self?.activeReviewView()

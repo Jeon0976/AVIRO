@@ -146,11 +146,14 @@ final class PlaceInfoView: UIView {
         let button = EditButton()
         
         button.setButton("가게 정보 수정 요청하기")
+        button.addTarget(self, action: #selector(editInfoButtonTapped), for: .touchUpInside)
         
         return button
     }()
     
     private var viewHeightConstraint: NSLayoutConstraint?
+    
+    var afterEditInfoButtonTapped: (() -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -290,5 +293,9 @@ final class PlaceInfoView: UIView {
         timeLabel.isHidden = true
         timePlusButton.isHidden = true
         homePageButton.setTitle("홈페이지 링크 추가", for: .normal)
+    }
+    
+    @objc private func editInfoButtonTapped() {
+        afterEditInfoButtonTapped?()
     }
 }

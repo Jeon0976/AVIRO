@@ -18,7 +18,7 @@ final class PlaceView: UIView {
     private lazy var topView = PlaceTopView()
     
     private lazy var segmentedControlView = PlaceSegmentedControlView()
-        
+    
     var placeViewStated: PlaceViewState = PlaceViewState.PopUp {
         didSet {
             switch placeViewStated {
@@ -63,6 +63,7 @@ final class PlaceView: UIView {
     var whenTopViewStarTapped: ((Bool) -> Void)?
     
     // MARK: SegmentedControl
+    var editPlaceInfo: (() -> Void)?
     var whenUploadReview: ((AVIROCommentPost) -> Void)?
     var reportReview: ((String) -> Void)?
     var editMyReview: ((String) -> Void)?
@@ -111,9 +112,21 @@ final class PlaceView: UIView {
                             isStar: Bool
     ) {
         self.placeId = placeId
-
+        
         topView.dataBinding(placeModel, isStar)
         isLoadingTopView = false
+    }
+    
+    func infoModelBinding(infoModel: PlaceInfoData?) {
+        
+    }
+    
+    func menuModelBinding(menuModel: PlaceMenuData?) {
+        
+    }
+    
+    func reviewsModelBinding(reviewsModel: PlaceReviewsData?) {
+        
     }
     
     func allDataBinding(infoModel: PlaceInfoData?,
@@ -164,6 +177,9 @@ final class PlaceView: UIView {
         }
         
         // MARK: Segmented
+        segmentedControlView.editPlaceInfo = { [weak self] in
+            self?.editPlaceInfo?()
+        }
         segmentedControlView.whenUploadReview = { [weak self] postReviewModel in
             self?.whenUploadReview?(postReviewModel)
         }

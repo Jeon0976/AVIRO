@@ -11,3 +11,7 @@ function_body_length:
 excluded:
 - Pods
 - Frameworks
+
+
+type_body_length:
+- 500

@@ -14,9 +14,10 @@ protocol HomeViewProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
     func makeGesture()
-    func makeSlideView()
+//    func makeSlideView()
     func whenViewWillAppear()
     func whenViewWillAppearAfterSearchDataNotInAVIRO()
+    func whenAfterPopEditPage()
     func keyboardWillShow(height: CGFloat)
     func keyboardWillHide()
     func ifDenied()
@@ -40,6 +41,7 @@ protocol HomeViewProtocol: NSObject {
     )
     func showReportPlaceAlert(_ placeId: String)
     func isSuccessReportPlaceActionSheet()
+    func pushEditPlaceInfoViewController(placeId: String, placeInfo: PlaceInfoData)
 }
 
 final class HomeViewPresenter: NSObject {
@@ -53,9 +55,13 @@ final class HomeViewPresenter: NSObject {
     private var hasTouchedMarkerBefore = false
     private var afterSearchDataInAVIRO = false
     private var isFirstViewWillappear = true
+    private var isShowEditPage = false
     
     private var selectedMarkerIndex = 0 
     private var selectedMarkerModel: MarkerModel?
+    private var selectedInfoModel: PlaceInfoData?
+    private var selectedMenuModel: PlaceMenuData?
+    private var selectedReviewsModel: PlaceReviewsData?
     
     private var firstLocation = true
     
@@ -83,13 +89,16 @@ final class HomeViewPresenter: NSObject {
     
     func viewWillAppear() {
         viewController?.whenViewWillAppear()
-        viewController?.makeSlideView()
+//        viewController?.makeSlideView()
+        
         addKeyboardNotification()
         
-        if !afterSearchDataInAVIRO {
-            viewController?.whenViewWillAppearAfterSearchDataNotInAVIRO()
-        } else {
-            afterSearchDataInAVIRO.toggle()
+        if !isShowEditPage {
+            if !afterSearchDataInAVIRO {
+                viewController?.whenViewWillAppearAfterSearchDataNotInAVIRO()
+            } else {
+                afterSearchDataInAVIRO.toggle()
+            }
         }
         
         if !isFirstViewWillappear {
@@ -114,8 +123,22 @@ final class HomeViewPresenter: NSObject {
         }
     }
     
+    func viewDidAppear() {
+        
+        firstLocationUpdate()
+        
+        if isShowEditPage {
+            viewController?.whenAfterPopEditPage()
+            isShowEditPage.toggle()
+        }
+    }
+    
     func viewWillDisappear() {
-        initMarkerState()
+        
+        if !isShowEditPage {
+            initMarkerState()
+        }
+
         removeKeyboardNotification()
     }
     
@@ -447,37 +470,33 @@ final class HomeViewPresenter: NSObject {
 
         let dispatchGroup = DispatchGroup()
         
-        var infoModel: PlaceInfoData?
-        var menuModel: PlaceMenuData?
-        var reviewsModel: PlaceReviewsData?
-        
         dispatchGroup.enter()
-        AVIROAPIManager().getPlaceInfo(placeId: placeId) { placeInfoModel in
+        AVIROAPIManager().getPlaceInfo(placeId: placeId) { [weak self] placeInfoModel in
             
-            infoModel = placeInfoModel.data
+            self?.selectedInfoModel = placeInfoModel.data
             
             dispatchGroup.leave()
         }
         
         dispatchGroup.enter()
-        AVIROAPIManager().getMenuInfo(placeId: placeId) { placeMenuModel in
-            menuModel = placeMenuModel.data
+        AVIROAPIManager().getMenuInfo(placeId: placeId) { [weak self] placeMenuModel in
+            self?.selectedMenuModel = placeMenuModel.data
             
             dispatchGroup.leave()
         }
         
         dispatchGroup.enter()
-        AVIROAPIManager().getCommentInfo(placeId: placeId) { placeReviewsModel in
-            reviewsModel = placeReviewsModel.data
+        AVIROAPIManager().getCommentInfo(placeId: placeId) { [weak self] placeReviewsModel in
+            self?.selectedReviewsModel = placeReviewsModel.data
             
             dispatchGroup.leave()
         }
         
         dispatchGroup.notify(queue: .main) { [weak self] in
             self?.viewController?.afterSlideupPlaceView(
-                infoModel: infoModel,
-                menuModel: menuModel,
-                reviewsModel: reviewsModel
+                infoModel: self?.selectedInfoModel,
+                menuModel: self?.selectedMenuModel,
+                reviewsModel: self?.selectedReviewsModel
             )
         }
     }
@@ -498,6 +517,16 @@ final class HomeViewPresenter: NSObject {
         guard let type = type else { return }
         print(type)
         viewController?.isSuccessReportPlaceActionSheet()
+    }
+    
+    func editPlaceInfo() {
+        guard let placeId = selectedPlaceId,
+              let placeInfo = selectedInfoModel
+        else { return }
+        
+        isShowEditPage = true
+        
+        viewController?.pushEditPlaceInfoViewController(placeId: placeId, placeInfo: placeInfo)
     }
 }
 

@@ -16,6 +16,8 @@ final class PlaceHomeView: UIView {
     
     private var viewHeightConstraint: NSLayoutConstraint?
 
+    // Place Info 관련 클로저
+    var editPlaceInfo: (() -> Void)?
     
     // review 관련 클로저
     var showMoreReviews: (() -> Void)?
@@ -99,6 +101,10 @@ final class PlaceHomeView: UIView {
     
     // MARK: 클로저 처리
     private func handleClosure() {
+        placeInfoView.afterEditInfoButtonTapped = { [weak self] in
+            self?.editPlaceInfo?()
+        }
+        
         placeReviewWriteView.whenWriteReviewButtonTapped = { [weak self] in
             self?.showMoreReviews?()
         }

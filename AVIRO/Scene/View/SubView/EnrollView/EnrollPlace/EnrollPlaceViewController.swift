@@ -305,7 +305,7 @@ extension EnrollPlaceViewController {
     
     // MARK: Navigation Attribute
     private func navigationAttributed() {
-        navigationItem.backButtonTitle = ""
+//        navigationItem.backButtonTitle = ""
         navigationItem.title = "가게 등록하기"
         navigationController?.navigationBar.isHidden = false
         

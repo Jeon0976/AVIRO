@@ -62,20 +62,18 @@ final class HomeViewController: UIViewController {
         ])
         zoomLevel.textColor = .black
         zoomLevel.font = .systemFont(ofSize: 20, weight: .bold)
-
-
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        presenter.firstLocationUpdate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     
         presenter.viewWillAppear()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        presenter.viewDidAppear()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -266,11 +264,15 @@ extension HomeViewController: HomeViewProtocol {
         
         naverMapView.isHidden = false
     }
-        
+
+    func whenAfterPopEditPage() {
+        naverMapView.isHidden = true
+    }
+    
     func whenViewWillAppearAfterSearchDataNotInAVIRO() {
         whenViewWillAppearInitPlaceView()
     }
-    
+
     // MARK: 위치 denided or approval
     // 위치 denied 할 때
     func ifDenied() {
@@ -355,6 +357,7 @@ extension HomeViewController: HomeViewProtocol {
                                menuModel: PlaceMenuData?,
                                reviewsModel: PlaceReviewsData?
     ) {
+        // MARK: 다 하나씩 쪼겔 필요 있음
         placeView.allDataBinding(infoModel: infoModel,
                                  menuModel: menuModel,
                                  reviewsModel: reviewsModel
@@ -377,6 +380,15 @@ extension HomeViewController: HomeViewProtocol {
         }
         
         present(alertController, animated: true)
+    }
+    
+    func pushEditPlaceInfoViewController(placeId: String, placeInfo: PlaceInfoData) {
+        let vc = PlaceInfoEditViewController()
+        let presenter = PlaceInfoEditPresenter(viewController: vc, placeId: placeId, placeInfo: placeInfo)
+        
+        vc.presenter = presenter
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -419,6 +431,7 @@ extension HomeViewController {
     // MARK: 클로저 함수 Binding 처리
     private func handleClosure() {
         placeView.whenFullBack = { [weak self] in
+            print("Test")
             self?.naverMapView.isHidden = false
             self?.placeViewPopUpAfterInitPlacePopViewHeight()
         }
@@ -435,6 +448,10 @@ extension HomeViewController {
             let title: String = selected ? "즐겨찾기가 추가되었습니다." : "즐겨찾기가 삭제되었습니다."
             self?.makeToastButton(title)
             self?.presenter.updateBookmark(selected)
+        }
+        
+        placeView.editPlaceInfo = { [weak self] in
+            self?.presenter.editPlaceInfo()
         }
         
         placeView.whenUploadReview = { [weak self] postReviewModel in
