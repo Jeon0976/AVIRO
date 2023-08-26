@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		A156F24E1DC1F5FA54D44A76 /* Pods_AVIRO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 796022A3066B91147B712BB4 /* Pods_AVIRO.framework */; };
 		C50367F52A1795D10020C6BB /* HomeViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */; };
-		C50DB73D2A99D5710078B501 /* PlaceListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50DB73C2A99D5710078B501 /* PlaceListCell.swift */; };
-		C50DB73F2A99D57C0078B501 /* PlaceListSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50DB73E2A99D57C0078B501 /* PlaceListSearchViewController.swift */; };
+		C50DB7422A99DCDA0078B501 /* PlaceListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50DB7402A99DCDA0078B501 /* PlaceListCell.swift */; };
+		C50DB7432A99DCDA0078B501 /* PlaceListSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50DB7412A99DCDA0078B501 /* PlaceListSearchViewController.swift */; };
 		C50E6F6D2A8E5AAC00703B9E /* ReviewLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50E6F6C2A8E5AAC00703B9E /* ReviewLabel.swift */; };
 		C50E6F6F2A8F10B500703B9E /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50E6F6E2A8F10B500703B9E /* UILabel+Extension.swift */; };
 		C50F6AF32A68FD0A00E942F5 /* EnrollPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6AF22A68FD0A00E942F5 /* EnrollPlaceViewController.swift */; };
@@ -158,8 +158,8 @@
 		796022A3066B91147B712BB4 /* Pods_AVIRO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AVIRO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B57500A8C1EA6C6CFDED2C4C /* Pods-AVIRO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AVIRO.debug.xcconfig"; path = "Target Support Files/Pods-AVIRO/Pods-AVIRO.debug.xcconfig"; sourceTree = "<group>"; };
 		C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewPresenter.swift; sourceTree = "<group>"; };
-		C50DB73C2A99D5710078B501 /* PlaceListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaceListCell.swift; path = ../../../../../../../../.Trash/PlaceListCell.swift; sourceTree = "<group>"; };
-		C50DB73E2A99D57C0078B501 /* PlaceListSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaceListSearchViewController.swift; path = ../../../../../../../../.Trash/PlaceListSearchViewController.swift; sourceTree = "<group>"; };
+		C50DB7402A99DCDA0078B501 /* PlaceListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceListCell.swift; sourceTree = "<group>"; };
+		C50DB7412A99DCDA0078B501 /* PlaceListSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceListSearchViewController.swift; sourceTree = "<group>"; };
 		C50E6F6C2A8E5AAC00703B9E /* ReviewLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewLabel.swift; sourceTree = "<group>"; };
 		C50E6F6E2A8F10B500703B9E /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		C50F6AF22A68FD0A00E942F5 /* EnrollPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollPlaceViewController.swift; sourceTree = "<group>"; };
@@ -419,8 +419,8 @@
 		C50DB7372A99D4C80078B501 /* PlaceList */ = {
 			isa = PBXGroup;
 			children = (
-				C50DB73E2A99D57C0078B501 /* PlaceListSearchViewController.swift */,
-				C50DB73C2A99D5710078B501 /* PlaceListCell.swift */,
+				C50DB7402A99DCDA0078B501 /* PlaceListCell.swift */,
+				C50DB7412A99DCDA0078B501 /* PlaceListSearchViewController.swift */,
 			);
 			path = PlaceList;
 			sourceTree = "<group>";
@@ -1308,7 +1308,6 @@
 				C5D93DA32A58718300629C39 /* BottomButton1.swift in Sources */,
 				C5A989992A959E040021B7C3 /* AVIROBookmarkModel.swift in Sources */,
 				C5803F582A88C1990064A853 /* PlaceTopModel.swift in Sources */,
-				C50DB73F2A99D57C0078B501 /* PlaceListSearchViewController.swift in Sources */,
 				C5D36D2E2A76031E003328E8 /* Double+Extension.swift in Sources */,
 				C54BC0DD2A2C762C00B65439 /* CommentsLabel.swift in Sources */,
 				C5EB51082A209F6900B29CC1 /* HomeSearchViewController.swift in Sources */,
@@ -1342,6 +1341,8 @@
 				C51AED232A8B7B000015FBC2 /* UIViewController+Extension.swift in Sources */,
 				C5C961952A8D9EED0016E2F8 /* PlaceReviewTableViewCell.swift in Sources */,
 				C5A3C3C62A39659B0050AB3D /* LoginViewPresenter.swift in Sources */,
+				C50DB7422A99DCDA0078B501 /* PlaceListCell.swift in Sources */,
+				C50DB7432A99DCDA0078B501 /* PlaceListSearchViewController.swift in Sources */,
 				C5166E4D2A945228003495AA /* UserSingleton.swift in Sources */,
 				C58B9AAE2A5675B9008AEAC3 /* TutorialViewController.swift in Sources */,
 				C5FF13552A42C88D0026981D /* AVIROMenuModel.swift in Sources */,
@@ -1371,7 +1372,6 @@
 				C50E6F6D2A8E5AAC00703B9E /* ReviewLabel.swift in Sources */,
 				C5C290852A86173F00ED5DCE /* PlaceReviewWriteView.swift in Sources */,
 				C51BBAD52A78D53D00BF5B7C /* AVIROCheckPlaceModel.swift in Sources */,
-				C50DB73D2A99D5710078B501 /* PlaceListCell.swift in Sources */,
 				C56857802A7113C600F52715 /* NormalTableViewCell.swift in Sources */,
 				C52066312A7E4A580038ECCD /* PlaceModelBeforeMatchedAVIRO.swift in Sources */,
 				C5C9619F2A8DEB230016E2F8 /* ReviewWriteButton.swift in Sources */,
