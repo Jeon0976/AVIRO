@@ -25,7 +25,7 @@ final class PlaceReviewsView: UIView {
         label.font = .systemFont(ofSize: 13, weight: .medium)
         label.textAlignment = .right
         label.numberOfLines = 1
-        label.textColor = .gray0
+        label.textColor = .gray2
         label.text = "0개"
         
         return label

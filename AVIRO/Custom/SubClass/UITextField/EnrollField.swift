@@ -9,11 +9,15 @@ import UIKit
 
 class EnrollField: UITextField {
     private var horizontalPadding: CGFloat = 16
-    private var buttonPadding: CGFloat = 7
     private var verticalPadding: CGFloat = 13
     private var imageViewSize: CGFloat = 24
+    private var buttonSize: CGFloat = 24
+    private var buttonPadding: CGFloat = 7
+
+    private var isAddLeftImage = false
+    private var isAddRightButton = false
     
-    var isAddLeftImage = false
+    var tappedPushViewButton: (() -> Void)?
     
     // MARK: Init 설정
     override init(frame: CGRect) {
@@ -66,6 +70,10 @@ class EnrollField: UITextField {
             return inset
         }
         
+        if isAddRightButton {
+            let rightInset = horizontalPadding + buttonSize + buttonPadding
+        }
+        
         return inset
     }
     // MARK: Left Image 넣기
@@ -93,7 +101,31 @@ class EnrollField: UITextField {
         self.leftView = paddingView
         self.leftViewMode = .always
     }
+    
+    func addRightPushViewControllerButton() {
+        isAddRightButton = !isAddRightButton
+        
+        let image = UIImage(named: "PushView")
+        
+        let button = UIButton()
+        button.setImage(image, for: .normal)
+        button.frame = CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize)
+        button.addTarget(self, action: #selector(rightPushViewButtonTapped), for: .touchUpInside)
+        
+        let paddingWidth = horizontalPadding + buttonPadding + buttonSize
+        
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: paddingWidth, height: buttonSize))
+        
+        paddingView.addSubview(button)
+        
+        self.rightView = paddingView
+        self.rightViewMode = .always
+    }
 
+    @objc private func rightPushViewButtonTapped() {
+        tappedPushViewButton?()
+    }
+    
     // MARK: Place Holder 값 넣기
     /// placeHolder 값 넣기
     func makePlaceHolder(_ placeHolder: String) {

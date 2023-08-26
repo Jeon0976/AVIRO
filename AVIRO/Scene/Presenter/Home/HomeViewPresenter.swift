@@ -41,7 +41,8 @@ protocol HomeViewProtocol: NSObject {
     )
     func showReportPlaceAlert(_ placeId: String)
     func isSuccessReportPlaceActionSheet()
-    func pushEditPlaceInfoViewController(placeId: String,
+    func pushEditPlaceInfoViewController(placeMarkerModel: MarkerModel,
+                                         placeId: String,
                                          placeSummary: PlaceSummaryData,
                                          placeInfo: PlaceInfoData
     )
@@ -525,7 +526,8 @@ final class HomeViewPresenter: NSObject {
     }
     
     func editPlaceInfo() {
-        guard let placeId = selectedPlaceId,
+        guard let placeMarkerModel = selectedMarkerModel,
+              let placeId = selectedPlaceId,
               let placeSummary = selectedSummaryModel,
               let placeInfo = selectedInfoModel
         else { return }
@@ -533,6 +535,7 @@ final class HomeViewPresenter: NSObject {
         isShowEditPage = true
         
         viewController?.pushEditPlaceInfoViewController(
+            placeMarkerModel: placeMarkerModel,
             placeId: placeId,
             placeSummary: placeSummary,
             placeInfo: placeInfo

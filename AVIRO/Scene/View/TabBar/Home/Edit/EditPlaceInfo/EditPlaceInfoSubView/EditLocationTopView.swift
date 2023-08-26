@@ -8,7 +8,7 @@
 import UIKit
 
 final class EditLocationTopView: UIView {
-    lazy var placeLabel: UILabel = {
+    private lazy var placeLabel: UILabel = {
         let label = UILabel()
         
         label.textColor = .gray0
@@ -18,8 +18,14 @@ final class EditLocationTopView: UIView {
         return label
     }()
     
+    private lazy var placeField: EnrollField = {
+        let field = EnrollField()
+        
+        return field
+    }()
+    
     // MARK: Category
-    lazy var categoryLabel: UILabel = {
+    private lazy var categoryLabel: UILabel = {
         let label = UILabel()
         
         label.textColor = .gray0
@@ -29,15 +35,15 @@ final class EditLocationTopView: UIView {
         return label
     }()
     
-    lazy var restaurantButton = CategoryButton()
-    lazy var cafeButton = CategoryButton()
-    lazy var bakeryButton = CategoryButton()
-    lazy var barButton = CategoryButton()
+    private lazy var restaurantButton = CategoryButton()
+    private lazy var cafeButton = CategoryButton()
+    private lazy var bakeryButton = CategoryButton()
+    private lazy var barButton = CategoryButton()
     
-    lazy var buttonStackView = UIStackView()
+    private lazy var buttonStackView = UIStackView()
     
     // 공통된 button action 작업을 위해 배열화
-    lazy var categoryButtons = [CategoryButton]()
+    private lazy var categoryButtons = [CategoryButton]()
     
     private var viewHeightConstraint: NSLayoutConstraint?
 
@@ -52,7 +58,46 @@ final class EditLocationTopView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        setViewHeight()
+    }
+    
     private func makeLayout() {
+        viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: 200)
+        viewHeightConstraint?.isActive = true
+        
+        [
+            placeLabel,
+            placeField,
+            categoryLabel,
+            buttonStackView
+        ].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            self.addSubview($0)
+        }
+        
+        NSLayoutConstraint.activate([
+            placeLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+            placeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            
+            placeField.topAnchor.constraint(equalTo: placeLabel.bottomAnchor, constant: 15),
+            placeField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            placeField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            
+            categoryLabel.topAnchor.constraint(equalTo: placeField.bottomAnchor, constant: 20),
+            categoryLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            
+            buttonStackView.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 15),
+            buttonStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            buttonStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
+        ])
+        
+        makeButtonStackViewLayout()
+    }
+    
+    private func makeButtonStackViewLayout() {
         [
             restaurantButton,
             cafeButton,
@@ -68,6 +113,9 @@ final class EditLocationTopView: UIView {
     }
     
     private func makeAttribute() {
+        self.layer.cornerRadius = 10
+        self.backgroundColor = .gray7
+        
         restaurantButton.setButton(Category.restaurant.title)
         cafeButton.setButton(Category.cafe.title)
         bakeryButton.setButton(Category.bakery.title)
@@ -79,5 +127,37 @@ final class EditLocationTopView: UIView {
             bakeryButton,
             barButton
         ]
+    }
+    
+    private func setViewHeight() {
+        let placeLabelHeight = placeLabel.frame.height
+        let placeFieldHeight = placeField.frame.height
+        let categoryLabelHeight = categoryLabel.frame.height
+        let buttonStackViewHeight = buttonStackView.frame.height
+        
+        // 20 * 3 15 * 2
+        let inset: CGFloat = 90
+        
+        let totalHeight = placeLabelHeight + placeFieldHeight + categoryLabelHeight + buttonStackViewHeight + inset
+                
+        viewHeightConstraint?.constant = totalHeight
+    }
+    
+    func dataBinding(title: String, category: String) {
+        self.placeField.text = title
+        
+        if let category = Category(title: category) {
+            switch category {
+            case .bakery:
+                bakeryButton.isSelected.toggle()
+            case .bar:
+                barButton.isSelected.toggle()
+            case .cafe:
+                cafeButton.isSelected.toggle()
+            case .restaurant:
+                restaurantButton.isSelected.toggle()
+            }
+        }
+        
     }
 }

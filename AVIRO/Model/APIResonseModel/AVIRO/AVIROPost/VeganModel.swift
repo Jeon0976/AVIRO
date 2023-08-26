@@ -21,6 +21,16 @@ enum Category: String {
         case .bar: return "술집"
         }
     }
+    
+    init?(title: String) {
+        switch title {
+        case "식당": self = .restaurant
+        case "카페": self = .cafe
+        case "빵집": self = .bakery
+        case "술집": self = .bar
+        default: return nil
+        }
+    }
 }
 
 enum VeganOption {

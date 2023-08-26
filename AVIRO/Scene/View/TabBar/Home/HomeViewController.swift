@@ -382,12 +382,14 @@ extension HomeViewController: HomeViewProtocol {
         present(alertController, animated: true)
     }
     
-    func pushEditPlaceInfoViewController(placeId: String,
+    func pushEditPlaceInfoViewController(placeMarkerModel: MarkerModel,
+                                         placeId: String,
                                          placeSummary: PlaceSummaryData,
                                          placeInfo: PlaceInfoData
     ) {
         let vc = EditPlaceInfoViewController()
         let presenter = EditPlaceInfoPresenter(viewController: vc,
+                                               placeMarkerModel: placeMarkerModel,
                                                placeId: placeId,
                                                placeSummary: placeSummary,
                                                placeInfo: placeInfo

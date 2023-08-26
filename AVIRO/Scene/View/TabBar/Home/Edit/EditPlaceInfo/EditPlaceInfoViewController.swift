@@ -7,12 +7,14 @@
 
 import UIKit
 
+import NMapsMap
+
 final class EditPlaceInfoViewController: UIViewController {
     lazy var presenter = EditPlaceInfoPresenter(viewController: self)
     
-    let items = ["위치", "전화번호", "영업시간", "홈페이지"]
+    private let items = ["위치", "전화번호", "영업시간", "홈페이지"]
     
-    lazy var topLine: UIView = {
+    private lazy var topLine: UIView = {
         let view = UIView()
         
         view.backgroundColor = .gray5
@@ -20,7 +22,7 @@ final class EditPlaceInfoViewController: UIViewController {
         return view
     }()
     
-    lazy var segmentedControl: UnderlineSegmentedControl = {
+    private lazy var segmentedControl: UnderlineSegmentedControl = {
         let segmented = UnderlineSegmentedControl(items: items)
         
         segmented.setAttributedTitle()
@@ -31,7 +33,7 @@ final class EditPlaceInfoViewController: UIViewController {
         return segmented
     }()
     
-    lazy var safeAreaView: UIView = {
+    private lazy var safeAreaView: UIView = {
         let view = UIView()
         
         view.backgroundColor = .gray6
@@ -39,31 +41,33 @@ final class EditPlaceInfoViewController: UIViewController {
         return view
     }()
     
-    lazy var editLocationTopView: EditLocationTopView = {
+    private lazy var scrollView = UIScrollView()
+    
+    private lazy var editLocationTopView: EditLocationTopView = {
         let view = EditLocationTopView()
         
         return view
     }()
     
-    lazy var editLocationBottomView: EditLocationBottomView = {
+    private lazy var editLocationBottomView: EditLocationBottomView = {
         let view = EditLocationBottomView()
         
         return view
     }()
     
-    lazy var editPhoneView: EditPhoneView = {
+    private lazy var editPhoneView: EditPhoneView = {
         let view = EditPhoneView()
         
         return view
     }()
     
-    lazy var editWorkingHoursView: EditWorkingHoursView = {
+    private lazy var editWorkingHoursView: EditWorkingHoursView = {
         let view = EditWorkingHoursView()
         
         return view
     }()
     
-    lazy var editHomePageView: EditHomePageView = {
+    private lazy var editHomePageView: EditHomePageView = {
         let view = EditHomePageView()
         
         return view
@@ -73,6 +77,12 @@ final class EditPlaceInfoViewController: UIViewController {
         super.viewDidLoad()
         
         presenter.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        presenter.dataBinding()
     }
 }
 
@@ -102,12 +112,13 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
             safeAreaView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             safeAreaView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
+        
+        makeSafeAreaViewLayout()
     }
     
     private func makeSafeAreaViewLayout() {
         [
-            editLocationTopView,
-            editLocationBottomView,
+            scrollView,
             editPhoneView,
             editWorkingHoursView,
             editHomePageView
@@ -117,13 +128,10 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         }
         
         NSLayoutConstraint.activate([
-            editLocationTopView.topAnchor.constraint(equalTo: safeAreaView.topAnchor, constant: 20),
-            editLocationTopView.leadingAnchor.constraint(equalTo: safeAreaView.leadingAnchor, constant: 16),
-            editLocationTopView.trailingAnchor.constraint(equalTo: safeAreaView.trailingAnchor, constant: -16),
-            
-            editLocationBottomView.topAnchor.constraint(equalTo: editLocationTopView.bottomAnchor, constant: 15),
-            editLocationBottomView.leadingAnchor.constraint(equalTo: editLocationTopView.leadingAnchor),
-            editLocationBottomView.trailingAnchor.constraint(equalTo: editLocationTopView.trailingAnchor),
+            scrollView.topAnchor.constraint(equalTo: safeAreaView.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: safeAreaView.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: safeAreaView.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: safeAreaView.bottomAnchor),
             
             editPhoneView.topAnchor.constraint(equalTo: safeAreaView.topAnchor, constant: 20),
             editPhoneView.leadingAnchor.constraint(equalTo: safeAreaView.leadingAnchor, constant: 16),
@@ -137,6 +145,33 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
             editHomePageView.leadingAnchor.constraint(equalTo: safeAreaView.leadingAnchor, constant: 16),
             editHomePageView.trailingAnchor.constraint(equalTo: safeAreaView.trailingAnchor, constant: -16)
         ])
+        
+        [
+            editLocationTopView,
+            editLocationBottomView
+        ].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            scrollView.addSubview($0)
+        }
+        
+        NSLayoutConstraint.activate([
+            editLocationTopView.topAnchor.constraint(
+                equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 20),
+            editLocationTopView.leadingAnchor.constraint(
+                equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 16),
+            editLocationTopView.trailingAnchor.constraint(
+                equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -16),
+            
+            editLocationBottomView.topAnchor.constraint(
+                equalTo: editLocationTopView.bottomAnchor, constant: 15),
+            editLocationBottomView.leadingAnchor.constraint(
+                equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 16),
+            editLocationBottomView.trailingAnchor.constraint(
+                equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -16),
+            editLocationBottomView.bottomAnchor.constraint(
+                equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -20)
+        ])
+        
     }
     
     func makeAttribute() {
@@ -159,8 +194,7 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         editHomePageView.isHidden = true
         editWorkingHoursView.isHidden = true
         
-        editLocationTopView.isHidden = false
-        editLocationBottomView.isHidden = false
+        scrollView.isHidden = false
     }
     
     @objc private func segmentedChanged(segment: UISegmentedControl) {
@@ -183,23 +217,20 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         editHomePageView.isHidden = true
         editWorkingHoursView.isHidden = true
         
-        editLocationTopView.isHidden = false
-        editLocationBottomView.isHidden = false
+        scrollView.isHidden = false
     }
     
     private func activePhone() {
+        scrollView.isHidden = true
         editHomePageView.isHidden = true
         editWorkingHoursView.isHidden = true
-        editLocationTopView.isHidden = true
-        editLocationBottomView.isHidden = true
         
         editPhoneView.isHidden = false
     }
     
     private func activeWorkingHours() {
         editHomePageView.isHidden = true
-        editLocationTopView.isHidden = true
-        editLocationBottomView.isHidden = true
+        scrollView.isHidden = true
         editPhoneView.isHidden = true
         
         editWorkingHoursView.isHidden = false
@@ -207,8 +238,7 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     
     private func activeHomepage() {
         editWorkingHoursView.isHidden = true
-        editLocationTopView.isHidden = true
-        editLocationBottomView.isHidden = true
+        scrollView.isHidden = true
         editPhoneView.isHidden = true
         
         editHomePageView.isHidden = false
@@ -216,5 +246,14 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     
     @objc private func editStore() {
 
+    }
+    
+    func dataBindingLocation(title: String,
+                             category: String,
+                             marker: NMFMarker,
+                             address: String
+    ) {
+        editLocationTopView.dataBinding(title: title, category: category)
+        editLocationBottomView.dataBinding(marker: marker, address: address)
     }
 }
