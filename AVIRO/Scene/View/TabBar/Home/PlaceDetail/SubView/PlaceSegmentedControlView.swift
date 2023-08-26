@@ -220,9 +220,9 @@ final class PlaceSegmentedControlView: UIView {
         }
     }
     
+    /// API 호출 후 선택되면 딜레이 보여서 따로 뺌
     func whenViewPopup() {
         segmentedControl.selectedSegmentIndex = 0
-        scrollViewSetOffset()
     }
     
     private func activeHomeView() {

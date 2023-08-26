@@ -1,5 +1,5 @@
 //
-//  InrollField2.swift
+//  EnrollField.swift
 //  AVIRO
 //
 //  Created by 전성훈 on 2023/07/22.
@@ -7,10 +7,10 @@
 
 import UIKit
 
-class InrollField: UITextField {
+class EnrollField: UITextField {
     private var horizontalPadding: CGFloat = 16
     private var buttonPadding: CGFloat = 7
-    private var verticalPadding: CGFloat = 12
+    private var verticalPadding: CGFloat = 13
     private var imageViewSize: CGFloat = 24
     
     var isAddLeftImage = false

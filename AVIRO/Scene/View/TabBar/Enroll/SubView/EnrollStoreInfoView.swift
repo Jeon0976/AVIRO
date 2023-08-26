@@ -19,7 +19,7 @@ final class EnrollStoreInfoView: UIView {
         return label
     }()
     
-    lazy var titleField = InrollField()
+    lazy var titleField = EnrollField()
     
     // MARK: Adderss
     lazy var address: UILabel = {
@@ -32,7 +32,7 @@ final class EnrollStoreInfoView: UIView {
         return label
     }()
     
-    lazy var addressField = InrollField()
+    lazy var addressField = EnrollField()
     
     // MARK: Number
     lazy var number: UILabel = {
@@ -45,7 +45,7 @@ final class EnrollStoreInfoView: UIView {
         return label
     }()
     
-    lazy var numberField = InrollField()
+    lazy var numberField = EnrollField()
     
     // MARK: Category
     lazy var categoryLabel: UILabel = {

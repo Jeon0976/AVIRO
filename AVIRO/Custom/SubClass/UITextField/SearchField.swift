@@ -25,6 +25,7 @@ final class SearchField: UITextField {
     
     private var changedLeftButton = false
     private var isNotChangedImageBeforeNextAction = false
+    
     var didTappedLeftButton: (() -> Void)?
     
     var rightButtonHidden = false {
@@ -44,7 +45,7 @@ final class SearchField: UITextField {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {

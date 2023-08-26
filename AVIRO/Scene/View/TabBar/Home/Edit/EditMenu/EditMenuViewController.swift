@@ -10,7 +10,6 @@ import UIKit
 final class EditMenuViewController: UIViewController {
     lazy var presenter = EditMenuPresenter(viewController: self)
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -26,6 +26,7 @@ final class EditPlaceInfoViewController: UIViewController {
         segmented.setAttributedTitle()
         segmented.backgroundColor = .gray7
         segmented.selectedSegmentIndex = 0
+        segmented.addTarget(self, action: #selector(segmentedChanged(segment:)), for: .valueChanged)
         
         return segmented
     }()
@@ -116,7 +117,25 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         }
         
         NSLayoutConstraint.activate([
-        
+            editLocationTopView.topAnchor.constraint(equalTo: safeAreaView.topAnchor, constant: 20),
+            editLocationTopView.leadingAnchor.constraint(equalTo: safeAreaView.leadingAnchor, constant: 16),
+            editLocationTopView.trailingAnchor.constraint(equalTo: safeAreaView.trailingAnchor, constant: -16),
+            
+            editLocationBottomView.topAnchor.constraint(equalTo: editLocationTopView.bottomAnchor, constant: 15),
+            editLocationBottomView.leadingAnchor.constraint(equalTo: editLocationTopView.leadingAnchor),
+            editLocationBottomView.trailingAnchor.constraint(equalTo: editLocationTopView.trailingAnchor),
+            
+            editPhoneView.topAnchor.constraint(equalTo: safeAreaView.topAnchor, constant: 20),
+            editPhoneView.leadingAnchor.constraint(equalTo: safeAreaView.leadingAnchor, constant: 16),
+            editPhoneView.trailingAnchor.constraint(equalTo: safeAreaView.trailingAnchor, constant: -16),
+            
+            editWorkingHoursView.topAnchor.constraint(equalTo: safeAreaView.topAnchor, constant: 20),
+            editWorkingHoursView.leadingAnchor.constraint(equalTo: safeAreaView.leadingAnchor, constant: 16),
+            editWorkingHoursView.trailingAnchor.constraint(equalTo: safeAreaView.trailingAnchor, constant: -16),
+            
+            editHomePageView.topAnchor.constraint(equalTo: safeAreaView.topAnchor, constant: 20),
+            editHomePageView.leadingAnchor.constraint(equalTo: safeAreaView.leadingAnchor, constant: 16),
+            editHomePageView.trailingAnchor.constraint(equalTo: safeAreaView.trailingAnchor, constant: -16)
         ])
     }
     
@@ -135,9 +154,67 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         if let tabBarController = self.tabBarController as? TabBarViewController {
             tabBarController.hiddenTabBarIncludeIsTranslucent(true)
         }
+        
+        editPhoneView.isHidden = true
+        editHomePageView.isHidden = true
+        editWorkingHoursView.isHidden = true
+        
+        editLocationTopView.isHidden = false
+        editLocationBottomView.isHidden = false
+    }
+    
+    @objc private func segmentedChanged(segment: UISegmentedControl) {
+        switch segment.selectedSegmentIndex {
+        case 0:
+            activeLocation()
+        case 1:
+            activePhone()
+        case 2:
+            activeWorkingHours()
+        case 3:
+            activeHomepage()
+        default:
+            break
+        }
+    }
+    
+    private func activeLocation() {
+        editPhoneView.isHidden = true
+        editHomePageView.isHidden = true
+        editWorkingHoursView.isHidden = true
+        
+        editLocationTopView.isHidden = false
+        editLocationBottomView.isHidden = false
+    }
+    
+    private func activePhone() {
+        editHomePageView.isHidden = true
+        editWorkingHoursView.isHidden = true
+        editLocationTopView.isHidden = true
+        editLocationBottomView.isHidden = true
+        
+        editPhoneView.isHidden = false
+    }
+    
+    private func activeWorkingHours() {
+        editHomePageView.isHidden = true
+        editLocationTopView.isHidden = true
+        editLocationBottomView.isHidden = true
+        editPhoneView.isHidden = true
+        
+        editWorkingHoursView.isHidden = false
+    }
+    
+    private func activeHomepage() {
+        editWorkingHoursView.isHidden = true
+        editLocationTopView.isHidden = true
+        editLocationBottomView.isHidden = true
+        editPhoneView.isHidden = true
+        
+        editHomePageView.isHidden = false
     }
     
     @objc private func editStore() {
-        
+
     }
 }
