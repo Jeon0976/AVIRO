@@ -23,6 +23,7 @@ protocol EditPlaceInfoProtocol: NSObject {
     )
     func dataBindingPhone(phone: String)
     func dataBindingHomepage(homepage: String)
+    func pushAddressEditViewController(placeMarkerModel: MarkerModel)
 }
 
 final class EditPlaceInfoPresenter {
@@ -54,6 +55,8 @@ final class EditPlaceInfoPresenter {
     
     func viewWillAppear() {
         addKeyboardNotification()
+        
+        dataBinding()
     }
     
     func viewWillDisappear() {
@@ -150,5 +153,11 @@ final class EditPlaceInfoPresenter {
         else { return }
         
         viewController?.dataBindingHomepage(homepage: homepage)
+    }
+    
+    func pushAddressEditViewController() {
+        guard let placeMarkerModel = placeMarkerModel else { return }
+        
+        viewController?.pushAddressEditViewController(placeMarkerModel: placeMarkerModel)
     }
 }

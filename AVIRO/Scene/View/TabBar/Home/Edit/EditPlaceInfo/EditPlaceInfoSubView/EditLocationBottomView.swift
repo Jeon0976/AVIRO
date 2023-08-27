@@ -44,7 +44,8 @@ final class EditLocationBottomView: UIView {
         
         field.addRightPushViewControllerButton()
         field.tappedPushViewButton = { [weak self] in
-            print("Test")
+            self?.naverMap.contentInset = .zero
+            self?.tappedPushViewButton?()
         }
         
         return field
@@ -138,9 +139,11 @@ final class EditLocationBottomView: UIView {
     
     func dataBinding(marker: NMFMarker, address: String) {
         marker.mapView = naverMap
+        
+        
         let latlng = marker.position
-        let cameraUpdate = NMFCameraUpdate(scrollTo: latlng)
-        cameraUpdate.animation = .easeIn
+        let position = NMFCameraPosition(latlng, zoom: 14)
+        let cameraUpdate = NMFCameraUpdate(position: position)
         
         naverMap.moveCamera(cameraUpdate)
         

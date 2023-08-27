@@ -17,6 +17,8 @@ final class HomeSearchViewController: UIViewController {
                                       
     lazy var historyTableView = UITableView()
     
+    lazy var indicatorView = UIActivityIndicatorView()
+    
     /// API 호출 관련해서 다 입력이 끝나면 발동하도록 하는 변수
     var searchTimer: DispatchWorkItem?
 
@@ -37,7 +39,8 @@ extension HomeSearchViewController: HomeSearchProtocol {
             searchField,
             placeListTableView,
             noHistoryView,
-            historyTableView
+            historyTableView,
+            indicatorView
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
@@ -76,7 +79,10 @@ extension HomeSearchViewController: HomeSearchProtocol {
             historyTableView.topAnchor.constraint(equalTo: searchField.bottomAnchor),
             historyTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             historyTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            historyTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            historyTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            indicatorView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            indicatorView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
         ])
     }
     
@@ -86,6 +92,11 @@ extension HomeSearchViewController: HomeSearchProtocol {
         makeSearchFieldAttribute()
         makePlaceListTableAttribute()
         makeHistoryTableAttribute()
+        
+        indicatorView.style = .large
+        indicatorView.startAnimating()
+        indicatorView.isHidden = true
+        indicatorView.color = .gray5
     }
     
     // MARK: How to Show First View
@@ -99,6 +110,7 @@ extension HomeSearchViewController: HomeSearchProtocol {
     
     func placeListTableReload() {
         placeListTableView.reloadData()
+        indicatorView.isHidden = true
     }
     
     func historyListTableReload() {
@@ -239,16 +251,18 @@ extension HomeSearchViewController: UITextFieldDelegate {
             if let text = textField.text {
                 if text != "" {
                     self?.presenter.changedColorText = text
+                    self?.indicatorView.isHidden = false
                     self?.presenter.initialSearchDataAndCompareAVIROData(text)
                 }
             }
         }
-
+        
+        
         // 타이머 작업을 저장합니다.
         searchTimer = task
 
         // 0.5초 후에 작업을 실행합니다.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: task)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: task)
     }
     
 }

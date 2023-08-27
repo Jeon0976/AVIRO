@@ -12,6 +12,10 @@
 		C50DB7422A99DCDA0078B501 /* PlaceListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50DB7402A99DCDA0078B501 /* PlaceListCell.swift */; };
 		C50DB7432A99DCDA0078B501 /* PlaceListSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50DB7412A99DCDA0078B501 /* PlaceListSearchViewController.swift */; };
 		C50DB74E2A9B2A8C0078B501 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C50DB74D2A9B2A8C0078B501 /* WebKit.framework */; };
+		C50DB7512A9B83550078B501 /* EditLocationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50DB7502A9B83550078B501 /* EditLocationDetailViewController.swift */; };
+		C50DB7542A9B838F0078B501 /* EditLocationDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50DB7532A9B838F0078B501 /* EditLocationDetailPresenter.swift */; };
+		C50DB7572A9B8DF80078B501 /* EditLocationDetailTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50DB7562A9B8DF80078B501 /* EditLocationDetailTextView.swift */; };
+		C50DB7592A9B8E060078B501 /* EditLocationDetailMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50DB7582A9B8E060078B501 /* EditLocationDetailMapView.swift */; };
 		C50E6F6D2A8E5AAC00703B9E /* ReviewLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50E6F6C2A8E5AAC00703B9E /* ReviewLabel.swift */; };
 		C50E6F6F2A8F10B500703B9E /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50E6F6E2A8F10B500703B9E /* UILabel+Extension.swift */; };
 		C50F6AF32A68FD0A00E942F5 /* EnrollPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6AF22A68FD0A00E942F5 /* EnrollPlaceViewController.swift */; };
@@ -162,6 +166,10 @@
 		C50DB7402A99DCDA0078B501 /* PlaceListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceListCell.swift; sourceTree = "<group>"; };
 		C50DB7412A99DCDA0078B501 /* PlaceListSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceListSearchViewController.swift; sourceTree = "<group>"; };
 		C50DB74D2A9B2A8C0078B501 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		C50DB7502A9B83550078B501 /* EditLocationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocationDetailViewController.swift; sourceTree = "<group>"; };
+		C50DB7532A9B838F0078B501 /* EditLocationDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocationDetailPresenter.swift; sourceTree = "<group>"; };
+		C50DB7562A9B8DF80078B501 /* EditLocationDetailTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocationDetailTextView.swift; sourceTree = "<group>"; };
+		C50DB7582A9B8E060078B501 /* EditLocationDetailMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocationDetailMapView.swift; sourceTree = "<group>"; };
 		C50E6F6C2A8E5AAC00703B9E /* ReviewLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewLabel.swift; sourceTree = "<group>"; };
 		C50E6F6E2A8F10B500703B9E /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		C50F6AF22A68FD0A00E942F5 /* EnrollPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollPlaceViewController.swift; sourceTree = "<group>"; };
@@ -427,6 +435,32 @@
 				C50DB7412A99DCDA0078B501 /* PlaceListSearchViewController.swift */,
 			);
 			path = PlaceList;
+			sourceTree = "<group>";
+		};
+		C50DB74F2A9B83300078B501 /* EditLocationDetail */ = {
+			isa = PBXGroup;
+			children = (
+				C50DB7502A9B83550078B501 /* EditLocationDetailViewController.swift */,
+				C50DB7552A9B8DD00078B501 /* EditLocationSubView */,
+			);
+			path = EditLocationDetail;
+			sourceTree = "<group>";
+		};
+		C50DB7522A9B83770078B501 /* EditLocationDetail */ = {
+			isa = PBXGroup;
+			children = (
+				C50DB7532A9B838F0078B501 /* EditLocationDetailPresenter.swift */,
+			);
+			path = EditLocationDetail;
+			sourceTree = "<group>";
+		};
+		C50DB7552A9B8DD00078B501 /* EditLocationSubView */ = {
+			isa = PBXGroup;
+			children = (
+				C50DB7562A9B8DF80078B501 /* EditLocationDetailTextView.swift */,
+				C50DB7582A9B8E060078B501 /* EditLocationDetailMapView.swift */,
+			);
+			path = EditLocationSubView;
 			sourceTree = "<group>";
 		};
 		C50F6AF72A68FFAF00E942F5 /* SubView */ = {
@@ -823,6 +857,7 @@
 			children = (
 				C5A201B32A986EC300A54381 /* EditPlaceInfoViewController.swift */,
 				C5A201BE2A989FF900A54381 /* EditPlaceInfoSubView */,
+				C50DB74F2A9B83300078B501 /* EditLocationDetail */,
 			);
 			path = EditPlaceInfo;
 			sourceTree = "<group>";
@@ -839,6 +874,7 @@
 			isa = PBXGroup;
 			children = (
 				C5A201BC2A98708800A54381 /* EditPlaceInfoPresenter.swift */,
+				C50DB7522A9B83770078B501 /* EditLocationDetail */,
 				C5A201BA2A986F9B00A54381 /* EditMenuPresenter.swift */,
 			);
 			path = EditPresenter;
@@ -1269,6 +1305,7 @@
 				C5A3C3C42A39658A0050AB3D /* LoginViewController.swift in Sources */,
 				C5732C732A41778A00CDC499 /* AVIROPostAPI.swift in Sources */,
 				C5732C7C2A41D41B00CDC499 /* VeganTableFieldModel.swift in Sources */,
+				C50DB7592A9B8E060078B501 /* EditLocationDetailMapView.swift in Sources */,
 				C5732C752A41962D00CDC499 /* AVIRORequestAPI.swift in Sources */,
 				C5D93DA12A581F5A00629C39 /* FirstRegistrationPresenter.swift in Sources */,
 				C567C1502A56611500D4B426 /* TopCell.swift in Sources */,
@@ -1282,6 +1319,7 @@
 				C52066292A7CD5FC0038ECCD /* HistoryTableModel.swift in Sources */,
 				C50F6AF52A68FD6300E942F5 /* EnrollPlacePresenter.swift in Sources */,
 				C5CAAC452A39A93C008C5FDA /* Layout.swift in Sources */,
+				C50DB7572A9B8DF80078B501 /* EditLocationDetailTextView.swift in Sources */,
 				C595ACD12A84A4EB00D35123 /* PlaceTopView.swift in Sources */,
 				C520663A2A808DC40038ECCD /* PlaceListHeaderView.swift in Sources */,
 				C52066382A808DAD0038ECCD /* HistoryHeaderView.swift in Sources */,
@@ -1310,6 +1348,7 @@
 				C5D93D9F2A581EC800629C39 /* FirstRegistrationViewController.swift in Sources */,
 				C528E4C02A5FF1CB002BD72E /* FinalRegistrationViewController.swift in Sources */,
 				C5D93DA32A58718300629C39 /* BottomButton1.swift in Sources */,
+				C50DB7512A9B83550078B501 /* EditLocationDetailViewController.swift in Sources */,
 				C5A989992A959E040021B7C3 /* AVIROBookmarkModel.swift in Sources */,
 				C5803F582A88C1990064A853 /* PlaceTopModel.swift in Sources */,
 				C5D36D2E2A76031E003328E8 /* Double+Extension.swift in Sources */,
@@ -1337,6 +1376,7 @@
 				C5351B542A19A7B100116D50 /* MyCoordinate.swift in Sources */,
 				C5EB50EA2A1C705900B29CC1 /* MyPageViewController.swift in Sources */,
 				C5D8E8632A3DEC3900D88A43 /* String+Extension.swift in Sources */,
+				C50DB7542A9B838F0078B501 /* EditLocationDetailPresenter.swift in Sources */,
 				C50F6B022A6BC8E400E942F5 /* EnrollField.swift in Sources */,
 				C5D7458F2A224DCE006F9F31 /* HomeFirstPopUpView.swift in Sources */,
 				C51B09B82A82155200916BBD /* MarkerModelArray.swift in Sources */,

@@ -19,6 +19,12 @@ class EnrollField: UITextField {
     
     var tappedPushViewButton: (() -> Void)?
     
+    var rightButtonHidden = false {
+        didSet {
+            rightView?.isHidden = rightButtonHidden
+        }
+    }
+    
     // MARK: Init 설정
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -124,6 +130,36 @@ class EnrollField: UITextField {
 
     @objc private func rightPushViewButtonTapped() {
         tappedPushViewButton?()
+    }
+    
+    func addRightCancelButton() {
+        let image = UIImage(named: "X-Circle")?.withRenderingMode(.alwaysTemplate)
+        let rightButton = UIButton()
+        
+        rightButton.setImage(image, for: .normal)
+        rightButton.tintColor = .gray2
+        rightButton.frame = .init(x: horizontalPadding, y: 0, width: buttonSize, height: buttonSize)
+        rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
+        
+        let paddingWidth = horizontalPadding + buttonPadding + buttonSize
+        
+        let paddingView = UIView(frame: CGRect(
+            x: 0,
+            y: 0,
+            width: paddingWidth,
+            height: buttonSize)
+        )
+        
+        paddingView.addSubview(rightButton)
+        
+        rightView = paddingView
+        rightViewMode = .always
+    }
+    
+    // MARK: Right Button 클릭 시
+    @objc func rightButtonTapped(_ sender: UIButton) {
+        self.text = ""
+        self.rightButtonHidden = true
     }
     
     // MARK: Place Holder 값 넣기

@@ -52,6 +52,10 @@ final class EditPlaceInfoViewController: UIViewController {
     private lazy var editLocationBottomView: EditLocationBottomView = {
         let view = EditLocationBottomView()
         
+        view.tappedPushViewButton = { [weak self] in
+            self?.presenter.pushAddressEditViewController()
+        }
+        
         return view
     }()
     
@@ -84,7 +88,6 @@ final class EditPlaceInfoViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        presenter.dataBinding()
         presenter.viewWillAppear()
     }
     
@@ -199,11 +202,7 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
             tabBarController.hiddenTabBarIncludeIsTranslucent(true)
         }
         
-        editPhoneView.isHidden = true
-        editHomePageView.isHidden = true
-        editWorkingHoursView.isHidden = true
-        
-        locationScrollView.isHidden = false
+       activeLocation()
     }
     
     @objc private func segmentedChanged(segment: UISegmentedControl) {
@@ -298,6 +297,18 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     
     func dataBindingHomepage(homepage: String) {
         editHomePageView.dataBinding(homepage)
+    }
+    
+    func pushAddressEditViewController(placeMarkerModel: MarkerModel) {
+        let vc = EditLocationDetailViewController()
+        let presenter = EditLocationDetailPresenter(
+            viewController: vc,
+            placeMarkerModel: placeMarkerModel
+        )
+        
+        vc.presenter = presenter
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

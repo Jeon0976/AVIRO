@@ -127,13 +127,13 @@ final class HomeSearchPresenter {
         isEndCompare = false
         matchedPlaceModel.removeAll()
         
-        initalSearchData(query: query) { [weak self] placeList in
+        initialSearchData(query: query) { [weak self] placeList in
             self?.makeToPlaceFromAVIROData(placeList: placeList)
         }
     }
     
     // MARK: 검색 후 KakaoMap Location Search API 호출
-    private func initalSearchData(
+    private func initialSearchData(
         query: String,
         completion: @escaping ([PlaceListModel]) -> Void
     ) {
@@ -294,6 +294,7 @@ final class HomeSearchPresenter {
         viewController?.placeListTableReload()
         isLoading = false
         isEndCompare = true
+        
     }
     
     // 선택된 것이 AVIRO에 있는지 확인하는 함수
