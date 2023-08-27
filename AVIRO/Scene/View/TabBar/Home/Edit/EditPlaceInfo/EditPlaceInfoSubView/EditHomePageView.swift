@@ -24,6 +24,7 @@ final class EditHomePageView: UIView {
         let placeHolder = "대표 홈페이지 링크를 입력해주세요."
         
         field.makePlaceHolder(placeHolder)
+        field.keyboardType = .URL
         
         return field
     }()
@@ -83,5 +84,9 @@ final class EditHomePageView: UIView {
         let totalHeight = homepageLabelHeight + homepageFieldHeight + inset
                 
         viewHeightConstraint?.constant = totalHeight
+    }
+    
+    func dataBinding(_ homePage: String) {
+        homepageField.text = homePage
     }
 }

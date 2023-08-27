@@ -66,12 +66,12 @@ class EnrollField: UITextField {
             let leftInest = horizontalPadding + imageViewSize + buttonPadding
             
             inset.left = leftInest
-        
-            return inset
         }
         
         if isAddRightButton {
             let rightInset = horizontalPadding + buttonSize + buttonPadding
+            
+            inset.right = rightInset
         }
         
         return inset

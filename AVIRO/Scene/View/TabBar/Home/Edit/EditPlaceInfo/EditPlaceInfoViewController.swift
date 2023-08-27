@@ -41,7 +41,7 @@ final class EditPlaceInfoViewController: UIViewController {
         return view
     }()
     
-    private lazy var scrollView = UIScrollView()
+    private lazy var locationScrollView = UIScrollView()
     
     private lazy var editLocationTopView: EditLocationTopView = {
         let view = EditLocationTopView()
@@ -73,6 +73,8 @@ final class EditPlaceInfoViewController: UIViewController {
         return view
     }()
     
+    private lazy var tapGesture = UITapGestureRecognizer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -83,6 +85,13 @@ final class EditPlaceInfoViewController: UIViewController {
         super.viewWillAppear(animated)
         
         presenter.dataBinding()
+        presenter.viewWillAppear()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        presenter.viewWillDisappear()
     }
 }
 
@@ -118,7 +127,7 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     
     private func makeSafeAreaViewLayout() {
         [
-            scrollView,
+            locationScrollView,
             editPhoneView,
             editWorkingHoursView,
             editHomePageView
@@ -128,10 +137,10 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         }
         
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: safeAreaView.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: safeAreaView.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: safeAreaView.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: safeAreaView.bottomAnchor),
+            locationScrollView.topAnchor.constraint(equalTo: safeAreaView.topAnchor),
+            locationScrollView.leadingAnchor.constraint(equalTo: safeAreaView.leadingAnchor),
+            locationScrollView.trailingAnchor.constraint(equalTo: safeAreaView.trailingAnchor),
+            locationScrollView.bottomAnchor.constraint(equalTo: safeAreaView.bottomAnchor),
             
             editPhoneView.topAnchor.constraint(equalTo: safeAreaView.topAnchor, constant: 20),
             editPhoneView.leadingAnchor.constraint(equalTo: safeAreaView.leadingAnchor, constant: 16),
@@ -151,32 +160,32 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
             editLocationBottomView
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
-            scrollView.addSubview($0)
+            locationScrollView.addSubview($0)
         }
         
         NSLayoutConstraint.activate([
             editLocationTopView.topAnchor.constraint(
-                equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 20),
+                equalTo: locationScrollView.contentLayoutGuide.topAnchor, constant: 20),
             editLocationTopView.leadingAnchor.constraint(
-                equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 16),
+                equalTo: locationScrollView.frameLayoutGuide.leadingAnchor, constant: 16),
             editLocationTopView.trailingAnchor.constraint(
-                equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -16),
+                equalTo: locationScrollView.frameLayoutGuide.trailingAnchor, constant: -16),
             
             editLocationBottomView.topAnchor.constraint(
                 equalTo: editLocationTopView.bottomAnchor, constant: 15),
             editLocationBottomView.leadingAnchor.constraint(
-                equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 16),
+                equalTo: locationScrollView.frameLayoutGuide.leadingAnchor, constant: 16),
             editLocationBottomView.trailingAnchor.constraint(
-                equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -16),
+                equalTo: locationScrollView.frameLayoutGuide.trailingAnchor, constant: -16),
             editLocationBottomView.bottomAnchor.constraint(
-                equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -20)
+                equalTo: locationScrollView.contentLayoutGuide.bottomAnchor, constant: -20)
         ])
         
     }
     
     func makeAttribute() {
         self.view.backgroundColor = .gray7
-
+        
         self.setupCustomBackButton()
         navigationController?.navigationBar.isHidden = false
         
@@ -194,7 +203,7 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         editHomePageView.isHidden = true
         editWorkingHoursView.isHidden = true
         
-        scrollView.isHidden = false
+        locationScrollView.isHidden = false
     }
     
     @objc private func segmentedChanged(segment: UISegmentedControl) {
@@ -217,11 +226,11 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         editHomePageView.isHidden = true
         editWorkingHoursView.isHidden = true
         
-        scrollView.isHidden = false
+        locationScrollView.isHidden = false
     }
     
     private func activePhone() {
-        scrollView.isHidden = true
+        locationScrollView.isHidden = true
         editHomePageView.isHidden = true
         editWorkingHoursView.isHidden = true
         
@@ -230,7 +239,7 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     
     private func activeWorkingHours() {
         editHomePageView.isHidden = true
-        scrollView.isHidden = true
+        locationScrollView.isHidden = true
         editPhoneView.isHidden = true
         
         editWorkingHoursView.isHidden = false
@@ -238,10 +247,36 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     
     private func activeHomepage() {
         editWorkingHoursView.isHidden = true
-        scrollView.isHidden = true
+        locationScrollView.isHidden = true
         editPhoneView.isHidden = true
         
         editHomePageView.isHidden = false
+    }
+    
+    func makeGesture() {
+        view.addGestureRecognizer(tapGesture)
+        tapGesture.delegate = self
+    }
+    
+    func isDetailFieldCheckBeforeKeyboardShowAndHide(notification: NSNotification) -> Bool {
+        return self.editLocationBottomView.checkIsDetailField(notification: notification)
+    }
+    
+    func keyboardWillShow(height: CGFloat) {
+        self.navigationController?.isNavigationBarHidden = true
+        UIView.animate(
+            withDuration: 0.3,
+            animations: { self.safeAreaView.transform = CGAffineTransform(
+                translationX: 0,
+                y: -(height))
+            }
+        )
+    }
+    
+    func keyboardWillHide() {
+        self.navigationController?.isNavigationBarHidden = false
+
+        self.safeAreaView.transform = .identity
     }
     
     @objc private func editStore() {
@@ -255,5 +290,24 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     ) {
         editLocationTopView.dataBinding(title: title, category: category)
         editLocationBottomView.dataBinding(marker: marker, address: address)
+    }
+    
+    func dataBindingPhone(phone: String) {
+        editPhoneView.dataBinding(phone)
+    }
+    
+    func dataBindingHomepage(homepage: String) {
+        editHomePageView.dataBinding(homepage)
+    }
+}
+
+extension EditPlaceInfoViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if touch.view is EnrollField {
+            return false
+        }
+        
+        view.endEditing(true)
+        return true
     }
 }

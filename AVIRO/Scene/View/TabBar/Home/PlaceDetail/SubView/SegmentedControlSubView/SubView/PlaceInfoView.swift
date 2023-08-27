@@ -292,7 +292,12 @@ final class PlaceInfoView: UIView {
         timeButton.setTitle("영업 시간 추가", for: .normal)
         timeLabel.isHidden = true
         timePlusButton.isHidden = true
-        homePageButton.setTitle("홈페이지 링크 추가", for: .normal)
+        
+        if let homePage = infoModel.url {
+            homePageButton.setTitle(homePage, for: .normal)
+        } else {
+            homePageButton.setTitle("홈페이지 링크 추가", for: .normal)
+        }
     }
     
     @objc private func editInfoButtonTapped() {

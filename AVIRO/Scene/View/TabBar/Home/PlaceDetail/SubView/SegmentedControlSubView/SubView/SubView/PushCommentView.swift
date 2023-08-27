@@ -90,8 +90,8 @@ final class PushCommentView: UIView {
                 equalTo: button.leadingAnchor, constant: -10),
             
             // button
-            button.topAnchor.constraint(
-                equalTo: textView.contentLayoutGuide.topAnchor),
+            button.centerYAnchor.constraint(
+                equalTo: textView.centerYAnchor),
             button.trailingAnchor.constraint(
                 equalTo: self.trailingAnchor, constant: Layout.Inset.trailingBottom)
         ])

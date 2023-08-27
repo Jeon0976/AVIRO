@@ -45,7 +45,7 @@ class TabBarViewController: UITabBarController {
         )
         
         setupTabBar()
-        setupMiddleButton()
+//        setupMiddleButton()
     }
     
     // MARK: 가운데 plus 버튼 만들기

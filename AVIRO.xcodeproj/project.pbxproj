@@ -11,6 +11,7 @@
 		C50367F52A1795D10020C6BB /* HomeViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */; };
 		C50DB7422A99DCDA0078B501 /* PlaceListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50DB7402A99DCDA0078B501 /* PlaceListCell.swift */; };
 		C50DB7432A99DCDA0078B501 /* PlaceListSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50DB7412A99DCDA0078B501 /* PlaceListSearchViewController.swift */; };
+		C50DB74E2A9B2A8C0078B501 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C50DB74D2A9B2A8C0078B501 /* WebKit.framework */; };
 		C50E6F6D2A8E5AAC00703B9E /* ReviewLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50E6F6C2A8E5AAC00703B9E /* ReviewLabel.swift */; };
 		C50E6F6F2A8F10B500703B9E /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50E6F6E2A8F10B500703B9E /* UILabel+Extension.swift */; };
 		C50F6AF32A68FD0A00E942F5 /* EnrollPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6AF22A68FD0A00E942F5 /* EnrollPlaceViewController.swift */; };
@@ -160,6 +161,7 @@
 		C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewPresenter.swift; sourceTree = "<group>"; };
 		C50DB7402A99DCDA0078B501 /* PlaceListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceListCell.swift; sourceTree = "<group>"; };
 		C50DB7412A99DCDA0078B501 /* PlaceListSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceListSearchViewController.swift; sourceTree = "<group>"; };
+		C50DB74D2A9B2A8C0078B501 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		C50E6F6C2A8E5AAC00703B9E /* ReviewLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewLabel.swift; sourceTree = "<group>"; };
 		C50E6F6E2A8F10B500703B9E /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		C50F6AF22A68FD0A00E942F5 /* EnrollPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollPlaceViewController.swift; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C50DB74E2A9B2A8C0078B501 /* WebKit.framework in Frameworks */,
 				A156F24E1DC1F5FA54D44A76 /* Pods_AVIRO.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -321,6 +324,7 @@
 		0C3C6AC2BC6B49CCDD2FE9BF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C50DB74D2A9B2A8C0078B501 /* WebKit.framework */,
 				796022A3066B91147B712BB4 /* Pods_AVIRO.framework */,
 			);
 			name = Frameworks;

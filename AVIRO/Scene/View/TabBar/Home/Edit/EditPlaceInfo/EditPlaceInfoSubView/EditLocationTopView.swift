@@ -127,6 +127,16 @@ final class EditLocationTopView: UIView {
             bakeryButton,
             barButton
         ]
+        
+        categoryButtons.forEach {
+            $0.addTarget(self, action: #selector(categoryButtonTapped(_:)), for: .touchUpInside)
+        }
+    }
+    
+    @objc private func categoryButtonTapped(_ sender: UIButton) {
+        for button in categoryButtons {
+            button.isSelected = (button == sender)
+        }
     }
     
     private func setViewHeight() {

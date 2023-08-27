@@ -24,6 +24,7 @@ final class EditPhoneView: UIView {
         let placeHolder = "대표 전화번호를 입력해주세요."
         
         field.makePlaceHolder(placeHolder)
+        field.keyboardType = .numbersAndPunctuation
         
         return field
     }()
@@ -83,5 +84,9 @@ final class EditPhoneView: UIView {
         let totalHeight = placeLabelHeight + placeFieldHeight + inset
                 
         viewHeightConstraint?.constant = totalHeight
+    }
+    
+    func dataBinding(_ phone: String) {
+        self.phoneField.text = phone
     }
 }

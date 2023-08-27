@@ -258,6 +258,10 @@ final class EnrollPlacePresenter {
         let values = [allVegan, someVegan, requestVegan]
         
         updateButtonBools(keys: keys, values: values)
+        
+        if requestVegan {
+            updateData(key: "requestTableModel", value: self.requestTableModel)
+        }
     }
     
     // MARK: Menu Plus Button 클릭 시
@@ -444,9 +448,6 @@ extension EnrollPlacePresenter {
             someMenuVegan: someVegan,
             ifRequestVegan: requestVegan
         )
-        print("all", allVegan)
-        print("some", someVegan)
-        print("request", requestVegan)
         
         let normalTableModel = totalData["normalTableModel"] as? [VeganTableFieldModel] ?? []
         let requestTableModel = totalData["requestTableModel"] as? [RequestTableFieldModel] ?? []
@@ -477,6 +478,19 @@ extension EnrollPlacePresenter {
                 viewController?.enableRightButton(false)
                 return
             }
+            
+            let hasEmptyRequest = requestTableModel.contains {
+                print("\($0): ", $0.isCheck)
+                
+                return $0.isCheck && $0.howToRequest == ""
+            }
+
+            print(hasEmptyRequest)
+            guard !hasEmptyRequest else {
+                viewController?.enableRightButton(false)
+                return
+            }
+            
             requestTableModel.forEach {
                 let menu = MenuArray(
                     menuType: $0.isCheck ? MenuType.needToRequset.rawValue : MenuType.vegan.rawValue,
@@ -525,11 +539,11 @@ extension EnrollPlacePresenter {
     private func bindingRequestPrice(_ price: String, _ indexPath: IndexPath) {
         requestTableModel[indexPath.row].price = price
         updateData(key: "requestTableModel", value: self.requestTableModel)
-
     }
     
     private func bindingRequestField(_ request: String, _ indexPath: IndexPath) {
         requestTableModel[indexPath.row].howToRequest = request
+        
         updateData(key: "requestTableModel", value: self.requestTableModel)
     }
     
@@ -538,6 +552,8 @@ extension EnrollPlacePresenter {
             deleteOnlyRequestString(indexPath)
         }
         requestTableModel[indexPath.row].isCheck = active
+        
+        updateData(key: "requestTableModel", value: self.requestTableModel)
     }
     
     private func deleteRequestCell(_ indexPath: IndexPath) {

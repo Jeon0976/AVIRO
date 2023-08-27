@@ -16,7 +16,7 @@ enum TabBarItem: CaseIterable {
     var title: String {
         switch self {
         case .home: return StringValue.TabBar.home
-        case .plus: return ""
+        case .plus: return "등록하기"
         case .myPage: return StringValue.TabBar.myPage
         }
     }
@@ -29,8 +29,8 @@ enum TabBarItem: CaseIterable {
             )
 
         case .plus: return (
-            nil,
-            nil
+            UIImage(named: "edit1"),
+            UIImage(named: "edit2")
             )
 
         case .myPage: return (

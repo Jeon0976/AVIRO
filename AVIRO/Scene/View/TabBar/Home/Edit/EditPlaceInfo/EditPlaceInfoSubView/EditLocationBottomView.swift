@@ -28,6 +28,8 @@ final class EditLocationBottomView: UIView {
         map.allowsScrolling = false
         map.allowsTilting = false
         map.isUserInteractionEnabled = false
+        map.logoAlign = .rightBottom
+        
         map.contentInset = UIEdgeInsets(top: 100, left: 50, bottom: 0, right: 0)
         
         return map
@@ -144,17 +146,22 @@ final class EditLocationBottomView: UIView {
         
         mainAddressField.text = address
     }
+    
+    func checkIsDetailField(notification: NSNotification) -> Bool {
+        return detailAddressField.isFirstResponder
+    }
 }
 
 extension EditLocationBottomView: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         switch textField.tag {
         case 0:
             return false
         case 1:
             return true
-        default :
+        default:
             return true
         }
     }
+
 }
