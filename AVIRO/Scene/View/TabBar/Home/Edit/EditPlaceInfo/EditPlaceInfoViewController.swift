@@ -306,6 +306,13 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
             placeMarkerModel: placeMarkerModel
         )
         
+        presenter.afterChangedAddress = { [weak self] address in
+            guard let address = address else { return }
+            
+            // TODO: 수정 예정
+            self?.editLocationBottomView.changedAddressLabel(address)
+        }
+        
         vc.presenter = presenter
         
         navigationController?.pushViewController(vc, animated: true)

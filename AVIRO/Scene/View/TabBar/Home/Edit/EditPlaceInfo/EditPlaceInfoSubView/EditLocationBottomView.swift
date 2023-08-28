@@ -153,6 +153,10 @@ final class EditLocationBottomView: UIView {
     func checkIsDetailField(notification: NSNotification) -> Bool {
         return detailAddressField.isFirstResponder
     }
+    
+    func changedAddressLabel(_ address: String) {
+        mainAddressField.text = address
+    }
 }
 
 extension EditLocationBottomView: UITextFieldDelegate {

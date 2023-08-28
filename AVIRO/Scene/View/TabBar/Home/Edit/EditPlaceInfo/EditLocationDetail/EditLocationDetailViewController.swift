@@ -149,6 +149,10 @@ extension EditLocationDetailViewController: EditLocationDetailProtocol {
     func textViewTableReload() {
         editLocationDetailTextView.addressTableViewReloadData()
     }
+    
+    func popViewController() {
+        navigationController?.popViewController(animated: true)
+    }
 }
 
 extension EditLocationDetailViewController: UITableViewDataSource {
@@ -191,5 +195,16 @@ extension EditLocationDetailViewController: UITableViewDelegate {
         if offsetY > contentHeight - height {
             presenter.whenScrollingTableView()
         }
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath)
+                as? EditLocationDetailTextTableViewCell
+        else { return }
+        
+        let selecedAddress = cell.selectedCell()
+        
+        presenter.whenAfterClickedAddress(selecedAddress)
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

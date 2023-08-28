@@ -15,6 +15,7 @@ protocol EditLocationDetailProtocol: NSObject {
     func dataBindingMap(_ marker: NMFMarker)
     func afterChangedAddressWhenMapView(_ address: String)
     func textViewTableReload()
+    func popViewController()
 }
 
 final class EditLocationDetailPresenter {
@@ -35,6 +36,8 @@ final class EditLocationDetailPresenter {
     
     private var changedAddress: String?
         
+    var afterChangedAddress: ((String?) -> Void)?
+    
     init(viewController: EditLocationDetailProtocol,
          placeMarkerModel: MarkerModel? = nil
     ) {
@@ -104,6 +107,15 @@ final class EditLocationDetailPresenter {
         return addressModels[indexPath.row]
     }
     
+    func whenAfterClickedAddress(_ address: String?) {
+        guard let address = address else { return }
+        self.changedAddress = address
+        
+        self.afterChangedAddress?(changedAddress)
+        
+        viewController?.popViewController()
+    }
+    
     func whenAfterChangedCoordinate(_ coordinate: NMGLatLng) {
         let lat = String(coordinate.lat)
         let lng = String(coordinate.lng)
@@ -115,7 +127,6 @@ final class EditLocationDetailPresenter {
             }
             
             self?.changedAddress = address
-            
             DispatchQueue.main.async {
                 self?.viewController?.afterChangedAddressWhenMapView(address)
             }
@@ -123,8 +134,9 @@ final class EditLocationDetailPresenter {
     }
     
     func editAddress() {
-        guard let address = changedAddress else { return }
-        print(address)
+        self.afterChangedAddress?(changedAddress)
+
+        viewController?.popViewController()
     }
     
 }

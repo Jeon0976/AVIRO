@@ -51,12 +51,13 @@ final class EditPlaceInfoPresenter {
         viewController?.makeLayout()
         viewController?.makeAttribute()
         viewController?.makeGesture()
+        
+        dataBinding()
     }
     
     func viewWillAppear() {
         addKeyboardNotification()
         
-        dataBinding()
     }
     
     func viewWillDisappear() {

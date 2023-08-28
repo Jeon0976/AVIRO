@@ -87,5 +87,10 @@ final class EditLocationDetailTextTableViewCell: UITableViewCell {
         self.roadAddr.attributedText = attributedRoad ?? NSAttributedString(string: roadAddr)
         self.jibunAddr.attributedText = attributedJibun ?? NSAttributedString(string: jibunAddr)
     }
+    
+    func selectedCell() -> String? {
+        guard let address = roadAddr.text else { return nil }
+        return address
+    }
 }
 
