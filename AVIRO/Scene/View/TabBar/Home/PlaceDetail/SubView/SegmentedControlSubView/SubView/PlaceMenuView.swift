@@ -59,12 +59,16 @@ final class PlaceMenuView: UIView {
     private lazy var editButton: EditButton = {
         let button = EditButton()
         button.setButton("메뉴 정보 수정하기")
+        button.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+        
         return button
     }()
 
     private lazy var showMoreButton: ShowMoreButton = {
         let button = ShowMoreButton()
         button.setButton("메뉴 더보기")
+        button.addTarget(self, action: #selector(showMoreButtonTapped), for: .touchUpInside)
+        
         return button
     }()
     
@@ -93,6 +97,9 @@ final class PlaceMenuView: UIView {
     private var menuArray = [MenuArray]()
     
     private var whenMenuView = false
+    
+    var editMenuButton: (() -> Void)?
+    var showMoreMenu: (() -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -195,6 +202,14 @@ final class PlaceMenuView: UIView {
         
         viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: totalHeight)
         viewHeightConstraint?.isActive = true
+    }
+    
+    @objc private func editButtonTapped() {
+        editMenuButton?()
+    }
+    
+    @objc private func showMoreButtonTapped() {
+        showMoreMenu?()
     }
 }
 

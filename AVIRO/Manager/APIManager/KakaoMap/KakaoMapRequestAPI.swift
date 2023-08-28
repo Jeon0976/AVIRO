@@ -13,6 +13,7 @@ struct KakaoMapRequestAPI {
     static let host = "dapi.kakao.com"
     static let keywordPath = "/v2/local/search/keyword"
     static let coordinatePath = "/v2/local/geo/coord2address"
+    static let addressPath = "/v2/local/search/address"
     
     // MARK: key
     static let query = "query"
@@ -62,6 +63,7 @@ struct KakaoMapRequestAPI {
                         isAccuracy: KakaoSearchHowToSort
     ) -> URLComponents {
         var components = URLComponents()
+        
         components.scheme = KakaoMapRequestAPI.scheme
         components.host = KakaoMapRequestAPI.host
         components.path = KakaoMapRequestAPI.keywordPath
@@ -71,7 +73,8 @@ struct KakaoMapRequestAPI {
             URLQueryItem(name: KakaoMapRequestAPI.category, value: KakaoMapRequestAPI.mainSearchCategory),
             URLQueryItem(name: KakaoMapRequestAPI.longitude, value: longitude),
             URLQueryItem(name: KakaoMapRequestAPI.latitude, value: latitude),
-            URLQueryItem(name: KakaoMapRequestAPI.sort, value: isAccuracy == KakaoSearchHowToSort.accuracy ? KakaoMapRequestAPI.accuracy : KakaoMapRequestAPI.distance),
+            URLQueryItem(name: KakaoMapRequestAPI.sort,
+                         value: isAccuracy == KakaoSearchHowToSort.accuracy ? KakaoMapRequestAPI.accuracy : KakaoMapRequestAPI.distance),
             URLQueryItem(name: KakaoMapRequestAPI.page, value: page)
         ]
         
@@ -82,13 +85,28 @@ struct KakaoMapRequestAPI {
     func searchCoodinate(longitude: String,
                          latitude: String) -> URLComponents {
         var components = URLComponents()
+        
         components.scheme = KakaoMapRequestAPI.scheme
         components.host = KakaoMapRequestAPI.host
         components.path = KakaoMapRequestAPI.coordinatePath
         
         components.queryItems = [
-            URLQueryItem(name: "x", value: longitude),
-            URLQueryItem(name: "y", value: latitude)
+            URLQueryItem(name: KakaoMapRequestAPI.longitude, value: longitude),
+            URLQueryItem(name: KakaoMapRequestAPI.latitude, value: latitude)
+        ]
+        
+        return components
+    }
+    
+    func searchAddress(query: String) -> URLComponents {
+        var components = URLComponents()
+        
+        components.scheme = KakaoMapRequestAPI.scheme
+        components.host = KakaoMapRequestAPI.host
+        components.path = KakaoMapRequestAPI.addressPath
+        
+        components.queryItems = [
+            URLQueryItem(name: KakaoMapRequestAPI.query, value: query)
         ]
         
         return components

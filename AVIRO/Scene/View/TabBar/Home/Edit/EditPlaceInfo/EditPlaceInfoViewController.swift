@@ -306,16 +306,22 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
             placeMarkerModel: placeMarkerModel
         )
         
+        // MARK: Address가 봐뀐 후 메소드
         presenter.afterChangedAddress = { [weak self] address in
             guard let address = address else { return }
             
             // TODO: 수정 예정
             self?.editLocationBottomView.changedAddressLabel(address)
+            self?.presenter.saveChangedAddress(address)
         }
         
         vc.presenter = presenter
         
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func updateNaverMap(_ latLng: NMGLatLng) {
+        editLocationBottomView.changedNaverMap(latLng)
     }
 }
 

@@ -140,9 +140,8 @@ final class EditLocationBottomView: UIView {
     func dataBinding(marker: NMFMarker, address: String) {
         marker.mapView = naverMap
         
-        
-        let latlng = marker.position
-        let position = NMFCameraPosition(latlng, zoom: 14)
+        let latLng = marker.position
+        let position = NMFCameraPosition(latLng, zoom: 17)
         let cameraUpdate = NMFCameraUpdate(position: position)
         
         naverMap.moveCamera(cameraUpdate)
@@ -156,6 +155,13 @@ final class EditLocationBottomView: UIView {
     
     func changedAddressLabel(_ address: String) {
         mainAddressField.text = address
+    }
+    
+    func changedNaverMap(_ latLng: NMGLatLng) {
+        let position = NMFCameraPosition(latLng, zoom: 17)
+        let cameraUpdate = NMFCameraUpdate(position: position)
+        
+        naverMap.moveCamera(cameraUpdate)
     }
 }
 

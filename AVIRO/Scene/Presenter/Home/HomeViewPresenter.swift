@@ -46,6 +46,7 @@ protocol HomeViewProtocol: NSObject {
                                          placeSummary: PlaceSummaryData,
                                          placeInfo: PlaceInfoData
     )
+    func pushEditMenuViewController()
 }
 
 final class HomeViewPresenter: NSObject {
@@ -139,7 +140,7 @@ final class HomeViewPresenter: NSObject {
     }
     
     func viewWillDisappear() {
-        
+
         if !isShowEditPage {
             initMarkerState()
         }
@@ -540,6 +541,12 @@ final class HomeViewPresenter: NSObject {
             placeSummary: placeSummary,
             placeInfo: placeInfo
         )
+    }
+    
+    func editMenu() {
+        isShowEditPage = true
+
+        viewController?.pushEditMenuViewController()
     }
 }
 

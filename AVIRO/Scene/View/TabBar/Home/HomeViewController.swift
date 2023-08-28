@@ -399,6 +399,14 @@ extension HomeViewController: HomeViewProtocol {
         
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    func pushEditMenuViewController() {
+        let vc = EditMenuViewController()
+        let presenter = EditMenuPresenter(viewController: vc)
+        vc.presenter = presenter
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 // MARK: View Refer & Objc Action
@@ -461,6 +469,10 @@ extension HomeViewController {
         
         placeView.editPlaceInfo = { [weak self] in
             self?.presenter.editPlaceInfo()
+        }
+        
+        placeView.editMenu = { [weak self] in
+            self?.presenter.editMenu()
         }
         
         placeView.whenUploadReview = { [weak self] postReviewModel in

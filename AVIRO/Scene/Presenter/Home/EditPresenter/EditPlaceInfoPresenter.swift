@@ -24,6 +24,7 @@ protocol EditPlaceInfoProtocol: NSObject {
     func dataBindingPhone(phone: String)
     func dataBindingHomepage(homepage: String)
     func pushAddressEditViewController(placeMarkerModel: MarkerModel)
+    func updateNaverMap(_ latLng: NMGLatLng)
 }
 
 final class EditPlaceInfoPresenter {
@@ -33,6 +34,14 @@ final class EditPlaceInfoPresenter {
     private var placeMarkerModel: MarkerModel?
     private var placeSummary: PlaceSummaryData?
     private var placeInfo: PlaceInfoData?
+    
+    private var newMarker = NMFMarker()
+    
+    private var changedAddress = "" {
+        didSet {
+            afterEditAddress()
+        }
+    }
     
     init(viewController: EditPlaceInfoProtocol,
          placeMarkerModel: MarkerModel? = nil,
@@ -126,12 +135,18 @@ final class EditPlaceInfoPresenter {
         let title = placeSummary.title
         let category = placeSummary.category
         let address = placeSummary.address
-        let marker = placeMarkerModel.marker
+        
+        let markerPosition = placeMarkerModel.marker.position
+        let markerImage = placeMarkerModel.marker.iconImage
+        
+        newMarker.position = markerPosition
+        newMarker.iconImage = markerImage
+        
         
         viewController?.dataBindingLocation(
             title: title,
             category: category,
-            marker: marker,
+            marker: newMarker,
             address: address
         )
     }
@@ -160,5 +175,34 @@ final class EditPlaceInfoPresenter {
         guard let placeMarkerModel = placeMarkerModel else { return }
         
         viewController?.pushAddressEditViewController(placeMarkerModel: placeMarkerModel)
+    }
+    
+    func saveChangedAddress(_ address: String) {
+        self.changedAddress = address
+    }
+    
+    private func afterEditAddress() {
+        KakaoMapRequestManager().kakaoMapAddressSearch(address: changedAddress) { [weak self] addressModel in
+            guard let documents = addressModel.documents, documents.count > 0 else { return }
+            
+            let firstCoordinate = documents[0]
+            
+            if let x = firstCoordinate.x, let y = firstCoordinate.y {
+                DispatchQueue.main.async {
+                    self?.changedMarker(lat: y, lng: x)
+                }
+            }
+        }
+    }
+    
+    private func changedMarker(lat: String, lng: String) {
+        guard let lat = Double(lat),
+              let lng = Double(lng) else { return }
+        
+        let latLng = NMGLatLng(lat: lat, lng: lng)
+        
+        newMarker.position = latLng
+        
+        viewController?.updateNaverMap(latLng)
     }
 }

@@ -26,7 +26,6 @@ final class EditLocationDetailMapView: UIView {
         
         map.addCameraDelegate(delegate: self)
         
-        
         return map
     }()
     

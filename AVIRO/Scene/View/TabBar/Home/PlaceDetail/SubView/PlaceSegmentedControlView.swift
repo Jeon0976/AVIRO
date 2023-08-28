@@ -59,6 +59,9 @@ final class PlaceSegmentedControlView: UIView {
     // placeInfo
     var editPlaceInfo: (() -> Void)?
     
+    // menu
+    var editMenu: (() -> Void)?
+    
     // review
     var whenUploadReview: ((AVIROCommentPost) -> Void)?
     var updateReviewsCount: ((Int) -> Void)?
@@ -269,6 +272,19 @@ final class PlaceSegmentedControlView: UIView {
             self?.editPlaceInfo?()
         }
         
+        // menu 관련 클로저
+        homeView.showMoreMenu = { [weak self] in
+            self?.segmentedControl.selectedSegmentIndex = 1
+            self?.activeMenuView()
+        }
+        
+        homeView.editMenu = { [weak self] in
+            self?.editMenu?()
+        }
+        
+        menuView.editMenuButton = { [weak self] in
+            self?.editMenu?()
+        }
         
         // Review 관련 클로저
         homeView.showMoreReviews = { [weak self] in

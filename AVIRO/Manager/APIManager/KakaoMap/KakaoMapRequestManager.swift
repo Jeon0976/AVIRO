@@ -130,4 +130,34 @@ final class KakaoMapRequestManager: KakaoMapRequestProtocol {
             }
         }.resume()
     }
+    
+    // MARK: Address Search
+    func kakaoMapAddressSearch(address: String,
+                               completionHandler: @escaping ((KakaoMapResponseAddressModel) -> Void)
+    ) {
+        guard let url = api.searchAddress(query: address).url else { return }
+        
+        guard let keyUrl = Bundle.main.url(forResource: "API", withExtension: "plist"),
+              let dictionary = NSDictionary(contentsOf: keyUrl) as? [String: Any] else { return }
+        
+        kakaoMapAPIKey = (dictionary["KakaoMapAPI_ Authorization _Key"] as? String)!
+        
+        var request = URLRequest(url: url)
+        
+        request.httpMethod = "GET"
+        request.setValue(kakaoMapAPIKey, forHTTPHeaderField: "Authorization")
+        
+        session.dataTask(with: request) { data, _, error in
+            if let error = error {
+                // TODO: urlsession 오류
+                print(error.localizedDescription)
+            }
+            
+            if let data = data {
+                if let searchData = try? JSONDecoder().decode(KakaoMapResponseAddressModel.self, from: data) {
+                    completionHandler(searchData)
+                }
+            }
+        }.resume()
+    }
 }
