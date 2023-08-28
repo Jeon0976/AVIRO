@@ -24,6 +24,9 @@ final class EditLocationDetailMapView: UIView {
     private lazy var naverMap: NMFMapView = {
         let map = NMFMapView()
         
+        map.addCameraDelegate(delegate: self)
+        
+        
         return map
     }()
     
@@ -40,13 +43,21 @@ final class EditLocationDetailMapView: UIView {
         let button = UIButton()
         
         button.setTitle("등록", for: .normal)
-        button.titleEdgeInsets = UIEdgeInsets(top: 15, left: 20, bottom: 15, right: 20)
+        button.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
+        button.contentEdgeInsets = UIEdgeInsets(top: 15, left: 20, bottom: 15, right: 20)
         button.backgroundColor = .gray6
         button.setTitleColor(.gray3, for: .normal)
         button.layer.cornerRadius = 10
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
 
         return button
     }()
+    
+    private var newMarker = NMFMarker()
+    private var afterMarkingMarked = false
+    
+    var isChangedCoordinate: ((NMGLatLng) -> Void)?
+    var isTappedEditButtonWhemMapView: (() -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -83,19 +94,65 @@ final class EditLocationDetailMapView: UIView {
             addressLabel.trailingAnchor.constraint(equalTo: enrollButton.leadingAnchor, constant: -5),
             
             enrollButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -13),
-            enrollButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
-            enrollButton.widthAnchor.constraint(equalToConstant: 75),
-            enrollButton.heightAnchor.constraint(equalToConstant: 55)
+            enrollButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15)
         ])
     }
     
     func dataBinding(_ marker: NMFMarker) {
-        marker.mapView = naverMap
+        let markerPosition = marker.position
+        let markerImage = marker.iconImage
         
-        let latlng = marker.position
-        let position = NMFCameraPosition(latlng, zoom: 14)
+        newMarker.position = markerPosition
+        newMarker.iconImage = markerImage
+
+        newMarker.mapView = naverMap
+        
+        let latLng = newMarker.position
+        let position = NMFCameraPosition(latLng, zoom: 17)
+        
         let cameraUpdate = NMFCameraUpdate(position: position)
         
         naverMap.moveCamera(cameraUpdate)
+        
+        isChangedCoordinate?(latLng)
+    }
+    
+    func changedAddress(_ address: String) {
+        self.addressLabel.text = address
+    }
+    
+    @objc private func buttonTapped() {
+        isTappedEditButtonWhemMapView?()
+    }
+}
+
+extension EditLocationDetailMapView: NMFMapViewCameraDelegate {
+    func mapView(_ mapView: NMFMapView, cameraWillChangeByReason reason: Int, animated: Bool) {
+        if afterMarkingMarked {
+            let lat = mapView.latitude
+            let lng = mapView.longitude
+            
+            let latLng = NMGLatLng(lat: lat, lng: lng)
+            
+            newMarker.position = latLng
+            
+            isChangedCoordinate?(latLng)
+            
+            self.enrollButton.setTitleColor(.gray7, for: .normal)
+            self.enrollButton.backgroundColor = .main
+        }
+    }
+    
+    func mapView(_ mapView: NMFMapView, cameraIsChangingByReason reason: Int) {
+        if !afterMarkingMarked {
+            let lat = mapView.latitude
+            let lng = mapView.longitude
+
+            let latLng = NMGLatLng(lat: lat, lng: lng)
+
+            newMarker.position = latLng
+            
+            afterMarkingMarked = true
+        }
     }
 }

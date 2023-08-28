@@ -22,7 +22,7 @@ struct KakaoMapRequestAPI {
     static let sort = "sort"
     static let page = "page"
     
-    // MARK: static query
+    // MARK: static Value
     // 사용자 기준 거리순 정렬
     static let accuracy = "accuracy"
     static let distance = "distance"
@@ -37,6 +37,7 @@ struct KakaoMapRequestAPI {
                      page: String
     ) -> URLComponents {
         var components = URLComponents()
+        
         components.scheme = KakaoMapRequestAPI.scheme
         components.host = KakaoMapRequestAPI.host
         components.path = KakaoMapRequestAPI.keywordPath

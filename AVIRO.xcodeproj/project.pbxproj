@@ -153,6 +153,11 @@
 		C5FA0EAA2A94DB3E004AD8B4 /* ReportReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FA0EA92A94DB3E004AD8B4 /* ReportReviewViewController.swift */; };
 		C5FA0EAC2A94DF39004AD8B4 /* ReportReviewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FA0EAB2A94DF39004AD8B4 /* ReportReviewPresenter.swift */; };
 		C5FA0EAE2A94E96F004AD8B4 /* ReportLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FA0EAD2A94E96F004AD8B4 /* ReportLabel.swift */; };
+		C5FD92E32A9C6C1E00CF4673 /* EditLocationDetailTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92E22A9C6C1E00CF4673 /* EditLocationDetailTextTableViewCell.swift */; };
+		C5FD92EB2A9C786600CF4673 /* PublicAPIRequestComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92EA2A9C786600CF4673 /* PublicAPIRequestComponents.swift */; };
+		C5FD92ED2A9C7AE800CF4673 /* PublicAPIRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92EC2A9C7AE800CF4673 /* PublicAPIRequestManager.swift */; };
+		C5FD92F02A9C803600CF4673 /* EditAddressTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92EF2A9C803600CF4673 /* EditAddressTableModel.swift */; };
+		C5FD92F22A9C805700CF4673 /* PublicXMLParserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92F12A9C805700CF4673 /* PublicXMLParserDelegate.swift */; };
 		C5FF13532A42C8810026981D /* AVIROPlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FF13522A42C8810026981D /* AVIROPlaceModel.swift */; };
 		C5FF13552A42C88D0026981D /* AVIROMenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FF13542A42C88D0026981D /* AVIROMenuModel.swift */; };
 		C5FF13572A42C8970026981D /* AVIROReviewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FF13562A42C8970026981D /* AVIROReviewsModel.swift */; };
@@ -311,6 +316,11 @@
 		C5FA0EA92A94DB3E004AD8B4 /* ReportReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportReviewViewController.swift; sourceTree = "<group>"; };
 		C5FA0EAB2A94DF39004AD8B4 /* ReportReviewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportReviewPresenter.swift; sourceTree = "<group>"; };
 		C5FA0EAD2A94E96F004AD8B4 /* ReportLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportLabel.swift; sourceTree = "<group>"; };
+		C5FD92E22A9C6C1E00CF4673 /* EditLocationDetailTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocationDetailTextTableViewCell.swift; sourceTree = "<group>"; };
+		C5FD92EA2A9C786600CF4673 /* PublicAPIRequestComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicAPIRequestComponents.swift; sourceTree = "<group>"; };
+		C5FD92EC2A9C7AE800CF4673 /* PublicAPIRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicAPIRequestManager.swift; sourceTree = "<group>"; };
+		C5FD92EF2A9C803600CF4673 /* EditAddressTableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAddressTableModel.swift; sourceTree = "<group>"; };
+		C5FD92F12A9C805700CF4673 /* PublicXMLParserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicXMLParserDelegate.swift; sourceTree = "<group>"; };
 		C5FF13522A42C8810026981D /* AVIROPlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROPlaceModel.swift; sourceTree = "<group>"; };
 		C5FF13542A42C88D0026981D /* AVIROMenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROMenuModel.swift; sourceTree = "<group>"; };
 		C5FF13562A42C8970026981D /* AVIROReviewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROReviewsModel.swift; sourceTree = "<group>"; };
@@ -395,10 +405,9 @@
 		C50367F22A1795B90020C6BB /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				C5FD92E92A9C77DE00CF4673 /* APIManager */,
 				C5A9899C2A95A7820021B7C3 /* FacadeManager */,
 				C520662B2A7CE19F0038ECCD /* UserDefaultsManager */,
-				C5732C6F2A41736D00CDC499 /* AVIRODatabase */,
-				C5351B4E2A19223600116D50 /* KakaoMap */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -458,6 +467,7 @@
 			isa = PBXGroup;
 			children = (
 				C50DB7562A9B8DF80078B501 /* EditLocationDetailTextView.swift */,
+				C5FD92E22A9C6C1E00CF4673 /* EditLocationDetailTextTableViewCell.swift */,
 				C50DB7582A9B8E060078B501 /* EditLocationDetailMapView.swift */,
 			);
 			path = EditLocationSubView;
@@ -672,8 +682,9 @@
 		C5351B782A1B437600116D50 /* APIResonseModel */ = {
 			isa = PBXGroup;
 			children = (
-				C5FF13502A42C8630026981D /* KakaoMap */,
 				C5FF13512A42C86C0026981D /* AVIRO */,
+				C5FF13502A42C8630026981D /* KakaoMap */,
+				C5FD92EE2A9C800A00CF4673 /* Public */,
 			);
 			path = APIResonseModel;
 			sourceTree = "<group>";
@@ -1145,6 +1156,34 @@
 			path = Edit;
 			sourceTree = "<group>";
 		};
+		C5FD92E82A9C77CE00CF4673 /* PublicAPI */ = {
+			isa = PBXGroup;
+			children = (
+				C5FD92EC2A9C7AE800CF4673 /* PublicAPIRequestManager.swift */,
+				C5FD92EA2A9C786600CF4673 /* PublicAPIRequestComponents.swift */,
+				C5FD92F12A9C805700CF4673 /* PublicXMLParserDelegate.swift */,
+			);
+			path = PublicAPI;
+			sourceTree = "<group>";
+		};
+		C5FD92E92A9C77DE00CF4673 /* APIManager */ = {
+			isa = PBXGroup;
+			children = (
+				C5732C6F2A41736D00CDC499 /* AVIRODatabase */,
+				C5351B4E2A19223600116D50 /* KakaoMap */,
+				C5FD92E82A9C77CE00CF4673 /* PublicAPI */,
+			);
+			path = APIManager;
+			sourceTree = "<group>";
+		};
+		C5FD92EE2A9C800A00CF4673 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				C5FD92EF2A9C803600CF4673 /* EditAddressTableModel.swift */,
+			);
+			path = Public;
+			sourceTree = "<group>";
+		};
 		C5FF13502A42C8630026981D /* KakaoMap */ = {
 			isa = PBXGroup;
 			children = (
@@ -1317,6 +1356,7 @@
 				C5803F5D2A88C3C00064A853 /* LocationUtility.swift in Sources */,
 				C5F1014F2A6D19A800C53286 /* VeganOptionButton.swift in Sources */,
 				C52066292A7CD5FC0038ECCD /* HistoryTableModel.swift in Sources */,
+				C5FD92EB2A9C786600CF4673 /* PublicAPIRequestComponents.swift in Sources */,
 				C50F6AF52A68FD6300E942F5 /* EnrollPlacePresenter.swift in Sources */,
 				C5CAAC452A39A93C008C5FDA /* Layout.swift in Sources */,
 				C50DB7572A9B8DF80078B501 /* EditLocationDetailTextView.swift in Sources */,
@@ -1326,6 +1366,7 @@
 				C5C290742A85E4EC00ED5DCE /* PlaceSegmentedControlView.swift in Sources */,
 				C5FA0EAE2A94E96F004AD8B4 /* ReportLabel.swift in Sources */,
 				C52FA3472A175B20005E70DC /* HomeViewController.swift in Sources */,
+				C5FD92E32A9C6C1E00CF4673 /* EditLocationDetailTextTableViewCell.swift in Sources */,
 				C51BBAD72A78D5AB00BF5B7C /* PlaceCheckModel.swift in Sources */,
 				C54BC0DB2A2C2D0D00B65439 /* UIColor+Extension.swift in Sources */,
 				C52FA3432A175B20005E70DC /* AppDelegate.swift in Sources */,
@@ -1368,6 +1409,7 @@
 				C51AED212A8B2BDB0015FBC2 /* HomeMapReferButton.swift in Sources */,
 				C5E430B32A5DADBE00CB67EC /* SecondRegistrationPresenter.swift in Sources */,
 				C5EB510D2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift in Sources */,
+				C5FD92ED2A9C7AE800CF4673 /* PublicAPIRequestManager.swift in Sources */,
 				C50367F52A1795D10020C6BB /* HomeViewPresenter.swift in Sources */,
 				C5C9619A2A8DA5950016E2F8 /* ShowMoreButton.swift in Sources */,
 				C5351B622A1A083400116D50 /* PlaceListCellModel.swift in Sources */,
@@ -1387,6 +1429,7 @@
 				C5A3C3C62A39659B0050AB3D /* LoginViewPresenter.swift in Sources */,
 				C50DB7422A99DCDA0078B501 /* PlaceListCell.swift in Sources */,
 				C50DB7432A99DCDA0078B501 /* PlaceListSearchViewController.swift in Sources */,
+				C5FD92F22A9C805700CF4673 /* PublicXMLParserDelegate.swift in Sources */,
 				C5166E4D2A945228003495AA /* UserSingleton.swift in Sources */,
 				C58B9AAE2A5675B9008AEAC3 /* TutorialViewController.swift in Sources */,
 				C5FF13552A42C88D0026981D /* AVIROMenuModel.swift in Sources */,
@@ -1438,6 +1481,7 @@
 				C568577D2A70E1F600F52715 /* BottomButton2.swift in Sources */,
 				C51132C12A559BCA006E1EC3 /* AppController.swift in Sources */,
 				C5A03C122A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift in Sources */,
+				C5FD92F02A9C803600CF4673 /* EditAddressTableModel.swift in Sources */,
 				C593B6472A4AB3A700D224CE /* PushCommentView.swift in Sources */,
 				C51AED1F2A8B2BC80015FBC2 /* HomeTopButton.swift in Sources */,
 				C5FA0EAC2A94DF39004AD8B4 /* ReportReviewPresenter.swift in Sources */,

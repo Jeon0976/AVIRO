@@ -13,13 +13,28 @@ protocol EditLocationDetailProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
     func dataBindingMap(_ marker: NMFMarker)
+    func afterChangedAddressWhenMapView(_ address: String)
+    func textViewTableReload()
 }
 
 final class EditLocationDetailPresenter {
     weak var viewController: EditLocationDetailProtocol?
     
+    var addressModels = [Juso]() {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                self?.viewController?.textViewTableReload()
+            }
+        }
+    }
+    var changedColorText = ""
+    private var totalCount = 0
+    private var pageIndex = 1
+    
     private var placeMarkerModel: MarkerModel?
-
+    
+    private var changedAddress: String?
+        
     init(viewController: EditLocationDetailProtocol,
          placeMarkerModel: MarkerModel? = nil
     ) {
@@ -47,4 +62,69 @@ final class EditLocationDetailPresenter {
         
         viewController?.dataBindingMap(marker)
     }
+    
+    func whenAfterSearchAddress(_ text: String) {
+        totalCount = 0
+        pageIndex = 1
+        self.changedColorText = text
+        
+        PublicAPIRequestManager().publicAddressSearch(currentPage: String(pageIndex), keyword: text) { [weak self] result in
+            switch result {
+            case .success(let addressTableModel):
+                guard let totalCount = addressTableModel.totalCount else { return }
+                
+                self?.totalCount = Int(totalCount)!
+                self?.addressModels = addressTableModel.juso
+            case .failure(let error):
+                // TODO: Error 처리
+                print("error")
+            }
+        }
+    }
+    
+    func whenScrollingTableView() {
+        if totalCount > pageIndex * 20 {
+            pageIndex += 1
+            PublicAPIRequestManager().publicAddressSearch(
+                currentPage: String(pageIndex),
+                keyword: changedColorText
+            ) { [weak self] result in
+                switch result {
+                case .success(let addressTableModel):
+                    self?.addressModels.append(contentsOf: addressTableModel.juso)
+                case .failure(let error):
+                    // TODO: Error 처리
+                    print(error)
+                }
+            }
+        }
+    }
+    
+    func checkSearchData(_ indexPath: IndexPath) -> Juso {
+        return addressModels[indexPath.row]
+    }
+    
+    func whenAfterChangedCoordinate(_ coordinate: NMGLatLng) {
+        let lat = String(coordinate.lat)
+        let lng = String(coordinate.lng)
+        KakaoMapRequestManager().kakaoMapCoordinateSearch(longtitude: lng, latitude: lat) { [weak self] coordinateModel in
+            
+            guard let firstDocument = coordinateModel.documents?.first,
+                  let address = firstDocument.address?.address else {
+                return
+            }
+            
+            self?.changedAddress = address
+            
+            DispatchQueue.main.async {
+                self?.viewController?.afterChangedAddressWhenMapView(address)
+            }
+        }
+    }
+    
+    func editAddress() {
+        guard let address = changedAddress else { return }
+        print(address)
+    }
+    
 }

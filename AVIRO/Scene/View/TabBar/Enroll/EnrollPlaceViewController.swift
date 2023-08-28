@@ -96,7 +96,6 @@ extension EnrollPlaceViewController: EnrollPlaceProtocol {
     func makeAttribute() {
         viewAttributed()
         navigationAttributed()
-        tabBarAttributed()
         storeInfoViewAttribute()
         veganDetailViewAttribute()
         menuTableViewAttribute()

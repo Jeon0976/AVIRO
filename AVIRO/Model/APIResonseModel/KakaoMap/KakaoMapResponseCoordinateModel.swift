@@ -8,18 +8,18 @@
 import Foundation
 
 struct KakaoMapResponseCoordinateModel: Decodable {
-    let documents: [AddressModel]
+    var documents: [AddressModel]?
 }
 
 struct AddressModel: Decodable {
-    let address: RodeAdress
+    let address: KakaoRodeAdress?
     
     enum CodingKeys: String, CodingKey {
         case address = "road_address"
     }
 }
 
-struct RodeAdress: Decodable {
+struct KakaoRodeAdress: Decodable {
     let address: String
     
     enum CodingKeys: String, CodingKey {

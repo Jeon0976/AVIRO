@@ -257,7 +257,6 @@ extension HomeSearchViewController: UITextFieldDelegate {
             }
         }
         
-        
         // 타이머 작업을 저장합니다.
         searchTimer = task
 

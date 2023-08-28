@@ -36,11 +36,23 @@ final class EditLocationDetailViewController: UIViewController {
     private lazy var editLocationDetailTextView: EditLocationDetailTextView = {
         let view = EditLocationDetailTextView()
         
+        view.searchAddress = { [weak self] text in
+            self?.presenter.whenAfterSearchAddress(text)
+        }
+        
         return view
     }()
     
     private lazy var editLocationDetailMapView: EditLocationDetailMapView = {
-       let view = EditLocationDetailMapView()
+        let view = EditLocationDetailMapView()
+        
+        view.isChangedCoordinate = { [weak self] coordinate in
+            self?.presenter.whenAfterChangedCoordinate(coordinate)
+        }
+        
+        view.isTappedEditButtonWhemMapView = { [weak self] in
+            self?.presenter.editAddress()
+        }
         
         return view
     }()
@@ -102,6 +114,7 @@ extension EditLocationDetailViewController: EditLocationDetailProtocol {
         activeTextSearch()
         
         editLocationDetailTextView.setTableViewDataSource(self)
+        editLocationDetailTextView.setTableViewDelegate(self)
     }
     
     @objc private func segmentedChanged(segment: UISegmentedControl) {
@@ -128,14 +141,55 @@ extension EditLocationDetailViewController: EditLocationDetailProtocol {
     func dataBindingMap(_ marker: NMFMarker) {
         editLocationDetailMapView.dataBinding(marker)
     }
+    
+    func afterChangedAddressWhenMapView(_ address: String) {
+        editLocationDetailMapView.changedAddress(address)
+    }
+    
+    func textViewTableReload() {
+        editLocationDetailTextView.addressTableViewReloadData()
+    }
 }
 
 extension EditLocationDetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        0
+        return presenter.addressModels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        UITableViewCell()
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: EditLocationDetailTextTableViewCell.identifier,
+            for: indexPath
+        ) as? EditLocationDetailTextTableViewCell
+        
+        guard presenter.addressModels.count > indexPath.row else {
+            return UITableViewCell()
+        }
+        
+        let jusoData = presenter.checkSearchData(indexPath)
+        
+        guard let roadAddr = jusoData.roadAddr,
+              let jibunAddr = jusoData.jibunAddr
+        else { return UITableViewCell()}
+        
+        cell?.dataBinding(
+            juso: jusoData,
+            attributedRoad: roadAddr.changeColor(changedText: presenter.changedColorText),
+            attributedJibun: jibunAddr.changeColor(changedText: presenter.changedColorText)
+        )
+        
+        return cell ?? UITableViewCell()
+    }
+}
+
+extension EditLocationDetailViewController: UITableViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
+        
+        if offsetY > contentHeight - height {
+            presenter.whenScrollingTableView()
+        }
     }
 }

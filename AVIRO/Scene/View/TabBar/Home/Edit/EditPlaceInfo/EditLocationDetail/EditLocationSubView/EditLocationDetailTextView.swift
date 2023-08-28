@@ -35,10 +35,22 @@ final class EditLocationDetailTextView: UIView {
     private lazy var addressTableView: UITableView = {
         let tableView = UITableView()
         
+        tableView.register(
+            EditLocationDetailTextTableViewCell.self,
+            forCellReuseIdentifier: EditLocationDetailTextTableViewCell.identifier
+        )
+        tableView.separatorStyle = .singleLine
+        tableView.separatorColor = .gray5
+        tableView.estimatedRowHeight = 150
+        tableView.rowHeight = UITableView.automaticDimension
         
         return tableView
     }()
     
+    var searchAddress: ((String) -> Void)?
+    
+    private var searchTimer: DispatchWorkItem?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -47,10 +59,6 @@ final class EditLocationDetailTextView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError()
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
     }
     
     private func makeLayout() {
@@ -76,16 +84,55 @@ final class EditLocationDetailTextView: UIView {
             addressTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             addressTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
+        
+        subLabel.isHidden = false
+        addressTableView.isHidden = true
     }
     
     func setTableViewDataSource(_ dataSource: UITableViewDataSource) {
         addressTableView.dataSource = dataSource
     }
+    
+    func setTableViewDelegate(_ delegate: UITableViewDelegate) {
+        addressTableView.delegate = delegate
+    }
+    
+    private func chagedView() {
+        subLabel.isHidden = true
+        addressTableView.isHidden = false
+    }
+    
+    func addressTableViewReloadData() {
+        addressTableView.reloadData()
+    }
 }
 
 extension EditLocationDetailTextView: UITextFieldDelegate {
-    func textFieldDidChangeSelection(_ textField: UITextField) {
-        addressTextField.rightButtonHidden = false
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        chagedView()
         
+        addressTextField.rightButtonHidden = false
+    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        
+        searchTimer?.cancel()
+
+        // 새로운 타이머 작업을 생성합니다.
+        let task = DispatchWorkItem { [weak self] in
+            if let text = textField.text {
+                if text != "" {
+                    guard let text = textField.text else { return }
+                    
+                    self?.searchAddress?(text)
+                }
+            }
+        }
+
+        // 타이머 작업을 저장합니다.
+        searchTimer = task
+
+        // 0.5초 후에 작업을 실행합니다.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: task)
     }
 }
