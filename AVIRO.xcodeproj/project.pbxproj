@@ -133,6 +133,8 @@
 		C5D6E19F2A17B4410042679C /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5D6E19E2A17B4410042679C /* API.plist */; };
 		C5D7458F2A224DCE006F9F31 /* HomeFirstPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D7458E2A224DCE006F9F31 /* HomeFirstPopUpView.swift */; };
 		C5D8E8632A3DEC3900D88A43 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D8E8622A3DEC3900D88A43 /* String+Extension.swift */; };
+		C5D8EB262A9D790800EF629F /* MyInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D8EB252A9D790800EF629F /* MyInfoView.swift */; };
+		C5D8EB282A9D797000EF629F /* OtherActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D8EB272A9D797000EF629F /* OtherActionsView.swift */; };
 		C5D93D9F2A581EC800629C39 /* FirstRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D93D9E2A581EC800629C39 /* FirstRegistrationViewController.swift */; };
 		C5D93DA12A581F5A00629C39 /* FirstRegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D93DA02A581F5A00629C39 /* FirstRegistrationPresenter.swift */; };
 		C5D93DA32A58718300629C39 /* BottomButton1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D93DA22A58718300629C39 /* BottomButton1.swift */; };
@@ -299,6 +301,8 @@
 		C5D6E19E2A17B4410042679C /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = API.plist; sourceTree = "<group>"; };
 		C5D7458E2A224DCE006F9F31 /* HomeFirstPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFirstPopUpView.swift; sourceTree = "<group>"; };
 		C5D8E8622A3DEC3900D88A43 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		C5D8EB252A9D790800EF629F /* MyInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoView.swift; sourceTree = "<group>"; };
+		C5D8EB272A9D797000EF629F /* OtherActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherActionsView.swift; sourceTree = "<group>"; };
 		C5D93D9E2A581EC800629C39 /* FirstRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstRegistrationViewController.swift; sourceTree = "<group>"; };
 		C5D93DA02A581F5A00629C39 /* FirstRegistrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstRegistrationPresenter.swift; sourceTree = "<group>"; };
 		C5D93DA22A58718300629C39 /* BottomButton1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomButton1.swift; sourceTree = "<group>"; };
@@ -1010,6 +1014,15 @@
 			path = StaticValue;
 			sourceTree = "<group>";
 		};
+		C5D8EB242A9D78F900EF629F /* SubView */ = {
+			isa = PBXGroup;
+			children = (
+				C5D8EB252A9D790800EF629F /* MyInfoView.swift */,
+				C5D8EB272A9D797000EF629F /* OtherActionsView.swift */,
+			);
+			path = SubView;
+			sourceTree = "<group>";
+		};
 		C5D93D962A56C6ED00629C39 /* Registration */ = {
 			isa = PBXGroup;
 			children = (
@@ -1088,6 +1101,7 @@
 			isa = PBXGroup;
 			children = (
 				C5EB50E92A1C705900B29CC1 /* MyPageViewController.swift */,
+				C5D8EB242A9D78F900EF629F /* SubView */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -1397,6 +1411,7 @@
 				C5351B4D2A19223300116D50 /* KakaoMapRequestAPI.swift in Sources */,
 				C520662F2A7E485B0038ECCD /* MatchedPlaceModel.swift in Sources */,
 				C5A201B72A986EDF00A54381 /* EditMenuViewController.swift in Sources */,
+				C5D8EB262A9D790800EF629F /* MyInfoView.swift in Sources */,
 				C5A201C92A98A70800A54381 /* EditHomePageView.swift in Sources */,
 				C5166E492A9305A9003495AA /* AVIROSummaryModel.swift in Sources */,
 				C5A9899E2A95A7940021B7C3 /* BookmarkManager.swift in Sources */,
@@ -1443,6 +1458,7 @@
 				C5A9899B2A95A6B50021B7C3 /* BookmarkArray.swift in Sources */,
 				C520662D2A7CE1CC0038ECCD /* SearchHistoryManager.swift in Sources */,
 				C51AED232A8B7B000015FBC2 /* UIViewController+Extension.swift in Sources */,
+				C5D8EB282A9D797000EF629F /* OtherActionsView.swift in Sources */,
 				C5C961952A8D9EED0016E2F8 /* PlaceReviewTableViewCell.swift in Sources */,
 				C5A3C3C62A39659B0050AB3D /* LoginViewPresenter.swift in Sources */,
 				C50DB7422A99DCDA0078B501 /* PlaceListCell.swift in Sources */,

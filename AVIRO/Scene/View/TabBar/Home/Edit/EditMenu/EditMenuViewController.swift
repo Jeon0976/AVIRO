@@ -77,7 +77,7 @@ extension EditMenuViewController: EditMenuProtocol {
         }
         
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
@@ -102,9 +102,52 @@ extension EditMenuViewController: EditMenuProtocol {
             tabBarController.hiddenTabBarIncludeIsTranslucent(true)
         }
         
+        
+        editMenuBottomView.setTableViewDelegate(self)
+        
     }
     
     @objc private func editMenu() {
         
+    }
+    
+    func makeGesture() {
+        
+    }
+    
+    func dataBindingTopView(isAll: Bool, isSome: Bool, isRequest: Bool) {
+        editMenuTopView.dataBinding(isAll: isAll, isSome: isSome, isRequest: isRequest)
+    }
+    
+    func dataBindingBottomView(menuArray: [MenuArray]) {
+        
+    }
+}
+
+extension EditMenuViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch tableView.tag {
+        case 0:
+            return 1
+        case 1:
+            return 1
+        default:
+            return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch tableView.tag {
+        case 0:
+            let cell = tableView.dequeueReusableCell(withIdentifier: NormalTableViewCell.identifier, for: indexPath) as? NormalTableViewCell
+            
+            return cell ?? UITableViewCell()
+        case 1:
+            let cell = tableView.dequeueReusableCell(withIdentifier: RequestTableViewCell.identifier, for: indexPath) as? RequestTableViewCell
+            
+            return cell ?? UITableViewCell()
+        default:
+            return UITableViewCell()
+        }
     }
 }

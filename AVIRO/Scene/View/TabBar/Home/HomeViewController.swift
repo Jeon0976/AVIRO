@@ -400,9 +400,20 @@ extension HomeViewController: HomeViewProtocol {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func pushEditMenuViewController() {
+    func pushEditMenuViewController(placeId: String,
+                                    isAll: Bool,
+                                    isSome: Bool,
+                                    isRequest: Bool,
+                                    menuArray: [MenuArray]) {
         let vc = EditMenuViewController()
-        let presenter = EditMenuPresenter(viewController: vc)
+        let presenter = EditMenuPresenter(viewController: vc,
+                                          placeId: placeId,
+                                          isAll: isAll,
+                                          isSome: isSome,
+                                          isRequest: isRequest,
+                                          menuArray: menuArray
+        )
+        
         vc.presenter = presenter
         
         self.navigationController?.pushViewController(vc, animated: true)
@@ -711,12 +722,40 @@ extension HomeViewController {
 // MARK: Text Field Delegate
 extension HomeViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        let viewController = HomeSearchViewController()
-        navigationController?.pushViewController(viewController,
-                                                 animated: false
-        )
+        animateTextFieldExpansion(textField: textField)
         return false
     }
+    
+    func animateTextFieldExpansion(textField: UITextField) {
+        
+        textField.placeholder = ""
+        textField.leftView?.isHidden = true
+        
+        let startingFrame = textField.convert(textField.bounds, to: nil)
+        let snapshot = textField.snapshotView(afterScreenUpdates: true)
+        snapshot?.frame = startingFrame
+        
+        guard let snapshot = snapshot else { return }
+        view.addSubview(snapshot)
+        
+        let targetScaleX = view.frame.width / startingFrame.width
+        let targetScaleY = view.frame.height / startingFrame.height
+        
+        UIView.animate(withDuration: 0.15, animations: {
+            snapshot.transform = CGAffineTransform(scaleX: targetScaleX, y: targetScaleY)
+            snapshot.center = self.view.center
+            
+        }, completion: { _ in
+            let vc = HomeSearchViewController()
+            
+            self.navigationController?.pushViewController(vc, animated: false)
+            snapshot.removeFromSuperview()
+            
+            textField.leftView?.isHidden = false
+            textField.placeholder = "어디로 이동할까요?"
+        })
+    }
+    
 }
 
 // MARK: TapGestureDelegate

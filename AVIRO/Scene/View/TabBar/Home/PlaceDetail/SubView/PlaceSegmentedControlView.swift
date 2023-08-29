@@ -24,7 +24,7 @@ final class PlaceSegmentedControlView: UIView {
         let indicatorView = UIActivityIndicatorView()
         
         indicatorView.color = .gray1
-        indicatorView.style = UIActivityIndicatorView.Style.large
+        indicatorView.style = UIActivityIndicatorView.Style.medium
         indicatorView.startAnimating()
         
         return indicatorView

@@ -46,7 +46,11 @@ protocol HomeViewProtocol: NSObject {
                                          placeSummary: PlaceSummaryData,
                                          placeInfo: PlaceInfoData
     )
-    func pushEditMenuViewController()
+    func pushEditMenuViewController(placeId: String,
+                                    isAll: Bool,
+                                    isSome: Bool,
+                                    isRequest: Bool,
+                                    menuArray: [MenuArray])
 }
 
 final class HomeViewPresenter: NSObject {
@@ -544,9 +548,25 @@ final class HomeViewPresenter: NSObject {
     }
     
     func editMenu() {
+        guard let placeMarkerModel = selectedMarkerModel,
+              let placeMenuModel = selectedMenuModel
+        else { return }
+        
+        let placeId = placeMarkerModel.placeId
+        let isAll = placeMarkerModel.isAll
+        let isSome = placeMarkerModel.isSome
+        let isRequest = placeMarkerModel.isRequest
+        let menuArray = placeMenuModel.menuArray
+        
         isShowEditPage = true
 
-        viewController?.pushEditMenuViewController()
+        viewController?.pushEditMenuViewController(
+            placeId: placeId,
+            isAll: isAll,
+            isSome: isSome,
+            isRequest: isRequest,
+            menuArray: menuArray
+        )
     }
 }
 

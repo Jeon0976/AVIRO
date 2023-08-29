@@ -142,7 +142,6 @@ final class EditPlaceInfoPresenter {
         newMarker.position = markerPosition
         newMarker.iconImage = markerImage
         
-        
         viewController?.dataBindingLocation(
             title: title,
             category: category,

@@ -21,7 +21,7 @@ protocol EditLocationDetailProtocol: NSObject {
 final class EditLocationDetailPresenter {
     weak var viewController: EditLocationDetailProtocol?
     
-    var addressModels = [Juso]() {
+    private var addressModels = [Juso]() {
         didSet {
             DispatchQueue.main.async { [weak self] in
                 self?.viewController?.textViewTableReload()
@@ -37,6 +37,10 @@ final class EditLocationDetailPresenter {
     private var changedAddress: String?
         
     var afterChangedAddress: ((String?) -> Void)?
+    
+    var addressModelCount: Int {
+        return addressModels.count
+    }
     
     init(viewController: EditLocationDetailProtocol,
          placeMarkerModel: MarkerModel? = nil

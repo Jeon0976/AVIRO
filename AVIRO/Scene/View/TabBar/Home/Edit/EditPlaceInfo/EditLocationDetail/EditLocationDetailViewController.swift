@@ -157,7 +157,7 @@ extension EditLocationDetailViewController: EditLocationDetailProtocol {
 
 extension EditLocationDetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter.addressModels.count
+        return presenter.addressModelCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -166,7 +166,7 @@ extension EditLocationDetailViewController: UITableViewDataSource {
             for: indexPath
         ) as? EditLocationDetailTextTableViewCell
         
-        guard presenter.addressModels.count > indexPath.row else {
+        guard presenter.addressModelCount > indexPath.row else {
             return UITableViewCell()
         }
         

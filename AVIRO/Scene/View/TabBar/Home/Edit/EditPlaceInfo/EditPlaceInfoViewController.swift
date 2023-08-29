@@ -205,6 +205,10 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
        activeLocation()
     }
     
+    @objc private func editStore() {
+
+    }
+    
     @objc private func segmentedChanged(segment: UISegmentedControl) {
         switch segment.selectedSegmentIndex {
         case 0:
@@ -276,10 +280,6 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         self.navigationController?.isNavigationBarHidden = false
 
         self.safeAreaView.transform = .identity
-    }
-    
-    @objc private func editStore() {
-
     }
     
     func dataBindingLocation(title: String,

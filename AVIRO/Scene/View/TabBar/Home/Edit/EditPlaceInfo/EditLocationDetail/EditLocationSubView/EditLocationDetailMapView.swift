@@ -93,7 +93,8 @@ final class EditLocationDetailMapView: UIView {
             addressLabel.trailingAnchor.constraint(equalTo: enrollButton.leadingAnchor, constant: -5),
             
             enrollButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -13),
-            enrollButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15)
+            enrollButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+            enrollButton.widthAnchor.constraint(equalToConstant: 80)
         ])
     }
     

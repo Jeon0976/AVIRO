@@ -11,10 +11,22 @@ import KeychainSwift
 
 final class MyPageViewController: UIViewController {
     lazy var presenter = MyPageViewPresenter(viewController: self)
-    let keychain = KeychainSwift()
     
-    var logOutButton = UIButton()
-    var label = UILabel()
+    private let keychain = KeychainSwift()
+    
+    private lazy var myInfoView: MyInfoView = {
+        let view = MyInfoView()
+        
+        return view
+    }()
+    
+    private lazy var otherActionsView: OtherActionsView = {
+        let view = OtherActionsView()
+        
+        return view
+    }()
+    
+    private lazy var scrollView = UIScrollView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,42 +37,57 @@ final class MyPageViewController: UIViewController {
 
 extension MyPageViewController: MyPageViewProtocol {
     func makeLayout() {
+       [
+            myInfoView,
+            otherActionsView
+       ].forEach {
+           $0.translatesAutoresizingMaskIntoConstraints = false
+           self.scrollView.addSubview($0)
+       }
+        
+        NSLayoutConstraint.activate([
+            myInfoView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            myInfoView.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor),
+            myInfoView.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor),
+            
+            otherActionsView.topAnchor.constraint(equalTo: myInfoView.bottomAnchor, constant: 20),
+            otherActionsView.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor),
+            otherActionsView.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor),
+            otherActionsView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor)
+        ])
+        
         [
-            logOutButton
+            scrollView
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview($0)
+            self.view.addSubview($0)
         }
         
         NSLayoutConstraint.activate([
-            logOutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logOutButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            scrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 20)
         ])
-        
     }
     
     func makeAttribute() {
-        view.backgroundColor = .white
+        view.backgroundColor = .gray7
         
-        logOutButton.setTitle("로그아웃", for: .normal)
-        logOutButton.setTitleColor(.black, for: .normal)
-        logOutButton.addTarget(self, action: #selector(tappedLogOutButton), for: .touchUpInside)
-        
-        label.font = .systemFont(ofSize: 14, weight: .medium)
-        label.numberOfLines = 0
-        
+        scrollView.backgroundColor = .gray6
     }
-    
-    @objc func tappedLogOutButton() {
-        let result = keychain.delete("userIdentifier")
-        
-        print("성공적인 로그아웃: \(result)")
-        
-        let viewController = LoginViewController()
-        let rootViewController = UINavigationController(rootViewController: viewController)
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            windowScene.windows.first?.rootViewController = rootViewController
-            windowScene.windows.first?.makeKeyAndVisible()
-        }
-    }
+
 }
+//let result = keychain.delete("userIdentifier")
+//
+//        print("성공적인 로그아웃: \(result)")
+//
+//        let vc = LoginViewController()
+//        let presenter = LoginViewPresenter(viewController: vc)
+//        vc.presenter = presenter
+//
+//        let rootViewController = UINavigationController(rootViewController: vc)
+//        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+//            windowScene.windows.first?.rootViewController = rootViewController
+//            windowScene.windows.first?.makeKeyAndVisible()
+//        }
