@@ -102,9 +102,7 @@ extension EditMenuViewController: EditMenuProtocol {
             tabBarController.hiddenTabBarIncludeIsTranslucent(true)
         }
         
-        
         editMenuBottomView.setTableViewDelegate(self)
-        
     }
     
     @objc private func editMenu() {
@@ -119,8 +117,13 @@ extension EditMenuViewController: EditMenuProtocol {
         editMenuTopView.dataBinding(isAll: isAll, isSome: isSome, isRequest: isRequest)
     }
     
-    func dataBindingBottomView(menuArray: [MenuArray]) {
-        
+    func dataBindingBottomView(_ isPresentingDefaultTable: Bool) {
+        editMenuBottomView.changeMenuTable(isPresentingDefaultTable, presenter.menuArrayCount)
+    }
+    
+    func changeMenuTable(_ isPresentingDefaultTable: Bool) {
+        editMenuBottomView.changeMenuTable(isPresentingDefaultTable, presenter.menuArrayCount)
+        print("Test")
     }
 }
 
@@ -128,9 +131,9 @@ extension EditMenuViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch tableView.tag {
         case 0:
-            return 1
+            return presenter.menuArrayCount
         case 1:
-            return 1
+            return presenter.menuArrayCount
         default:
             return 0
         }
@@ -139,12 +142,30 @@ extension EditMenuViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch tableView.tag {
         case 0:
-            let cell = tableView.dequeueReusableCell(withIdentifier: NormalTableViewCell.identifier, for: indexPath) as? NormalTableViewCell
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: NormalTableViewCell.identifier,
+                for: indexPath
+            ) as? NormalTableViewCell
+
+            guard let menuData = presenter.checkMenuData(indexPath) else { return UITableViewCell() }
             
+            cell?.setData(menu: menuData.menu, price: menuData.price)
+            cell?.selectionStyle = .none
+
             return cell ?? UITableViewCell()
         case 1:
-            let cell = tableView.dequeueReusableCell(withIdentifier: RequestTableViewCell.identifier, for: indexPath) as? RequestTableViewCell
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: RequestTableViewCell.identifier,
+                for: indexPath
+            ) as? RequestTableViewCell
             
+            guard let menuData = presenter.checkMenuData(indexPath) else { return UITableViewCell() }
+            
+            let isEnabled = presenter.isEnabledWhenRequestTable
+                        
+            cell?.setData(menu: menuData.menu, price: menuData.price, request: menuData.howToRequest, isSelected: menuData.isCheck, isEnabled: isEnabled)
+            cell?.selectionStyle = .none
+
             return cell ?? UITableViewCell()
         default:
             return UITableViewCell()

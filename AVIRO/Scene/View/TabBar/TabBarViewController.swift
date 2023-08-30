@@ -43,8 +43,6 @@ class TabBarViewController: UITabBarController {
                                 #selector(didTapPlusButton),
                                for: .touchUpInside
         )
-
-        setupTabBar()
     }
     
     // MARK: 가운데 plus 버튼 만들기
@@ -83,9 +81,7 @@ class TabBarViewController: UITabBarController {
     /// tabBar의 isTranslucent 때문인것 같음
     ///
     func hiddenTabBarIncludeIsTranslucent(_ hidden: Bool) {
-//        if !hidden {
-//            setupTabBar()
-//        }
+        setupTabBar()
         
         self.tabBar.isTranslucent = hidden
         self.tabBar.isHidden = hidden

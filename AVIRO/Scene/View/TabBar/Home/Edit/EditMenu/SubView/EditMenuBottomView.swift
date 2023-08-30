@@ -66,6 +66,9 @@ final class EditMenuBottomView: UIView {
     var initialView = true
     var constraintSet = true
     
+    private var isDefaultTable = true
+    private var count = 1
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -81,11 +84,9 @@ final class EditMenuBottomView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        if initialView {
-            initViewHeight()
-            
-            initialView = !initialView
-        }
+        updateViewHeight(defaultTable: isDefaultTable,
+                         count: count
+        )
     }
     
     // MARK: 데이터 바인딩 하고 들어올 예정이 추후 delete
@@ -184,7 +185,15 @@ final class EditMenuBottomView: UIView {
             requestTableViewHeight?.constant = height
             viewHeightConstraint?.constant = defaultTotalHeight + height
             self.layoutIfNeeded()
-
         }
+    }
+    
+    func changeMenuTable(_ isPresentingDefaultTable: Bool, _ count: Int) {
+        
+        self.isDefaultTable = isPresentingDefaultTable
+        self.count = count
+        
+        normalTableView.isHidden = !isPresentingDefaultTable
+        requestTableView.isHidden = isPresentingDefaultTable
     }
 }

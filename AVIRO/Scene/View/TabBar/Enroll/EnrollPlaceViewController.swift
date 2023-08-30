@@ -209,7 +209,7 @@ extension EnrollPlaceViewController: EnrollPlaceProtocol {
     // MARK: Keyboard Will Show
     func keyboardWillShow(height: CGFloat) {
         let tabBarHeight = tabBarController?.tabBar.frame.height ?? 0
-        let result = height
+        let result = height - tabBarHeight
         
         UIView.animate(
             withDuration: 0.3,
@@ -325,6 +325,7 @@ extension EnrollPlaceViewController {
     private func tabBarAttributed() {
         if let tabBarController = self.tabBarController as? TabBarViewController {
             tabBarController.hiddenTabBarIncludeIsTranslucent(true)
+            
         }
     }
     
@@ -371,7 +372,6 @@ extension EnrollPlaceViewController {
             )
             
         }
-        view.layoutIfNeeded()
     }
 }
 

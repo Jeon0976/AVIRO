@@ -12,18 +12,43 @@ protocol EditMenuProtocol: NSObject {
     func makeAttribute()
     func makeGesture()
     func dataBindingTopView(isAll: Bool, isSome: Bool, isRequest: Bool)
-    func dataBindingBottomView(menuArray: [MenuArray])
+    func dataBindingBottomView(_ isPresentingDefaultTable: Bool)
+    func changeMenuTable(_ isPresentingDefaultTable: Bool)
 }
 
 final class EditMenuPresenter {
+    enum Table {
+        case Normal
+        case Request
+    }
+    
     weak var viewController: EditMenuProtocol?
     
     private var placeId: String?
     private var isAll: Bool?
     private var isSome: Bool?
-    private var isRequest: Bool?
+    private var isRequest: Bool? {
+        didSet {
+            guard let isRequest = isRequest,
+                  let isSome = isSome
+            else { return }
+            if isRequest && !isSome {
+                viewController?.dataBindingBottomView(false)
+                isEnabledWhenRequestTable = false
+            } else if isRequest && isSome {
+                viewController?.dataBindingBottomView(false)
+                isEnabledWhenRequestTable = true
+            }
+        }
+    }
+    var isEnabledWhenRequestTable = true
     
     private var menuArray: [MenuArray]?
+    
+    var menuArrayCount: Int {
+        guard let menuArray = menuArray else { return 0 }
+        return menuArray.count
+    }
     
     init(viewController: EditMenuProtocol,
          placeId: String? = nil,
@@ -39,7 +64,7 @@ final class EditMenuPresenter {
         self.isRequest = isRequest
         self.menuArray = menuArray
         
-        print(placeId ,isAll, isSome, isRequest, menuArray)
+        print(placeId, isAll, isSome, isRequest, menuArray)
     }
     
     func viewDidLoad() {
@@ -64,8 +89,25 @@ final class EditMenuPresenter {
     }
     
     private func dataBindingBottomView() {
-        guard let menuArray = menuArray else { return }
+        guard let menuArray = menuArray,
+              let isRequest = isRequest,
+              let isSome = isSome
+        else { return }
         
-        viewController?.dataBindingBottomView(menuArray: menuArray)
+        if isRequest && !isSome {
+            viewController?.dataBindingBottomView(false)
+            isEnabledWhenRequestTable = false
+        } else if isRequest && isSome {
+            viewController?.dataBindingBottomView(false)
+            isEnabledWhenRequestTable = true
+        } else {
+            viewController?.dataBindingBottomView(true)
+        }
+    }
+    
+    func checkMenuData(_ indexPath: IndexPath) -> MenuArray? {
+        guard let menuArray = menuArray else { return nil }
+        
+        return menuArray[indexPath.row]
     }
 }

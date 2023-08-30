@@ -64,7 +64,7 @@ extension MyPageViewController: MyPageViewProtocol {
         }
         
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 20)
@@ -75,6 +75,9 @@ extension MyPageViewController: MyPageViewProtocol {
         view.backgroundColor = .gray7
         
         scrollView.backgroundColor = .gray6
+        
+        navigationItem.title = "마이페이지"
+        navigationController?.navigationBar.isHidden = false
     }
 
 }
