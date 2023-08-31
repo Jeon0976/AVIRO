@@ -25,22 +25,51 @@ final class EditMenuPresenter {
     weak var viewController: EditMenuProtocol?
     
     private var placeId: String?
-    private var isAll: Bool?
-    private var isSome: Bool?
+    
+    private var isAll: Bool? {
+        didSet {
+            guard let isAll else { return }
+            
+            if isAll {
+                viewController?.changeMenuTable(true)
+            }
+        }
+    }
+    
+    private var isSome: Bool? {
+        didSet {
+            guard let isSome = isSome,
+                  let isRequest = isRequest else { return }
+            
+            if isSome && !isRequest {
+                viewController?.changeMenuTable(true)
+            } else if !isSome && isRequest {
+                viewController?.changeMenuTable(false)
+                isEnabledWhenRequestTable = false
+            } else if isSome && isRequest {
+                viewController?.changeMenuTable(false)
+                isEnabledWhenRequestTable = true
+            }
+        }
+    }
+    
     private var isRequest: Bool? {
         didSet {
             guard let isRequest = isRequest,
                   let isSome = isSome
             else { return }
             if isRequest && !isSome {
-                viewController?.dataBindingBottomView(false)
+                viewController?.changeMenuTable(false)
                 isEnabledWhenRequestTable = false
             } else if isRequest && isSome {
-                viewController?.dataBindingBottomView(false)
+                viewController?.changeMenuTable(false)
                 isEnabledWhenRequestTable = true
+            } else if !isRequest {
+                viewController?.changeMenuTable(true)
             }
         }
     }
+    
     var isEnabledWhenRequestTable = true
     
     private var menuArray: [MenuArray]?
@@ -110,4 +139,64 @@ final class EditMenuPresenter {
         
         return menuArray[indexPath.row]
     }
+    
+    func changedVeganOption(_ text: String, _ selected: Bool) {
+        switch text {
+        case "모든 메뉴가\n비건":
+            tappedAllVegan(selected)
+        case "일부 메뉴만\n비건":
+            tappedSomeVegan(selected)
+        case "비건 메뉴로\n요청 가능":
+            tappedRequestVegan(selected)
+        default:
+            break
+        }
+    }
+    
+    private func tappedAllVegan(_ selected: Bool) {
+        isSome = false
+        isRequest = false
+
+        if selected {
+            isAll = true
+        } else {
+            isAll = false
+        }
+    }
+    
+    private func tappedSomeVegan(_ selected: Bool) {
+        isAll = false
+        
+        if selected {
+            isSome = true
+        } else {
+            isSome = false
+        }
+    }
+    
+    private func tappedRequestVegan(_ selected: Bool) {
+        isAll = false
+        print(selected)
+
+        if selected {
+            isRequest = true
+        } else {
+            isRequest = false
+        }
+    }
+    
+//    private func fixedRequestTable() {
+//        for index in requestTableModel.indices {
+//            requestTableModel[index].isCheck = true
+//            requestTableModel[index].isEnabled = false
+//        }
+//        viewController?.menuTableReload(isPresentingDefaultTable: isPresentingDefaultTable)
+//    }
+//
+//    private func unFixedRequestTable() {
+//        for index in requestTableModel.indices {
+//            requestTableModel[index].isEnabled = true
+//        }
+//        viewController?.menuTableReload(isPresentingDefaultTable: isPresentingDefaultTable)
+//    }
 }

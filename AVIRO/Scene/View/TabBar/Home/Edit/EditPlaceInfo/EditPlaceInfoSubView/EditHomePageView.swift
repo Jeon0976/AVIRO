@@ -25,6 +25,7 @@ final class EditHomePageView: UIView {
         
         field.makePlaceHolder(placeHolder)
         field.keyboardType = .URL
+        field.font = .systemFont(ofSize: 16, weight: .medium)
         
         return field
     }()

@@ -51,7 +51,6 @@ final class EditMenuBottomView: UIView {
         
         tableView.register(RequestTableViewCell.self, forCellReuseIdentifier: RequestTableViewCell.identifier)
         
-        
         return tableView
     }()
     
@@ -62,19 +61,16 @@ final class EditMenuBottomView: UIView {
     private var normalTableViewHeight: NSLayoutConstraint? // default 45
     private var requestTableViewHeight: NSLayoutConstraint? // default 100
     private var viewHeightConstraint: NSLayoutConstraint?
-    
-    var initialView = true
-    var constraintSet = true
-    
-    private var isDefaultTable = true
-    private var count = 1
+
+    private var firstShowTable: Bool!
+    private var firstCount: Int!
+    private var firstShow = true
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         makeAttribute()
         makeLayout()
-
     }
     
     required init?(coder: NSCoder) {
@@ -84,24 +80,11 @@ final class EditMenuBottomView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        updateViewHeight(defaultTable: isDefaultTable,
-                         count: count
-        )
-    }
-    
-    // MARK: 데이터 바인딩 하고 들어올 예정이 추후 delete
-    func initViewHeight() {
-        let titleHeight = title.frame.height
-        let subTitleHeight = subTitle.frame.height
-        let normalHeight = normalTableView.frame.height
-        let buttonHeight = menuPlusButton.frame.height
-        // 20, 7, 20, 20, 30
-        let paddingValues: CGFloat = 97
-        
-        let totalHeight = titleHeight + subTitleHeight + normalHeight + buttonHeight + paddingValues
-        
-        viewHeightConstraint?.constant = totalHeight
-        requestTableView.isHidden = true
+        if firstShow {
+            updateViewHeight(defaultTable: firstShowTable, count: firstCount)
+            
+            firstShow.toggle()
+        }
     }
         
     private func makeLayout() {
@@ -174,26 +157,33 @@ final class EditMenuBottomView: UIView {
         let defaultTotalHeight = titleHeight + subTitleHeight + buttonHeight + defaultPadding
         
         if defaultTable {
+            
             let height = CGFloat(55 * count)
             
             normalTableViewHeight?.constant = height
             viewHeightConstraint?.constant = defaultTotalHeight + height
-            self.layoutIfNeeded()
         } else {
+            
             let height = CGFloat(110 * count)
             
             requestTableViewHeight?.constant = height
             viewHeightConstraint?.constant = defaultTotalHeight + height
-            self.layoutIfNeeded()
         }
+    }
+    
+    func initMenuTableView(_ isPresentingDefaultTable: Bool, _ count: Int) {
+        firstShowTable = isPresentingDefaultTable
+        firstCount = count
+        
+        normalTableView.isHidden = !isPresentingDefaultTable
+        requestTableView.isHidden = isPresentingDefaultTable
     }
     
     func changeMenuTable(_ isPresentingDefaultTable: Bool, _ count: Int) {
         
-        self.isDefaultTable = isPresentingDefaultTable
-        self.count = count
-        
         normalTableView.isHidden = !isPresentingDefaultTable
         requestTableView.isHidden = isPresentingDefaultTable
+                
+        updateViewHeight(defaultTable: isPresentingDefaultTable, count: count)
     }
 }

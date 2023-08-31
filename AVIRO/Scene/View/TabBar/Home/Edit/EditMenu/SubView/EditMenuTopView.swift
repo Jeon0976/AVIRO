@@ -31,16 +31,18 @@ final class EditMenuTopView: UIView {
     }()
     
     // MARK: Vegan Options
-    lazy var allVeganButton = VeganOptionButton()
-    lazy var someVeganButton = VeganOptionButton()
-    lazy var requestVeganButton = VeganOptionButton()
+    private lazy var allVeganButton = VeganOptionButton()
+    private lazy var someVeganButton = VeganOptionButton()
+    private lazy var requestVeganButton = VeganOptionButton()
     
-    lazy var veganOptions = [VeganOptionButton]()
+    private lazy var veganOptions = [VeganOptionButton]()
     
     private lazy var buttonStackView = UIStackView()
     
     // MARK: Constraint 조절
     private var viewHeightConstraint: NSLayoutConstraint?
+    
+    var veganOptionsTapped: ((String,Bool) -> Void)?
     
     // MARK: View Init
     override init(frame: CGRect) {
@@ -122,6 +124,53 @@ final class EditMenuTopView: UIView {
             someVeganButton,
             requestVeganButton
         ]
+        
+        allVeganButton.addTarget(self, action: #selector(tappedAllVegan(_:)), for: .touchUpInside)
+        someVeganButton.addTarget(self, action: #selector(tappedSomeVegan(_:)), for: .touchUpInside)
+        requestVeganButton.addTarget(self, action: #selector(tappedRequestVegan(_:)), for: .touchUpInside)
+    }
+    
+    @objc private func tappedAllVegan(_ sender: UIButton) {
+        guard let text = sender.titleLabel?.text else { return }
+
+        allVeganButton.isSelected.toggle()
+        
+        let selected = allVeganButton.isSelected
+        
+        if selected {
+            someVeganButton.isSelected = false
+            requestVeganButton.isSelected = false
+        }
+        
+        veganOptionsTapped?(text, selected)
+    }
+    
+    @objc private func tappedSomeVegan(_ sender: UIButton) {
+        guard let text = sender.titleLabel?.text else { return }
+
+        someVeganButton.isSelected.toggle()
+        
+        let selected = someVeganButton.isSelected
+        
+        if selected {
+            allVeganButton.isSelected = false
+        }
+        
+        veganOptionsTapped?(text, selected)
+    }
+    
+    @objc private func tappedRequestVegan(_ sender: UIButton) {
+        guard let text = sender.titleLabel?.text else { return }
+
+        requestVeganButton.isSelected.toggle()
+        
+        let selected = requestVeganButton.isSelected
+        
+        if selected {
+            allVeganButton.isSelected = false 
+        }
+        
+        veganOptionsTapped?(text, selected)
     }
     
     // MARK: View Height

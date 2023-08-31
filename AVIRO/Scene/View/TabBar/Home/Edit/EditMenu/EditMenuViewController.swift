@@ -13,6 +13,10 @@ final class EditMenuViewController: UIViewController {
     private lazy var editMenuTopView: EditMenuTopView = {
         let view = EditMenuTopView()
         
+        view.veganOptionsTapped = { [weak self] (text, selected) in
+            self?.presenter.changedVeganOption(text, selected)
+        }
+        
         return view
     }()
     
@@ -118,12 +122,11 @@ extension EditMenuViewController: EditMenuProtocol {
     }
     
     func dataBindingBottomView(_ isPresentingDefaultTable: Bool) {
-        editMenuBottomView.changeMenuTable(isPresentingDefaultTable, presenter.menuArrayCount)
+        editMenuBottomView.initMenuTableView(isPresentingDefaultTable, presenter.menuArrayCount)
     }
     
     func changeMenuTable(_ isPresentingDefaultTable: Bool) {
         editMenuBottomView.changeMenuTable(isPresentingDefaultTable, presenter.menuArrayCount)
-        print("Test")
     }
 }
 
@@ -149,7 +152,10 @@ extension EditMenuViewController: UITableViewDataSource {
 
             guard let menuData = presenter.checkMenuData(indexPath) else { return UITableViewCell() }
             
-            cell?.setData(menu: menuData.menu, price: menuData.price)
+            cell?.setData(menu: menuData.menu,
+                          price: menuData.price
+            )
+            
             cell?.selectionStyle = .none
 
             return cell ?? UITableViewCell()
@@ -163,7 +169,13 @@ extension EditMenuViewController: UITableViewDataSource {
             
             let isEnabled = presenter.isEnabledWhenRequestTable
                         
-            cell?.setData(menu: menuData.menu, price: menuData.price, request: menuData.howToRequest, isSelected: menuData.isCheck, isEnabled: isEnabled)
+            cell?.setData(menu: menuData.menu,
+                          price: menuData.price,
+                          request: menuData.howToRequest,
+                          isSelected: menuData.isCheck,
+                          isEnabled: isEnabled
+            )
+            
             cell?.selectionStyle = .none
 
             return cell ?? UITableViewCell()
