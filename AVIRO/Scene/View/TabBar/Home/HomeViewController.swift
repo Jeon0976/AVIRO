@@ -41,27 +41,14 @@ final class HomeViewController: UIViewController {
     var firstPopupView = HomeFirstPopUpView()
     var blurEffectView = UIVisualEffectView()
     
-    // TODO: zoom level
-    var zoomLevel = UILabel()
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
         presenter.locationAuthorization()
         presenter.viewDidLoad()
         presenter.makeNotification()
         presenter.loadVeganData()
         handleClosure()
-        
-        view.addSubview(zoomLevel)
-        zoomLevel.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            zoomLevel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            zoomLevel.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 30)
-        ])
-        zoomLevel.textColor = .black
-        zoomLevel.font = .systemFont(ofSize: 20, weight: .bold)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -162,6 +149,10 @@ extension HomeViewController: HomeViewProtocol {
         // NFMAP
         naverMapView.addCameraDelegate(delegate: self)
         naverMapView.touchDelegate = self
+        naverMapView.mapType = .basic
+        naverMapView.isIndoorMapEnabled = true
+        naverMapView.minZoomLevel = 5.0
+        naverMapView.extent = NMGLatLngBounds(southWestLat: 31.43, southWestLng: 122.37, northEastLat: 44.35, northEastLng: 132)
         
         // searchTextField
         searchTextField.makePlaceHolder("어디로 이동할까요?")
@@ -178,13 +169,13 @@ extension HomeViewController: HomeViewProtocol {
         
         // lodeLocationButton
         loadLocationButton.setImage(UIImage(named: "current-location"), for: .normal)
-        loadLocationButton.setImage(UIImage(named: "current-location"), for: .disabled)
-        loadLocationButton.isEnabled = false
+        loadLocationButton.setImage(UIImage(named: "current-locationDisable")?.withTintColor(.gray4!), for: .disabled)
         loadLocationButton.addTarget(self, action: #selector(locationButtonTapped(_:)), for: .touchUpInside)
         
         // starButton
         starButton.setImage(UIImage(named: "star"), for: .normal)
         starButton.setImage(UIImage(named: "selectedStar"), for: .selected)
+        starButton.setImage(UIImage(named: "starDisable")?.withTintColor(.gray4!), for: .disabled)
         starButton.addTarget(self, action: #selector(starButtonTapped(_ :)), for: .touchUpInside)
         
     }
@@ -292,7 +283,6 @@ extension HomeViewController: HomeViewProtocol {
     // MARK: center 위치 coordinate 저장하기
     func saveCenterCoordinate() {
         let center = naverMapView.cameraPosition.target
-        
         presenter.saveCenterCoordinate(center)
     }
     
@@ -499,7 +489,6 @@ extension HomeViewController {
         placeView.editMyReview = { [weak self] commentId in
             self?.makeEditMyReviewAlert(commentId)
         }
-        
     }
     
     private func makeToastButton(_ title: String) {
@@ -511,9 +500,9 @@ extension HomeViewController {
         style.titleFont = .systemFont(ofSize: 17, weight: .semibold)
         
         let centerX = (self.view.frame.size.width) / 2
-        let viewHeight = self.view.safeAreaLayoutGuide.layoutFrame.height
+        let viewHeight = self.view.safeAreaLayoutGuide.layoutFrame.height + (self.tabBarController?.tabBar.frame.height ?? 0)
         
-        let yPosition: CGFloat = viewHeight - 32
+        let yPosition: CGFloat = viewHeight - 70
         
         self.view.makeToast(title,
                             duration: 1.0,
@@ -773,9 +762,25 @@ extension HomeViewController: UIGestureRecognizerDelegate {
 }
 extension HomeViewController: NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
-        zoomLevel.text = String(mapView.zoomLevel)
         
         saveCenterCoordinate()
+    }
+    
+    // 카메라 움직일 때
+    func mapView(_ mapView: NMFMapView, cameraWillChangeByReason reason: Int, animated: Bool) {
+        loadLocationButton.isEnabled = false
+        if !starButton.isSelected {
+            starButton.isEnabled = false
+        }
+    }
+    
+    // 카메라 멈출 때
+    func mapViewCameraIdle(_ mapView: NMFMapView) {
+        loadLocationButton.isEnabled = true
+        
+        if !starButton.isSelected {
+            starButton.isEnabled = true
+        }
     }
 }
 

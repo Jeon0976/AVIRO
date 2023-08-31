@@ -85,8 +85,27 @@ enum MapIcon {
 struct MarkerModel {
     let placeId: String
     let marker: NMFMarker
-    let mapPlace: MapPlace
-    var isStar = false
+    var mapPlace: MapPlace
+    var isStar = false {
+        didSet {
+            if isStar {
+                marker.changeStarIcon(mapPlace, false)
+            }
+        }
+    }
+    var isCliced = false {
+        didSet {
+            if isCliced && !isStar {
+                marker.changeIcon(mapPlace, true)
+            } else if isCliced && isStar {
+                marker.changeStarIcon(mapPlace, true)
+            } else if !isCliced && !isStar {
+                marker.changeIcon(mapPlace, false)
+            } else {
+                marker.changeStarIcon(mapPlace, false)
+            }
+        }
+    }
     
     var isAll = false
     var isSome = false

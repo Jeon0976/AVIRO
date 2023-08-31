@@ -16,7 +16,7 @@ final class PlaceListHeaderView: UIView {
         button.setTitle(title, for: .normal)
         button.setImage(UIImage(named: "DownSorting"), for: .normal)
         button.setTitleColor(.gray3, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+        button.titleLabel?.font = .systemFont(ofSize: 13, weight: .medium)
         button.semanticContentAttribute = .forceRightToLeft
         button.addTarget(self, action: #selector(locationPositionButtonTapped(_:)), for: .touchUpInside)
         button.titleLabel?.textAlignment = .left
@@ -32,7 +32,7 @@ final class PlaceListHeaderView: UIView {
         button.setTitle(title, for: .normal)
         button.setImage(UIImage(named: "DownSorting"), for: .normal)
         button.setTitleColor(.gray3, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+        button.titleLabel?.font = .systemFont(ofSize: 13, weight: .medium)
         button.titleLabel?.textAlignment = .left
 
         button.semanticContentAttribute = .forceRightToLeft
@@ -59,7 +59,7 @@ final class PlaceListHeaderView: UIView {
     
     private func makeLayout() {
         self.backgroundColor = .gray7
-//        self.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        self.heightAnchor.constraint(equalToConstant: 40).isActive = true
         [
             locationPositionButton,
             sortingByButton
@@ -70,12 +70,13 @@ final class PlaceListHeaderView: UIView {
         
         NSLayoutConstraint.activate([
             locationPositionButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            locationPositionButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
+            locationPositionButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
             locationPositionButton.widthAnchor.constraint(equalToConstant: 110),
             
             sortingByButton.leadingAnchor.constraint(equalTo: locationPositionButton.trailingAnchor, constant: 10),
-            sortingByButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
+            sortingByButton.topAnchor.constraint(equalTo: locationPositionButton.topAnchor),
             sortingByButton.widthAnchor.constraint(equalToConstant: 90)
+            
         ])
     }
     

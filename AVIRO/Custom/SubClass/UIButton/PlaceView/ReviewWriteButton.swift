@@ -15,7 +15,7 @@ final class ReviewWriteButton: UIButton {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
     
     private func setAttribute() {
@@ -29,7 +29,7 @@ final class ReviewWriteButton: UIButton {
                    _ image: UIImage? = UIImage(named: "Pencil")
     ) {
         setTitle(title, for: .normal)
-        setImage(image, for: .normal)
+        setImage(image?.withTintColor(.main!), for: .normal)
         
         setTitleColor(.main, for: .normal)
         titleLabel?.font = .systemFont(ofSize: 16, weight: .semibold)

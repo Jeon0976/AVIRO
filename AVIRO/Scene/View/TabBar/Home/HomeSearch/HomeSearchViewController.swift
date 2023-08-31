@@ -10,21 +10,23 @@ import UIKit
 final class HomeSearchViewController: UIViewController {
     lazy var presenter = HomeSearchPresenter(viewController: self)
     
-    lazy var searchField = SearchField()
+    private lazy var searchField = SearchField()
     
-    lazy var placeListTableView = UITableView()
-    lazy var noHistoryView = NoHistoryView()
-                                      
-    lazy var historyTableView = UITableView()
+    private lazy var noHistoryView = NoHistoryView()
+    private lazy var historyHeaderView = HistoryHeaderView()
+    private lazy var historyTableView = UITableView()
     
-    lazy var indicatorView = UIActivityIndicatorView()
+    private lazy var placeListHeaderView = PlaceListHeaderView()
+    private lazy var placeListTableView = UITableView()
+    
+    private lazy var indicatorView = UIActivityIndicatorView()
     
     /// API 호출 관련해서 다 입력이 끝나면 발동하도록 하는 변수
-    var searchTimer: DispatchWorkItem?
+    private var searchTimer: DispatchWorkItem?
 
-    var tapGesture = UITapGestureRecognizer()
+    private lazy var tapGesture = UITapGestureRecognizer()
     
-    var searchFieldTopConstraint: NSLayoutConstraint?
+    private var searchFieldTopConstraint: NSLayoutConstraint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,9 +39,11 @@ extension HomeSearchViewController: HomeSearchProtocol {
     func makeLayout() {
         [
             searchField,
-            placeListTableView,
             noHistoryView,
+            historyHeaderView,
             historyTableView,
+            placeListHeaderView,
+            placeListTableView,
             indicatorView
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -60,9 +64,14 @@ extension HomeSearchViewController: HomeSearchProtocol {
             searchField.trailingAnchor.constraint(
                 equalTo: view.trailingAnchor, constant: -16),
             
+            // placeListHeaderView
+            placeListHeaderView.topAnchor.constraint(equalTo: searchField.bottomAnchor),
+            placeListHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            placeListHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
             // placeListTableView
             placeListTableView.topAnchor.constraint(
-                equalTo: searchField.bottomAnchor),
+                equalTo: placeListHeaderView.bottomAnchor),
             placeListTableView.leadingAnchor.constraint(
                 equalTo: view.leadingAnchor),
             placeListTableView.trailingAnchor.constraint(
@@ -71,12 +80,17 @@ extension HomeSearchViewController: HomeSearchProtocol {
                 equalTo: view.bottomAnchor),
             
             // noHistoryView
-            noHistoryView.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 20),
+            noHistoryView.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 0),
             noHistoryView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             noHistoryView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
+            // historyHeaderView
+            historyHeaderView.topAnchor.constraint(equalTo: searchField.bottomAnchor),
+            historyHeaderView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
+            historyHeaderView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
+            
             // historyTableView
-            historyTableView.topAnchor.constraint(equalTo: searchField.bottomAnchor),
+            historyTableView.topAnchor.constraint(equalTo: historyHeaderView.bottomAnchor),
             historyTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             historyTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             historyTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -90,7 +104,9 @@ extension HomeSearchViewController: HomeSearchProtocol {
     func makeAttribute() {
         makeViewAndTabAttribute()
         makeSearchFieldAttribute()
+        makePlaceHeaderViewAttribute()
         makePlaceListTableAttribute()
+        makeHistoryHeaderViewAttribute()
         makeHistoryTableAttribute()
         
         indicatorView.style = .large
@@ -133,17 +149,20 @@ extension HomeSearchViewController: HomeSearchProtocol {
 extension HomeSearchViewController {
     // MARK: How to Show First View Detail
     private func ShowHistoryTable() {
+        historyHeaderView.isHidden = false
         historyTableView.isHidden = false
         noHistoryView.isHidden = true
     }
     
     private func ShowNoHistoryView() {
+        historyHeaderView.isHidden = true
         historyTableView.isHidden = true
         noHistoryView.isHidden = false
     }
     
     private func showPlaceListTable() {
         placeListTableView.isHidden = false
+        placeListHeaderView.isHidden = false
         historyTableView.isHidden = true
         noHistoryView.isHidden = true
     }
@@ -177,6 +196,24 @@ extension HomeSearchViewController {
         }
     }
     
+    // MARK: Place Header View Attribute & Clousre
+    private func makePlaceHeaderViewAttribute() {
+        placeListHeaderView.isHidden = true
+        
+        placeListHeaderView.touchedLocationPositionButton = { [weak self] alert in
+            self?.present(alert, animated: true)
+        }
+        
+        placeListHeaderView.touchedSortingByButton = { [weak self] alert in
+            self?.present(alert, animated: true)
+        }
+        
+        placeListHeaderView.touchedCanActiveSort = { [weak self] in
+            guard let query = self?.searchField.text else { return }
+            self?.presenter.initialSearchDataAndCompareAVIROData(query)
+        }
+    }
+    
     // MARK: Place List Table Attribute
     private func makePlaceListTableAttribute() {
         placeListTableView.delegate = self
@@ -189,6 +226,14 @@ extension HomeSearchViewController {
         placeListTableView.separatorColor = .gray5
         placeListTableView.isHidden = true
         placeListTableView.tag = 0
+    }
+    
+    // MARK: History Header View Attribute
+    private func makeHistoryHeaderViewAttribute() {
+        historyHeaderView.deleteAllCell = { [weak self] in
+            self?.presenter.deleteHistoryModelAll()
+            self?.ShowNoHistoryView()
+        }
     }
     
     // MARK: History Table Attribute
@@ -224,6 +269,7 @@ extension HomeSearchViewController {
         UIView.animate(withDuration: 0.2) {
             self.presenter.checkHistoryTableValues()
             self.placeListTableView.isHidden = true
+            self.placeListHeaderView.isHidden = true
             
             self.searchFieldTopConstraint?.constant = 15
             self.view.layoutIfNeeded()
@@ -343,49 +389,6 @@ extension HomeSearchViewController: UITableViewDataSource {
             return cell ?? UITableViewCell()
         default:
             return UITableViewCell()
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        switch tableView.tag {
-        case 0:
-            let headerView = PlaceListHeaderView()
-            
-            headerView.touchedLocationPositionButton = { [weak self] alert in
-                self?.present(alert, animated: true)
-            }
-            
-            headerView.touchedSortingByButton = { [weak self] alert in
-                self?.present(alert, animated: true)
-            }
-            
-            headerView.touchedCanActiveSort = { [weak self] in
-                guard let query = self?.searchField.text else { return }
-                self?.presenter.initialSearchDataAndCompareAVIROData(query)
-            }
-            
-            return headerView
-        case 1:
-            let headerView = HistoryHeaderView()
-            
-            headerView.deleteAllCell = { [weak self] in
-                self?.presenter.deleteHistoryModelAll()
-            }
-            
-            return headerView
-        default:
-            return UIView()
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        switch tableView.tag {
-        case 0:
-            return 50
-        case 1:
-            return 50
-        default:
-            return 50
         }
     }
 }

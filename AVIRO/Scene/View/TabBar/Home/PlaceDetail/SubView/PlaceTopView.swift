@@ -109,7 +109,7 @@ final class PlaceTopView: UIView {
     lazy var shareButton: UIButton = {
         let button = UIButton()
         
-        button.setImage(UIImage(named: "share"), for: .normal)
+        button.setImage(UIImage(named: "share")?.withTintColor(.main!), for: .normal)
         button.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
         
         return button

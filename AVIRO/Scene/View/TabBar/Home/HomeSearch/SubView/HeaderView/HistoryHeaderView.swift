@@ -47,7 +47,7 @@ final class HistoryHeaderView: UIView {
     
     private func makeLayout() {
         self.backgroundColor = .gray7
-        
+        self.heightAnchor.constraint(equalToConstant: 45).isActive = true
         [
             recentlyLabel,
             deleteAllButton
@@ -58,8 +58,7 @@ final class HistoryHeaderView: UIView {
         
         NSLayoutConstraint.activate([
             recentlyLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            recentlyLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-            recentlyLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
+            recentlyLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
             
             deleteAllButton.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             deleteAllButton.centerYAnchor.constraint(equalTo: recentlyLabel.centerYAnchor)

@@ -268,14 +268,14 @@ final class HomeViewPresenter: NSObject {
    func resetPreviouslyTouchedMarker() {
        /// 최초 터치 이후 작동을 위한 분기처리
         if hasTouchedMarkerBefore {
-            let markerModel = MarkerModelArray.shared.getMarkerFromIndex(selectedMarkerIndex)
-            
-            guard let markerModel = markerModel else { return }
-            if markerModel.isStar {
-                markerModel.marker.changeStarIcon(markerModel.mapPlace, false)
-            } else {
-                markerModel.marker.changeIcon(markerModel.mapPlace, false)
-            }
+            selectedMarkerModel?.isCliced = false
+            selectedMarkerModel = nil
+            selectedMarkerIndex = 0
+            selectedPlaceId = nil
+            selectedInfoModel = nil
+            selectedMenuModel = nil
+            selectedReviewsModel = nil
+            selectedSummaryModel = nil
         }
     }
     
@@ -293,11 +293,7 @@ final class HomeViewPresenter: NSObject {
         selectedMarkerIndex = validIndex
         selectedMarkerModel = validMarkerModel
         
-        if validMarkerModel.isStar {
-            validMarkerModel.marker.changeStarIcon(validMarkerModel.mapPlace, true)
-        } else {
-            validMarkerModel.marker.changeIcon(validMarkerModel.mapPlace, true)
-        }
+        selectedMarkerModel?.isCliced = true
         
         hasTouchedMarkerBefore = true
         
@@ -425,18 +421,19 @@ final class HomeViewPresenter: NSObject {
         
         var starMarkers: [NMFMarker] = []
         
-        starMarkersModel.forEach { markerModel in
-            switch markerModel.mapPlace {
-            case .All:
-                markerModel.marker.makeStarIcon(.All)
-            case .Some:
-                markerModel.marker.makeStarIcon(.Some)
-            case .Request:
-                markerModel.marker.makeStarIcon(.Request)
-            }
-            
-            starMarkers.append(markerModel.marker)
-        }
+        // 구조체 didSet으로 변경
+//        starMarkersModel.forEach { markerModel in
+//            switch markerModel.mapPlace {
+//            case .All:
+//                markerModel.marker.makeStarIcon(.All)
+//            case .Some:
+//                markerModel.marker.makeStarIcon(.Some)
+//            case .Request:
+//                markerModel.marker.makeStarIcon(.Request)
+//            }
+//
+//            starMarkers.append(markerModel.marker)
+//        }
 
         MarkerModelArray.shared.updateWhenStarButton(starMarkersModel)
         viewController?.afterLoadStarButton(noMarkers: noMarkers, starMarkers: starMarkers)
