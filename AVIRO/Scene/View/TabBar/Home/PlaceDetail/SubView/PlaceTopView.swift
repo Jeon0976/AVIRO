@@ -259,7 +259,7 @@ final class PlaceTopView: UIView {
             self.layer.cornerRadius = 20
             self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         } else {
-            self.layer.cornerRadius = 0
+            self.layer.cornerRadius = 20
         }
     }
     

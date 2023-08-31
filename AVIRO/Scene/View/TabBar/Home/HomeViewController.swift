@@ -178,6 +178,8 @@ extension HomeViewController: HomeViewProtocol {
         
         // lodeLocationButton
         loadLocationButton.setImage(UIImage(named: "current-location"), for: .normal)
+        loadLocationButton.setImage(UIImage(named: "current-location"), for: .disabled)
+        loadLocationButton.isEnabled = false
         loadLocationButton.addTarget(self, action: #selector(locationButtonTapped(_:)), for: .touchUpInside)
         
         // starButton

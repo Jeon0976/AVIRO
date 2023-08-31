@@ -55,20 +55,17 @@ class TabBarViewController: UITabBarController {
             centerButton.widthAnchor.constraint(equalToConstant: 90),
             centerButton.heightAnchor.constraint(equalToConstant: 90)
         ])
+
     }
     
     // MARK: TabBar Attribute
     private func setupTabBar() {
         tabBar.backgroundColor = .gray7
         tabBar.tintColor = .main
-        tabBar.isTranslucent = false
-        tabBar.layer.cornerRadius = tabBar.frame.height * 0.41
+        tabBar.layer.cornerRadius = 20
         tabBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         tabBar.layer.borderWidth = 0.5
-        tabBar.layer.borderColor = UIColor.gray6?.cgColor
-        
-//        tabBar.layer.shadowColor = UIColor.gray2?.cgColor
-//        tabBar.layer.shadowOpacity = 0.9
+        tabBar.layer.borderColor = UIColor.gray5?.cgColor
     }
     
     // MARK: button touch method
@@ -81,12 +78,14 @@ class TabBarViewController: UITabBarController {
     /// tabBar의 isTranslucent 때문인것 같음
     ///
     func hiddenTabBarIncludeIsTranslucent(_ hidden: Bool) {
-        setupTabBar()
         
         self.tabBar.isTranslucent = hidden
         self.tabBar.isHidden = hidden
         self.centerButton.isHidden = hidden
-        
+
+        if !hidden {
+            setupTabBar()
+        }
     }
 }
 

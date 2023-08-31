@@ -22,6 +22,7 @@ final class EnrollPlaceViewController: UIViewController {
         super.viewDidLoad()
         
         presenter.viewDidLoad()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,6 +91,7 @@ extension EnrollPlaceViewController: EnrollPlaceProtocol {
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+        
     }
     
     // MARK: Attribute
@@ -304,7 +306,6 @@ extension EnrollPlaceViewController {
     
     // MARK: Navigation Attribute
     private func navigationAttributed() {
-//        navigationItem.backButtonTitle = ""
         navigationItem.title = "가게 등록하기"
         navigationController?.navigationBar.isHidden = false
         
@@ -318,14 +319,21 @@ extension EnrollPlaceViewController {
         let backButtonItem = UIBarButtonItem(customView: backButton)
         
         self.navigationItem.leftBarButtonItem = backButtonItem
-
     }
     
     // MARK: TabBar Attribute
+    // TODO: Tab Bar push hidden 처리도 해야함
     private func tabBarAttributed() {
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.backgroundColor = UIColor.clear
+        tabBarController?.tabBar.standardAppearance = tabBarAppearance
+        
+        let bar = self.tabBarController?.tabBar
+        bar?.standardAppearance.backgroundEffect = nil
+        bar?.standardAppearance.backgroundImage = nil
+    
         if let tabBarController = self.tabBarController as? TabBarViewController {
             tabBarController.hiddenTabBarIncludeIsTranslucent(true)
-            
         }
     }
     
