@@ -15,3 +15,12 @@ struct RequestTableFieldModel: Hashable {
     var isCheck: Bool
     var isEnabled: Bool
 }
+
+struct RequestTableFieldModelForEdit {
+    var id: String
+    var menu: String
+    var price: String
+    var howToRequest: String
+    var isCheck: Bool
+    var isEnabled: Bool
+}

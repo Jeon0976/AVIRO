@@ -42,7 +42,7 @@ final class EditMenuTopView: UIView {
     // MARK: Constraint 조절
     private var viewHeightConstraint: NSLayoutConstraint?
     
-    var veganOptionsTapped: ((String,Bool) -> Void)?
+    var veganOptionsTapped: ((String, Bool) -> Void)?
     
     // MARK: View Init
     override init(frame: CGRect) {

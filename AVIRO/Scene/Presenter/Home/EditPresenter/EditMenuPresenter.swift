@@ -11,17 +11,15 @@ protocol EditMenuProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
     func makeGesture()
+    func updateEditMenuButton(_ isEnabled: Bool)
+    func handleClosure()
     func dataBindingTopView(isAll: Bool, isSome: Bool, isRequest: Bool)
     func dataBindingBottomView(_ isPresentingDefaultTable: Bool)
-    func changeMenuTable(_ isPresentingDefaultTable: Bool)
+    func updateMenuTableView(_ isPresentingDefaultTable: Bool)
+    func menuTableReload(_ isPresentingDefaultTable: Bool)
 }
 
 final class EditMenuPresenter {
-    enum Table {
-        case Normal
-        case Request
-    }
-    
     weak var viewController: EditMenuProtocol?
     
     private var placeId: String?
@@ -31,7 +29,7 @@ final class EditMenuPresenter {
             guard let isAll else { return }
             
             if isAll {
-                viewController?.changeMenuTable(true)
+                isDefaultMenuTable = true
             }
         }
     }
@@ -42,12 +40,12 @@ final class EditMenuPresenter {
                   let isRequest = isRequest else { return }
             
             if isSome && !isRequest {
-                viewController?.changeMenuTable(true)
+                viewController?.updateMenuTableView(true)
             } else if !isSome && isRequest {
-                viewController?.changeMenuTable(false)
+                isDefaultMenuTable = false
                 isEnabledWhenRequestTable = false
             } else if isSome && isRequest {
-                viewController?.changeMenuTable(false)
+                isDefaultMenuTable = false
                 isEnabledWhenRequestTable = true
             }
         }
@@ -59,23 +57,61 @@ final class EditMenuPresenter {
                   let isSome = isSome
             else { return }
             if isRequest && !isSome {
-                viewController?.changeMenuTable(false)
+                isDefaultMenuTable = false
                 isEnabledWhenRequestTable = false
             } else if isRequest && isSome {
-                viewController?.changeMenuTable(false)
+                isDefaultMenuTable = false
                 isEnabledWhenRequestTable = true
             } else if !isRequest {
-                viewController?.changeMenuTable(true)
+                isDefaultMenuTable = true
             }
         }
     }
     
-    var isEnabledWhenRequestTable = true
+    private var isDefaultMenuTable: Bool? {
+        didSet {
+            guard let isDefaultMenuTable = isDefaultMenuTable else { return }
+            if isDefaultMenuTable {
+                viewController?.updateMenuTableView(true)
+            } else {
+                viewController?.updateMenuTableView(false)
+            }
+        }
+    }
+    
+    private var isEnabledWhenRequestTable: Bool? {
+        didSet {
+            guard let isEnabledWhenRequestTable = isEnabledWhenRequestTable else { return }
+            
+            if isEnabledWhenRequestTable {
+                unFixedRequestTable()
+            } else {
+                fixedRequestTable()
+            }
+        }
+    }
     
     private var menuArray: [MenuArray]?
+    private var initAll: Bool!
+    private var initSome: Bool!
+    private var initRequest: Bool!
+    
+    private var veganMenuArray: [VeganTableFieldModelForEdit]?
+    
+    private var requestVeganMenuArray: [RequestTableFieldModelForEdit]?
     
     var menuArrayCount: Int {
         guard let menuArray = menuArray else { return 0 }
+        return menuArray.count
+    }
+    
+    var veganMenuCount: Int {
+        guard let menuArray = veganMenuArray else { return 0 }
+        return menuArray.count
+    }
+
+    var requestVeganMenuCount: Int {
+        guard let menuArray = requestVeganMenuArray else { return 0 }
         return menuArray.count
     }
     
@@ -89,24 +125,48 @@ final class EditMenuPresenter {
         self.viewController = viewController
         self.placeId = placeId
         self.isAll = isAll
+        self.initAll = isAll
         self.isSome = isSome
+        self.initSome = isSome
         self.isRequest = isRequest
+        self.initRequest = isRequest
         self.menuArray = menuArray
-        
-        print(placeId, isAll, isSome, isRequest, menuArray)
     }
     
     func viewDidLoad() {
         viewController?.makeLayout()
         viewController?.makeAttribute()
         viewController?.makeGesture()
-        
+        viewController?.handleClosure()
+
         dataBinding()
     }
     
     func dataBinding() {
+        updateTableData()
         dataBindingTopView()
         dataBindingBottomView()
+    }
+    
+    private func updateTableData() {
+        veganMenuArray = []
+        requestVeganMenuArray = []
+        
+        guard let menuArray = menuArray else { return }
+        
+        menuArray.forEach {
+            let id = $0.menuId
+            let menu = $0.menu
+            let price = $0.price
+            let howToRequest = $0.howToRequest
+            let isCheck = $0.isCheck
+            
+            let veganMenuTable = VeganTableFieldModelForEdit(id: id, menu: menu, price: price)
+            
+            let requestMenuTable = RequestTableFieldModelForEdit(id: id, menu: menu, price: price, howToRequest: howToRequest, isCheck: isCheck, isEnabled: true)
+            veganMenuArray?.append(veganMenuTable)
+            requestVeganMenuArray?.append(requestMenuTable)
+        }
     }
     
     private func dataBindingTopView() {
@@ -118,25 +178,52 @@ final class EditMenuPresenter {
     }
     
     private func dataBindingBottomView() {
-        guard let menuArray = menuArray,
+        guard (menuArray != nil),
               let isRequest = isRequest,
               let isSome = isSome
         else { return }
         
         if isRequest && !isSome {
-            viewController?.dataBindingBottomView(false)
+            let isDefaultMenuTable = false
+            
+            self.isDefaultMenuTable = isDefaultMenuTable
             isEnabledWhenRequestTable = false
+            
+            viewController?.dataBindingBottomView(isDefaultMenuTable)
         } else if isRequest && isSome {
-            viewController?.dataBindingBottomView(false)
+            let isDefaultMenuTable = false
+            
+            self.isDefaultMenuTable = isDefaultMenuTable
             isEnabledWhenRequestTable = true
+            
+            viewController?.dataBindingBottomView(isDefaultMenuTable)
         } else {
-            viewController?.dataBindingBottomView(true)
+            let isDefaultMenuTable = true
+            
+            self.isDefaultMenuTable = isDefaultMenuTable
+
+            viewController?.dataBindingBottomView(isDefaultMenuTable)
         }
     }
     
     func checkMenuData(_ indexPath: IndexPath) -> MenuArray? {
+        
         guard let menuArray = menuArray else { return nil }
         
+        return menuArray[indexPath.row]
+    }
+    
+    func checkVeganMenuData(_ indexPath: IndexPath) -> VeganTableFieldModelForEdit? {
+        
+        guard let menuArray = veganMenuArray else { return nil }
+
+        return menuArray[indexPath.row]
+    }
+    
+    func checkRequestVeanMenuData(_ indexPath: IndexPath) -> RequestTableFieldModelForEdit? {
+        
+        guard let menuArray = requestVeganMenuArray else { return nil }
+
         return menuArray[indexPath.row]
     }
     
@@ -176,7 +263,6 @@ final class EditMenuPresenter {
     
     private func tappedRequestVegan(_ selected: Bool) {
         isAll = false
-        print(selected)
 
         if selected {
             isRequest = true
@@ -185,18 +271,138 @@ final class EditMenuPresenter {
         }
     }
     
-//    private func fixedRequestTable() {
-//        for index in requestTableModel.indices {
-//            requestTableModel[index].isCheck = true
-//            requestTableModel[index].isEnabled = false
-//        }
-//        viewController?.menuTableReload(isPresentingDefaultTable: isPresentingDefaultTable)
-//    }
-//
-//    private func unFixedRequestTable() {
-//        for index in requestTableModel.indices {
-//            requestTableModel[index].isEnabled = true
-//        }
-//        viewController?.menuTableReload(isPresentingDefaultTable: isPresentingDefaultTable)
-//    }
+    private func fixedRequestTable() {
+        guard let menuArray = requestVeganMenuArray,
+              let isDefaultMenuTable = isDefaultMenuTable
+        else { return }
+        
+        for index in menuArray.indices {
+            requestVeganMenuArray?[index].isCheck = true
+            requestVeganMenuArray?[index].isEnabled = false
+        }
+        viewController?.menuTableReload(isDefaultMenuTable)
+    }
+    
+    private func unFixedRequestTable() {
+        guard let menuArray = requestVeganMenuArray,
+              let isDefaultMenuTable = isDefaultMenuTable
+        else { return }
+        
+        for index in menuArray.indices {
+            requestVeganMenuArray?[index].isEnabled = true
+        }
+        
+        viewController?.menuTableReload(isDefaultMenuTable)
+    }
+    
+    func editingMenuField(_ menu: String, _ indexPath: IndexPath) {
+        guard let isDefaultMenuTable = isDefaultMenuTable else { return }
+        
+        if isDefaultMenuTable {
+            veganMenuArray?[indexPath.row].menu = menu
+        } else {
+            requestVeganMenuArray?[indexPath.row].menu = menu
+        }
+    }
+    
+    func editingPriceField(_ price: String, _ indexPath: IndexPath) {
+        guard let isDefaultMenuTable = isDefaultMenuTable else { return }
+        
+        if isDefaultMenuTable {
+            veganMenuArray?[indexPath.row].price = price
+        } else {
+            requestVeganMenuArray?[indexPath.row].price = price
+        }
+    }
+    
+    func editingRequestButton(_ isSelected: Bool, _ indexPath: IndexPath) {
+        guard let isDefaultMenuTable = isDefaultMenuTable else { return }
+        
+        if !isDefaultMenuTable {
+            requestVeganMenuArray?[indexPath.row].isCheck = isSelected
+        }
+    }
+    
+    func editingRequestField(_ request: String, _ indexPath: IndexPath) {
+        guard let isDefaultMenuTable = isDefaultMenuTable else { return }
+        
+        if !isDefaultMenuTable {
+            requestVeganMenuArray?[indexPath.row].howToRequest = request
+        }
+    }
+    
+    func deleteMenu(_ indexPath: IndexPath) {
+        guard let isDefaultMenuTable = isDefaultMenuTable else { return }
+        
+        if isDefaultMenuTable {
+            veganMenuArray?.remove(at: indexPath.row)
+        } else {
+            requestVeganMenuArray?.remove(at: indexPath.row)
+        }
+        viewController?.menuTableReload(isDefaultMenuTable)
+        viewController?.updateMenuTableView(isDefaultMenuTable)
+    }
+    
+    func plusMenu() {
+        guard let isDefaultMenuTable = isDefaultMenuTable else { return }
+        
+        if isDefaultMenuTable {
+            let field = VeganTableFieldModel(menu: "",
+                                             price: ""
+            )
+                        
+            let editModel = VeganTableFieldModelForEdit(
+                id: field.id.uuidString,
+                menu: field.menu,
+                price: field.price
+            )
+            
+            veganMenuArray?.append(editModel)
+        } else {
+            guard let isEnabledWhenRequestTable = isEnabledWhenRequestTable else { return }
+            
+            if isEnabledWhenRequestTable {
+                let field = RequestTableFieldModel(
+                    menu: "",
+                    price: "",
+                    howToRequest: "",
+                    isCheck: false,
+                    isEnabled: true
+                )
+                
+                let editModel = RequestTableFieldModelForEdit(
+                    id: field.id.uuidString,
+                    menu: field.menu,
+                    price: field.price,
+                    howToRequest: field.howToRequest,
+                    isCheck: field.isCheck,
+                    isEnabled: field.isEnabled
+                )
+                
+                requestVeganMenuArray?.append(editModel)
+            } else {
+                let field = RequestTableFieldModel(
+                    menu: "",
+                    price: "",
+                    howToRequest: "",
+                    isCheck: true,
+                    isEnabled: false
+                )
+                
+                let editModel = RequestTableFieldModelForEdit(
+                    id: field.id.uuidString,
+                    menu: field.menu,
+                    price: field.price,
+                    howToRequest: field.howToRequest,
+                    isCheck: field.isCheck,
+                    isEnabled: field.isEnabled
+                )
+                
+                requestVeganMenuArray?.append(editModel)
+            }
+        }
+        
+        viewController?.menuTableReload(isDefaultMenuTable)
+        viewController?.updateMenuTableView(isDefaultMenuTable)
+    }
 }

@@ -10,21 +10,9 @@ import UIKit
 final class EditMenuViewController: UIViewController {
     lazy var presenter = EditMenuPresenter(viewController: self)
     
-    private lazy var editMenuTopView: EditMenuTopView = {
-        let view = EditMenuTopView()
-        
-        view.veganOptionsTapped = { [weak self] (text, selected) in
-            self?.presenter.changedVeganOption(text, selected)
-        }
-        
-        return view
-    }()
+    private lazy var editMenuTopView = EditMenuTopView()
     
-    private lazy var editMenuBottomView: EditMenuBottomView = {
-        let view = EditMenuBottomView()
-        
-        return view
-    }()
+    private lazy var editMenuBottomView =  EditMenuBottomView()
     
     private lazy var scrollView = UIScrollView()
     
@@ -113,6 +101,20 @@ extension EditMenuViewController: EditMenuProtocol {
         
     }
     
+    func updateEditMenuButton(_ isEnabled: Bool) {
+        navigationItem.rightBarButtonItem?.isEnabled = isEnabled
+    }
+    
+    func handleClosure() {
+        editMenuTopView.veganOptionsTapped = { [weak self] (text, selected) in
+            self?.presenter.changedVeganOption(text, selected)
+        }
+        
+        editMenuBottomView.plusButtonTapped = { [weak self] in
+            self?.presenter.plusMenu()
+        }
+    }
+    
     func makeGesture() {
         
     }
@@ -125,18 +127,27 @@ extension EditMenuViewController: EditMenuProtocol {
         editMenuBottomView.initMenuTableView(isPresentingDefaultTable, presenter.menuArrayCount)
     }
     
-    func changeMenuTable(_ isPresentingDefaultTable: Bool) {
-        editMenuBottomView.changeMenuTable(isPresentingDefaultTable, presenter.menuArrayCount)
+    func updateMenuTableView(_ isPresentingDefaultTable: Bool) {
+        if isPresentingDefaultTable {
+            editMenuBottomView.changeMenuTable(isPresentingDefaultTable, presenter.veganMenuCount)
+        } else {
+            editMenuBottomView.changeMenuTable(isPresentingDefaultTable, presenter.requestVeganMenuCount)
+        }
     }
+    
+    func menuTableReload(_ isPresentingDefaultTable: Bool) {
+        editMenuBottomView.menuTableReload(isPresentingDefaultTable)
+    }
+    
 }
 
 extension EditMenuViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch tableView.tag {
         case 0:
-            return presenter.menuArrayCount
+            return presenter.veganMenuCount
         case 1:
-            return presenter.menuArrayCount
+            return presenter.requestVeganMenuCount
         default:
             return 0
         }
@@ -150,13 +161,26 @@ extension EditMenuViewController: UITableViewDataSource {
                 for: indexPath
             ) as? NormalTableViewCell
 
-            guard let menuData = presenter.checkMenuData(indexPath) else { return UITableViewCell() }
-            
+            guard let menuData = presenter.checkVeganMenuData(indexPath) else { return UITableViewCell() }
+                        
             cell?.setData(menu: menuData.menu,
                           price: menuData.price
             )
             
             cell?.selectionStyle = .none
+            
+            // MARK: DataBinding
+            cell?.editingMenuField = { [weak self] menu in
+                self?.presenter.editingMenuField(menu, indexPath)
+            }
+            
+            cell?.editingPriceField = { [weak self] price in
+                self?.presenter.editingPriceField(price, indexPath)
+            }
+            
+            cell?.onMinusButtonTapped = { [weak self] in
+                self?.presenter.deleteMenu(indexPath)
+            }
 
             return cell ?? UITableViewCell()
         case 1:
@@ -165,19 +189,38 @@ extension EditMenuViewController: UITableViewDataSource {
                 for: indexPath
             ) as? RequestTableViewCell
             
-            guard let menuData = presenter.checkMenuData(indexPath) else { return UITableViewCell() }
-            
-            let isEnabled = presenter.isEnabledWhenRequestTable
-                        
+            guard let menuData = presenter.checkRequestVeanMenuData(indexPath) else { return UITableViewCell() }
+                                    
             cell?.setData(menu: menuData.menu,
                           price: menuData.price,
                           request: menuData.howToRequest,
                           isSelected: menuData.isCheck,
-                          isEnabled: isEnabled
+                          isEnabled: menuData.isEnabled
             )
             
             cell?.selectionStyle = .none
 
+            // MARK: DataBinding
+            cell?.editingMenuField = { [weak self] menu in
+                self?.presenter.editingMenuField(menu, indexPath)
+            }
+            
+            cell?.editingPriceField = { [weak self] price in
+                self?.presenter.editingPriceField(price, indexPath)
+            }
+            
+            cell?.onRequestButtonTapped = { [weak self] selected in
+                self?.presenter.editingRequestButton(selected, indexPath)
+            }
+            
+            cell?.editingRequestField = { [weak self] request in
+                self?.presenter.editingRequestField(request, indexPath)
+            }
+            
+            cell?.onMinusButtonTapped = { [weak self] in
+                self?.presenter.deleteMenu(indexPath)
+            }
+            
             return cell ?? UITableViewCell()
         default:
             return UITableViewCell()

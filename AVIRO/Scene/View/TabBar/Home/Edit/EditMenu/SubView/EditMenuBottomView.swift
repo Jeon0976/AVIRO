@@ -66,6 +66,8 @@ final class EditMenuBottomView: UIView {
     private var firstCount: Int!
     private var firstShow = true
     
+    var plusButtonTapped: (() -> Void)?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -140,6 +142,11 @@ final class EditMenuBottomView: UIView {
         self.backgroundColor = .gray7
         
         menuPlusButton.setButton("메뉴 정보 추가하기")
+        menuPlusButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+    }
+    
+    @objc private func buttonTapped() {
+        plusButtonTapped?()
     }
     
     func setTableViewDelegate(_ dataSource: UITableViewDataSource) {
@@ -186,4 +193,11 @@ final class EditMenuBottomView: UIView {
                 
         updateViewHeight(defaultTable: isPresentingDefaultTable, count: count)
     }
-}
+    
+    func menuTableReload(_ isPresentingDefaultTable: Bool) {
+        if isPresentingDefaultTable {
+            normalTableView.reloadData()
+        } else {
+            requestTableView.reloadData()
+        }
+    }}

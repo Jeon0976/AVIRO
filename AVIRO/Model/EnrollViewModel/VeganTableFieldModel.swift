@@ -12,3 +12,9 @@ struct VeganTableFieldModel: Hashable {
     var menu: String
     var price: String
 }
+
+struct VeganTableFieldModelForEdit {
+    var id: String
+    var menu: String
+    var price: String
+}

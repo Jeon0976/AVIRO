@@ -51,7 +51,6 @@ final class PlaceReviewsView: UIView {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
-        tableView.estimatedRowHeight = 100
         
         return tableView
     }()
@@ -172,7 +171,6 @@ final class PlaceReviewsView: UIView {
         whenReviewView = true
 
         reviewsTable.isScrollEnabled = true
-        reviewsTable.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
 
         reviewsTable.bottomAnchor.constraint(equalTo: reviewInputView.topAnchor).isActive = true
         
@@ -442,7 +440,6 @@ extension PlaceReviewsView: UITableViewDataSource {
                 cell?.bindingData(comment: reviewData, isAbbreviated: true, isMyReview: false)
             }
         }
-        
         return cell ?? UITableViewCell()
     }
 }

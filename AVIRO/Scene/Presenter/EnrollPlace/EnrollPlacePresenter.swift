@@ -485,7 +485,6 @@ extension EnrollPlacePresenter {
                 return $0.isCheck && $0.howToRequest == ""
             }
 
-            print(hasEmptyRequest)
             guard !hasEmptyRequest else {
                 viewController?.enableRightButton(false)
                 return
