@@ -587,6 +587,8 @@ final class HomeViewPresenter: NSObject {
         selectedMarkerModel.isSome = changedMarkerModel.isSome
         selectedMarkerModel.isRequest = changedMarkerModel.isRequest
         
+        MarkerModelArray.shared.change(selectedMarkerIndex, selectedMarkerModel)
+        
         self.selectedMarkerModel = selectedMarkerModel
         
         viewController?.refreshMapPlace(changedMarkerModel.mapPlace)
