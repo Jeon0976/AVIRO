@@ -480,8 +480,6 @@ extension EnrollPlacePresenter {
             }
             
             let hasEmptyRequest = requestTableModel.contains {
-                print("\($0): ", $0.isCheck)
-                
                 return $0.isCheck && $0.howToRequest == ""
             }
 

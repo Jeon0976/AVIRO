@@ -27,6 +27,8 @@ struct AVIROPostAPI {
 
     static let bookmarkPostPath = "/prod/map/add/bookmark"
     
+    static let editMenuPath = "/prod/map/update/menu"
+    
     static let userSignUpPath = "/prod/member/sign-up"
     static let userCheckPath = "/prod/member"
     static let userNicNameCheckPath = "/prod/member/check"
@@ -72,6 +74,17 @@ struct AVIROPostAPI {
         components.scheme = AVIROPostAPI.scheme
         components.host = host
         components.path = AVIROPostAPI.bookmarkPostPath
+        
+        return components
+    }
+    
+    // MARK: Edit Menu Data
+    mutating func editMenu() -> URLComponents {
+        var components = URLComponents()
+        
+        components.scheme = AVIROPostAPI.scheme
+        components.host = host
+        components.path = AVIROPostAPI.editMenuPath
         
         return components
     }

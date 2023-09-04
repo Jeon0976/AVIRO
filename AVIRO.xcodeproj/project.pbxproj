@@ -119,6 +119,7 @@
 		C5C2907E2A85E69B00ED5DCE /* UnderlineSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C2907D2A85E69B00ED5DCE /* UnderlineSegmentedControl.swift */; };
 		C5C290812A8616E500ED5DCE /* PlaceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C290802A8616E500ED5DCE /* PlaceInfoView.swift */; };
 		C5C290852A86173F00ED5DCE /* PlaceReviewWriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C290842A86173F00ED5DCE /* PlaceReviewWriteView.swift */; };
+		C5C90EAF2AA5B7F300AB3668 /* EditMenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C90EAE2AA5B7F300AB3668 /* EditMenuModel.swift */; };
 		C5C915492A777F8500C7CB93 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C915482A777F8500C7CB93 /* SearchField.swift */; };
 		C5C961932A8D9EE20016E2F8 /* PlaceMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C961922A8D9EE20016E2F8 /* PlaceMenuTableViewCell.swift */; };
 		C5C961952A8D9EED0016E2F8 /* PlaceReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C961942A8D9EED0016E2F8 /* PlaceReviewTableViewCell.swift */; };
@@ -287,6 +288,7 @@
 		C5C2907D2A85E69B00ED5DCE /* UnderlineSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlineSegmentedControl.swift; sourceTree = "<group>"; };
 		C5C290802A8616E500ED5DCE /* PlaceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceInfoView.swift; sourceTree = "<group>"; };
 		C5C290842A86173F00ED5DCE /* PlaceReviewWriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceReviewWriteView.swift; sourceTree = "<group>"; };
+		C5C90EAE2AA5B7F300AB3668 /* EditMenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuModel.swift; sourceTree = "<group>"; };
 		C5C915482A777F8500C7CB93 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		C5C961922A8D9EE20016E2F8 /* PlaceMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceMenuTableViewCell.swift; sourceTree = "<group>"; };
 		C5C961942A8D9EED0016E2F8 /* PlaceReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceReviewTableViewCell.swift; sourceTree = "<group>"; };
@@ -817,6 +819,7 @@
 		C593B6482A4AEA6600D224CE /* AVIROPost */ = {
 			isa = PBXGroup;
 			children = (
+				C5C90EAD2AA5B71800AB3668 /* EditPostModel */,
 				C5538AAE2A1BB81200661DE2 /* VeganModel.swift */,
 				C593B64A2A4AEA9800D224CE /* AVIROCommentPost.swift */,
 				C5E7B7A82A4D3CDF00CA2090 /* UserInfoModel.swift */,
@@ -974,6 +977,14 @@
 				C5C961902A8D9EA10016E2F8 /* TableView */,
 			);
 			path = SubView;
+			sourceTree = "<group>";
+		};
+		C5C90EAD2AA5B71800AB3668 /* EditPostModel */ = {
+			isa = PBXGroup;
+			children = (
+				C5C90EAE2AA5B7F300AB3668 /* EditMenuModel.swift */,
+			);
+			path = EditPostModel;
 			sourceTree = "<group>";
 		};
 		C5C961902A8D9EA10016E2F8 /* TableView */ = {
@@ -1498,6 +1509,7 @@
 				C5C9619F2A8DEB230016E2F8 /* ReviewWriteButton.swift in Sources */,
 				C5E430B52A5DAE9800CB67EC /* SecondRegistrationViewController.swift in Sources */,
 				C593B64B2A4AEA9800D224CE /* AVIROCommentPost.swift in Sources */,
+				C5C90EAF2AA5B7F300AB3668 /* EditMenuModel.swift in Sources */,
 				C5A201C12A98A5DD00A54381 /* EditLocationTopView.swift in Sources */,
 				C593B64F2A4C490600D224CE /* MyPageViewPresenter.swift in Sources */,
 				C5FF13572A42C8970026981D /* AVIROReviewsModel.swift in Sources */,

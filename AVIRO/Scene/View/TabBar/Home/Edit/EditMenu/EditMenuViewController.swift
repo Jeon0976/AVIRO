@@ -16,6 +16,8 @@ final class EditMenuViewController: UIViewController {
     
     private lazy var scrollView = UIScrollView()
     
+    private lazy var tapGesture = UITapGestureRecognizer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,11 +27,13 @@ final class EditMenuViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        presenter.viewWillAppear()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        presenter.viewWillDisappear()
     }
 }
 
@@ -98,7 +102,7 @@ extension EditMenuViewController: EditMenuProtocol {
     }
     
     @objc private func editMenu() {
-        
+        presenter.filteringDataSet()
     }
     
     func updateEditMenuButton(_ isEnabled: Bool) {
@@ -116,7 +120,27 @@ extension EditMenuViewController: EditMenuProtocol {
     }
     
     func makeGesture() {
+        view.addGestureRecognizer(tapGesture)
+            
+        tapGesture.delegate = self
+    }
+    
+    func keyboardWillShow(height: CGFloat) {
+        self.navigationController?.isNavigationBarHidden = true
         
+        let navigationHeight = navigationController!.navigationBar.frame.height
+        
+        UIView.animate(withDuration: 0.3) {
+            self.scrollView.transform = CGAffineTransform(
+                translationX: 0,
+                y: -(height - navigationHeight))
+        }
+    }
+    
+    func keyboardWillHide() {
+        self.navigationController?.isNavigationBarHidden = false
+        
+        self.scrollView.transform = .identity
     }
     
     func dataBindingTopView(isAll: Bool, isSome: Bool, isRequest: Bool) {
@@ -137,6 +161,10 @@ extension EditMenuViewController: EditMenuProtocol {
     
     func menuTableReload(_ isPresentingDefaultTable: Bool) {
         editMenuBottomView.menuTableReload(isPresentingDefaultTable)
+    }
+    
+    func popViewController() {
+        navigationController?.popViewController(animated: true)
     }
     
 }
@@ -225,5 +253,17 @@ extension EditMenuViewController: UITableViewDataSource {
         default:
             return UITableViewCell()
         }
+    }
+}
+
+extension EditMenuViewController: UIGestureRecognizerDelegate {
+    // MARK: 키보드 로직
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if touch.view is MenuField || touch.view is UIButton {
+            return false
+        }
+
+        view.endEditing(true)
+        return true
     }
 }

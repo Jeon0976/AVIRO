@@ -16,7 +16,7 @@ struct RequestTableFieldModel: Hashable {
     var isEnabled: Bool
 }
 
-struct RequestTableFieldModelForEdit {
+struct RequestTableFieldModelForEdit: Equatable {
     var id: String
     var menu: String
     var price: String

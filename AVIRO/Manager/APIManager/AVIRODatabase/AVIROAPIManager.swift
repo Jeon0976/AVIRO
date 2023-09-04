@@ -83,6 +83,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
         guard let jsonData = try? JSONEncoder().encode(bookmarkModel) else { return }
         
         var request = URLRequest(url: url)
+        
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonData
@@ -282,7 +283,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
     }
     
     // MARK: Post Place Model
-    func postPlaceModel(_ veganModel: VeganModel, completionHandler: @escaping((VeganPlaceResponse) -> Void)) {
+    func postPlaceModel(_ veganModel: VeganModel, completionHandler: @escaping((CommonResponseResult) -> Void)) {
         guard let url = postAPI.placeEnroll().url else { print("url error"); return }
         
         guard let jsonData = try? JSONEncoder().encode(veganModel) else {
@@ -307,7 +308,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
             }
             
             if let data = data {
-                if let placeResponse = try? JSONDecoder().decode(VeganPlaceResponse.self, from: data) {
+                if let placeResponse = try? JSONDecoder().decode(CommonResponseResult.self, from: data) {
                     completionHandler(placeResponse)
                 }
                 return 
@@ -435,6 +436,40 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
             if let data = data {
                 if let placeResponse = try? JSONDecoder().decode(PlaceModelAfterMatchedAVIRO.self, from: data) {
                     completionHandler(placeResponse)
+                }
+                return
+            }
+        }.resume()
+    }
+    
+    // MARK: Post Edit Menu
+    func postEditMenu(
+        _ editMenuModel: EditMenuModel,
+        completionHandler: @escaping((CommonResponseResult) -> Void)
+    ) {
+        guard let url = postAPI.editMenu().url else { return }
+        
+        guard let jsonData = try? JSONEncoder().encode(editMenuModel) else { return }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+
+        session.dataTask(with: request) { data, response, error in
+            guard error == nil else {
+                print("error")
+                return
+            }
+            
+            guard response != nil else {
+                print(response ?? "response error")
+                return
+            }
+            
+            if let data = data {
+                if let result = try? JSONDecoder().decode(CommonResponseResult.self, from: data) {
+                    completionHandler(result)
                 }
                 return
             }

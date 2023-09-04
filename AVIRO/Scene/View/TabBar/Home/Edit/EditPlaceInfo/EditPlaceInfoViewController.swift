@@ -267,17 +267,23 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     
     func keyboardWillShow(height: CGFloat) {
         self.navigationController?.isNavigationBarHidden = true
+        self.segmentedControl.isHidden = true
+        
+        let navigationHeight = navigationController!.navigationBar.frame.height
+        let segmentedControlHeight = segmentedControl.frame.height
+        
         UIView.animate(
             withDuration: 0.3,
             animations: { self.safeAreaView.transform = CGAffineTransform(
                 translationX: 0,
-                y: -(height))
+                y: -(height - navigationHeight - segmentedControlHeight))
             }
         )
     }
     
     func keyboardWillHide() {
         self.navigationController?.isNavigationBarHidden = false
+        self.segmentedControl.isHidden = false
 
         self.safeAreaView.transform = .identity
     }

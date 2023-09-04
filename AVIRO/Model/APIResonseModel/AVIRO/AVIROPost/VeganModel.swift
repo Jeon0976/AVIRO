@@ -82,7 +82,7 @@ struct MenuArray: Codable {
 }
 
 // MARK: Output Data
-struct VeganPlaceResponse: Decodable {
+struct CommonResponseResult: Decodable {
     let statusCode: Int
     let message: String
 }

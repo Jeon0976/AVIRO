@@ -5,18 +5,21 @@
 //  Created by 전성훈 on 2023/08/25.
 //
 
-import Foundation
+import UIKit
 
 protocol EditMenuProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
     func makeGesture()
+    func keyboardWillShow(height: CGFloat)
+    func keyboardWillHide()
     func updateEditMenuButton(_ isEnabled: Bool)
     func handleClosure()
     func dataBindingTopView(isAll: Bool, isSome: Bool, isRequest: Bool)
     func dataBindingBottomView(_ isPresentingDefaultTable: Bool)
     func updateMenuTableView(_ isPresentingDefaultTable: Bool)
     func menuTableReload(_ isPresentingDefaultTable: Bool)
+    func popViewController()
 }
 
 final class EditMenuPresenter {
@@ -96,9 +99,15 @@ final class EditMenuPresenter {
     private var initSome: Bool!
     private var initRequest: Bool!
     
-    private var veganMenuArray: [VeganTableFieldModelForEdit]?
+    private var initVeganMenuArray: [VeganTableFieldModelForEdit]?
+    private var initRequestVeganMenuArray: [RequestTableFieldModelForEdit]?
     
+    private var veganMenuArray: [VeganTableFieldModelForEdit]?
     private var requestVeganMenuArray: [RequestTableFieldModelForEdit]?
+    
+    private var deletedMenuArrayId: [(Bool, String)] = []
+    private var insertMenuArrayId: [(Bool, String)] = []
+    private var updateMenuArrayId: [(Bool, String)] = []
     
     var menuArrayCount: Int {
         guard let menuArray = menuArray else { return 0 }
@@ -142,6 +151,56 @@ final class EditMenuPresenter {
         dataBinding()
     }
     
+    func viewWillAppear() {
+        addKeyboardNotification()
+    }
+    
+    func viewWillDisappear() {
+        removeKeyboardNotification()
+    }
+    
+    // MARK: Keyboard에 따른 view 높이 변경 Notification
+    private func addKeyboardNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    private func removeKeyboardNotification() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            viewController?.keyboardWillShow(height: keyboardRectangle.height)
+        }
+        
+    }
+    
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        viewController?.keyboardWillHide()
+        
+    }
+    
     func dataBinding() {
         updateTableData()
         dataBindingTopView()
@@ -151,6 +210,8 @@ final class EditMenuPresenter {
     private func updateTableData() {
         veganMenuArray = []
         requestVeganMenuArray = []
+        initVeganMenuArray = []
+        initRequestVeganMenuArray = []
         
         guard let menuArray = menuArray else { return }
         
@@ -161,11 +222,25 @@ final class EditMenuPresenter {
             let howToRequest = $0.howToRequest
             let isCheck = $0.isCheck
             
-            let veganMenuTable = VeganTableFieldModelForEdit(id: id, menu: menu, price: price)
+            let veganMenuTable = VeganTableFieldModelForEdit(
+                id: id,
+                menu: menu,
+                price: price
+            )
             
-            let requestMenuTable = RequestTableFieldModelForEdit(id: id, menu: menu, price: price, howToRequest: howToRequest, isCheck: isCheck, isEnabled: true)
+            let requestMenuTable = RequestTableFieldModelForEdit(
+                id: id,
+                menu: menu,
+                price: price,
+                howToRequest: howToRequest,
+                isCheck: isCheck,
+                isEnabled: true
+            )
+            
             veganMenuArray?.append(veganMenuTable)
+            initVeganMenuArray?.append(veganMenuTable)
             requestVeganMenuArray?.append(requestMenuTable)
+            initRequestVeganMenuArray?.append(requestMenuTable)
         }
     }
     
@@ -238,6 +313,9 @@ final class EditMenuPresenter {
         default:
             break
         }
+        
+        // MARK: 여기 추가
+        enabledEditButton()
     }
     
     private func tappedAllVegan(_ selected: Bool) {
@@ -281,6 +359,7 @@ final class EditMenuPresenter {
             requestVeganMenuArray?[index].isEnabled = false
         }
         viewController?.menuTableReload(isDefaultMenuTable)
+        enabledEditButton()
     }
     
     private func unFixedRequestTable() {
@@ -293,6 +372,7 @@ final class EditMenuPresenter {
         }
         
         viewController?.menuTableReload(isDefaultMenuTable)
+        enabledEditButton()
     }
     
     func editingMenuField(_ menu: String, _ indexPath: IndexPath) {
@@ -303,6 +383,9 @@ final class EditMenuPresenter {
         } else {
             requestVeganMenuArray?[indexPath.row].menu = menu
         }
+        
+        updateArrayState(indexPath.row)
+        enabledEditButton()
     }
     
     func editingPriceField(_ price: String, _ indexPath: IndexPath) {
@@ -313,6 +396,9 @@ final class EditMenuPresenter {
         } else {
             requestVeganMenuArray?[indexPath.row].price = price
         }
+        
+        updateArrayState(indexPath.row)
+        enabledEditButton()
     }
     
     func editingRequestButton(_ isSelected: Bool, _ indexPath: IndexPath) {
@@ -320,7 +406,15 @@ final class EditMenuPresenter {
         
         if !isDefaultMenuTable {
             requestVeganMenuArray?[indexPath.row].isCheck = isSelected
+            
+            if !isSelected {
+                requestVeganMenuArray?[indexPath.row].howToRequest = ""
+                viewController?.menuTableReload(isDefaultMenuTable)
+            }
         }
+        
+        updateArrayState(indexPath.row)
+        enabledEditButton()
     }
     
     func editingRequestField(_ request: String, _ indexPath: IndexPath) {
@@ -329,18 +423,30 @@ final class EditMenuPresenter {
         if !isDefaultMenuTable {
             requestVeganMenuArray?[indexPath.row].howToRequest = request
         }
+        
+        updateArrayState(indexPath.row)
+        enabledEditButton()
     }
     
     func deleteMenu(_ indexPath: IndexPath) {
         guard let isDefaultMenuTable = isDefaultMenuTable else { return }
         
         if isDefaultMenuTable {
+            guard let id = veganMenuArray?[indexPath.row].id else { return }
+            
+            deletedMenuArrayId.append((isDefaultMenuTable, id))
+            
             veganMenuArray?.remove(at: indexPath.row)
         } else {
+            guard let id = requestVeganMenuArray?[indexPath.row].id else { return }
+            
+            deletedMenuArrayId.append((isDefaultMenuTable, id))
+            
             requestVeganMenuArray?.remove(at: indexPath.row)
         }
         viewController?.menuTableReload(isDefaultMenuTable)
         viewController?.updateMenuTableView(isDefaultMenuTable)
+        enabledEditButton()
     }
     
     func plusMenu() {
@@ -404,5 +510,318 @@ final class EditMenuPresenter {
         
         viewController?.menuTableReload(isDefaultMenuTable)
         viewController?.updateMenuTableView(isDefaultMenuTable)
+        enabledEditButton()
+    }
+    
+    private func updateArrayState(_ index: Int) {
+        guard let isDefaultMenuTable = isDefaultMenuTable else { return }
+        
+        if isDefaultMenuTable {
+            guard let menuArray = menuArray,
+                let veganMenuArray = veganMenuArray
+            else { return }
+            
+            let id = veganMenuArray[index].id
+            
+            if menuArray.contains(where: { $0.menuId == id}) {
+                if !updateMenuArrayId.contains(where: { $0.1 == id && $0.0 == isDefaultMenuTable }) {
+                    updateMenuArrayId.append((isDefaultMenuTable, id))
+                }
+            } else {
+                if !insertMenuArrayId.contains(where: { $0.1 == id && $0.0 == isDefaultMenuTable }) {
+                    insertMenuArrayId.append((isDefaultMenuTable, id))
+                }
+            }
+        } else {
+            guard let menuArray = menuArray,
+                let requestVeganMenuArray = requestVeganMenuArray
+            else { return }
+            
+            let id = requestVeganMenuArray[index].id
+            
+            if menuArray.contains(where: { $0.menuId == id}) {
+                if !updateMenuArrayId.contains(where: { $0.1 == id && $0.0 == isDefaultMenuTable }) {
+                    updateMenuArrayId.append((isDefaultMenuTable, id))
+                }
+            } else {
+                if !insertMenuArrayId.contains(where: { $0.1 == id && $0.0 == isDefaultMenuTable }) {
+                    insertMenuArrayId.append((isDefaultMenuTable, id))
+                }
+            }
+        }
+        
+    }
+    
+    private func enabledEditButton() {
+        /// 버튼이 전부 비활성화 될 때
+        guard !(isAll == false && isSome == false && isRequest == false) else {
+            viewController?.updateEditMenuButton(false)
+            return
+        }
+        
+        /// 기존 데이터와 비교해서 같을 시 false
+        guard updateEditButtonFromVeganOption() || updateEditButtonFromVeganMenus() else {
+            
+            viewController?.updateEditMenuButton(false)
+            return }
+        
+        /// empty 데이터가 있는지 확인 함수, 없으면 -> true
+        let hasEmptyData = afterCompareInitData()
+
+        viewController?.updateEditMenuButton(hasEmptyData)
+    }
+    
+    /// 최초 버튼이랑 전부 같을 때
+    private func updateEditButtonFromVeganOption() -> Bool {
+        if initAll == isAll,
+           initSome == isSome,
+           initRequest == isRequest {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    /// 최초 메뉴 데이터와 같을 때 비활성화
+    private func updateEditButtonFromVeganMenus() -> Bool {
+        !compareMenuData()
+    }
+        
+    private func compareMenuData() -> Bool {
+        guard let isDefaultMenuTable = isDefaultMenuTable else { return false }
+        
+        if isDefaultMenuTable {
+            return whenDefaultMenuTableCompareMenuData()
+        } else {
+            return whenNotDefaultMenuTableCompareMenuData()
+        }
+    }
+    
+    private func whenDefaultMenuTableCompareMenuData() -> Bool {
+        return initVeganMenuArray == veganMenuArray
+    }
+    
+    private func whenNotDefaultMenuTableCompareMenuData() -> Bool {
+        return initRequestVeganMenuArray == requestVeganMenuArray
+    }
+    
+    private func afterCompareInitData() -> Bool {
+        guard let isDefaultMenuTable = isDefaultMenuTable else { return false }
+        
+        if isDefaultMenuTable {
+            return !whenDefaultMenuTableHasEmptyData()
+        } else {
+            return !whenNotDefaultMenuTableHasEmptyData()
+        }
+    }
+    
+    private func whenDefaultMenuTableHasEmptyData() -> Bool {
+        guard let veganMenuArray = veganMenuArray else { return true }
+       return veganMenuArray.contains(where: { $0.menu == "" || $0.price == "" }) || veganMenuArray.isEmpty
+    }
+    
+    private func whenNotDefaultMenuTableHasEmptyData() -> Bool {
+        guard let requestVeganMenuArray = requestVeganMenuArray else { return true }
+
+        let hasEmptyData = requestVeganMenuArray.contains(where: { $0.menu == "" || $0.price == "" }) || requestVeganMenuArray.isEmpty
+        
+        let hasEmptyRequest = requestVeganMenuArray.contains(where: {
+            $0.isCheck && $0.howToRequest == ""
+        })
+        
+        return hasEmptyData || hasEmptyRequest
+    }
+    
+    // MARK: api 호출할 데이터 필터링하기
+    func filteringDataSet() {
+        guard let isDefaultMenuTable = isDefaultMenuTable,
+        let placeId = placeId,
+        let isAll = isAll,
+        let isSome = isSome,
+        let isRequest = isRequest
+        else { return }
+        
+        let deletedArray = filteringDeletedMenuData(isDefaultMenuTable)
+        let updatedArray = filteringUpdatedMenuData(isDefaultMenuTable)
+        let insertedArray = filteringInsertMenuData(isDefaultMenuTable)
+        
+        let editMenu = EditMenuModel(
+            placeId: placeId,
+            userId: UserId.shared.userId,
+            allVegan: isAll,
+            someMenuVegan: isSome,
+            ifRequestVegan: isRequest,
+            deleteArray: deletedArray,
+            updateArray: updatedArray,
+            insertArray: insertedArray
+        )
+
+        updateMenuData(editMenu)
+    }
+    
+    private func filteringDeletedMenuData(_ isDefaultMenuTable: Bool) -> [String] {
+        var deletedArray = [String]()
+        
+        deletedMenuArrayId.forEach {
+            if $0.0 == isDefaultMenuTable {
+                deletedArray.append($0.1)
+            }
+        }
+        
+        return deletedArray
+    }
+    
+    private func filteringUpdatedMenuData(_ isDefaultMenuTable: Bool) -> [MenuArray] {
+        var updatedMenuArray = [MenuArray]()
+        
+        if isDefaultMenuTable {
+            updateMenuArrayId.forEach { updatedMenu in
+                if updatedMenu.0 == isDefaultMenuTable {
+                    veganMenuArray?.forEach { veganMenu in
+                        if updatedMenu.1 == veganMenu.id {
+                            guard let menu = checkUpdatedMenuDataWhenVeganMenu(veganMenu) else { return }
+                            
+                            updatedMenuArray.append(menu)
+                        }
+                    }
+                }
+            }
+        } else {
+            updateMenuArrayId.forEach { updatedMenu in
+                if updatedMenu.0 == isDefaultMenuTable {
+                    requestVeganMenuArray?.forEach { veganMenu in
+                        if updatedMenu.1 == veganMenu.id {
+                            guard let menu = checkUpdatedMenuDataWhenRequestMenu(veganMenu) else { return }
+                            
+                            updatedMenuArray.append(menu)
+                        }
+                    }
+                }
+            }
+        }
+        
+        return updatedMenuArray
+    }
+    
+    private func checkUpdatedMenuDataWhenVeganMenu(_ menu: VeganTableFieldModelForEdit) -> MenuArray? {
+        guard let initVeganMenuArray = initVeganMenuArray else { return nil }
+        
+        var menuData: MenuArray?
+        
+        initVeganMenuArray.forEach { initMenu in
+            if initMenu.id == menu.id && initMenu != menu {
+                menuData = MenuArray(
+                    menuId: menu.id,
+                    menuType: MenuType.vegan.rawValue,
+                    menu: menu.menu,
+                    price: menu.price,
+                    howToRequest: "",
+                    isCheck: false
+                )
+            }
+        }
+        
+        return menuData
+    }
+    
+    private func checkUpdatedMenuDataWhenRequestMenu(_ menu: RequestTableFieldModelForEdit) -> MenuArray? {
+        guard let initRequestVeganMenuArray = initRequestVeganMenuArray else { return nil }
+        
+        var menuData: MenuArray?
+        
+        initRequestVeganMenuArray.forEach { initMenu in
+            if initMenu.id == menu.id && initMenu != menu {
+                menuData = MenuArray(
+                    menuId: menu.id,
+                    menuType: menu.isCheck ? MenuType.needToRequset.rawValue : MenuType.vegan.rawValue,
+                    menu: menu.menu,
+                    price: menu.price,
+                    howToRequest: menu.howToRequest,
+                    isCheck: menu.isCheck
+                )
+            }
+        }
+        
+        return menuData
+    }
+    
+    private func filteringInsertMenuData(_ isDefaultMenuTable: Bool) -> [MenuArray] {
+        var insertMenuArray = [MenuArray]()
+        
+        if isDefaultMenuTable {
+            insertMenuArrayId.forEach { insertMenu in
+                if insertMenu.0 == isDefaultMenuTable {
+                    veganMenuArray?.forEach { veganMenu in
+                        if insertMenu.1 == veganMenu.id {
+                            guard let menu = checkInsertedMenuDataWhenVeganMenu(veganMenu) else { return }
+                            
+                            insertMenuArray.append(menu)
+                        }
+                    }
+                }
+            }
+        } else {
+            insertMenuArrayId.forEach { insertMenu in
+                if insertMenu.0 == isDefaultMenuTable {
+                    requestVeganMenuArray?.forEach { veganMenu in
+                        if insertMenu.1 == veganMenu.id {
+                            guard let menu = checkInsertedMenuDataWhenRequestMenu(veganMenu) else { return }
+                            
+                            insertMenuArray.append(menu)
+                        }
+                    }
+                }
+            }
+        }
+        
+        return insertMenuArray
+    }
+    
+    private func checkInsertedMenuDataWhenVeganMenu(_ menu: VeganTableFieldModelForEdit) -> MenuArray? {
+        guard let initVeganMenuArray = initVeganMenuArray else { return nil }
+        
+        var menuData: MenuArray?
+        
+        if !initVeganMenuArray.contains(where: { $0.id == menu.id }) {
+            menuData = MenuArray(
+                menuId: menu.id,
+                menuType: MenuType.vegan.rawValue,
+                menu: menu.menu,
+                price: menu.price,
+                howToRequest: "",
+                isCheck: false
+            )
+        }
+        
+        return menuData
+    }
+    
+    private func checkInsertedMenuDataWhenRequestMenu(_ menu: RequestTableFieldModelForEdit) -> MenuArray? {
+        guard let initRequestVeganMenuArray = initRequestVeganMenuArray else { return nil }
+        
+        var menuData: MenuArray?
+        
+        if !initRequestVeganMenuArray.contains(where: { $0.id == menu.id }) {
+            menuData = MenuArray(
+                menuId: menu.id,
+                menuType: menu.isCheck ? MenuType.needToRequset.rawValue : MenuType.vegan.rawValue,
+                menu: menu.menu,
+                price: menu.price,
+                howToRequest: menu.howToRequest,
+                isCheck: menu.isCheck
+            )
+        }
+        
+        return menuData
+    }
+    
+    private func updateMenuData(_ editMenu: EditMenuModel) {
+        AVIROAPIManager().postEditMenu(editMenu) { [weak self] result in
+            DispatchQueue.main.async {
+                if result.statusCode == 200 {
+                    self?.viewController?.popViewController()
+                }
+            }
+        }
     }
 }

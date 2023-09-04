@@ -74,7 +74,7 @@ final class EditPlaceInfoPresenter {
     }
     
     // MARK: Keyboard에 따른 view 높이 변경 Notification
-    func addKeyboardNotification() {
+    private func addKeyboardNotification() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillShow),
@@ -89,7 +89,7 @@ final class EditPlaceInfoPresenter {
         )
     }
     
-    func removeKeyboardNotification() {
+    private func removeKeyboardNotification() {
         NotificationCenter.default.removeObserver(
             self,
             name: UIResponder.keyboardWillShowNotification,
@@ -102,7 +102,7 @@ final class EditPlaceInfoPresenter {
         )
     }
     
-    @objc func keyboardWillShow(notification: NSNotification) {
+    @objc private func keyboardWillShow(notification: NSNotification) {
         guard let viewController = viewController else { return }
         
         if viewController.isDetailFieldCheckBeforeKeyboardShowAndHide(notification: notification) {
@@ -113,7 +113,7 @@ final class EditPlaceInfoPresenter {
         }
     }
     
-    @objc func keyboardWillHide(notification: NSNotification) {
+    @objc private func keyboardWillHide(notification: NSNotification) {
         guard let viewController = viewController else { return }
         
         if viewController.isDetailFieldCheckBeforeKeyboardShowAndHide(notification: notification) {
