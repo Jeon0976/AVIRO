@@ -85,7 +85,16 @@ enum MapIcon {
 struct MarkerModel {
     let placeId: String
     let marker: NMFMarker
-    var mapPlace: MapPlace
+    // MARK: 수정 중 일때만 Map Place 변경 가능 
+    var mapPlace: MapPlace {
+        didSet {
+            if isStar {
+                marker.changeStarIcon(mapPlace, true)
+            } else {
+                marker.changeIcon(mapPlace, true)
+            }
+        }
+    }
     var isStar = false {
         didSet {
             if isStar {

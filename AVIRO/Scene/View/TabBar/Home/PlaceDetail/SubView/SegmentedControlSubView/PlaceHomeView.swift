@@ -103,6 +103,10 @@ final class PlaceHomeView: UIView {
         placeReviewsView.dataBindingWhenInHomeView(reviewsModel)
     }
     
+    func refreshMenuData(_ menuModel: PlaceMenuData?) {
+        placeMenuView.dataBindingWhenInHomeView(menuModel)
+    }
+    
     // MARK: 클로저 처리
     private func handleClosure() {
         placeInfoView.afterEditInfoButtonTapped = { [weak self] in

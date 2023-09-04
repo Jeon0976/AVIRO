@@ -182,6 +182,11 @@ final class PlaceSegmentedControlView: UIView {
         self.reviewsCount = reviewsCount
     }
     
+    func refreshMenuData(_ menuModel: PlaceMenuData?) {
+        homeView.refreshMenuData(menuModel)
+        menuView.dataBinding(menuModel)
+    }
+    
     func editMyReview(_ commentId: String) {
         if segmentedControl.selectedSegmentIndex == 0 {
             self.segmentedControl.selectedSegmentIndex = 2

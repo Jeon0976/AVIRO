@@ -120,6 +120,7 @@
 		C5C290812A8616E500ED5DCE /* PlaceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C290802A8616E500ED5DCE /* PlaceInfoView.swift */; };
 		C5C290852A86173F00ED5DCE /* PlaceReviewWriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C290842A86173F00ED5DCE /* PlaceReviewWriteView.swift */; };
 		C5C90EAF2AA5B7F300AB3668 /* EditMenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C90EAE2AA5B7F300AB3668 /* EditMenuModel.swift */; };
+		C5C90EB22AA5EC9E00AB3668 /* EditMenuChangedMarkerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C90EB12AA5EC9E00AB3668 /* EditMenuChangedMarkerModel.swift */; };
 		C5C915492A777F8500C7CB93 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C915482A777F8500C7CB93 /* SearchField.swift */; };
 		C5C961932A8D9EE20016E2F8 /* PlaceMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C961922A8D9EE20016E2F8 /* PlaceMenuTableViewCell.swift */; };
 		C5C961952A8D9EED0016E2F8 /* PlaceReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C961942A8D9EED0016E2F8 /* PlaceReviewTableViewCell.swift */; };
@@ -289,6 +290,7 @@
 		C5C290802A8616E500ED5DCE /* PlaceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceInfoView.swift; sourceTree = "<group>"; };
 		C5C290842A86173F00ED5DCE /* PlaceReviewWriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceReviewWriteView.swift; sourceTree = "<group>"; };
 		C5C90EAE2AA5B7F300AB3668 /* EditMenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuModel.swift; sourceTree = "<group>"; };
+		C5C90EB12AA5EC9E00AB3668 /* EditMenuChangedMarkerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuChangedMarkerModel.swift; sourceTree = "<group>"; };
 		C5C915482A777F8500C7CB93 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		C5C961922A8D9EE20016E2F8 /* PlaceMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceMenuTableViewCell.swift; sourceTree = "<group>"; };
 		C5C961942A8D9EED0016E2F8 /* PlaceReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceReviewTableViewCell.swift; sourceTree = "<group>"; };
@@ -987,6 +989,14 @@
 			path = EditPostModel;
 			sourceTree = "<group>";
 		};
+		C5C90EB02AA5EC8900AB3668 /* EditModel */ = {
+			isa = PBXGroup;
+			children = (
+				C5C90EB12AA5EC9E00AB3668 /* EditMenuChangedMarkerModel.swift */,
+			);
+			path = EditModel;
+			sourceTree = "<group>";
+		};
 		C5C961902A8D9EA10016E2F8 /* TableView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1130,6 +1140,7 @@
 			children = (
 				C51B09B92A8215D800916BBD /* MarkerModel.swift */,
 				C5803F562A88C1810064A853 /* PlaceViewModel */,
+				C5C90EB02AA5EC8900AB3668 /* EditModel */,
 				C52066272A7CD5E60038ECCD /* HomeSearchViewModel */,
 			);
 			path = HomeViewModel;
@@ -1457,6 +1468,7 @@
 				C5FD92F42A9CD2FC00CF4673 /* KakaoMapResponseAddressModel.swift in Sources */,
 				C5C9619A2A8DA5950016E2F8 /* ShowMoreButton.swift in Sources */,
 				C5351B622A1A083400116D50 /* PlaceListCellModel.swift in Sources */,
+				C5C90EB22AA5EC9E00AB3668 /* EditMenuChangedMarkerModel.swift in Sources */,
 				C51B09BA2A8215D800916BBD /* MarkerModel.swift in Sources */,
 				C52FA3452A175B20005E70DC /* SceneDelegate.swift in Sources */,
 				C5351B542A19A7B100116D50 /* MyCoordinate.swift in Sources */,

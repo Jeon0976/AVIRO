@@ -332,6 +332,31 @@ final class PlaceTopView: UIView {
     func updateReviewsCount(_ count: Int) {
         self.reviewsLabel.text = "\(count)개"
     }
+    
+    func updateMapPlace(_ mapPlace: MapPlace) {
+        var placeIconImage: UIImage?
+        var whenSlideTopLabelString: String?
+        
+        switch mapPlace {
+        case .All:
+            placeIconImage = UIImage(named: "Allbox")
+            whenSlideTopLabel.textColor = .all
+            whenSlideTopLabelString = "모든 메뉴가 비건"
+        case .Some:
+            placeIconImage = UIImage(named: "Somebox")
+            whenSlideTopLabel.textColor = .some
+            whenSlideTopLabelString = "일부 메뉴만 비건"
+        case .Request:
+            placeIconImage = UIImage(named: "Requestbox")
+            whenSlideTopLabel.textColor = .request
+            whenSlideTopLabelString = "비건 메뉴로 요청 가능"
+        }
+        
+        print(whenSlideTopLabelString)
+        placeIcon.image = placeIconImage
+        whenSlideTopLabel.text = whenSlideTopLabelString
+
+    }
 }
 
 // MARK: When View Pop up

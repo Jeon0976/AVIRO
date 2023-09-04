@@ -123,7 +123,11 @@ final class PlaceView: UIView {
     }
     
     func menuModelBinding(menuModel: PlaceMenuData?) {
-        
+        segmentedControlView.refreshMenuData(menuModel)
+    }
+    
+    func updateMapPlace(_ mapPlace: MapPlace) {
+        topView.updateMapPlace(mapPlace)
     }
     
     func reviewsModelBinding(reviewsModel: PlaceReviewsData?) {

@@ -406,9 +406,25 @@ extension HomeViewController: HomeViewProtocol {
                                           menuArray: menuArray
         )
         
+        presenter.afterEditMenuChangedMenus = { [weak self] in
+            self?.presenter.afterEditMenu()
+        }
+        
+        presenter.afterEditMenuChangedVeganMarker = { [weak self] changedMarkerModel in
+            self?.presenter.afterEditMenuChangedMarker(changedMarkerModel)
+        }
+        
         vc.presenter = presenter
         
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func refreshMenuView(_ menuData: PlaceMenuData?) {
+        placeView.menuModelBinding(menuModel: menuData)
+    }
+    
+    func refreshMapPlace(_ mapPlace: MapPlace) {
+        placeView.updateMapPlace(mapPlace)
     }
 }
 
@@ -451,7 +467,6 @@ extension HomeViewController {
     // MARK: 클로저 함수 Binding 처리
     private func handleClosure() {
         placeView.whenFullBack = { [weak self] in
-            print("Test")
             self?.naverMapView.isHidden = false
             self?.placeViewPopUpAfterInitPlacePopViewHeight()
         }

@@ -164,7 +164,7 @@ extension EditMenuViewController: EditMenuProtocol {
     }
     
     func popViewController() {
-        navigationController?.popViewController(animated: true)
+        navigationController?.popViewController(animated: false)
     }
     
 }

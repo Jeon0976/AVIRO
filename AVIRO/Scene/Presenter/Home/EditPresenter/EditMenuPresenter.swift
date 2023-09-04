@@ -33,6 +33,7 @@ final class EditMenuPresenter {
             
             if isAll {
                 isDefaultMenuTable = true
+                allUpdateMenuArrayId()
             }
         }
     }
@@ -44,12 +45,18 @@ final class EditMenuPresenter {
             
             if isSome && !isRequest {
                 viewController?.updateMenuTableView(true)
+                allUpdateMenuArrayId()
+
             } else if !isSome && isRequest {
                 isDefaultMenuTable = false
                 isEnabledWhenRequestTable = false
+                allUpdateMenuArrayId()
+
             } else if isSome && isRequest {
                 isDefaultMenuTable = false
                 isEnabledWhenRequestTable = true
+                allUpdateMenuArrayId()
+
             }
         }
     }
@@ -62,11 +69,17 @@ final class EditMenuPresenter {
             if isRequest && !isSome {
                 isDefaultMenuTable = false
                 isEnabledWhenRequestTable = false
+                allUpdateMenuArrayId()
+
             } else if isRequest && isSome {
                 isDefaultMenuTable = false
                 isEnabledWhenRequestTable = true
+                allUpdateMenuArrayId()
+
             } else if !isRequest {
                 isDefaultMenuTable = true
+                allUpdateMenuArrayId()
+
             }
         }
     }
@@ -90,6 +103,25 @@ final class EditMenuPresenter {
                 unFixedRequestTable()
             } else {
                 fixedRequestTable()
+            }
+        }
+    }
+    
+    private func allUpdateMenuArrayId() {
+        guard let isDefaultMenuTable = isDefaultMenuTable else { return }
+        if isDefaultMenuTable {
+            guard let initVeganMenuArray = initVeganMenuArray else { return }
+            initVeganMenuArray.forEach { initVegan in
+                if !updateMenuArrayId.contains(where: { initVegan.id == $0.1 && isDefaultMenuTable == $0.0 }) {
+                    updateMenuArrayId.append((isDefaultMenuTable, initVegan.id))
+                }
+            }
+        } else {
+            guard let initRequestVeganMenuArray = initRequestVeganMenuArray else { return }
+            initRequestVeganMenuArray.forEach { initVegan in
+                if !updateMenuArrayId.contains(where: { initVegan.id == $0.1 && isDefaultMenuTable == $0.0 }) {
+                    updateMenuArrayId.append((isDefaultMenuTable, initVegan.id))
+                }
             }
         }
     }
@@ -124,6 +156,9 @@ final class EditMenuPresenter {
         return menuArray.count
     }
     
+    var afterEditMenuChangedMenus: (() -> Void)?
+    var afterEditMenuChangedVeganMarker: ( (EditMenuChangedMarkerModel) -> Void)?
+    
     init(viewController: EditMenuProtocol,
          placeId: String? = nil,
          isAll: Bool? = nil,
@@ -147,7 +182,7 @@ final class EditMenuPresenter {
         viewController?.makeAttribute()
         viewController?.makeGesture()
         viewController?.handleClosure()
-
+    
         dataBinding()
     }
     
@@ -709,7 +744,7 @@ final class EditMenuPresenter {
         var menuData: MenuArray?
         
         initVeganMenuArray.forEach { initMenu in
-            if initMenu.id == menu.id && initMenu != menu {
+            if initMenu.id == menu.id  {
                 menuData = MenuArray(
                     menuId: menu.id,
                     menuType: MenuType.vegan.rawValue,
@@ -730,7 +765,7 @@ final class EditMenuPresenter {
         var menuData: MenuArray?
         
         initRequestVeganMenuArray.forEach { initMenu in
-            if initMenu.id == menu.id && initMenu != menu {
+            if initMenu.id == menu.id {
                 menuData = MenuArray(
                     menuId: menu.id,
                     menuType: menu.isCheck ? MenuType.needToRequset.rawValue : MenuType.vegan.rawValue,
@@ -816,10 +851,31 @@ final class EditMenuPresenter {
     }
     
     private func updateMenuData(_ editMenu: EditMenuModel) {
+        guard let isAll = isAll,
+              let isSome = isSome,
+              let isRequest = isRequest
+        else { return }
+        
+        var mapPlace: MapPlace!
+        
+        if isAll {
+            mapPlace = .All
+        } else if isSome {
+            mapPlace = .Some
+        } else {
+            mapPlace = .Request
+        }
+                
+
+        let editMenuChangedMarkerModel = EditMenuChangedMarkerModel(mapPlace: mapPlace, isAll: isAll, isSome: isSome, isRequest: isRequest)
+        
         AVIROAPIManager().postEditMenu(editMenu) { [weak self] result in
             DispatchQueue.main.async {
+                print(result)
                 if result.statusCode == 200 {
                     self?.viewController?.popViewController()
+                    self?.afterEditMenuChangedMenus?()
+                    self?.afterEditMenuChangedVeganMarker?(editMenuChangedMarkerModel)
                 }
             }
         }

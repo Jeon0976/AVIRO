@@ -51,6 +51,9 @@ protocol HomeViewProtocol: NSObject {
                                     isSome: Bool,
                                     isRequest: Bool,
                                     menuArray: [MenuArray])
+    func refreshMenuView(_ menuData: PlaceMenuData?)
+    func refreshMapPlace(_ mapPlace: MapPlace)
+
 }
 
 final class HomeViewPresenter: NSObject {
@@ -565,6 +568,29 @@ final class HomeViewPresenter: NSObject {
             menuArray: menuArray
         )
     }
+    
+    func afterEditMenu() {
+        guard let placeId = selectedPlaceId else { return }
+        AVIROAPIManager().getMenuInfo(placeId: placeId) { [weak self] placeMenuModel in
+            DispatchQueue.main.async {
+                print(placeMenuModel.data)
+                self?.selectedMenuModel = placeMenuModel.data
+                self?.viewController?.refreshMenuView(placeMenuModel.data)
+            }
+        }
+    }
+    
+    func afterEditMenuChangedMarker(_ changedMarkerModel: EditMenuChangedMarkerModel) {
+        guard var selectedMarkerModel = selectedMarkerModel else { return }
+        selectedMarkerModel.mapPlace = changedMarkerModel.mapPlace
+        selectedMarkerModel.isAll = changedMarkerModel.isAll
+        selectedMarkerModel.isSome = changedMarkerModel.isSome
+        selectedMarkerModel.isRequest = changedMarkerModel.isRequest
+        
+        self.selectedMarkerModel = selectedMarkerModel
+        
+        viewController?.refreshMapPlace(changedMarkerModel.mapPlace)
+    }
 }
 
 // MARK: user location 불러오기 관련 작업들
@@ -622,3 +648,4 @@ extension HomeViewPresenter: CLLocationManagerDelegate {
         locationManager.stopUpdatingLocation()
     }
 }
+
