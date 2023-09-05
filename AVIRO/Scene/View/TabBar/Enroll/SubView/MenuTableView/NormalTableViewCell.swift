@@ -96,6 +96,10 @@ final class NormalTableViewCell: UITableViewCell {
         priceField.addRightButton()
         priceField.keyboardType = .numberPad
         priceField.delegate = self
+        priceField.variablePriceChanged = { [weak self] text in
+            self?.editingPriceField?(text)
+        }
+        
         
         let image = UIImage(named: "Minus")?.withRenderingMode(.alwaysTemplate)
         minusButton.setImage(image, for: .normal)

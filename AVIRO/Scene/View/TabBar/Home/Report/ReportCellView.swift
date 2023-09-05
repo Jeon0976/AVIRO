@@ -28,7 +28,9 @@ final class ReportCellView: UIView {
         
         return label
     }()
-        
+    
+    private var tapGesture = UITapGestureRecognizer()
+
     var selectedReportType: ((String) -> Void)?
     var clickedOffSelectedType: ((String) -> Void)?
     var isHiddenTextView: ((Bool) -> Void)?
@@ -37,28 +39,21 @@ final class ReportCellView: UIView {
         super.init(frame: frame)
         
         makeLayout()
+        makeAttribute()
+        makeGesture()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let total = clickButton.frame.height + 24
-        self.heightAnchor.constraint(equalToConstant: total).isActive = true
+        makeViewHeight()
     }
     
     private func makeLayout() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(cellTapped))
-
-        self.addGestureRecognizer(tapGesture)
-        
-        self.layer.cornerRadius = 10
-        self.layer.borderColor = UIColor.gray4?.cgColor
-        self.layer.borderWidth = 1
-        
         [
             clickButton,
             titleLabel
@@ -77,6 +72,22 @@ final class ReportCellView: UIView {
             titleLabel.centerYAnchor.constraint(equalTo: clickButton.centerYAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 16)
         ])
+    }
+    
+    private func makeAttribute() {
+        self.layer.cornerRadius = 10
+        self.layer.borderColor = UIColor.gray4?.cgColor
+        self.layer.borderWidth = 1
+    }
+    
+    private func makeGesture() {
+        tapGesture.addTarget(self, action: #selector(cellTapped))
+        self.addGestureRecognizer(tapGesture)
+    }
+    
+    private func makeViewHeight() {
+        let total = clickButton.frame.height + 24
+        self.heightAnchor.constraint(equalToConstant: total).isActive = true
     }
     
     @objc private func cellTapped() {

@@ -464,15 +464,24 @@ final class EditMenuPresenter {
     }
     
     func deleteMenu(_ indexPath: IndexPath) {
-        guard let isDefaultMenuTable = isDefaultMenuTable else { return }
+        guard let isDefaultMenuTable = isDefaultMenuTable,
+              let isSome = isSome,
+              let isRequest = isRequest
+        else { return }
         
-        if isDefaultMenuTable {
+        if isDefaultMenuTable && veganMenuCount > 1 {
             guard let id = veganMenuArray?[indexPath.row].id else { return }
             
             deletedMenuArrayId.append((isDefaultMenuTable, id))
             
             veganMenuArray?.remove(at: indexPath.row)
-        } else {
+        } else if !isDefaultMenuTable && isSome && isRequest && requestVeganMenuCount > 2 {
+            guard let id = requestVeganMenuArray?[indexPath.row].id else { return }
+            
+            deletedMenuArrayId.append((isDefaultMenuTable, id))
+            
+            requestVeganMenuArray?.remove(at: indexPath.row)
+        } else if !isDefaultMenuTable && !isSome && isRequest && requestVeganMenuCount > 1 {
             guard let id = requestVeganMenuArray?[indexPath.row].id else { return }
             
             deletedMenuArrayId.append((isDefaultMenuTable, id))
@@ -600,10 +609,30 @@ final class EditMenuPresenter {
             viewController?.updateEditMenuButton(false)
             return }
         
+        if isSome == true && isRequest == true {
+            if !checkRequestArrayWhenSomeRequest() {
+                viewController?.updateEditMenuButton(false)
+                return
+            }
+        }
+        
         /// empty 데이터가 있는지 확인 함수, 없으면 -> true
         let hasEmptyData = afterCompareInitData()
 
         viewController?.updateEditMenuButton(hasEmptyData)
+    }
+    
+    private func checkRequestArrayWhenSomeRequest() -> Bool {
+        let count = requestVeganMenuCount >= 2
+        
+        guard let checkVegan = requestVeganMenuArray?.contains(where: { $0.howToRequest == "" && !$0.isCheck }) else { return false }
+        guard let checkRequest = requestVeganMenuArray?.contains(where: { $0.howToRequest != "" && $0.isCheck }) else { return false }
+        
+        print("1",count)
+        print("2'",checkVegan)
+        print("3",checkRequest)
+        
+        return count && checkVegan && checkRequest
     }
     
     /// 최초 버튼이랑 전부 같을 때

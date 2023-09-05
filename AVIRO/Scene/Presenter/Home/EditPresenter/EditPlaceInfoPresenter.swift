@@ -22,6 +22,7 @@ protocol EditPlaceInfoProtocol: NSObject {
                              address: String
     )
     func dataBindingPhone(phone: String)
+    func dataBindingOperatingHours(operatingHourModels: [EditOperationHoursModel])
     func dataBindingHomepage(homepage: String)
     func pushAddressEditViewController(placeMarkerModel: MarkerModel)
     func updateNaverMap(_ latLng: NMGLatLng)
@@ -125,8 +126,8 @@ final class EditPlaceInfoPresenter {
     func dataBinding() {
         dataBindingLocation()
         dataBindingPhone()
-        dataBindingHomepage()
         dataBindingWorkingHours()
+        dataBindingHomepage()
     }
     
     private func dataBindingLocation() {
@@ -159,7 +160,17 @@ final class EditPlaceInfoPresenter {
     }
     
     private func dataBindingWorkingHours() {
+        let test = [
+            EditOperationHoursModel(day: "월요일", operatingHours: "10:00 - 19:00", breakTime: nil),
+            EditOperationHoursModel(day: "화요일", operatingHours: nil, breakTime: nil),
+            EditOperationHoursModel(day: "수요일", operatingHours: nil, breakTime: nil),
+            EditOperationHoursModel(day: "목요일", operatingHours: "10:00 - 19:00", breakTime: "15:00 - 16:00"),
+            EditOperationHoursModel(day: "금요일", operatingHours: "10:00 - 19:00", breakTime: nil),
+            EditOperationHoursModel(day: "토요일", operatingHours: "10:00 - 19:00", breakTime: nil),
+            EditOperationHoursModel(day: "일요일", operatingHours: "10:00 - 19:00", breakTime: nil)
+        ]
         
+        viewController?.dataBindingOperatingHours(operatingHourModels: test)
     }
     
     private func dataBindingHomepage() {

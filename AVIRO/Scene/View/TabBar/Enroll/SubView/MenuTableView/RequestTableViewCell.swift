@@ -36,7 +36,7 @@ final class RequestTableViewCell: UITableViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
     
     override func prepareForReuse() {
@@ -120,6 +120,9 @@ final class RequestTableViewCell: UITableViewCell {
         priceField.addRightButton()
         priceField.keyboardType = .numberPad
         priceField.delegate = self
+        priceField.variablePriceChanged = { [weak self] text in
+            self?.editingPriceField?(text)
+        }
         
         requestField.makePlaceHolder("계란 빼달라고 요청하기")
         requestField.delegate = self

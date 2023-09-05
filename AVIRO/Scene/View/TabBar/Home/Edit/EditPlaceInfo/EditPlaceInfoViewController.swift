@@ -41,7 +41,7 @@ final class EditPlaceInfoViewController: UIViewController {
         return view
     }()
     
-    private lazy var locationScrollView = UIScrollView()
+    private lazy var scrollView = UIScrollView()
     
     private lazy var editLocationTopView: EditLocationTopView = {
         let view = EditLocationTopView()
@@ -65,8 +65,8 @@ final class EditPlaceInfoViewController: UIViewController {
         return view
     }()
     
-    private lazy var editWorkingHoursView: EditWorkingHoursView = {
-        let view = EditWorkingHoursView()
+    private lazy var editOperationHoursView: EditOperatingHoursView = {
+        let view = EditOperatingHoursView()
         
         return view
     }()
@@ -130,58 +130,58 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     
     private func makeSafeAreaViewLayout() {
         [
-            locationScrollView,
-            editPhoneView,
-            editWorkingHoursView,
-            editHomePageView
+            scrollView
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             safeAreaView.addSubview($0)
         }
         
         NSLayoutConstraint.activate([
-            locationScrollView.topAnchor.constraint(equalTo: safeAreaView.topAnchor),
-            locationScrollView.leadingAnchor.constraint(equalTo: safeAreaView.leadingAnchor),
-            locationScrollView.trailingAnchor.constraint(equalTo: safeAreaView.trailingAnchor),
-            locationScrollView.bottomAnchor.constraint(equalTo: safeAreaView.bottomAnchor),
-            
-            editPhoneView.topAnchor.constraint(equalTo: safeAreaView.topAnchor, constant: 20),
-            editPhoneView.leadingAnchor.constraint(equalTo: safeAreaView.leadingAnchor, constant: 16),
-            editPhoneView.trailingAnchor.constraint(equalTo: safeAreaView.trailingAnchor, constant: -16),
-            
-            editWorkingHoursView.topAnchor.constraint(equalTo: safeAreaView.topAnchor, constant: 20),
-            editWorkingHoursView.leadingAnchor.constraint(equalTo: safeAreaView.leadingAnchor, constant: 16),
-            editWorkingHoursView.trailingAnchor.constraint(equalTo: safeAreaView.trailingAnchor, constant: -16),
-            
-            editHomePageView.topAnchor.constraint(equalTo: safeAreaView.topAnchor, constant: 20),
-            editHomePageView.leadingAnchor.constraint(equalTo: safeAreaView.leadingAnchor, constant: 16),
-            editHomePageView.trailingAnchor.constraint(equalTo: safeAreaView.trailingAnchor, constant: -16)
+            scrollView.topAnchor.constraint(equalTo: safeAreaView.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: safeAreaView.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: safeAreaView.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: safeAreaView.bottomAnchor),
         ])
         
         [
             editLocationTopView,
-            editLocationBottomView
+            editLocationBottomView,
+            editPhoneView,
+            editOperationHoursView,
+            editHomePageView
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
-            locationScrollView.addSubview($0)
+            scrollView.addSubview($0)
         }
         
         NSLayoutConstraint.activate([
             editLocationTopView.topAnchor.constraint(
-                equalTo: locationScrollView.contentLayoutGuide.topAnchor, constant: 20),
+                equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 20),
             editLocationTopView.leadingAnchor.constraint(
-                equalTo: locationScrollView.frameLayoutGuide.leadingAnchor, constant: 16),
+                equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 16),
             editLocationTopView.trailingAnchor.constraint(
-                equalTo: locationScrollView.frameLayoutGuide.trailingAnchor, constant: -16),
+                equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -16),
             
             editLocationBottomView.topAnchor.constraint(
                 equalTo: editLocationTopView.bottomAnchor, constant: 15),
             editLocationBottomView.leadingAnchor.constraint(
-                equalTo: locationScrollView.frameLayoutGuide.leadingAnchor, constant: 16),
+                equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 16),
             editLocationBottomView.trailingAnchor.constraint(
-                equalTo: locationScrollView.frameLayoutGuide.trailingAnchor, constant: -16),
+                equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -16),
             editLocationBottomView.bottomAnchor.constraint(
-                equalTo: locationScrollView.contentLayoutGuide.bottomAnchor, constant: -20)
+                equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -20),
+            
+            editPhoneView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 20),
+            editPhoneView.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 16),
+            editPhoneView.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -16),
+            
+            editOperationHoursView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 20),
+            editOperationHoursView.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 16),
+            editOperationHoursView.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -16),
+            
+            editHomePageView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 20),
+            editHomePageView.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 16),
+            editHomePageView.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -16)
         ])
         
     }
@@ -227,30 +227,34 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     private func activeLocation() {
         editPhoneView.isHidden = true
         editHomePageView.isHidden = true
-        editWorkingHoursView.isHidden = true
+        editOperationHoursView.isHidden = true
         
-        locationScrollView.isHidden = false
+        editLocationTopView.isHidden = false
+        editLocationBottomView.isHidden = false
     }
     
     private func activePhone() {
-        locationScrollView.isHidden = true
+        editLocationTopView.isHidden = true
+        editLocationBottomView.isHidden = true
         editHomePageView.isHidden = true
-        editWorkingHoursView.isHidden = true
+        editOperationHoursView.isHidden = true
         
         editPhoneView.isHidden = false
     }
     
     private func activeWorkingHours() {
         editHomePageView.isHidden = true
-        locationScrollView.isHidden = true
+        editLocationTopView.isHidden = true
+        editLocationBottomView.isHidden = true
         editPhoneView.isHidden = true
         
-        editWorkingHoursView.isHidden = false
+        editOperationHoursView.isHidden = false
     }
     
     private func activeHomepage() {
-        editWorkingHoursView.isHidden = true
-        locationScrollView.isHidden = true
+        editOperationHoursView.isHidden = true
+        editLocationTopView.isHidden = true
+        editLocationBottomView.isHidden = true
         editPhoneView.isHidden = true
         
         editHomePageView.isHidden = false
@@ -299,6 +303,10 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     
     func dataBindingPhone(phone: String) {
         editPhoneView.dataBinding(phone)
+    }
+    
+    func dataBindingOperatingHours(operatingHourModels: [EditOperationHoursModel]) {
+        editOperationHoursView.dataBinding(operatingHourModels)
     }
     
     func dataBindingHomepage(homepage: String) {

@@ -33,6 +33,7 @@ final class EditLocationDetailMapView: UIView {
         let label = UILabel()
         
         label.textColor = .gray0
+        label.numberOfLines = 2
         label.font = .systemFont(ofSize: 17, weight: .medium)
         
         return label
