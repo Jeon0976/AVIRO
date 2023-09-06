@@ -23,6 +23,7 @@ final class PushCommentView: UIView {
         textView.isEditable = true
         textView.isScrollEnabled = false
 
+        textView.backgroundColor = .gray7
         textView.delegate = self
 
         textView.textContainer.lineBreakMode = .byWordWrapping

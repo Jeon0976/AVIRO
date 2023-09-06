@@ -289,7 +289,7 @@ final class OperationHourChangebleView: UIView {
             
             open24hoursButton.topAnchor.constraint(equalTo: operatingHoursLabel.topAnchor),
             open24hoursButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            open24hoursButton.widthAnchor.constraint(equalToConstant: 80),
+            open24hoursButton.widthAnchor.constraint(equalToConstant: 90),
             
             operationTimeOpen.topAnchor.constraint(equalTo: operatingHoursLabel.bottomAnchor, constant: 20),
             operationTimeOpen.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
@@ -358,6 +358,12 @@ final class OperationHourChangebleView: UIView {
     
     func makeBindingData(_ operationHoursModel: EditOperationHoursModel) {
         day = operationHoursModel.day
+        
+        operationTimeOpen.isEnabledButton(true)
+        operationTimeClosed.isEnabledButton(true)
+        breakTimeOpen.isEnabledButton(true)
+        breakTimeClosed.isEnabledButton(true)
+        
         editButtonIsEnabled = false
         open24hoursButton.isSelected = false
         initDayOff = ""
@@ -376,6 +382,12 @@ final class OperationHourChangebleView: UIView {
             operationTimeClosed.makeLabelText("시간 선택")
             breakTimeOpen.makeLabelText("시간 선택")
             breakTimeClosed.makeLabelText("시간 선택")
+            
+            operationTimeOpen.isEnabledButton(false)
+            operationTimeClosed.isEnabledButton(false)
+            breakTimeOpen.isEnabledButton(false)
+            breakTimeClosed.isEnabledButton(false)
+            
         } else if operationHoursModel.operatingHours == "정보 없음" {
             initOperationOpen = "시간 선택"
             initOperationClosed = "시간 선택"
@@ -540,15 +552,10 @@ final class OperationHourChangebleView: UIView {
         
         if operationIsInit {
             editButtonIsEnabled = false
-            print(operationIsInit)
         } else {
             if operationCheck || breakTimeCheck {
-                print(operationCheck)
-                print(breakTimeCheck)
                 editButtonIsEnabled = true
             } else {
-                print(operationCheck)
-                print(breakTimeCheck)
                 editButtonIsEnabled = false
             }
         }

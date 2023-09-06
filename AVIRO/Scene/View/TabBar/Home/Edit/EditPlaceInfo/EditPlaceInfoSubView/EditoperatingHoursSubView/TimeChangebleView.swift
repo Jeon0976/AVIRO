@@ -94,9 +94,11 @@ final class TimeChangebleView: UIView {
         for hour in 0...23 {
             for minute in stride(from: 0, to: 60, by: 10) {
                 let timeString = String(format: "%02d:%02d", hour, minute)
+                
                 let action = UIAction(title: timeString, handler: { [weak self] _ in
                     self?.changeLabelText(timeString)
                 })
+                
                 actions.append(action)
             }
         }
