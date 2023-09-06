@@ -13,6 +13,7 @@ protocol EditPlaceInfoProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
     func makeGesture()
+    func handleClosure()
     func isDetailFieldCheckBeforeKeyboardShowAndHide(notification: NSNotification) -> Bool
     func keyboardWillShow(height: CGFloat)
     func keyboardWillHide()
@@ -61,6 +62,7 @@ final class EditPlaceInfoPresenter {
         viewController?.makeLayout()
         viewController?.makeAttribute()
         viewController?.makeGesture()
+        viewController?.handleClosure()
         
         dataBinding()
     }
@@ -161,13 +163,13 @@ final class EditPlaceInfoPresenter {
     
     private func dataBindingWorkingHours() {
         let test = [
-            EditOperationHoursModel(day: "월요일", operatingHours: "10:00 - 19:00", breakTime: nil),
-            EditOperationHoursModel(day: "화요일", operatingHours: nil, breakTime: nil),
-            EditOperationHoursModel(day: "수요일", operatingHours: nil, breakTime: nil),
+            EditOperationHoursModel(day: "월요일", operatingHours: "10:00 - 19:00", breakTime: ""),
+            EditOperationHoursModel(day: "화요일", operatingHours: "정보 없음", breakTime: ""),
+            EditOperationHoursModel(day: "수요일", operatingHours: "휴무", breakTime: ""),
             EditOperationHoursModel(day: "목요일", operatingHours: "10:00 - 19:00", breakTime: "15:00 - 16:00"),
-            EditOperationHoursModel(day: "금요일", operatingHours: "10:00 - 19:00", breakTime: nil),
-            EditOperationHoursModel(day: "토요일", operatingHours: "10:00 - 19:00", breakTime: nil),
-            EditOperationHoursModel(day: "일요일", operatingHours: "10:00 - 19:00", breakTime: nil)
+            EditOperationHoursModel(day: "금요일", operatingHours: "10:00 - 19:00", breakTime: ""),
+            EditOperationHoursModel(day: "토요일", operatingHours: "10:00 - 19:00", breakTime: ""),
+            EditOperationHoursModel(day: "일요일", operatingHours: "10:00 - 19:00", breakTime: "")
         ]
         
         viewController?.dataBindingOperatingHours(operatingHourModels: test)

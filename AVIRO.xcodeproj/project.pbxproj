@@ -123,6 +123,8 @@
 		C5C90EB22AA5EC9E00AB3668 /* EditMenuChangedMarkerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C90EB12AA5EC9E00AB3668 /* EditMenuChangedMarkerModel.swift */; };
 		C5C90EB52AA6D80300AB3668 /* OperatingHourView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C90EB42AA6D80300AB3668 /* OperatingHourView.swift */; };
 		C5C90EB72AA7078300AB3668 /* EditOperationHoursModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C90EB62AA7078300AB3668 /* EditOperationHoursModel.swift */; };
+		C5C90EB92AA78D0200AB3668 /* OperationHourChangebleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C90EB82AA78D0200AB3668 /* OperationHourChangebleView.swift */; };
+		C5C90EBB2AA7F79600AB3668 /* TimeChangebleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C90EBA2AA7F79600AB3668 /* TimeChangebleLabel.swift */; };
 		C5C915492A777F8500C7CB93 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C915482A777F8500C7CB93 /* SearchField.swift */; };
 		C5C961932A8D9EE20016E2F8 /* PlaceMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C961922A8D9EE20016E2F8 /* PlaceMenuTableViewCell.swift */; };
 		C5C961952A8D9EED0016E2F8 /* PlaceReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C961942A8D9EED0016E2F8 /* PlaceReviewTableViewCell.swift */; };
@@ -158,7 +160,6 @@
 		C5F1014F2A6D19A800C53286 /* VeganOptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F1014E2A6D19A800C53286 /* VeganOptionButton.swift */; };
 		C5FA0EAA2A94DB3E004AD8B4 /* ReportReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FA0EA92A94DB3E004AD8B4 /* ReportReviewViewController.swift */; };
 		C5FA0EAC2A94DF39004AD8B4 /* ReportReviewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FA0EAB2A94DF39004AD8B4 /* ReportReviewPresenter.swift */; };
-		C5FA0EAE2A94E96F004AD8B4 /* ReportLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FA0EAD2A94E96F004AD8B4 /* ReportLabel.swift */; };
 		C5FD92E32A9C6C1E00CF4673 /* EditLocationDetailTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92E22A9C6C1E00CF4673 /* EditLocationDetailTextTableViewCell.swift */; };
 		C5FD92EB2A9C786600CF4673 /* PublicAPIRequestComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92EA2A9C786600CF4673 /* PublicAPIRequestComponents.swift */; };
 		C5FD92ED2A9C7AE800CF4673 /* PublicAPIRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92EC2A9C7AE800CF4673 /* PublicAPIRequestManager.swift */; };
@@ -295,6 +296,8 @@
 		C5C90EB12AA5EC9E00AB3668 /* EditMenuChangedMarkerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuChangedMarkerModel.swift; sourceTree = "<group>"; };
 		C5C90EB42AA6D80300AB3668 /* OperatingHourView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperatingHourView.swift; sourceTree = "<group>"; };
 		C5C90EB62AA7078300AB3668 /* EditOperationHoursModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditOperationHoursModel.swift; sourceTree = "<group>"; };
+		C5C90EB82AA78D0200AB3668 /* OperationHourChangebleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationHourChangebleView.swift; sourceTree = "<group>"; };
+		C5C90EBA2AA7F79600AB3668 /* TimeChangebleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeChangebleLabel.swift; sourceTree = "<group>"; };
 		C5C915482A777F8500C7CB93 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		C5C961922A8D9EE20016E2F8 /* PlaceMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceMenuTableViewCell.swift; sourceTree = "<group>"; };
 		C5C961942A8D9EED0016E2F8 /* PlaceReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceReviewTableViewCell.swift; sourceTree = "<group>"; };
@@ -330,7 +333,6 @@
 		C5F1014E2A6D19A800C53286 /* VeganOptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganOptionButton.swift; sourceTree = "<group>"; };
 		C5FA0EA92A94DB3E004AD8B4 /* ReportReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportReviewViewController.swift; sourceTree = "<group>"; };
 		C5FA0EAB2A94DF39004AD8B4 /* ReportReviewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportReviewPresenter.swift; sourceTree = "<group>"; };
-		C5FA0EAD2A94E96F004AD8B4 /* ReportLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportLabel.swift; sourceTree = "<group>"; };
 		C5FD92E22A9C6C1E00CF4673 /* EditLocationDetailTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocationDetailTextTableViewCell.swift; sourceTree = "<group>"; };
 		C5FD92EA2A9C786600CF4673 /* PublicAPIRequestComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicAPIRequestComponents.swift; sourceTree = "<group>"; };
 		C5FD92EC2A9C7AE800CF4673 /* PublicAPIRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicAPIRequestManager.swift; sourceTree = "<group>"; };
@@ -745,7 +747,7 @@
 			children = (
 				C5C9619D2A8DEAED0016E2F8 /* PlaceView */,
 				C54BC0DC2A2C762C00B65439 /* CommentsLabel.swift */,
-				C5FA0EAD2A94E96F004AD8B4 /* ReportLabel.swift */,
+				C5C90EBA2AA7F79600AB3668 /* TimeChangebleLabel.swift */,
 			);
 			path = UITextLabel;
 			sourceTree = "<group>";
@@ -1007,6 +1009,7 @@
 			isa = PBXGroup;
 			children = (
 				C5C90EB42AA6D80300AB3668 /* OperatingHourView.swift */,
+				C5C90EB82AA78D0200AB3668 /* OperationHourChangebleView.swift */,
 			);
 			path = EditoperatingHoursSubView;
 			sourceTree = "<group>";
@@ -1431,7 +1434,6 @@
 				C520663A2A808DC40038ECCD /* PlaceListHeaderView.swift in Sources */,
 				C52066382A808DAD0038ECCD /* HistoryHeaderView.swift in Sources */,
 				C5C290742A85E4EC00ED5DCE /* PlaceSegmentedControlView.swift in Sources */,
-				C5FA0EAE2A94E96F004AD8B4 /* ReportLabel.swift in Sources */,
 				C52FA3472A175B20005E70DC /* HomeViewController.swift in Sources */,
 				C5FD92E32A9C6C1E00CF4673 /* EditLocationDetailTextTableViewCell.swift in Sources */,
 				C51BBAD72A78D5AB00BF5B7C /* PlaceCheckModel.swift in Sources */,
@@ -1452,6 +1454,7 @@
 				C5166E492A9305A9003495AA /* AVIROSummaryModel.swift in Sources */,
 				C5A9899E2A95A7940021B7C3 /* BookmarkManager.swift in Sources */,
 				C50F6AFB2A68FFC300E942F5 /* EnrollVeganDetailView.swift in Sources */,
+				C5C90EB92AA78D0200AB3668 /* OperationHourChangebleView.swift in Sources */,
 				C5A201C72A98A6D200A54381 /* EditOperatingHoursView.swift in Sources */,
 				C5C290772A85E4FF00ED5DCE /* PlaceHomeView.swift in Sources */,
 				C5D93D9F2A581EC800629C39 /* FirstRegistrationViewController.swift in Sources */,
@@ -1526,6 +1529,7 @@
 				C5EB51122A20CC7D00B29CC1 /* HomeInfoStoreView.swift in Sources */,
 				C5EB50E42A1C685100B29CC1 /* TabBarItem.swift in Sources */,
 				C5A201BB2A986F9B00A54381 /* EditMenuPresenter.swift in Sources */,
+				C5C90EBB2AA7F79600AB3668 /* TimeChangebleLabel.swift in Sources */,
 				C5C9619C2A8DB1D80016E2F8 /* MenuTypeLabel.swift in Sources */,
 				C5351B7A2A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift in Sources */,
 				C50E6F6D2A8E5AAC00703B9E /* ReviewLabel.swift in Sources */,

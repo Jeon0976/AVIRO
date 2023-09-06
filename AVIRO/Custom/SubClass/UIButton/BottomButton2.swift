@@ -25,9 +25,9 @@ final class BottomButton2: UIButton {
         layer.borderWidth = 2
     }
     
-    func setButton(_ title: String) {
+    func setButton(_ title: String, _ image: UIImage? = UIImage(named: "Plus")?.withTintColor(.main!)) {
         let attributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: 17, weight: .semibold),
+            .font: UIFont.systemFont(ofSize: 16, weight: .semibold),
             .foregroundColor: UIColor.main!
         ]
         
@@ -35,7 +35,7 @@ final class BottomButton2: UIButton {
         
         setAttributedTitle(attributedTitle, for: .normal)
         
-        setImage(UIImage(named: "Plus"), for: .normal)
+        setImage(image, for: .normal)
         
         imageView?.contentMode = .scaleAspectFit
         semanticContentAttribute = .forceLeftToRight

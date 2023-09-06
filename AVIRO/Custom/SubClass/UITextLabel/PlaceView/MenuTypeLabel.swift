@@ -24,6 +24,16 @@ final class MenuTypeLabel: UILabel {
         }
     }
 
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        makeAttribute()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+    
     override func drawText(in rect: CGRect) {
         let insets = UIEdgeInsets(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
         super.drawText(in: rect.inset(by: insets))
@@ -33,16 +43,6 @@ final class MenuTypeLabel: UILabel {
         let size = super.intrinsicContentSize
         return CGSize(width: size.width + leftInset + rightInset,
                       height: size.height + topInset + bottomInset)
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        makeAttribute()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError()
     }
     
     private func makeAttribute() {

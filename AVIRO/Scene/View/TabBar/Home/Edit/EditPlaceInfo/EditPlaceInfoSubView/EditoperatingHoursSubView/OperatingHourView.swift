@@ -36,7 +36,10 @@ final class OperatingHourView: UIView {
     
     private var tapGesture = UITapGestureRecognizer()
     
-    var tappedOperatingHoursView: ((String?, String?) -> Void)?
+    var tappedOperatingHoursView: ((EditOperationHoursModel) -> Void)?
+    
+    private var operationText = ""
+    private var breakTimeText = ""
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -85,17 +88,29 @@ final class OperatingHourView: UIView {
     
     private func makeGesture() {
         tapGesture.addTarget(self, action: #selector(cellTapped))
+        
         self.addGestureRecognizer(tapGesture)
     }
     
     @objc private func cellTapped() {
-        tappedOperatingHoursView?(operatinghourLabel.text, breakTimeLabel.text)
+        guard let day = dayLabel.text else { return }
+        
+        let operationHourModel = EditOperationHoursModel(
+            day: day,
+            operatingHours: operationText,
+            breakTime: breakTimeText
+        )
+        
+        tappedOperatingHoursView?(operationHourModel)
     }
     
-    func dataBinding(day: String, operatingHours: String?, breakTime: String?) {
+    func dataBinding(day: String, operatingHours: String, breakTime: String) {
         dayLabel.text = day
         
-        if let operatingHours = operatingHours {
+        operationText = operatingHours
+        breakTimeText = breakTime
+        
+        if operatingHours != "정보 없음" {
             operatinghourLabel.text = operatingHours
             operatinghourLabel.textColor = .gray0
         } else {
@@ -103,9 +118,10 @@ final class OperatingHourView: UIView {
             operatinghourLabel.textColor = .gray2
         }
         
-        if let breakTime = breakTime {
+        if breakTime != "" {
             breakTimeLabel.text = "[휴식시간] " + breakTime
         } else {
+            breakTimeLabel.text = breakTime
             breakTimeLabel.isHidden = true
         }
     }

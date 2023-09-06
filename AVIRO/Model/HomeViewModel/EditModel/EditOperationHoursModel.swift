@@ -9,6 +9,6 @@ import Foundation
 
 struct EditOperationHoursModel {
     var day: String
-    var operatingHours: String?
-    var breakTime: String?
+    var operatingHours: String
+    var breakTime: String
 }

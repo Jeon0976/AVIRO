@@ -20,6 +20,8 @@ final class EditOperatingHoursView: UIView {
 
     private var operatingHourViews: [OperatingHourView] = []
     
+    var openChangebleOperationHourView: ((EditOperationHoursModel) -> Void)?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -50,10 +52,6 @@ final class EditOperatingHoursView: UIView {
         for _ in 0..<7 {
             let cellView = OperatingHourView()
             
-            cellView.tappedOperatingHoursView = { [weak self] (test, test2) in
-                
-            }
-            
             cellView.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview(cellView)
             
@@ -65,6 +63,10 @@ final class EditOperatingHoursView: UIView {
                 cellView.topAnchor.constraint(equalTo: operatingHourLabel.bottomAnchor, constant: 15) :
                 cellView.topAnchor.constraint(equalTo: lastView!.bottomAnchor, constant: 15)
             ])
+            
+            cellView.tappedOperatingHoursView = { [weak self] model in
+                self?.openChangebleOperationHourView?(model)
+            }
             
             operatingHourViews.append(cellView)
             

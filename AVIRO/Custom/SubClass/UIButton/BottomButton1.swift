@@ -27,7 +27,7 @@ final class BottomButton1: UIButton {
         
         let attributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 19, weight: .semibold),
-            .foregroundColor: UIColor.white
+            .foregroundColor: UIColor.gray7
         ]
         
         let attributedTitle = NSAttributedString(string: title, attributes: attributes)
@@ -36,7 +36,7 @@ final class BottomButton1: UIButton {
     
     private func setupButton() {
         self.layer.cornerRadius = 25
-        self.contentEdgeInsets = UIEdgeInsets(top: 14, left: 25, bottom: 14, right: 25)
+        self.contentEdgeInsets = UIEdgeInsets(top: 15, left: 25, bottom: 15, right: 25)
         self.clipsToBounds = true
         self.backgroundColor = .main
     }

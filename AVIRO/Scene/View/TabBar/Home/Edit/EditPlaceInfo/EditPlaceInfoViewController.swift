@@ -42,7 +42,7 @@ final class EditPlaceInfoViewController: UIViewController {
     }()
     
     private lazy var scrollView = UIScrollView()
-    
+        
     private lazy var editLocationTopView: EditLocationTopView = {
         let view = EditLocationTopView()
         
@@ -51,11 +51,7 @@ final class EditPlaceInfoViewController: UIViewController {
     
     private lazy var editLocationBottomView: EditLocationBottomView = {
         let view = EditLocationBottomView()
-        
-        view.tappedPushViewButton = { [weak self] in
-            self?.presenter.pushAddressEditViewController()
-        }
-        
+                
         return view
     }()
     
@@ -78,6 +74,9 @@ final class EditPlaceInfoViewController: UIViewController {
     }()
     
     private lazy var tapGesture = UITapGestureRecognizer()
+    
+    private lazy var blurEffectView = UIVisualEffectView()
+    private lazy var operationHourChangebleView = OperationHourChangebleView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,7 +102,9 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         [
             topLine,
             segmentedControl,
-            safeAreaView
+            safeAreaView,
+            blurEffectView,
+            operationHourChangebleView
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
@@ -122,7 +123,17 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
             safeAreaView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor),
             safeAreaView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             safeAreaView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            safeAreaView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            safeAreaView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            
+            blurEffectView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            blurEffectView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            blurEffectView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            blurEffectView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            
+            operationHourChangebleView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            operationHourChangebleView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            operationHourChangebleView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1, constant: -32)
+            
         ])
         
         makeSafeAreaViewLayout()
@@ -140,7 +151,7 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
             scrollView.topAnchor.constraint(equalTo: safeAreaView.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: safeAreaView.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: safeAreaView.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: safeAreaView.bottomAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: safeAreaView.bottomAnchor)
         ])
         
         [
@@ -178,6 +189,7 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
             editOperationHoursView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 20),
             editOperationHoursView.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 16),
             editOperationHoursView.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -16),
+            editOperationHoursView.bottomAnchor.constraint(equalTo: scrollView.frameLayoutGuide.bottomAnchor),
             
             editHomePageView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 20),
             editHomePageView.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 16),
@@ -202,11 +214,48 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
             tabBarController.hiddenTabBarIncludeIsTranslucent(true)
         }
         
-       activeLocation()
+        makeBlurEffect()
+        
+        activeLocation()
+    }
+    
+    private func makeBlurEffect() {
+        let blurEffectStyle = UIBlurEffect(style: UIBlurEffect.Style.dark)
+        
+        blurEffectView.effect = blurEffectStyle
+        blurEffectView.frame = view.bounds
+        blurEffectView.alpha = 0.4
+        blurEffectView.isHidden = true
+        operationHourChangebleView.isHidden = true
+    }
+    
+    func handleClosure() {
+        editLocationBottomView.tappedPushViewButton = { [weak self] in
+            self?.presenter.pushAddressEditViewController()
+        }
+
+        editOperationHoursView.openChangebleOperationHourView = { [weak self] timeModel in
+            self?.showOperationHourChangebleView(true, timeModel)
+        }
+    }
+    
+    private func showOperationHourChangebleView(
+        _ show: Bool,
+        _ operationHoursModel: EditOperationHoursModel
+    ) {
+        navigationController?.navigationBar.isUserInteractionEnabled = !show
+        blurEffectView.isHidden = !show
+        operationHourChangebleView.isHidden = !show
+        
+        operationHourChangebleView.makeBindingData(operationHoursModel)
+    }
+    
+    private func showTimeChangebleView(_ show: Bool) {
+        
     }
     
     @objc private func editStore() {
-
+        
     }
     
     @objc private func segmentedChanged(segment: UISegmentedControl) {
@@ -273,14 +322,11 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         self.navigationController?.isNavigationBarHidden = true
         self.segmentedControl.isHidden = true
         
-        let navigationHeight = navigationController!.navigationBar.frame.height
-        let segmentedControlHeight = segmentedControl.frame.height
-        
         UIView.animate(
             withDuration: 0.3,
-            animations: { self.safeAreaView.transform = CGAffineTransform(
+            animations: { self.scrollView.transform = CGAffineTransform(
                 translationX: 0,
-                y: -(height - navigationHeight - segmentedControlHeight))
+                y: -(height))
             }
         )
     }
@@ -288,8 +334,8 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     func keyboardWillHide() {
         self.navigationController?.isNavigationBarHidden = false
         self.segmentedControl.isHidden = false
-
-        self.safeAreaView.transform = .identity
+        
+        self.scrollView.transform = .identity
     }
     
     func dataBindingLocation(title: String,
