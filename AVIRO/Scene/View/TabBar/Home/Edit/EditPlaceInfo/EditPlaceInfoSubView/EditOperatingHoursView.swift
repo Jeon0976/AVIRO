@@ -85,4 +85,15 @@ final class EditOperatingHoursView: UIView {
             }
         }
     }
+    
+    func editOperationHour(_ model: EditOperationHoursModel) {
+        operatingHourViews.forEach {
+            if $0.checkDay() == model.day {
+                $0.changeData(
+                    operatingHours: model.operatingHours,
+                    breakTime: model.breakTime
+                )
+            }
+        }
+    }
 }

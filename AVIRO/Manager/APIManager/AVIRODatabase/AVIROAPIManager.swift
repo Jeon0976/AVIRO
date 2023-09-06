@@ -212,6 +212,32 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
         }.resume()
     }
     
+    // MARK: Get Operation Hour
+    func getOperationHour(
+        placeId: String,
+        completionHandler: @escaping((AVIROOperationHourModel) -> Void)
+    ) {
+        guard let url = requestAPI.getOperationHours(placeId: placeId).url else {
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        
+        request.httpMethod = "GET"
+        
+        session.dataTask(with: request) { data, _, error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            if let data = data {
+                if let operationHoursData = try? JSONDecoder().decode(AVIROOperationHourModel.self, from: data) {
+                    completionHandler(operationHoursData)
+                }
+            }
+        }.resume()
+    }
+    
     // MARK: Check User Model
     func postCheckUserModel(_ userToken: UserCheckInput, completionHandler: @escaping((CheckUser) -> Void)) {
         guard let url = postAPI.userCheck().url else { print("url error"); return}

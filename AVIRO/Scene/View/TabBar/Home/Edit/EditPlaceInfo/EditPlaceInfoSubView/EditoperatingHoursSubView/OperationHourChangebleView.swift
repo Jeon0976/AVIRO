@@ -23,6 +23,8 @@ final class OperationHourChangebleView: UIView {
         button.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 2)
         button.titleEdgeInsets = .init(top: 0, left: 2, bottom: 0, right: 0)
         
+        button.addTarget(self, action: #selector(operatingHourButtonTapped), for: .touchUpInside)
+        
         return button
     }()
     
@@ -41,6 +43,8 @@ final class OperationHourChangebleView: UIView {
         button.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 2)
         button.titleEdgeInsets = .init(top: 0, left: 2, bottom: 0, right: 0)
         
+        button.addTarget(self, action: #selector(dayOffButtonTapped), for: .touchUpInside)
+        
         return button
     }()
     
@@ -48,6 +52,7 @@ final class OperationHourChangebleView: UIView {
         let button = UIButton()
         
         button.setImage(UIImage(named: "X-Circle"), for: .normal)
+        button.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         
         return button
     }()
@@ -79,11 +84,13 @@ final class OperationHourChangebleView: UIView {
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         
         button.setImage(UIImage(named: "EmptyFrame"), for: .normal)
-        button.setImage(UIImage(named: "Frame")?.withTintColor(.main!), for: .selected)
+        button.setImage(UIImage(named: "Frame"), for: .selected)
         
         button.semanticContentAttribute = .forceLeftToRight
         button.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 7)
         button.titleEdgeInsets = .init(top: 0, left: 7, bottom: 0, right: 0)
+        
+        button.addTarget(self, action: #selector(open24hoursButtonTapped), for: .touchUpInside)
                 
         return button
     }()
@@ -91,11 +98,19 @@ final class OperationHourChangebleView: UIView {
     private lazy var operationTimeOpen: TimeChangebleView = {
         let view = TimeChangebleView()
         
+        view.isChangedTime = { [weak self] in
+            self?.whenAddTimeLabelCheckIsEnabledEditButton()
+        }
+        
         return view
     }()
     
     private lazy var operationTimeClosed: TimeChangebleView = {
         let view = TimeChangebleView()
+        
+        view.isChangedTime = { [weak self] in
+            self?.whenAddTimeLabelCheckIsEnabledEditButton()
+        }
         
         return view
     }()
@@ -126,15 +141,22 @@ final class OperationHourChangebleView: UIView {
         return label
     }()
     
-    
     private lazy var breakTimeOpen: TimeChangebleView = {
         let view = TimeChangebleView()
+        
+        view.isChangedTime = { [weak self] in
+            self?.whenAddTimeLabelCheckIsEnabledEditButton()
+        }
         
         return view
     }()
     
     private lazy var breakTimeClosed: TimeChangebleView = {
         let view = TimeChangebleView()
+        
+        view.isChangedTime = { [weak self] in
+            self?.whenAddTimeLabelCheckIsEnabledEditButton()
+        }
         
         return view
     }()
@@ -166,10 +188,38 @@ final class OperationHourChangebleView: UIView {
         
         button.layer.cornerRadius = 27
         
+        button.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+        
         return button
     }()
     
     private var viewHeightConstraint: NSLayoutConstraint?
+    
+    private var day = ""
+    private var initDayOff = ""
+    private var initOperationOpen = ""
+    private var initOperationClosed = ""
+    private var initBreakOpen = ""
+    private var initBreakClosed = ""
+    
+    var cancelTapped: (() -> Void)?
+    var editTapped: ((EditOperationHoursModel) -> Void)?
+    
+    private var editButtonIsEnabled = false {
+        didSet {
+            isEnabledEditButton(editButtonIsEnabled)
+        }
+    }
+    
+    private func isEnabledEditButton(_ enabled: Bool) {
+        if enabled {
+            editButton.backgroundColor = .main
+            editButton.setTitleColor(.gray7, for: .normal)
+        } else {
+            editButton.backgroundColor = .gray6
+            editButton.setTitleColor(.gray2, for: .normal)
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -307,31 +357,63 @@ final class OperationHourChangebleView: UIView {
     }
     
     func makeBindingData(_ operationHoursModel: EditOperationHoursModel) {
+        day = operationHoursModel.day
+        editButtonIsEnabled = false
+        open24hoursButton.isSelected = false
+        initDayOff = ""
+        
         if operationHoursModel.operatingHours == "휴무" {
+            initDayOff = operationHoursModel.operatingHours
+            initOperationOpen = "시간 선택"
+            initOperationClosed = "시간 선택"
+            initBreakOpen = "시간 선택"
+            initBreakClosed = "시간 선택"
+            
             dayOffButton.isSelected = true
             operatingHoursButton.isSelected = false
+            
             operationTimeOpen.makeLabelText("시간 선택")
             operationTimeClosed.makeLabelText("시간 선택")
             breakTimeOpen.makeLabelText("시간 선택")
             breakTimeClosed.makeLabelText("시간 선택")
         } else if operationHoursModel.operatingHours == "정보 없음" {
+            initOperationOpen = "시간 선택"
+            initOperationClosed = "시간 선택"
+            
             dayOffButton.isSelected = false
             operatingHoursButton.isSelected = true
+            
             operationTimeOpen.makeLabelText("시간 선택")
             operationTimeClosed.makeLabelText("시간 선택")
         } else {
             dayOffButton.isSelected = false
             operatingHoursButton.isSelected = true
             let times = operationHoursModel.operatingHours.split(separator: "-")
+            var open00 = false
+            var closed24 = false
             
             if let openTime = times.first {
                 let open = String(openTime)
                 operationTimeOpen.makeLabelText(open)
+                initOperationOpen = open
+                if open == "00:00" {
+                    open00 = true
+                }
             }
             
             if let closedTime = times.last {
                 let closed = String(closedTime)
                 operationTimeClosed.makeLabelText(closed)
+                initOperationClosed = closed
+                if closed == "24:00" {
+                    closed24 = true
+                }
+            }
+   
+            if open00 && closed24 {
+                open24hoursButton.isSelected = true
+                operationTimeOpen.isEnabledButton(false)
+                operationTimeClosed.isEnabledButton(false)
             }
         }
         
@@ -342,15 +424,133 @@ final class OperationHourChangebleView: UIView {
             if let openTime = times.first {
                 let open = String(openTime)
                 breakTimeOpen.makeLabelText(open)
+                initBreakOpen = open
             }
             
             if let closedTime = times.last {
                 let closed = String(closedTime)
                 breakTimeClosed.makeLabelText(closed)
+                initBreakClosed = closed
             }
         } else {
+            initBreakOpen = "시간 선택"
+            initBreakClosed = "시간 선택"
+            
             breakTimeOpen.makeLabelText("시간 선택")
             breakTimeClosed.makeLabelText("시간 선택")
+        }
+    }
+    
+    @objc private func operatingHourButtonTapped() {
+        if !operatingHoursButton.isSelected {
+            operatingHoursButton.isSelected.toggle()
+            dayOffButton.isSelected.toggle()
+            operationTimeOpen.isEnabledButton(true)
+            operationTimeClosed.isEnabledButton(true)
+            breakTimeOpen.isEnabledButton(true)
+            breakTimeClosed.isEnabledButton(true)
+            
+            editButtonIsEnabled = false
+        }
+    }
+    
+    @objc private func dayOffButtonTapped() {
+        if !dayOffButton.isSelected {
+            operatingHoursButton.isSelected.toggle()
+            dayOffButton.isSelected.toggle()
+            open24hoursButton.isSelected = false
+            
+            operationTimeOpen.makeLabelText("시간 선택")
+            operationTimeClosed.makeLabelText("시간 선택")
+            breakTimeOpen.makeLabelText("시간 선택")
+            breakTimeClosed.makeLabelText("시간 선택")
+            operationTimeOpen.isEnabledButton(false)
+            operationTimeClosed.isEnabledButton(false)
+            breakTimeOpen.isEnabledButton(false)
+            breakTimeClosed.isEnabledButton(false)
+            
+            if initDayOff != "휴무" {
+                editButtonIsEnabled = true
+            }
+        }
+    }
+    
+    @objc private func cancelButtonTapped() {
+        cancelTapped?()
+    }
+    
+    @objc private func open24hoursButtonTapped() {
+        if !dayOffButton.isSelected {
+            open24hoursButton.isSelected.toggle()
+            
+            if open24hoursButton.isSelected {
+                operationTimeOpen.makeLabelText("00:00")
+                operationTimeClosed.makeLabelText("24:00")
+                operationTimeOpen.isEnabledButton(false)
+                operationTimeClosed.isEnabledButton(false)
+                
+                whenAddTimeLabelCheckIsEnabledEditButton()
+            } else {
+                operationTimeOpen.isEnabledButton(true)
+                operationTimeClosed.isEnabledButton(true)
+            }
+        }
+
+    }
+    
+    @objc private func editButtonTapped() {
+        if editButtonIsEnabled {
+            var operatingHours = "정보 없음"
+            var breakTime = ""
+            
+            if dayOffButton.isSelected {
+                operatingHours = "휴무"
+                breakTime = ""
+            } else {
+                let open = operationTimeOpen.loadTimeData()
+                let closed = operationTimeClosed.loadTimeData()
+                
+                operatingHours = open + "-" + closed
+            }
+            
+            if breakTimeOpen.loadTimeData() != "시간 선택" && breakTimeClosed.loadTimeData() != "시간 선택" {
+                let open = breakTimeOpen.loadTimeData()
+                let closed = breakTimeClosed.loadTimeData()
+                
+                breakTime = open + "-" + closed
+            }
+            
+            let model = EditOperationHoursModel(
+                day: self.day,
+                operatingHours: operatingHours,
+                breakTime: breakTime
+            )
+            
+            editTapped?(model)
+        }
+    }
+
+    private func whenAddTimeLabelCheckIsEnabledEditButton() {
+        let operationIsInit = operationTimeOpen.loadTimeData() == "시간 선택" || operationTimeClosed.loadTimeData() == "시간 선택"
+        
+        let operationCheck = operationTimeOpen.loadTimeData() != initOperationOpen || operationTimeClosed.loadTimeData() != initOperationClosed
+        
+        
+        let breakTimeCheck = breakTimeOpen.loadTimeData() != initBreakOpen || breakTimeClosed.loadTimeData() != initBreakClosed
+        
+        if operationIsInit {
+            editButtonIsEnabled = false
+            print(operationIsInit)
+        } else {
+            if operationCheck || breakTimeCheck {
+                print(operationCheck)
+                print(breakTimeCheck)
+                editButtonIsEnabled = true
+            } else {
+                print(operationCheck)
+                print(breakTimeCheck)
+                editButtonIsEnabled = false
+            }
         }
     }
 }

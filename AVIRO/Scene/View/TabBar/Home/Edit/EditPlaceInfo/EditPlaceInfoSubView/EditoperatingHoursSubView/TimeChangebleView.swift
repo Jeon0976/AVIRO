@@ -18,9 +18,13 @@ final class TimeChangebleView: UIView {
         let btn = UIButton()
 
         btn.setImage(UIImage(named: "DownSorting"), for: .normal)
+        btn.menu = setButtonMenu()
+        btn.showsMenuAsPrimaryAction = true
         
         return btn
     }()
+    
+    var isChangedTime: (() -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -67,4 +71,37 @@ final class TimeChangebleView: UIView {
             label.textColor = .gray0
         }
     }
+    
+    func changeLabelText(_ time: String) {
+        self.label.text = time
+        self.label.textColor = .gray0
+        
+        isChangedTime?()
+    }
+    
+    func loadTimeData() -> String {
+        guard let text = self.label.text else { return "" }
+        return text
+    }
+    
+    func isEnabledButton(_ isEnabled: Bool) {
+        button.isEnabled = isEnabled
+    }
+    
+    private func setButtonMenu() -> UIMenu {
+        var actions: [UIAction] = []
+        
+        for hour in 0...23 {
+            for minute in stride(from: 0, to: 60, by: 10) {
+                let timeString = String(format: "%02d:%02d", hour, minute)
+                let action = UIAction(title: timeString, handler: { [weak self] _ in
+                    self?.changeLabelText(timeString)
+                })
+                actions.append(action)
+            }
+        }
+        
+        return UIMenu(title: "", children: actions)
+    }
+
 }

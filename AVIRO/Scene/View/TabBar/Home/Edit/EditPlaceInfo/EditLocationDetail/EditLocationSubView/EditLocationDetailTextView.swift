@@ -46,11 +46,11 @@ final class EditLocationDetailTextView: UIView {
         
         return tableView
     }()
-    
+        
     var searchAddress: ((String) -> Void)?
     
     private var searchTimer: DispatchWorkItem?
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -87,6 +87,7 @@ final class EditLocationDetailTextView: UIView {
         
         subLabel.isHidden = false
         addressTableView.isHidden = true
+        
     }
     
     func setTableViewDataSource(_ dataSource: UITableViewDataSource) {
@@ -110,12 +111,11 @@ final class EditLocationDetailTextView: UIView {
 extension EditLocationDetailTextView: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         chagedView()
-        
-        addressTextField.rightButtonHidden = false
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        
+        addressTextField.rightButtonHidden = false
+
         searchTimer?.cancel()
 
         // 새로운 타이머 작업을 생성합니다.
@@ -132,7 +132,7 @@ extension EditLocationDetailTextView: UITextFieldDelegate {
         // 타이머 작업을 저장합니다.
         searchTimer = task
 
-        // 0.5초 후에 작업을 실행합니다.
+        // 0.3초 후에 작업을 실행합니다.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: task)
     }
 }

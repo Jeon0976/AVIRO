@@ -162,17 +162,12 @@ final class EditPlaceInfoPresenter {
     }
     
     private func dataBindingWorkingHours() {
-        let test = [
-            EditOperationHoursModel(day: "월요일", operatingHours: "10:00 - 19:00", breakTime: ""),
-            EditOperationHoursModel(day: "화요일", operatingHours: "정보 없음", breakTime: ""),
-            EditOperationHoursModel(day: "수요일", operatingHours: "휴무", breakTime: ""),
-            EditOperationHoursModel(day: "목요일", operatingHours: "10:00 - 19:00", breakTime: "15:00 - 16:00"),
-            EditOperationHoursModel(day: "금요일", operatingHours: "10:00 - 19:00", breakTime: ""),
-            EditOperationHoursModel(day: "토요일", operatingHours: "10:00 - 19:00", breakTime: ""),
-            EditOperationHoursModel(day: "일요일", operatingHours: "10:00 - 19:00", breakTime: "")
-        ]
-        
-        viewController?.dataBindingOperatingHours(operatingHourModels: test)
+        guard let placeId = placeId else { return }
+        AVIROAPIManager().getOperationHour(placeId: placeId) { [weak self] model in
+            DispatchQueue.main.async {
+                self?.viewController?.dataBindingOperatingHours(operatingHourModels: model.data.toEditOperationHoursModels())
+            }
+        }
     }
     
     private func dataBindingHomepage() {

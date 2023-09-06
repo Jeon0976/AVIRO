@@ -17,6 +17,8 @@ class EnrollField: UITextField {
     private var isAddLeftImage = false
     private var isAddRightButton = false
     
+    private var rightButton = UIButton()
+    
     var tappedPushViewButton: (() -> Void)?
     
     var rightButtonHidden = false {
@@ -134,7 +136,6 @@ class EnrollField: UITextField {
     
     func addRightCancelButton() {
         let image = UIImage(named: "X-Circle")?.withRenderingMode(.alwaysTemplate)
-        let rightButton = UIButton()
         
         rightButton.setImage(image, for: .normal)
         rightButton.tintColor = .gray2
@@ -160,6 +161,7 @@ class EnrollField: UITextField {
     @objc func rightButtonTapped(_ sender: UIButton) {
         self.text = ""
         self.rightButtonHidden = true
+        print("Test")
     }
     
     // MARK: Place Holder 값 넣기

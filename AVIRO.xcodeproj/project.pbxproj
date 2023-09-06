@@ -124,7 +124,8 @@
 		C5C90EB52AA6D80300AB3668 /* OperatingHourView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C90EB42AA6D80300AB3668 /* OperatingHourView.swift */; };
 		C5C90EB72AA7078300AB3668 /* EditOperationHoursModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C90EB62AA7078300AB3668 /* EditOperationHoursModel.swift */; };
 		C5C90EB92AA78D0200AB3668 /* OperationHourChangebleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C90EB82AA78D0200AB3668 /* OperationHourChangebleView.swift */; };
-		C5C90EBB2AA7F79600AB3668 /* TimeChangebleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C90EBA2AA7F79600AB3668 /* TimeChangebleLabel.swift */; };
+		C5C90EBB2AA7F79600AB3668 /* TimeChangebleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C90EBA2AA7F79600AB3668 /* TimeChangebleView.swift */; };
+		C5C90EBD2AA85E7000AB3668 /* AVIROOperationHourModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C90EBC2AA85E7000AB3668 /* AVIROOperationHourModel.swift */; };
 		C5C915492A777F8500C7CB93 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C915482A777F8500C7CB93 /* SearchField.swift */; };
 		C5C961932A8D9EE20016E2F8 /* PlaceMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C961922A8D9EE20016E2F8 /* PlaceMenuTableViewCell.swift */; };
 		C5C961952A8D9EED0016E2F8 /* PlaceReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C961942A8D9EED0016E2F8 /* PlaceReviewTableViewCell.swift */; };
@@ -297,7 +298,8 @@
 		C5C90EB42AA6D80300AB3668 /* OperatingHourView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperatingHourView.swift; sourceTree = "<group>"; };
 		C5C90EB62AA7078300AB3668 /* EditOperationHoursModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditOperationHoursModel.swift; sourceTree = "<group>"; };
 		C5C90EB82AA78D0200AB3668 /* OperationHourChangebleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationHourChangebleView.swift; sourceTree = "<group>"; };
-		C5C90EBA2AA7F79600AB3668 /* TimeChangebleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeChangebleLabel.swift; sourceTree = "<group>"; };
+		C5C90EBA2AA7F79600AB3668 /* TimeChangebleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeChangebleView.swift; sourceTree = "<group>"; };
+		C5C90EBC2AA85E7000AB3668 /* AVIROOperationHourModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROOperationHourModel.swift; sourceTree = "<group>"; };
 		C5C915482A777F8500C7CB93 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		C5C961922A8D9EE20016E2F8 /* PlaceMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceMenuTableViewCell.swift; sourceTree = "<group>"; };
 		C5C961942A8D9EED0016E2F8 /* PlaceReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceReviewTableViewCell.swift; sourceTree = "<group>"; };
@@ -525,6 +527,7 @@
 				C5FF13522A42C8810026981D /* AVIROPlaceModel.swift */,
 				C5FF13542A42C88D0026981D /* AVIROMenuModel.swift */,
 				C5FF13562A42C8970026981D /* AVIROReviewsModel.swift */,
+				C5C90EBC2AA85E7000AB3668 /* AVIROOperationHourModel.swift */,
 			);
 			path = AVIRODetailPlace;
 			sourceTree = "<group>";
@@ -747,7 +750,6 @@
 			children = (
 				C5C9619D2A8DEAED0016E2F8 /* PlaceView */,
 				C54BC0DC2A2C762C00B65439 /* CommentsLabel.swift */,
-				C5C90EBA2AA7F79600AB3668 /* TimeChangebleLabel.swift */,
 			);
 			path = UITextLabel;
 			sourceTree = "<group>";
@@ -1010,6 +1012,7 @@
 			children = (
 				C5C90EB42AA6D80300AB3668 /* OperatingHourView.swift */,
 				C5C90EB82AA78D0200AB3668 /* OperationHourChangebleView.swift */,
+				C5C90EBA2AA7F79600AB3668 /* TimeChangebleView.swift */,
 			);
 			path = EditoperatingHoursSubView;
 			sourceTree = "<group>";
@@ -1442,6 +1445,7 @@
 				C5C290812A8616E500ED5DCE /* PlaceInfoView.swift in Sources */,
 				C5B071E12A59454300AE709A /* BottomCell.swift in Sources */,
 				C5FA0EAA2A94DB3E004AD8B4 /* ReportReviewViewController.swift in Sources */,
+				C5C90EBD2AA85E7000AB3668 /* AVIROOperationHourModel.swift in Sources */,
 				C520663C2A80C0450038ECCD /* CenterCoordinate.swift in Sources */,
 				C5C961932A8D9EE20016E2F8 /* PlaceMenuTableViewCell.swift in Sources */,
 				C5351B502A19225A00116D50 /* KakaoMapResponseKeywordModel.swift in Sources */,
@@ -1529,7 +1533,7 @@
 				C5EB51122A20CC7D00B29CC1 /* HomeInfoStoreView.swift in Sources */,
 				C5EB50E42A1C685100B29CC1 /* TabBarItem.swift in Sources */,
 				C5A201BB2A986F9B00A54381 /* EditMenuPresenter.swift in Sources */,
-				C5C90EBB2AA7F79600AB3668 /* TimeChangebleLabel.swift in Sources */,
+				C5C90EBB2AA7F79600AB3668 /* TimeChangebleView.swift in Sources */,
 				C5C9619C2A8DB1D80016E2F8 /* MenuTypeLabel.swift in Sources */,
 				C5351B7A2A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift in Sources */,
 				C50E6F6D2A8E5AAC00703B9E /* ReviewLabel.swift in Sources */,

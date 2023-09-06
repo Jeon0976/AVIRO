@@ -27,6 +27,7 @@ struct AVIRORequestAPI {
     static let placeInfoPath = "/prod/map/load/place"
     static let menuInfoPath = "/prod/map/load/menu"
     static let commentPath = "/prod/map/load/comment"
+    static let operationHourPath = "/prod/map/load/timetable"
     
     static let checkPlacePath = "/prod/map/check/place"
     
@@ -142,7 +143,22 @@ struct AVIRORequestAPI {
         
         return components
     }
-
+    
+    // MARK: Operation Hour
+    mutating func getOperationHours(placeId: String) -> URLComponents {
+        var components = URLComponents()
+        
+        components.scheme = AVIRORequestAPI.scheme
+        components.host = host
+        components.path = AVIRORequestAPI.operationHourPath
+        
+        components.queryItems = [
+            URLQueryItem(name: AVIRORequestAPI.placeId, value: placeId)
+        ]
+        
+        return components
+    }
+    
     // MARK: Check Place
     mutating func getCheckPlace(placeModel: PlaceCheckModel) -> URLComponents {
         var components = URLComponents()

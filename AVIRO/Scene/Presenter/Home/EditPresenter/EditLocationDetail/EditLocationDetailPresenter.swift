@@ -12,6 +12,7 @@ import NMapsMap
 protocol EditLocationDetailProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
+    func makeGesture()
     func dataBindingMap(_ marker: NMFMarker)
     func afterChangedAddressWhenMapView(_ address: String)
     func textViewTableReload()
@@ -52,6 +53,7 @@ final class EditLocationDetailPresenter {
     func viewDidLoad() {
         viewController?.makeLayout()
         viewController?.makeAttribute()
+        viewController?.makeGesture()
     }
     
     func viewWillAppear() {

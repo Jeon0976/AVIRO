@@ -34,6 +34,8 @@ final class OperatingHourView: UIView {
         return label
     }()
     
+    private var viewHeight: NSLayoutConstraint?
+    
     private var tapGesture = UITapGestureRecognizer()
     
     var tappedOperatingHoursView: ((EditOperationHoursModel) -> Void)?
@@ -60,6 +62,9 @@ final class OperatingHourView: UIView {
     }
     
     private func makeLayout() {
+        viewHeight = heightAnchor.constraint(equalToConstant: 70)
+        viewHeight?.isActive = true
+        
         [
             dayLabel,
             operatinghourLabel,
@@ -120,10 +125,34 @@ final class OperatingHourView: UIView {
         
         if breakTime != "" {
             breakTimeLabel.text = "[휴식시간] " + breakTime
+            breakTimeLabel.isHidden = false
         } else {
             breakTimeLabel.text = breakTime
             breakTimeLabel.isHidden = true
         }
+    }
+    
+    func changeData(operatingHours: String, breakTime: String) {
+        operationText = operatingHours
+        breakTimeText = breakTime
+        
+        if operatingHours != "정보 없음" {
+            operatinghourLabel.text = operatingHours
+            operatinghourLabel.textColor = .gray0
+        } else {
+            operatinghourLabel.text = "입력해주세요"
+            operatinghourLabel.textColor = .gray2
+        }
+        
+        if breakTime != "" {
+            breakTimeLabel.text = "[휴식시간] " + breakTime
+            breakTimeLabel.isHidden = false
+        } else {
+            breakTimeLabel.text = breakTime
+            breakTimeLabel.isHidden = true
+        }
+        
+        makeViewHeight()
     }
     
     private func makeViewHeight() {
@@ -142,7 +171,7 @@ final class OperatingHourView: UIView {
         
         let totalHeight = operationHeight + inset
         
-        self.heightAnchor.constraint(equalToConstant: totalHeight).isActive = true
+        viewHeight?.constant = totalHeight
     }
     
     private func whenHasBreakTimeMakeViewHeight() {
@@ -154,6 +183,11 @@ final class OperatingHourView: UIView {
         
         let totalHeight = operationHeight + breackTimeHeight + inset
         
-        self.heightAnchor.constraint(equalToConstant: totalHeight).isActive = true
+        viewHeight?.constant = totalHeight
+    }
+    
+    func checkDay() -> String {
+        guard let day = dayLabel.text else { return "" }
+        return day
     }
 }

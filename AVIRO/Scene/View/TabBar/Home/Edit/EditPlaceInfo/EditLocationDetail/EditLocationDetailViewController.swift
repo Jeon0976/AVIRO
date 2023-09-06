@@ -57,6 +57,8 @@ final class EditLocationDetailViewController: UIViewController {
         return view
     }()
     
+    private var tapGesture = UIGestureRecognizer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -115,6 +117,12 @@ extension EditLocationDetailViewController: EditLocationDetailProtocol {
         
         editLocationDetailTextView.setTableViewDataSource(self)
         editLocationDetailTextView.setTableViewDelegate(self)
+    }
+    
+    func makeGesture() {
+        view.addGestureRecognizer(tapGesture)
+        tapGesture.delegate = self
+//        tapGesture.cancelsTouchesInView = false
     }
     
     @objc private func segmentedChanged(segment: UISegmentedControl) {
@@ -206,5 +214,21 @@ extension EditLocationDetailViewController: UITableViewDelegate {
         presenter.whenAfterClickedAddress(selecedAddress)
         
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+extension EditLocationDetailViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if touch.view is UISegmentedControl {
+            view.endEditing(true)
+            return false
+        }
+        
+        if touch.view is EnrollField || touch.view is UIButton {
+            return false
+        }
+        
+        view.endEditing(true)
+        return true
     }
 }

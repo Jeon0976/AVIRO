@@ -224,7 +224,7 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         
         blurEffectView.effect = blurEffectStyle
         blurEffectView.frame = view.bounds
-        blurEffectView.alpha = 0.4
+        blurEffectView.alpha = 0.6
         blurEffectView.isHidden = true
         operationHourChangebleView.isHidden = true
     }
@@ -237,16 +237,28 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         editOperationHoursView.openChangebleOperationHourView = { [weak self] timeModel in
             self?.showOperationHourChangebleView(true, timeModel)
         }
+        
+        operationHourChangebleView.cancelTapped = { [weak self] in
+            self?.showOperationHourChangebleView(false, nil)
+        }
+        
+        // MARK: API 연결 후 작업
+        operationHourChangebleView.editTapped = { [weak self] editOperationHoursModel in
+            self?.showOperationHourChangebleView(false, nil)
+            self?.editOperationHoursView.editOperationHour(editOperationHoursModel)
+            
+        }
     }
     
     private func showOperationHourChangebleView(
         _ show: Bool,
-        _ operationHoursModel: EditOperationHoursModel
+        _ operationHoursModel: EditOperationHoursModel?
     ) {
         navigationController?.navigationBar.isUserInteractionEnabled = !show
         blurEffectView.isHidden = !show
         operationHourChangebleView.isHidden = !show
         
+        guard let operationHoursModel = operationHoursModel else { return }
         operationHourChangebleView.makeBindingData(operationHoursModel)
     }
     

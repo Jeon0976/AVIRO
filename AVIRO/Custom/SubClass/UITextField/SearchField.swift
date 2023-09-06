@@ -115,7 +115,7 @@ final class SearchField: UITextField {
         let image = UIImage(named: "X-Circle")?.withRenderingMode(.alwaysTemplate)
         
         rightButton.setImage(image, for: .normal)
-        rightButton.tintColor = .gray0
+        rightButton.tintColor = .gray2
         rightButton.frame = .init(x: horizontalPadding, y: 0, width: buttonSize, height: buttonSize)
         rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
         
