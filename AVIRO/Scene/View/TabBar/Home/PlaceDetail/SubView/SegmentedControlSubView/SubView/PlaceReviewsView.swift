@@ -218,17 +218,17 @@ final class PlaceReviewsView: UIView {
     }
     
     private func whenHaveReviewsInHomeView(_ reviews: [ReviewData]) {
-        noReviews.isHidden = true
-        reviewsTable.isHidden = false
-        showMoreReviewsButton.isHidden = false
-        separatedLine.isHidden = false
-        
         if reviews.count > 4 {
             self.reviewsArray = Array(reviews.prefix(4))
         } else {
             self.reviewsArray = reviews
         }
         
+        noReviews.isHidden = true
+        reviewsTable.isHidden = false
+        showMoreReviewsButton.isHidden = false
+        separatedLine.isHidden = false
+
         reviewsTable.reloadData()
         reviewsTable.isScrollEnabled = false
         
@@ -240,6 +240,8 @@ final class PlaceReviewsView: UIView {
     }
     
     private func whenNotHaveReviewsInHomeView() {
+        self.reviewsArray = [ReviewData]()
+
         reviewsHeightConstraint?.isActive = false
         viewHeightConstraint?.isActive = false
         
@@ -313,10 +315,9 @@ final class PlaceReviewsView: UIView {
         
         if let existingIndex = reviewsArray.firstIndex(where: { $0.commentId == reviewModel.commentId }) {
 
-            reviewsArray.remove(at: existingIndex)
+            reviewsArray[existingIndex] = reviewModel
         }
         
-        reviewsArray.insert(reviewModel, at: 0)
         reviewsTable.reloadData()
         
         subTitle.text = "\(whenHomeViewReviewsCount)개"
@@ -370,9 +371,7 @@ final class PlaceReviewsView: UIView {
         guard let index = reviewsArray.firstIndex(where: {$0.commentId == editedReviewId}) else {
             return
         }
-        
-        reviewsArray.remove(at: index)
-        
+                
         var postModel = AVIROCommentPost(placeId: placeId, userId: UserId.shared.userId, content: text)
         postModel.commentId = editedReviewId
         
@@ -382,7 +381,8 @@ final class PlaceReviewsView: UIView {
             content: text,
             updatedTime: nowDate)
         
-        reviewsArray.insert(reviewModel, at: 0)
+        reviewsArray[index] = reviewModel
+        
         reviewsTable.reloadData()
         
         subTitle.text = "\(reviewsArray.count)개"
