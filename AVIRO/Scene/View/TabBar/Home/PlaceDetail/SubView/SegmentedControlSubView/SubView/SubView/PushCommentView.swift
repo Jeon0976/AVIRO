@@ -32,7 +32,7 @@ final class PushCommentView: UIView {
         return textView
     }()
     
-    private lazy var button: UIButton = {
+    private lazy var enrollButton: UIButton = {
         let button = UIButton()
         
         button.setTitle("등록", for: .normal)
@@ -51,20 +51,47 @@ final class PushCommentView: UIView {
         return separator
     }()
     
+    private lazy var cancelEditButton: UIButton = {
+        let button = UIButton()
+       
+        button.setImage(UIImage(named: "Close"), for: .normal)
+        button.addTarget(self, action: #selector(cancelEditTapped), for: .touchUpInside)
+        
+        return button
+    }()
+    
     private var viewHeight: NSLayoutConstraint?
-    private var originalTextViewHeight: CGFloat?    
+    
+    private var temparyTextViewHeightConstraint: NSLayoutConstraint?
+    private var textViewLeadingWhenHiddenCancelButton: NSLayoutConstraint?
+    private var textViewLeadingWhenShowCancelButton: NSLayoutConstraint?
     
     var enrollReview: ((String) -> Void)?
+    var initView: (() -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.backgroundColor = .gray7
-        
+        setupLayout()
+        setupAttribute()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        makeViewHeight()
+    }
+    
+    private func setupLayout() {
         [
             separator,
             textView,
-            button
+            enrollButton,
+            cancelEditButton
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview($0)
@@ -72,6 +99,15 @@ final class PushCommentView: UIView {
         
         viewHeight = heightAnchor.constraint(equalToConstant: 0)
         viewHeight?.isActive = true
+        
+        textViewLeadingWhenHiddenCancelButton = textView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10)
+        textViewLeadingWhenHiddenCancelButton?.isActive = true
+        
+        textViewLeadingWhenShowCancelButton = textView.leadingAnchor.constraint(equalTo: cancelEditButton.trailingAnchor, constant: 10)
+        textViewLeadingWhenShowCancelButton?.isActive = false
+        
+        temparyTextViewHeightConstraint = textView.heightAnchor.constraint(equalToConstant: 0)
+        temparyTextViewHeightConstraint?.isActive = false
         
         NSLayoutConstraint.activate([
             // separator
@@ -85,32 +121,26 @@ final class PushCommentView: UIView {
             // textView
             textView.topAnchor.constraint(
                 equalTo: separator.bottomAnchor, constant: 12.5),
-            textView.leadingAnchor.constraint(
-                equalTo: self.leadingAnchor, constant: 16),
             textView.trailingAnchor.constraint(
-                equalTo: button.leadingAnchor, constant: -10),
+                equalTo: enrollButton.leadingAnchor, constant: -10),
             
-            // button
-            button.centerYAnchor.constraint(
+            // CancelButton
+            cancelEditButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            cancelEditButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            cancelEditButton.widthAnchor.constraint(equalToConstant: 15),
+            cancelEditButton.heightAnchor.constraint(equalToConstant: 15),
+            
+            // EnrollButton
+            enrollButton.centerYAnchor.constraint(
                 equalTo: self.centerYAnchor),
-            button.trailingAnchor.constraint(
+            enrollButton.trailingAnchor.constraint(
                 equalTo: self.trailingAnchor, constant: Layout.Inset.trailingBottom)
         ])
     }
     
-    required init?(coder: NSCoder) {
-        fatalError()
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        makeViewHeight()
-        
-        if originalTextViewHeight == nil {
-            originalTextViewHeight = textView.frame.height
-        }
-        
+    private func setupAttribute() {
+        self.backgroundColor = .gray7
+        cancelEditButton.isHidden = true
     }
     
     private func makeViewHeight() {
@@ -126,46 +156,86 @@ final class PushCommentView: UIView {
         if sender.titleLabel?.textColor == .gray0 {
             guard let text = textView.text else { return }
             enrollReview?(text)
-            textView.text = "식당에 대한 경험과 팁을 알려주세요!"
-            textView.textColor = .gray4
-            textView.resignFirstResponder()
-            button.setTitleColor(.gray4, for: .normal)
-            
-            resetTextViewHeight()
+
+            initTextView()
         } else {
             return
         }
     }
     
-    private func resetTextViewHeight() {
-        guard let originalHeight = originalTextViewHeight else { return }
-
-        textView.constraints.forEach { constraint in
-            if constraint.firstAttribute == .height {
-                constraint.constant = originalHeight
-            }
-        }
+    @objc private func cancelEditTapped() {
+        initTextView()
     }
     
     func editMyReview(_ text: String) {
         textView.text = text
         textView.textColor = .gray0
-        button.setTitleColor(.gray0, for: .normal)
+        enrollButton.setTitleColor(.gray0, for: .normal)
+        
+        whenEditUpdateTextViewHeight()
+        updateViewWhenEditComment(true)
+        textView.becomeFirstResponder()
+    }
+    
+    func initTextView() {
+        initAttribute()
+        updateTextviewHeight()
+        updateViewWhenEditComment(false)
+        textView.resignFirstResponder()
+        
+        initView?()
+    }
+    
+    private func initAttribute() {
+        textView.text = "식당에 대한 경험과 팁을 알려주세요!"
+        textView.textColor = .gray4
+        enrollButton.setTitleColor(.gray4, for: .normal)
+    }
+    
+    private func updateViewWhenEditComment(_ isShow: Bool) {
+        cancelEditButton.isHidden = !isShow
+        
+        if isShow {
+            textViewLeadingWhenHiddenCancelButton?.isActive = false
+            textViewLeadingWhenShowCancelButton?.isActive = true
+        } else {
+            textViewLeadingWhenShowCancelButton?.isActive = false
+            textViewLeadingWhenHiddenCancelButton?.isActive = true
+        }
+        
+        UIView.animate(withDuration: 0.1) {
+            self.layoutIfNeeded()
+        }
     }
     
     private func updateTextviewHeight() {
+        temparyTextViewHeightConstraint?.isActive = false
+
         let size = CGSize(width: textView.frame.width, height: .infinity)
         let estimatedSize = textView.sizeThatFits(size)
         
-        if estimatedSize.height <= textView.font!.lineHeight * 5 {
+        let maxLines = 5
+        let maxHeight = textView.font!.lineHeight * CGFloat(maxLines)
+        
+        if estimatedSize.height <= maxHeight {
             textView.isScrollEnabled = false
-
-            textView.constraints.forEach { constraint in
-                if constraint.firstAttribute == .height {
-                    constraint.constant = estimatedSize.height
-                }
-            }
         } else {
+            textView.isScrollEnabled = true
+        }
+    }
+    
+    private func whenEditUpdateTextViewHeight() {
+        let size = CGSize(width: textView.frame.width, height: .infinity)
+        let estimatedSize = textView.sizeThatFits(size)
+        
+        let maxLines = 5
+        let maxHeight = textView.font!.lineHeight * CGFloat(maxLines)
+
+        if estimatedSize.height <= maxHeight {
+            textView.isScrollEnabled = false
+        } else {
+            temparyTextViewHeightConstraint?.constant = maxHeight
+            temparyTextViewHeightConstraint?.isActive = true
             textView.isScrollEnabled = true
         }
     }
@@ -184,13 +254,6 @@ final class PushCommentView: UIView {
     func keyboardWillHide() {
         self.transform = .identity
     }
-    
-    func initTextView() {
-        textView.text = "식당에 대한 경험과 팁을 알려주세요!"
-        textView.textColor = .gray4
-        button.setTitleColor(.gray4, for: .normal)
-    }
-    
 }
 
 extension PushCommentView: UITextViewDelegate {
@@ -203,10 +266,9 @@ extension PushCommentView: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         if textView.text != "" {
-            button.setTitleColor(.gray0, for: .normal)
+            enrollButton.setTitleColor(.gray0, for: .normal)
         } else {
-            button.setTitleColor(.gray4, for: .normal)
-            
+            enrollButton.setTitleColor(.gray4, for: .normal)
         }
         
         updateTextviewHeight()

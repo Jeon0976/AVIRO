@@ -133,12 +133,16 @@ final class PlaceHomeView: UIView {
             self?.reportReview?(commentId)
         }
         
-        placeReviewsView.whenEditMyReview = { [weak self] commentId in
+        placeReviewsView.whenBeforeEditMyReview = { [weak self] commentId in
             self?.editMyReview?(commentId)
         }
     }
     
     func updateReview(_ postModel: AVIROCommentPost) {
         placeReviewsView.afterUpdateReviewAndUpdateInHomeView(postModel)
+    }
+    
+    func whenAfterEditReview(_ model: AVIROEditCommentPost) {
+        placeReviewsView.afterEditReviewAndUpdateInHomeView(model)
     }
 }

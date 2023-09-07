@@ -96,7 +96,7 @@ final class OperationHourChangebleView: UIView {
     }()
     
     private lazy var operationTimeOpen: TimeChangebleView = {
-        let view = TimeChangebleView()
+        let view = TimeChangebleView(isReversedTime: false)
         
         view.isChangedTime = { [weak self] in
             self?.whenAddTimeLabelCheckIsEnabledEditButton()
@@ -106,7 +106,7 @@ final class OperationHourChangebleView: UIView {
     }()
     
     private lazy var operationTimeClosed: TimeChangebleView = {
-        let view = TimeChangebleView()
+        let view = TimeChangebleView(isReversedTime: false)
         
         view.isChangedTime = { [weak self] in
             self?.whenAddTimeLabelCheckIsEnabledEditButton()
@@ -142,7 +142,7 @@ final class OperationHourChangebleView: UIView {
     }()
     
     private lazy var breakTimeOpen: TimeChangebleView = {
-        let view = TimeChangebleView()
+        let view = TimeChangebleView(isReversedTime: true)
         
         view.isChangedTime = { [weak self] in
             self?.whenAddTimeLabelCheckIsEnabledEditButton()
@@ -152,7 +152,7 @@ final class OperationHourChangebleView: UIView {
     }()
     
     private lazy var breakTimeClosed: TimeChangebleView = {
-        let view = TimeChangebleView()
+        let view = TimeChangebleView(isReversedTime: true)
         
         view.isChangedTime = { [weak self] in
             self?.whenAddTimeLabelCheckIsEnabledEditButton()

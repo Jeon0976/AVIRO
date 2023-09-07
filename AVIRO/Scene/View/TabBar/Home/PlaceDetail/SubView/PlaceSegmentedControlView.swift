@@ -32,6 +32,9 @@ final class PlaceSegmentedControlView: UIView {
     
     private lazy var scrollView = UIScrollView()
     
+    private lazy var leftSwipeGesture = UISwipeGestureRecognizer()
+    private lazy var rightSwipteGesture = UISwipeGestureRecognizer()
+    
     private var homeBottomConstraint: NSLayoutConstraint?
 
     private var afterInitViewConstrait = false
@@ -64,6 +67,7 @@ final class PlaceSegmentedControlView: UIView {
     
     // review
     var whenUploadReview: ((AVIROCommentPost) -> Void)?
+    var whenAfterEditReview: ((AVIROEditCommentPost) -> Void)?
     var updateReviewsCount: ((Int) -> Void)?
     var reportReview: ((String) -> Void)?
     var editMyReview: ((String) -> Void)?
@@ -73,6 +77,7 @@ final class PlaceSegmentedControlView: UIView {
         
         makeLayout()
         makeAttribute()
+        makeGesture()
         handleClosure()
     }
     
@@ -157,8 +162,27 @@ final class PlaceSegmentedControlView: UIView {
         segmentedControl.selectedSegmentIndex = 0
     }
         
-    // TODO: API 연결되면 수정 예정
-    // Popup할 때, Slide up 할 때 구분 필요
+    private func makeGesture() {
+        self.addGestureRecognizer(leftSwipeGesture)
+        self.addGestureRecognizer(rightSwipteGesture)
+        
+        leftSwipeGesture.direction = .left
+        rightSwipteGesture.direction = .right
+        
+        leftSwipeGesture.addTarget(self, action: #selector(swipeGestureActived(_:)))
+        rightSwipteGesture.addTarget(self, action: #selector(swipeGestureActived(_:)))
+    }
+    
+    @objc private func swipeGestureActived(_ gesture: UISwipeGestureRecognizer) {
+        if gesture.direction == .right && segmentedControl.selectedSegmentIndex != 0 {
+            segmentedControl.selectedSegmentIndex -= 1
+        } else if gesture.direction == .left && segmentedControl.selectedSegmentIndex != 2 {
+            segmentedControl.selectedSegmentIndex += 1
+        }
+        
+        whenActiveSegmentedChanged()
+    }
+    
     func allDataBinding(placeId: String,
                         infoModel: PlaceInfoData?,
                         menuModel: PlaceMenuData?,
@@ -216,7 +240,11 @@ final class PlaceSegmentedControlView: UIView {
     }
     
     @objc private func segmentedChanged(segment: UISegmentedControl) {
-        switch segment.selectedSegmentIndex {
+        whenActiveSegmentedChanged()
+    }
+    
+    private func whenActiveSegmentedChanged() {
+        switch segmentedControl.selectedSegmentIndex {
         case 0:
             activeHomeView()
         case 1:
@@ -304,6 +332,11 @@ final class PlaceSegmentedControlView: UIView {
             self?.whenUploadReview?(postReviewModel)
         }
         
+        reviewView.whenAfterEditMyReview = { [weak self] postEditReviewModel in
+            self?.homeView.whenAfterEditReview(postEditReviewModel)
+            self?.whenAfterEditReview?(postEditReviewModel)
+        }
+        
         reviewView.whenReportReview = { [weak self] commentId in
             self?.reportReview?(commentId)
         }
@@ -312,7 +345,7 @@ final class PlaceSegmentedControlView: UIView {
             self?.reportReview?(commentId)
         }
         
-        reviewView.whenEditMyReview = { [weak self] commentId in
+        reviewView.whenBeforeEditMyReview = { [weak self] commentId in
             self?.editMyReview?(commentId)
         }
         

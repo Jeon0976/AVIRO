@@ -64,8 +64,12 @@ final class PlaceView: UIView {
     
     // MARK: SegmentedControl
     var editPlaceInfo: (() -> Void)?
+    
     var editMenu: (() -> Void)?
+    
     var whenUploadReview: ((AVIROCommentPost) -> Void)?
+    var whenAfterEditReview: ((AVIROEditCommentPost) -> Void)?
+    
     var reportReview: ((String) -> Void)?
     var editMyReview: ((String) -> Void)?
     
@@ -192,6 +196,10 @@ final class PlaceView: UIView {
         
         segmentedControlView.whenUploadReview = { [weak self] postReviewModel in
             self?.whenUploadReview?(postReviewModel)
+        }
+        
+        segmentedControlView.whenAfterEditReview = { [weak self] postEditReviewModel in
+            self?.whenAfterEditReview?(postEditReviewModel)
         }
         
         segmentedControlView.updateReviewsCount = { [weak self] reviewsCount in

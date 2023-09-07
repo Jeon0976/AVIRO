@@ -24,6 +24,7 @@ struct AVIROPostAPI {
     static let placeListMatchedAVIROPath = "/prod/map/check/place"
 
     static let commentUploadPath = "/prod/map/add/comment"
+    static let commentEditPath = "/prod/map/update/comment"
 
     static let bookmarkPostPath = "/prod/map/add/bookmark"
     
@@ -63,6 +64,17 @@ struct AVIROPostAPI {
         components.scheme = AVIROPostAPI.scheme
         components.host = host
         components.path = AVIROPostAPI.commentUploadPath
+        
+        return components
+    }
+    
+    // MARK: Comment Edit
+    mutating func commentEdit() -> URLComponents {
+        var components = URLComponents()
+        
+        components.scheme = AVIROPostAPI.scheme
+        components.host = host
+        components.path = AVIROPostAPI.commentEditPath
         
         return components
     }

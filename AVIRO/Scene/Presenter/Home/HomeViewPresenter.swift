@@ -512,8 +512,15 @@ final class HomeViewPresenter: NSObject {
         }
     }
   
-    func postReviewModel(_ postReviewModel: AVIROCommentPost) {
+    func uploadReview(_ postReviewModel: AVIROCommentPost) {
         AVIROAPIManager().postCommentModel(postReviewModel)
+    }
+    
+    func editMyReview(_ postEditReviewModel: AVIROEditCommentPost) {
+        AVIROAPIManager().postEditCommentModel(postEditReviewModel) { model in
+            print(model.message)
+            
+        }
     }
     
     // MARK: Place Id 불러오기
@@ -573,7 +580,6 @@ final class HomeViewPresenter: NSObject {
         guard let placeId = selectedPlaceId else { return }
         AVIROAPIManager().getMenuInfo(placeId: placeId) { [weak self] placeMenuModel in
             DispatchQueue.main.async {
-                print(placeMenuModel.data)
                 self?.selectedMenuModel = placeMenuModel.data
                 self?.viewController?.refreshMenuView(placeMenuModel.data)
             }
@@ -650,4 +656,3 @@ extension HomeViewPresenter: CLLocationManagerDelegate {
         locationManager.stopUpdatingLocation()
     }
 }
-

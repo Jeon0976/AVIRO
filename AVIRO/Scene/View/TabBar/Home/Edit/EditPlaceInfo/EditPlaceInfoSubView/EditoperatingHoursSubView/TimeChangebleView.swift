@@ -1,6 +1,6 @@
 import UIKit
 
-final class TimeChangebleView: UIView {
+final class TimeChangebleView: UIView, UIContextMenuInteractionDelegate {
     private var topInset: CGFloat = 15.0
     private var bottomInset: CGFloat = 15.0
     private var leftInset: CGFloat = 12.0
@@ -18,19 +18,30 @@ final class TimeChangebleView: UIView {
         let btn = UIButton()
 
         btn.setImage(UIImage(named: "DownSorting"), for: .normal)
-        btn.menu = setButtonMenu()
+        btn.menu = setButtonMenuWhenClickedButton()
         btn.showsMenuAsPrimaryAction = true
         
         return btn
     }()
-    
+        
     var isChangedTime: (() -> Void)?
+    
+    private var isReversedTime: Bool!
+    
+    init(isReversedTime: Bool) {
+        super.init(frame: .zero)
+        
+        self.isReversedTime = isReversedTime
+        
+        setupLayout()
+        setupAttribute()
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setAttribute()
         setupLayout()
+        setupAttribute()
     }
     
     required init?(coder: NSCoder) {
@@ -52,16 +63,35 @@ final class TimeChangebleView: UIView {
             label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -bottomInset),
             
             button.centerYAnchor.constraint(equalTo: label.centerYAnchor),
-            button.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -rightInset),
+            button.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -rightInset)
         ])
     }
     
-    private func setAttribute() {
+    private func setupAttribute() {
         self.layer.cornerRadius = 10
         self.layer.borderColor = UIColor.gray.cgColor
         self.layer.borderWidth = 1
+        
+        let contextMenuInteraction = UIContextMenuInteraction(delegate: self)
+        self.addInteraction(contextMenuInteraction)
     }
     
+    @objc private func tappedView() {
+        button.sendActions(for: .touchDown)
+    }
+    
+    internal func contextMenuInteraction(
+        _ interaction: UIContextMenuInteraction,
+        configurationForMenuAtLocation location: CGPoint
+    ) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(
+            identifier: nil,
+            previewProvider: nil
+        ) { suggestedActions in
+            return self.setButtonMenuWhenClickedView()
+        }
+    }
+
     func makeLabelText(_ time: String) {
         self.label.text = time
         
@@ -86,13 +116,22 @@ final class TimeChangebleView: UIView {
     
     func isEnabledButton(_ isEnabled: Bool) {
         button.isEnabled = isEnabled
+        
+        if !isEnabled {
+            self.backgroundColor = .gray6
+        } else {
+            self.backgroundColor = .gray7
+        }
     }
     
-    private func setButtonMenu() -> UIMenu {
+    private func setButtonMenuWhenClickedButton() -> UIMenu {
         var actions: [UIAction] = []
         
-        for hour in 0...23 {
-            for minute in stride(from: 0, to: 60, by: 10) {
+        let hours = isReversedTime ? Array((0...23).reversed()) : Array(0...23)
+        let minutes = isReversedTime ? stride(from: 50, to: -1, by: -10) : stride(from: 0, to: 60, by: 10)
+
+        for hour in hours {
+            for minute in minutes {
                 let timeString = String(format: "%02d:%02d", hour, minute)
                 
                 let action = UIAction(title: timeString, handler: { [weak self] _ in
@@ -103,7 +142,27 @@ final class TimeChangebleView: UIView {
             }
         }
         
-        return UIMenu(title: "", children: actions)
+        return UIMenu(title: "시간선택", children: actions)
     }
 
+    private func setButtonMenuWhenClickedView() -> UIMenu {
+        var actions: [UIAction] = []
+        
+        let hours = Array(0...23)
+        let minutes = stride(from: 0, to: 60, by: 10)
+
+        for hour in hours {
+            for minute in minutes {
+                let timeString = String(format: "%02d:%02d", hour, minute)
+                
+                let action = UIAction(title: timeString, handler: { [weak self] _ in
+                    self?.changeLabelText(timeString)
+                })
+                
+                actions.append(action)
+            }
+        }
+        
+        return UIMenu(title: "시간선택", children: actions)
+    }
 }

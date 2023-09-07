@@ -74,6 +74,8 @@ final class EditPlaceInfoViewController: UIViewController {
     }()
     
     private lazy var tapGesture = UITapGestureRecognizer()
+    private lazy var leftSwipeGesture = UISwipeGestureRecognizer()
+    private lazy var rightSwipeGesture = UISwipeGestureRecognizer()
     
     private lazy var blurEffectView = UIVisualEffectView()
     private lazy var operationHourChangebleView = OperationHourChangebleView()
@@ -133,7 +135,6 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
             operationHourChangebleView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             operationHourChangebleView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
             operationHourChangebleView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1, constant: -32)
-            
         ])
         
         makeSafeAreaViewLayout()
@@ -219,6 +220,23 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         activeLocation()
     }
     
+    func makeGesture() {
+        [
+            leftSwipeGesture,
+            rightSwipeGesture,
+            tapGesture
+        ].forEach {
+            view.addGestureRecognizer($0)
+        }
+        
+        tapGesture.delegate = self
+        leftSwipeGesture.direction = .left
+        rightSwipeGesture.direction = .right
+        
+        leftSwipeGesture.addTarget(self, action: #selector(swipeGestureActive(_:)))
+        rightSwipeGesture.addTarget(self, action: #selector(swipeGestureActive(_:)))
+    }
+    
     private func makeBlurEffect() {
         let blurEffectStyle = UIBlurEffect(style: UIBlurEffect.Style.dark)
         
@@ -270,8 +288,22 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         
     }
     
+    @objc private func swipeGestureActive(_ gesture: UISwipeGestureRecognizer) {
+        if gesture.direction == .right && segmentedControl.selectedSegmentIndex != 0 {
+            segmentedControl.selectedSegmentIndex -= 1
+        } else if gesture.direction == .left && segmentedControl.selectedSegmentIndex != 3 {
+            segmentedControl.selectedSegmentIndex += 1
+        }
+        
+        whenActiveSegmentedChanged()
+    }
+    
     @objc private func segmentedChanged(segment: UISegmentedControl) {
-        switch segment.selectedSegmentIndex {
+        whenActiveSegmentedChanged()
+    }
+    
+    private func whenActiveSegmentedChanged() {
+        switch segmentedControl.selectedSegmentIndex {
         case 0:
             activeLocation()
         case 1:
@@ -319,11 +351,6 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         editPhoneView.isHidden = true
         
         editHomePageView.isHidden = false
-    }
-    
-    func makeGesture() {
-        view.addGestureRecognizer(tapGesture)
-        tapGesture.delegate = self
     }
     
     func isDetailFieldCheckBeforeKeyboardShowAndHide(notification: NSNotification) -> Bool {

@@ -62,8 +62,6 @@ class TabBarViewController: UITabBarController {
     private func setupTabBar() {
         tabBar.backgroundColor = .gray7
         tabBar.tintColor = .main
-        tabBar.layer.cornerRadius = 20
-        tabBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         tabBar.layer.borderWidth = 0.5
         tabBar.layer.borderColor = UIColor.gray5?.cgColor
     }

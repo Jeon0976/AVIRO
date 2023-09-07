@@ -129,7 +129,6 @@ final class PlaceReviewTableViewCell: UITableViewCell {
     
     @objc private func buttonTapped() {
         guard let userId = userId.text else { return }
-        print(commentId, userId)
         reportButtonTapped?(commentId, userId)
     }
 }

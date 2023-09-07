@@ -57,7 +57,9 @@ final class EditLocationDetailViewController: UIViewController {
         return view
     }()
     
-    private var tapGesture = UIGestureRecognizer()
+    private lazy var tapGesture = UIGestureRecognizer()
+    private lazy var leftSwipeGesture = UISwipeGestureRecognizer()
+    private lazy var rightSwipeGesture = UISwipeGestureRecognizer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,13 +122,38 @@ extension EditLocationDetailViewController: EditLocationDetailProtocol {
     }
     
     func makeGesture() {
-        view.addGestureRecognizer(tapGesture)
+        [
+            tapGesture,
+            leftSwipeGesture,
+            rightSwipeGesture
+        ].forEach {
+            self.view.addGestureRecognizer($0)
+        }
+        
         tapGesture.delegate = self
-//        tapGesture.cancelsTouchesInView = false
+        leftSwipeGesture.direction = .left
+        rightSwipeGesture.direction = .right
+        
+        leftSwipeGesture.addTarget(self, action: #selector(swipeGestureActive(_:)))
+        rightSwipeGesture.addTarget(self, action: #selector(swipeGestureActive(_:)))
+    }
+    
+    @objc private func swipeGestureActive(_ gesture: UISwipeGestureRecognizer) {
+        if gesture.direction == .right && segmentedControl.selectedSegmentIndex != 0 {
+            segmentedControl.selectedSegmentIndex -= 1
+        } else if gesture.direction == .left && segmentedControl.selectedSegmentIndex != 1 {
+            segmentedControl.selectedSegmentIndex += 1
+        }
+        
+        whenActiveSegmentedChanged()
     }
     
     @objc private func segmentedChanged(segment: UISegmentedControl) {
-        switch segment.selectedSegmentIndex {
+        whenActiveSegmentedChanged()
+    }
+    
+    private func whenActiveSegmentedChanged() {
+        switch segmentedControl.selectedSegmentIndex {
         case 0:
             activeTextSearch()
         case 1:

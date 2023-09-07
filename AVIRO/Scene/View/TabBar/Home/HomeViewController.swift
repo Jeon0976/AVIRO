@@ -168,12 +168,12 @@ extension HomeViewController: HomeViewProtocol {
         flagButton.addTarget(self, action: #selector(flagButtonTapped(_:)), for: .touchUpInside)
         
         // lodeLocationButton
-        loadLocationButton.setImage(UIImage(named: "current-location"), for: .normal)
+        loadLocationButton.setImage(UIImage(named: "current-location")?.withTintColor(.gray1!), for: .normal)
         loadLocationButton.setImage(UIImage(named: "current-locationDisable")?.withTintColor(.gray4!), for: .disabled)
         loadLocationButton.addTarget(self, action: #selector(locationButtonTapped(_:)), for: .touchUpInside)
         
         // starButton
-        starButton.setImage(UIImage(named: "star"), for: .normal)
+        starButton.setImage(UIImage(named: "star")?.withTintColor(.gray1!), for: .normal)
         starButton.setImage(UIImage(named: "selectedStar"), for: .selected)
         starButton.setImage(UIImage(named: "starDisable")?.withTintColor(.gray4!), for: .disabled)
         starButton.addTarget(self, action: #selector(starButtonTapped(_ :)), for: .touchUpInside)
@@ -494,7 +494,11 @@ extension HomeViewController {
         }
         
         placeView.whenUploadReview = { [weak self] postReviewModel in
-            self?.presenter.postReviewModel(postReviewModel)
+            self?.presenter.uploadReview(postReviewModel)
+        }
+        
+        placeView.whenAfterEditReview = { [weak self] postReviewEditModel in
+            self?.presenter.editMyReview(postReviewEditModel)
         }
         
         placeView.reportReview = { [weak self] commentId in
