@@ -373,7 +373,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
         }.resume()
     }
     
-    // MARK: Post Comment Edit Model
+    // MARK: Post Edit Comment
     func postEditCommentModel(
         _ commentEditModel: AVIROEditCommentPost,
         completionHandler: @escaping((CommonResponseResult) -> Void)) {
@@ -408,6 +408,40 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
         }.resume()
     }
     
+    // MARK: Post Delete Comment
+    func postDeleteCommentModel(
+        _ commentDeleteModel: AVIRODeleteCommentPost,
+        completionHandler: @escaping((CommonResponseResult) -> Void)) {
+        guard let url = postAPI.commentDelete().url else { return }
+        
+        guard let jsonData = try? JSONEncoder().encode(commentDeleteModel) else {
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        session.dataTask(with: request) { data, response, error in
+            guard error == nil else {
+                print("error")
+                return
+            }
+            
+            guard response != nil else {
+                print(response ?? "response error")
+                return
+            }
+                        
+            if let data = data {
+                if let placeResponse = try? JSONDecoder().decode(CommonResponseResult.self, from: data) {
+                    completionHandler(placeResponse)
+                }
+                return
+            }
+        }.resume()
+    }
     
     // MARK: Post Nicname Check
     func postCheckNicname(_ nicname: NicnameCheckInput, completionHandler: @escaping ((NicnameCheck) -> Void)) {

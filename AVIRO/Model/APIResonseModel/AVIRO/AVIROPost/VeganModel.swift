@@ -84,5 +84,5 @@ struct MenuArray: Codable {
 // MARK: Output Data
 struct CommonResponseResult: Decodable {
     let statusCode: Int
-    let message: String
+    let message: String?
 }

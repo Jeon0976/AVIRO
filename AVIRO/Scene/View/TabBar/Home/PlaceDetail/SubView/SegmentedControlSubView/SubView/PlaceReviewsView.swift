@@ -111,6 +111,14 @@ final class PlaceReviewsView: UIView {
         super.layoutSubviews()
     }
     
+    func keyboardWillShow(height: CGFloat) {
+        reviewInputView.keyboardWillShow(height: height)
+    }
+    
+    func keyboardWillHide() {
+        reviewInputView.keyboardWillHide()
+    }
+    
     private func makeLayout() {
         self.backgroundColor = .gray7
         
@@ -215,6 +223,7 @@ final class PlaceReviewsView: UIView {
         
         reviewInputView.isHidden = true
     
+        print(whenHomeViewReviewsCount)
     }
     
     private func whenHaveReviewsInHomeView(_ reviews: [ReviewData]) {
@@ -280,6 +289,8 @@ final class PlaceReviewsView: UIView {
     }
     
     func afterUpdateReviewAndUpdateInHomeView(_ reviewModel: AVIROCommentPost) {
+        print(whenHomeViewReviewsCount)
+
         reviewsUpdateInHomeView(reviewModel)
         whenHaveReviewsInHomeView(self.reviewsArray)
     }
@@ -296,7 +307,8 @@ final class PlaceReviewsView: UIView {
         reviewsArray.insert(reviewModel, at: 0)
         reviewsTable.reloadData()
         
-        subTitle.text = "\(whenHomeViewReviewsCount + 1)개"
+        whenHomeViewReviewsCount += 1
+        subTitle.text = "\(whenHomeViewReviewsCount)개"
     }
     
     func afterEditReviewAndUpdateInHomeView(_ reviewModel: AVIROEditCommentPost) {
@@ -327,6 +339,10 @@ final class PlaceReviewsView: UIView {
         whenTappedShowMoreButton?()
     }
     
+    func autoStartWriteComment() {
+        reviewInputView.autoStartWriteComment()
+    }
+    
     // MARK: Edit My Review
     func editMyReview(_ commentId: String) {
         var text = ""
@@ -340,18 +356,6 @@ final class PlaceReviewsView: UIView {
         editedReviewId = commentId
         
         reviewInputView.editMyReview(text)
-    }
-    
-    private func handleClosure() {
-        reviewInputView.enrollReview = { [weak self] text in
-            guard let placeId = self?.placeId else { return }
-            
-            self?.updateReviewArray(text)
-        }
-        
-        reviewInputView.initView = { [weak self] in
-            self?.isEditedAfter = false
-        }
     }
     
     private func updateReviewArray(_ text: String) {
@@ -427,12 +431,37 @@ final class PlaceReviewsView: UIView {
         self.whenUploadReview?(postModel)
     }
     
-    func keyboardWillShow(height: CGFloat) {
-        reviewInputView.keyboardWillShow(height: height)
+    func deleteMyReview(_ commentId: String) {
+        if let index = reviewsArray.firstIndex(where: { $0.commentId == commentId}) {
+            reviewsArray.remove(at: index)
+        }
+        
+        reviewsTable.reloadData()
+        
+        if whenReviewView {
+            subTitle.text = "\(reviewsArray.count)개"
+        } else {
+            whenHomeViewReviewsCount -= 1
+            subTitle.text = "\(whenHomeViewReviewsCount)개"
+
+            if whenHomeViewReviewsCount == 0 {
+            } else {
+                whenHaveReviewsInHomeView(self.reviewsArray)
+            }
+        }
     }
     
-    func keyboardWillHide() {
-        reviewInputView.keyboardWillHide()
+    // MARK: Closure 처리
+    private func handleClosure() {
+        reviewInputView.enrollReview = { [weak self] text in
+            guard let placeId = self?.placeId else { return }
+            
+            self?.updateReviewArray(text)
+        }
+        
+        reviewInputView.initView = { [weak self] in
+            self?.isEditedAfter = false
+        }
     }
 }
 

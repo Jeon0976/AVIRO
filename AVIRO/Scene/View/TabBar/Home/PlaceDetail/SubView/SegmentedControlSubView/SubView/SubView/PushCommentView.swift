@@ -134,7 +134,9 @@ final class PushCommentView: UIView {
             enrollButton.centerYAnchor.constraint(
                 equalTo: self.centerYAnchor),
             enrollButton.trailingAnchor.constraint(
-                equalTo: self.trailingAnchor, constant: Layout.Inset.trailingBottom)
+                equalTo: self.trailingAnchor, constant: Layout.Inset.trailingBottom),
+            enrollButton.widthAnchor.constraint(equalToConstant: 32),
+            enrollButton.heightAnchor.constraint(equalToConstant: 24)
         ])
     }
     
@@ -165,6 +167,10 @@ final class PushCommentView: UIView {
     
     @objc private func cancelEditTapped() {
         initTextView()
+    }
+    
+    func autoStartWriteComment() {
+        textView.becomeFirstResponder()
     }
     
     func editMyReview(_ text: String) {

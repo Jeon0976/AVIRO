@@ -25,6 +25,7 @@ final class PlaceHomeView: UIView {
     
     // review 관련 클로저
     var showMoreReviews: (() -> Void)?
+    var showMoreReviewsAndWriteComment: (() -> Void)?
     var reportReview: ((String) -> Void)?
     var editMyReview: ((String) -> Void)?
     
@@ -107,6 +108,18 @@ final class PlaceHomeView: UIView {
         placeMenuView.dataBindingWhenInHomeView(menuModel)
     }
     
+    func updateReview(_ postModel: AVIROCommentPost) {
+        placeReviewsView.afterUpdateReviewAndUpdateInHomeView(postModel)
+    }
+    
+    func whenAfterEditReview(_ model: AVIROEditCommentPost) {
+        placeReviewsView.afterEditReviewAndUpdateInHomeView(model)
+    }
+    
+    func deleteMyReview(_ commentId: String) {
+        placeReviewsView.deleteMyReview(commentId)
+    }
+    
     // MARK: 클로저 처리
     private func handleClosure() {
         placeInfoView.afterEditInfoButtonTapped = { [weak self] in
@@ -122,7 +135,7 @@ final class PlaceHomeView: UIView {
         }
         
         placeReviewWriteView.whenWriteReviewButtonTapped = { [weak self] in
-            self?.showMoreReviews?()
+            self?.showMoreReviewsAndWriteComment?()
         }
         
         placeReviewsView.whenTappedShowMoreButton = { [weak self] in
@@ -136,13 +149,5 @@ final class PlaceHomeView: UIView {
         placeReviewsView.whenBeforeEditMyReview = { [weak self] commentId in
             self?.editMyReview?(commentId)
         }
-    }
-    
-    func updateReview(_ postModel: AVIROCommentPost) {
-        placeReviewsView.afterUpdateReviewAndUpdateInHomeView(postModel)
-    }
-    
-    func whenAfterEditReview(_ model: AVIROEditCommentPost) {
-        placeReviewsView.afterEditReviewAndUpdateInHomeView(model)
     }
 }

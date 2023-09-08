@@ -19,3 +19,8 @@ struct AVIROEditCommentPost: Encodable {
     let content: String
     let userId: String
 }
+
+struct AVIRODeleteCommentPost: Encodable {
+    let commentId: String
+    let userId: String
+}

@@ -278,6 +278,7 @@ final class PlaceInfoView: UIView {
     
     // TODO: Back end 수정 되면 수정
     func dataBindingWhenInHomeView(_ infoModel: PlaceInfoData?) {
+        print(infoModel)
         guard let infoModel = infoModel else { return }
         
         addressLabel.text = infoModel.address
@@ -288,16 +289,29 @@ final class PlaceInfoView: UIView {
         } else {
             phoneButton.setTitle(infoModel.phone, for: .normal)
         }
-
-        timeButton.setTitle("영업 시간 추가", for: .normal)
-        timeLabel.isHidden = true
-        timePlusButton.isHidden = true
+        
+        if infoModel.shopStatus == "영업 시간 없음" {
+            timeButton.setTitle("영업 시간 추가", for: .normal)
+            timeButton.isHidden = false
+            timeLabel.isHidden = true
+            timePlusButton.isHidden = true
+        } else {
+            changedOperationLabel(infoModel.shopStatus, infoModel.shopHours)
+        }
         
         if let homePage = infoModel.url {
             homePageButton.setTitle(homePage, for: .normal)
         } else {
             homePageButton.setTitle("홈페이지 링크 추가", for: .normal)
         }
+    }
+    
+    private func changedOperationLabel(_ state: String, _ operating: String) {
+        timeLabel.isHidden = false
+        timePlusButton.isHidden = false
+        timePlusButton.isHidden = true
+        
+        timeLabel.text = state + " " + operating
     }
     
     @objc private func editInfoButtonTapped() {

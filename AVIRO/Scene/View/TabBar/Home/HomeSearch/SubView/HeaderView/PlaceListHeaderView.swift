@@ -96,7 +96,7 @@ final class PlaceListHeaderView: UIView {
             KakaoAPISortingQuery.shared.coordinate = KakaoSerachCoordinate.CenterCoordinate
             self.touchedCanActiveSort?()
         }
-    
+        
         let myLocation = UIAlertAction(title: "내 위치 중심", style: .default) { _ in
             self.locationPositionButton.setTitle("내 위치 중심", for: .normal)
             KakaoAPISortingQuery.shared.coordinate = KakaoSerachCoordinate.MyCoordinate

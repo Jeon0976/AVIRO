@@ -122,9 +122,9 @@ final class PlaceView: UIView {
         isLoadingTopView = false
     }
     
-    func infoModelBinding(infoModel: PlaceInfoData?) {
-        
-    }
+//    func infoModelBinding(infoModel: PlaceInfoData?) {
+//
+//    }
     
     func menuModelBinding(menuModel: PlaceMenuData?) {
         segmentedControlView.refreshMenuData(menuModel)
@@ -134,8 +134,12 @@ final class PlaceView: UIView {
         topView.updateMapPlace(mapPlace)
     }
     
-    func reviewsModelBinding(reviewsModel: PlaceReviewsData?) {
-        
+//    func reviewsModelBinding(reviewsModel: PlaceReviewsData?) {
+//
+//    }
+  
+    func deleteMyReview(_ commentId: String) {
+        segmentedControlView.deleteMyReview(commentId)
     }
     
     func allDataBinding(infoModel: PlaceInfoData?,

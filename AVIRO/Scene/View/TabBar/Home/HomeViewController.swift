@@ -426,6 +426,10 @@ extension HomeViewController: HomeViewProtocol {
     func refreshMapPlace(_ mapPlace: MapPlace) {
         placeView.updateMapPlace(mapPlace)
     }
+    
+    func deleteMyReviewInView(_ commentId: String) {
+        placeView.deleteMyReview(commentId)
+    }
 }
 
 // MARK: View Refer & Objc Action
@@ -493,6 +497,7 @@ extension HomeViewController {
             self?.presenter.editMenu()
         }
         
+        // TODO: api 요청 성공 하면 view 바뀌게 수정
         placeView.whenUploadReview = { [weak self] postReviewModel in
             self?.presenter.uploadReview(postReviewModel)
         }
@@ -596,7 +601,11 @@ extension HomeViewController {
         )
         
         let deleteMyReview = UIAlertAction(title: "예", style: .default) { _ in
+            let deleteCommentModel = AVIRODeleteCommentPost(commentId: commentId,
+                                                            userId: UserId.shared.userId
+            )
             
+            self.presenter.deleteMyReview(deleteCommentModel)
         }
         
         deleteMyReview.setValue(UIColor.red, forKey: "titleTextColor")
@@ -788,6 +797,7 @@ extension HomeViewController: NMFMapViewCameraDelegate {
     // 카메라 움직일 때
     func mapView(_ mapView: NMFMapView, cameraWillChangeByReason reason: Int, animated: Bool) {
         loadLocationButton.isEnabled = false
+        
         if !starButton.isSelected {
             starButton.isEnabled = false
         }
@@ -806,6 +816,12 @@ extension HomeViewController: NMFMapViewCameraDelegate {
 // MARK: Map 빈 공간 클릭 할 때
 extension HomeViewController: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
+        loadLocationButton.isEnabled = true
+
+        if !starButton.isSelected {
+            starButton.isEnabled = true
+        }
+        
         whenClosedPlaceView()
         isSlideUpView = false
     }

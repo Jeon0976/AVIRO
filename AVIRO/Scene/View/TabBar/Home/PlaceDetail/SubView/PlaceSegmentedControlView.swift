@@ -183,6 +183,14 @@ final class PlaceSegmentedControlView: UIView {
         whenActiveSegmentedChanged()
     }
     
+    func keyboardWillShow(height: CGFloat) {
+        reviewView.keyboardWillShow(height: height)
+    }
+    
+    func keyboardWillHide() {
+        reviewView.keyboardWillHide()
+    }
+    
     func allDataBinding(placeId: String,
                         infoModel: PlaceInfoData?,
                         menuModel: PlaceMenuData?,
@@ -204,19 +212,6 @@ final class PlaceSegmentedControlView: UIView {
         guard let reviewsCount = reviewsModel?.commentArray.count else { return }
         
         self.reviewsCount = reviewsCount
-    }
-    
-    func refreshMenuData(_ menuModel: PlaceMenuData?) {
-        homeView.refreshMenuData(menuModel)
-        menuView.dataBinding(menuModel)
-    }
-    
-    func editMyReview(_ commentId: String) {
-        if segmentedControl.selectedSegmentIndex == 0 {
-            self.segmentedControl.selectedSegmentIndex = 2
-            self.activeReviewView()
-        }
-        reviewView.editMyReview(commentId)
     }
     
     private func segmentedControlLabelChange(_ reviews: Int) {
@@ -299,6 +294,27 @@ final class PlaceSegmentedControlView: UIView {
         reviewView.isUserInteractionEnabled = enabled
     }
     
+    func refreshMenuData(_ menuModel: PlaceMenuData?) {
+        homeView.refreshMenuData(menuModel)
+        menuView.dataBinding(menuModel)
+    }
+    
+    func editMyReview(_ commentId: String) {
+        if segmentedControl.selectedSegmentIndex == 0 {
+            self.segmentedControl.selectedSegmentIndex = 2
+            self.activeReviewView()
+        }
+        reviewView.editMyReview(commentId)
+    }
+    
+    func deleteMyReview(_ commentId: String) {
+        self.reviewsCount -= 1
+        
+        homeView.deleteMyReview(commentId)
+        reviewView.deleteMyReview(commentId)
+    }
+    
+    // MARK: Closure 처리
     private func handleClosure() {
         // Place Info 관련 클로저
         homeView.editPlaceInfo = { [weak self] in
@@ -323,6 +339,12 @@ final class PlaceSegmentedControlView: UIView {
         homeView.showMoreReviews = { [weak self] in
             self?.segmentedControl.selectedSegmentIndex = 2
             self?.activeReviewView()
+        }
+        
+        homeView.showMoreReviewsAndWriteComment = { [weak self] in
+            self?.segmentedControl.selectedSegmentIndex = 2
+            self?.activeReviewView()
+            self?.reviewView.autoStartWriteComment()
         }
         
         reviewView.whenUploadReview = { [weak self] postReviewModel in
@@ -352,13 +374,5 @@ final class PlaceSegmentedControlView: UIView {
         homeView.editMyReview = { [weak self] commentId in
             self?.editMyReview?(commentId)
         }
-    }
-    
-    func keyboardWillShow(height: CGFloat) {
-        reviewView.keyboardWillShow(height: height)
-    }
-    
-    func keyboardWillHide() {
-        reviewView.keyboardWillHide()
     }
 }

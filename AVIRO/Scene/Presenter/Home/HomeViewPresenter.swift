@@ -53,7 +53,7 @@ protocol HomeViewProtocol: NSObject {
                                     menuArray: [MenuArray])
     func refreshMenuView(_ menuData: PlaceMenuData?)
     func refreshMapPlace(_ mapPlace: MapPlace)
-
+    func deleteMyReviewInView(_ commentId: String)
 }
 
 final class HomeViewPresenter: NSObject {
@@ -330,6 +330,7 @@ final class HomeViewPresenter: NSObject {
                 distance: distanceString,
                 reviewsCount: reviewsCount,
                 address: place.address)
+            
             DispatchQueue.main.async { [weak self] in
                 let isStar = self?.bookmarkManager.checkData(placeId)
                 self?.viewController?.afterClickedMarker(
@@ -511,17 +512,6 @@ final class HomeViewPresenter: NSObject {
             )
         }
     }
-  
-    func uploadReview(_ postReviewModel: AVIROCommentPost) {
-        AVIROAPIManager().postCommentModel(postReviewModel)
-    }
-    
-    func editMyReview(_ postEditReviewModel: AVIROEditCommentPost) {
-        AVIROAPIManager().postEditCommentModel(postEditReviewModel) { model in
-            print(model.message)
-            
-        }
-    }
     
     // MARK: Place Id 불러오기
     func checkPlaceId() {
@@ -598,6 +588,27 @@ final class HomeViewPresenter: NSObject {
         self.selectedMarkerModel = selectedMarkerModel
         
         viewController?.refreshMapPlace(changedMarkerModel.mapPlace)
+    }
+    
+    func uploadReview(_ postReviewModel: AVIROCommentPost) {
+        AVIROAPIManager().postCommentModel(postReviewModel)
+    }
+    
+    func editMyReview(_ postEditReviewModel: AVIROEditCommentPost) {
+        AVIROAPIManager().postEditCommentModel(postEditReviewModel) { model in
+            
+        }
+    }
+    
+    // TODO: Print문 수정
+    func deleteMyReview(_ postDeleteReviewModel: AVIRODeleteCommentPost) {
+        print(postDeleteReviewModel)
+        AVIROAPIManager().postDeleteCommentModel(postDeleteReviewModel) { [weak self] model in
+            print(model)
+            DispatchQueue.main.async {
+                self?.viewController?.deleteMyReviewInView(postDeleteReviewModel.commentId)
+            }
+        }
     }
 }
 
