@@ -62,7 +62,7 @@ final class BottomButton1: UIButton {
 //
     override var isEnabled: Bool {
          didSet {
-             self.backgroundColor = isEnabled ? .allVegan : .subTitle
+             self.backgroundColor = isEnabled ? .main : .gray4
          }
      }
  }

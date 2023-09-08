@@ -83,8 +83,7 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
             nextButton.bottomAnchor.constraint(
                 equalTo: view.bottomAnchor, constant: -40),
             nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-
+            nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
     }
     
@@ -93,6 +92,7 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
         // view, naivgation, ..
         view.backgroundColor = .white
         navigationItem.backButtonTitle = ""
+        setupCustomBackButton(true)
 
         // TODO: 확인
         tapGesture.cancelsTouchesInView = false

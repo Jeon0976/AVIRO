@@ -49,6 +49,9 @@ final class OtherActionsView: UIView {
     
     private var viewHeightConstrant: NSLayoutConstraint?
     
+    var afterTappedCell: ((SettingsRow) -> Void)?
+    var withdrawaButtonTapped: (() -> Void)?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -96,6 +99,7 @@ extension OtherActionsView: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         guard let sectionType = SettingsSection(rawValue: section) else { return 0 }
         return sectionType.rows.count
     }
@@ -107,7 +111,11 @@ extension OtherActionsView: UITableViewDataSource {
             let rowType = sectionType.rows[indexPath.row]
             
             cell?.selectionStyle = .none
+            
             cell?.dataBinding(rowType)
+            cell?.tappedAfterSettingValue = { [weak self] settingValue in
+                self?.afterTappedCell?(settingValue)
+            }
         }
         
         return cell ?? UITableViewCell()
@@ -138,10 +146,15 @@ extension OtherActionsView: UITableViewDelegate {
         button.setAttributedTitle(attributedString, for: .normal)
         button.setTitleColor(.gray2, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        button.addTarget(self, action: #selector(withdrawalTapped), for: .touchUpInside)
         
         footerView.addSubview(button)
         
         return footerView
+    }
+    
+    @objc private func withdrawalTapped() {
+        self.withdrawaButtonTapped?()
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -150,10 +163,4 @@ extension OtherActionsView: UITableViewDelegate {
         }
         return 10
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath)
-        
-    }
-    
 }

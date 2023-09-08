@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MessageUI
 
 import KeychainSwift
 
@@ -17,11 +18,38 @@ final class MyPageViewController: UIViewController {
     private lazy var myInfoView: MyInfoView = {
         let view = MyInfoView()
         
+        view.editNickNameTapped = { [weak self] in
+            self?.whenTappedEditNickName()
+        }
+        
         return view
     }()
     
     private lazy var otherActionsView: OtherActionsView = {
         let view = OtherActionsView()
+        
+        view.afterTappedCell = { [weak self] settingValue in
+            switch settingValue {
+            case .displayMode:
+                self?.whenTappedDisplayMode()
+            case .termsOfService:
+                self?.whenTappedTermsOfService()
+            case .privacyPolicy, .locationPolicy:
+                self?.whenTappedPolicy()
+            case .inquiries:
+                self?.whenTappedInquiries()
+            case .thanksTo:
+                self?.whenTappedThanksTo()
+            case .logout:
+                self?.whenTappedLogOut()
+            default:
+                break
+            }
+        }
+        
+        view.withdrawaButtonTapped = { [weak self] in
+            self?.whenTappedWithdrawal()
+        }
         
         return view
     }()
@@ -92,17 +120,75 @@ extension MyPageViewController: MyPageViewProtocol {
         myInfoView.updateMyReview(myDataModel.review)
         myInfoView.updateMyStar(myDataModel.star)
     }
+    
+    private func whenTappedEditNickName() {
+        let vc = NickNameChangebleViewController()
+        let presenter = NickNameChangeblePresenter(viewController: vc)
+        
+        vc.presenter = presenter
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func whenTappedDisplayMode() {
+        
+    }
+    
+    private func whenTappedTermsOfService() {
+        
+    }
+    
+    private func whenTappedPolicy() {
+        
+    }
+    
+    private func whenTappedInquiries() {
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients(["AVRIO@example.com"])
+            mail.setSubject("[AVIRO] \(UserId.shared.userNickName)님의 문의 및 의견")
+            mail.setMessageBody("본문 내용입니다.", isHTML: false)
+            
+            present(mail, animated: true)
+        } else {
+            // TODO: 메일 작업
+            print("메일 설정하세요")
+        }
+    }
+    
+    private func whenTappedThanksTo() {
+        
+    }
+    
+    private func whenTappedLogOut() {
+        let result = self.keychain.delete("userIdentifier")
+        
+        print("성공적인 로그아웃: \(result)")
+        
+        let vc = LoginViewController()
+        let presenter = LoginViewPresenter(viewController: vc)
+        vc.presenter = presenter
+        
+        let rootViewController = UINavigationController(rootViewController: vc)
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            windowScene.windows.first?.rootViewController = rootViewController
+            windowScene.windows.first?.makeKeyAndVisible()
+        }
+
+    }
+    
+    private func whenTappedWithdrawal() {
+        
+    }
 }
-//let result = keychain.delete("userIdentifier")
-//
-//        print("성공적인 로그아웃: \(result)")
-//
-//        let vc = LoginViewController()
-//        let presenter = LoginViewPresenter(viewController: vc)
-//        vc.presenter = presenter
-//
-//        let rootViewController = UINavigationController(rootViewController: vc)
-//        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-//            windowScene.windows.first?.rootViewController = rootViewController
-//            windowScene.windows.first?.makeKeyAndVisible()
-//        }
+
+extension MyPageViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(
+        _ controller: MFMailComposeViewController,
+        didFinishWith result: MFMailComposeResult,
+        error: Error?
+    ) {
+        controller.dismiss(animated: true)
+    }
+}

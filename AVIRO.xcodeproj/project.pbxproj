@@ -30,6 +30,8 @@
 		C51385422AAADB0E001AB827 /* EditNicNameButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51385412AAADB0E001AB827 /* EditNicNameButton.swift */; };
 		C51385452AAAE493001AB827 /* MyDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51385442AAAE493001AB827 /* MyDataModel.swift */; };
 		C51385472AAAF3BB001AB827 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51385462AAAF3BB001AB827 /* SettingCell.swift */; };
+		C513854A2AAB3B13001AB827 /* NickNameChangebleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51385492AAB3B13001AB827 /* NickNameChangebleViewController.swift */; };
+		C513854C2AAB3B52001AB827 /* NickNameChangeblePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513854B2AAB3B52001AB827 /* NickNameChangeblePresenter.swift */; };
 		C5166E492A9305A9003495AA /* AVIROSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5166E482A9305A9003495AA /* AVIROSummaryModel.swift */; };
 		C5166E4D2A945228003495AA /* UserSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5166E4C2A945228003495AA /* UserSingleton.swift */; };
 		C51AED1D2A8A192D0015FBC2 /* ChangedViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51AED1C2A8A192D0015FBC2 /* ChangedViewAction.swift */; };
@@ -203,6 +205,8 @@
 		C51385412AAADB0E001AB827 /* EditNicNameButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNicNameButton.swift; sourceTree = "<group>"; };
 		C51385442AAAE493001AB827 /* MyDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDataModel.swift; sourceTree = "<group>"; };
 		C51385462AAAF3BB001AB827 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
+		C51385492AAB3B13001AB827 /* NickNameChangebleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameChangebleViewController.swift; sourceTree = "<group>"; };
+		C513854B2AAB3B52001AB827 /* NickNameChangeblePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameChangeblePresenter.swift; sourceTree = "<group>"; };
 		C5166E482A9305A9003495AA /* AVIROSummaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROSummaryModel.swift; sourceTree = "<group>"; };
 		C5166E4C2A945228003495AA /* UserSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSingleton.swift; sourceTree = "<group>"; };
 		C51AED1C2A8A192D0015FBC2 /* ChangedViewAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangedViewAction.swift; sourceTree = "<group>"; };
@@ -435,7 +439,6 @@
 			children = (
 				C5FD92E92A9C77DE00CF4673 /* APIManager */,
 				C5A9899C2A95A7820021B7C3 /* FacadeManager */,
-				C520662B2A7CE19F0038ECCD /* UserDefaultsManager */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -543,6 +546,14 @@
 			path = MyPageModel;
 			sourceTree = "<group>";
 		};
+		C51385482AAB3AD8001AB827 /* NickNameChangebleView */ = {
+			isa = PBXGroup;
+			children = (
+				C51385492AAB3B13001AB827 /* NickNameChangebleViewController.swift */,
+			);
+			path = NickNameChangebleView;
+			sourceTree = "<group>";
+		};
 		C5166E472A930583003495AA /* AVIRODetailPlace */ = {
 			isa = PBXGroup;
 			children = (
@@ -610,13 +621,6 @@
 			path = HomeSearchViewModel;
 			sourceTree = "<group>";
 		};
-		C520662B2A7CE19F0038ECCD /* UserDefaultsManager */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = UserDefaultsManager;
-			sourceTree = "<group>";
-		};
 		C52066362A808D920038ECCD /* HeaderView */ = {
 			isa = PBXGroup;
 			children = (
@@ -658,8 +662,8 @@
 			children = (
 				C5351B4A2A1919F700116D50 /* .swiftlint.yml */,
 				C52FA3412A175B20005E70DC /* AVIRO */,
-				C52FA3402A175B20005E70DC /* Products */,
 				BE7C2C07294F8980354FE766 /* Pods */,
+				C52FA3402A175B20005E70DC /* Products */,
 				0C3C6AC2BC6B49CCDD2FE9BF /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -878,6 +882,7 @@
 			isa = PBXGroup;
 			children = (
 				C593B64E2A4C490600D224CE /* MyPageViewPresenter.swift */,
+				C513854B2AAB3B52001AB827 /* NickNameChangeblePresenter.swift */,
 			);
 			path = Mypage;
 			sourceTree = "<group>";
@@ -1168,6 +1173,7 @@
 			children = (
 				C5EB50E92A1C705900B29CC1 /* MyPageViewController.swift */,
 				C5D8EB242A9D78F900EF629F /* SubView */,
+				C51385482AAB3AD8001AB827 /* NickNameChangebleView */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -1444,6 +1450,7 @@
 				C5732C7C2A41D41B00CDC499 /* VeganTableFieldModel.swift in Sources */,
 				C50DB7592A9B8E060078B501 /* EditLocationDetailMapView.swift in Sources */,
 				C5732C752A41962D00CDC499 /* AVIRORequestAPI.swift in Sources */,
+				C513854C2AAB3B52001AB827 /* NickNameChangeblePresenter.swift in Sources */,
 				C5D93DA12A581F5A00629C39 /* FirstRegistrationPresenter.swift in Sources */,
 				C567C1502A56611500D4B426 /* TopCell.swift in Sources */,
 				C50F6B042A6BCD6900E942F5 /* CategoryButton.swift in Sources */,
@@ -1547,6 +1554,7 @@
 				C51132BF2A559838006E1EC3 /* NotificationCenter+Extension.swift in Sources */,
 				C5FF13532A42C8810026981D /* AVIROPlaceModel.swift in Sources */,
 				C5351B5C2A19F60200116D50 /* PlaceListSearchViewPresenter.swift in Sources */,
+				C513854A2AAB3B13001AB827 /* NickNameChangebleViewController.swift in Sources */,
 				C50E6F6F2A8F10B500703B9E /* UILabel+Extension.swift in Sources */,
 				C52066352A7F3FAE0038ECCD /* HistoryTableViewCell.swift in Sources */,
 				C5C90EB72AA7078300AB3668 /* EditOperationHoursModel.swift in Sources */,

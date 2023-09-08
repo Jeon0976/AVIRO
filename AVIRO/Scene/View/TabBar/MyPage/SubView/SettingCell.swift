@@ -10,19 +10,27 @@ import UIKit
 final class SettingCell: UITableViewCell {
     static let identifier = "SettingCell"
     
-    private lazy var settingLabel: UILabel = {
-        let label = UILabel()
+    private lazy var settingButton: UIButton = {
+        let button = UIButton()
         
-        label.font = .systemFont(ofSize: 17, weight: .medium)
-        label.textColor = .gray0
+        button.setTitleColor(.gray0, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 17, weight: .medium)
+        button.addTarget(self,
+                         action: #selector(buttonTapped),
+                         for: .touchUpInside
+        )
         
-        return label
+        return button
     }()
     
     private lazy var pushButton: UIButton = {
         let button = UIButton()
         
         button.setImage(UIImage(named: "PushView"), for: .normal)
+        button.addTarget(self,
+                         action: #selector(buttonTapped),
+                         for: .touchUpInside
+        )
         
         return button
     }()
@@ -38,7 +46,14 @@ final class SettingCell: UITableViewCell {
         return label
     }()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    private var settingValue: SettingsRow!
+    
+    var tappedAfterSettingValue: ((SettingsRow) -> Void)?
+    
+    override init(
+        style: UITableViewCell.CellStyle,
+        reuseIdentifier: String?
+    ) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         setupLayout()
@@ -51,7 +66,7 @@ final class SettingCell: UITableViewCell {
     
     private func setupLayout() {
         [
-            settingLabel,
+            settingButton,
             pushButton,
             versionLabel
         ].forEach {
@@ -60,8 +75,8 @@ final class SettingCell: UITableViewCell {
         }
                 
         NSLayoutConstraint.activate([
-            settingLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            settingLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+            settingButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            settingButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             
             pushButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             pushButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
@@ -88,9 +103,14 @@ final class SettingCell: UITableViewCell {
         }
         
         if settingsRow == .logout {
-            settingLabel.textColor = .red
+            settingButton.setTitleColor(.red, for: .normal)
         }
         
-        settingLabel.text = settingsRow.rawValue
+        self.settingValue = settingsRow
+        settingButton.setTitle(settingsRow.rawValue, for: .normal)
+    }
+    
+    @objc private func buttonTapped() {
+        tappedAfterSettingValue?(settingValue)
     }
 }

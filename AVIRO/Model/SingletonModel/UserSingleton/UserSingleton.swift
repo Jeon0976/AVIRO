@@ -11,8 +11,10 @@ final class UserId {
     static let shared = UserId()
     
     var userId = ""
+    var userNickName = ""
     
-    private init(userId: String = "") {
+    private init(userId: String = "test", userNickName: String = "test") {
         self.userId = userId
+        self.userNickName = userNickName
     }
 }

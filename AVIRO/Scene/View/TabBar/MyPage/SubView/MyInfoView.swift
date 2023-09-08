@@ -24,6 +24,7 @@ final class MyInfoView: UIView {
         label.text = UserId.shared.userId
         label.textColor = .gray0
         
+        
         return label
     }()
     
@@ -31,6 +32,7 @@ final class MyInfoView: UIView {
         let button = EditNicNameButton()
         
         button.makeButton("닉네임 수정하기")
+        button.addTarget(self, action: #selector(tappedNicNameButton), for: .touchUpInside)
         
         return button
     }()
@@ -140,6 +142,8 @@ final class MyInfoView: UIView {
         return stackView
     }()
     
+    var editNickNameTapped: (() -> Void)?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -246,5 +250,9 @@ final class MyInfoView: UIView {
     
     func updateMyStar(_ star: String) {
         myStarButton.setTitle("\(star)개", for: .normal)
+    }
+    
+    @objc private func tappedNicNameButton() {
+        editNickNameTapped?()
     }
 }
