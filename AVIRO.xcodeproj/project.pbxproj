@@ -27,6 +27,9 @@
 		C50F6B042A6BCD6900E942F5 /* CategoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6B032A6BCD6900E942F5 /* CategoryButton.swift */; };
 		C51132BF2A559838006E1EC3 /* NotificationCenter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51132BE2A559838006E1EC3 /* NotificationCenter+Extension.swift */; };
 		C51132C12A559BCA006E1EC3 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51132C02A559BCA006E1EC3 /* AppController.swift */; };
+		C51385422AAADB0E001AB827 /* EditNicNameButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51385412AAADB0E001AB827 /* EditNicNameButton.swift */; };
+		C51385452AAAE493001AB827 /* MyDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51385442AAAE493001AB827 /* MyDataModel.swift */; };
+		C51385472AAAF3BB001AB827 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51385462AAAF3BB001AB827 /* SettingCell.swift */; };
 		C5166E492A9305A9003495AA /* AVIROSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5166E482A9305A9003495AA /* AVIROSummaryModel.swift */; };
 		C5166E4D2A945228003495AA /* UserSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5166E4C2A945228003495AA /* UserSingleton.swift */; };
 		C51AED1D2A8A192D0015FBC2 /* ChangedViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51AED1C2A8A192D0015FBC2 /* ChangedViewAction.swift */; };
@@ -197,6 +200,9 @@
 		C50F6B032A6BCD6900E942F5 /* CategoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryButton.swift; sourceTree = "<group>"; };
 		C51132BE2A559838006E1EC3 /* NotificationCenter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationCenter+Extension.swift"; sourceTree = "<group>"; };
 		C51132C02A559BCA006E1EC3 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
+		C51385412AAADB0E001AB827 /* EditNicNameButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNicNameButton.swift; sourceTree = "<group>"; };
+		C51385442AAAE493001AB827 /* MyDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDataModel.swift; sourceTree = "<group>"; };
+		C51385462AAAF3BB001AB827 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		C5166E482A9305A9003495AA /* AVIROSummaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROSummaryModel.swift; sourceTree = "<group>"; };
 		C5166E4C2A945228003495AA /* UserSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSingleton.swift; sourceTree = "<group>"; };
 		C51AED1C2A8A192D0015FBC2 /* ChangedViewAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangedViewAction.swift; sourceTree = "<group>"; };
@@ -440,6 +446,7 @@
 				C5EB51012A20926800B29CC1 /* TapBarModel */,
 				C5EB51022A20927400B29CC1 /* HomeViewModel */,
 				C5732C7A2A41D3F800CDC499 /* EnrollViewModel */,
+				C51385432AAAE47C001AB827 /* MyPageModel */,
 				C5351B7B2A1B52A000116D50 /* PlaceListModel */,
 				C5351B782A1B437600116D50 /* APIResonseModel */,
 				C5351B652A1A128D00116D50 /* SingletonModel */,
@@ -518,6 +525,22 @@
 				C50E6F6E2A8F10B500703B9E /* UILabel+Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		C51385402AAADAF8001AB827 /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				C51385412AAADB0E001AB827 /* EditNicNameButton.swift */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
+		C51385432AAAE47C001AB827 /* MyPageModel */ = {
+			isa = PBXGroup;
+			children = (
+				C51385442AAAE493001AB827 /* MyDataModel.swift */,
+			);
+			path = MyPageModel;
 			sourceTree = "<group>";
 		};
 		C5166E472A930583003495AA /* AVIRODetailPlace */ = {
@@ -733,6 +756,7 @@
 		C54BC0D82A2C2CEE00B65439 /* UIButton */ = {
 			isa = PBXGroup;
 			children = (
+				C51385402AAADAF8001AB827 /* MyPage */,
 				C5C961962A8DA5680016E2F8 /* PlaceView */,
 				C5D93DA22A58718300629C39 /* BottomButton1.swift */,
 				C568577C2A70E1F600F52715 /* BottomButton2.swift */,
@@ -1060,6 +1084,7 @@
 			children = (
 				C5D8EB252A9D790800EF629F /* MyInfoView.swift */,
 				C5D8EB272A9D797000EF629F /* OtherActionsView.swift */,
+				C51385462AAAF3BB001AB827 /* SettingCell.swift */,
 			);
 			path = SubView;
 			sourceTree = "<group>";
@@ -1505,6 +1530,7 @@
 				C5D8EB282A9D797000EF629F /* OtherActionsView.swift in Sources */,
 				C5C961952A8D9EED0016E2F8 /* PlaceReviewTableViewCell.swift in Sources */,
 				C5A3C3C62A39659B0050AB3D /* LoginViewPresenter.swift in Sources */,
+				C51385452AAAE493001AB827 /* MyDataModel.swift in Sources */,
 				C50DB7422A99DCDA0078B501 /* PlaceListCell.swift in Sources */,
 				C50DB7432A99DCDA0078B501 /* PlaceListSearchViewController.swift in Sources */,
 				C5FD92F22A9C805700CF4673 /* PublicXMLParserDelegate.swift in Sources */,
@@ -1514,6 +1540,7 @@
 				C56E7A112A971504009CCAF2 /* ReportCellView.swift in Sources */,
 				C52066332A7E80350038ECCD /* MatchedPlaceListCell.swift in Sources */,
 				C595ACCD2A84A1A200D35123 /* PlaceView.swift in Sources */,
+				C51385422AAADB0E001AB827 /* EditNicNameButton.swift in Sources */,
 				C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */,
 				C5351B672A1A154C00116D50 /* PageEndingCheck.swift in Sources */,
 				C5732C772A41A0A500CDC499 /* AVIROMapModel.swift in Sources */,
@@ -1561,6 +1588,7 @@
 				C5C2907B2A85E51B00ED5DCE /* PlaceReviewsView.swift in Sources */,
 				C5A201BD2A98708800A54381 /* EditPlaceInfoPresenter.swift in Sources */,
 				C5EB50EC2A1C72C600B29CC1 /* TabBarViewController.swift in Sources */,
+				C51385472AAAF3BB001AB827 /* SettingCell.swift in Sources */,
 				C568577D2A70E1F600F52715 /* BottomButton2.swift in Sources */,
 				C51132C12A559BCA006E1EC3 /* AppController.swift in Sources */,
 				C5A03C122A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift in Sources */,

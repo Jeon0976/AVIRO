@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "AllMapStar.png",
+      "filename" : "SmallPushView.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "AllMapStar@2x.png",
+      "filename" : "SmallPushView@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "AllMapStar@3x.png",
+      "filename" : "SmallPushView@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

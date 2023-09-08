@@ -40,6 +40,7 @@ final class PlaceInfoView: UIView {
         let label = UILabel()
         
         label.textColor = .gray0
+        label.numberOfLines = 2
         label.font = .systemFont(ofSize: 16, weight: .medium)
         
         return label

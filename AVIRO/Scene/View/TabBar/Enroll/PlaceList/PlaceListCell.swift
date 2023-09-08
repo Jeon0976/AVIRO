@@ -10,16 +10,26 @@ import UIKit
 final class PlaceListCell: UITableViewCell {
     static let identifier = "PlaceListCell"
     
-    var icon = UIImageView()
-    var title = UILabel()
-    var address = UILabel()
-    var distance = UILabel()
+    private lazy var icon = UIImageView()
+    private lazy var title = UILabel()
+    private lazy var address = UILabel()
+    private lazy var distance = UILabel()
     
     // MARK: 최초 불러드릴 때 작업
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        makeLayout()
+        makeAttribute()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: Layout
+    private func makeLayout() {
         [
             icon,
             title,
@@ -51,11 +61,6 @@ final class PlaceListCell: UITableViewCell {
             distance.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ])
         
-        makeAttribute()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: Attribute

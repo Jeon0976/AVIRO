@@ -10,7 +10,7 @@ import UIKit
 import KeychainSwift
 
 final class MyPageViewController: UIViewController {
-    lazy var presenter = MyPageViewPresenter(viewController: self)
+    private lazy var presenter = MyPageViewPresenter(viewController: self)
     
     private let keychain = KeychainSwift()
     
@@ -33,6 +33,12 @@ final class MyPageViewController: UIViewController {
         
         presenter.viewDidLoad()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        presenter.viewWillAppear()
+    }
 }
 
 extension MyPageViewController: MyPageViewProtocol {
@@ -50,7 +56,7 @@ extension MyPageViewController: MyPageViewProtocol {
             myInfoView.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor),
             myInfoView.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor),
             
-            otherActionsView.topAnchor.constraint(equalTo: myInfoView.bottomAnchor, constant: 20),
+            otherActionsView.topAnchor.constraint(equalTo: myInfoView.bottomAnchor),
             otherActionsView.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor),
             otherActionsView.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor),
             otherActionsView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor)
@@ -67,7 +73,7 @@ extension MyPageViewController: MyPageViewProtocol {
             scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 20)
+            scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
     }
     
@@ -80,6 +86,12 @@ extension MyPageViewController: MyPageViewProtocol {
         navigationController?.navigationBar.isHidden = false
     }
 
+    func updateMyData(_ myDataModel: MyDataModel) {
+        myInfoView.updateId(myDataModel.id)
+        myInfoView.updateMyPlace(myDataModel.place)
+        myInfoView.updateMyReview(myDataModel.review)
+        myInfoView.updateMyStar(myDataModel.star)
+    }
 }
 //let result = keychain.delete("userIdentifier")
 //
