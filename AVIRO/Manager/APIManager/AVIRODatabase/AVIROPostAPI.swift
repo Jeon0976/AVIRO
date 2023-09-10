@@ -22,7 +22,8 @@ struct AVIROPostAPI {
     
     static let placeEnrollPath = "/prod/map/add/place"
     static let placeListMatchedAVIROPath = "/prod/map/check/place"
-
+    static let placeListReportPath = "/prod/map/report/place"
+    
     static let commentUploadPath = "/prod/map/add/comment"
     static let commentEditPath = "/prod/map/update/comment"
     static let commentDeletePath = "/prod/map/delete/comment"
@@ -54,6 +55,17 @@ struct AVIROPostAPI {
         components.scheme = AVIROPostAPI.scheme
         components.host = host
         components.path = AVIROPostAPI.placeListMatchedAVIROPath
+        
+        return components
+    }
+    
+    // MARK: PlaceList Report
+    mutating func placeListReport() -> URLComponents {
+        var components = URLComponents()
+        
+        components.scheme = AVIROPostAPI.scheme
+        components.host = host
+        components.path = AVIROPostAPI.placeListReportPath
         
         return components
     }

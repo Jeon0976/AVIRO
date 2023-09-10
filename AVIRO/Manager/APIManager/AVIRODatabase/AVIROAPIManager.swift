@@ -76,10 +76,12 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
     }
     
     // MARK: Post Bookmark
-    func postBookmarkModel(bookmarkModel: BookmarkPostModel, completionHandler: @escaping((BookmarkPostAfterData) -> Void)) {
-        
+    func postBookmarkModel(
+        bookmarkModel: BookmarkPostModel,
+        completionHandler: @escaping((BookmarkPostAfterData) -> Void)
+    ) {
         guard let url = postAPI.bookmarkPost().url else { return }
-
+        
         guard let jsonData = try? JSONEncoder().encode(bookmarkModel) else { return }
         
         var request = URLRequest(url: url)
@@ -178,7 +180,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
             if let error = error {
                 print(error.localizedDescription)
             }
-
+            
             if let data = data {
                 if let menuData = try? JSONDecoder().decode(AVIROMenuModel.self, from: data) {
                     completionHandler(menuData)
@@ -203,7 +205,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
             if let error = error {
                 print(error.localizedDescription)
             }
-
+            
             if let data = data {
                 if let commentData = try? JSONDecoder().decode(AVIROReviewsModel.self, from: data) {
                     completionHandler(commentData)
@@ -321,7 +323,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonData
-
+        
         session.dataTask(with: request) { data, response, error in
             guard error == nil else {
                 print("error")
@@ -337,7 +339,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
                 if let placeResponse = try? JSONDecoder().decode(CommonResponseResult.self, from: data) {
                     completionHandler(placeResponse)
                 }
-                return 
+                return
             }
         }.resume()
     }
@@ -377,71 +379,71 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
     func postEditCommentModel(
         _ commentEditModel: AVIROEditCommentPost,
         completionHandler: @escaping((CommonResponseResult) -> Void)) {
-        guard let url = postAPI.commentEdit().url else { return }
-        
-        guard let jsonData = try? JSONEncoder().encode(commentEditModel) else {
-            return
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = jsonData
-        
-        session.dataTask(with: request) { data, response, error in
-            guard error == nil else {
-                print("error")
+            guard let url = postAPI.commentEdit().url else { return }
+            
+            guard let jsonData = try? JSONEncoder().encode(commentEditModel) else {
                 return
             }
             
-            guard response != nil else {
-                print(response ?? "response error")
-                return
-            }
-                        
-            if let data = data {
-                if let placeResponse = try? JSONDecoder().decode(CommonResponseResult.self, from: data) {
-                    completionHandler(placeResponse)
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = jsonData
+            
+            session.dataTask(with: request) { data, response, error in
+                guard error == nil else {
+                    print("error")
+                    return
                 }
-                return
-            }
-        }.resume()
-    }
+                
+                guard response != nil else {
+                    print(response ?? "response error")
+                    return
+                }
+                
+                if let data = data {
+                    if let placeResponse = try? JSONDecoder().decode(CommonResponseResult.self, from: data) {
+                        completionHandler(placeResponse)
+                    }
+                    return
+                }
+            }.resume()
+        }
     
     // MARK: Post Delete Comment
     func postDeleteCommentModel(
         _ commentDeleteModel: AVIRODeleteCommentPost,
         completionHandler: @escaping((CommonResponseResult) -> Void)) {
-        guard let url = postAPI.commentDelete().url else { return }
-        
-        guard let jsonData = try? JSONEncoder().encode(commentDeleteModel) else {
-            return
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = jsonData
-        
-        session.dataTask(with: request) { data, response, error in
-            guard error == nil else {
-                print("error")
+            guard let url = postAPI.commentDelete().url else { return }
+            
+            guard let jsonData = try? JSONEncoder().encode(commentDeleteModel) else {
                 return
             }
             
-            guard response != nil else {
-                print(response ?? "response error")
-                return
-            }
-                        
-            if let data = data {
-                if let placeResponse = try? JSONDecoder().decode(CommonResponseResult.self, from: data) {
-                    completionHandler(placeResponse)
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = jsonData
+            
+            session.dataTask(with: request) { data, response, error in
+                guard error == nil else {
+                    print("error")
+                    return
                 }
-                return
-            }
-        }.resume()
-    }
+                
+                guard response != nil else {
+                    print(response ?? "response error")
+                    return
+                }
+                
+                if let data = data {
+                    if let placeResponse = try? JSONDecoder().decode(CommonResponseResult.self, from: data) {
+                        completionHandler(placeResponse)
+                    }
+                    return
+                }
+            }.resume()
+        }
     
     // MARK: Post Nicname Check
     func postCheckNicname(_ nicname: NicnameCheckInput, completionHandler: @escaping ((NicnameCheck) -> Void)) {
@@ -473,8 +475,6 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
                 print(response ?? "response error")
                 return
             }
-            
-            
         }.resume()
     }
     
@@ -494,7 +494,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
             if let error = error {
                 print(error.localizedDescription)
             }
-
+            
             if let data = data {
                 if let menuData = try? JSONDecoder().decode(AVIROCheckPlaceModel.self, from: data) {
                     completionHandler(menuData)
@@ -519,7 +519,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonData
-
+        
         session.dataTask(with: request) { data, response, error in
             guard error == nil else {
                 print("error")
@@ -553,7 +553,65 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonData
-
+        
+        session.dataTask(with: request) { data, response, error in
+            guard error == nil else {
+                print("error")
+                return
+            }
+            
+            guard response != nil else {
+                print(response ?? "response error")
+                return
+            }
+            
+            if let data = data {
+                if let result = try? JSONDecoder().decode(CommonResponseResult.self, from: data) {
+                    completionHandler(result)
+                }
+                return
+            }
+        }.resume()
+    }
+    
+    // MARK: Get Place Report Dublicated
+    func getPlaceReportIsDublicated(
+        _ checkReportModel: AVIROPlaceReportCheckDTO,
+        completionHandler: @escaping((AVIROPlaceReportCheckResultDTO) -> Void)
+    ) {
+        guard let url = requestAPI.getChekPlaceReport(model: checkReportModel).url else { return }
+        
+        var request = URLRequest(url: url)
+        
+        request.httpMethod = "GET"
+        
+        session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            if let data = data {
+                if let isReported = try? JSONDecoder().decode(AVIROPlaceReportCheckResultDTO.self, from: data) {
+                    completionHandler(isReported)
+                }
+            }
+        }.resume()
+    }
+    
+    // MARK: Post Place Report
+    func postPlaceReport(
+        _ reportModel: AVIROPlaceReportDTO,
+        completionHandler: @escaping((CommonResponseResult) -> Void)
+    ) {
+        guard let url = postAPI.placeListReport().url else { return }
+        
+        guard let jsonData = try? JSONEncoder().encode(reportModel) else { return }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
         session.dataTask(with: request) { data, response, error in
             guard error == nil else {
                 print("error")

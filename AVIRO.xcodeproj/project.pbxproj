@@ -32,6 +32,8 @@
 		C51385472AAAF3BB001AB827 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51385462AAAF3BB001AB827 /* SettingCell.swift */; };
 		C513854A2AAB3B13001AB827 /* NickNameChangebleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51385492AAB3B13001AB827 /* NickNameChangebleViewController.swift */; };
 		C513854C2AAB3B52001AB827 /* NickNameChangeblePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513854B2AAB3B52001AB827 /* NickNameChangeblePresenter.swift */; };
+		C513854E2AAD8E9F001AB827 /* AVIROPlaceReportDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513854D2AAD8E9F001AB827 /* AVIROPlaceReportDTO.swift */; };
+		C51385502AAD921F001AB827 /* AVIROPlaceReportCheckDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513854F2AAD921F001AB827 /* AVIROPlaceReportCheckDTO.swift */; };
 		C5166E492A9305A9003495AA /* AVIROSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5166E482A9305A9003495AA /* AVIROSummaryModel.swift */; };
 		C5166E4D2A945228003495AA /* UserSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5166E4C2A945228003495AA /* UserSingleton.swift */; };
 		C51AED1D2A8A192D0015FBC2 /* ChangedViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51AED1C2A8A192D0015FBC2 /* ChangedViewAction.swift */; };
@@ -207,6 +209,8 @@
 		C51385462AAAF3BB001AB827 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		C51385492AAB3B13001AB827 /* NickNameChangebleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameChangebleViewController.swift; sourceTree = "<group>"; };
 		C513854B2AAB3B52001AB827 /* NickNameChangeblePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameChangeblePresenter.swift; sourceTree = "<group>"; };
+		C513854D2AAD8E9F001AB827 /* AVIROPlaceReportDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROPlaceReportDTO.swift; sourceTree = "<group>"; };
+		C513854F2AAD921F001AB827 /* AVIROPlaceReportCheckDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROPlaceReportCheckDTO.swift; sourceTree = "<group>"; };
 		C5166E482A9305A9003495AA /* AVIROSummaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROSummaryModel.swift; sourceTree = "<group>"; };
 		C5166E4C2A945228003495AA /* UserSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSingleton.swift; sourceTree = "<group>"; };
 		C51AED1C2A8A192D0015FBC2 /* ChangedViewAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangedViewAction.swift; sourceTree = "<group>"; };
@@ -863,6 +867,7 @@
 				C5E7B7A82A4D3CDF00CA2090 /* UserInfoModel.swift */,
 				C52066302A7E4A580038ECCD /* PlaceModelBeforeMatchedAVIRO.swift */,
 				C5A989962A959D920021B7C3 /* BookmarkPostModel.swift */,
+				C513854D2AAD8E9F001AB827 /* AVIROPlaceReportDTO.swift */,
 			);
 			path = AVIROPost;
 			sourceTree = "<group>";
@@ -874,6 +879,7 @@
 				C5732C762A41A0A500CDC499 /* AVIROMapModel.swift */,
 				C5A989982A959E040021B7C3 /* AVIROBookmarkModel.swift */,
 				C5166E472A930583003495AA /* AVIRODetailPlace */,
+				C513854F2AAD921F001AB827 /* AVIROPlaceReportCheckDTO.swift */,
 			);
 			path = AVIROGet;
 			sourceTree = "<group>";
@@ -1478,6 +1484,7 @@
 				C5B071E12A59454300AE709A /* BottomCell.swift in Sources */,
 				C5FA0EAA2A94DB3E004AD8B4 /* ReportReviewViewController.swift in Sources */,
 				C5C90EBD2AA85E7000AB3668 /* AVIROOperationHourModel.swift in Sources */,
+				C513854E2AAD8E9F001AB827 /* AVIROPlaceReportDTO.swift in Sources */,
 				C520663C2A80C0450038ECCD /* CenterCoordinate.swift in Sources */,
 				C5C961932A8D9EE20016E2F8 /* PlaceMenuTableViewCell.swift in Sources */,
 				C5351B502A19225A00116D50 /* KakaoMapResponseKeywordModel.swift in Sources */,
@@ -1596,6 +1603,7 @@
 				C5C2907B2A85E51B00ED5DCE /* PlaceReviewsView.swift in Sources */,
 				C5A201BD2A98708800A54381 /* EditPlaceInfoPresenter.swift in Sources */,
 				C5EB50EC2A1C72C600B29CC1 /* TabBarViewController.swift in Sources */,
+				C51385502AAD921F001AB827 /* AVIROPlaceReportCheckDTO.swift in Sources */,
 				C51385472AAAF3BB001AB827 /* SettingCell.swift in Sources */,
 				C568577D2A70E1F600F52715 /* BottomButton2.swift in Sources */,
 				C51132C12A559BCA006E1EC3 /* AppController.swift in Sources */,

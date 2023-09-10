@@ -10,6 +10,7 @@ import Foundation
 protocol NickNameChangebleProtocol: NSObject {
     func setupLayout()
     func setupAttribute()
+    func changebleNickNameCount(_ count: Int)
 }
 
 final class NickNameChangeblePresenter {

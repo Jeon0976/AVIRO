@@ -34,6 +34,7 @@ final class NickNameChangebleViewController: UIViewController {
         label.font = .systemFont(ofSize: 13, weight: .medium)
         label.textColor = .gray2
         label.numberOfLines = 2
+        label.lineBreakMode = .byCharWrapping
         
         return label
     }()
@@ -43,7 +44,7 @@ final class NickNameChangebleViewController: UIViewController {
         
         let nickNameCount = UserId.shared.userNickName.count
         
-        label.text = "(\(nickNameCount)/15)"
+        label.text = "(\(nickNameCount)/15)개"
         label.font = .systemFont(ofSize: 13, weight: .medium)
         label.textColor = .gray2
         
@@ -102,7 +103,7 @@ extension NickNameChangebleViewController: NickNameChangebleProtocol {
                 equalTo: subInfo.topAnchor),
             subInfo2.trailingAnchor.constraint(
                 equalTo: view.trailingAnchor, constant: -40),
-            subInfo2.widthAnchor.constraint(equalToConstant: 45),
+            subInfo2.widthAnchor.constraint(equalToConstant: 55),
             
             // editButtton
             editNickNameButton.topAnchor.constraint(equalTo: subInfo.bottomAnchor, constant: 30),
@@ -116,5 +117,10 @@ extension NickNameChangebleViewController: NickNameChangebleProtocol {
         self.setupCustomBackButton(true)
         
         self.navigationItem.title = "닉네임 수정"
+    }
+    
+    func changebleNickNameCount(_ count: Int) {
+        self.subInfo2.text = "(\(count)/15)개"
+        print(count)
     }
 }

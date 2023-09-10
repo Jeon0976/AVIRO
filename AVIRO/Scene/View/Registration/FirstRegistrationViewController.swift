@@ -77,7 +77,7 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
                 equalTo: subInfo.topAnchor),
             subInfo2.trailingAnchor.constraint(
                 equalTo: view.trailingAnchor, constant: -40),
-            subInfo2.widthAnchor.constraint(equalToConstant: 45),
+            subInfo2.widthAnchor.constraint(equalToConstant: 55),
             
             // next Button
             nextButton.bottomAnchor.constraint(
@@ -118,13 +118,14 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
                 
         // subInfo
         subInfo.text = "이모지, 특수문자(-, _ 제외)를 사용할 수 없습니다."
-        subInfo.font = .systemFont(ofSize: 13)
-        subInfo.numberOfLines = 0
+        subInfo.font = .systemFont(ofSize: 13, weight: .medium)
+        subInfo.numberOfLines = 2
+        subInfo.lineBreakMode = .byCharWrapping
         subInfo.textColor = .gray2
         
         // subInfo2
         subInfo2.text = "(0/15)"
-        subInfo2.font = .systemFont(ofSize: 13)
+        subInfo2.font = .systemFont(ofSize: 13, weight: .medium)
         subInfo2.textColor = .gray2
         
         // nextButton

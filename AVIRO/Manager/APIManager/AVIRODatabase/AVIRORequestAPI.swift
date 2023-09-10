@@ -23,14 +23,15 @@ struct AVIRORequestAPI {
     static let getNerbyStorePath = "/prod/map"
     static let getBookmarkPath = "/prod/map/load/bookmark"
     
+    static let checkPlacePath = "/prod/map/check/place"
+    static let checkPlaceReport = "/prod/map/check/place/report"
+    
     static let placeSummaryPath = "/prod/map/load/summary"
     static let placeInfoPath = "/prod/map/load/place"
     static let menuInfoPath = "/prod/map/load/menu"
     static let commentPath = "/prod/map/load/comment"
     static let operationHourPath = "/prod/map/load/timetable"
-    
-    static let checkPlacePath = "/prod/map/check/place"
-    
+        
     // MARK: Key
     static let userId = "userId"
     
@@ -172,6 +173,22 @@ struct AVIRORequestAPI {
             URLQueryItem(name: AVIRORequestAPI.address, value: placeModel.address),
             URLQueryItem(name: AVIRORequestAPI.x, value: placeModel.x),
             URLQueryItem(name: AVIRORequestAPI.y, value: placeModel.y)
+        ]
+        
+        return components
+    }
+    
+    // MARK: Check Place Report
+    mutating func getChekPlaceReport(model: AVIROPlaceReportCheckDTO) -> URLComponents {
+        var components = URLComponents()
+        
+        components.scheme = AVIRORequestAPI.scheme
+        components.host = host
+        components.path = AVIRORequestAPI.checkPlaceReport
+        
+        components.queryItems = [
+            URLQueryItem(name: AVIRORequestAPI.placeId, value: model.placeId),
+            URLQueryItem(name: AVIRORequestAPI.userId, value: model.userId)
         ]
         
         return components
