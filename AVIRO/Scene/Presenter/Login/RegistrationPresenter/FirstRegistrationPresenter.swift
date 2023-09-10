@@ -19,7 +19,7 @@ final class FirstRegistrationPresenter {
     private let aviroManager = AVIROAPIManager()
 
     var userInfoModel: UserInfoModel?
-    var userNicname: String?
+    var userNickname: String?
         
     init(viewController: FirstRegistrationProtocol, userInfoModel: UserInfoModel? = nil) {
         self.viewController = viewController
@@ -31,20 +31,24 @@ final class FirstRegistrationPresenter {
         viewController?.makeAttribute()
     }
     
-    // MARK: Nicname Setting Method
-    func insertUserNicName(_ userName: String) {
-        userNicname = userName
+    // MARK: Nickname Setting Method
+    func insertUserNickName(_ userName: String) {
+        userNickname = userName
     }
     
     func nicNameCount() -> Int {
-        userNicname?.count ?? 0
+        userNickname?.count ?? 0
     }
     
-    // MARK: Nicmane Check Method
+    // MARK: Nickmane Check Method
     func checkDuplication() {
-        let nicname = NicnameCheckInput(nickname: userNicname)
-        aviroManager.postCheckNicname(nicname) { result in
-            let result = NicnameCheck(statusCode: result.statusCode, isValid: result.isValid, message: result.message)
+        let nickname = NicknameCheckInput(nickname: userNickname)
+        aviroManager.postCheckNickname(nickname) { result in
+            let result = NicknameCheck(
+                statusCode: result.statusCode,
+                isValid: result.isValid,
+                message: result.message
+            )
             
             DispatchQueue.main.async { [weak self] in
                 self?.viewController?.changeSubInfo(subInfo: result.message, isVaild: result.isValid)
@@ -55,7 +59,7 @@ final class FirstRegistrationPresenter {
     // MARK: Nicmane + UserModel Push Method
     func pushUserInfo() {
         guard var userInfoModel = userInfoModel else { return }
-        userInfoModel.nickname = userNicname
+        userInfoModel.nickname = userNickname
         viewController?.pushSecondRegistrationView(userInfoModel)
     }
 }

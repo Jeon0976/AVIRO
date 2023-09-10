@@ -45,12 +45,12 @@ struct CheckUser: Codable {
 }
 
 // MARK: 닉네임 중복 확인 Input
-struct NicnameCheckInput: Encodable {
+struct NicknameCheckInput: Encodable {
     let nickname: String?
 }
 
 // MARK: 닉네임 중복 확인 Output
-struct NicnameCheck: Codable {
+struct NicknameCheck: Codable {
     let statusCode: Int
     let isValid: Bool
     let message: String

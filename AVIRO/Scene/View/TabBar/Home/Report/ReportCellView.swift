@@ -101,7 +101,7 @@ final class ReportCellView: UIView {
         } else {
             self.layer.borderColor = UIColor.gray4?.cgColor
             clickedOffSelectedType?(text)
-            if titleLabel.text == ReportType.others.rawValue {
+            if titleLabel.text == CommentReportType.others.rawValue {
                 isHiddenTextView?(true)
             }
         }
@@ -118,7 +118,7 @@ final class ReportCellView: UIView {
         } else {
             self.layer.borderColor = UIColor.gray4?.cgColor
             clickedOffSelectedType?(text)
-            if titleLabel.text == ReportType.others.rawValue {
+            if titleLabel.text == CommentReportType.others.rawValue {
                 isHiddenTextView?(true)
             }
         }

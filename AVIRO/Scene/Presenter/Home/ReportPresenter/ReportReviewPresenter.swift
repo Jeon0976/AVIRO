@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum ReportType: String, CaseIterable {
+enum CommentReportType: String, CaseIterable {
     case profanity = "욕설/비방/차별/혐오 후기예요."
     case advertisement = "홍보/영리목적 후기예요."
     case illegalInfo = "불법 정보 후기예요."
@@ -70,7 +70,7 @@ final class ReportReviewPresenter {
     func selectedReportType(_ type: String) {
         self.reportType = type
         
-        if type == ReportType.others.rawValue {
+        if type == CommentReportType.others.rawValue {
             viewController?.showTextView(true)
         } else {
             viewController?.showTextView(false)

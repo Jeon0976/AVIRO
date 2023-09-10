@@ -25,7 +25,8 @@ final class TimeChangebleView: UIView, UIContextMenuInteractionDelegate {
     }()
         
     var isChangedTime: (() -> Void)?
-    
+    var shouldShowContextMenu: Bool = true
+
     private var isReversedTime: Bool!
     
     init(isReversedTime: Bool) {
@@ -84,11 +85,15 @@ final class TimeChangebleView: UIView, UIContextMenuInteractionDelegate {
         _ interaction: UIContextMenuInteraction,
         configurationForMenuAtLocation location: CGPoint
     ) -> UIContextMenuConfiguration? {
-        return UIContextMenuConfiguration(
-            identifier: nil,
-            previewProvider: nil
-        ) { suggestedActions in
-            return self.setButtonMenuWhenClickedView()
+        if shouldShowContextMenu {
+            return UIContextMenuConfiguration(
+                identifier: nil,
+                previewProvider: nil
+            ) { suggestedActions in
+                return self.setButtonMenuWhenClickedView()
+            }
+        } else {
+            return nil
         }
     }
 
@@ -116,6 +121,7 @@ final class TimeChangebleView: UIView, UIContextMenuInteractionDelegate {
     
     func isEnabledButton(_ isEnabled: Bool) {
         button.isEnabled = isEnabled
+        shouldShowContextMenu = isEnabled
         
         if !isEnabled {
             self.backgroundColor = .gray6

@@ -628,10 +628,6 @@ final class EditMenuPresenter {
         guard let checkVegan = requestVeganMenuArray?.contains(where: { $0.howToRequest == "" && !$0.isCheck }) else { return false }
         guard let checkRequest = requestVeganMenuArray?.contains(where: { $0.howToRequest != "" && $0.isCheck }) else { return false }
         
-        print("1",count)
-        print("2'",checkVegan)
-        print("3",checkRequest)
-        
         return count && checkVegan && checkRequest
     }
     

@@ -181,7 +181,7 @@ extension FirstRegistrationViewController: UITextFieldDelegate {
     // MARK: TextField 값이 변하고 있을 때
     func textFieldDidChangeSelection(_ textField: UITextField) {
         if textField.text == "" {
-            presenter.insertUserNicName("")
+            presenter.insertUserNickName("")
             checkDuplication()
             subInfo2.text = "(0/15)"
             return
@@ -200,10 +200,10 @@ extension FirstRegistrationViewController: UITextFieldDelegate {
             return
         }
         
-        presenter.insertUserNicName(currentText)
+        presenter.insertUserNickName(currentText)
         subInfo2.text = "(\(currentText.count)/15)"
         
-        // 0.5초 후 nicname 확인 method 실행
+        // 0.5초 후 nickname 확인 method 실행
         timer?.invalidate()
         timer = Timer.scheduledTimer(timeInterval: 0.5,
                                      target: self,

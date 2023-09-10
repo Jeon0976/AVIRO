@@ -446,7 +446,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
         }
     
     // MARK: Post Nicname Check
-    func postCheckNicname(_ nicname: NicnameCheckInput, completionHandler: @escaping ((NicnameCheck) -> Void)) {
+    func postCheckNickname(_ nicname: NicknameCheckInput, completionHandler: @escaping ((NicknameCheck) -> Void)) {
         guard let url = postAPI.nicnameCheck().url else { return }
         
         guard let jsonData = try? JSONEncoder().encode(nicname) else {
@@ -465,7 +465,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
             }
             
             if let data = data {
-                if let userCheck = try? JSONDecoder().decode(NicnameCheck.self, from: data) {
+                if let userCheck = try? JSONDecoder().decode(NicknameCheck.self, from: data) {
                     completionHandler(userCheck)
                 }
                 return
@@ -575,7 +575,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
     }
     
     // MARK: Get Place Report Dublicated
-    func getPlaceReportIsDublicated(
+    func getPlaceReportIsDuplicated(
         _ checkReportModel: AVIROPlaceReportCheckDTO,
         completionHandler: @escaping((AVIROPlaceReportCheckResultDTO) -> Void)
     ) {

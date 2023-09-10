@@ -168,7 +168,7 @@ extension ReportReviewViewController: ReportReviewProtocol {
     private func makeReportViewCells() {
         var lastView: UIView?
         
-        for report in ReportType.allCases {
+        for report in CommentReportType.allCases {
             let cellView = ReportCellView()
             
             cellView.makeCellView(report.rawValue)

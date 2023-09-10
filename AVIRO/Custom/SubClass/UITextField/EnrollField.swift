@@ -161,7 +161,6 @@ class EnrollField: UITextField {
     @objc func rightButtonTapped(_ sender: UIButton) {
         self.text = ""
         self.rightButtonHidden = true
-        print("Test")
     }
     
     // MARK: Place Holder 값 넣기

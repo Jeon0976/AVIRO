@@ -119,10 +119,10 @@ extension UIColor {
     static let warning = UIColor(named: "RED")
     
     /// BG NAVY
-    static let approveBack = UIColor(named: "BG NAVY")
+    static let bgNavy = UIColor(named: "BG NAVY")
     
     /// BG RED
-    static let warningBack = UIColor(named: "BG RED")
+    static let bgRed = UIColor(named: "BG RED")
     
     /// ChangeButtonColor
     static let changeButton = UIColor(named: "KEYWORD_BLUE")

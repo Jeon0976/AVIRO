@@ -641,10 +641,24 @@ extension HomeViewController {
     }
     // MARK: Flag Button Tapped
     @objc private func flagButtonTapped(_ sender: UIButton) {
-        presenter.checkPlaceId()
+        presenter.checkReportPlaceDuplecated()
     }
     
-    func showReportPlaceAlert(_ placeId: String) {
+    func isDuplicatedReport() {
+        let alertController = UIAlertController(
+            title: "이미 신고한 가계예요",
+            message: "3건 이상의 신고가 들어오면\n가게는 자동으로 삭제돼요.",
+            preferredStyle: .alert
+        )
+        
+        let check = UIAlertAction(title: "확인", style: .cancel)
+        
+        alertController.addAction(check)
+        
+        present(alertController, animated: true)
+    }
+    
+    func showReportPlaceAlert() {
         let alertController = UIAlertController(
             title: nil,
             message: "신고하기",
@@ -652,7 +666,7 @@ extension HomeViewController {
         )
             
         let reportPlace = UIAlertAction(title: "가게 신고하기", style: .destructive) { _ in
-            self.reasonForReportPlaceActionSheet(placeId)
+            self.reasonForReportPlaceActionSheet( )
         }
         
         let cancel = UIAlertAction(title: "취소", style: .cancel)
@@ -667,23 +681,26 @@ extension HomeViewController {
         present(alertController, animated: true)
     }
     
-    private func reasonForReportPlaceActionSheet(_ placeId: String) {
+    private func reasonForReportPlaceActionSheet() {
         let alertController = UIAlertController(
             title: "신고 이유가 궁금해요!",
             message: "3건 이상의 신고가 들어오면\n가게는 자동으로 삭제돼요.",
             preferredStyle: .alert
         )
         
-        let lostPlace = UIAlertAction(title: "없어진 가게예요", style: .default) { action in
-            self.presenter.reportPlace(action.title)
+        let lostPlace = UIAlertAction(title: "없어진 가게예요", style: .default) { _ in
+            let type = AVIROPlaceReportEnum.noPlace
+            self.presenter.reportPlace(type)
         }
         
-        let notVeganPlace = UIAlertAction(title: "비건 가게가 아니예요", style: .default) { action in
-            self.presenter.reportPlace(action.title)
+        let notVeganPlace = UIAlertAction(title: "비건 메뉴가 없는 가게예요", style: .default) { _ in
+            let type = AVIROPlaceReportEnum.noVegan
+            self.presenter.reportPlace(type)
         }
          
-        let duplicatedPlace = UIAlertAction(title: "중복 등록된 가게예요", style: .default) { action in
-            self.presenter.reportPlace(action.title)
+        let duplicatedPlace = UIAlertAction(title: "중복 등록된 가게예요", style: .default) { _ in
+            let type = AVIROPlaceReportEnum.dubplicatedPlace
+            self.presenter.reportPlace(type)
         }
         
         let cancel = UIAlertAction(title: "취소", style: .cancel)

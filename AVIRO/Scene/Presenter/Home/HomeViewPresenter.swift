@@ -39,7 +39,8 @@ protocol HomeViewProtocol: NSObject {
                                menuModel: PlaceMenuData?,
                                reviewsModel: PlaceReviewsData?
     )
-    func showReportPlaceAlert(_ placeId: String)
+    func showReportPlaceAlert()
+    func isDuplicatedReport()
     func isSuccessReportPlaceActionSheet()
     func pushEditPlaceInfoViewController(placeMarkerModel: MarkerModel,
                                          placeId: String,
@@ -424,20 +425,6 @@ final class HomeViewPresenter: NSObject {
         }
         
         var starMarkers: [NMFMarker] = []
-        
-        // 구조체 didSet으로 변경
-//        starMarkersModel.forEach { markerModel in
-//            switch markerModel.mapPlace {
-//            case .All:
-//                markerModel.marker.makeStarIcon(.All)
-//            case .Some:
-//                markerModel.marker.makeStarIcon(.Some)
-//            case .Request:
-//                markerModel.marker.makeStarIcon(.Request)
-//            }
-//
-//            starMarkers.append(markerModel.marker)
-//        }
 
         MarkerModelArray.shared.updateWhenStarButton(starMarkersModel)
         viewController?.afterLoadStarButton(noMarkers: noMarkers, starMarkers: starMarkers)
@@ -514,17 +501,40 @@ final class HomeViewPresenter: NSObject {
     }
     
     // MARK: Place Id 불러오기
-    func checkPlaceId() {
+    func checkReportPlaceDuplecated() {
         guard let placeId = selectedPlaceId else { return }
         
-        viewController?.showReportPlaceAlert(placeId)
+        let model = AVIROPlaceReportCheckDTO(
+            placeId: placeId,
+            userId: UserId.shared.userId
+        )
+        
+        AVIROAPIManager().getPlaceReportIsDuplicated(model) { [weak self] resultModel in
+            DispatchQueue.main.async {
+                if resultModel.reported {
+                    self?.viewController?.isDuplicatedReport()
+                } else {
+                    self?.viewController?.showReportPlaceAlert()
+                }
+            }
+        }
     }
     
-    // TODO: 나중에 작업
-    func reportPlace(_ type: String?) {
-        guard let type = type else { return }
-        print(type)
-        viewController?.isSuccessReportPlaceActionSheet()
+    func reportPlace(_ type: AVIROPlaceReportEnum) {
+        guard let placeId = selectedPlaceId else { return }
+        
+        let model = AVIROPlaceReportDTO(
+            placeId: placeId,
+            userId: UserId.shared.userId,
+            content: type.rawValue)
+
+        AVIROAPIManager().postPlaceReport(model) { [weak self] result in
+            if result.statusCode == 200 {
+                DispatchQueue.main.async {
+                    self?.viewController?.isSuccessReportPlaceActionSheet()
+                }
+            }
+        }
     }
     
     func editPlaceInfo() {
