@@ -18,6 +18,7 @@ final class PlaceHomeView: UIView {
 
     // Place Info 관련 클로저
     var editPlaceInfo: (() -> Void)?
+    var afterTimePlusButtonTapped: (() -> Void)?
     
     // menu 관련 클로저
     var showMoreMenu: (() -> Void)?
@@ -124,6 +125,10 @@ final class PlaceHomeView: UIView {
     private func handleClosure() {
         placeInfoView.afterEditInfoButtonTapped = { [weak self] in
             self?.editPlaceInfo?()
+        }
+        
+        placeInfoView.afterTimePlusButtonTapped = { [weak self] in
+            self?.afterTimePlusButtonTapped?()
         }
         
         placeMenuView.editMenuButton = { [weak self] in

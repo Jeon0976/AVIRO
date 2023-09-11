@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class OperatingHourView: UIView {
+final class EditOperatingHourView: UIView {
     private lazy var dayLabel: UILabel = {
         let label = UILabel()
         
@@ -110,7 +110,7 @@ final class OperatingHourView: UIView {
     }
     
     func dataBinding(day: String, operatingHours: String, breakTime: String) {
-        dayLabel.text = day
+        dayLabel.text = day + "요일"
         
         operationText = operatingHours
         breakTimeText = breakTime

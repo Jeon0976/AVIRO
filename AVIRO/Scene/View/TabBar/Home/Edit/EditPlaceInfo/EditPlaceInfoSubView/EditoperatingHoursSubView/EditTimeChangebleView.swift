@@ -1,6 +1,6 @@
 import UIKit
 
-final class TimeChangebleView: UIView, UIContextMenuInteractionDelegate {
+final class EditTimeChangebleView: UIView, UIContextMenuInteractionDelegate {
     private var topInset: CGFloat = 15.0
     private var bottomInset: CGFloat = 15.0
     private var leftInset: CGFloat = 12.0

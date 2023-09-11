@@ -78,7 +78,7 @@ final class EditPlaceInfoViewController: UIViewController {
     private lazy var rightSwipeGesture = UISwipeGestureRecognizer()
     
     private lazy var blurEffectView = UIVisualEffectView()
-    private lazy var operationHourChangebleView = OperationHourChangebleView()
+    private lazy var operationHourChangebleView = EditOperationHourChangebleView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -289,17 +289,21 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     }
     
     @objc private func swipeGestureActive(_ gesture: UISwipeGestureRecognizer) {
-        if gesture.direction == .right && segmentedControl.selectedSegmentIndex != 0 {
-            segmentedControl.selectedSegmentIndex -= 1
-        } else if gesture.direction == .left && segmentedControl.selectedSegmentIndex != 3 {
-            segmentedControl.selectedSegmentIndex += 1
+        if blurEffectView.isHidden {
+            if gesture.direction == .right && segmentedControl.selectedSegmentIndex != 0 {
+                segmentedControl.selectedSegmentIndex -= 1
+            } else if gesture.direction == .left && segmentedControl.selectedSegmentIndex != 3 {
+                segmentedControl.selectedSegmentIndex += 1
+            }
+            
+            whenActiveSegmentedChanged()
         }
-        
-        whenActiveSegmentedChanged()
     }
     
     @objc private func segmentedChanged(segment: UISegmentedControl) {
-        whenActiveSegmentedChanged()
+        if blurEffectView.isHidden {
+            whenActiveSegmentedChanged()
+        }
     }
     
     private func whenActiveSegmentedChanged() {
@@ -391,6 +395,7 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     }
     
     func dataBindingOperatingHours(operatingHourModels: [EditOperationHoursModel]) {
+        print(operatingHourModels)
         editOperationHoursView.dataBinding(operatingHourModels)
     }
     

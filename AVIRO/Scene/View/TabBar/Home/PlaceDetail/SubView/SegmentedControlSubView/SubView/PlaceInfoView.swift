@@ -110,11 +110,16 @@ final class PlaceInfoView: UIView {
         let button = UIButton()
         
         button.setTitle("더보기", for: .normal)
-        button.setTitleColor(.gray0, for: .normal)
-        button.backgroundColor = .gray7
+        button.setTitleColor(.gray2, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
+        button.addTarget(self, action: #selector(timePlusButtonTapped), for: .touchUpInside)
         
         return button
     }()
+    
+    @objc private func timePlusButtonTapped() {
+        afterTimePlusButtonTapped?()
+    }
     
     private lazy var homePageIcon: UIImageView = {
         let imageView = UIImageView()
@@ -155,6 +160,7 @@ final class PlaceInfoView: UIView {
     private var viewHeightConstraint: NSLayoutConstraint?
     
     var afterEditInfoButtonTapped: (() -> Void)?
+    var afterTimePlusButtonTapped: (() -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -233,9 +239,9 @@ final class PlaceInfoView: UIView {
             timeLabel.leadingAnchor.constraint(equalTo: timeIcon.trailingAnchor, constant: 10),
             timeLabel.trailingAnchor.constraint(equalTo: timePlusButton.leadingAnchor, constant: -10),
             
-            timePlusButton.topAnchor.constraint(equalTo: timeIcon.topAnchor),
-            timePlusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 10),
-            timePlusButton.widthAnchor.constraint(equalToConstant: 40),
+            timePlusButton.centerYAnchor.constraint(equalTo: timeLabel.centerYAnchor),
+            timePlusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
+            timePlusButton.widthAnchor.constraint(equalToConstant: 50),
             
             homePageIcon.topAnchor.constraint(equalTo: timeIcon.bottomAnchor, constant: 20),
             homePageIcon.leadingAnchor.constraint(equalTo: title.leadingAnchor),
@@ -310,7 +316,7 @@ final class PlaceInfoView: UIView {
     private func changedOperationLabel(_ state: String, _ operating: String) {
         timeLabel.isHidden = false
         timePlusButton.isHidden = false
-        timePlusButton.isHidden = true
+        timeButton.isHidden = true
         
         timeLabel.text = state + " " + operating
     }

@@ -18,7 +18,7 @@ final class EditOperatingHoursView: UIView {
         return label
     }()
 
-    private var operatingHourViews: [OperatingHourView] = []
+    private var operatingHourViews: [EditOperatingHourView] = []
     
     var openChangebleOperationHourView: ((EditOperationHoursModel) -> Void)?
     
@@ -47,10 +47,10 @@ final class EditOperatingHoursView: UIView {
             operatingHourLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor)
         ])
         
-        var lastView: OperatingHourView?
+        var lastView: EditOperatingHourView?
         
         for _ in 0..<7 {
-            let cellView = OperatingHourView()
+            let cellView = EditOperatingHourView()
             
             cellView.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview(cellView)

@@ -64,6 +64,7 @@ final class PlaceView: UIView {
     
     // MARK: SegmentedControl
     var editPlaceInfo: (() -> Void)?
+    var afterTimePlusButtonTapped: (() -> Void)?
     
     var editMenu: (() -> Void)?
     
@@ -192,6 +193,10 @@ final class PlaceView: UIView {
         // MARK: Segmented
         segmentedControlView.editPlaceInfo = { [weak self] in
             self?.editPlaceInfo?()
+        }
+        
+        segmentedControlView.afterTimePlusButton = { [weak self] in
+            self?.afterTimePlusButtonTapped?()
         }
         
         segmentedControlView.editMenu = { [weak self] in

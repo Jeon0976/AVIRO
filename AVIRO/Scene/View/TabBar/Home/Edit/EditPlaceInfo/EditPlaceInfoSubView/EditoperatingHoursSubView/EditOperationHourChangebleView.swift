@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class OperationHourChangebleView: UIView {
+final class EditOperationHourChangebleView: UIView {
     private lazy var operatingHoursButton: UIButton = {
         let button = UIButton()
         
@@ -95,8 +95,8 @@ final class OperationHourChangebleView: UIView {
         return button
     }()
     
-    private lazy var operationTimeOpen: TimeChangebleView = {
-        let view = TimeChangebleView(isReversedTime: false)
+    private lazy var operationTimeOpen: EditTimeChangebleView = {
+        let view = EditTimeChangebleView(isReversedTime: false)
         
         view.isChangedTime = { [weak self] in
             self?.whenAddTimeLabelCheckIsEnabledEditButton()
@@ -105,8 +105,8 @@ final class OperationHourChangebleView: UIView {
         return view
     }()
     
-    private lazy var operationTimeClosed: TimeChangebleView = {
-        let view = TimeChangebleView(isReversedTime: false)
+    private lazy var operationTimeClosed: EditTimeChangebleView = {
+        let view = EditTimeChangebleView(isReversedTime: false)
         
         view.isChangedTime = { [weak self] in
             self?.whenAddTimeLabelCheckIsEnabledEditButton()
@@ -141,8 +141,8 @@ final class OperationHourChangebleView: UIView {
         return label
     }()
     
-    private lazy var breakTimeOpen: TimeChangebleView = {
-        let view = TimeChangebleView(isReversedTime: true)
+    private lazy var breakTimeOpen: EditTimeChangebleView = {
+        let view = EditTimeChangebleView(isReversedTime: true)
         
         view.isChangedTime = { [weak self] in
             self?.whenAddTimeLabelCheckIsEnabledEditButton()
@@ -151,8 +151,8 @@ final class OperationHourChangebleView: UIView {
         return view
     }()
     
-    private lazy var breakTimeClosed: TimeChangebleView = {
-        let view = TimeChangebleView(isReversedTime: true)
+    private lazy var breakTimeClosed: EditTimeChangebleView = {
+        let view = EditTimeChangebleView(isReversedTime: true)
         
         view.isChangedTime = { [weak self] in
             self?.whenAddTimeLabelCheckIsEnabledEditButton()
