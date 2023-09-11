@@ -11,4 +11,5 @@ struct EditOperationHoursModel {
     var day: String
     var operatingHours: String
     var breakTime: String
+    var isToday: Bool
 }

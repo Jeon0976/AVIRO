@@ -79,10 +79,37 @@ final class OperationHourView: UIView {
         ])
     }
     
-    private func setupAttribute() {        self.backgroundColor = .gray7
+    private func setupAttribute() {
+        self.backgroundColor = .gray7
     }
     
-    func isToday() {
+    func dataBinding(_ model: EditOperationHoursModel) {
+        dayLabel.text = model.day
+        
+        if model.operatingHours != "정보 없음" {
+            operatingHourLabel.text = model.operatingHours
+            operatingHourLabel.textColor = .gray1
+        } else {
+            operatingHourLabel.text = "정보없음"
+            operatingHourLabel.textColor = .gray3
+        }
+        
+        if model.breakTime != "" {
+            breakTimeLabel.text = model.breakTime + " 휴식시간"
+            breakTimeLabel.isHidden = false
+        } else {
+            breakTimeLabel.text = model.breakTime
+            breakTimeLabel.isHidden = true
+        }
+        
+        if model.isToday {
+            isToday()
+        } else {
+            isNotToday()
+        }
+    }
+    
+    private func isToday() {
         dayLabel.font = .systemFont(ofSize: 15, weight: .semibold)
         dayLabel.textColor = .main
         
@@ -93,29 +120,13 @@ final class OperationHourView: UIView {
         breakTimeLabel.textColor = .main
     }
     
-    func dataBinding(day: String, operationHours: String, breakTime: String) {
-        dayLabel.text = day
-        dayLabel.textColor = .gray1
-        
-        if operationHours != "정보 없음" {
-            operatingHourLabel.text = operationHours
-            operatingHourLabel.textColor = .gray1
-        } else {
-            operatingHourLabel.text = "정보없음"
-            operatingHourLabel.textColor = .gray3
-        }
-        
-        if breakTime != "" {
-            breakTimeLabel.text = "[휴식시간] " + breakTime
-            breakTimeLabel.isHidden = false
-        } else {
-            breakTimeLabel.text = breakTime
-            breakTimeLabel.isHidden = true
-        }
-
+    private func isNotToday() {
         dayLabel.font = .systemFont(ofSize: 15, weight: .medium)
+        dayLabel.textColor = .gray1
+
         operatingHourLabel.font = .systemFont(ofSize: 15, weight: .medium)
         breakTimeLabel.font = .systemFont(ofSize: 15, weight: .medium)
+        breakTimeLabel.textColor = .gray3
     }
     
     private func setupViewHeight() {

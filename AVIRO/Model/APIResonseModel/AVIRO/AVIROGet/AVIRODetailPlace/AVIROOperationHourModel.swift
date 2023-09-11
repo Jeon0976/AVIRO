@@ -37,13 +37,48 @@ struct AVIROOperationHoursRawData: Decodable {
 extension AVIROOperationHoursData {
     func toEditOperationHoursModels() -> [EditOperationHoursModel] {
         return [
-                    EditOperationHoursModel(day: "월", operatingHours: mon.operation, breakTime: mon.breakTime),
-                    EditOperationHoursModel(day: "화", operatingHours: tue.operation, breakTime: tue.breakTime),
-                    EditOperationHoursModel(day: "수", operatingHours: wed.operation, breakTime: wed.breakTime),
-                    EditOperationHoursModel(day: "목", operatingHours: thu.operation, breakTime: thu.breakTime),
-                    EditOperationHoursModel(day: "금", operatingHours: fri.operation, breakTime: fri.breakTime),
-                    EditOperationHoursModel(day: "토", operatingHours: sat.operation, breakTime: sat.breakTime),
-                    EditOperationHoursModel(day: "일", operatingHours: sun.operation, breakTime: sun.breakTime)
-                ]
+            EditOperationHoursModel(
+                day: "월",
+                operatingHours: mon.operation,
+                breakTime: mon.breakTime,
+                isToday: mon.today
+            ),
+            EditOperationHoursModel(
+                day: "화",
+                operatingHours: tue.operation,
+                breakTime: tue.breakTime,
+                isToday: tue.today
+            ),
+            EditOperationHoursModel(
+                day: "수",
+                operatingHours: wed.operation,
+                breakTime: wed.breakTime,
+                isToday: wed.today
+            ),
+            EditOperationHoursModel(
+                day: "목",
+                operatingHours: thu.operation,
+                breakTime: thu.breakTime,
+                isToday: thu.today
+            ),
+            EditOperationHoursModel(
+                day: "금",
+                operatingHours: fri.operation,
+                breakTime: fri.breakTime,
+                isToday: fri.today
+            ),
+            EditOperationHoursModel(
+                day: "토",
+                operatingHours: sat.operation,
+                breakTime: sat.breakTime,
+                isToday: sat.today
+            ),
+            EditOperationHoursModel(
+                day: "일",
+                operatingHours: sun.operation,
+                breakTime: sun.breakTime,
+                isToday: sun.today
+            )
+        ]
     }
 }

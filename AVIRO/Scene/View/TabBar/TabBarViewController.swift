@@ -9,7 +9,7 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
     
-    private let centerButton: UIButton = {
+    private lazy var  centerButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "InrollTabBarIcon"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -25,6 +25,16 @@ class TabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupViewController()
+        
+        centerButton.addTarget(self, action:
+                                #selector(didTapPlusButton),
+                               for: .touchUpInside
+        )
+        
+    }
+    
+    private func setupViewController() {
         let tabBarViewControllers: [UIViewController] = TabBarItem.allCases.map { tabCase in
             let viewController = tabCase.viewController
             let tabBarItem = UITabBarItem(
@@ -39,10 +49,6 @@ class TabBarViewController: UITabBarController {
         }
         self.viewControllers = tabBarViewControllers
         
-        centerButton.addTarget(self, action:
-                                #selector(didTapPlusButton),
-                               for: .touchUpInside
-        )
     }
     
     // MARK: 가운데 plus 버튼 만들기
@@ -85,6 +91,7 @@ class TabBarViewController: UITabBarController {
             setupTabBar()
         }
     }
+    
 }
 
 // MARK: View Preview

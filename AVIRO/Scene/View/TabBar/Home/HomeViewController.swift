@@ -26,6 +26,7 @@ final class HomeViewController: UIViewController {
     private lazy var flagButton = HomeTopButton()
     
     private(set) lazy var placeView = PlaceView()
+        
     private(set) var placeViewTopConstraint: NSLayoutConstraint?
     private(set) var searchTextFieldTopConstraint: NSLayoutConstraint?
     
@@ -39,7 +40,6 @@ final class HomeViewController: UIViewController {
     private var downGesture = UISwipeGestureRecognizer()
     // 최초 화면 뷰
     var firstPopupView = HomeFirstPopUpView()
-    var blurEffectView = UIVisualEffectView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -127,7 +127,7 @@ extension HomeViewController: HomeViewProtocol {
             downBackButton.widthAnchor.constraint(equalToConstant: 40),
             downBackButton.heightAnchor.constraint(equalToConstant: 40)
         ])
-        
+                        
         searchTextFieldTopConstraint = searchTextField.topAnchor.constraint(
             equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16)
         searchTextFieldTopConstraint?.isActive = true
@@ -177,7 +177,7 @@ extension HomeViewController: HomeViewProtocol {
         starButton.setImage(UIImage(named: "selectedStar"), for: .selected)
         starButton.setImage(UIImage(named: "starDisable")?.withTintColor(.gray4!), for: .disabled)
         starButton.addTarget(self, action: #selector(starButtonTapped(_ :)), for: .touchUpInside)
-        
+
     }
     
     // MARK: Gesture 설정
@@ -193,45 +193,20 @@ extension HomeViewController: HomeViewProtocol {
         
         view.addGestureRecognizer(tapGesture)
         tapGesture.delegate = self
+        
     }
     
-    // MARK: SlideView 설정
-    func makeSlideView() {
-        // first popup view
-        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
-        blurEffectView.effect = blurEffect
-        blurEffectView.frame = view.bounds
-        blurEffectView.alpha = 0.4
-        
-        firstPopupView.cancelButton.addTarget(self,
-                                              action: #selector(firstPopupViewDelete),
-                                              for: .touchUpInside
-        )
-        firstPopupView.reportButton.addTarget(self,
-                                              action: #selector(firstPopupViewReport(_:)),
-                                              for: .touchUpInside
-        )
-        
-        [
-            blurEffectView,
-            firstPopupView
-        ].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview($0)
-        }
-        
-        NSLayoutConstraint.activate([
-            // firstPopUpView
-            firstPopupView.bottomAnchor.constraint(
-                equalTo: view.bottomAnchor),
-            firstPopupView.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor),
-            firstPopupView.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor),
-            firstPopupView.heightAnchor.constraint(
-                equalToConstant: Layout.SlideView.firstHeight)
-        ])
-    }
+//    private func turnOnBlurEffect() {
+//        if let tabBarController = tabBarController as? TabBarViewController {
+//            tabBarController.toggleFullScreenBlurEffect(true)
+//        }
+//    }
+//
+//    private func turnOffBlurEffect() {
+//        if let tabBarController = tabBarController as? TabBarViewController {
+//            tabBarController.toggleFullScreenBlurEffect(false)
+//        }
+//    }
     
     // MARK: Keyboard Will Show
     func keyboardWillShow(height: CGFloat) {
@@ -374,6 +349,14 @@ extension HomeViewController: HomeViewProtocol {
         present(alertController, animated: true)
     }
     
+    func pushPlaceInfoOpreationHoursViewController(_ models: [EditOperationHoursModel]) {
+        let vc = PlaceOperationHoursViewController(models)
+        
+        vc.modalPresentationStyle = .overFullScreen
+        
+        present(vc, animated: false)
+    }
+    
     func pushEditPlaceInfoViewController(placeMarkerModel: MarkerModel,
                                          placeId: String,
                                          placeSummary: PlaceSummaryData,
@@ -487,6 +470,10 @@ extension HomeViewController {
             let title: String = selected ? "즐겨찾기가 추가되었습니다." : "즐겨찾기가 삭제되었습니다."
             self?.makeToastButton(title)
             self?.presenter.updateBookmark(selected)
+        }
+        
+        placeView.afterTimePlusButtonTapped = { [weak self] in
+            self?.presenter.loadPlaceOperationHours()
         }
         
         placeView.editPlaceInfo = { [weak self] in

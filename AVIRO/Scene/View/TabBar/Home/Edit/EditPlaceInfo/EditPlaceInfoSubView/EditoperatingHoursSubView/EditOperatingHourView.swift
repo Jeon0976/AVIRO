@@ -42,6 +42,7 @@ final class EditOperatingHourView: UIView {
     
     private var operationText = ""
     private var breakTimeText = ""
+    private var isToday: Bool!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -103,15 +104,16 @@ final class EditOperatingHourView: UIView {
         let operationHourModel = EditOperationHoursModel(
             day: day,
             operatingHours: operationText,
-            breakTime: breakTimeText
+            breakTime: breakTimeText,
+            isToday: isToday
         )
         
         tappedOperatingHoursView?(operationHourModel)
     }
     
-    func dataBinding(day: String, operatingHours: String, breakTime: String) {
+    func dataBinding(day: String, operatingHours: String, breakTime: String, isToday: Bool) {
         dayLabel.text = day + "요일"
-        
+        self.isToday = isToday
         operationText = operatingHours
         breakTimeText = breakTime
         

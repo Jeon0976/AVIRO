@@ -42,6 +42,7 @@ protocol HomeViewProtocol: NSObject {
     func showReportPlaceAlert()
     func isDuplicatedReport()
     func isSuccessReportPlaceActionSheet()
+    func pushPlaceInfoOpreationHoursViewController(_ models: [EditOperationHoursModel])
     func pushEditPlaceInfoViewController(placeMarkerModel: MarkerModel,
                                          placeId: String,
                                          placeSummary: PlaceSummaryData,
@@ -537,6 +538,16 @@ final class HomeViewPresenter: NSObject {
         }
     }
     
+    func loadPlaceOperationHours() {
+        guard let selectedPlaceId = selectedPlaceId else { return }
+        
+        AVIROAPIManager().getOperationHour(placeId: selectedPlaceId) { [weak self] model in
+            DispatchQueue.main.async {
+                self?.viewController?.pushPlaceInfoOpreationHoursViewController(model.data.toEditOperationHoursModels())
+            }
+        }
+    }
+    
     func editPlaceInfo() {
         guard let placeMarkerModel = selectedMarkerModel,
               let placeId = selectedPlaceId,
@@ -610,11 +621,8 @@ final class HomeViewPresenter: NSObject {
         }
     }
     
-    // TODO: Print문 수정
     func deleteMyReview(_ postDeleteReviewModel: AVIRODeleteCommentPost) {
-        print(postDeleteReviewModel)
         AVIROAPIManager().postDeleteCommentModel(postDeleteReviewModel) { [weak self] model in
-            print(model)
             DispatchQueue.main.async {
                 self?.viewController?.deleteMyReviewInView(postDeleteReviewModel.commentId)
             }

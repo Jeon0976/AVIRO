@@ -201,6 +201,7 @@ final class EditOperationHourChangebleView: UIView {
     private var initOperationClosed = ""
     private var initBreakOpen = ""
     private var initBreakClosed = ""
+    private var isToday: Bool!
     
     var cancelTapped: (() -> Void)?
     var editTapped: ((EditOperationHoursModel) -> Void)?
@@ -358,6 +359,7 @@ final class EditOperationHourChangebleView: UIView {
     
     func makeBindingData(_ operationHoursModel: EditOperationHoursModel) {
         day = operationHoursModel.day
+        isToday = operationHoursModel.isToday
         
         operationTimeOpen.isEnabledButton(true)
         operationTimeClosed.isEnabledButton(true)
@@ -535,7 +537,8 @@ final class EditOperationHourChangebleView: UIView {
             let model = EditOperationHoursModel(
                 day: self.day,
                 operatingHours: operatingHours,
-                breakTime: breakTime
+                breakTime: breakTime,
+                isToday: isToday
             )
             
             editTapped?(model)

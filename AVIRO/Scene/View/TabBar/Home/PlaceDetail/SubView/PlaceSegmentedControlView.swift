@@ -62,7 +62,6 @@ final class PlaceSegmentedControlView: UIView {
     // placeInfo
     var editPlaceInfo: (() -> Void)?
     var afterTimePlusButton: (() -> Void)?
-    private var isTimePlusButtonTapped = false
     
     // menu
     var editMenu: (() -> Void)?
@@ -176,15 +175,13 @@ final class PlaceSegmentedControlView: UIView {
     }
     
     @objc private func swipeGestureActived(_ gesture: UISwipeGestureRecognizer) {
-        if !isTimePlusButtonTapped {
-            if gesture.direction == .right && segmentedControl.selectedSegmentIndex != 0 {
-                segmentedControl.selectedSegmentIndex -= 1
-            } else if gesture.direction == .left && segmentedControl.selectedSegmentIndex != 2 {
-                segmentedControl.selectedSegmentIndex += 1
-            }
-            
-            whenActiveSegmentedChanged()
+        if gesture.direction == .right && segmentedControl.selectedSegmentIndex != 0 {
+            segmentedControl.selectedSegmentIndex -= 1
+        } else if gesture.direction == .left && segmentedControl.selectedSegmentIndex != 2 {
+            segmentedControl.selectedSegmentIndex += 1
         }
+        
+        whenActiveSegmentedChanged()
     }
     
     func keyboardWillShow(height: CGFloat) {
@@ -239,9 +236,7 @@ final class PlaceSegmentedControlView: UIView {
     }
     
     @objc private func segmentedChanged(segment: UISegmentedControl) {
-        if !isTimePlusButtonTapped {
-            whenActiveSegmentedChanged()
-        }
+        whenActiveSegmentedChanged()
     }
     
     private func whenActiveSegmentedChanged() {
@@ -329,7 +324,6 @@ final class PlaceSegmentedControlView: UIView {
         
         homeView.afterTimePlusButtonTapped = { [weak self] in
             self?.afterTimePlusButton?()
-            self?.isTimePlusButtonTapped = true
         }
         
         // menu 관련 클로저

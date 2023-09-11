@@ -81,7 +81,12 @@ final class EditOperatingHoursView: UIView {
     func dataBinding(_ operatingHourModels: [EditOperationHoursModel]) {
         if operatingHourModels.count == operatingHourViews.count {
             for (index, model) in operatingHourModels.enumerated() {
-                operatingHourViews[index].dataBinding(day: model.day, operatingHours: model.operatingHours, breakTime: model.breakTime)
+                operatingHourViews[index].dataBinding(
+                    day: model.day,
+                    operatingHours: model.operatingHours,
+                    breakTime: model.breakTime,
+                    isToday: model.isToday
+                )
             }
         }
     }

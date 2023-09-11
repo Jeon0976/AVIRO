@@ -165,8 +165,9 @@
 		C5EB510B2A209FD300B29CC1 /* HomeSearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB510A2A209FD300B29CC1 /* HomeSearchPresenter.swift */; };
 		C5EB510D2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB510C2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift */; };
 		C5EB51122A20CC7D00B29CC1 /* HomeInfoStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB51112A20CC7D00B29CC1 /* HomeInfoStoreView.swift */; };
-		C5ED46932AAEB02F00F2DA04 /* PlaceOperationHoursView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ED46922AAEB02F00F2DA04 /* PlaceOperationHoursView.swift */; };
+		C5ED46932AAEB02F00F2DA04 /* PlaceOperationHoursViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ED46922AAEB02F00F2DA04 /* PlaceOperationHoursViewController.swift */; };
 		C5ED46952AAEB3F300F2DA04 /* OperationHourView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ED46942AAEB3F300F2DA04 /* OperationHourView.swift */; };
+		C5ED46982AAEEFB600F2DA04 /* OperationHoursView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ED46972AAEEFB600F2DA04 /* OperationHoursView.swift */; };
 		C5F1014F2A6D19A800C53286 /* VeganOptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F1014E2A6D19A800C53286 /* VeganOptionButton.swift */; };
 		C5FA0EAA2A94DB3E004AD8B4 /* ReportReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FA0EA92A94DB3E004AD8B4 /* ReportReviewViewController.swift */; };
 		C5FA0EAC2A94DF39004AD8B4 /* ReportReviewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FA0EAB2A94DF39004AD8B4 /* ReportReviewPresenter.swift */; };
@@ -348,8 +349,9 @@
 		C5EB510A2A209FD300B29CC1 /* HomeSearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchPresenter.swift; sourceTree = "<group>"; };
 		C5EB510C2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchViewTableViewCell.swift; sourceTree = "<group>"; };
 		C5EB51112A20CC7D00B29CC1 /* HomeInfoStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInfoStoreView.swift; sourceTree = "<group>"; };
-		C5ED46922AAEB02F00F2DA04 /* PlaceOperationHoursView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceOperationHoursView.swift; sourceTree = "<group>"; };
+		C5ED46922AAEB02F00F2DA04 /* PlaceOperationHoursViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceOperationHoursViewController.swift; sourceTree = "<group>"; };
 		C5ED46942AAEB3F300F2DA04 /* OperationHourView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationHourView.swift; sourceTree = "<group>"; };
+		C5ED46972AAEEFB600F2DA04 /* OperationHoursView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationHoursView.swift; sourceTree = "<group>"; };
 		C5F1014E2A6D19A800C53286 /* VeganOptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganOptionButton.swift; sourceTree = "<group>"; };
 		C5FA0EA92A94DB3E004AD8B4 /* ReportReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportReviewViewController.swift; sourceTree = "<group>"; };
 		C5FA0EAB2A94DF39004AD8B4 /* ReportReviewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportReviewPresenter.swift; sourceTree = "<group>"; };
@@ -1003,7 +1005,7 @@
 			isa = PBXGroup;
 			children = (
 				C5C290762A85E4FF00ED5DCE /* PlaceHomeView.swift */,
-				C5ED46922AAEB02F00F2DA04 /* PlaceOperationHoursView.swift */,
+				C5ED46922AAEB02F00F2DA04 /* PlaceOperationHoursViewController.swift */,
 				C5ED46962AAEB40500F2DA04 /* PlaceOperationSubView */,
 				C5C2907F2A8616C500ED5DCE /* SubView */,
 			);
@@ -1239,6 +1241,7 @@
 		C5ED46962AAEB40500F2DA04 /* PlaceOperationSubView */ = {
 			isa = PBXGroup;
 			children = (
+				C5ED46972AAEEFB600F2DA04 /* OperationHoursView.swift */,
 				C5ED46942AAEB3F300F2DA04 /* OperationHourView.swift */,
 			);
 			path = PlaceOperationSubView;
@@ -1469,7 +1472,7 @@
 				C5732C732A41778A00CDC499 /* AVIROPostAPI.swift in Sources */,
 				C5732C7C2A41D41B00CDC499 /* VeganTableFieldModel.swift in Sources */,
 				C50DB7592A9B8E060078B501 /* EditLocationDetailMapView.swift in Sources */,
-				C5ED46932AAEB02F00F2DA04 /* PlaceOperationHoursView.swift in Sources */,
+				C5ED46932AAEB02F00F2DA04 /* PlaceOperationHoursViewController.swift in Sources */,
 				C5732C752A41962D00CDC499 /* AVIRORequestAPI.swift in Sources */,
 				C513854C2AAB3B52001AB827 /* NickNameChangeblePresenter.swift in Sources */,
 				C5D93DA12A581F5A00629C39 /* FirstRegistrationPresenter.swift in Sources */,
@@ -1535,6 +1538,7 @@
 				C5A201C32A98A61F00A54381 /* EditLocationBottomView.swift in Sources */,
 				C52066232A7CAC910038ECCD /* NoHistoryView.swift in Sources */,
 				C5E306E72A6FB4ED00C11CF7 /* MenuField.swift in Sources */,
+				C5ED46982AAEEFB600F2DA04 /* OperationHoursView.swift in Sources */,
 				C51AED212A8B2BDB0015FBC2 /* HomeMapReferButton.swift in Sources */,
 				C5E430B32A5DADBE00CB67EC /* SecondRegistrationPresenter.swift in Sources */,
 				C5EB510D2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift in Sources */,
