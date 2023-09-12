@@ -33,9 +33,9 @@ struct SearchHistoryManager: SearchHistoryManagerProtocol {
     func setHistoryModel(_ newValues: HistoryTableModel) {
         var currentTable: [HistoryTableModel] = getHistoryModel()
         
-        if currentTable.contains(where: { $0.title == newValues.title }) {
-                return
-            }
+        if let existingIndex = currentTable.firstIndex(where: { $0.title == newValues.title }) {
+              currentTable.remove(at: existingIndex)
+        }
         
         currentTable.insert(newValues, at: 0)
         

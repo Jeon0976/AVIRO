@@ -21,9 +21,59 @@ final class HomeSearchViewController: UIViewController {
     
     private lazy var indicatorView = UIActivityIndicatorView()
     
+    private lazy var noResultImageView: UIImageView = {
+        let imageView = UIImageView()
+        
+        imageView.backgroundColor = .gray6
+        imageView.isHidden = true
+        
+        return imageView
+    }()
+    
+    private lazy var noResultMainTitle: UILabel = {
+        let label = UILabel()
+        
+        label.text = "아직 등록된 가게가 없어요"
+        label.font = .systemFont(ofSize: 20, weight: .bold)
+        label.textAlignment = .center
+        label.textColor = .gray0
+        label.isHidden = true
+        
+        return label
+    }()
+    
+    private lazy var noResultSubTitle: UILabel = {
+        let label = UILabel()
+        
+        label.text = "알고 있는 가게에 검색 결과가 없다면\n가게를 직접 등록해보세요."
+        label.numberOfLines = 2
+        label.textColor = .gray2
+        label.font = .systemFont(ofSize: 15, weight: .medium)
+        label.textAlignment = .center
+        label.isHidden = true
+        
+        return label
+    }()
+    
+    private lazy var noResultAndPushEnrollPlaceViewButton: BottomButton1 = {
+        let button = BottomButton1()
+        
+        button.setTitle("새로운 가게 등록하기", for: .normal)
+        button.addTarget(self, action: #selector(newEnrollPlaceButtonTapped), for: .touchUpInside)
+        button.isHidden = true
+
+        return button
+    }()
+    
+    @objc private func newEnrollPlaceButtonTapped() {
+        afterNewEnrollPlaceButtonTapped?()
+    }
+    
     /// API 호출 관련해서 다 입력이 끝나면 발동하도록 하는 변수
     private var searchTimer: DispatchWorkItem?
 
+    var afterNewEnrollPlaceButtonTapped: (() -> Void)?
+    
     private lazy var tapGesture = UITapGestureRecognizer()
     
     private var searchFieldTopConstraint: NSLayoutConstraint?
@@ -44,7 +94,11 @@ extension HomeSearchViewController: HomeSearchProtocol {
             historyTableView,
             placeListHeaderView,
             placeListTableView,
-            indicatorView
+            indicatorView,
+            noResultImageView,
+            noResultMainTitle,
+            noResultSubTitle,
+            noResultAndPushEnrollPlaceViewButton
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
@@ -96,7 +150,22 @@ extension HomeSearchViewController: HomeSearchProtocol {
             historyTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             indicatorView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            indicatorView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+            indicatorView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            
+            noResultImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            noResultImageView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            noResultImageView.widthAnchor.constraint(equalToConstant: 120),
+            noResultImageView.heightAnchor.constraint(equalToConstant: 120),
+            
+            noResultMainTitle.topAnchor.constraint(equalTo: noResultImageView.bottomAnchor, constant: 30),
+            noResultMainTitle.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            
+            noResultSubTitle.topAnchor.constraint(equalTo: noResultMainTitle.bottomAnchor, constant: 15),
+            noResultSubTitle.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            
+            noResultAndPushEnrollPlaceViewButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -25),
+            noResultAndPushEnrollPlaceViewButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 32),
+            noResultAndPushEnrollPlaceViewButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -32)
         ])
     }
     
@@ -124,8 +193,28 @@ extension HomeSearchViewController: HomeSearchProtocol {
         }
     }
     
-    func placeListTableReload() {
+    func placeListTableReloadData() {
         placeListTableView.reloadData()
+        
+        resultAfterViewShow(haveDatas: true)
+    }
+    
+    func placeListNoResultData() {
+        placeListTableView.reloadData()
+
+        searchField.activeShakeAfterNoSearchData()
+        
+        resultAfterViewShow(haveDatas: false)
+    }
+    
+    private func resultAfterViewShow(haveDatas: Bool) {
+        placeListTableView.isHidden = !haveDatas
+        placeListHeaderView.isHidden = !haveDatas
+        
+        noResultImageView.isHidden = haveDatas
+        noResultMainTitle.isHidden = haveDatas
+        noResultSubTitle.isHidden = haveDatas
+        noResultAndPushEnrollPlaceViewButton.isHidden = haveDatas
         indicatorView.isHidden = true
     }
     
@@ -164,6 +253,7 @@ extension HomeSearchViewController {
         placeListTableView.isHidden = false
         placeListHeaderView.isHidden = false
         historyTableView.isHidden = true
+        historyHeaderView.isHidden = true
         noHistoryView.isHidden = true
     }
     
@@ -270,6 +360,10 @@ extension HomeSearchViewController {
             self.presenter.checkHistoryTableValues()
             self.placeListTableView.isHidden = true
             self.placeListHeaderView.isHidden = true
+            self.noResultImageView.isHidden = true
+            self.noResultMainTitle.isHidden = true
+            self.noResultSubTitle.isHidden = true
+            self.noResultAndPushEnrollPlaceViewButton.isHidden = true
             
             self.searchFieldTopConstraint?.constant = 15
             self.view.layoutIfNeeded()
@@ -287,8 +381,6 @@ extension HomeSearchViewController: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         searchField.rightButtonHidden = false
         
-        // 중간 배열의 out of index 방지를 위해 & API 요청 횟수를 줄이기 위해
-
         // 이전 타이머 작업을 취소합니다(있는 경우).
         searchTimer?.cancel()
 
@@ -307,7 +399,7 @@ extension HomeSearchViewController: UITextFieldDelegate {
         searchTimer = task
 
         // 0.5초 후에 작업을 실행합니다.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: task)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: task)
     }
     
 }

@@ -787,6 +787,10 @@ extension HomeViewController: UITextFieldDelegate {
         }, completion: { _ in
             let vc = HomeSearchViewController()
             
+            vc.afterNewEnrollPlaceButtonTapped = { [weak self] in
+                self?.tabBarController?.selectedIndex = 1
+            }
+            
             self.navigationController?.pushViewController(vc, animated: false)
             snapshot.removeFromSuperview()
             

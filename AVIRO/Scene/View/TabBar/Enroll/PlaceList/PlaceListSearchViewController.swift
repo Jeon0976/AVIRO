@@ -10,13 +10,49 @@ import UIKit
 final class PlaceListSearchViewController: UIViewController {
     lazy var presenter = PlaceListSearchViewPresenter(viewController: self)
     
-    var listTableView = UITableView()
-    var searchField = SearchField()
+    private lazy var listTableView = UITableView()
+    private lazy var searchField = SearchField()
     
-    var tapGesture = UITapGestureRecognizer()
+    private lazy var tapGesture = UITapGestureRecognizer()
+    
+    private lazy var noResultImageView: UIImageView = {
+        let imageView = UIImageView()
+        
+        imageView.backgroundColor = .gray6
+        imageView.isHidden = true
+        
+        return imageView
+    }()
+    
+    private lazy var noResultMainTitle: UILabel = {
+        let label = UILabel()
+        
+        label.text = "아직 등록된 가게가 없어요"
+        label.font = .systemFont(ofSize: 20, weight: .bold)
+        label.textAlignment = .center
+        label.textColor = .gray0
+        label.isHidden = true
+        
+        return label
+    }()
+    
+    private lazy var noResultSubTitle: UILabel = {
+        let label = UILabel()
+        
+        label.text = "알고 있는 가게에 검색 결과가 없다면\n가게를 직접 등록해보세요."
+        label.numberOfLines = 2
+        label.textColor = .gray2
+        label.font = .systemFont(ofSize: 15, weight: .medium)
+        label.textAlignment = .center
+        label.isHidden = true
+        
+        return label
+    }()
+    
+    private var searchTimer: DispatchWorkItem?
     
     /// SearchFieldTopConstraint
-    var searchFieldTopConstraint: NSLayoutConstraint?
+    private var searchFieldTopConstraint: NSLayoutConstraint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +79,10 @@ extension PlaceListSearchViewController: PlaceListProtocol {
     func makeLayout() {
         [
             searchField,
-            listTableView
+            listTableView,
+            noResultImageView,
+            noResultMainTitle,
+            noResultSubTitle
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
@@ -63,7 +102,18 @@ extension PlaceListSearchViewController: PlaceListProtocol {
             listTableView.topAnchor.constraint(equalTo: searchField.bottomAnchor),
             listTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             listTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            listTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            listTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            noResultImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            noResultImageView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            noResultImageView.widthAnchor.constraint(equalToConstant: 120),
+            noResultImageView.heightAnchor.constraint(equalToConstant: 120),
+            
+            noResultMainTitle.topAnchor.constraint(equalTo: noResultImageView.bottomAnchor, constant: 30),
+            noResultMainTitle.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            
+            noResultSubTitle.topAnchor.constraint(equalTo: noResultMainTitle.bottomAnchor, constant: 15),
+            noResultSubTitle.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
         ])
     }
     
@@ -99,7 +149,22 @@ extension PlaceListSearchViewController: PlaceListProtocol {
     
     // MARK: reloadData
     func reloadTableView() {
+        listTableView.isHidden = false
+        noResultImageView.isHidden = true
+        noResultMainTitle.isHidden = true
+        noResultSubTitle.isHidden = true
+        
         listTableView.reloadData()
+    }
+    
+    func noResultData() {
+        listTableView.isHidden = true
+        noResultImageView.isHidden = false
+        noResultMainTitle.isHidden = false
+        noResultSubTitle.isHidden = false
+        
+        listTableView.reloadData()
+        searchField.activeShakeAfterNoSearchData()
     }
     
     // MARK: Pop View Controller
@@ -202,10 +267,18 @@ extension PlaceListSearchViewController: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         searchField.rightButtonHidden = false
 
-        if let text = textField.text {
-            presenter.inrolledData = text
-            presenter.searchData(text)
+        searchTimer?.cancel()
+        
+        let task = DispatchWorkItem { [weak self] in
+            if let text = textField.text {
+                self?.presenter.inrolledData = text
+                self?.presenter.searchData(text)
+            }
         }
+    
+        searchTimer = task
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35, execute: task)
     }
 }
 

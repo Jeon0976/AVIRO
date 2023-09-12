@@ -15,7 +15,7 @@ protocol EditLocationDetailProtocol: NSObject {
     func makeGesture()
     func dataBindingMap(_ marker: NMFMarker)
     func afterChangedAddressWhenMapView(_ address: String)
-    func textViewTableReload()
+    func afterResultShowTable(with totalCount: Int)
     func popViewController()
 }
 
@@ -25,7 +25,8 @@ final class EditLocationDetailPresenter {
     private var addressModels = [Juso]() {
         didSet {
             DispatchQueue.main.async { [weak self] in
-                self?.viewController?.textViewTableReload()
+                guard let count = self?.totalCount else { return }
+                self?.viewController?.afterResultShowTable(with: count)
             }
         }
     }
@@ -86,7 +87,7 @@ final class EditLocationDetailPresenter {
                 self?.addressModels = addressTableModel.juso
             case .failure(let error):
                 // TODO: Error 처리
-                print("error")
+                print(error.localizedDescription)
             }
         }
     }

@@ -181,8 +181,20 @@ extension EditLocationDetailViewController: EditLocationDetailProtocol {
         editLocationDetailMapView.changedAddress(address)
     }
     
-    func textViewTableReload() {
+    func afterResultShowTable(with totalCount: Int) {
+        if totalCount == 0 {
+            noResultData()
+        } else {
+            reloadData()
+        }
+    }
+    
+    private func reloadData() {
         editLocationDetailTextView.addressTableViewReloadData()
+    }
+    
+    private func noResultData() {
+        editLocationDetailTextView.noResultData()
     }
     
     func popViewController() {

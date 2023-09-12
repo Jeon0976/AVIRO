@@ -142,6 +142,7 @@ extension NickNameChangebleViewController: NickNameChangebleProtocol {
             editNickNameButton.isEnabled = false
             nicNameField.isPossible = false
             self.subInfo.textColor = .red
+            nicNameField.activeShakeAfterNoSearchData()
         }
     }
     
@@ -171,7 +172,7 @@ extension NickNameChangebleViewController: UITextFieldDelegate {
         
         if currentText.count > 15 {
             textField.text = limitText(currentText)
-            shakeTextField(textField)
+            textField.activeShakeAfterNoSearchData()
             return
         }
         
@@ -187,22 +188,6 @@ extension NickNameChangebleViewController: UITextFieldDelegate {
         let fixedText = String(text[startIndex...endIndex])
                 
         return fixedText
-    }
-    
-    private func shakeTextField(_ textField: UITextField) {
-        let animation = CABasicAnimation(keyPath: "position")
-        
-        animation.duration = 0.07
-        animation.repeatCount = 3
-        animation.autoreverses = true
-        animation.fromValue = NSValue(cgPoint: CGPoint(x: textField.center.x - 3,
-                                                       y: textField.center.y)
-        )
-        animation.toValue = NSValue(cgPoint: CGPoint(x: textField.center.x + 3,
-                                                     y: textField.center.y)
-        )
-        
-        textField.layer.add(animation, forKey: "position")
     }
 
     private func checkNicknameDuplicationAfterDelay() {

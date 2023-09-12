@@ -11,7 +11,8 @@ protocol HomeSearchProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
     func howToShowFirstView(_ isShowHistoryTable: Bool)
-    func placeListTableReload()
+    func placeListTableReloadData()
+    func placeListNoResultData()
     func historyListTableReload()
     func insertTitleToTextField(_ query: String)
     func popViewController()
@@ -291,10 +292,15 @@ final class HomeSearchPresenter {
             matchedPlaceModel.append(matchedPlace)
         }
 
-        viewController?.placeListTableReload()
+        if matchedPlaceModel.count == 0 {
+            viewController?.placeListNoResultData()
+            
+        } else {
+            viewController?.placeListTableReloadData()
+        }
+        
         isLoading = false
         isEndCompare = true
-        
     }
     
     // 선택된 것이 AVIRO에 있는지 확인하는 함수

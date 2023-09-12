@@ -41,6 +41,7 @@ final class PlaceInfoView: UIView {
         
         label.textColor = .gray0
         label.numberOfLines = 2
+        label.lineBreakMode = .byCharWrapping
         label.font = .systemFont(ofSize: 16, weight: .medium)
         
         return label
@@ -60,6 +61,7 @@ final class PlaceInfoView: UIView {
         button.setTitleColor(.changeButton, for: .normal)
         button.backgroundColor = .gray7
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+        button.titleLabel?.numberOfLines = 1
         button.addTarget(self, action: #selector(phoneButtonTapped(_:)), for: .touchUpInside)
         
         return button
@@ -91,6 +93,7 @@ final class PlaceInfoView: UIView {
         
         label.font = .systemFont(ofSize: 16, weight: .medium)
         label.textColor = .gray0
+        label.numberOfLines = 1
         
         return label
     }()
@@ -207,7 +210,7 @@ final class PlaceInfoView: UIView {
             
             addressLabel.centerYAnchor.constraint(equalTo: addressIcon.centerYAnchor),
             addressLabel.leadingAnchor.constraint(equalTo: addressIcon.trailingAnchor, constant: 10),
-            addressLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            addressLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             
             phoneIcon.topAnchor.constraint(equalTo: addressIcon.bottomAnchor, constant: 20),
             phoneIcon.leadingAnchor.constraint(equalTo: addressIcon.leadingAnchor),
@@ -256,7 +259,7 @@ final class PlaceInfoView: UIView {
        
     private func initPlaceInfoViewHeight() {
         let titleHeight = title.frame.height
-        let addressHeight = addressLabel.frame.height
+        let addressHeight = addressIcon.frame.height
         let phoneHeight = phoneIcon.frame.height
         let timeHeight = timeIcon.frame.height
         let homePageHeight = homePageIcon.frame.height
@@ -274,7 +277,6 @@ final class PlaceInfoView: UIView {
         viewHeightConstraint?.constant = totalHeight
     }
     
-    // TODO: Back end 수정 되면 수정
     func dataBindingWhenInHomeView(_ infoModel: PlaceInfoData?) {
         guard let infoModel = infoModel else { return }
 

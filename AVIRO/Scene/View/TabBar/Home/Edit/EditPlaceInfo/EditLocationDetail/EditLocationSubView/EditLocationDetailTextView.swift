@@ -9,14 +9,13 @@ import UIKit
 
 final class EditLocationDetailTextView: UIView {
     
-    private lazy var addressTextField: EnrollField = {
-        let textField = EnrollField()
+    private lazy var addressTextField: SearchField = {
+        let textField = SearchField()
         
         let placeHolder = "예) 정자일로 195, 백현동 532"
         textField.makePlaceHolder(placeHolder)
-        textField.addLeftImage()
+        textField.initLeftButton()
         textField.delegate = self
-        textField.addRightCancelButton()
         textField.rightButtonHidden = true
         
         return textField
@@ -46,6 +45,28 @@ final class EditLocationDetailTextView: UIView {
         
         return tableView
     }()
+    
+    private lazy var noResultImageView: UIImageView = {
+        let imageView = UIImageView()
+        
+        imageView.backgroundColor = .gray6
+        imageView.isHidden = true
+        
+        return imageView
+    }()
+    
+    private lazy var noResultLabel: UILabel = {
+        let label = UILabel()
+        
+        label.text = "검색 결과가 없습니다.\n주소를 다시 입력해주세요"
+        label.textColor = .gray1
+        label.numberOfLines = 2
+        label.font = .systemFont(ofSize: 15, weight: .medium)
+        label.textAlignment = .center
+        label.isHidden = true
+        
+        return label
+    }()
         
     var searchAddress: ((String) -> Void)?
     
@@ -65,7 +86,9 @@ final class EditLocationDetailTextView: UIView {
         [
             addressTextField,
             addressTableView,
-            subLabel
+            subLabel,
+            noResultImageView,
+            noResultLabel
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview($0)
@@ -82,7 +105,15 @@ final class EditLocationDetailTextView: UIView {
             addressTableView.topAnchor.constraint(equalTo: addressTextField.bottomAnchor),
             addressTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             addressTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-            addressTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            addressTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            
+            noResultImageView.topAnchor.constraint(equalTo: addressTextField.bottomAnchor, constant: 30),
+            noResultImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            noResultImageView.widthAnchor.constraint(equalToConstant: 80),
+            noResultImageView.heightAnchor.constraint(equalToConstant: 80),
+            
+            noResultLabel.topAnchor.constraint(equalTo: noResultImageView.bottomAnchor, constant: 30),
+            noResultLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
         
         subLabel.isHidden = false
@@ -104,7 +135,19 @@ final class EditLocationDetailTextView: UIView {
     }
     
     func addressTableViewReloadData() {
+        noResultLabel.isHidden = true
+        noResultImageView.isHidden = true
+        addressTableView.isHidden = false
+        
         addressTableView.reloadData()
+    }
+    
+    func noResultData() {
+        noResultLabel.isHidden = false
+        noResultImageView.isHidden = false
+        addressTableView.isHidden = true
+        
+        addressTextField.activeShakeAfterNoSearchData()
     }
 }
 

@@ -31,7 +31,6 @@ final class PlaceTopView: UIView {
         let label = UILabel()
         
         label.textColor = .gray0
-        label.text = "OOO"
         label.font = .systemFont(ofSize: 24, weight: .heavy)
 
         return label
@@ -41,7 +40,6 @@ final class PlaceTopView: UIView {
         let label = UILabel()
         
         label.textColor = .gray2
-        label.text = "oo"
         label.textAlignment = .left
         label.font = .systemFont(ofSize: 15, weight: .medium)
 
@@ -88,9 +86,8 @@ final class PlaceTopView: UIView {
         let label = UILabel()
         
         label.textColor = .gray1
-        label.text = "oo"
         label.font = .systemFont(ofSize: 14, weight: .medium)
-        label.numberOfLines = 3
+        label.numberOfLines = 1
         label.textAlignment = .left
 
         return label
@@ -352,10 +349,8 @@ final class PlaceTopView: UIView {
             whenSlideTopLabelString = "비건 메뉴로 요청 가능"
         }
         
-        print(whenSlideTopLabelString)
         placeIcon.image = placeIconImage
         whenSlideTopLabel.text = whenSlideTopLabelString
-
     }
 }
 
@@ -476,15 +471,9 @@ extension PlaceTopView {
 
         let guideBarHeight = guideBar.frame.height
         let placeIconHeight = placeIcon.frame.height
-        let addressHeight: CGFloat = 30
-        // 5 + 20 + 7 + 7 + 30 + 20 + 30
-        let inset: CGFloat = 79 
-
-        var boundsPlusHeight: CGFloat = 0
-        // tabBar 때문에 share button이 클릭이 안 되는것을 막기 위한 조치
-        if let boundsHeight = self.window?.windowScene?.screen.bounds.height {
-            boundsPlusHeight = boundsHeight * 1/20
-        }
+        let addressHeight = addressLabel.frame.height
+        // 5 + 20 + 7 + 7 + 30 +
+        let inset: CGFloat = 69
 
         let totalHeight = guideBarHeight + placeIconHeight + addressHeight + inset
 

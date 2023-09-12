@@ -12,6 +12,7 @@ protocol PlaceListProtocol: NSObject {
     func makeAttribute()
     func makeGesture()
     func reloadTableView()
+    func noResultData()
     func popViewController()
     func pushAlertController()
 }
@@ -77,7 +78,12 @@ final class PlaceListSearchViewPresenter: NSObject {
 
             DispatchQueue.main.async {
                 self?.placeList = placeList
-                self?.viewController?.reloadTableView()
+                
+                if placeList.count == 0 {
+                    self?.viewController?.noResultData()
+                } else {
+                    self?.viewController?.reloadTableView()
+                }
                 self?.isLoading = false
             }
         }

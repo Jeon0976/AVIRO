@@ -48,13 +48,13 @@ final class PlaceListCell: UITableViewCell {
             // title
             title.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 10),
             title.topAnchor.constraint(equalTo: icon.topAnchor),
-            title.widthAnchor.constraint(equalToConstant: contentView.frame.width - 105),
+            title.trailingAnchor.constraint(equalTo: distance.leadingAnchor, constant: -20),
             
             // address
             address.leadingAnchor.constraint(equalTo: title.leadingAnchor),
             address.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 11),
             address.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15),
-            address.widthAnchor.constraint(equalTo: title.widthAnchor, multiplier: 1),
+            address.trailingAnchor.constraint(equalTo: distance.leadingAnchor, constant: -20),
             
             // distance
             distance.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
