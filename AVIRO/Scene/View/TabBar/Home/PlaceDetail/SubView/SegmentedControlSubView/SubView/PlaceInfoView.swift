@@ -65,19 +65,6 @@ final class PlaceInfoView: UIView {
         return button
     }()
     
-    @objc private func phoneButtonTapped(_ sender: UIButton) {
-        guard let text = sender.titleLabel?.text else { return }
-        if text != "전화번호 추가" {
-            let urlPhone = "tel:" + text
-            
-            guard let url = URL(string: urlPhone) else { return }
-            
-            if UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            }
-        }
-    }
-    
     private lazy var timeIcon: UIImageView = {
         let imageView = UIImageView()
         
@@ -86,14 +73,16 @@ final class PlaceInfoView: UIView {
         return imageView
     }()
     
-    private lazy var timeButton: UIButton = {
+    private lazy var timePlusButton: UIButton = {
         let button = UIButton()
         
+        button.setTitle("영업 시간 추가", for: .normal)
         button.setTitleColor(.changeButton, for: .normal)
         button.backgroundColor = .gray7
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.titleLabel?.textAlignment = .left
-
+        button.addTarget(self, action: #selector(timePlusButtonTapped), for: .touchUpInside)
+        
         return button
     }()
     
@@ -106,20 +95,16 @@ final class PlaceInfoView: UIView {
         return label
     }()
     
-    private lazy var timePlusButton: UIButton = {
+    private lazy var timeTableShowButton: UIButton = {
         let button = UIButton()
         
         button.setTitle("더보기", for: .normal)
         button.setTitleColor(.gray2, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
-        button.addTarget(self, action: #selector(timePlusButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(timeTableShowButtonTapped), for: .touchUpInside)
         
         return button
     }()
-    
-    @objc private func timePlusButtonTapped() {
-        afterTimePlusButtonTapped?()
-    }
     
     private lazy var homePageIcon: UIImageView = {
         let imageView = UIImageView()
@@ -135,8 +120,10 @@ final class PlaceInfoView: UIView {
         button.setTitleColor(.changeButton, for: .normal)
         button.backgroundColor = .gray7
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-        button.titleLabel?.textAlignment = .left
-
+        button.titleLabel?.numberOfLines = 2
+        button.titleLabel?.lineBreakMode = .byCharWrapping
+        button.contentHorizontalAlignment = .left
+        button.addTarget(self, action: #selector(homePageButtonTapped(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -159,9 +146,12 @@ final class PlaceInfoView: UIView {
     
     private var viewHeightConstraint: NSLayoutConstraint?
     
-    var afterEditInfoButtonTapped: (() -> Void)?
+    var afterPhoneButtonTappedWhenNoData: (() -> Void)?
     var afterTimePlusButtonTapped: (() -> Void)?
-    
+    var afterTimeTableShowButtonTapped: (() -> Void)?
+    var afterHomePageButtonTapped: ((String) -> Void)?
+    var afterEditInfoButtonTapped: (() -> Void)?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -188,9 +178,9 @@ final class PlaceInfoView: UIView {
             phoneIcon,
             phoneButton,
             timeIcon,
-            timeButton,
-            timeLabel,
             timePlusButton,
+            timeLabel,
+            timeTableShowButton,
             homePageIcon,
             homePageButton,
             separatorLine,
@@ -232,16 +222,16 @@ final class PlaceInfoView: UIView {
             timeIcon.widthAnchor.constraint(equalToConstant: 24),
             timeIcon.heightAnchor.constraint(equalToConstant: 24),
             
-            timeButton.centerYAnchor.constraint(equalTo: timeIcon.centerYAnchor),
-            timeButton.leadingAnchor.constraint(equalTo: timeIcon.trailingAnchor, constant: 10),
+            timePlusButton.centerYAnchor.constraint(equalTo: timeIcon.centerYAnchor),
+            timePlusButton.leadingAnchor.constraint(equalTo: timeIcon.trailingAnchor, constant: 10),
             
             timeLabel.centerYAnchor.constraint(equalTo: timeIcon.centerYAnchor),
             timeLabel.leadingAnchor.constraint(equalTo: timeIcon.trailingAnchor, constant: 10),
-            timeLabel.trailingAnchor.constraint(equalTo: timePlusButton.leadingAnchor, constant: -10),
+            timeLabel.trailingAnchor.constraint(equalTo: timeTableShowButton.leadingAnchor, constant: -10),
             
-            timePlusButton.centerYAnchor.constraint(equalTo: timeLabel.centerYAnchor),
-            timePlusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
-            timePlusButton.widthAnchor.constraint(equalToConstant: 50),
+            timeTableShowButton.centerYAnchor.constraint(equalTo: timeLabel.centerYAnchor),
+            timeTableShowButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
+            timeTableShowButton.widthAnchor.constraint(equalToConstant: 50),
             
             homePageIcon.topAnchor.constraint(equalTo: timeIcon.bottomAnchor, constant: 20),
             homePageIcon.leadingAnchor.constraint(equalTo: title.leadingAnchor),
@@ -250,6 +240,7 @@ final class PlaceInfoView: UIView {
             
             homePageButton.centerYAnchor.constraint(equalTo: homePageIcon.centerYAnchor),
             homePageButton.leadingAnchor.constraint(equalTo: homePageIcon.trailingAnchor, constant: 10),
+            homePageButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             
             separatorLine.topAnchor.constraint(equalTo: homePageIcon.bottomAnchor, constant: 10),
             separatorLine.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
@@ -285,9 +276,8 @@ final class PlaceInfoView: UIView {
     
     // TODO: Back end 수정 되면 수정
     func dataBindingWhenInHomeView(_ infoModel: PlaceInfoData?) {
-        print(infoModel)
         guard let infoModel = infoModel else { return }
-        
+
         addressLabel.text = infoModel.address
         updatedTimeLabel.text = "업데이트 " + infoModel.updatedTime
         
@@ -297,15 +287,12 @@ final class PlaceInfoView: UIView {
             phoneButton.setTitle(infoModel.phone, for: .normal)
         }
         
-        if infoModel.shopStatus == "영업 시간 없음" {
-            timeButton.setTitle("영업 시간 추가", for: .normal)
-            timeButton.isHidden = false
-            timeLabel.isHidden = true
-            timePlusButton.isHidden = true
+        if !infoModel.haveTime {
+            showOperationButton()
         } else {
-            changedOperationLabel(infoModel.shopStatus, infoModel.shopHours)
+            showOperationLabel(infoModel.shopStatus, infoModel.shopHours)
         }
-        
+                
         if let homePage = infoModel.url {
             homePageButton.setTitle(homePage, for: .normal)
         } else {
@@ -313,15 +300,57 @@ final class PlaceInfoView: UIView {
         }
     }
     
-    private func changedOperationLabel(_ state: String, _ operating: String) {
-        timeLabel.isHidden = false
+    private func showOperationButton() {
         timePlusButton.isHidden = false
-        timeButton.isHidden = true
+        timeLabel.isHidden = true
+        timeTableShowButton.isHidden = true
+
+    }
+    
+    private func showOperationLabel(_ state: String, _ operating: String) {
+        timeLabel.isHidden = false
+        timeTableShowButton.isHidden = false
+        timePlusButton.isHidden = true
         
         timeLabel.text = state + " " + operating
+    }
+    
+    @objc private func phoneButtonTapped(_ sender: UIButton) {
+        guard let text = sender.titleLabel?.text else { return }
+        if text != "전화번호 추가" {
+            self.telViewPush(text)
+        } else {
+            self.afterPhoneButtonTappedWhenNoData?()
+        }
+    }
+    
+    private func telViewPush(_ phoneNumber: String) {
+        let urlPhone = "tel:" + phoneNumber
+        
+        guard let url = URL(string: urlPhone) else { return }
+        
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+
+    }
+    
+    @objc private func timeTableShowButtonTapped() {
+        self.afterTimeTableShowButtonTapped?()
+    }
+    
+    @objc private func timePlusButtonTapped() {
+        self.afterTimePlusButtonTapped?()
+    }
+    
+    @objc private func homePageButtonTapped(_ sender: UIButton) {
+        guard let text = sender.titleLabel?.text else { return }
+        
+        afterHomePageButtonTapped?(text)
     }
     
     @objc private func editInfoButtonTapped() {
         afterEditInfoButtonTapped?()
     }
+    
 }

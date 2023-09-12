@@ -17,6 +17,7 @@ struct PlaceInfoData: Decodable {
     let address: String
     let phone: String?
     let url: String?
+    let haveTime: Bool
     let shopStatus: String
     let shopHours: String
     let updatedTime: String

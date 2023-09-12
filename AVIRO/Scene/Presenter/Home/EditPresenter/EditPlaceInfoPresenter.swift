@@ -14,6 +14,7 @@ protocol EditPlaceInfoProtocol: NSObject {
     func makeAttribute()
     func makeGesture()
     func handleClosure()
+    func whenViewWillAppearSelectedIndex(_ index: Int)
     func isDetailFieldCheckBeforeKeyboardShowAndHide(notification: NSNotification) -> Bool
     func keyboardWillShow(height: CGFloat)
     func keyboardWillHide()
@@ -32,6 +33,7 @@ protocol EditPlaceInfoProtocol: NSObject {
 final class EditPlaceInfoPresenter {
     weak var viewController: EditPlaceInfoProtocol?
     
+    private var selectedIndex: Int!
     private var placeId: String?
     private var placeMarkerModel: MarkerModel?
     private var placeSummary: PlaceSummaryData?
@@ -49,9 +51,11 @@ final class EditPlaceInfoPresenter {
          placeMarkerModel: MarkerModel? = nil,
          placeId: String? = nil,
          placeSummary: PlaceSummaryData? = nil,
-         placeInfo: PlaceInfoData? = nil
+         placeInfo: PlaceInfoData? = nil,
+         selectedIndex: Int = 0
     ) {
         self.viewController = viewController
+        self.selectedIndex = selectedIndex
         self.placeMarkerModel = placeMarkerModel
         self.placeId = placeId
         self.placeSummary = placeSummary
@@ -68,8 +72,9 @@ final class EditPlaceInfoPresenter {
     }
     
     func viewWillAppear() {
+        viewController?.whenViewWillAppearSelectedIndex(selectedIndex)
+
         addKeyboardNotification()
-        
     }
     
     func viewWillDisappear() {

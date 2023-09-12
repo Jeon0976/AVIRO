@@ -247,6 +247,11 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         operationHourChangebleView.isHidden = true
     }
     
+    func whenViewWillAppearSelectedIndex(_ index: Int) {
+        segmentedControl.selectedSegmentIndex = index
+        whenActiveSegmentedChanged()
+    }
+    
     func handleClosure() {
         editLocationBottomView.tappedPushViewButton = { [weak self] in
             self?.presenter.pushAddressEditViewController()

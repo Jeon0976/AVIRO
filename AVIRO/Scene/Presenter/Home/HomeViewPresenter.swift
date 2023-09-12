@@ -46,7 +46,8 @@ protocol HomeViewProtocol: NSObject {
     func pushEditPlaceInfoViewController(placeMarkerModel: MarkerModel,
                                          placeId: String,
                                          placeSummary: PlaceSummaryData,
-                                         placeInfo: PlaceInfoData
+                                         placeInfo: PlaceInfoData,
+                                         editSegmentedIndex: Int
     )
     func pushEditMenuViewController(placeId: String,
                                     isAll: Bool,
@@ -104,7 +105,6 @@ final class HomeViewPresenter: NSObject {
     
     func viewWillAppear() {
         viewController?.whenViewWillAppear()
-//        viewController?.makeSlideView()
         
         addKeyboardNotification()
         
@@ -149,7 +149,6 @@ final class HomeViewPresenter: NSObject {
     }
     
     func viewWillDisappear() {
-
         if !isShowEditPage {
             initMarkerState()
         }
@@ -548,7 +547,7 @@ final class HomeViewPresenter: NSObject {
         }
     }
     
-    func editPlaceInfo() {
+    func editPlaceInfo(with placeEditSegmentedIndex: Int = 0) {
         guard let placeMarkerModel = selectedMarkerModel,
               let placeId = selectedPlaceId,
               let placeSummary = selectedSummaryModel,
@@ -561,7 +560,8 @@ final class HomeViewPresenter: NSObject {
             placeMarkerModel: placeMarkerModel,
             placeId: placeId,
             placeSummary: placeSummary,
-            placeInfo: placeInfo
+            placeInfo: placeInfo,
+            editSegmentedIndex: placeEditSegmentedIndex
         )
     }
     

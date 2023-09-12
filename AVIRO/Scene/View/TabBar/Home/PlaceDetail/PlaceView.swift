@@ -63,8 +63,11 @@ final class PlaceView: UIView {
     var whenTopViewStarTapped: ((Bool) -> Void)?
     
     // MARK: SegmentedControl
-    var editPlaceInfo: (() -> Void)?
+    var afterPhoneButtonTappedWhenNoData: (() -> Void)?
     var afterTimePlusButtonTapped: (() -> Void)?
+    var afterTimeTableShowButtonTapped: (() -> Void)?
+    var afterHomePageButtonTapped: ((String) -> Void)?
+    var afterEditInfoButtonTapped: (() -> Void)?
     
     var editMenu: (() -> Void)?
     
@@ -123,10 +126,6 @@ final class PlaceView: UIView {
         isLoadingTopView = false
     }
     
-//    func infoModelBinding(infoModel: PlaceInfoData?) {
-//
-//    }
-    
     func menuModelBinding(menuModel: PlaceMenuData?) {
         segmentedControlView.refreshMenuData(menuModel)
     }
@@ -134,10 +133,6 @@ final class PlaceView: UIView {
     func updateMapPlace(_ mapPlace: MapPlace) {
         topView.updateMapPlace(mapPlace)
     }
-    
-//    func reviewsModelBinding(reviewsModel: PlaceReviewsData?) {
-//
-//    }
   
     func deleteMyReview(_ commentId: String) {
         segmentedControlView.deleteMyReview(commentId)
@@ -191,18 +186,33 @@ final class PlaceView: UIView {
         }
         
         // MARK: Segmented
-        segmentedControlView.editPlaceInfo = { [weak self] in
-            self?.editPlaceInfo?()
+        // place info
+        segmentedControlView.afterPhoneButtonTappedWhenNoData = { [weak self] in
+            self?.afterPhoneButtonTappedWhenNoData?()
         }
         
-        segmentedControlView.afterTimePlusButton = { [weak self] in
+        segmentedControlView.afterTimePlusButtonTapped = { [weak self] in
             self?.afterTimePlusButtonTapped?()
         }
         
+        segmentedControlView.afterTimeTableShowButtonTapped = { [weak self] in
+            self?.afterTimeTableShowButtonTapped?()
+        }
+        
+        segmentedControlView.afterHomePageButtonTapped = { [weak self] url in
+            self?.afterHomePageButtonTapped?(url)
+        }
+        
+        segmentedControlView.afterEditInfoButtonTapped = { [weak self] in
+            self?.afterEditInfoButtonTapped?()
+        }
+        
+        // place menu
         segmentedControlView.editMenu = { [weak self] in
             self?.editMenu?()
         }
         
+        // place review
         segmentedControlView.whenUploadReview = { [weak self] postReviewModel in
             self?.whenUploadReview?(postReviewModel)
         }

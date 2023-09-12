@@ -60,9 +60,12 @@ final class PlaceSegmentedControlView: UIView {
     }
     
     // placeInfo
-    var editPlaceInfo: (() -> Void)?
-    var afterTimePlusButton: (() -> Void)?
-    
+    var afterPhoneButtonTappedWhenNoData: (() -> Void)?
+    var afterTimePlusButtonTapped: (() -> Void)?
+    var afterTimeTableShowButtonTapped: (() -> Void)?
+    var afterHomePageButtonTapped: ((String) -> Void)?
+    var afterEditInfoButtonTapped: (() -> Void)?
+
     // menu
     var editMenu: (() -> Void)?
     
@@ -318,12 +321,24 @@ final class PlaceSegmentedControlView: UIView {
     // MARK: Closure 처리
     private func handleClosure() {
         // Place Info 관련 클로저
-        homeView.editPlaceInfo = { [weak self] in
-            self?.editPlaceInfo?()
+        homeView.afterPhoneButtonTappedWhenNoData = { [weak self] in
+            self?.afterPhoneButtonTappedWhenNoData?()
         }
         
         homeView.afterTimePlusButtonTapped = { [weak self] in
-            self?.afterTimePlusButton?()
+            self?.afterTimePlusButtonTapped?()
+        }
+        
+        homeView.afterTimeTableShowButtonTapped = { [weak self] in
+            self?.afterTimeTableShowButtonTapped?()
+        }
+        
+        homeView.afterHomePageButtonTapped = { [weak self] url in
+            self?.afterHomePageButtonTapped?(url)
+        }
+        
+        homeView.afterEditInfoButtonTapped = { [weak self] in
+            self?.afterEditInfoButtonTapped?()
         }
         
         // menu 관련 클로저

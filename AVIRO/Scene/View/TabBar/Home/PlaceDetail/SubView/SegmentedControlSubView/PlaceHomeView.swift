@@ -17,9 +17,12 @@ final class PlaceHomeView: UIView {
     private var viewHeightConstraint: NSLayoutConstraint?
 
     // Place Info 관련 클로저
-    var editPlaceInfo: (() -> Void)?
+    var afterPhoneButtonTappedWhenNoData: (() -> Void)?
     var afterTimePlusButtonTapped: (() -> Void)?
-    
+    var afterTimeTableShowButtonTapped: (() -> Void)?
+    var afterHomePageButtonTapped: ((String) -> Void)?
+    var afterEditInfoButtonTapped: (() -> Void)?
+
     // menu 관련 클로저
     var showMoreMenu: (() -> Void)?
     var editMenu: (() -> Void)?
@@ -123,14 +126,28 @@ final class PlaceHomeView: UIView {
     
     // MARK: 클로저 처리
     private func handleClosure() {
-        placeInfoView.afterEditInfoButtonTapped = { [weak self] in
-            self?.editPlaceInfo?()
+        // Place Info View
+        placeInfoView.afterPhoneButtonTappedWhenNoData = { [weak self] in
+            self?.afterPhoneButtonTappedWhenNoData?()
         }
         
         placeInfoView.afterTimePlusButtonTapped = { [weak self] in
             self?.afterTimePlusButtonTapped?()
         }
         
+        placeInfoView.afterTimeTableShowButtonTapped = { [weak self] in
+            self?.afterTimeTableShowButtonTapped?()
+        }
+        
+        placeInfoView.afterHomePageButtonTapped = { [weak self] url in
+            self?.afterHomePageButtonTapped?(url)
+        }
+        
+        placeInfoView.afterEditInfoButtonTapped = { [weak self] in
+            self?.afterEditInfoButtonTapped?()
+        }
+        
+        // Place Menu View
         placeMenuView.editMenuButton = { [weak self] in
             self?.editMenu?()
         }
@@ -139,10 +156,12 @@ final class PlaceHomeView: UIView {
             self?.showMoreMenu?()
         }
         
+        // Place Review Write View
         placeReviewWriteView.whenWriteReviewButtonTapped = { [weak self] in
             self?.showMoreReviewsAndWriteComment?()
         }
         
+        // Place Reviews View
         placeReviewsView.whenTappedShowMoreButton = { [weak self] in
             self?.showMoreReviews?()
         }

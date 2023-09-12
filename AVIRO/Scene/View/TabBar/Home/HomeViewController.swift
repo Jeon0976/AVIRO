@@ -7,6 +7,8 @@
 
 import UIKit
 
+import SafariServices
+
 import NMapsMap
 import Toast_Swift
 
@@ -196,18 +198,6 @@ extension HomeViewController: HomeViewProtocol {
         
     }
     
-//    private func turnOnBlurEffect() {
-//        if let tabBarController = tabBarController as? TabBarViewController {
-//            tabBarController.toggleFullScreenBlurEffect(true)
-//        }
-//    }
-//
-//    private func turnOffBlurEffect() {
-//        if let tabBarController = tabBarController as? TabBarViewController {
-//            tabBarController.toggleFullScreenBlurEffect(false)
-//        }
-//    }
-    
     // MARK: Keyboard Will Show
     func keyboardWillShow(height: CGFloat) {
         let tabbarHeight = tabBarController?.tabBar.frame.height ?? 0
@@ -357,17 +347,21 @@ extension HomeViewController: HomeViewProtocol {
         present(vc, animated: false)
     }
     
-    func pushEditPlaceInfoViewController(placeMarkerModel: MarkerModel,
-                                         placeId: String,
-                                         placeSummary: PlaceSummaryData,
-                                         placeInfo: PlaceInfoData
+    func pushEditPlaceInfoViewController(
+        placeMarkerModel: MarkerModel,
+        placeId: String,
+        placeSummary: PlaceSummaryData,
+        placeInfo: PlaceInfoData,
+        editSegmentedIndex: Int
     ) {
         let vc = EditPlaceInfoViewController()
-        let presenter = EditPlaceInfoPresenter(viewController: vc,
-                                               placeMarkerModel: placeMarkerModel,
-                                               placeId: placeId,
-                                               placeSummary: placeSummary,
-                                               placeInfo: placeInfo
+        let presenter = EditPlaceInfoPresenter(
+            viewController: vc,
+            placeMarkerModel: placeMarkerModel,
+            placeId: placeId,
+            placeSummary: placeSummary,
+            placeInfo: placeInfo,
+            selectedIndex: editSegmentedIndex
         )
         
         vc.presenter = presenter
@@ -471,12 +465,28 @@ extension HomeViewController {
             self?.makeToastButton(title)
             self?.presenter.updateBookmark(selected)
         }
+            
+        placeView.afterPhoneButtonTappedWhenNoData = { [weak self] in
+            self?.presenter.editPlaceInfo(with: 1)
+        }
         
         placeView.afterTimePlusButtonTapped = { [weak self] in
+            self?.presenter.editPlaceInfo(with: 2)
+        }
+        
+        placeView.afterTimeTableShowButtonTapped = { [weak self] in
             self?.presenter.loadPlaceOperationHours()
         }
         
-        placeView.editPlaceInfo = { [weak self] in
+        placeView.afterHomePageButtonTapped = { [weak self] url in
+            if let url = URL(string: url) {
+                self?.openWebLink(url: url)
+            } else {
+                self?.presenter.editPlaceInfo(with: 3)
+            }
+        }
+        
+        placeView.afterEditInfoButtonTapped = { [weak self] in
             self?.presenter.editPlaceInfo()
         }
         
@@ -500,6 +510,12 @@ extension HomeViewController {
         placeView.editMyReview = { [weak self] commentId in
             self?.makeEditMyReviewAlert(commentId)
         }
+    }
+    
+    // MARK: Clousre Private 함수
+    private func openWebLink(url: URL) {
+        let safariViewController = SFSafariViewController(url: url)
+        present(safariViewController, animated: true)
     }
     
     private func makeToastButton(_ title: String) {
