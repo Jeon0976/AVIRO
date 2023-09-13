@@ -1,5 +1,5 @@
 //
-//  PlaceTopView.swift
+//  PlaceSummaryView.swift
 //  AVIRO
 //
 //  Created by 전성훈 on 2023/08/10.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class PlaceTopView: UIView {
+final class PlaceSummaryView: UIView {
     // MARK: When Pop Up
     private lazy var guideBar: UIView = {
         let guide = UIView()
@@ -163,7 +163,7 @@ final class PlaceTopView: UIView {
     }()
     
     private var viewHeightConstraint: NSLayoutConstraint?
-    private var isInit = true
+//    private var isInit = true
     
     var placeViewStated: PlaceViewState = PlaceViewState.PopUp {
         didSet {
@@ -193,6 +193,7 @@ final class PlaceTopView: UIView {
         }
     }
     
+    var whenFirstPopupView: ((CGFloat) -> Void)?
     var whenFullBackButtonTapped: (() -> Void)?
     var whenStarButtonTapped: ((Bool) -> Void)?
     var whenShareButtonTapped: (([String]) -> Void)?
@@ -226,15 +227,6 @@ final class PlaceTopView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        if isInit {
-            whenPopUpViewHeight()
-            isInit = false
-        }
     }
     
     // MARK: Layout & Attribute
@@ -355,7 +347,7 @@ final class PlaceTopView: UIView {
 }
 
 // MARK: When View Pop up
-extension PlaceTopView {
+extension PlaceSummaryView {
     // MARK: When Popup View Layout
     private func whenPopUpViewLayout() {
         [
@@ -479,11 +471,12 @@ extension PlaceTopView {
 
         viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: totalHeight)
         viewHeightConstraint?.isActive = true
+        whenFirstPopupView?(totalHeight)
     }
 }
 
 // MARK: When View Slide up
-extension PlaceTopView {
+extension PlaceSummaryView {
     // MARK: When Slideup View Layout
     private func whenSlideUpViewLayout() {
         [
@@ -542,7 +535,7 @@ extension PlaceTopView {
 }
 
 // MARK: When View Full up {
-extension PlaceTopView {
+extension PlaceSummaryView {
     // MARK: When Full Height View
     private func whenFullHeightViewLayout() {
         [

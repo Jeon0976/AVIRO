@@ -1,5 +1,5 @@
 //
-//  EditLocationDetailTextTableViewCell.swift
+//  EditLocationAddressTextTableViewCell.swift
 //  AVIRO
 //
 //  Created by 전성훈 on 2023/08/28.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class EditLocationDetailTextTableViewCell: UITableViewCell {
+final class EditLocationAddressTextTableViewCell: UITableViewCell {
     static let identifier = "EditLocationDetailTextTableViewCell"
     
     private lazy var zipNo: UILabel = {

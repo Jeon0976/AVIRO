@@ -1,15 +1,15 @@
 //
-//  UILabel+Extension.swift
+//  UIButton+Extension.swift
 //  AVIRO
 //
-//  Created by 전성훈 on 2023/08/18.
+//  Created by 전성훈 on 2023/09/13.
 //
 
 import UIKit
 
-extension UILabel {
+extension UIButton {
     func countCurrentLines() -> Int {
-        guard let text = self.text else { return 0 }
+        guard let text = self.titleLabel?.text else { return 0 }
 
         let rect = CGSize(
             width: self.bounds.width,
@@ -19,11 +19,11 @@ extension UILabel {
         let labelSize = text.boundingRect(
             with: rect,
             options: .usesLineFragmentOrigin,
-            attributes: [NSAttributedString.Key.font: font ?? UIFont.systemFont(ofSize: 16, weight: .medium)],
+            attributes: [NSAttributedString.Key.font: titleLabel?.font ?? UIFont.systemFont(ofSize: 16, weight: .medium)],
             context: nil
         )
 
-        let numberOfLine = Int(ceil(CGFloat(labelSize.height) / font.lineHeight ))
+        let numberOfLine = Int(ceil(CGFloat(labelSize.height) / (titleLabel?.font?.lineHeight ?? 1)))
 
         return numberOfLine
     }

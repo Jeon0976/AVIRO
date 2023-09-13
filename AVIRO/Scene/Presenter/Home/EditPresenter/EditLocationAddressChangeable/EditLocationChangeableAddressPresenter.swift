@@ -9,7 +9,7 @@ import UIKit
 
 import NMapsMap
 
-protocol EditLocationDetailProtocol: NSObject {
+protocol EditLocationChangebleAddressProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
     func makeGesture()
@@ -19,8 +19,8 @@ protocol EditLocationDetailProtocol: NSObject {
     func popViewController()
 }
 
-final class EditLocationDetailPresenter {
-    weak var viewController: EditLocationDetailProtocol?
+final class EditLocationChangeableAddressPresenter {
+    weak var viewController: EditLocationChangebleAddressProtocol?
     
     private var addressModels = [Juso]() {
         didSet {
@@ -44,7 +44,7 @@ final class EditLocationDetailPresenter {
         return addressModels.count
     }
     
-    init(viewController: EditLocationDetailProtocol,
+    init(viewController: EditLocationChangebleAddressProtocol,
          placeMarkerModel: MarkerModel? = nil
     ) {
         self.viewController = viewController

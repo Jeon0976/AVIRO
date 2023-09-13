@@ -13,9 +13,6 @@ extension HomeViewController {
     }
     
     func whenClosedPlaceView() {
-//        guard let tabBarController = self.tabBarController as? TabBarViewController else { return }
-//        tabBarController.hiddenTabBarIncludeIsTranslucent(false)
-        
         presenter.resetPreviouslyTouchedMarker()
         
         settingPlaceView()
@@ -34,9 +31,6 @@ extension HomeViewController {
     }
     
     func placeViewPopUp() {
-//        guard let tabBarController = self.tabBarController as? TabBarViewController else { return }
-//        tabBarController.hiddenTabBarIncludeIsTranslucent(true)
-        
         placeView.placeViewStated = .PopUp
       
         homeButtonIsHidden(false)
@@ -47,7 +41,7 @@ extension HomeViewController {
         
         placeViewTopConstraint?.constant = height
         
-        UIView.animate(withDuration: 0.1) {
+        UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
     }

@@ -24,6 +24,11 @@ struct AVIROPostAPI {
     static let placeListMatchedAVIROPath = "/prod/map/check/place"
     static let placeListReportPath = "/prod/map/report/place"
     
+    static let editPlaceLocationPath = "/prod/map/report/address"
+    static let editPlacePhonePath = "/prod/map/report/phone"
+    static let editPlaceOperationPath = "/prod/map/update/time"
+    static let editPlaceURLPath = "/prod/map/report/url"
+    
     static let commentUploadPath = "/prod/map/add/comment"
     static let commentEditPath = "/prod/map/update/comment"
     static let commentDeletePath = "/prod/map/delete/comment"
@@ -60,12 +65,56 @@ struct AVIROPostAPI {
     }
     
     // MARK: PlaceList Report
-    mutating func placeListReport() -> URLComponents {
+    mutating func placeReport() -> URLComponents {
         var components = URLComponents()
         
         components.scheme = AVIROPostAPI.scheme
         components.host = host
         components.path = AVIROPostAPI.placeListReportPath
+        
+        return components
+    }
+    
+    // MARK: Edit Place Location
+    mutating func editPlaceLocation() -> URLComponents {
+        var components = URLComponents()
+        
+        components.scheme = AVIROPostAPI.scheme
+        components.host = host
+        components.path = AVIROPostAPI.editPlaceLocationPath
+        
+        return components
+    }
+    
+    // MARK: Edit Place Phone
+    mutating func editPlacePhone() -> URLComponents {
+        var components = URLComponents()
+        
+        components.scheme = AVIROPostAPI.scheme
+        components.host = host
+        components.path = AVIROPostAPI.editPlacePhonePath
+        
+        return components
+    }
+    
+    // MARK: Edit Place Operation
+    mutating func editPlaceOperation() -> URLComponents {
+        var components = URLComponents()
+        
+        components.scheme = AVIROPostAPI.scheme
+        components.host = host
+        components.path = AVIROPostAPI.editPlaceOperationPath
+        
+        return components
+    }
+    
+    // MARK: Edit Place URL
+    mutating func editPlaceURL() -> URLComponents {
+        var components = URLComponents()
+        
+        components.scheme = AVIROPostAPI.scheme
+        components.host = host
+        components.path = AVIROPostAPI.editPlaceURLPath
         
         return components
     }

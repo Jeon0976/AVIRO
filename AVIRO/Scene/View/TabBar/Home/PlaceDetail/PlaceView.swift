@@ -15,7 +15,7 @@ enum PlaceViewState {
 }
 
 final class PlaceView: UIView {
-    private lazy var topView = PlaceTopView()
+    private lazy var summaryView = PlaceSummaryView()
     
     private lazy var segmentedControlView = PlaceSegmentedControlView()
     
@@ -36,11 +36,11 @@ final class PlaceView: UIView {
     var isLoadingTopView: Bool = true {
         didSet {
             if isLoadingTopView {
-                topView.isLoadingTopView = isLoadingTopView
-                topView.isUserInteractionEnabled = false
+                summaryView.isLoadingTopView = isLoadingTopView
+                summaryView.isUserInteractionEnabled = false
             } else {
-                topView.isLoadingTopView = isLoadingTopView
-                topView.isUserInteractionEnabled = true
+                summaryView.isLoadingTopView = isLoadingTopView
+                summaryView.isUserInteractionEnabled = true
             }
         }
     }
@@ -58,6 +58,7 @@ final class PlaceView: UIView {
     private var placeId = ""
     
     // MARK: Top View
+    var whenFirstPopupView: ((CGFloat) -> Void)?
     var whenFullBack: (() -> Void)?
     var whenShareTapped: (([String]) -> Void)?
     var whenTopViewStarTapped: ((Bool) -> Void)?
@@ -92,7 +93,7 @@ final class PlaceView: UIView {
         self.backgroundColor = .clear
         
         [
-            topView,
+            summaryView,
             segmentedControlView
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -100,11 +101,11 @@ final class PlaceView: UIView {
         }
         
         NSLayoutConstraint.activate([
-            topView.topAnchor.constraint(equalTo: self.topAnchor),
-            topView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            topView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            summaryView.topAnchor.constraint(equalTo: self.topAnchor),
+            summaryView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            summaryView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             
-            segmentedControlView.topAnchor.constraint(equalTo: topView.bottomAnchor),
+            segmentedControlView.topAnchor.constraint(equalTo: summaryView.bottomAnchor),
             segmentedControlView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             segmentedControlView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             segmentedControlView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
@@ -112,7 +113,7 @@ final class PlaceView: UIView {
     }
     
     func topViewHeight() -> CGFloat {
-        return topView.frame.height
+        return summaryView.frame.height
     }
     
     // TODO: slide up 일때 세부내용 api 호출 후 데이터 바인딩 되는거 만들기
@@ -122,7 +123,7 @@ final class PlaceView: UIView {
     ) {
         self.placeId = placeId
         
-        topView.dataBinding(placeModel, isStar)
+        summaryView.dataBinding(placeModel, isStar)
         isLoadingTopView = false
     }
     
@@ -131,7 +132,7 @@ final class PlaceView: UIView {
     }
     
     func updateMapPlace(_ mapPlace: MapPlace) {
-        topView.updateMapPlace(mapPlace)
+        summaryView.updateMapPlace(mapPlace)
     }
   
     func deleteMyReview(_ commentId: String) {
@@ -156,32 +157,36 @@ final class PlaceView: UIView {
     }
     
     private func whenViewPopUp() {
-        topView.placeViewStated = .PopUp
+        summaryView.placeViewStated = .PopUp
         segmentedControlView.whenViewPopup()
     }
     
     private func whenViewSlideUp() {
-        topView.placeViewStated = .SlideUp
+        summaryView.placeViewStated = .SlideUp
         segmentedControlView.scrollViewIsUserIneraction(false)
         
     }
     
     private func whenViewFullUp() {
-        topView.placeViewStated = .Full
+        summaryView.placeViewStated = .Full
         segmentedControlView.scrollViewIsUserIneraction(true)
     }
     
     private func handleClosure() {
         // MARK: Top View
-        topView.whenFullBackButtonTapped = { [weak self] in
+        summaryView.whenFirstPopupView = { [weak self] firstViewHeight in
+            self?.whenFirstPopupView?(firstViewHeight)
+        }
+        
+        summaryView.whenFullBackButtonTapped = { [weak self] in
             self?.whenFullBack?()
         }
         
-        topView.whenShareButtonTapped = { [weak self] shareObject in
+        summaryView.whenShareButtonTapped = { [weak self] shareObject in
             self?.whenShareTapped?(shareObject)
         }
         
-        topView.whenStarButtonTapped = { [weak self] selected in
+        summaryView.whenStarButtonTapped = { [weak self] selected in
             self?.whenTopViewStarTapped?(selected)
         }
         
@@ -222,7 +227,7 @@ final class PlaceView: UIView {
         }
         
         segmentedControlView.updateReviewsCount = { [weak self] reviewsCount in
-            self?.topView.updateReviewsCount(reviewsCount)
+            self?.summaryView.updateReviewsCount(reviewsCount)
         }
         
         segmentedControlView.reportReview = { [weak self] commentId in

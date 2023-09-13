@@ -14,7 +14,6 @@ protocol HomeViewProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
     func makeGesture()
-//    func makeSlideView()
     func whenViewWillAppear()
     func whenViewWillAppearAfterSearchDataNotInAVIRO()
     func whenAfterPopEditPage()
@@ -70,7 +69,7 @@ final class HomeViewPresenter: NSObject {
     private var hasTouchedMarkerBefore = false
     private var afterSearchDataInAVIRO = false
     private var isFirstViewWillappear = true
-    private var isShowEditPage = false
+    private var shouldKeepPlaceInfoView = false
     
     private var selectedMarkerIndex = 0 
     private var selectedMarkerModel: MarkerModel?
@@ -98,26 +97,34 @@ final class HomeViewPresenter: NSObject {
     func viewDidLoad() {
         locationManager.delegate = self
         
+        locationAuthorization()
+        
         viewController?.makeLayout()
         viewController?.makeAttribute()
         viewController?.makeGesture()
+        makeNotification()
+        
+        loadVeganData()
     }
     
     func viewWillAppear() {
-        viewController?.whenViewWillAppear()
-        
         addKeyboardNotification()
-        
-        if !isShowEditPage {
-            if !afterSearchDataInAVIRO {
-                viewController?.whenViewWillAppearAfterSearchDataNotInAVIRO()
-            } else {
-                afterSearchDataInAVIRO.toggle()
-            }
-        }
-        
+
+        viewController?.whenViewWillAppear()
+
+        /// 내부에 viewWillAppear를 안 넣는 이유 -> viewWillapper할 때 naverMap을 isHidden처리하고 나서 hidden을 풀 면 네이버 map이 안 움직이는 버그 발생
+        /// 좀 더 괜찮을 로직을 위해 새로운 view를 만들어서 naveMap위에 덮어쓰는 방식으로 수정해야 될 것 같음
         if !isFirstViewWillappear {
+            
             updateMarkerWhenViewWillAppear()
+            
+            if !shouldKeepPlaceInfoView {
+                if !afterSearchDataInAVIRO {
+                    viewController?.whenViewWillAppearAfterSearchDataNotInAVIRO()
+                } else {
+                    afterSearchDataInAVIRO.toggle()
+                }
+            }
         } else {
             isFirstViewWillappear.toggle()
         }
@@ -125,10 +132,8 @@ final class HomeViewPresenter: NSObject {
     
     private func updateMarkerWhenViewWillAppear() {
         let dateTime = TimeUtility.nowDateTime()
-        let userId = UserId.shared.userId
         
         AVIROAPIManager().getNerbyPlaceModels(
-            userId: userId,
             longitude: MyCoordinate.shared.longitudeString,
             latitude: MyCoordinate.shared.latitudeString,
             wide: "100",
@@ -139,21 +144,25 @@ final class HomeViewPresenter: NSObject {
     }
     
     func viewDidAppear() {
-        
         firstLocationUpdate()
         
-        if isShowEditPage {
+        if shouldKeepPlaceInfoView {
             viewController?.whenAfterPopEditPage()
-            isShowEditPage.toggle()
+            shouldKeepPlaceInfoView.toggle()
         }
     }
     
     func viewWillDisappear() {
-        if !isShowEditPage {
+        if !shouldKeepPlaceInfoView {
             initMarkerState()
         }
 
         removeKeyboardNotification()
+    }
+    
+    // MARK: 전화, url 들어가고 난 후에도 계속 place 정보 보여주기 위한 함수
+    func shouldKeepPlaceInfoViewState(_ state: Bool) {
+        shouldKeepPlaceInfoView = state
     }
     
     // MARK: Keyboard에 따른 view 높이 변경 Notification
@@ -197,11 +206,8 @@ final class HomeViewPresenter: NSObject {
     }
     
     // MARK: vegan Data 불러오기
-    func loadVeganData() {
-        let userId = UserId.shared.userId
-        
+    private func loadVeganData() {
         AVIROAPIManager().getNerbyPlaceModels(
-            userId: userId,
             longitude: MyCoordinate.shared.longitudeString,
             latitude: MyCoordinate.shared.latitudeString,
             wide: "100",
@@ -216,9 +222,7 @@ final class HomeViewPresenter: NSObject {
     
     // MARK: Marker 상태 초기화
     func initMarkerState() {
-        guard let selectedMarkerModel = selectedMarkerModel else { return }
-        
-        selectedMarkerModel.marker.changeIcon(selectedMarkerModel.mapPlace, false)
+        resetPreviouslyTouchedMarker()
     }
     
     // MARK: Marker Data singleton에 저장하기
@@ -350,7 +354,7 @@ final class HomeViewPresenter: NSObject {
     }
     
     // MARK: Make Notification
-    func makeNotification() {
+    private func makeNotification() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(checkIsInAVRIONotificaiton(_:)),
@@ -547,14 +551,14 @@ final class HomeViewPresenter: NSObject {
         }
     }
     
-    func editPlaceInfo(with placeEditSegmentedIndex: Int = 0) {
+    func editPlaceInfo(withSelectedSegmentedControl placeEditSegmentedIndex: Int = 0) {
         guard let placeMarkerModel = selectedMarkerModel,
               let placeId = selectedPlaceId,
               let placeSummary = selectedSummaryModel,
               let placeInfo = selectedInfoModel
         else { return }
         
-        isShowEditPage = true
+        shouldKeepPlaceInfoView = true
         
         viewController?.pushEditPlaceInfoViewController(
             placeMarkerModel: placeMarkerModel,
@@ -576,7 +580,7 @@ final class HomeViewPresenter: NSObject {
         let isRequest = placeMarkerModel.isRequest
         let menuArray = placeMenuModel.menuArray
         
-        isShowEditPage = true
+        shouldKeepPlaceInfoView = true
 
         viewController?.pushEditMenuViewController(
             placeId: placeId,
@@ -632,7 +636,7 @@ final class HomeViewPresenter: NSObject {
 
 // MARK: user location 불러오기 관련 작업들
 extension HomeViewPresenter: CLLocationManagerDelegate {
-    func locationAuthorization() {
+    private func locationAuthorization() {
         
         switch locationManager.authorizationStatus {
         case .denied:

@@ -47,7 +47,7 @@ struct AVIRORequestAPI {
     static let y = "y"
     
     // MARK: get Nerby Store
-    mutating func getNerbyStore(userId: String,
+    mutating func getNerbyStore(
                                 longitude: String,
                                 latitude: String,
                                 wide: String,
@@ -60,7 +60,6 @@ struct AVIRORequestAPI {
         components.path = AVIRORequestAPI.getNerbyStorePath
         
         components.queryItems = [
-            URLQueryItem(name: AVIRORequestAPI.userId, value: userId),
             URLQueryItem(name: AVIRORequestAPI.longitude, value: longitude),
             URLQueryItem(name: AVIRORequestAPI.latitude, value: latitude),
             URLQueryItem(name: AVIRORequestAPI.wide, value: wide),

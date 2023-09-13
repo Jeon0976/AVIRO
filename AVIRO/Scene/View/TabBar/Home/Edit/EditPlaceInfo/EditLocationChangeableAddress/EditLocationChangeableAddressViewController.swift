@@ -1,5 +1,5 @@
 //
-//  EditLocationDetailViewController.swift
+//  EditLocationChangeableAddressViewController.swift
 //  AVIRO
 //
 //  Created by 전성훈 on 2023/08/27.
@@ -9,8 +9,8 @@ import UIKit
 
 import NMapsMap
 
-final class EditLocationDetailViewController: UIViewController {
-    lazy var presenter = EditLocationDetailPresenter(viewController: self)
+final class EditLocationChangeableAddressViewController: UIViewController {
+    lazy var presenter = EditLocationChangeableAddressPresenter(viewController: self)
     
     private let items = ["주소 검색", "지도에서 검색"]
     
@@ -33,8 +33,8 @@ final class EditLocationDetailViewController: UIViewController {
         return segmented
     }()
     
-    private lazy var editLocationDetailTextView: EditLocationDetailTextView = {
-        let view = EditLocationDetailTextView()
+    private lazy var editLocationDetailTextView: EditLocationAddressTextView = {
+        let view = EditLocationAddressTextView()
         
         view.searchAddress = { [weak self] text in
             self?.presenter.whenAfterSearchAddress(text)
@@ -43,8 +43,8 @@ final class EditLocationDetailViewController: UIViewController {
         return view
     }()
     
-    private lazy var editLocationDetailMapView: EditLocationDetailMapView = {
-        let view = EditLocationDetailMapView()
+    private lazy var editLocationDetailMapView: EditLocationAddressMapView = {
+        let view = EditLocationAddressMapView()
         
         view.isChangedCoordinate = { [weak self] coordinate in
             self?.presenter.whenAfterChangedCoordinate(coordinate)
@@ -74,7 +74,7 @@ final class EditLocationDetailViewController: UIViewController {
     }
 }
 
-extension EditLocationDetailViewController: EditLocationDetailProtocol {
+extension EditLocationChangeableAddressViewController: EditLocationChangebleAddressProtocol {
     func makeLayout() {
         [
             topLine,
@@ -202,16 +202,16 @@ extension EditLocationDetailViewController: EditLocationDetailProtocol {
     }
 }
 
-extension EditLocationDetailViewController: UITableViewDataSource {
+extension EditLocationChangeableAddressViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return presenter.addressModelCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
-            withIdentifier: EditLocationDetailTextTableViewCell.identifier,
+            withIdentifier: EditLocationAddressTextTableViewCell.identifier,
             for: indexPath
-        ) as? EditLocationDetailTextTableViewCell
+        ) as? EditLocationAddressTextTableViewCell
         
         guard presenter.addressModelCount > indexPath.row else {
             return UITableViewCell()
@@ -233,7 +233,7 @@ extension EditLocationDetailViewController: UITableViewDataSource {
     }
 }
 
-extension EditLocationDetailViewController: UITableViewDelegate {
+extension EditLocationChangeableAddressViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
@@ -245,7 +245,7 @@ extension EditLocationDetailViewController: UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath)
-                as? EditLocationDetailTextTableViewCell
+                as? EditLocationAddressTextTableViewCell
         else { return }
         
         let selecedAddress = cell.selectedCell()
@@ -256,7 +256,7 @@ extension EditLocationDetailViewController: UITableViewDelegate {
     }
 }
 
-extension EditLocationDetailViewController: UIGestureRecognizerDelegate {
+extension EditLocationChangeableAddressViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         if touch.view is UISegmentedControl {
             view.endEditing(true)

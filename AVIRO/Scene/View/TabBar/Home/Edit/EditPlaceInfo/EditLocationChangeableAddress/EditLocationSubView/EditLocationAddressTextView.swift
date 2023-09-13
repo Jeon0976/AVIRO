@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class EditLocationDetailTextView: UIView {
+final class EditLocationAddressTextView: UIView {
     
     private lazy var addressTextField: SearchField = {
         let textField = SearchField()
@@ -35,8 +35,8 @@ final class EditLocationDetailTextView: UIView {
         let tableView = UITableView()
         
         tableView.register(
-            EditLocationDetailTextTableViewCell.self,
-            forCellReuseIdentifier: EditLocationDetailTextTableViewCell.identifier
+            EditLocationAddressTextTableViewCell.self,
+            forCellReuseIdentifier: EditLocationAddressTextTableViewCell.identifier
         )
         tableView.separatorStyle = .singleLine
         tableView.separatorColor = .gray5
@@ -151,7 +151,7 @@ final class EditLocationDetailTextView: UIView {
     }
 }
 
-extension EditLocationDetailTextView: UITextFieldDelegate {
+extension EditLocationAddressTextView: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         chagedView()
     }

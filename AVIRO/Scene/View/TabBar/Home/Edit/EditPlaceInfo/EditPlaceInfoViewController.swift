@@ -253,8 +253,24 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     }
     
     func handleClosure() {
+        editLocationTopView.afterChangedTitle = { [weak self] title in
+            
+        }
+        
+        editLocationTopView.afterChangedCategory = { [weak self] category in
+            
+        }
+        
         editLocationBottomView.tappedPushViewButton = { [weak self] in
             self?.presenter.pushAddressEditViewController()
+        }
+        
+        editLocationBottomView.afterChangedAddress = { [weak self] address in
+            
+        }
+        
+        editLocationBottomView.afterChangedDetailAddress = { [weak self] addressDetail in
+            
         }
 
         editOperationHoursView.openChangebleOperationHourView = { [weak self] timeModel in
@@ -263,6 +279,10 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         
         operationHourChangebleView.cancelTapped = { [weak self] in
             self?.showOperationHourChangebleView(false, nil)
+        }
+        
+        editHomePageView.afterChagnedURL = { [weak self] url in
+            
         }
         
         // MARK: API 연결 후 작업
@@ -409,8 +429,8 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     }
     
     func pushAddressEditViewController(placeMarkerModel: MarkerModel) {
-        let vc = EditLocationDetailViewController()
-        let presenter = EditLocationDetailPresenter(
+        let vc = EditLocationChangeableAddressViewController()
+        let presenter = EditLocationChangeableAddressPresenter(
             viewController: vc,
             placeMarkerModel: placeMarkerModel
         )

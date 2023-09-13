@@ -104,7 +104,7 @@ extension NickNameChangebleViewController: NickNameChangebleProtocol {
                 equalTo: subInfo.topAnchor),
             subInfo2.trailingAnchor.constraint(
                 equalTo: view.trailingAnchor, constant: -40),
-            subInfo2.widthAnchor.constraint(equalToConstant: 55),
+            subInfo2.widthAnchor.constraint(equalToConstant: 60),
             
             // editButtton
             editNickNameButton.topAnchor.constraint(equalTo: subInfo.bottomAnchor, constant: 30),
@@ -158,6 +158,8 @@ extension NickNameChangebleViewController: NickNameChangebleProtocol {
 extension NickNameChangebleViewController: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         nicNameField.rightButtonHidden = false
+        editNickNameButton.isEnabled = false
+        nicNameField.isPossible = nil
         
         if let text = textField.text,
            text == "" {

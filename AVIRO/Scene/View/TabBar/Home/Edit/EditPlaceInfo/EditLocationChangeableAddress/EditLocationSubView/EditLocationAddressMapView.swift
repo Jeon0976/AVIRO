@@ -1,5 +1,5 @@
 //
-//  EditLocationDetailMapView.swift
+//  EditLocationAddressMapView.swift
 //  AVIRO
 //
 //  Created by 전성훈 on 2023/08/27.
@@ -9,8 +9,7 @@ import UIKit
 
 import NMapsMap
 
-final class EditLocationDetailMapView: UIView {
-    
+final class EditLocationAddressMapView: UIView {
     private lazy var mapSubTitleLabel: UILabel = {
         let label = UILabel()
         
@@ -127,7 +126,7 @@ final class EditLocationDetailMapView: UIView {
     }
 }
 
-extension EditLocationDetailMapView: NMFMapViewCameraDelegate {
+extension EditLocationAddressMapView: NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraWillChangeByReason reason: Int, animated: Bool) {
         if afterMarkingMarked {
             let lat = mapView.latitude

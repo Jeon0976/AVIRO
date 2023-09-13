@@ -21,6 +21,8 @@ final class EditLocationTopView: UIView {
     private lazy var placeField: EnrollField = {
         let field = EnrollField()
         
+        field.delegate = self
+        
         return field
     }()
     
@@ -46,6 +48,9 @@ final class EditLocationTopView: UIView {
     private lazy var categoryButtons = [CategoryButton]()
     
     private var viewHeightConstraint: NSLayoutConstraint?
+    
+    var afterChangedTitle: ((String) -> Void)?
+    var afterChangedCategory: ((Category) -> Void)?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -133,12 +138,6 @@ final class EditLocationTopView: UIView {
         }
     }
     
-    @objc private func categoryButtonTapped(_ sender: UIButton) {
-        for button in categoryButtons {
-            button.isSelected = (button == sender)
-        }
-    }
-    
     private func setViewHeight() {
         let placeLabelHeight = placeLabel.frame.height
         let placeFieldHeight = placeField.frame.height
@@ -152,7 +151,28 @@ final class EditLocationTopView: UIView {
                 
         viewHeightConstraint?.constant = totalHeight
     }
-    
+
+    @objc private func categoryButtonTapped(_ sender: UIButton) {
+        for button in categoryButtons {
+            button.isSelected = (button == sender)
+        }
+        
+        var selectedCategory: Category?
+        if sender == restaurantButton {
+            selectedCategory = .restaurant
+        } else if sender == cafeButton {
+            selectedCategory = .cafe
+        } else if sender == bakeryButton {
+            selectedCategory = .bakery
+        } else if sender == barButton {
+            selectedCategory = .bar
+        }
+        
+        if let category = selectedCategory {
+            afterChangedCategory?(category)
+        }
+    }
+        
     func dataBinding(title: String, category: String) {
         self.placeField.text = title
         
@@ -168,6 +188,12 @@ final class EditLocationTopView: UIView {
                 restaurantButton.isSelected.toggle()
             }
         }
-        
+    }
+}
+
+extension EditLocationTopView: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        guard let title = textField.text else { return }
+        afterChangedTitle?(title)
     }
 }

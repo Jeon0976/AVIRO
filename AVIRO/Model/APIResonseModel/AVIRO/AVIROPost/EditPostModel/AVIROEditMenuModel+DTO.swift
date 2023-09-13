@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct EditMenuModel: Encodable {
+struct AVIROEditMenuModel: Encodable {
     let placeId: String
     let userId: String
     let allVegan: Bool

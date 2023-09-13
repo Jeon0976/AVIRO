@@ -12,10 +12,10 @@
 		C50DB7422A99DCDA0078B501 /* PlaceListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50DB7402A99DCDA0078B501 /* PlaceListCell.swift */; };
 		C50DB7432A99DCDA0078B501 /* PlaceListSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50DB7412A99DCDA0078B501 /* PlaceListSearchViewController.swift */; };
 		C50DB74E2A9B2A8C0078B501 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C50DB74D2A9B2A8C0078B501 /* WebKit.framework */; };
-		C50DB7512A9B83550078B501 /* EditLocationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50DB7502A9B83550078B501 /* EditLocationDetailViewController.swift */; };
-		C50DB7542A9B838F0078B501 /* EditLocationDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50DB7532A9B838F0078B501 /* EditLocationDetailPresenter.swift */; };
-		C50DB7572A9B8DF80078B501 /* EditLocationDetailTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50DB7562A9B8DF80078B501 /* EditLocationDetailTextView.swift */; };
-		C50DB7592A9B8E060078B501 /* EditLocationDetailMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50DB7582A9B8E060078B501 /* EditLocationDetailMapView.swift */; };
+		C50DB7512A9B83550078B501 /* EditLocationChangeableAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50DB7502A9B83550078B501 /* EditLocationChangeableAddressViewController.swift */; };
+		C50DB7542A9B838F0078B501 /* EditLocationChangeableAddressPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50DB7532A9B838F0078B501 /* EditLocationChangeableAddressPresenter.swift */; };
+		C50DB7572A9B8DF80078B501 /* EditLocationAddressTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50DB7562A9B8DF80078B501 /* EditLocationAddressTextView.swift */; };
+		C50DB7592A9B8E060078B501 /* EditLocationAddressMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50DB7582A9B8E060078B501 /* EditLocationAddressMapView.swift */; };
 		C50E6F6D2A8E5AAC00703B9E /* ReviewLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50E6F6C2A8E5AAC00703B9E /* ReviewLabel.swift */; };
 		C50E6F6F2A8F10B500703B9E /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50E6F6E2A8F10B500703B9E /* UILabel+Extension.swift */; };
 		C50F6AF32A68FD0A00E942F5 /* EnrollPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6AF22A68FD0A00E942F5 /* EnrollPlaceViewController.swift */; };
@@ -95,12 +95,18 @@
 		C5803F582A88C1990064A853 /* PlaceTopModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5803F572A88C1990064A853 /* PlaceTopModel.swift */; };
 		C5803F5D2A88C3C00064A853 /* LocationUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5803F5C2A88C3C00064A853 /* LocationUtility.swift */; };
 		C58B9AAE2A5675B9008AEAC3 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58B9AAD2A5675B9008AEAC3 /* TutorialViewController.swift */; };
+		C58EC7CC2AB171C000401FF7 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58EC7CB2AB171C000401FF7 /* UIButton+Extension.swift */; };
+		C58EC7CE2AB1B57100401FF7 /* AVIROEditOperationTime+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58EC7CD2AB1B57100401FF7 /* AVIROEditOperationTime+DTO.swift */; };
+		C58EC7D02AB1B59100401FF7 /* AVIROEditLocation+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58EC7CF2AB1B59100401FF7 /* AVIROEditLocation+DTO.swift */; };
+		C58EC7D22AB1B5AD00401FF7 /* AVIROEditPhone+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58EC7D12AB1B5AD00401FF7 /* AVIROEditPhone+DTO.swift */; };
+		C58EC7D42AB1B5C400401FF7 /* AVIROEditURL+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58EC7D32AB1B5C400401FF7 /* AVIROEditURL+DTO.swift */; };
+		C58EC7D62AB1B61500401FF7 /* AVIROEditCommonBeforeAfterDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58EC7D52AB1B61500401FF7 /* AVIROEditCommonBeforeAfterDTO.swift */; };
 		C593B6472A4AB3A700D224CE /* PushCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593B6462A4AB3A700D224CE /* PushCommentView.swift */; };
 		C593B64B2A4AEA9800D224CE /* AVIROCommentPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593B64A2A4AEA9800D224CE /* AVIROCommentPost.swift */; };
 		C593B64F2A4C490600D224CE /* MyPageViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593B64E2A4C490600D224CE /* MyPageViewPresenter.swift */; };
 		C59491D32AB0336100880B4B /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59491D22AB0336100880B4B /* UIView+Extension.swift */; };
 		C595ACCD2A84A1A200D35123 /* PlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C595ACCC2A84A1A200D35123 /* PlaceView.swift */; };
-		C595ACD12A84A4EB00D35123 /* PlaceTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C595ACD02A84A4EB00D35123 /* PlaceTopView.swift */; };
+		C595ACD12A84A4EB00D35123 /* PlaceSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C595ACD02A84A4EB00D35123 /* PlaceSummaryView.swift */; };
 		C5A03C122A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A03C112A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift */; };
 		C5A201B22A98502500A54381 /* TimeUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A201B12A98502500A54381 /* TimeUtility.swift */; };
 		C5A201B42A986EC300A54381 /* EditPlaceInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A201B32A986EC300A54381 /* EditPlaceInfoViewController.swift */; };
@@ -127,7 +133,7 @@
 		C5C2907E2A85E69B00ED5DCE /* UnderlineSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C2907D2A85E69B00ED5DCE /* UnderlineSegmentedControl.swift */; };
 		C5C290812A8616E500ED5DCE /* PlaceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C290802A8616E500ED5DCE /* PlaceInfoView.swift */; };
 		C5C290852A86173F00ED5DCE /* PlaceReviewWriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C290842A86173F00ED5DCE /* PlaceReviewWriteView.swift */; };
-		C5C90EAF2AA5B7F300AB3668 /* EditMenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C90EAE2AA5B7F300AB3668 /* EditMenuModel.swift */; };
+		C5C90EAF2AA5B7F300AB3668 /* AVIROEditMenuModel+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C90EAE2AA5B7F300AB3668 /* AVIROEditMenuModel+DTO.swift */; };
 		C5C90EB22AA5EC9E00AB3668 /* EditMenuChangedMarkerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C90EB12AA5EC9E00AB3668 /* EditMenuChangedMarkerModel.swift */; };
 		C5C90EB52AA6D80300AB3668 /* EditOperatingHourView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C90EB42AA6D80300AB3668 /* EditOperatingHourView.swift */; };
 		C5C90EB72AA7078300AB3668 /* EditOperationHoursModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C90EB62AA7078300AB3668 /* EditOperationHoursModel.swift */; };
@@ -172,7 +178,7 @@
 		C5F1014F2A6D19A800C53286 /* VeganOptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F1014E2A6D19A800C53286 /* VeganOptionButton.swift */; };
 		C5FA0EAA2A94DB3E004AD8B4 /* ReportReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FA0EA92A94DB3E004AD8B4 /* ReportReviewViewController.swift */; };
 		C5FA0EAC2A94DF39004AD8B4 /* ReportReviewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FA0EAB2A94DF39004AD8B4 /* ReportReviewPresenter.swift */; };
-		C5FD92E32A9C6C1E00CF4673 /* EditLocationDetailTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92E22A9C6C1E00CF4673 /* EditLocationDetailTextTableViewCell.swift */; };
+		C5FD92E32A9C6C1E00CF4673 /* EditLocationAddressTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92E22A9C6C1E00CF4673 /* EditLocationAddressTextTableViewCell.swift */; };
 		C5FD92EB2A9C786600CF4673 /* PublicAPIRequestComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92EA2A9C786600CF4673 /* PublicAPIRequestComponents.swift */; };
 		C5FD92ED2A9C7AE800CF4673 /* PublicAPIRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92EC2A9C7AE800CF4673 /* PublicAPIRequestManager.swift */; };
 		C5FD92F02A9C803600CF4673 /* EditAddressTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92EF2A9C803600CF4673 /* EditAddressTableModel.swift */; };
@@ -193,10 +199,10 @@
 		C50DB7402A99DCDA0078B501 /* PlaceListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceListCell.swift; sourceTree = "<group>"; };
 		C50DB7412A99DCDA0078B501 /* PlaceListSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceListSearchViewController.swift; sourceTree = "<group>"; };
 		C50DB74D2A9B2A8C0078B501 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		C50DB7502A9B83550078B501 /* EditLocationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocationDetailViewController.swift; sourceTree = "<group>"; };
-		C50DB7532A9B838F0078B501 /* EditLocationDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocationDetailPresenter.swift; sourceTree = "<group>"; };
-		C50DB7562A9B8DF80078B501 /* EditLocationDetailTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocationDetailTextView.swift; sourceTree = "<group>"; };
-		C50DB7582A9B8E060078B501 /* EditLocationDetailMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocationDetailMapView.swift; sourceTree = "<group>"; };
+		C50DB7502A9B83550078B501 /* EditLocationChangeableAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocationChangeableAddressViewController.swift; sourceTree = "<group>"; };
+		C50DB7532A9B838F0078B501 /* EditLocationChangeableAddressPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocationChangeableAddressPresenter.swift; sourceTree = "<group>"; };
+		C50DB7562A9B8DF80078B501 /* EditLocationAddressTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocationAddressTextView.swift; sourceTree = "<group>"; };
+		C50DB7582A9B8E060078B501 /* EditLocationAddressMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocationAddressMapView.swift; sourceTree = "<group>"; };
 		C50E6F6C2A8E5AAC00703B9E /* ReviewLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewLabel.swift; sourceTree = "<group>"; };
 		C50E6F6E2A8F10B500703B9E /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		C50F6AF22A68FD0A00E942F5 /* EnrollPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollPlaceViewController.swift; sourceTree = "<group>"; };
@@ -279,13 +285,19 @@
 		C5803F572A88C1990064A853 /* PlaceTopModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTopModel.swift; sourceTree = "<group>"; };
 		C5803F5C2A88C3C00064A853 /* LocationUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationUtility.swift; sourceTree = "<group>"; };
 		C58B9AAD2A5675B9008AEAC3 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
+		C58EC7CB2AB171C000401FF7 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
+		C58EC7CD2AB1B57100401FF7 /* AVIROEditOperationTime+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROEditOperationTime+DTO.swift"; sourceTree = "<group>"; };
+		C58EC7CF2AB1B59100401FF7 /* AVIROEditLocation+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROEditLocation+DTO.swift"; sourceTree = "<group>"; };
+		C58EC7D12AB1B5AD00401FF7 /* AVIROEditPhone+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROEditPhone+DTO.swift"; sourceTree = "<group>"; };
+		C58EC7D32AB1B5C400401FF7 /* AVIROEditURL+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROEditURL+DTO.swift"; sourceTree = "<group>"; };
+		C58EC7D52AB1B61500401FF7 /* AVIROEditCommonBeforeAfterDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROEditCommonBeforeAfterDTO.swift; sourceTree = "<group>"; };
 		C593B6462A4AB3A700D224CE /* PushCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushCommentView.swift; sourceTree = "<group>"; };
 		C593B64A2A4AEA9800D224CE /* AVIROCommentPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROCommentPost.swift; sourceTree = "<group>"; };
 		C593B64C2A4BFD9A00D224CE /* AVIRO.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AVIRO.entitlements; sourceTree = "<group>"; };
 		C593B64E2A4C490600D224CE /* MyPageViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewPresenter.swift; sourceTree = "<group>"; };
 		C59491D22AB0336100880B4B /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		C595ACCC2A84A1A200D35123 /* PlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceView.swift; sourceTree = "<group>"; };
-		C595ACD02A84A4EB00D35123 /* PlaceTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTopView.swift; sourceTree = "<group>"; };
+		C595ACD02A84A4EB00D35123 /* PlaceSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSummaryView.swift; sourceTree = "<group>"; };
 		C5A03C112A3A11290044D995 /* HomeViewControllerActionAndAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerActionAndAnimation.swift; sourceTree = "<group>"; };
 		C5A201B12A98502500A54381 /* TimeUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeUtility.swift; sourceTree = "<group>"; };
 		C5A201B32A986EC300A54381 /* EditPlaceInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPlaceInfoViewController.swift; sourceTree = "<group>"; };
@@ -312,7 +324,7 @@
 		C5C2907D2A85E69B00ED5DCE /* UnderlineSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlineSegmentedControl.swift; sourceTree = "<group>"; };
 		C5C290802A8616E500ED5DCE /* PlaceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceInfoView.swift; sourceTree = "<group>"; };
 		C5C290842A86173F00ED5DCE /* PlaceReviewWriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceReviewWriteView.swift; sourceTree = "<group>"; };
-		C5C90EAE2AA5B7F300AB3668 /* EditMenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuModel.swift; sourceTree = "<group>"; };
+		C5C90EAE2AA5B7F300AB3668 /* AVIROEditMenuModel+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROEditMenuModel+DTO.swift"; sourceTree = "<group>"; };
 		C5C90EB12AA5EC9E00AB3668 /* EditMenuChangedMarkerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuChangedMarkerModel.swift; sourceTree = "<group>"; };
 		C5C90EB42AA6D80300AB3668 /* EditOperatingHourView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditOperatingHourView.swift; sourceTree = "<group>"; };
 		C5C90EB62AA7078300AB3668 /* EditOperationHoursModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditOperationHoursModel.swift; sourceTree = "<group>"; };
@@ -357,7 +369,7 @@
 		C5F1014E2A6D19A800C53286 /* VeganOptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganOptionButton.swift; sourceTree = "<group>"; };
 		C5FA0EA92A94DB3E004AD8B4 /* ReportReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportReviewViewController.swift; sourceTree = "<group>"; };
 		C5FA0EAB2A94DF39004AD8B4 /* ReportReviewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportReviewPresenter.swift; sourceTree = "<group>"; };
-		C5FD92E22A9C6C1E00CF4673 /* EditLocationDetailTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocationDetailTextTableViewCell.swift; sourceTree = "<group>"; };
+		C5FD92E22A9C6C1E00CF4673 /* EditLocationAddressTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocationAddressTextTableViewCell.swift; sourceTree = "<group>"; };
 		C5FD92EA2A9C786600CF4673 /* PublicAPIRequestComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicAPIRequestComponents.swift; sourceTree = "<group>"; };
 		C5FD92EC2A9C7AE800CF4673 /* PublicAPIRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicAPIRequestManager.swift; sourceTree = "<group>"; };
 		C5FD92EF2A9C803600CF4673 /* EditAddressTableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAddressTableModel.swift; sourceTree = "<group>"; };
@@ -490,29 +502,29 @@
 			path = PlaceList;
 			sourceTree = "<group>";
 		};
-		C50DB74F2A9B83300078B501 /* EditLocationDetail */ = {
+		C50DB74F2A9B83300078B501 /* EditLocationChangeableAddress */ = {
 			isa = PBXGroup;
 			children = (
-				C50DB7502A9B83550078B501 /* EditLocationDetailViewController.swift */,
+				C50DB7502A9B83550078B501 /* EditLocationChangeableAddressViewController.swift */,
 				C50DB7552A9B8DD00078B501 /* EditLocationSubView */,
 			);
-			path = EditLocationDetail;
+			path = EditLocationChangeableAddress;
 			sourceTree = "<group>";
 		};
-		C50DB7522A9B83770078B501 /* EditLocationDetail */ = {
+		C50DB7522A9B83770078B501 /* EditLocationAddressChangeable */ = {
 			isa = PBXGroup;
 			children = (
-				C50DB7532A9B838F0078B501 /* EditLocationDetailPresenter.swift */,
+				C50DB7532A9B838F0078B501 /* EditLocationChangeableAddressPresenter.swift */,
 			);
-			path = EditLocationDetail;
+			path = EditLocationAddressChangeable;
 			sourceTree = "<group>";
 		};
 		C50DB7552A9B8DD00078B501 /* EditLocationSubView */ = {
 			isa = PBXGroup;
 			children = (
-				C50DB7562A9B8DF80078B501 /* EditLocationDetailTextView.swift */,
-				C5FD92E22A9C6C1E00CF4673 /* EditLocationDetailTextTableViewCell.swift */,
-				C50DB7582A9B8E060078B501 /* EditLocationDetailMapView.swift */,
+				C50DB7562A9B8DF80078B501 /* EditLocationAddressTextView.swift */,
+				C5FD92E22A9C6C1E00CF4673 /* EditLocationAddressTextTableViewCell.swift */,
+				C50DB7582A9B8E060078B501 /* EditLocationAddressMapView.swift */,
 			);
 			path = EditLocationSubView;
 			sourceTree = "<group>";
@@ -538,6 +550,7 @@
 				C51B09BB2A82397800916BBD /* Marker+Extension.swift */,
 				C51AED222A8B7B000015FBC2 /* UIViewController+Extension.swift */,
 				C50E6F6E2A8F10B500703B9E /* UILabel+Extension.swift */,
+				C58EC7CB2AB171C000401FF7 /* UIButton+Extension.swift */,
 				C59491D22AB0336100880B4B /* UIView+Extension.swift */,
 			);
 			path = Extension;
@@ -914,7 +927,7 @@
 		C595ACCF2A84A21100D35123 /* SubView */ = {
 			isa = PBXGroup;
 			children = (
-				C595ACD02A84A4EB00D35123 /* PlaceTopView.swift */,
+				C595ACD02A84A4EB00D35123 /* PlaceSummaryView.swift */,
 				C5C290732A85E4EC00ED5DCE /* PlaceSegmentedControlView.swift */,
 				C5C290752A85E4EF00ED5DCE /* SegmentedControlSubView */,
 			);
@@ -935,7 +948,7 @@
 			children = (
 				C5A201B32A986EC300A54381 /* EditPlaceInfoViewController.swift */,
 				C5A201BE2A989FF900A54381 /* EditPlaceInfoSubView */,
-				C50DB74F2A9B83300078B501 /* EditLocationDetail */,
+				C50DB74F2A9B83300078B501 /* EditLocationChangeableAddress */,
 			);
 			path = EditPlaceInfo;
 			sourceTree = "<group>";
@@ -953,7 +966,7 @@
 			isa = PBXGroup;
 			children = (
 				C5A201BC2A98708800A54381 /* EditPlaceInfoPresenter.swift */,
-				C50DB7522A9B83770078B501 /* EditLocationDetail */,
+				C50DB7522A9B83770078B501 /* EditLocationAddressChangeable */,
 				C5A201BA2A986F9B00A54381 /* EditMenuPresenter.swift */,
 			);
 			path = EditPresenter;
@@ -966,8 +979,8 @@
 				C5A201C22A98A61F00A54381 /* EditLocationBottomView.swift */,
 				C5A201C42A98A67900A54381 /* EditPhoneView.swift */,
 				C5A201C62A98A6D200A54381 /* EditOperatingHoursView.swift */,
-				C5C90EB32AA6D7EB00AB3668 /* EditoperatingHoursSubView */,
 				C5A201C82A98A70800A54381 /* EditHomePageView.swift */,
+				C5C90EB32AA6D7EB00AB3668 /* EditoperatingHoursSubView */,
 			);
 			path = EditPlaceInfoSubView;
 			sourceTree = "<group>";
@@ -1039,7 +1052,12 @@
 		C5C90EAD2AA5B71800AB3668 /* EditPostModel */ = {
 			isa = PBXGroup;
 			children = (
-				C5C90EAE2AA5B7F300AB3668 /* EditMenuModel.swift */,
+				C5C90EAE2AA5B7F300AB3668 /* AVIROEditMenuModel+DTO.swift */,
+				C58EC7CF2AB1B59100401FF7 /* AVIROEditLocation+DTO.swift */,
+				C58EC7D12AB1B5AD00401FF7 /* AVIROEditPhone+DTO.swift */,
+				C58EC7CD2AB1B57100401FF7 /* AVIROEditOperationTime+DTO.swift */,
+				C58EC7D32AB1B5C400401FF7 /* AVIROEditURL+DTO.swift */,
+				C58EC7D52AB1B61500401FF7 /* AVIROEditCommonBeforeAfterDTO.swift */,
 			);
 			path = EditPostModel;
 			sourceTree = "<group>";
@@ -1472,9 +1490,10 @@
 				C5CAAC492A39C6D4008C5FDA /* StringValue.swift in Sources */,
 				C5C2907E2A85E69B00ED5DCE /* UnderlineSegmentedControl.swift in Sources */,
 				C5A3C3C42A39658A0050AB3D /* LoginViewController.swift in Sources */,
+				C58EC7CC2AB171C000401FF7 /* UIButton+Extension.swift in Sources */,
 				C5732C732A41778A00CDC499 /* AVIROPostAPI.swift in Sources */,
 				C5732C7C2A41D41B00CDC499 /* VeganTableFieldModel.swift in Sources */,
-				C50DB7592A9B8E060078B501 /* EditLocationDetailMapView.swift in Sources */,
+				C50DB7592A9B8E060078B501 /* EditLocationAddressMapView.swift in Sources */,
 				C5ED46932AAEB02F00F2DA04 /* PlaceOperationHoursViewController.swift in Sources */,
 				C5732C752A41962D00CDC499 /* AVIRORequestAPI.swift in Sources */,
 				C513854C2AAB3B52001AB827 /* NickNameChangeblePresenter.swift in Sources */,
@@ -1491,13 +1510,13 @@
 				C5FD92EB2A9C786600CF4673 /* PublicAPIRequestComponents.swift in Sources */,
 				C50F6AF52A68FD6300E942F5 /* EnrollPlacePresenter.swift in Sources */,
 				C5CAAC452A39A93C008C5FDA /* Layout.swift in Sources */,
-				C50DB7572A9B8DF80078B501 /* EditLocationDetailTextView.swift in Sources */,
-				C595ACD12A84A4EB00D35123 /* PlaceTopView.swift in Sources */,
+				C50DB7572A9B8DF80078B501 /* EditLocationAddressTextView.swift in Sources */,
+				C595ACD12A84A4EB00D35123 /* PlaceSummaryView.swift in Sources */,
 				C520663A2A808DC40038ECCD /* PlaceListHeaderView.swift in Sources */,
 				C52066382A808DAD0038ECCD /* HistoryHeaderView.swift in Sources */,
 				C5C290742A85E4EC00ED5DCE /* PlaceSegmentedControlView.swift in Sources */,
 				C52FA3472A175B20005E70DC /* HomeViewController.swift in Sources */,
-				C5FD92E32A9C6C1E00CF4673 /* EditLocationDetailTextTableViewCell.swift in Sources */,
+				C5FD92E32A9C6C1E00CF4673 /* EditLocationAddressTextTableViewCell.swift in Sources */,
 				C51BBAD72A78D5AB00BF5B7C /* PlaceCheckModel.swift in Sources */,
 				C54BC0DB2A2C2D0D00B65439 /* UIColor+Extension.swift in Sources */,
 				C52FA3432A175B20005E70DC /* AppDelegate.swift in Sources */,
@@ -1507,6 +1526,7 @@
 				C5C90EBD2AA85E7000AB3668 /* AVIROOperationHourModel.swift in Sources */,
 				C513854E2AAD8E9F001AB827 /* AVIROPlaceReportDTO.swift in Sources */,
 				C520663C2A80C0450038ECCD /* CenterCoordinate.swift in Sources */,
+				C58EC7D22AB1B5AD00401FF7 /* AVIROEditPhone+DTO.swift in Sources */,
 				C5C961932A8D9EE20016E2F8 /* PlaceMenuTableViewCell.swift in Sources */,
 				C5351B502A19225A00116D50 /* KakaoMapResponseKeywordModel.swift in Sources */,
 				C52066412A8129510038ECCD /* KakaoAPISortingQuery.swift in Sources */,
@@ -1524,8 +1544,9 @@
 				C5D93D9F2A581EC800629C39 /* FirstRegistrationViewController.swift in Sources */,
 				C528E4C02A5FF1CB002BD72E /* FinalRegistrationViewController.swift in Sources */,
 				C5D93DA32A58718300629C39 /* BottomButton1.swift in Sources */,
-				C50DB7512A9B83550078B501 /* EditLocationDetailViewController.swift in Sources */,
+				C50DB7512A9B83550078B501 /* EditLocationChangeableAddressViewController.swift in Sources */,
 				C5A989992A959E040021B7C3 /* AVIROBookmarkModel.swift in Sources */,
+				C58EC7D02AB1B59100401FF7 /* AVIROEditLocation+DTO.swift in Sources */,
 				C5803F582A88C1990064A853 /* PlaceTopModel.swift in Sources */,
 				C5D36D2E2A76031E003328E8 /* Double+Extension.swift in Sources */,
 				C54BC0DD2A2C762C00B65439 /* CommentsLabel.swift in Sources */,
@@ -1557,7 +1578,10 @@
 				C5351B542A19A7B100116D50 /* MyCoordinate.swift in Sources */,
 				C5EB50EA2A1C705900B29CC1 /* MyPageViewController.swift in Sources */,
 				C5D8E8632A3DEC3900D88A43 /* String+Extension.swift in Sources */,
-				C50DB7542A9B838F0078B501 /* EditLocationDetailPresenter.swift in Sources */,
+				C58EC7D62AB1B61500401FF7 /* AVIROEditCommonBeforeAfterDTO.swift in Sources */,
+				C58EC7CE2AB1B57100401FF7 /* AVIROEditOperationTime+DTO.swift in Sources */,
+				C50DB7542A9B838F0078B501 /* EditLocationChangeableAddressPresenter.swift in Sources */,
+				C58EC7D42AB1B5C400401FF7 /* AVIROEditURL+DTO.swift in Sources */,
 				C50F6B022A6BC8E400E942F5 /* EnrollField.swift in Sources */,
 				C5D7458F2A224DCE006F9F31 /* HomeFirstPopUpView.swift in Sources */,
 				C51B09B82A82155200916BBD /* MarkerModelArray.swift in Sources */,
@@ -1610,7 +1634,7 @@
 				C5E430B52A5DAE9800CB67EC /* SecondRegistrationViewController.swift in Sources */,
 				C593B64B2A4AEA9800D224CE /* AVIROCommentPost.swift in Sources */,
 				C5C90EB52AA6D80300AB3668 /* EditOperatingHourView.swift in Sources */,
-				C5C90EAF2AA5B7F300AB3668 /* EditMenuModel.swift in Sources */,
+				C5C90EAF2AA5B7F300AB3668 /* AVIROEditMenuModel+DTO.swift in Sources */,
 				C5A201C12A98A5DD00A54381 /* EditLocationTopView.swift in Sources */,
 				C593B64F2A4C490600D224CE /* MyPageViewPresenter.swift in Sources */,
 				C5FF13572A42C8970026981D /* AVIROReviewsModel.swift in Sources */,
@@ -1789,6 +1813,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1822,6 +1847,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

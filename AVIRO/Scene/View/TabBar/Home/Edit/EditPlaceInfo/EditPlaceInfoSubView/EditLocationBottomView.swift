@@ -38,10 +38,9 @@ final class EditLocationBottomView: UIView {
     private lazy var mainAddressField: EnrollField = {
         let field = EnrollField()
         
+        field.tag = 0
         field.delegate = self
 
-        field.tag = 0
-        
         field.addRightPushViewControllerButton()
         field.tappedPushViewButton = { [weak self] in
             self?.naverMap.contentInset = .zero
@@ -58,6 +57,7 @@ final class EditLocationBottomView: UIView {
         field.makePlaceHolder(detail)
         
         field.tag = 1
+        field.delegate = self
         
         return field
     }()
@@ -66,6 +66,9 @@ final class EditLocationBottomView: UIView {
     
     var tappedPushViewButton: (() -> Void)?
     
+    var afterChangedAddress: ((String) -> Void)?
+    var afterChangedDetailAddress: ((String) -> Void)?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -155,6 +158,8 @@ final class EditLocationBottomView: UIView {
     
     func changedAddressLabel(_ address: String) {
         mainAddressField.text = address
+
+        afterChangedAddress?(address)
     }
     
     func changedNaverMap(_ latLng: NMGLatLng) {
@@ -177,4 +182,15 @@ extension EditLocationBottomView: UITextFieldDelegate {
         }
     }
 
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        switch textField.tag {
+        case 0:
+            return
+        case 1:
+            guard let addressDetail = textField.text else { return }
+            afterChangedDetailAddress?(addressDetail)
+        default:
+            return
+        }
+    }
 }

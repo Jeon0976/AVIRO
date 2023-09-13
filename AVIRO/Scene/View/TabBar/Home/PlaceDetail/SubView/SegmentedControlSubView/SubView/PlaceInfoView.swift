@@ -40,7 +40,7 @@ final class PlaceInfoView: UIView {
         let label = UILabel()
         
         label.textColor = .gray0
-        label.numberOfLines = 2
+        label.numberOfLines = 0
         label.lineBreakMode = .byCharWrapping
         label.font = .systemFont(ofSize: 16, weight: .medium)
         
@@ -60,6 +60,7 @@ final class PlaceInfoView: UIView {
         
         button.setTitleColor(.changeButton, for: .normal)
         button.backgroundColor = .gray7
+        button.contentHorizontalAlignment = .left
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.titleLabel?.numberOfLines = 1
         button.addTarget(self, action: #selector(phoneButtonTapped(_:)), for: .touchUpInside)
@@ -149,6 +150,12 @@ final class PlaceInfoView: UIView {
     
     private var viewHeightConstraint: NSLayoutConstraint?
     
+    private var addressLabelTopAnchor: NSLayoutConstraint?
+    private var addressLabelCenterYAnchor: NSLayoutConstraint?
+    
+    private var homePageButtonTopAnchor: NSLayoutConstraint?
+    private var homePageButtonCenterYAncor: NSLayoutConstraint?
+    
     var afterPhoneButtonTappedWhenNoData: (() -> Void)?
     var afterTimePlusButtonTapped: (() -> Void)?
     var afterTimeTableShowButtonTapped: (() -> Void)?
@@ -168,11 +175,12 @@ final class PlaceInfoView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        initPlaceInfoViewHeight()
+        setupViewHeight()
     }
     
     private func makeLayout() {
         self.backgroundColor = .gray7
+        
         [
             title,
             updatedTimeLabel,
@@ -207,18 +215,18 @@ final class PlaceInfoView: UIView {
             addressIcon.leadingAnchor.constraint(equalTo: title.leadingAnchor),
             addressIcon.widthAnchor.constraint(equalToConstant: 24),
             addressIcon.heightAnchor.constraint(equalToConstant: 24),
-            
-            addressLabel.centerYAnchor.constraint(equalTo: addressIcon.centerYAnchor),
+
             addressLabel.leadingAnchor.constraint(equalTo: addressIcon.trailingAnchor, constant: 10),
-            addressLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-            
-            phoneIcon.topAnchor.constraint(equalTo: addressIcon.bottomAnchor, constant: 20),
+            addressLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -32),
+
+            phoneIcon.topAnchor.constraint(equalTo: addressLabel.bottomAnchor, constant: 20),
             phoneIcon.leadingAnchor.constraint(equalTo: addressIcon.leadingAnchor),
             phoneIcon.widthAnchor.constraint(equalToConstant: 24),
             phoneIcon.heightAnchor.constraint(equalToConstant: 24),
             
             phoneButton.centerYAnchor.constraint(equalTo: phoneIcon.centerYAnchor),
             phoneButton.leadingAnchor.constraint(equalTo: phoneIcon.trailingAnchor, constant: 10),
+            phoneButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             
             timeIcon.topAnchor.constraint(equalTo: phoneIcon.bottomAnchor, constant: 20),
             timeIcon.leadingAnchor.constraint(equalTo: addressIcon.leadingAnchor),
@@ -241,28 +249,39 @@ final class PlaceInfoView: UIView {
             homePageIcon.widthAnchor.constraint(equalToConstant: 24),
             homePageIcon.heightAnchor.constraint(equalToConstant: 24),
             
-            homePageButton.centerYAnchor.constraint(equalTo: homePageIcon.centerYAnchor),
             homePageButton.leadingAnchor.constraint(equalTo: homePageIcon.trailingAnchor, constant: 10),
-            homePageButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            homePageButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -32),
             
-            separatorLine.topAnchor.constraint(equalTo: homePageIcon.bottomAnchor, constant: 10),
+            separatorLine.topAnchor.constraint(equalTo: homePageButton.bottomAnchor, constant: 12),
             separatorLine.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             separatorLine.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             separatorLine.heightAnchor.constraint(equalToConstant: 1),
             
             editInfoButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            editInfoButton.topAnchor.constraint(equalTo: separatorLine.bottomAnchor, constant: 20),
+            editInfoButton.topAnchor.constraint(equalTo: separatorLine.bottomAnchor, constant: 18),
             editInfoButton.widthAnchor.constraint(equalToConstant: 160)
         ])
     
+        // 모두 1줄일 때 기본 anchor
+        addressLabelCenterYAnchor = addressLabel.centerYAnchor.constraint(equalTo: addressIcon.centerYAnchor)
+        addressLabelCenterYAnchor?.isActive = true
+        
+        homePageButtonCenterYAncor = homePageButton.centerYAnchor.constraint(equalTo: homePageIcon.centerYAnchor)
+        homePageButtonCenterYAncor?.isActive = true
+        
+        addressLabelTopAnchor = addressLabel.topAnchor.constraint(equalTo: addressIcon.topAnchor)
+        addressLabelTopAnchor?.isActive = false
+        
+        homePageButtonTopAnchor = homePageButton.topAnchor.constraint(equalTo: homePageIcon.topAnchor)
+        homePageButtonTopAnchor?.isActive = false
     }
        
-    private func initPlaceInfoViewHeight() {
+    private func setupViewHeight() {
         let titleHeight = title.frame.height
-        let addressHeight = addressIcon.frame.height
+        let addressHeight = addressLabel.countCurrentLines() == 1 ? addressIcon.frame.height : addressLabel.frame.height
         let phoneHeight = phoneIcon.frame.height
         let timeHeight = timeIcon.frame.height
-        let homePageHeight = homePageIcon.frame.height
+        let homePageHeight = homePageButton.countCurrentLines() == 1 ? homePageIcon.frame.height : homePageButton.frame.height
         
         let lineHeight = separatorLine.frame.height
         let changeButtonHeight = editInfoButton.frame.height
@@ -273,7 +292,7 @@ final class PlaceInfoView: UIView {
         let totalHeight =
             titleHeight + addressHeight + phoneHeight +
             timeHeight + homePageHeight + lineHeight + changeButtonHeight + inset
-                
+                        
         viewHeightConstraint?.constant = totalHeight
     }
     
@@ -299,6 +318,26 @@ final class PlaceInfoView: UIView {
             homePageButton.setTitle(homePage, for: .normal)
         } else {
             homePageButton.setTitle("홈페이지 링크 추가", for: .normal)
+        }
+        
+        setLayoutForLineCount()
+    }
+    
+    private func setLayoutForLineCount() {
+        if addressLabel.countCurrentLines() > 1 {
+            addressLabelCenterYAnchor?.isActive = false
+            addressLabelTopAnchor?.isActive = true
+        } else {
+            addressLabelTopAnchor?.isActive = false
+            addressLabelCenterYAnchor?.isActive = true
+        }
+        
+        if homePageButton.countCurrentLines() > 1 {
+            homePageButtonCenterYAncor?.isActive = false
+            homePageButtonTopAnchor?.isActive = true
+        } else {
+            homePageButtonTopAnchor?.isActive = false
+            homePageButtonCenterYAncor?.isActive = true
         }
     }
     

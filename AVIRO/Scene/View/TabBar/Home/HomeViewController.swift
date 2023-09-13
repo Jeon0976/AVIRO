@@ -6,7 +6,6 @@
 //
 
 import UIKit
-
 import SafariServices
 
 import NMapsMap
@@ -42,14 +41,11 @@ final class HomeViewController: UIViewController {
     private var downGesture = UISwipeGestureRecognizer()
     // 최초 화면 뷰
     var firstPopupView = HomeFirstPopUpView()
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        presenter.locationAuthorization()
         presenter.viewDidLoad()
-        presenter.makeNotification()
-        presenter.loadVeganData()
         handleClosure()
     }
     
@@ -299,11 +295,11 @@ extension HomeViewController: HomeViewProtocol {
     }
     
     // MARK: place view에 data binding
-    // TODO: 수정 예정
     func afterClickedMarker(placeModel: PlaceTopModel,
                             placeId: String,
                             isStar: Bool
     ) {
+        popupPlaceView()
         placeView.summaryDataBinding(placeModel: placeModel,
                                      placeId: placeId,
                                      isStar: isStar
@@ -467,11 +463,11 @@ extension HomeViewController {
         }
             
         placeView.afterPhoneButtonTappedWhenNoData = { [weak self] in
-            self?.presenter.editPlaceInfo(with: 1)
+            self?.presenter.editPlaceInfo(withSelectedSegmentedControl: 1)
         }
         
         placeView.afterTimePlusButtonTapped = { [weak self] in
-            self?.presenter.editPlaceInfo(with: 2)
+            self?.presenter.editPlaceInfo(withSelectedSegmentedControl: 2)
         }
         
         placeView.afterTimeTableShowButtonTapped = { [weak self] in
@@ -482,7 +478,7 @@ extension HomeViewController {
             if let url = URL(string: url) {
                 self?.openWebLink(url: url)
             } else {
-                self?.presenter.editPlaceInfo(with: 3)
+                self?.presenter.editPlaceInfo(withSelectedSegmentedControl: 3)
             }
         }
         
@@ -514,7 +510,9 @@ extension HomeViewController {
     
     // MARK: Clousre Private 함수
     private func openWebLink(url: URL) {
+        presenter.shouldKeepPlaceInfoViewState(true)
         let safariViewController = SFSafariViewController(url: url)
+        safariViewController.dismissButtonStyle = .cancel
         present(safariViewController, animated: true)
     }
     
@@ -850,3 +848,17 @@ extension HomeViewController: NMFMapViewTouchDelegate {
         isSlideUpView = false
     }
 }
+
+//// MARK: Safari View Controller Delegate
+//extension HomeViewController: SFSafariViewControllerDelegate {
+//    // dismiss animation false
+//    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+//    }
+//
+//    func safariViewControllerWillOpenInBrowser(_ controller: SFSafariViewController) {
+////        print("Test")
+////        print(controller)
+////        controller.dismiss(animated: false, completion: nil)
+//
+//    }
+//}

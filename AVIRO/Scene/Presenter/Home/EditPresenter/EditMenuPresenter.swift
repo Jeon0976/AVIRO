@@ -705,7 +705,7 @@ final class EditMenuPresenter {
         let updatedArray = filteringUpdatedMenuData(isDefaultMenuTable)
         let insertedArray = filteringInsertMenuData(isDefaultMenuTable)
         
-        let editMenu = EditMenuModel(
+        let editMenu = AVIROEditMenuModel(
             placeId: placeId,
             userId: UserId.shared.userId,
             allVegan: isAll,
@@ -875,7 +875,7 @@ final class EditMenuPresenter {
         return menuData
     }
     
-    private func updateMenuData(_ editMenu: EditMenuModel) {
+    private func updateMenuData(_ editMenu: AVIROEditMenuModel) {
         guard let isAll = isAll,
               let isSome = isSome,
               let isRequest = isRequest

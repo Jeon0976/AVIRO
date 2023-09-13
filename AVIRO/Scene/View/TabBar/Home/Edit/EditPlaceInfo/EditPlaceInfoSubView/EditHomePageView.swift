@@ -24,6 +24,7 @@ final class EditHomePageView: UIView {
         let placeHolder = "대표 홈페이지 링크를 입력해주세요."
         
         field.makePlaceHolder(placeHolder)
+        field.delegate = self
         field.keyboardType = .URL
         field.font = .systemFont(ofSize: 16, weight: .medium)
         
@@ -32,6 +33,8 @@ final class EditHomePageView: UIView {
     
     private var viewHeightConstraint: NSLayoutConstraint?
 
+    var afterChagnedURL: ((String) -> Void)?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -89,5 +92,13 @@ final class EditHomePageView: UIView {
     
     func dataBinding(_ homePage: String) {
         homepageField.text = homePage
+    }
+}
+
+extension EditHomePageView: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        guard let url = textField.text else { return }
+        
+        afterChagnedURL?(url)
     }
 }
