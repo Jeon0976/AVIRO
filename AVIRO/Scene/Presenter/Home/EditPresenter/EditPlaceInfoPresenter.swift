@@ -15,18 +15,25 @@ protocol EditPlaceInfoProtocol: NSObject {
     func makeGesture()
     func handleClosure()
     func whenViewWillAppearSelectedIndex(_ index: Int)
-    func isDetailFieldCheckBeforeKeyboardShowAndHide(notification: NSNotification) -> Bool
+    func isDetailFieldCheckBeforeKeyboardShowAndHide(
+        notification: NSNotification
+    ) -> Bool
     func keyboardWillShow(height: CGFloat)
     func keyboardWillHide()
-    func dataBindingLocation(title: String,
-                             category: String,
-                             marker: NMFMarker,
-                             address: String
+    func dataBindingLocation(
+        title: String,
+        category: String,
+        marker: NMFMarker,
+        address: String
     )
     func dataBindingPhone(phone: String)
-    func dataBindingOperatingHours(operatingHourModels: [EditOperationHoursModel])
+    func dataBindingOperatingHours(
+        operatingHourModels: [EditOperationHoursModel]
+    )
     func dataBindingHomepage(homepage: String)
-    func pushAddressEditViewController(placeMarkerModel: MarkerModel)
+    func pushAddressEditViewController(
+        placeMarkerModel: MarkerModel
+    )
     func updateNaverMap(_ latLng: NMGLatLng)
     func editStoreButtonChangeableState(_ state: Bool)
     func popViewController()
@@ -50,14 +57,6 @@ final class EditPlaceInfoPresenter {
         }
     }
     
-    private func checkIsChangedTitle() {
-        if afterChangedTitle != placeSummary?.title {
-            isChangedTitle = true
-        } else {
-            isChangedTitle = false
-        }
-    }
-    
     private var isChangedTitle = false {
         didSet {
             changeEditButtonState()
@@ -67,14 +66,6 @@ final class EditPlaceInfoPresenter {
     var afterChangedCategory = Category.restaurant {
         didSet {
             checkIsChangedCategory()
-        }
-    }
-    
-    private func checkIsChangedCategory() {
-        if afterChangedCategory.title != placeSummary?.category {
-            isChangedCategory = true
-        } else {
-            isChangedCategory = false
         }
     }
     
@@ -91,14 +82,6 @@ final class EditPlaceInfoPresenter {
         }
     }
     
-    private func checkIsChangedAddress() {
-        if afterChangedAddress != placeInfo?.address {
-            isChangedAddress = true
-        } else {
-            isChangedCategory = false
-        }
-    }
-    
     private var isChangedAddress = false {
         didSet {
             changeEditButtonState()
@@ -111,15 +94,6 @@ final class EditPlaceInfoPresenter {
         }
     }
     
-    private func checkIsChangedAddressDetail() {
-        if afterChangedAddressDetail != placeInfo?.address2 ?? "" {
-            isChangedAddressDetail = true
-        } else {
-            isChangedAddressDetail = false
-        }
-        
-    }
-    
     private var isChangedAddressDetail = false {
         didSet {
             changeEditButtonState()
@@ -129,14 +103,6 @@ final class EditPlaceInfoPresenter {
     var afterChangedPhone = "" {
         didSet {
             checkIsChangedPhone()
-        }
-    }
-    
-    private func checkIsChangedPhone() {
-        if afterChangedPhone != placeInfo?.phone ?? "" {
-            isChangedPhone = true
-        } else {
-            isChangedPhone = false
         }
     }
     
@@ -159,41 +125,6 @@ final class EditPlaceInfoPresenter {
         }
     }
     
-    private func checkIsChangedOperationHour() {
-        placeOperationModels?.forEach {
-            if $0.day == afterChangedOperationHour.day {
-                if $0.breakTime != afterChangedOperationHour.breakTime || $0.operatingHours != afterChangedOperationHour.operatingHours {
-                    appendToOperationArrayWhenChangedOperationHour(afterChangedOperationHour)
-                } else {
-                    compareToAfterOperationArrayFromBeforeOperationArray(afterChangedOperationHour)
-                }
-            }
-        }
-    }
-    
-    private func appendToOperationArrayWhenChangedOperationHour(_ model: EditOperationHoursModel) {
-        if let index =  afterChangedOperationHourArray.firstIndex(where: { $0.day == model.day}) {
-            afterChangedOperationHourArray[index].operatingHours = model.operatingHours
-            afterChangedOperationHourArray[index].breakTime = model.breakTime
-        } else {
-            afterChangedOperationHourArray.append(model)
-        }
-        
-        isChangedOperationHour = true
-    }
-    
-    private func compareToAfterOperationArrayFromBeforeOperationArray(_ model: EditOperationHoursModel) {
-        if let index = afterChangedOperationHourArray.firstIndex(where: { $0.day == model.day }) {
-            afterChangedOperationHourArray.remove(at: index)
-        }
-        
-        if afterChangedOperationHourArray.count == 0 {
-            isChangedOperationHour = false
-        } else {
-            isChangedOperationHour = true
-        }
-    }
-    
     private var isChangedOperationHour = false {
         didSet {
             changeEditButtonState()
@@ -206,6 +137,324 @@ final class EditPlaceInfoPresenter {
         }
     }
     
+    private var isChangedURL = false {
+        didSet {
+            changeEditButtonState()
+        }
+    }
+    
+    init(viewController: EditPlaceInfoProtocol,
+         placeMarkerModel: MarkerModel? = nil,
+         placeId: String? = nil,
+         placeSummary: PlaceSummaryData? = nil,
+         placeInfo: PlaceInfoData? = nil,
+         selectedIndex: Int = 0
+    ) {
+        self.viewController = viewController
+        self.selectedIndex = selectedIndex
+        self.placeMarkerModel = placeMarkerModel
+        self.placeId = placeId
+        self.placeSummary = placeSummary
+        self.placeInfo = placeInfo
+    }
+    
+    func viewDidLoad() {
+        viewController?.makeLayout()
+        viewController?.makeAttribute()
+        viewController?.makeGesture()
+        viewController?.handleClosure()
+        
+        dataBinding()
+    }
+    
+    func viewWillAppear() {
+        viewController?.whenViewWillAppearSelectedIndex(selectedIndex)
+
+        addKeyboardNotification()
+    }
+    
+    func viewWillDisappear() {
+        removeKeyboardNotification()
+    }
+    
+    // MARK: Keyboard에 따른 view 높이 변경 Notification
+    private func addKeyboardNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    private func removeKeyboardNotification() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    @objc private func keyboardWillShow(
+        notification: NSNotification
+    ) {
+        guard let viewController = viewController else { return }
+        
+        if viewController.isDetailFieldCheckBeforeKeyboardShowAndHide(
+            notification: notification
+        ) {
+            if let keyboardFrame: NSValue = notification.userInfo?[
+                UIResponder.keyboardFrameEndUserInfoKey
+            ] as? NSValue {
+               let keyboardRectangle = keyboardFrame.cgRectValue
+                viewController.keyboardWillShow(
+                    height: keyboardRectangle.height
+                )
+            }
+        }
+    }
+    
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        guard let viewController = viewController else { return }
+        
+        if viewController.isDetailFieldCheckBeforeKeyboardShowAndHide(
+            notification: notification
+        ) {
+            viewController.keyboardWillHide()
+        }
+    }
+    
+    // MARK: Data Binding
+    private func dataBinding() {
+        dataBindingLocation()
+        dataBindingPhone()
+        dataBindingWorkingHours()
+        dataBindingHomepage()
+    }
+    
+    private func dataBindingLocation() {
+        guard let placeSummary = placeSummary,
+              let placeMarkerModel = placeMarkerModel else { return }
+        
+        let title = placeSummary.title
+        let category = placeSummary.category
+        let address = placeSummary.address
+        
+        let markerPosition = placeMarkerModel.marker.position
+        let markerImage = placeMarkerModel.marker.iconImage
+        
+        newMarker.position = markerPosition
+        newMarker.iconImage = markerImage
+        
+        viewController?.dataBindingLocation(
+            title: title,
+            category: category,
+            marker: newMarker,
+            address: address
+        )
+    }
+    
+    private func dataBindingPhone() {
+        guard let placeInfo = placeInfo,
+              let phone = placeInfo.phone
+        else { return }
+        
+        viewController?.dataBindingPhone(phone: phone)
+    }
+    
+    private func dataBindingWorkingHours() {
+        guard let placeId = placeId else { return }
+        
+        self.placeOperationModels = [EditOperationHoursModel]()
+        
+        AVIROAPIManager().getOperationHour(placeId: placeId
+        ) { [weak self] model in
+            DispatchQueue.main.async {
+                let modelArray = model.data.toEditOperationHoursModels()
+                
+                self?.viewController?.dataBindingOperatingHours(
+                    operatingHourModels: modelArray
+                )
+                
+                self?.placeOperationModels = modelArray
+            }
+        }
+    }
+    
+    private func dataBindingHomepage() {
+        guard let placeInfo = placeInfo,
+              let homepage = placeInfo.url
+        else { return }
+        
+        viewController?.dataBindingHomepage(homepage: homepage)
+    }
+    
+    func pushAddressEditViewController() {
+        guard let placeMarkerModel = placeMarkerModel else { return }
+        
+        viewController?.pushAddressEditViewController(
+            placeMarkerModel: placeMarkerModel
+        )
+    }
+
+    private func changedMarkerLocation() {
+        KakaoMapRequestManager().kakaoMapAddressSearch(
+            address: afterChangedAddress
+        ) { [weak self] addressModel in
+            guard let documents = addressModel.documents, documents.count > 0 else { return }
+            
+            let firstCoordinate = documents[0]
+            
+            if let x = firstCoordinate.x, let y = firstCoordinate.y {
+                DispatchQueue.main.async {
+                    self?.changedMarker(lat: y, lng: x)
+                }
+            }
+        }
+    }
+    
+    private func changedMarker(
+        lat: String,
+        lng: String
+    ) {
+        guard let lat = Double(lat),
+              let lng = Double(lng) else { return }
+        
+        let latLng = NMGLatLng(lat: lat, lng: lng)
+        
+        newMarker.position = latLng
+        
+        viewController?.updateNaverMap(latLng)
+    }
+}
+
+
+// MARK: Data State Management Method
+extension EditPlaceInfoPresenter {
+    private func changeEditButtonState() {
+        if isChangedTitle
+            ||
+            isChangedCategory
+            ||
+            isChangedAddress
+            ||
+            isChangedAddressDetail
+            ||
+            isChangedPhone
+            ||
+            isChangedOperationHour
+            ||
+            isChangedURL {
+            viewController?.editStoreButtonChangeableState(true)
+        } else {
+            viewController?.editStoreButtonChangeableState(false)
+        }
+    }
+    
+    private func checkIsChangedTitle() {
+        if afterChangedTitle != placeSummary?.title {
+            isChangedTitle = true
+        } else {
+            isChangedTitle = false
+        }
+    }
+    
+    private func checkIsChangedCategory() {
+        if afterChangedCategory.title != placeSummary?.category {
+            isChangedCategory = true
+        } else {
+            isChangedCategory = false
+        }
+    }
+    
+    private func checkIsChangedAddress() {
+        if afterChangedAddress != placeInfo?.address {
+            isChangedAddress = true
+        } else {
+            isChangedCategory = false
+        }
+    }
+    
+    private func checkIsChangedAddressDetail() {
+        if afterChangedAddressDetail != placeInfo?.address2 ?? "" {
+            isChangedAddressDetail = true
+        } else {
+            isChangedAddressDetail = false
+        }
+        
+    }
+    
+    private func checkIsChangedPhone() {
+        if afterChangedPhone != placeInfo?.phone ?? "" {
+            isChangedPhone = true
+        } else {
+            isChangedPhone = false
+        }
+    }
+    
+    private func checkIsChangedOperationHour() {
+        placeOperationModels?.forEach {
+            if $0.day == afterChangedOperationHour.day {
+                if $0.breakTime != afterChangedOperationHour.breakTime
+                    ||
+                    $0.operatingHours != afterChangedOperationHour.operatingHours {
+                    appendToOperationArrayWhenChangedOperationHour(
+                        afterChangedOperationHour
+                    )
+                } else {
+                    compareToAfterOperationArrayFromBeforeOperationArray(
+                        afterChangedOperationHour
+                    )
+                }
+            }
+        }
+    }
+    
+    private func appendToOperationArrayWhenChangedOperationHour(
+        _ model: EditOperationHoursModel
+    ) {
+        if let index = afterChangedOperationHourArray
+            .firstIndex(where: {$0.day == model.day}
+        ) {
+            afterChangedOperationHourArray[index]
+                .operatingHours = model.operatingHours
+            afterChangedOperationHourArray[index]
+                .breakTime = model.breakTime
+        } else {
+            afterChangedOperationHourArray.append(model)
+        }
+        
+        isChangedOperationHour = true
+    }
+    
+    private func compareToAfterOperationArrayFromBeforeOperationArray(
+        _ model: EditOperationHoursModel
+    ) {
+        if let index = afterChangedOperationHourArray
+            .firstIndex(where: {$0.day == model.day}
+        ) {
+            afterChangedOperationHourArray
+                .remove(at: index)
+        }
+        
+        if afterChangedOperationHourArray.count == 0 {
+            isChangedOperationHour = false
+        } else {
+            isChangedOperationHour = true
+        }
+    }
+    
     private func checkIsChangedURL() {
         if afterChangedURL != placeInfo?.url ?? "" {
             isChangedURL = true
@@ -213,21 +462,10 @@ final class EditPlaceInfoPresenter {
             isChangedURL = false
         }
     }
-    
-    private var isChangedURL = false {
-        didSet {
-            changeEditButtonState()
-        }
-    }
-    
-    private func changeEditButtonState() {
-        if isChangedTitle || isChangedCategory || isChangedAddress || isChangedAddressDetail || isChangedPhone || isChangedOperationHour || isChangedURL {
-            viewController?.editStoreButtonChangeableState(true)
-        } else {
-            viewController?.editStoreButtonChangeableState(false)
-        }
-    }
-    
+}
+
+// MARK: Data Edit Request Method
+extension EditPlaceInfoPresenter {
     func afterEditButtonTapped() {
         guard let placeId = placeId,
               let placeTitle = placeSummary?.title
@@ -268,7 +506,8 @@ final class EditPlaceInfoPresenter {
             dispatchGroup: dispatchGroup
         )
         
-        dispatchGroup.notify(queue: .main) { [weak self] in
+        dispatchGroup.notify(queue: .main
+        ) { [weak self] in
             self?.viewController?.popViewController()
         }
     }
@@ -280,39 +519,58 @@ final class EditPlaceInfoPresenter {
         nickName: String,
         dispatchGroup: DispatchGroup
     ) {
-        if isChangedTitle || isChangedCategory || isChangedAddress || isChangedAddressDetail {
+        if isChangedTitle
+            ||
+            isChangedCategory
+            ||
+            isChangedAddress
+            ||
+            isChangedAddressDetail {
             guard  let beforeCategory = placeSummary?.category,
-                  let beforeAddress = placeInfo?.address else { return }
+                  let beforeAddress = placeInfo?.address
+            else { return }
+            
             let beforeAdderss2 = placeInfo?.address2 ?? ""
             
             dispatchGroup.enter()
+            
             let model = AVIROEditLocationDTO(
                 placeId: placeId,
                 userId: userId,
                 nickname: nickName,
-                title: isChangedTitle ? AVIROEditCommonBeforeAfterDTO(
-                    before: placeTitle,
-                    after: afterChangedTitle
-                ) : AVIROEditCommonBeforeAfterDTO(
-                    before: placeTitle,
-                    after: placeTitle
+                title: isChangedTitle ?
+                    AVIROEditCommonBeforeAfterDTO(
+                        before: placeTitle,
+                        after: afterChangedTitle
+                    )
+                :
+                    AVIROEditCommonBeforeAfterDTO(
+                        before: placeTitle,
+                        after: placeTitle
+                    ),
+                category: isChangedCategory ?
+                    AVIROEditCommonBeforeAfterDTO(
+                        before: beforeCategory,
+                        after: afterChangedCategory.title
+                    )
+                :
+                    nil,
+                address: whenRequestAndLoadAddressBasedOnCondition(
+                    beforeAddress: beforeAddress
                 ),
-                category: isChangedCategory ? AVIROEditCommonBeforeAfterDTO(
-                    before: beforeCategory,
-                    after: afterChangedCategory.title
-                ) : nil,
-                address: whenRequestAndLoadAddressBasedOnCondition(beforeAddress: beforeAddress),
-                address2: whenRequestAndLoadDetailAddressBasedOnCondition(beforeDetailAddress: beforeAdderss2)
+                address2: whenRequestAndLoadDetailAddressBasedOnCondition(
+                    beforeDetailAddress: beforeAdderss2
+                )
             )
             
-            AVIROAPIManager().postEditPlaceLocation(model) { resultModel in
+            AVIROAPIManager().postEditPlaceLocation(model
+            ) { resultModel in
                 print(resultModel.statusCode)
                 print(resultModel.message)
                 
                 dispatchGroup.leave()
             }
         }
-        
     }
     
     private func whenRequestAndLoadAddressBasedOnCondition(
@@ -343,7 +601,10 @@ final class EditPlaceInfoPresenter {
     ) -> AVIROEditCommonBeforeAfterDTO? {
         if (isChangedAddress || isChangedAddressDetail)
             &&
-            (afterChangedAddressDetail != "" && afterChangedAddressDetail != beforeDetailAddress) {
+            (afterChangedAddressDetail != ""
+             &&
+             afterChangedAddressDetail != beforeDetailAddress
+            ) {
             return AVIROEditCommonBeforeAfterDTO(
                 before: beforeDetailAddress,
                 after: afterChangedAddressDetail
@@ -351,7 +612,10 @@ final class EditPlaceInfoPresenter {
         } else if
             (isChangedAddress || isChangedAddressDetail)
                 &&
-            (afterChangedAddressDetail == "" || afterChangedAddressDetail == beforeDetailAddress) {
+            (afterChangedAddressDetail == ""
+             ||
+             afterChangedAddressDetail == beforeDetailAddress
+            ) {
             return AVIROEditCommonBeforeAfterDTO(
                 before: beforeDetailAddress,
                 after: beforeDetailAddress
@@ -369,7 +633,9 @@ final class EditPlaceInfoPresenter {
         dispatchGroup: DispatchGroup
     ) {
         if isChangedPhone {
+
             dispatchGroup.enter()
+
             let beforePhone = placeInfo?.phone ?? ""
             
             let model = AVIROEditPhoneDTO(
@@ -383,7 +649,8 @@ final class EditPlaceInfoPresenter {
                 )
             )
             
-            AVIROAPIManager().postEditPlacePhone(model) { resultModel in
+            AVIROAPIManager().postEditPlacePhone(model
+            ) { resultModel in
                 print(resultModel.statusCode)
                 print(resultModel.message)
                 
@@ -481,10 +748,9 @@ final class EditPlaceInfoPresenter {
                 sun: sun?.operatingHours,
                 sunBreak: sun?.breakTime
             )
-            
-            print(model)
-            
-            AVIROAPIManager().postEditPlaceOperation(model) { resultModel in
+                        
+            AVIROAPIManager().postEditPlaceOperation(model
+            ) { resultModel in
                 print(resultModel.statusCode)
                 print(resultModel.message)
                 
@@ -516,186 +782,13 @@ final class EditPlaceInfoPresenter {
                 )
             )
             
-            AVIROAPIManager().postEditPlaceURL(model) { resultModel in
+            AVIROAPIManager().postEditPlaceURL(model
+            ) { resultModel in
                 print(resultModel.statusCode)
                 print(resultModel.message)
                 
                 dispatchGroup.leave()
             }
         }
-    }
-    
-    init(viewController: EditPlaceInfoProtocol,
-         placeMarkerModel: MarkerModel? = nil,
-         placeId: String? = nil,
-         placeSummary: PlaceSummaryData? = nil,
-         placeInfo: PlaceInfoData? = nil,
-         selectedIndex: Int = 0
-    ) {
-        self.viewController = viewController
-        self.selectedIndex = selectedIndex
-        self.placeMarkerModel = placeMarkerModel
-        self.placeId = placeId
-        self.placeSummary = placeSummary
-        self.placeInfo = placeInfo
-    }
-    
-    func viewDidLoad() {
-        viewController?.makeLayout()
-        viewController?.makeAttribute()
-        viewController?.makeGesture()
-        viewController?.handleClosure()
-        
-        dataBinding()
-    }
-    
-    func viewWillAppear() {
-        viewController?.whenViewWillAppearSelectedIndex(selectedIndex)
-
-        addKeyboardNotification()
-    }
-    
-    func viewWillDisappear() {
-        removeKeyboardNotification()
-    }
-    
-    // MARK: Keyboard에 따른 view 높이 변경 Notification
-    private func addKeyboardNotification() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillShow),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil
-        )
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillHide),
-            name: UIResponder.keyboardWillHideNotification,
-            object: nil
-        )
-    }
-    
-    private func removeKeyboardNotification() {
-        NotificationCenter.default.removeObserver(
-            self,
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil
-        )
-        NotificationCenter.default.removeObserver(
-            self,
-            name: UIResponder.keyboardWillHideNotification,
-            object: nil
-        )
-    }
-    
-    @objc private func keyboardWillShow(notification: NSNotification) {
-        guard let viewController = viewController else { return }
-        
-        if viewController.isDetailFieldCheckBeforeKeyboardShowAndHide(notification: notification) {
-            if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-               let keyboardRectangle = keyboardFrame.cgRectValue
-                viewController.keyboardWillShow(height: keyboardRectangle.height)
-            }
-        }
-    }
-    
-    @objc private func keyboardWillHide(notification: NSNotification) {
-        guard let viewController = viewController else { return }
-        
-        if viewController.isDetailFieldCheckBeforeKeyboardShowAndHide(notification: notification) {
-            viewController.keyboardWillHide()
-        }
-    }
-    
-    // MARK: Data Binding
-    private func dataBinding() {
-        dataBindingLocation()
-        dataBindingPhone()
-        dataBindingWorkingHours()
-        dataBindingHomepage()
-    }
-    
-    private func dataBindingLocation() {
-        guard let placeSummary = placeSummary,
-              let placeMarkerModel = placeMarkerModel else { return }
-        let title = placeSummary.title
-        let category = placeSummary.category
-        let address = placeSummary.address
-        
-        let markerPosition = placeMarkerModel.marker.position
-        let markerImage = placeMarkerModel.marker.iconImage
-        
-        newMarker.position = markerPosition
-        newMarker.iconImage = markerImage
-        
-        viewController?.dataBindingLocation(
-            title: title,
-            category: category,
-            marker: newMarker,
-            address: address
-        )
-    }
-    
-    private func dataBindingPhone() {
-        guard let placeInfo = placeInfo,
-              let phone = placeInfo.phone
-        else { return }
-        
-        viewController?.dataBindingPhone(phone: phone)
-    }
-    
-    private func dataBindingWorkingHours() {
-        guard let placeId = placeId else { return }
-        
-        self.placeOperationModels = [EditOperationHoursModel]()
-        
-        AVIROAPIManager().getOperationHour(placeId: placeId) { [weak self] model in
-            DispatchQueue.main.async {
-                let modelArray = model.data.toEditOperationHoursModels()
-                
-                self?.viewController?.dataBindingOperatingHours(operatingHourModels: modelArray)
-                
-                self?.placeOperationModels = modelArray
-            }
-        }
-    }
-    
-    private func dataBindingHomepage() {
-        guard let placeInfo = placeInfo,
-              let homepage = placeInfo.url
-        else { return }
-        
-        viewController?.dataBindingHomepage(homepage: homepage)
-    }
-    
-    func pushAddressEditViewController() {
-        guard let placeMarkerModel = placeMarkerModel else { return }
-        
-        viewController?.pushAddressEditViewController(placeMarkerModel: placeMarkerModel)
-    }
-
-    private func changedMarkerLocation() {
-        KakaoMapRequestManager().kakaoMapAddressSearch(address: afterChangedAddress) { [weak self] addressModel in
-            guard let documents = addressModel.documents, documents.count > 0 else { return }
-            
-            let firstCoordinate = documents[0]
-            
-            if let x = firstCoordinate.x, let y = firstCoordinate.y {
-                DispatchQueue.main.async {
-                    self?.changedMarker(lat: y, lng: x)
-                }
-            }
-        }
-    }
-    
-    private func changedMarker(lat: String, lng: String) {
-        guard let lat = Double(lat),
-              let lng = Double(lng) else { return }
-        
-        let latLng = NMGLatLng(lat: lat, lng: lng)
-        
-        newMarker.position = latLng
-        
-        viewController?.updateNaverMap(latLng)
     }
 }
