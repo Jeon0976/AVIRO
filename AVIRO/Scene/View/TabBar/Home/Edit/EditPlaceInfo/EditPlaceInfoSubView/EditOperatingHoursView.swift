@@ -21,6 +21,7 @@ final class EditOperatingHoursView: UIView {
     private var operatingHourViews: [EditOperatingHourView] = []
     
     var openChangebleOperationHourView: ((EditOperationHoursModel) -> Void)?
+    var afterChangedOperationHour: ((EditOperationHoursModel) -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -82,7 +83,7 @@ final class EditOperatingHoursView: UIView {
         if operatingHourModels.count == operatingHourViews.count {
             for (index, model) in operatingHourModels.enumerated() {
                 operatingHourViews[index].dataBinding(
-                    day: model.day,
+                    day: model.day.rawValue,
                     operatingHours: model.operatingHours,
                     breakTime: model.breakTime,
                     isToday: model.isToday
@@ -100,5 +101,6 @@ final class EditOperatingHoursView: UIView {
                 )
             }
         }
+        afterChangedOperationHour?(model)
     }
 }

@@ -195,7 +195,7 @@ final class EditOperationHourChangebleView: UIView {
     
     private var viewHeightConstraint: NSLayoutConstraint?
     
-    private var day = ""
+    private var day = Day.mon
     private var initDayOff = ""
     private var initOperationOpen = ""
     private var initOperationClosed = ""
@@ -204,7 +204,7 @@ final class EditOperationHourChangebleView: UIView {
     private var isToday: Bool!
     
     var cancelTapped: (() -> Void)?
-    var editTapped: ((EditOperationHoursModel) -> Void)?
+    var afterEditButtonTapped: ((EditOperationHoursModel) -> Void)?
     
     private var editButtonIsEnabled = false {
         didSet {
@@ -524,14 +524,14 @@ final class EditOperationHourChangebleView: UIView {
                 let open = operationTimeOpen.loadTimeData()
                 let closed = operationTimeClosed.loadTimeData()
                 
-                operatingHours = open + "-" + closed
+                operatingHours = open + " - " + closed
             }
             
-            if breakTimeOpen.loadTimeData() != "시간 선택" && breakTimeClosed.loadTimeData() != "시간 선택" {
+            if breakTimeOpen.loadTimeData() != "시간선택" && breakTimeClosed.loadTimeData() != "시간선택" {
                 let open = breakTimeOpen.loadTimeData()
                 let closed = breakTimeClosed.loadTimeData()
                 
-                breakTime = open + "-" + closed
+                breakTime = open + " - " + closed
             }
             
             let model = EditOperationHoursModel(
@@ -541,12 +541,12 @@ final class EditOperationHourChangebleView: UIView {
                 isToday: isToday
             )
             
-            editTapped?(model)
+            afterEditButtonTapped?(model)
         }
     }
 
     private func whenAddTimeLabelCheckIsEnabledEditButton() {
-        let operationIsInit = operationTimeOpen.loadTimeData() == "시간 선택" || operationTimeClosed.loadTimeData() == "시간 선택"
+        let operationIsInit = operationTimeOpen.loadTimeData() == "시간선택" || operationTimeClosed.loadTimeData() == "시간선택"
         
         let operationCheck = operationTimeOpen.loadTimeData() != initOperationOpen || operationTimeClosed.loadTimeData() != initOperationClosed
         

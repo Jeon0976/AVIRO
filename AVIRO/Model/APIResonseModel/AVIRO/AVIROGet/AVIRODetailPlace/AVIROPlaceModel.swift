@@ -15,6 +15,7 @@ struct AVIROPlaceModel: Decodable {
 struct PlaceInfoData: Decodable {
     let placeId: String
     let address: String
+    let address2: String?
     let phone: String?
     let url: String?
     let haveTime: Bool

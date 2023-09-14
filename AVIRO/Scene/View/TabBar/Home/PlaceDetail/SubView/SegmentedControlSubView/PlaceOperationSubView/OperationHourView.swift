@@ -84,7 +84,7 @@ final class OperationHourView: UIView {
     }
     
     func dataBinding(_ model: EditOperationHoursModel) {
-        dayLabel.text = model.day
+        dayLabel.text = model.day.rawValue
         
         if model.operatingHours != "정보 없음" {
             operatingHourLabel.text = model.operatingHours

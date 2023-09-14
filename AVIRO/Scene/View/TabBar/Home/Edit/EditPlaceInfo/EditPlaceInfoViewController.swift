@@ -207,7 +207,7 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         
         navigationItem.title = "정보 수정 요청하기"
         
-        let rightBarButton = UIBarButtonItem(title: "요청하기", style: .plain, target: self, action: #selector(editStore))
+        let rightBarButton = UIBarButtonItem(title: "요청하기", style: .plain, target: self, action: #selector(editStoreButtonTapped))
         navigationItem.rightBarButtonItem = rightBarButton
         navigationItem.rightBarButtonItem?.isEnabled = false
         
@@ -254,11 +254,11 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     
     func handleClosure() {
         editLocationTopView.afterChangedTitle = { [weak self] title in
-            
+            self?.presenter.afterChangedTitle = title
         }
         
         editLocationTopView.afterChangedCategory = { [weak self] category in
-            
+            self?.presenter.afterChangedCategory = category
         }
         
         editLocationBottomView.tappedPushViewButton = { [weak self] in
@@ -266,15 +266,23 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         }
         
         editLocationBottomView.afterChangedAddress = { [weak self] address in
-            
+            self?.presenter.afterChangedAddress = address
         }
         
         editLocationBottomView.afterChangedDetailAddress = { [weak self] addressDetail in
-            
+            self?.presenter.afterChangedAddressDetail = addressDetail
         }
 
+        editPhoneView.afterChangedPhone = { [weak self] phone in
+            self?.presenter.afterChangedPhone = phone
+        }
+        
         editOperationHoursView.openChangebleOperationHourView = { [weak self] timeModel in
             self?.showOperationHourChangebleView(true, timeModel)
+        }
+        
+        editOperationHoursView.afterChangedOperationHour = { [weak self] editOperationHourModel in
+            self?.presenter.afterChangedOperationHour = editOperationHourModel
         }
         
         operationHourChangebleView.cancelTapped = { [weak self] in
@@ -282,14 +290,12 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         }
         
         editHomePageView.afterChagnedURL = { [weak self] url in
-            
+            self?.presenter.afterChangedURL = url
         }
         
-        // MARK: API 연결 후 작업
-        operationHourChangebleView.editTapped = { [weak self] editOperationHoursModel in
+        operationHourChangebleView.afterEditButtonTapped = { [weak self] editOperationHoursModel in
             self?.showOperationHourChangebleView(false, nil)
             self?.editOperationHoursView.editOperationHour(editOperationHoursModel)
-            
         }
     }
     
@@ -305,12 +311,9 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         operationHourChangebleView.makeBindingData(operationHoursModel)
     }
     
-    private func showTimeChangebleView(_ show: Bool) {
-        
-    }
-    
-    @objc private func editStore() {
-        
+    @objc private func editStoreButtonTapped() {
+        presenter.afterEditButtonTapped()
+        self.view.isUserInteractionEnabled = false
     }
     
     @objc private func swipeGestureActive(_ gesture: UISwipeGestureRecognizer) {
@@ -420,7 +423,6 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     }
     
     func dataBindingOperatingHours(operatingHourModels: [EditOperationHoursModel]) {
-        print(operatingHourModels)
         editOperationHoursView.dataBinding(operatingHourModels)
     }
     
@@ -439,9 +441,7 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         presenter.afterChangedAddress = { [weak self] address in
             guard let address = address else { return }
             
-            // TODO: 수정 예정
             self?.editLocationBottomView.changedAddressLabel(address)
-            self?.presenter.saveChangedAddress(address)
         }
         
         vc.presenter = presenter
@@ -451,6 +451,14 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     
     func updateNaverMap(_ latLng: NMGLatLng) {
         editLocationBottomView.changedNaverMap(latLng)
+    }
+    
+    func editStoreButtonChangeableState(_ state: Bool) {
+        navigationItem.rightBarButtonItem?.isEnabled = state
+    }
+    
+    func popViewController() {
+        navigationController?.popViewController(animated: true)
     }
 }
 

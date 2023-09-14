@@ -8,7 +8,7 @@
 import Foundation
 
 struct EditOperationHoursModel {
-    var day: String
+    var day: Day
     var operatingHours: String
     var breakTime: String
     var isToday: Bool

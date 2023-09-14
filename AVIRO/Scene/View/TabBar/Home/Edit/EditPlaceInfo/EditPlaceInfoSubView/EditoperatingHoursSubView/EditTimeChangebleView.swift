@@ -116,7 +116,10 @@ final class EditTimeChangebleView: UIView, UIContextMenuInteractionDelegate {
     
     func loadTimeData() -> String {
         guard let text = self.label.text else { return "" }
-        return text
+
+        let noSpacesText = text.replacingOccurrences(of: " ", with: "")
+        
+        return noSpacesText
     }
     
     func isEnabledButton(_ isEnabled: Bool) {

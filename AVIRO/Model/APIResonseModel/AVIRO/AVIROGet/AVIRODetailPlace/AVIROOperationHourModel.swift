@@ -7,6 +7,16 @@
 
 import Foundation
 
+enum Day: String {
+    case mon = "월"
+    case tue = "화"
+    case wed = "수"
+    case thu = "목"
+    case fri = "금"
+    case sat = "토"
+    case sun = "일"
+}
+
 struct AVIROOperationHourModel: Decodable {
     let statusCode: Int
     let data: AVIROOperationHoursData
@@ -38,43 +48,43 @@ extension AVIROOperationHoursData {
     func toEditOperationHoursModels() -> [EditOperationHoursModel] {
         return [
             EditOperationHoursModel(
-                day: "월",
+                day: Day.mon,
                 operatingHours: mon.operation,
                 breakTime: mon.breakTime,
                 isToday: mon.today
             ),
             EditOperationHoursModel(
-                day: "화",
+                day: Day.tue,
                 operatingHours: tue.operation,
                 breakTime: tue.breakTime,
                 isToday: tue.today
             ),
             EditOperationHoursModel(
-                day: "수",
+                day: Day.wed,
                 operatingHours: wed.operation,
                 breakTime: wed.breakTime,
                 isToday: wed.today
             ),
             EditOperationHoursModel(
-                day: "목",
+                day: Day.thu,
                 operatingHours: thu.operation,
                 breakTime: thu.breakTime,
                 isToday: thu.today
             ),
             EditOperationHoursModel(
-                day: "금",
+                day: Day.fri,
                 operatingHours: fri.operation,
                 breakTime: fri.breakTime,
                 isToday: fri.today
             ),
             EditOperationHoursModel(
-                day: "토",
+                day: Day.sat,
                 operatingHours: sat.operation,
                 breakTime: sat.breakTime,
                 isToday: sat.today
             ),
             EditOperationHoursModel(
-                day: "일",
+                day: Day.sun,
                 operatingHours: sun.operation,
                 breakTime: sun.breakTime,
                 isToday: sun.today

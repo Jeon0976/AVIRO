@@ -99,7 +99,9 @@ final class EditOperatingHourView: UIView {
     }
     
     @objc private func cellTapped() {
-        guard let day = dayLabel.text else { return }
+        guard let dayString = dayLabel.text?.prefix(1).description,
+              let day = Day(rawValue: dayString)
+        else { return }
         
         let operationHourModel = EditOperationHoursModel(
             day: day,
@@ -188,8 +190,11 @@ final class EditOperatingHourView: UIView {
         viewHeight?.constant = totalHeight
     }
     
-    func checkDay() -> String {
-        guard let day = dayLabel.text else { return "" }
+    func checkDay() -> Day {
+        guard let dayString = dayLabel.text?.prefix(1).description,
+              let day = Day(rawValue: dayString)
+        else { return Day.mon }
+        
         return day
     }
 }

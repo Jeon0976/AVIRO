@@ -24,13 +24,16 @@ final class EditPhoneView: UIView {
         let placeHolder = "대표 전화번호를 입력해주세요."
         
         field.makePlaceHolder(placeHolder)
-        field.keyboardType = .numbersAndPunctuation
+        field.keyboardType = .numberPad
+        field.delegate = self
         
         return field
     }()
     
     private var viewHeightConstraint: NSLayoutConstraint?
 
+    var afterChangedPhone: ((String) -> Void)?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -88,5 +91,13 @@ final class EditPhoneView: UIView {
     
     func dataBinding(_ phone: String) {
         self.phoneField.text = phone
+    }
+}
+
+extension EditPhoneView: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        guard let phone = textField.text else { return }
+        
+        afterChangedPhone?(phone)
     }
 }

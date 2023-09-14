@@ -11,5 +11,6 @@ struct AVIROEditURLDTO: Encodable {
     let placeId: String
     let userId: String
     let nickname: String
+    let title: String
     let url: AVIROEditCommonBeforeAfterDTO
 }

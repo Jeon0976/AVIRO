@@ -28,6 +28,8 @@ protocol EditPlaceInfoProtocol: NSObject {
     func dataBindingHomepage(homepage: String)
     func pushAddressEditViewController(placeMarkerModel: MarkerModel)
     func updateNaverMap(_ latLng: NMGLatLng)
+    func editStoreButtonChangeableState(_ state: Bool)
+    func popViewController()
 }
 
 final class EditPlaceInfoPresenter {
@@ -38,12 +40,488 @@ final class EditPlaceInfoPresenter {
     private var placeMarkerModel: MarkerModel?
     private var placeSummary: PlaceSummaryData?
     private var placeInfo: PlaceInfoData?
+    private var placeOperationModels: [EditOperationHoursModel]?
     
     private var newMarker = NMFMarker()
     
-    private var changedAddress = "" {
+    var afterChangedTitle = "" {
         didSet {
-            afterEditAddress()
+            checkIsChangedTitle()
+        }
+    }
+    
+    private func checkIsChangedTitle() {
+        if afterChangedTitle != placeSummary?.title {
+            isChangedTitle = true
+        } else {
+            isChangedTitle = false
+        }
+    }
+    
+    private var isChangedTitle = false {
+        didSet {
+            changeEditButtonState()
+        }
+    }
+    
+    var afterChangedCategory = Category.restaurant {
+        didSet {
+            checkIsChangedCategory()
+        }
+    }
+    
+    private func checkIsChangedCategory() {
+        if afterChangedCategory.title != placeSummary?.category {
+            isChangedCategory = true
+        } else {
+            isChangedCategory = false
+        }
+    }
+    
+    private var isChangedCategory = false {
+        didSet {
+            changeEditButtonState()
+        }
+    }
+    
+    var afterChangedAddress = "" {
+        didSet {
+            changedMarkerLocation()
+            checkIsChangedAddress()
+        }
+    }
+    
+    private func checkIsChangedAddress() {
+        if afterChangedAddress != placeInfo?.address {
+            isChangedAddress = true
+        } else {
+            isChangedCategory = false
+        }
+    }
+    
+    private var isChangedAddress = false {
+        didSet {
+            changeEditButtonState()
+        }
+    }
+    
+    var afterChangedAddressDetail = "" {
+        didSet {
+            checkIsChangedAddressDetail()
+        }
+    }
+    
+    private func checkIsChangedAddressDetail() {
+        if afterChangedAddressDetail != placeInfo?.address2 ?? "" {
+            isChangedAddressDetail = true
+        } else {
+            isChangedAddressDetail = false
+        }
+        
+    }
+    
+    private var isChangedAddressDetail = false {
+        didSet {
+            changeEditButtonState()
+        }
+    }
+    
+    var afterChangedPhone = "" {
+        didSet {
+            checkIsChangedPhone()
+        }
+    }
+    
+    private func checkIsChangedPhone() {
+        if afterChangedPhone != placeInfo?.phone ?? "" {
+            isChangedPhone = true
+        } else {
+            isChangedPhone = false
+        }
+    }
+    
+    private var isChangedPhone = false {
+        didSet {
+            changeEditButtonState()
+        }
+    }
+    
+    private var afterChangedOperationHourArray = [EditOperationHoursModel]()
+    
+    var afterChangedOperationHour = EditOperationHoursModel(
+        day: Day.mon,
+        operatingHours: "",
+        breakTime: "",
+        isToday: false
+    ) {
+        didSet {
+            checkIsChangedOperationHour()
+        }
+    }
+    
+    private func checkIsChangedOperationHour() {
+        placeOperationModels?.forEach {
+            if $0.day == afterChangedOperationHour.day {
+                if $0.breakTime != afterChangedOperationHour.breakTime || $0.operatingHours != afterChangedOperationHour.operatingHours {
+                    appendToOperationArrayWhenChangedOperationHour(afterChangedOperationHour)
+                } else {
+                    compareToAfterOperationArrayFromBeforeOperationArray(afterChangedOperationHour)
+                }
+            }
+        }
+    }
+    
+    private func appendToOperationArrayWhenChangedOperationHour(_ model: EditOperationHoursModel) {
+        if let index =  afterChangedOperationHourArray.firstIndex(where: { $0.day == model.day}) {
+            afterChangedOperationHourArray[index].operatingHours = model.operatingHours
+            afterChangedOperationHourArray[index].breakTime = model.breakTime
+        } else {
+            afterChangedOperationHourArray.append(model)
+        }
+        
+        isChangedOperationHour = true
+    }
+    
+    private func compareToAfterOperationArrayFromBeforeOperationArray(_ model: EditOperationHoursModel) {
+        if let index = afterChangedOperationHourArray.firstIndex(where: { $0.day == model.day }) {
+            afterChangedOperationHourArray.remove(at: index)
+        }
+        
+        if afterChangedOperationHourArray.count == 0 {
+            isChangedOperationHour = false
+        } else {
+            isChangedOperationHour = true
+        }
+    }
+    
+    private var isChangedOperationHour = false {
+        didSet {
+            changeEditButtonState()
+        }
+    }
+    
+    var afterChangedURL = "" {
+        didSet {
+            checkIsChangedURL()
+        }
+    }
+    
+    private func checkIsChangedURL() {
+        if afterChangedURL != placeInfo?.url ?? "" {
+            isChangedURL = true
+        } else {
+            isChangedURL = false
+        }
+    }
+    
+    private var isChangedURL = false {
+        didSet {
+            changeEditButtonState()
+        }
+    }
+    
+    private func changeEditButtonState() {
+        if isChangedTitle || isChangedCategory || isChangedAddress || isChangedAddressDetail || isChangedPhone || isChangedOperationHour || isChangedURL {
+            viewController?.editStoreButtonChangeableState(true)
+        } else {
+            viewController?.editStoreButtonChangeableState(false)
+        }
+    }
+    
+    func afterEditButtonTapped() {
+        guard let placeId = placeId,
+              let placeTitle = placeSummary?.title
+        else { return }
+        
+        let userId = UserId.shared.userId
+        let nickName = UserId.shared.userNickName
+        
+        let dispatchGroup = DispatchGroup()
+        
+        requestEditLocation(
+            placeId: placeId,
+            placeTitle: placeTitle,
+            userId: userId,
+            nickName: nickName,
+            dispatchGroup: dispatchGroup
+        )
+        
+        requestEditPhone(
+            placeId: placeId,
+            placeTitle: placeTitle,
+            userId: userId,
+            nickName: nickName,
+            dispatchGroup: dispatchGroup
+        )
+
+        requestEditOperationHour(
+            placeId: placeId,
+            userId: userId,
+            dispatchGroup: dispatchGroup
+        )
+        
+        requestEditURL(
+            placeId: placeId,
+            placeTitle: placeTitle,
+            userId: userId,
+            nickName: nickName,
+            dispatchGroup: dispatchGroup
+        )
+        
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            self?.viewController?.popViewController()
+        }
+    }
+    
+    private func requestEditLocation(
+        placeId: String,
+        placeTitle: String,
+        userId: String,
+        nickName: String,
+        dispatchGroup: DispatchGroup
+    ) {
+        if isChangedTitle || isChangedCategory || isChangedAddress || isChangedAddressDetail {
+            guard  let beforeCategory = placeSummary?.category,
+                  let beforeAddress = placeInfo?.address else { return }
+            let beforeAdderss2 = placeInfo?.address2 ?? ""
+            
+            dispatchGroup.enter()
+            let model = AVIROEditLocationDTO(
+                placeId: placeId,
+                userId: userId,
+                nickname: nickName,
+                title: isChangedTitle ? AVIROEditCommonBeforeAfterDTO(
+                    before: placeTitle,
+                    after: afterChangedTitle
+                ) : AVIROEditCommonBeforeAfterDTO(
+                    before: placeTitle,
+                    after: placeTitle
+                ),
+                category: isChangedCategory ? AVIROEditCommonBeforeAfterDTO(
+                    before: beforeCategory,
+                    after: afterChangedCategory.title
+                ) : nil,
+                address: whenRequestAndLoadAddressBasedOnCondition(beforeAddress: beforeAddress),
+                address2: whenRequestAndLoadDetailAddressBasedOnCondition(beforeDetailAddress: beforeAdderss2)
+            )
+            
+            AVIROAPIManager().postEditPlaceLocation(model) { resultModel in
+                print(resultModel.statusCode)
+                print(resultModel.message)
+                
+                dispatchGroup.leave()
+            }
+        }
+        
+    }
+    
+    private func whenRequestAndLoadAddressBasedOnCondition(
+        beforeAddress: String
+    ) -> AVIROEditCommonBeforeAfterDTO? {
+        if (isChangedAddress || isChangedAddressDetail)
+            &&
+            (afterChangedAddress != "" && afterChangedAddress != beforeAddress) {
+            return AVIROEditCommonBeforeAfterDTO(
+                before: beforeAddress,
+                after: afterChangedAddress
+            )
+        } else if
+            (isChangedAddress || isChangedAddressDetail)
+                &&
+            (afterChangedAddress == "" || afterChangedAddress == beforeAddress) {
+            return AVIROEditCommonBeforeAfterDTO(
+                before: beforeAddress,
+                after: beforeAddress
+            )
+        } else {
+            return nil
+        }
+    }
+    
+    private func whenRequestAndLoadDetailAddressBasedOnCondition(
+        beforeDetailAddress: String
+    ) -> AVIROEditCommonBeforeAfterDTO? {
+        if (isChangedAddress || isChangedAddressDetail)
+            &&
+            (afterChangedAddressDetail != "" && afterChangedAddressDetail != beforeDetailAddress) {
+            return AVIROEditCommonBeforeAfterDTO(
+                before: beforeDetailAddress,
+                after: afterChangedAddressDetail
+            )
+        } else if
+            (isChangedAddress || isChangedAddressDetail)
+                &&
+            (afterChangedAddressDetail == "" || afterChangedAddressDetail == beforeDetailAddress) {
+            return AVIROEditCommonBeforeAfterDTO(
+                before: beforeDetailAddress,
+                after: beforeDetailAddress
+            )
+        } else {
+            return nil
+        }
+    }
+    
+    private func requestEditPhone(
+        placeId: String,
+        placeTitle: String,
+        userId: String,
+        nickName: String,
+        dispatchGroup: DispatchGroup
+    ) {
+        if isChangedPhone {
+            dispatchGroup.enter()
+            let beforePhone = placeInfo?.phone ?? ""
+            
+            let model = AVIROEditPhoneDTO(
+                placeId: placeId,
+                userId: userId,
+                nickname: nickName,
+                title: placeTitle,
+                phone: AVIROEditCommonBeforeAfterDTO(
+                    before: beforePhone,
+                    after: afterChangedPhone
+                )
+            )
+            
+            AVIROAPIManager().postEditPlacePhone(model) { resultModel in
+                print(resultModel.statusCode)
+                print(resultModel.message)
+                
+                dispatchGroup.leave()
+            }
+        }
+    }
+    
+    private func requestEditOperationHour(
+        placeId: String,
+        userId: String,
+        dispatchGroup: DispatchGroup
+    ) {
+        if isChangedOperationHour {
+            
+            dispatchGroup.enter()
+            
+            var mon: EditOperationHoursModel?
+            var tue: EditOperationHoursModel?
+            var wed: EditOperationHoursModel?
+            var thu: EditOperationHoursModel?
+            var fri: EditOperationHoursModel?
+            var sat: EditOperationHoursModel?
+            var sun: EditOperationHoursModel?
+            
+            afterChangedOperationHourArray.forEach {
+                switch $0.day {
+                case .mon:
+                    mon = EditOperationHoursModel(
+                        day: $0.day,
+                        operatingHours: $0.operatingHours,
+                        breakTime: $0.breakTime,
+                        isToday: $0.isToday
+                    )
+                case .tue:
+                    tue = EditOperationHoursModel(
+                        day: $0.day,
+                        operatingHours: $0.operatingHours,
+                        breakTime: $0.breakTime,
+                        isToday: $0.isToday
+                    )
+                case .wed:
+                    wed = EditOperationHoursModel(
+                        day: $0.day,
+                        operatingHours: $0.operatingHours,
+                        breakTime: $0.breakTime,
+                        isToday: $0.isToday
+                    )
+                case .thu:
+                    thu = EditOperationHoursModel(
+                        day: $0.day,
+                        operatingHours: $0.operatingHours,
+                        breakTime: $0.breakTime,
+                        isToday: $0.isToday
+                    )
+                case .fri:
+                    fri = EditOperationHoursModel(
+                        day: $0.day,
+                        operatingHours: $0.operatingHours,
+                        breakTime: $0.breakTime,
+                        isToday: $0.isToday
+                    )
+                case .sat:
+                    sat = EditOperationHoursModel(
+                        day: $0.day,
+                        operatingHours: $0.operatingHours,
+                        breakTime: $0.breakTime,
+                        isToday: $0.isToday
+                    )
+                case .sun:
+                    sun = EditOperationHoursModel(
+                        day: $0.day,
+                        operatingHours: $0.operatingHours,
+                        breakTime: $0.breakTime,
+                        isToday: $0.isToday
+                    )
+                }
+            }
+            
+            let model = AVIROEditOperationTimeDTO(
+                placeId: placeId,
+                userId: userId,
+                mon: mon?.operatingHours,
+                monBreak: mon?.breakTime,
+                tue: tue?.operatingHours,
+                tueBreak: tue?.breakTime,
+                wed: wed?.operatingHours,
+                wedBreak: wed?.breakTime,
+                thu: thu?.operatingHours,
+                thuBreak: thu?.breakTime,
+                fri: fri?.operatingHours,
+                friBreak: fri?.breakTime,
+                sat: sat?.operatingHours,
+                satBreak: sat?.breakTime,
+                sun: sun?.operatingHours,
+                sunBreak: sun?.breakTime
+            )
+            
+            print(model)
+            
+            AVIROAPIManager().postEditPlaceOperation(model) { resultModel in
+                print(resultModel.statusCode)
+                print(resultModel.message)
+                
+                dispatchGroup.leave()
+            }
+        }
+    }
+    
+    private func requestEditURL(
+        placeId: String,
+        placeTitle: String,
+        userId: String,
+        nickName: String,
+        dispatchGroup: DispatchGroup
+    ) {
+        if isChangedURL {
+            dispatchGroup.enter()
+            
+            let beforeURL = placeInfo?.url ?? ""
+            
+            let model = AVIROEditURLDTO(
+                placeId: placeId,
+                userId: userId,
+                nickname: nickName,
+                title: placeTitle,
+                url: AVIROEditCommonBeforeAfterDTO(
+                    before: beforeURL,
+                    after: afterChangedURL
+                )
+            )
+            
+            AVIROAPIManager().postEditPlaceURL(model) { resultModel in
+                print(resultModel.statusCode)
+                print(resultModel.message)
+                
+                dispatchGroup.leave()
+            }
         }
     }
     
@@ -130,7 +608,7 @@ final class EditPlaceInfoPresenter {
     }
     
     // MARK: Data Binding
-    func dataBinding() {
+    private func dataBinding() {
         dataBindingLocation()
         dataBindingPhone()
         dataBindingWorkingHours()
@@ -168,9 +646,16 @@ final class EditPlaceInfoPresenter {
     
     private func dataBindingWorkingHours() {
         guard let placeId = placeId else { return }
+        
+        self.placeOperationModels = [EditOperationHoursModel]()
+        
         AVIROAPIManager().getOperationHour(placeId: placeId) { [weak self] model in
             DispatchQueue.main.async {
-                self?.viewController?.dataBindingOperatingHours(operatingHourModels: model.data.toEditOperationHoursModels())
+                let modelArray = model.data.toEditOperationHoursModels()
+                
+                self?.viewController?.dataBindingOperatingHours(operatingHourModels: modelArray)
+                
+                self?.placeOperationModels = modelArray
             }
         }
     }
@@ -188,13 +673,9 @@ final class EditPlaceInfoPresenter {
         
         viewController?.pushAddressEditViewController(placeMarkerModel: placeMarkerModel)
     }
-    
-    func saveChangedAddress(_ address: String) {
-        self.changedAddress = address
-    }
-    
-    private func afterEditAddress() {
-        KakaoMapRequestManager().kakaoMapAddressSearch(address: changedAddress) { [weak self] addressModel in
+
+    private func changedMarkerLocation() {
+        KakaoMapRequestManager().kakaoMapAddressSearch(address: afterChangedAddress) { [weak self] addressModel in
             guard let documents = addressModel.documents, documents.count > 0 else { return }
             
             let firstCoordinate = documents[0]
