@@ -162,24 +162,73 @@ extension MyPageViewController: MyPageViewProtocol {
     }
     
     private func whenTappedLogOut() {
-        let result = self.keychain.delete("userIdentifier")
+        let alertTitle = "로그아웃 하시겠어요?"
         
-        print("성공적인 로그아웃: \(result)")
+        let alertController = UIAlertController(title: alertTitle, message: nil, preferredStyle: .alert)
         
-        let vc = LoginViewController()
-        let presenter = LoginViewPresenter(viewController: vc)
-        vc.presenter = presenter
-        
-        let rootViewController = UINavigationController(rootViewController: vc)
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            windowScene.windows.first?.rootViewController = rootViewController
-            windowScene.windows.first?.makeKeyAndVisible()
+        let cancelAction = UIAlertAction(title: "취소", style: .default)
+        let logoutAction = UIAlertAction(title: "로그아웃", style: .destructive) { _ in
+            let result = self.keychain.delete("userIdentifier")
+            
+            print("성공적인 로그아웃: \(result)")
+            
+            let vc = LoginViewController()
+            let presenter = LoginViewPresenter(viewController: vc)
+            vc.presenter = presenter
+            
+            presenter.whenAfterLogout = true 
+            
+            let rootViewController = UINavigationController(rootViewController: vc)
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                windowScene.windows.first?.rootViewController = rootViewController
+                windowScene.windows.first?.makeKeyAndVisible()
+            }
         }
 
+        [
+            cancelAction,
+            logoutAction
+        ].forEach {
+            alertController.addAction($0)
+        }
+        
+        present(alertController, animated: true)
     }
     
     private func whenTappedWithdrawal() {
+        let alertTitle = "정말로 어비로를 떠나시는 건가요?"
+        let alertMessage = "회원탈퇴 이후, 내가 등록한 가게와 댓글은\n사라지지 않지만, 다시 볼 수 없어요.\n정말로 탈퇴하시겠어요?"
         
+        let alertController = UIAlertController(
+            title: alertTitle,
+            message: alertMessage,
+            preferredStyle: .alert
+        )
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .default)
+        let withdrawalAction = UIAlertAction(title: "탈퇴하기", style: .destructive) { _ in
+            // TODO:
+            let vc = LoginViewController()
+            let presenter = LoginViewPresenter(viewController: vc)
+            vc.presenter = presenter
+
+            presenter.whenAfterWithdrawal = true
+            
+            let rootViewController = UINavigationController(rootViewController: vc)
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                windowScene.windows.first?.rootViewController = rootViewController
+                windowScene.windows.first?.makeKeyAndVisible()
+            }
+        }
+        
+        [
+            cancelAction,
+            withdrawalAction
+        ].forEach {
+            alertController.addAction($0)
+        }
+        
+        present(alertController, animated: true)
     }
 }
 

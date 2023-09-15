@@ -21,6 +21,9 @@ final class HistoryTableViewCell: UITableViewCell {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         
+        label.numberOfLines = 2
+        label.lineBreakMode = .byCharWrapping
+        
         return label
     }()
     
@@ -69,7 +72,7 @@ final class HistoryTableViewCell: UITableViewCell {
             
             // titleLabel
             titleLabel.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 10),
-            titleLabel.centerYAnchor.constraint(equalTo: icon.centerYAnchor),
+            titleLabel.topAnchor.constraint(equalTo: icon.topAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: cancelButton.leadingAnchor, constant: -10),
             
             // cancelButton

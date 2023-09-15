@@ -25,7 +25,7 @@ final class HomeSearchViewTableViewCell: UITableViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
     
     private func setupLayout() {
@@ -44,6 +44,8 @@ final class HomeSearchViewTableViewCell: UITableViewCell {
             // icon
             icon.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             icon.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
+            icon.widthAnchor.constraint(equalToConstant: 24),
+            icon.heightAnchor.constraint(equalToConstant: 24),
             
             // title
             title.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 10),
@@ -59,17 +61,16 @@ final class HomeSearchViewTableViewCell: UITableViewCell {
             // distance
             distance.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
             distance.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
-
         ])
     }
     
     // MARK: Attribute
     private func setupAttribute() {
-        title.numberOfLines = 0
+        title.numberOfLines = 2
         title.font = .systemFont(ofSize: 18, weight: .medium)
         title.lineBreakMode = .byCharWrapping
         
-        address.numberOfLines = 0
+        address.numberOfLines = 2
         address.font = .systemFont(ofSize: 15, weight: .medium)
         address.lineBreakMode = .byCharWrapping
                 

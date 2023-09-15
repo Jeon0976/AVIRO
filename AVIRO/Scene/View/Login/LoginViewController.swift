@@ -9,6 +9,7 @@ import UIKit
 import AuthenticationServices
 
 import Lottie
+import Toast_Swift
 
 final class LoginViewController: UIViewController {
     lazy var presenter = LoginViewPresenter(viewController: self)
@@ -39,8 +40,7 @@ extension LoginViewController: LoginViewProtocol {
         [
             titleLabel,
             appleLoginButton,
-            noLoginButton,
-            loginAnimation
+            noLoginButton
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
@@ -53,16 +53,10 @@ extension LoginViewController: LoginViewProtocol {
             
             // appleLoginButton
             appleLoginButton.bottomAnchor.constraint(
-                equalTo: loginAnimation.topAnchor, constant: -35),
-            appleLoginButton.widthAnchor.constraint(equalToConstant: 220),
-            appleLoginButton.heightAnchor.constraint(
-                equalToConstant: Layout.Button.height),
-            appleLoginButton.centerXAnchor.constraint(
-                equalTo: view.centerXAnchor),
-            
-            // loginAnimation
-            loginAnimation.widthAnchor.constraint(equalToConstant: view.frame.width),
-            loginAnimation.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -60),
+            appleLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 26.5),
+            appleLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -26.5),
+            appleLoginButton.heightAnchor.constraint(equalToConstant: 50),
             
             // TODO: 추후 없애기
             noLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -74,10 +68,6 @@ extension LoginViewController: LoginViewProtocol {
     func makeAttribute() {
         view.backgroundColor = .gray7
         
-        // loginAnimation
-        loginAnimation.play()
-        loginAnimation.loopMode = .loop
-        
         // titleLabel
         titleLabel.text = "어디서든 비건으로\n어비로 시작하기"
         titleLabel.numberOfLines = 0
@@ -87,16 +77,20 @@ extension LoginViewController: LoginViewProtocol {
         
         // appleLoginButton
         appleLoginButton.setTitle(StringValue.Login.apple, for: .normal)
-        appleLoginButton.setTitleColor(.mainTitle, for: .normal)
+        appleLoginButton.setTitleColor(.white, for: .normal)
         appleLoginButton.setImage(UIImage(named: "Logo"), for: .normal)
+        
         appleLoginButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -12, bottom: 0, right: 0)
         
-        appleLoginButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .semibold)
-        appleLoginButton.layer.borderColor = UIColor.mainTitle?.cgColor
+        appleLoginButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
+        
+        appleLoginButton.layer.borderColor = UIColor.black.cgColor
         appleLoginButton.layer.borderWidth = 2
         appleLoginButton.layer.cornerRadius = 26
+        appleLoginButton.clipsToBounds = true
+        appleLoginButton.backgroundColor = .black
+        
         appleLoginButton.addTarget(self, action: #selector(tapAppleLogin), for: .touchUpInside)
-        appleLoginButton.adjustsImageWhenHighlighted = false
         
         // noLoginButton
         noLoginButton.setTitle(StringValue.Login.noLogin, for: .normal)
@@ -112,11 +106,11 @@ extension LoginViewController: LoginViewProtocol {
     
     // MARK: No Login Button Tapped
     @objc func tapNoLoginButton() {
-        pushRegistration(UserInfoModel(userToken: "test",
+        pushRegistration(AVIROUserSignUpDTO(userToken: "test",
                                        userName: "",
                                        userEmail: "",
                                        nickname: "",
-                                       birthYear: 0,
+                                       birthday: 0,
                                        gender: "",
                                        marketingAgree: false)
         )
@@ -142,7 +136,7 @@ extension LoginViewController: LoginViewProtocol {
     }
     
     // MARK: Push Registration ViewController
-    func pushRegistration(_ userInfo: UserInfoModel) {
+    func pushRegistration(_ userInfo: AVIROUserSignUpDTO) {
         
         navigationController?.navigationBar.isHidden = false
         navigationItem.backButtonTitle = ""
@@ -156,6 +150,44 @@ extension LoginViewController: LoginViewProtocol {
 
         navigationController?.pushViewController(viewController, animated: true)
     }
+    
+    func afterLogoutAndMakeToastButton() {
+        let title = "로그아웃이 완료되었습니다."
+        
+        var style = ToastStyle()
+        style.cornerRadius = 14
+        style.backgroundColor = .gray3?.withAlphaComponent(0.7) ?? .lightGray
+        
+        style.titleColor = .gray7 ?? .white
+        style.titleFont = .systemFont(ofSize: 17, weight: .medium)
+        
+        let centerX = (self.view.frame.size.width) / 2
+        let viewHeight = self.view.safeAreaLayoutGuide.layoutFrame.height
+        
+        let yPosition: CGFloat = viewHeight - 240
+        
+        self.view.makeToast(title,
+                            duration: 1.0,
+                            point: CGPoint(x: centerX, y: yPosition),
+                            title: nil,
+                            image: nil,
+                            style: style,
+                            completion: nil
+        )
+    }
+    
+    func afterWithdrawalUserShowAlert() {
+        let alertTitle = "회원탈퇴가 완료되었어요."
+        let alertMessage = "함께한 시간이 아쉽지만,\n언제든지 돌아오는 문을 열어둘게요.\n어비로의 비건 여정은 계속될 거에요!"
+        
+        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+        
+        let checkAction = UIAlertAction(title: "확인", style: .default)
+        
+        alertController.addAction(checkAction)
+        
+        present(alertController, animated: true)
+    }
 }
 
 // MARK: Apple Login 처리 설정
@@ -168,11 +200,11 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
             let fullName = appleIDCredential.fullName?.formatted() ?? ""
             let email = appleIDCredential.email ?? ""
             
-            let userInfo = UserInfoModel(userToken: userIdentifier,
+            let userInfo = AVIROUserSignUpDTO(userToken: userIdentifier,
                                          userName: fullName,
                                          userEmail: email,
                                          nickname: "",
-                                         birthYear: 0,
+                                         birthday: 0,
                                          gender: "",
                                          marketingAgree: false
             )

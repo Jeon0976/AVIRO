@@ -82,7 +82,7 @@ final class EnrollPlacePresenter {
     ]
     
     // MARK: 최종 데이터
-    private var veganModel: VeganModel?
+    private var veganModel: AVIROEnrollPlaceDTO?
     
     init(viewController: EnrollPlaceProtocol) {
         self.viewController = viewController
@@ -436,7 +436,7 @@ extension EnrollPlacePresenter {
             return
         }
         
-        veganModel = VeganModel(
+        veganModel = AVIROEnrollPlaceDTO(
             userId: UserId.shared.userId,
             title: storeNormalData?.title ?? "",
             category: category?.title ?? "",

@@ -10,18 +10,77 @@ import UIKit
 final class FirstRegistrationViewController: UIViewController {
     lazy var presenter = FirstRegistrationPresenter(viewController: self)
     
-    var titleLabel = UILabel()
-    var subTitleLabel = UILabel()
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        
+        label.text = "반가워요!\n닉네임을 정해주세요."
+        label.font = .systemFont(ofSize: 24, weight: .bold)
+        label.textColor = .main
+        label.numberOfLines = 2
+        
+        return label
+    }()
+
+    private lazy var subTitleLabel: UILabel = {
+        let label = UILabel()
+        
+        label.text = "어비로에 불릴 닉네임이에요."
+        label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.textColor = .gray1
+        
+        return label
+    }()
     
-    var nicNameField = RegistrationField()
+    private lazy var nicNameField: RegistrationField = {
+        let field = RegistrationField()
+        
+        field.font = .systemFont(ofSize: 18, weight: .medium)
+        field.makePlaceHolder("닉네임을 입력해주세요")
+        field.isPossible = nil
+        field.delegate = self
+        
+        return field
+    }()
     
-    var subInfo = UILabel()
-    var subInfo2 = UILabel()
+    private lazy var subInfo: UILabel = {
+        let label = UILabel()
+        
+        label.text = "이모지, 특수문자(-, _ 제외)를 사용할 수 없습니다."
+        label.font = .systemFont(ofSize: 13, weight: .medium)
+        label.numberOfLines = 2
+        label.lineBreakMode = .byCharWrapping
+        label.textColor = .gray2
+        
+        return label
+    }()
     
-    var nextButton = BottomButton1()
+    private lazy var subInfo2: UILabel = {
+        let label = UILabel()
+        
+        label.text = "(0/8)"
+        label.font = .systemFont(ofSize: 13, weight: .medium)
+        label.textColor = .gray2
+        label.textAlignment = .right
+        
+        return label
+    }()
     
-    var tapGesture = UITapGestureRecognizer()
-    var timer: Timer?
+    private lazy var nextButton: BottomButton1 = {
+        let button = BottomButton1()
+        
+        button.setTitle("다음으로", for: .normal)
+        button.isEnabled = false
+        button.addTarget(
+            self,
+            action: #selector(tappedNextButton),
+            for: .touchUpInside
+        )
+        
+        return button
+    }()
+    
+    private var tapGesture = UITapGestureRecognizer()
+    private var timer: Timer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,7 +136,7 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
                 equalTo: subInfo.topAnchor),
             subInfo2.trailingAnchor.constraint(
                 equalTo: view.trailingAnchor, constant: -40),
-            subInfo2.widthAnchor.constraint(equalToConstant: 55),
+            subInfo2.widthAnchor.constraint(equalToConstant: 50),
             
             // next Button
             nextButton.bottomAnchor.constraint(
@@ -93,45 +152,12 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
         view.backgroundColor = .white
         navigationItem.backButtonTitle = ""
         setupCustomBackButton(true)
-
-        // TODO: 확인
+    }
+    
+    func makeGesture() {
         tapGesture.cancelsTouchesInView = false
         tapGesture.delegate = self
         view.addGestureRecognizer(tapGesture)
-        
-        // titleLabel
-        titleLabel.text = "반가워요!\n닉네임을 정해주세요."
-        titleLabel.font = .systemFont(ofSize: 24, weight: .bold)
-        titleLabel.textColor = .main
-        titleLabel.numberOfLines = 2
-        
-        // subTitle
-        subTitleLabel.text = "어비로에 불릴 닉네임이에요."
-        subTitleLabel.font = .systemFont(ofSize: 14, weight: .medium)
-        subTitleLabel.textColor = .gray1
-        
-        // nicNameField
-        nicNameField.font = .systemFont(ofSize: 18)
-        nicNameField.makePlaceHolder("닉네임을 입력해주세요")
-        nicNameField.isPossible = nil
-        nicNameField.delegate = self
-                
-        // subInfo
-        subInfo.text = "이모지, 특수문자(-, _ 제외)를 사용할 수 없습니다."
-        subInfo.font = .systemFont(ofSize: 13, weight: .medium)
-        subInfo.numberOfLines = 2
-        subInfo.lineBreakMode = .byCharWrapping
-        subInfo.textColor = .gray2
-        
-        // subInfo2
-        subInfo2.text = "(0/15)"
-        subInfo2.font = .systemFont(ofSize: 13, weight: .medium)
-        subInfo2.textColor = .gray2
-        
-        // nextButton
-        nextButton.setTitle("다음으로", for: .normal)
-        nextButton.isEnabled = false
-        nextButton.addTarget(self, action: #selector(tappedNextButton), for: .touchUpInside)
     }
     
     // MARK: check Result
@@ -150,7 +176,7 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
     }
     
     // MARK: Push Second Registration View
-    func pushSecondRegistrationView(_ userInfoModel: UserInfoModel) {
+    func pushSecondRegistrationView(_ userInfoModel: AVIROUserSignUpDTO) {
         let viewController = SecondRegistrationViewController()
         let presenter = SecondRegistrationPresenter(viewController: viewController,
                                                     userInfoModel: userInfoModel)
@@ -180,10 +206,13 @@ extension FirstRegistrationViewController: UIGestureRecognizerDelegate {
 extension FirstRegistrationViewController: UITextFieldDelegate {
     // MARK: TextField 값이 변하고 있을 때
     func textFieldDidChangeSelection(_ textField: UITextField) {
+        nicNameField.isPossible = nil
+        nextButton.isEnabled = false
+        
         if textField.text == "" {
             presenter.insertUserNickName("")
             checkDuplication()
-            subInfo2.text = "(0/15)"
+            subInfo2.text = "(0/8)"
             return
         }
 
@@ -192,16 +221,16 @@ extension FirstRegistrationViewController: UITextFieldDelegate {
         let currentText = textField.text ?? ""
         
         // MARK: 최대 갯수 제한
-        if currentText.count > 15 {
+        if currentText.count > 8 {
             let startIndex = currentText.startIndex
-            let endIndex = currentText.index(startIndex, offsetBy: 15 - 1)
+            let endIndex = currentText.index(startIndex, offsetBy: 8 - 1)
             let fixedText = String(currentText[startIndex...endIndex])
             textField.text = fixedText
             return
         }
         
         presenter.insertUserNickName(currentText)
-        subInfo2.text = "(\(currentText.count)/15)"
+        subInfo2.text = "(\(currentText.count)/8)"
         
         // 0.5초 후 nickname 확인 method 실행
         timer?.invalidate()

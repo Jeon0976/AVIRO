@@ -55,7 +55,7 @@ enum MenuType: String {
 // MARK: Input Data
 /// 사용자가 입력한 데이터
 /// 옵셔널 데이터는 검색으로 입력, 좌표로 입력에 따라 값이 있고 없을 수 있기 때문
-struct VeganModel: Codable {
+struct AVIROEnrollPlaceDTO: Codable {
     var placeId = UUID().uuidString
     var userId: String
     var title: String
@@ -79,10 +79,4 @@ struct MenuArray: Codable {
     var price: String
     var howToRequest: String
     var isCheck: Bool
-}
-
-// MARK: Output Data
-struct PostResultDTO: Decodable {
-    let statusCode: Int
-    let message: String?
 }

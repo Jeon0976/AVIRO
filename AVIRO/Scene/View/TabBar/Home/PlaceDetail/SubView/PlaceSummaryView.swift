@@ -31,6 +31,7 @@ final class PlaceSummaryView: UIView {
         let label = UILabel()
         
         label.textColor = .gray0
+        label.clipsToBounds = true
         label.font = .systemFont(ofSize: 24, weight: .heavy)
 
         return label
@@ -41,6 +42,7 @@ final class PlaceSummaryView: UIView {
         
         label.textColor = .gray2
         label.textAlignment = .left
+        label.clipsToBounds = true
         label.font = .systemFont(ofSize: 15, weight: .medium)
 
         return label
@@ -86,6 +88,7 @@ final class PlaceSummaryView: UIView {
         let label = UILabel()
         
         label.textColor = .gray1
+        label.clipsToBounds = true
         label.font = .systemFont(ofSize: 14, weight: .medium)
         label.numberOfLines = 1
         label.textAlignment = .left
@@ -210,12 +213,15 @@ final class PlaceSummaryView: UIView {
         placeIcon.image = nil
         placeTitle.text = "            "
         placeTitle.backgroundColor = .gray5
+        placeTitle.layer.cornerRadius = 6
         placeCategory.text = "  "
         placeCategory.backgroundColor = .gray5
+        placeCategory.layer.cornerRadius = 6
         distanceLabel.text = "0m"
         reviewsLabel.text = "0개"
         addressLabel.text = "  "
         addressLabel.backgroundColor = .gray5
+        addressLabel.layer.cornerRadius = 6
     }
     
     override init(frame: CGRect) {
@@ -277,8 +283,12 @@ final class PlaceSummaryView: UIView {
     // MARK: Data Binding
     func dataBinding(_ placeModel: PlaceTopModel, _ isStar: Bool) {
         placeTitle.backgroundColor = .gray7
+        placeTitle.layer.cornerRadius = 0
         placeCategory.backgroundColor = .gray7
+        placeCategory.layer.cornerRadius = 0
         addressLabel.backgroundColor = .gray7
+        addressLabel.layer.cornerRadius = 0
+        
         if isStar {
             starButton.isSelected = true
         } else {

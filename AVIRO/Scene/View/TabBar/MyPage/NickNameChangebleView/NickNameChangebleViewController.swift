@@ -45,9 +45,10 @@ final class NickNameChangebleViewController: UIViewController {
         
         let nickNameCount = UserId.shared.userNickName.count
         
-        label.text = "(\(nickNameCount)/15)개"
+        label.text = "(\(nickNameCount)/8)"
         label.font = .systemFont(ofSize: 13, weight: .medium)
         label.textColor = .gray2
+        label.textAlignment = .right
         
         return label
     }()
@@ -104,7 +105,7 @@ extension NickNameChangebleViewController: NickNameChangebleProtocol {
                 equalTo: subInfo.topAnchor),
             subInfo2.trailingAnchor.constraint(
                 equalTo: view.trailingAnchor, constant: -40),
-            subInfo2.widthAnchor.constraint(equalToConstant: 60),
+            subInfo2.widthAnchor.constraint(equalToConstant: 50),
             
             // editButtton
             editNickNameButton.topAnchor.constraint(equalTo: subInfo.bottomAnchor, constant: 30),
@@ -128,7 +129,7 @@ extension NickNameChangebleViewController: NickNameChangebleProtocol {
     }
     
     private func changebleNickNameCount(_ count: Int) {
-        self.subInfo2.text = "(\(count)/15)개"
+        self.subInfo2.text = "(\(count)/8)"
     }
     
     func changeSubInfo(subInfo: String, isVaild: Bool) {
@@ -172,7 +173,7 @@ extension NickNameChangebleViewController: UITextFieldDelegate {
         
         let currentText = textField.text ?? ""
         
-        if currentText.count > 15 {
+        if currentText.count > 8 {
             textField.text = limitText(currentText)
             textField.activeShakeAfterNoSearchData()
             return
@@ -185,7 +186,7 @@ extension NickNameChangebleViewController: UITextFieldDelegate {
     
     private func limitText(_ text: String) -> String {
         let startIndex = text.startIndex
-        let endIndex = text.index(startIndex, offsetBy: 15 - 1)
+        let endIndex = text.index(startIndex, offsetBy: 8 - 1)
         
         let fixedText = String(text[startIndex...endIndex])
                 

@@ -18,7 +18,7 @@ final class ThridRegistrationPresenter {
 
     private let aviroManager = AVIROAPIManager()
 
-    var userInfoModel: UserInfoModel?
+    var userInfoModel: AVIROUserSignUpDTO?
         
     var terms = [
         ("어비로 이용 약관 (필수)", false),
@@ -27,7 +27,7 @@ final class ThridRegistrationPresenter {
         ("이벤트 및 마케팅 활용 동의 (선택)", false)
     ]
     
-    init(viewController: ThridRegistrationProtocol, userInfo: UserInfoModel? = nil) {
+    init(viewController: ThridRegistrationProtocol, userInfo: AVIROUserSignUpDTO? = nil) {
         self.viewController = viewController
         self.userInfoModel = userInfo
     }

@@ -85,8 +85,8 @@ final class PlaceReviewsView: UIView {
     
     var whenTappedShowMoreButton: (() -> Void)?
     
-    var whenUploadReview: ((AVIROCommentPost) -> Void)?
-    var whenAfterEditMyReview: ((AVIROEditCommentPost) -> Void)?
+    var whenUploadReview: ((AVIROEnrollCommentDTO) -> Void)?
+    var whenAfterEditMyReview: ((AVIROEditCommenDTO) -> Void)?
     
     var whenReportReview: ((String) -> Void)?
     var whenBeforeEditMyReview: ((String) -> Void)?
@@ -288,14 +288,14 @@ final class PlaceReviewsView: UIView {
         viewHeightConstraint?.isActive = true
     }
     
-    func afterUpdateReviewAndUpdateInHomeView(_ reviewModel: AVIROCommentPost) {
+    func afterUpdateReviewAndUpdateInHomeView(_ reviewModel: AVIROEnrollCommentDTO) {
         print(whenHomeViewReviewsCount)
 
         reviewsUpdateInHomeView(reviewModel)
         whenHaveReviewsInHomeView(self.reviewsArray)
     }
     
-    private func reviewsUpdateInHomeView(_ reviewModel: AVIROCommentPost) {
+    private func reviewsUpdateInHomeView(_ reviewModel: AVIROEnrollCommentDTO) {
         let nowDate = TimeUtility.nowDate()
 
         let reviewModel = ReviewData(
@@ -311,12 +311,12 @@ final class PlaceReviewsView: UIView {
         subTitle.text = "\(whenHomeViewReviewsCount)개"
     }
     
-    func afterEditReviewAndUpdateInHomeView(_ reviewModel: AVIROEditCommentPost) {
+    func afterEditReviewAndUpdateInHomeView(_ reviewModel: AVIROEditCommenDTO) {
         reviewsEditInHomeView(reviewModel)
         whenHaveReviewsInHomeView(self.reviewsArray)
     }
     
-    private func reviewsEditInHomeView(_ reviewModel: AVIROEditCommentPost) {
+    private func reviewsEditInHomeView(_ reviewModel: AVIROEditCommenDTO) {
         let nowDate = TimeUtility.nowDate()
 
         let reviewModel = ReviewData(
@@ -376,7 +376,7 @@ final class PlaceReviewsView: UIView {
             return
         }
                 
-        var postModel = AVIROCommentPost(placeId: placeId, userId: UserId.shared.userId, content: text)
+        var postModel = AVIROEnrollCommentDTO(placeId: placeId, userId: UserId.shared.userId, content: text)
         postModel.commentId = editedReviewId
         
         let reviewModel = ReviewData(
@@ -392,7 +392,7 @@ final class PlaceReviewsView: UIView {
         subTitle.text = "\(reviewsArray.count)개"
         editedReviewId = ""
         
-        let editModel = AVIROEditCommentPost(
+        let editModel = AVIROEditCommenDTO(
             commentId: reviewModel.commentId,
             content: text,
             userId: reviewModel.userId
@@ -406,7 +406,7 @@ final class PlaceReviewsView: UIView {
         
         let nowDate = TimeUtility.nowDate()
         
-        let postModel = AVIROCommentPost(
+        let postModel = AVIROEnrollCommentDTO(
             placeId: placeId,
             userId: UserId.shared.userId,
             content: text

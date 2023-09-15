@@ -14,15 +14,18 @@ protocol LoginViewProtocol: NSObject {
     func makeAttribute()
     func makeNaviAttribute()
     func pushTabBar()
-    func pushRegistration(_ userInfo: UserInfoModel)
+    func pushRegistration(_ userInfo: AVIROUserSignUpDTO)
+    func afterLogoutAndMakeToastButton()
+    func afterWithdrawalUserShowAlert()
 }
 
 final class LoginViewPresenter {
     weak var viewController: LoginViewProtocol?
     
-    let keychain = KeychainSwift()
-    
-    private let avrioManager = AVIROAPIManager()
+    private let keychain = KeychainSwift()
+        
+    var whenAfterLogout = false
+    var whenAfterWithdrawal = false
     
     init(viewController: LoginViewProtocol) {
         self.viewController = viewController
@@ -35,21 +38,36 @@ final class LoginViewPresenter {
     
     func viewWillAppear() {
         viewController?.makeNaviAttribute()
+        
+        if whenAfterWithdrawal {
+            viewController?.afterWithdrawalUserShowAlert()
+            whenAfterWithdrawal.toggle()
+        }
+        
+        if whenAfterLogout {
+            viewController?.afterLogoutAndMakeToastButton()
+            whenAfterLogout.toggle()
+        }
     }
     // MARK: Login 후 최초인지 아닌지 확인 처리
-    func upLoadUserInfo(_ userInfoModel: UserInfoModel) {
+    func upLoadUserInfo(_ userInfoModel: AVIROUserSignUpDTO) {
         keychain.set(userInfoModel.userToken,
                      forKey: "userIdentifier")
         
-        let userCheck = UserCheckInput(userToken: userInfoModel.userToken)
+        let userCheck = AVIROAppleUserCheckMemberDTO(userToken: userInfoModel.userToken)
         
-        avrioManager.postCheckUserModel(userCheck) { userInfo in
+        AVIROAPIManager().postCheckUserModel(userCheck) { userInfo in
             DispatchQueue.main.async { [weak self] in
-                if userInfo.isMember {
-                    self?.viewController?.pushTabBar()
+                if userInfo.statusCode == 200 {
+//                    self?.viewController.
                 } else {
-                    self?.viewController?.pushRegistration(userInfoModel)
+                    
                 }
+//                if userInfo.isMember {
+//                    self?.viewController?.pushTabBar()
+//                } else {
+//                    self?.viewController?.pushRegistration(userInfoModel)
+//                }
             }
         }
     }

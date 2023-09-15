@@ -36,19 +36,21 @@ final class NickNameChangeblePresenter {
     }
     
     func checkDuplication() {
-        let nickname = NicknameCheckInput(nickname: userNickname)
+        guard let userNickname = userNickname else { return }
         
-        if userNickname! != initNickName {
+        let nickname = AVIRONicknameIsDuplicatedCheckDTO(nickname: userNickname)
+        
+        if userNickname != initNickName {
             AVIROAPIManager().postCheckNickname(nickname) { result in
                 
-                let result = NicknameCheck(
+                let result = AVIROAfterNicknameIsDuplicatedCheckDTO(
                     statusCode: result.statusCode,
                     isValid: result.isValid,
                     message: result.message
                 )
                 
                 DispatchQueue.main.async { [weak self] in
-                    self?.viewController?.changeSubInfo(subInfo: result.message, isVaild: result.isValid)
+                    self?.viewController?.changeSubInfo(subInfo: result.message, isVaild: result.isValid ?? false)
                 }
             }
         } else {

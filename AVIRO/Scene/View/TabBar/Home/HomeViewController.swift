@@ -602,7 +602,7 @@ extension HomeViewController {
         )
         
         let deleteMyReview = UIAlertAction(title: "예", style: .default) { _ in
-            let deleteCommentModel = AVIRODeleteCommentPost(commentId: commentId,
+            let deleteCommentModel = AVIRODeleteCommentDTO(commentId: commentId,
                                                             userId: UserId.shared.userId
             )
             

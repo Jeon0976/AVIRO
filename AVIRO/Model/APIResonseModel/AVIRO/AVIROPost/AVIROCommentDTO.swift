@@ -7,20 +7,20 @@
 
 import Foundation
 
-struct AVIROCommentPost: Encodable {
+struct AVIROEnrollCommentDTO: Encodable {
     var commentId = UUID().uuidString
     let placeId: String
     let userId: String
     let content: String
 }
 
-struct AVIROEditCommentPost: Encodable {
+struct AVIROEditCommenDTO: Encodable {
     let commentId: String
     let content: String
     let userId: String
 }
 
-struct AVIRODeleteCommentPost: Encodable {
+struct AVIRODeleteCommentDTO: Encodable {
     let commentId: String
     let userId: String
 }

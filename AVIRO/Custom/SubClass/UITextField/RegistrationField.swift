@@ -81,7 +81,7 @@ class RegistrationField: UITextField {
     func makePlaceHolder(_ placeHolder: String) {
         self.attributedPlaceholder = NSAttributedString(
             string: placeHolder,
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.registrationPlaceHolder!]
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray3]
         )
     }
     

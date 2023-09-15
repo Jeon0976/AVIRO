@@ -44,6 +44,8 @@ final class PlaceListCell: UITableViewCell {
             // icon
             icon.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             icon.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
+            icon.widthAnchor.constraint(equalToConstant: 24),
+            icon.heightAnchor.constraint(equalToConstant: 24),
             
             // title
             title.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 10),
@@ -65,11 +67,13 @@ final class PlaceListCell: UITableViewCell {
     
     // MARK: Attribute
     private func makeAttribute() {
-        title.numberOfLines = 0
+        title.numberOfLines = 2
         title.font = .systemFont(ofSize: 18, weight: .medium)
+        title.lineBreakMode = .byCharWrapping
         
-        address.numberOfLines = 0
+        address.numberOfLines = 2
         address.font = .systemFont(ofSize: 15, weight: .medium)
+        address.lineBreakMode = .byCharWrapping
                 
         distance.font = .systemFont(ofSize: 14, weight: .medium)
         distance.textAlignment = .right

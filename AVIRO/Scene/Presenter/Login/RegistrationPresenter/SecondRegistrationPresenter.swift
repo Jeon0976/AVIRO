@@ -12,13 +12,13 @@ protocol SecondRegistrationProtocol: NSObject {
     func makeAttribute()
     func invalidDate()
     func birthInit()
-    func pushThridRegistrationView(_ userInfoModel: UserInfoModel)
+    func pushThridRegistrationView(_ userInfoModel: AVIROUserSignUpDTO)
 }
 
 final class SecondRegistrationPresenter {
     weak var viewController: SecondRegistrationProtocol?
     
-    var userInfoModel: UserInfoModel?
+    var userInfoModel: AVIROUserSignUpDTO?
     
     var birth = ""
     var gender: Gender?
@@ -27,7 +27,7 @@ final class SecondRegistrationPresenter {
     private let aviroManager = AVIROAPIManager()
     
     init(viewController: SecondRegistrationProtocol,
-         userInfoModel: UserInfoModel? = nil) {
+         userInfoModel: AVIROUserSignUpDTO? = nil) {
         self.viewController = viewController
         self.userInfoModel = userInfoModel
     }
@@ -53,7 +53,7 @@ final class SecondRegistrationPresenter {
         
         let birth = Int(birth.components(separatedBy: ".").joined()) ?? 0
         
-        userInfoModel.birthYear = birth
+        userInfoModel.birthday = birth
         
         viewController?.pushThridRegistrationView(userInfoModel)
         print(userInfoModel)

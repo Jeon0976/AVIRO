@@ -10,18 +10,19 @@ import UIKit
 protocol FirstRegistrationProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
+    func makeGesture()
     func changeSubInfo(subInfo: String, isVaild: Bool)
-    func pushSecondRegistrationView(_ userInfoModel: UserInfoModel)
+    func pushSecondRegistrationView(_ userInfoModel: AVIROUserSignUpDTO)
 }
 
 final class FirstRegistrationPresenter {
     weak var viewController: FirstRegistrationProtocol?
     private let aviroManager = AVIROAPIManager()
 
-    var userInfoModel: UserInfoModel?
+    var userInfoModel: AVIROUserSignUpDTO?
     var userNickname: String?
         
-    init(viewController: FirstRegistrationProtocol, userInfoModel: UserInfoModel? = nil) {
+    init(viewController: FirstRegistrationProtocol, userInfoModel: AVIROUserSignUpDTO? = nil) {
         self.viewController = viewController
         self.userInfoModel = userInfoModel
     }
@@ -29,6 +30,7 @@ final class FirstRegistrationPresenter {
     func viewDidLoad() {
         viewController?.makeLayout()
         viewController?.makeAttribute()
+        viewController?.makeGesture()
     }
     
     // MARK: Nickname Setting Method
@@ -42,16 +44,18 @@ final class FirstRegistrationPresenter {
     
     // MARK: Nickmane Check Method
     func checkDuplication() {
-        let nickname = NicknameCheckInput(nickname: userNickname)
+        guard let userNickname = userNickname else { return }
+        
+        let nickname = AVIRONicknameIsDuplicatedCheckDTO(nickname: userNickname)
         aviroManager.postCheckNickname(nickname) { result in
-            let result = NicknameCheck(
+            let result = AVIROAfterNicknameIsDuplicatedCheckDTO(
                 statusCode: result.statusCode,
                 isValid: result.isValid,
                 message: result.message
             )
             
             DispatchQueue.main.async { [weak self] in
-                self?.viewController?.changeSubInfo(subInfo: result.message, isVaild: result.isValid)
+                self?.viewController?.changeSubInfo(subInfo: result.message, isVaild: result.isValid ?? false)
             }
         }
     }

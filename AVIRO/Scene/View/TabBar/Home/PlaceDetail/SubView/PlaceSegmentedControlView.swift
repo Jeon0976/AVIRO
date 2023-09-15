@@ -70,8 +70,8 @@ final class PlaceSegmentedControlView: UIView {
     var editMenu: (() -> Void)?
     
     // review
-    var whenUploadReview: ((AVIROCommentPost) -> Void)?
-    var whenAfterEditReview: ((AVIROEditCommentPost) -> Void)?
+    var whenUploadReview: ((AVIROEnrollCommentDTO) -> Void)?
+    var whenAfterEditReview: ((AVIROEditCommenDTO) -> Void)?
     var updateReviewsCount: ((Int) -> Void)?
     var reportReview: ((String) -> Void)?
     var editMyReview: ((String) -> Void)?

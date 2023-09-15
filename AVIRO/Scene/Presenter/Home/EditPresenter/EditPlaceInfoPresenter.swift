@@ -56,7 +56,6 @@ final class EditPlaceInfoPresenter {
             checkIsChangedTitle()
         }
     }
-    
     private var isChangedTitle = false {
         didSet {
             changeEditButtonState()
@@ -68,7 +67,6 @@ final class EditPlaceInfoPresenter {
             checkIsChangedCategory()
         }
     }
-    
     private var isChangedCategory = false {
         didSet {
             changeEditButtonState()
@@ -81,19 +79,19 @@ final class EditPlaceInfoPresenter {
             checkIsChangedAddress()
         }
     }
-    
     private var isChangedAddress = false {
         didSet {
             changeEditButtonState()
         }
     }
+    private var afterChangedXLng = ""
+    private var afterChangedYLat = ""
     
     var afterChangedAddressDetail = "" {
         didSet {
             checkIsChangedAddressDetail()
         }
     }
-    
     private var isChangedAddressDetail = false {
         didSet {
             changeEditButtonState()
@@ -105,7 +103,6 @@ final class EditPlaceInfoPresenter {
             checkIsChangedPhone()
         }
     }
-    
     private var isChangedPhone = false {
         didSet {
             changeEditButtonState()
@@ -113,7 +110,6 @@ final class EditPlaceInfoPresenter {
     }
     
     private var afterChangedOperationHourArray = [EditOperationHoursModel]()
-    
     var afterChangedOperationHour = EditOperationHoursModel(
         day: Day.mon,
         operatingHours: "",
@@ -124,7 +120,6 @@ final class EditPlaceInfoPresenter {
             checkIsChangedOperationHour()
         }
     }
-    
     private var isChangedOperationHour = false {
         didSet {
             changeEditButtonState()
@@ -136,7 +131,6 @@ final class EditPlaceInfoPresenter {
             checkIsChangedURL()
         }
     }
-    
     private var isChangedURL = false {
         didSet {
             changeEditButtonState()
@@ -225,7 +219,8 @@ final class EditPlaceInfoPresenter {
         }
     }
     
-    @objc private func keyboardWillHide(notification: NSNotification) {
+    @objc private func keyboardWillHide(
+        notification: NSNotification) {
         guard let viewController = viewController else { return }
         
         if viewController.isDetailFieldCheckBeforeKeyboardShowAndHide(
@@ -318,6 +313,10 @@ final class EditPlaceInfoPresenter {
             
             if let x = firstCoordinate.x, let y = firstCoordinate.y {
                 DispatchQueue.main.async {
+                    
+                    self?.afterChangedXLng = x
+                    self?.afterChangedYLat = y
+                    
                     self?.changedMarker(lat: y, lng: x)
                 }
             }
@@ -338,7 +337,6 @@ final class EditPlaceInfoPresenter {
         viewController?.updateNaverMap(latLng)
     }
 }
-
 
 // MARK: Data State Management Method
 extension EditPlaceInfoPresenter {
@@ -560,14 +558,16 @@ extension EditPlaceInfoPresenter {
                 ),
                 address2: whenRequestAndLoadDetailAddressBasedOnCondition(
                     beforeDetailAddress: beforeAdderss2
-                )
+                ),
+                x: whenRequestAndLoadXLongitude(beforeAddress: beforeAddress),
+                y: whenRequestAndLoadYLatitude(beforeAddress: beforeAddress)
             )
             
             AVIROAPIManager().postEditPlaceLocation(model
             ) { resultModel in
                 print(resultModel.statusCode)
-                print(resultModel.message)
-                
+                print(resultModel.message ?? "")
+
                 dispatchGroup.leave()
             }
         }
@@ -625,6 +625,34 @@ extension EditPlaceInfoPresenter {
         }
     }
     
+    private func whenRequestAndLoadXLongitude(
+        beforeAddress: String
+    ) -> AVIROEditCommonBeforeAfterDTO? {
+        let beforeX = String(placeMarkerModel?.marker.position.lng ?? 0.0)
+        
+        if isChangedAddress {
+            return AVIROEditCommonBeforeAfterDTO(before: beforeX, after: afterChangedXLng)
+        } else if isChangedAddressDetail {
+            return AVIROEditCommonBeforeAfterDTO(before: beforeX, after: beforeX)
+        } else {
+            return nil
+        }
+    }
+    
+    private func whenRequestAndLoadYLatitude(
+        beforeAddress: String
+    ) -> AVIROEditCommonBeforeAfterDTO? {
+        let beforeY = String(placeMarkerModel?.marker.position.lat ?? 0.0)
+        
+        if isChangedAddress {
+            return AVIROEditCommonBeforeAfterDTO(before: beforeY, after: afterChangedYLat)
+        } else if isChangedAddressDetail {
+            return AVIROEditCommonBeforeAfterDTO(before: beforeY, after: afterChangedYLat)
+        } else {
+            return nil
+        }
+    }
+    
     private func requestEditPhone(
         placeId: String,
         placeTitle: String,
@@ -652,7 +680,7 @@ extension EditPlaceInfoPresenter {
             AVIROAPIManager().postEditPlacePhone(model
             ) { resultModel in
                 print(resultModel.statusCode)
-                print(resultModel.message)
+                print(resultModel.message ?? "")
                 
                 dispatchGroup.leave()
             }
@@ -752,7 +780,7 @@ extension EditPlaceInfoPresenter {
             AVIROAPIManager().postEditPlaceOperation(model
             ) { resultModel in
                 print(resultModel.statusCode)
-                print(resultModel.message)
+                print(resultModel.message ?? "")
                 
                 dispatchGroup.leave()
             }
@@ -785,7 +813,7 @@ extension EditPlaceInfoPresenter {
             AVIROAPIManager().postEditPlaceURL(model
             ) { resultModel in
                 print(resultModel.statusCode)
-                print(resultModel.message)
+                print(resultModel.message ?? "")
                 
                 dispatchGroup.leave()
             }

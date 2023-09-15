@@ -615,17 +615,17 @@ final class HomeViewPresenter: NSObject {
         viewController?.refreshMapPlace(changedMarkerModel.mapPlace)
     }
     
-    func uploadReview(_ postReviewModel: AVIROCommentPost) {
+    func uploadReview(_ postReviewModel: AVIROEnrollCommentDTO) {
         AVIROAPIManager().postCommentModel(postReviewModel)
     }
     
-    func editMyReview(_ postEditReviewModel: AVIROEditCommentPost) {
+    func editMyReview(_ postEditReviewModel: AVIROEditCommenDTO) {
         AVIROAPIManager().postEditCommentModel(postEditReviewModel) { model in
             
         }
     }
     
-    func deleteMyReview(_ postDeleteReviewModel: AVIRODeleteCommentPost) {
+    func deleteMyReview(_ postDeleteReviewModel: AVIRODeleteCommentDTO) {
         AVIROAPIManager().postDeleteCommentModel(postDeleteReviewModel) { [weak self] model in
             DispatchQueue.main.async {
                 self?.viewController?.deleteMyReviewInView(postDeleteReviewModel.commentId)

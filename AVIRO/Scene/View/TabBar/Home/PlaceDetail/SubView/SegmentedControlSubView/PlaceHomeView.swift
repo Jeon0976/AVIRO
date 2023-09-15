@@ -112,11 +112,11 @@ final class PlaceHomeView: UIView {
         placeMenuView.dataBindingWhenInHomeView(menuModel)
     }
     
-    func updateReview(_ postModel: AVIROCommentPost) {
+    func updateReview(_ postModel: AVIROEnrollCommentDTO) {
         placeReviewsView.afterUpdateReviewAndUpdateInHomeView(postModel)
     }
     
-    func whenAfterEditReview(_ model: AVIROEditCommentPost) {
+    func whenAfterEditReview(_ model: AVIROEditCommenDTO) {
         placeReviewsView.afterEditReviewAndUpdateInHomeView(model)
     }
     

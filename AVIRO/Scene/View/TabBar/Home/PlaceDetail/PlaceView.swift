@@ -72,8 +72,8 @@ final class PlaceView: UIView {
     
     var editMenu: (() -> Void)?
     
-    var whenUploadReview: ((AVIROCommentPost) -> Void)?
-    var whenAfterEditReview: ((AVIROEditCommentPost) -> Void)?
+    var whenUploadReview: ((AVIROEnrollCommentDTO) -> Void)?
+    var whenAfterEditReview: ((AVIROEditCommenDTO) -> Void)?
     
     var reportReview: ((String) -> Void)?
     var editMyReview: ((String) -> Void)?

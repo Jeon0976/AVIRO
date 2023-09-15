@@ -175,7 +175,7 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
     }
     
     // MARK: Push Thrid RegistrationView
-    func pushThridRegistrationView(_ userInfoModel: UserInfoModel) {
+    func pushThridRegistrationView(_ userInfoModel: AVIROUserSignUpDTO) {
         let viewController = ThridRegistrationViewController()
         let presenter = ThridRegistrationPresenter(viewController: viewController,
                                                    userInfo: userInfoModel)

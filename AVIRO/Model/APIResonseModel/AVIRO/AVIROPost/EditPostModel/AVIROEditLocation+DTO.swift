@@ -15,4 +15,6 @@ struct AVIROEditLocationDTO: Encodable {
     let category: AVIROEditCommonBeforeAfterDTO?
     let address: AVIROEditCommonBeforeAfterDTO?
     let address2: AVIROEditCommonBeforeAfterDTO?
+    let x: AVIROEditCommonBeforeAfterDTO?
+    let y: AVIROEditCommonBeforeAfterDTO?
 }

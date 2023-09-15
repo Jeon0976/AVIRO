@@ -316,6 +316,7 @@ extension HomeSearchViewController {
         placeListTableView.separatorColor = .gray5
         placeListTableView.isHidden = true
         placeListTableView.tag = 0
+        placeListTableView.rowHeight = UITableView.automaticDimension
     }
     
     // MARK: History Header View Attribute
