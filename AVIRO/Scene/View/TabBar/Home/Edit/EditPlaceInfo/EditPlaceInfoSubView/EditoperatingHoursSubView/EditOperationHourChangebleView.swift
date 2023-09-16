@@ -499,7 +499,7 @@ final class EditOperationHourChangebleView: UIView {
             
             if open24hoursButton.isSelected {
                 operationTimeOpen.makeLabelText("00:00")
-                operationTimeClosed.makeLabelText("24:00")
+                operationTimeClosed.makeLabelText("23:59")
                 operationTimeOpen.isEnabledButton(false)
                 operationTimeClosed.isEnabledButton(false)
                 

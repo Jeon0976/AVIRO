@@ -12,19 +12,33 @@ protocol FirstRegistrationProtocol: NSObject {
     func makeAttribute()
     func makeGesture()
     func changeSubInfo(subInfo: String, isVaild: Bool)
-    func pushSecondRegistrationView(_ userInfoModel: AVIROUserSignUpDTO)
+    func pushSecondRegistrationView(_ signupModel: AVIROUserSignUpDTO)
 }
 
 final class FirstRegistrationPresenter {
     weak var viewController: FirstRegistrationProtocol?
     private let aviroManager = AVIROAPIManager()
 
-    var userInfoModel: AVIROUserSignUpDTO?
+    var userModel: CommonUserModel!
+    var signupModel: AVIROUserSignUpDTO!
     var userNickname: String?
         
-    init(viewController: FirstRegistrationProtocol, userInfoModel: AVIROUserSignUpDTO? = nil) {
+    init(viewController: FirstRegistrationProtocol,
+         userModel: CommonUserModel? = nil
+    ) {
         self.viewController = viewController
-        self.userInfoModel = userInfoModel
+        self.userModel = userModel
+        
+        bindingSignupModel()
+    }
+    
+    private func bindingSignupModel() {
+        self.signupModel = AVIROUserSignUpDTO(
+            userToken: userModel.token,
+            userName: userModel.name,
+            userEmail: userModel.email,
+            marketingAgree: false
+        )
     }
     
     func viewDidLoad() {
@@ -62,8 +76,9 @@ final class FirstRegistrationPresenter {
     
     // MARK: Nicmane + UserModel Push Method
     func pushUserInfo() {
-        guard var userInfoModel = userInfoModel else { return }
-        userInfoModel.nickname = userNickname
-        viewController?.pushSecondRegistrationView(userInfoModel)
+        guard let userNickname = userNickname else { return }
+        signupModel.nickname = userNickname
+        
+        viewController?.pushSecondRegistrationView(self.signupModel)
     }
 }

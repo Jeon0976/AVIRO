@@ -134,7 +134,7 @@ extension HomeSearchViewController: HomeSearchProtocol {
                 equalTo: view.bottomAnchor),
             
             // noHistoryView
-            noHistoryView.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 0),
+            noHistoryView.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 15),
             noHistoryView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             noHistoryView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             

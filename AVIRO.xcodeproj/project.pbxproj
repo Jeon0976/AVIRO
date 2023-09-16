@@ -25,6 +25,8 @@
 		C50F6AFD2A68FFCB00E942F5 /* EnrollMenuTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6AFC2A68FFCB00E942F5 /* EnrollMenuTableView.swift */; };
 		C50F6B022A6BC8E400E942F5 /* EnrollField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6B012A6BC8E400E942F5 /* EnrollField.swift */; };
 		C50F6B042A6BCD6900E942F5 /* CategoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6B032A6BCD6900E942F5 /* CategoryButton.swift */; };
+		C51000282AB5B8FB00F65C1F /* AppleUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51000272AB5B8FB00F65C1F /* AppleUserModel.swift */; };
+		C510002B2AB5BA7A00F65C1F /* CommonUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C510002A2AB5BA7A00F65C1F /* CommonUserModel.swift */; };
 		C51132BF2A559838006E1EC3 /* NotificationCenter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51132BE2A559838006E1EC3 /* NotificationCenter+Extension.swift */; };
 		C51132C12A559BCA006E1EC3 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51132C02A559BCA006E1EC3 /* AppController.swift */; };
 		C51385422AAADB0E001AB827 /* EditNicNameButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51385412AAADB0E001AB827 /* EditNicNameButton.swift */; };
@@ -213,6 +215,8 @@
 		C50F6AFC2A68FFCB00E942F5 /* EnrollMenuTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollMenuTableView.swift; sourceTree = "<group>"; };
 		C50F6B012A6BC8E400E942F5 /* EnrollField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollField.swift; sourceTree = "<group>"; };
 		C50F6B032A6BCD6900E942F5 /* CategoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryButton.swift; sourceTree = "<group>"; };
+		C51000272AB5B8FB00F65C1F /* AppleUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleUserModel.swift; sourceTree = "<group>"; };
+		C510002A2AB5BA7A00F65C1F /* CommonUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonUserModel.swift; sourceTree = "<group>"; };
 		C51132BE2A559838006E1EC3 /* NotificationCenter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationCenter+Extension.swift"; sourceTree = "<group>"; };
 		C51132C02A559BCA006E1EC3 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		C51385412AAADB0E001AB827 /* EditNicNameButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNicNameButton.swift; sourceTree = "<group>"; };
@@ -472,6 +476,7 @@
 		C50367F32A1795BE0020C6BB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C51000292AB5B90200F65C1F /* UserModel */,
 				C5EB51012A20926800B29CC1 /* TapBarModel */,
 				C5EB51022A20927400B29CC1 /* HomeViewModel */,
 				C5732C7A2A41D3F800CDC499 /* EnrollViewModel */,
@@ -540,6 +545,15 @@
 				C568577E2A7113A100F52715 /* MenuTableView */,
 			);
 			path = SubView;
+			sourceTree = "<group>";
+		};
+		C51000292AB5B90200F65C1F /* UserModel */ = {
+			isa = PBXGroup;
+			children = (
+				C51000272AB5B8FB00F65C1F /* AppleUserModel.swift */,
+				C510002A2AB5BA7A00F65C1F /* CommonUserModel.swift */,
+			);
+			path = UserModel;
 			sourceTree = "<group>";
 		};
 		C51132BD2A559826006E1EC3 /* Extension */ = {
@@ -1497,6 +1511,7 @@
 				C5732C732A41778A00CDC499 /* AVIROPostAPI.swift in Sources */,
 				C5732C7C2A41D41B00CDC499 /* VeganTableFieldModel.swift in Sources */,
 				C50DB7592A9B8E060078B501 /* EditLocationAddressMapView.swift in Sources */,
+				C510002B2AB5BA7A00F65C1F /* CommonUserModel.swift in Sources */,
 				C5ED46932AAEB02F00F2DA04 /* PlaceOperationHoursViewController.swift in Sources */,
 				C5732C752A41962D00CDC499 /* AVIRORequestAPI.swift in Sources */,
 				C513854C2AAB3B52001AB827 /* NickNameChangeblePresenter.swift in Sources */,
@@ -1509,6 +1524,7 @@
 				C52066262A7CC3CE0038ECCD /* NoHistoryLabelView.swift in Sources */,
 				C5803F5D2A88C3C00064A853 /* LocationUtility.swift in Sources */,
 				C5F1014F2A6D19A800C53286 /* VeganOptionButton.swift in Sources */,
+				C51000282AB5B8FB00F65C1F /* AppleUserModel.swift in Sources */,
 				C52066292A7CD5FC0038ECCD /* HistoryTableModel.swift in Sources */,
 				C5FD92EB2A9C786600CF4673 /* PublicAPIRequestComponents.swift in Sources */,
 				C50F6AF52A68FD6300E942F5 /* EnrollPlacePresenter.swift in Sources */,

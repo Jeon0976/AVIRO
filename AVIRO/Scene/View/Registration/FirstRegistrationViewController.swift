@@ -81,7 +81,7 @@ final class FirstRegistrationViewController: UIViewController {
     
     private var tapGesture = UITapGestureRecognizer()
     private var timer: Timer?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -209,30 +209,37 @@ extension FirstRegistrationViewController: UITextFieldDelegate {
         nicNameField.isPossible = nil
         nextButton.isEnabled = false
         
-        if textField.text == "" {
-            presenter.insertUserNickName("")
-            checkDuplication()
-            subInfo2.text = "(0/8)"
-            return
+        if let count = textField.text?.count {
+            changebleNickNameCount(count)
         }
-
-        nicNameField.isPossible = nil
-
+        
         let currentText = textField.text ?? ""
         
-        // MARK: 최대 갯수 제한
         if currentText.count > 8 {
-            let startIndex = currentText.startIndex
-            let endIndex = currentText.index(startIndex, offsetBy: 8 - 1)
-            let fixedText = String(currentText[startIndex...endIndex])
-            textField.text = fixedText
+            textField.text = limitText(currentText)
+            textField.activeShakeAfterNoSearchData()
             return
         }
         
         presenter.insertUserNickName(currentText)
-        subInfo2.text = "(\(currentText.count)/8)"
         
-        // 0.5초 후 nickname 확인 method 실행
+        checkNicknameDuplicationAfterDelay()
+    }
+    
+    private func changebleNickNameCount(_ count: Int) {
+        self.subInfo2.text = "(\(count)/8)"
+    }
+    
+    private func limitText(_ text: String) -> String {
+        let startIndex = text.startIndex
+        let endIndex = text.index(startIndex, offsetBy: 8 - 1)
+        
+        let fixedText = String(text[startIndex...endIndex])
+                
+        return fixedText
+    }
+    
+    private func checkNicknameDuplicationAfterDelay() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(timeInterval: 0.5,
                                      target: self,
@@ -242,8 +249,7 @@ extension FirstRegistrationViewController: UITextFieldDelegate {
         )
     }
     
-    // MARK: Nicname Check Timer 발동
-    @objc func checkDuplication() {
+    @objc private func checkDuplication() {
         presenter.checkDuplication()
     }
 }

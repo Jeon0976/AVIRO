@@ -11,7 +11,8 @@ struct AVIROEditLocationDTO: Encodable {
     let placeId: String
     let userId: String
     let nickname: String
-    let title: AVIROEditCommonBeforeAfterDTO
+    let title: String
+    let changedTitle: AVIROEditCommonBeforeAfterDTO?
     let category: AVIROEditCommonBeforeAfterDTO?
     let address: AVIROEditCommonBeforeAfterDTO?
     let address2: AVIROEditCommonBeforeAfterDTO?

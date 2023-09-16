@@ -22,7 +22,7 @@ final class NickNameChangebleViewController: UIViewController {
     private lazy var nicNameField: RegistrationField = {
         let field = RegistrationField()
         
-        field.text = UserId.shared.userNickName
+        field.text = UserId.shared.userNickname
         field.addRightCancelButton()
         
         return field
@@ -43,7 +43,7 @@ final class NickNameChangebleViewController: UIViewController {
     private lazy var subInfo2: UILabel = {
         let label = UILabel()
         
-        let nickNameCount = UserId.shared.userNickName.count
+        let nickNameCount = UserId.shared.userNickname.count
         
         label.text = "(\(nickNameCount)/8)"
         label.font = .systemFont(ofSize: 13, weight: .medium)
@@ -128,10 +128,6 @@ extension NickNameChangebleViewController: NickNameChangebleProtocol {
         self.view.addGestureRecognizer(tapGesture)
     }
     
-    private func changebleNickNameCount(_ count: Int) {
-        self.subInfo2.text = "(\(count)/8)"
-    }
-    
     func changeSubInfo(subInfo: String, isVaild: Bool) {
         self.subInfo.text = subInfo
         
@@ -182,6 +178,10 @@ extension NickNameChangebleViewController: UITextFieldDelegate {
         presenter.insertUserNickName(currentText)
         
         checkNicknameDuplicationAfterDelay()
+    }
+    
+    private func changebleNickNameCount(_ count: Int) {
+        self.subInfo2.text = "(\(count)/8)"
     }
     
     private func limitText(_ text: String) -> String {

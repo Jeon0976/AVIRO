@@ -106,14 +106,14 @@ extension LoginViewController: LoginViewProtocol {
     
     // MARK: No Login Button Tapped
     @objc func tapNoLoginButton() {
-        pushRegistration(AVIROUserSignUpDTO(userToken: "test",
-                                       userName: "",
-                                       userEmail: "",
-                                       nickname: "",
-                                       birthday: 0,
-                                       gender: "",
-                                       marketingAgree: false)
-        )
+//        pushRegistration(AVIROUserSignUpDTO(userToken: "test",
+//                                       userName: "",
+//                                       userEmail: "",
+//                                       nickname: "",
+//                                       birthday: 0,
+//                                       gender: "",
+//                                       marketingAgree: false)
+//        )
     }
     
     // MARK: Apple Login Tapped
@@ -136,7 +136,7 @@ extension LoginViewController: LoginViewProtocol {
     }
     
     // MARK: Push Registration ViewController
-    func pushRegistration(_ userInfo: AVIROUserSignUpDTO) {
+    func pushRegistration(_ userModel: CommonUserModel) {
         
         navigationController?.navigationBar.isHidden = false
         navigationItem.backButtonTitle = ""
@@ -144,7 +144,7 @@ extension LoginViewController: LoginViewProtocol {
         let viewController = FirstRegistrationViewController()
         
         let presenter = FirstRegistrationPresenter(viewController: viewController,
-                                              userInfoModel: userInfo)
+                                                   userModel: userModel)
         
         viewController.presenter = presenter
 
@@ -162,10 +162,8 @@ extension LoginViewController: LoginViewProtocol {
         style.titleFont = .systemFont(ofSize: 17, weight: .medium)
         
         let centerX = (self.view.frame.size.width) / 2
-        let viewHeight = self.view.safeAreaLayoutGuide.layoutFrame.height
-        
-        let yPosition: CGFloat = viewHeight - 240
-        
+        let yPosition = self.view.frame.height - 150
+                
         self.view.makeToast(title,
                             duration: 1.0,
                             point: CGPoint(x: centerX, y: yPosition),
@@ -200,16 +198,14 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
             let fullName = appleIDCredential.fullName?.formatted() ?? ""
             let email = appleIDCredential.email ?? ""
             
-            let userInfo = AVIROUserSignUpDTO(userToken: userIdentifier,
-                                         userName: fullName,
-                                         userEmail: email,
-                                         nickname: "",
-                                         birthday: 0,
-                                         gender: "",
-                                         marketingAgree: false
+            let appleUserModel = AppleUserModel(
+                userIdentifier: userIdentifier,
+                name: fullName,
+                email: email
             )
             
-            presenter.upLoadUserInfo(userInfo)
+            
+            presenter.whenCheckAfterAppleLogin(appleUserModel)
         }
     }
     

@@ -62,34 +62,48 @@ final class AppController {
     
     // MARK: 불러올 view 확인 메서드
     private func checkState() {
-        UserId.shared.userId = "test"
+//        UserId.shared.userId = "test"
         
         setHomeView()
 
 //         최초 튜토리얼 화면 안 봤을 때
-//        guard UserDefaults.standard.bool(forKey: "Tutorial") else {
-//            setTutorialView()
-//            return
-//        }
-//
-//        // TODO: 회원가입 페이지 다 만들면 변경
-//        // 자동로그인 토큰 없을 때
-//        guard let userIdentifier = userIdentifier else {
-//            setLoginView()
-//            return
-//        }
-//
-//        let userCheck = UserCheckInput(userToken: userIdentifier)
-//
-//        // 회원이 서버에 없을 때
-//        aviroManager.postCheckUserModel(userCheck) { userInfo in
-//            DispatchQueue.main.async { [weak self] in
-//                if userInfo.isMember {
-//                    self?.setHomeView()
-//                } else {
-//                    self?.setLoginView()
-//                }
-//            }
-//        }
+        guard UserDefaults.standard.bool(forKey: "Tutorial") else {
+            setTutorialView()
+            return
+        }
+
+        // TODO: 회원가입 페이지 다 만들면 변경
+        // 자동로그인 토큰 없을 때
+        guard let userIdentifier = userIdentifier else {
+            setLoginView()
+            return
+        }
+
+        // TODO: 로그인 기능 추가 시 업데이트
+        let userCheck = AVIROAppleUserCheckMemberDTO(userToken: userIdentifier)
+        
+        // 회원이 서버에 없을 때
+        aviroManager.postCheckUserModel(userCheck) { userInfo in
+            DispatchQueue.main.async { [weak self] in
+                if userInfo.statusCode == 200 {
+                    let userId = userInfo.data?.userId ?? ""
+                    let userName = userInfo.data?.userName ?? ""
+                    let userEmail = userInfo.data?.userEmail ?? ""
+                    let userNickname = userInfo.data?.nickname ?? ""
+                    let marketingAgree = userInfo.data?.marketingAgree ?? 0
+                    
+                    UserId.shared.whenLogin(
+                        userId: userId,
+                        userName: userName,
+                        userNickname: userNickname,
+                        marketingAgree: marketingAgree
+                    )
+                    
+                    self?.setHomeView()
+                } else {
+                    self?.setLoginView()
+                }
+            }
+        }
     }
 }

@@ -299,7 +299,7 @@ final class PlaceInfoView: UIView {
     func dataBindingWhenInHomeView(_ infoModel: PlaceInfoData?) {
         guard let infoModel = infoModel else { return }
 
-        addressLabel.text = infoModel.address
+        addressLabel.text = infoModel.address + " " + (infoModel.address2 ?? "")
         updatedTimeLabel.text = "업데이트 " + infoModel.updatedTime
         
         if infoModel.phone == "" {
@@ -307,6 +307,8 @@ final class PlaceInfoView: UIView {
         } else {
             phoneButton.setTitle(infoModel.phone, for: .normal)
         }
+        
+        print(infoModel)
         
         if !infoModel.haveTime {
             showOperationButton()

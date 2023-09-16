@@ -470,7 +470,7 @@ extension EditPlaceInfoPresenter {
         else { return }
         
         let userId = UserId.shared.userId
-        let nickName = UserId.shared.userNickName
+        let nickName = UserId.shared.userNickname
         
         let dispatchGroup = DispatchGroup()
         
@@ -536,16 +536,14 @@ extension EditPlaceInfoPresenter {
                 placeId: placeId,
                 userId: userId,
                 nickname: nickName,
-                title: isChangedTitle ?
+                title: placeTitle,
+                changedTitle: isChangedTitle ?
                     AVIROEditCommonBeforeAfterDTO(
                         before: placeTitle,
                         after: afterChangedTitle
                     )
                 :
-                    AVIROEditCommonBeforeAfterDTO(
-                        before: placeTitle,
-                        after: placeTitle
-                    ),
+                    nil,
                 category: isChangedCategory ?
                     AVIROEditCommonBeforeAfterDTO(
                         before: beforeCategory,

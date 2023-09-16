@@ -147,7 +147,7 @@ extension MyPageViewController: MyPageViewProtocol {
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
             mail.setToRecipients(["AVRIO@example.com"])
-            mail.setSubject("[AVIRO] \(UserId.shared.userNickName)님의 문의 및 의견")
+            mail.setSubject("[AVIRO] \(UserId.shared.userNickname)님의 문의 및 의견")
             mail.setMessageBody("본문 내용입니다.", isHTML: false)
             
             present(mail, animated: true)

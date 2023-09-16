@@ -18,7 +18,7 @@ protocol NickNameChangebleProtocol: NSObject {
 final class NickNameChangeblePresenter {
     weak var viewController: NickNameChangebleProtocol?
     
-    private var initNickName = UserId.shared.userNickName
+    private var initNickName = UserId.shared.userNickname
     var userNickname: String?
     
     init(viewController: NickNameChangebleProtocol) {
