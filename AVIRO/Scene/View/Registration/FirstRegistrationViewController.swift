@@ -14,7 +14,7 @@ final class FirstRegistrationViewController: UIViewController {
         let label = UILabel()
         
         label.text = "반가워요!\n닉네임을 정해주세요."
-        label.font = .systemFont(ofSize: 24, weight: .bold)
+        label.font = .pretendard(size: 24, weight: .bold)
         label.textColor = .main
         label.numberOfLines = 2
         
@@ -25,7 +25,7 @@ final class FirstRegistrationViewController: UIViewController {
         let label = UILabel()
         
         label.text = "어비로에 불릴 닉네임이에요."
-        label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.font = .pretendard(size: 14, weight: .regular)
         label.textColor = .gray1
         
         return label
@@ -34,7 +34,6 @@ final class FirstRegistrationViewController: UIViewController {
     private lazy var nicNameField: RegistrationField = {
         let field = RegistrationField()
         
-        field.font = .systemFont(ofSize: 18, weight: .medium)
         field.makePlaceHolder("닉네임을 입력해주세요")
         field.isPossible = nil
         field.delegate = self
@@ -46,7 +45,7 @@ final class FirstRegistrationViewController: UIViewController {
         let label = UILabel()
         
         label.text = "이모지, 특수문자(-, _ 제외)를 사용할 수 없습니다."
-        label.font = .systemFont(ofSize: 13, weight: .medium)
+        label.font = .pretendard(size: 13, weight: .regular)
         label.numberOfLines = 2
         label.lineBreakMode = .byCharWrapping
         label.textColor = .gray2
@@ -58,15 +57,15 @@ final class FirstRegistrationViewController: UIViewController {
         let label = UILabel()
         
         label.text = "(0/8)"
-        label.font = .systemFont(ofSize: 13, weight: .medium)
+        label.font = .pretendard(size: 13, weight: .regular)
         label.textColor = .gray2
         label.textAlignment = .right
         
         return label
     }()
     
-    private lazy var nextButton: BottomButton1 = {
-        let button = BottomButton1()
+    private lazy var nextButton: NextPageButton = {
+        let button = NextPageButton()
         
         button.setTitle("다음으로", for: .normal)
         button.isEnabled = false
@@ -136,7 +135,7 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
                 equalTo: subInfo.topAnchor),
             subInfo2.trailingAnchor.constraint(
                 equalTo: view.trailingAnchor, constant: -40),
-            subInfo2.widthAnchor.constraint(equalToConstant: 50),
+            subInfo2.widthAnchor.constraint(equalToConstant: 32),
             
             // next Button
             nextButton.bottomAnchor.constraint(
@@ -167,11 +166,12 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
         if isVaild {
             nextButton.isEnabled = true
             nicNameField.isPossible = true
-            self.subInfo.textColor = .exampleRegistration
+            self.subInfo.textColor = .gray2
         } else {
             nextButton.isEnabled = false
             nicNameField.isPossible = false
-            self.subInfo.textColor = .explainImPossible
+            self.subInfo.textColor = .warning
+            nicNameField.activeShakeAfterNoSearchData()
         }
     }
     

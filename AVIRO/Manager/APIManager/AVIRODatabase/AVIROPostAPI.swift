@@ -206,4 +206,14 @@ struct AVIROPostAPI {
         
         return components
     }
+    
+    mutating func userWithdraw() -> URLComponents {
+        var components = URLComponents()
+        
+        components.scheme = AVIROPostAPI.scheme
+        components.host = host
+        components.path = AVIROPostAPI.userWithdrawPath
+        
+        return components
+    }
 }

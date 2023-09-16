@@ -63,7 +63,7 @@ final class TutorialViewController: UIViewController {
     
     var viewPageControl = UIPageControl()
     
-    var nextButton = BottomButton1()
+    var nextButton = NextPageButton()
         
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -26,7 +26,7 @@ class RegistrationField: UITextField {
                 self.rightView = makeRightView(isPossible)
                 self.rightViewMode = .always
             } else {
-                self.backgroundColor = .backField
+                self.backgroundColor = .gray6
                 self.rightView = nil
             }
         }
@@ -58,15 +58,19 @@ class RegistrationField: UITextField {
     }
     
     private func configuration() {
-        self.textColor = .registrationColor
+        self.textColor = .gray0
         self.layer.cornerRadius = 25
-        self.backgroundColor = .backField
+        self.backgroundColor = .gray6
         self.rightViewMode = .unlessEditing
-        self.font = .systemFont(ofSize: 18, weight: .medium)
+        self.font = .pretendard(size: 18, weight: .medium)
     }
     
     private func makeRightView(_ isPossible: Bool) -> UIView {
-        let image = isPossible ? UIImage(named: Image.Registration.check)?.withTintColor(.main!) : UIImage(named: Image.Registration.xCheck)
+        let image = isPossible ?
+        UIImage(named: Image.Registration.check)?.withTintColor(.main!)
+        :
+        UIImage(named: Image.Registration.xCheck)
+        
         let imageView = UIImageView(image: image)
         
         imageView.contentMode = .scaleAspectFit
@@ -81,7 +85,7 @@ class RegistrationField: UITextField {
     func makePlaceHolder(_ placeHolder: String) {
         self.attributedPlaceholder = NSAttributedString(
             string: placeHolder,
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray3]
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray3 ?? UIColor.lightGray]
         )
     }
     

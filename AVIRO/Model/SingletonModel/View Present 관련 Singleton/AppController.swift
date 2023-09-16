@@ -62,8 +62,6 @@ final class AppController {
     
     // MARK: 불러올 view 확인 메서드
     private func checkState() {
-//        UserId.shared.userId = "test"
-        
         setHomeView()
 
 //         최초 튜토리얼 화면 안 봤을 때
@@ -72,7 +70,6 @@ final class AppController {
             return
         }
 
-        // TODO: 회원가입 페이지 다 만들면 변경
         // 자동로그인 토큰 없을 때
         guard let userIdentifier = userIdentifier else {
             setLoginView()
@@ -82,10 +79,12 @@ final class AppController {
         // TODO: 로그인 기능 추가 시 업데이트
         let userCheck = AVIROAppleUserCheckMemberDTO(userToken: userIdentifier)
         
+        print(userCheck)
         // 회원이 서버에 없을 때
         aviroManager.postCheckUserModel(userCheck) { userInfo in
             DispatchQueue.main.async { [weak self] in
                 if userInfo.statusCode == 200 {
+                    print("TestTest")
                     let userId = userInfo.data?.userId ?? ""
                     let userName = userInfo.data?.userName ?? ""
                     let userEmail = userInfo.data?.userEmail ?? ""
@@ -98,7 +97,7 @@ final class AppController {
                         userNickname: userNickname,
                         marketingAgree: marketingAgree
                     )
-                    
+                    print(userInfo)
                     self?.setHomeView()
                 } else {
                     self?.setLoginView()

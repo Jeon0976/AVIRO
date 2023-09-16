@@ -55,10 +55,11 @@ final class LoginViewPresenter {
                      forKey: "userIdentifier")
         
         let userCheck = AVIROAppleUserCheckMemberDTO(userToken: appleUserModel.userIdentifier)
-        
+                
         AVIROAPIManager().postCheckUserModel(userCheck) { userInfo in
+            print(userInfo)
             DispatchQueue.main.async { [weak self] in
-                if userInfo.statusCode == 200 {
+                if userInfo.data != nil {
                     let userId = userInfo.data?.userId ?? ""
                     let userName = userInfo.data?.userName ?? ""
                     let userEmail = userInfo.data?.userEmail ?? ""

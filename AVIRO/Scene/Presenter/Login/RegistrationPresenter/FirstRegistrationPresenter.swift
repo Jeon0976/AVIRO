@@ -69,7 +69,10 @@ final class FirstRegistrationPresenter {
             )
             
             DispatchQueue.main.async { [weak self] in
-                self?.viewController?.changeSubInfo(subInfo: result.message, isVaild: result.isValid ?? false)
+                self?.viewController?.changeSubInfo(
+                    subInfo: result.message,
+                    isVaild: result.isValid ?? false
+                )
             }
         }
     }

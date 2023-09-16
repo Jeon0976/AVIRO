@@ -10,24 +10,96 @@ import UIKit
 final class SecondRegistrationViewController: UIViewController {
     lazy var presenter = SecondRegistrationPresenter(viewController: self)
     
-    var titleLabel = UILabel()
-    var subTitleLabel = UILabel()
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        
+        label.text = "곧 어비로를\n사용할 수 있어요!"
+        label.font = .pretendard(size: 24, weight: .bold)
+        label.textColor = .main
+        label.numberOfLines = 2
+        
+        return label
+    }()
     
-    var birthField = RegistrationField()
-    var birthExample = UILabel()
+    private lazy var subTitleLabel: UILabel = {
+        let label = UILabel()
+        
+        label.text = "연도와 성별은 선택사항이에요."
+        label.font = .pretendard(size: 14, weight: .regular)
+        label.textColor = .gray1
+        
+        return label
+    }()
     
-    var genderButton: [GenderButton] = []
-    var male = GenderButton()
-    var female = GenderButton()
-    var other = GenderButton()
+    private lazy var birthField: RegistrationField = {
+        let field = RegistrationField()
+        
+        field.keyboardType = .numberPad
+        field.makePlaceHolder("0000.00.00")
+        field.delegate = self
+        
+        return field
+    }()
     
-    var genderStackView = UIStackView()
-    var genderExample = UILabel()
+    private lazy var birthExample: UILabel = {
+        let label = UILabel()
+        
+        // birthExample
+        label.text = "태어난 연도를 입력해주세요 (선택)"
+        label.font = .pretendard(size: 13, weight: .regular)
+        label.textColor = .gray2
+        
+        return label
+    }()
     
-    var nextButton = BottomButton1()
+    private lazy var genderButton: [GenderButton] = []
+    private lazy var genderStackView = UIStackView()
+
+    private lazy var male: GenderButton = {
+        let button = GenderButton()
+        
+        button.setTitle("남자", for: .normal)
+        
+        return button
+    }()
     
-    var tapGesture = UITapGestureRecognizer()
-    var timer: Timer?
+    private lazy var female: GenderButton = {
+        let button = GenderButton()
+        
+        button.setTitle("여자", for: .normal)
+
+        return button
+    }()
+    
+    private lazy var other: GenderButton = {
+        let button = GenderButton()
+        
+        button.setTitle("기타", for: .normal)
+        
+        return button
+    }()
+    
+    private lazy var genderExample: UILabel = {
+        let label = UILabel()
+        
+        label.text = "성별을 선택해주세요 (선택)"
+        label.font = .pretendard(size: 13, weight: .regular)
+        label.textColor = .gray2
+        
+        return label
+    }()
+    
+    private lazy var nextButton: NextPageButton = {
+        let button = NextPageButton()
+        
+        button.setTitle("다음으로", for: .normal)
+        button.addTarget(self, action: #selector(tappedNextButton), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    private lazy var tapGesture = UITapGestureRecognizer()
+    private var timer: Timer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,8 +109,7 @@ final class SecondRegistrationViewController: UIViewController {
 }
 
 extension SecondRegistrationViewController: SecondRegistrationProtocol {
-    // MARK: Layout
-    func makeLayout() {
+    func setupLayout() {
         [
             male,
             female,
@@ -103,73 +174,47 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
         ])
     }
     
-    // MARK: Attribute
-    func makeAttribute() {
+    func setupAttribute() {
         // view ...
-        view.backgroundColor = .white
+        view.backgroundColor = .gray7
         navigationItem.backButtonTitle = ""
-        
-        // tapGesture
-        tapGesture.delegate = self
-        tapGesture.cancelsTouchesInView = false
-        view.addGestureRecognizer(tapGesture)
-        
-        // titleLabel
-        titleLabel.text = "곧 어비로를\n사용할 수 있어요!"
-        titleLabel.font = .systemFont(ofSize: 24, weight: .bold)
-        titleLabel.textColor = .allVegan
-        titleLabel.numberOfLines = 2
-
-        // subTitle
-        subTitleLabel.text = "연도와 성별은 선택사항이에요."
-        subTitleLabel.font = .systemFont(ofSize: 14, weight: .medium)
-        subTitleLabel.textColor = .subTitleColor
-        
-        // birthField
-        birthField.keyboardType = .numberPad
-        birthField.makePlaceHolder("YYYY.MM.DD")
-        birthField.delegate = self
-
-        // birthExample
-        birthExample.text = "태어난 연도를 입력해주세요 (선택)"
-        birthExample.font = .systemFont(ofSize: 13)
-        birthExample.numberOfLines = 0
-        birthExample.textColor = .exampleRegistration
-        
+        setupCustomBackButton(true)
+    
         // genderbutton
-        male.setTitle("남자", for: .normal)
-        female.setTitle("여자", for: .normal)
-        other.setTitle("기타", for: .normal)
         genderButton = [male, female, other]
         
         genderButton.forEach {
             $0.addTarget(self, action: #selector(genderButtonTapped(_:)), for: .touchUpInside)
         }
-        genderStackView.backgroundColor = .white
+        genderStackView.backgroundColor = .gray7
         
-        // genderExample
-        genderExample.text = "성별을 선택해주세요 (선택)"
-        genderExample.font = .systemFont(ofSize: 13)
-        genderExample.numberOfLines = 0
-        genderExample.textColor = .exampleRegistration
-        
-        // nextButton
-        nextButton.setTitle("다음으로", for: .normal)
-        nextButton.addTarget(self, action: #selector(tappedNextButton), for: .touchUpInside)
+    }
+    
+    func setupGesture() {
+        tapGesture.delegate = self
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
     }
     
     // MARK: InvalidDate
-    func invalidDate() {
-        birthField.isPossible = false
-        birthExample.textColor = .explainImPossible
+    func isInvalidDate() {
+        birthField.backgroundColor = .bgRed
+        birthExample.textColor = .warning
         birthExample.text = "올바른 형식으로 입력해주세요"
         presenter.isWrongBirth = true
     }
     
+    func isValidDate() {
+        birthField.backgroundColor = .bgNavy
+        birthExample.textColor = .gray2
+        birthExample.text = "태어난 연도를 입력해주세요 (선택)"
+        presenter.isWrongBirth = false
+    }
+    
     // MARK: Birth Init
     func birthInit() {
-        birthField.isPossible = nil
-        birthExample.textColor = .exampleRegistration
+        birthField.backgroundColor = .bgNavy
+        birthExample.textColor = .gray2
         birthExample.text = "태어난 연도를 입력해주세요 (선택)"
         presenter.isWrongBirth = false
     }
@@ -189,16 +234,8 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
             button.isSelected = (button == sender)
             
             if button.isSelected {
-                switch button.currentAttributedTitle?.string {
-                case "남자":
-                    presenter.gender = .male
-                case "여자":
-                    presenter.gender = .female
-                case "기타":
-                    presenter.gender = .other
-                default:
-                    break
-                }
+                guard let gender = button.currentAttributedTitle?.string else { return }
+                presenter.gender = Gender(rawValue: gender)
             }
         }
     }
@@ -221,7 +258,7 @@ extension SecondRegistrationViewController: UIGestureRecognizerDelegate {
 }
 
 extension SecondRegistrationViewController: UITextFieldDelegate {
-    //MARK: 년, 월 단위로 . 찍기
+    // MARK: 년, 월 단위로 . 찍기
     func textFieldDidChangeSelection(_ textField: UITextField) {
         guard var text = textField.text else { return }
 
@@ -272,6 +309,7 @@ extension SecondRegistrationViewController: UITextFieldDelegate {
             textField.selectedTextRange = textField.textRange(from: cursorPosition!, to: cursorPosition!)
             return false
         }
+        
         return true
     }
 

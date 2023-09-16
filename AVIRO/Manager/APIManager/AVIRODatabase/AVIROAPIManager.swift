@@ -444,7 +444,10 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
         }
     
     // MARK: Post Nicname Check
-    func postCheckNickname(_ nicname: AVIRONicknameIsDuplicatedCheckDTO, completionHandler: @escaping ((AVIROAfterNicknameIsDuplicatedCheckDTO) -> Void)) {
+    func postCheckNickname(
+        _ nicname: AVIRONicknameIsDuplicatedCheckDTO,
+        completionHandler: @escaping ((AVIROAfterNicknameIsDuplicatedCheckDTO) -> Void)
+    ) {
         guard let url = postAPI.nicnameCheck().url else { return }
         
         guard let jsonData = try? JSONEncoder().encode(nicname) else {
@@ -465,6 +468,42 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
             if let data = data {
                 if let userCheck = try? JSONDecoder().decode(AVIROAfterNicknameIsDuplicatedCheckDTO.self, from: data) {
                     completionHandler(userCheck)
+                }
+                return
+            }
+            
+            guard response != nil else {
+                print(response ?? "response error")
+                return
+            }
+        }.resume()
+    }
+    
+    // MARK: Post Withdrawal User
+    func postUserWithrawal(
+        _ userModel: AVIROUserWithdrawDTO,
+        completionHandler: @escaping ((AVIROPostResultDTO) -> Void)
+    ) {
+        guard let url = postAPI.userWithdraw().url else { return }
+        
+        guard let jsonData = try? JSONEncoder().encode(userModel) else {
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        session.dataTask(with: request) { data, response, error in
+            guard error == nil else {
+                print("error")
+                return
+            }
+            
+            if let data = data {
+                if let resultModel = try? JSONDecoder().decode(AVIROPostResultDTO.self, from: data) {
+                    completionHandler(resultModel)
                 }
                 return
             }

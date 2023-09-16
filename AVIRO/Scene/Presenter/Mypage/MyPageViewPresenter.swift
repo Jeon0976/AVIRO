@@ -7,14 +7,24 @@
 
 import UIKit
 
+import KeychainSwift
+
+enum PushLoginViewEnum {
+    case logout
+    case withdrawal
+}
+
 protocol MyPageViewProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
     func updateMyData(_ myDataModel: MyDataModel)
+    func pushLoginViewController(with: PushLoginViewEnum)
 }
 
 final class MyPageViewPresenter {
     weak var viewController: MyPageViewProtocol?
+    
+    private let keychain = KeychainSwift()
     
     private var myDataModel: MyDataModel? {
         didSet {
@@ -46,5 +56,27 @@ final class MyPageViewPresenter {
         let myReview = "0"
         
         myDataModel = MyDataModel(id: myNickName, place: myPlace, review: myReview, star: myStar)
+    }
+    
+    func whenAfterLogout() {
+        self.keychain.delete("userIdentifier")
+        
+        viewController?.pushLoginViewController(with: .logout)
+    }
+    
+    func whenAfterWithdrawal() {
+        guard let userToken = self.keychain.get("userIdentifier") else { return }
+        
+        let userModel = AVIROUserWithdrawDTO(userToken: userToken)
+        
+        AVIROAPIManager().postUserWithrawal(userModel) { [weak self] resultModel in
+            print(resultModel)
+            if resultModel.statusCode == 200 {
+                self?.keychain.delete("userIdentifier")
+                DispatchQueue.main.async {
+                    self?.viewController?.pushLoginViewController(with: .withdrawal)
+                }
+            }
+        }
     }
 }

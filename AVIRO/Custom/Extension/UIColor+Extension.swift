@@ -68,10 +68,6 @@ extension UIColor {
     class var exampleRegistration: UIColor? {
         UIColor(named: "ExplainRegistration")
     }
-    
-    class var explainImPossible: UIColor? {
-        UIColor(named: "ExplainImPossible")
-    }
 }
 
 // MARK: Background

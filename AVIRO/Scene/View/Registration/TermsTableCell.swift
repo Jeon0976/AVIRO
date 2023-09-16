@@ -10,14 +10,37 @@ import UIKit
 final class TermsTableCell: UITableViewCell {
     static let identifier = "TermsTableCell"
     
-    var check = UIButton()
-    var termsLabel = UILabel()
+    private lazy var check: UIButton = {
+        let button = UIButton()
+        
+        button.addTarget(self, action: #selector(tappedCheck), for: .touchUpInside)
+        button.setImage(UIImage(systemName: "checkmark"), for: .normal)
+        button.tintColor = .gray4
+        
+        return button
+    }()
+    
+    private lazy var termsLabel: UILabel = {
+        let label = UILabel()
+        
+        label.font = .pretendard(size: 14, weight: .medium)
+        
+        return label
+    }()
     
     var checkButtonTapped: (() -> Void) = { }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        setupLayout()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+    
+    private func setupLayout() {
         [
             check,
             termsLabel
@@ -34,20 +57,6 @@ final class TermsTableCell: UITableViewCell {
             termsLabel.leadingAnchor.constraint(equalTo: check.trailingAnchor, constant: 10),
             termsLabel.centerYAnchor.constraint(equalTo: check.centerYAnchor)
         ])
-        
-        makeAttribute()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func makeAttribute() {
-        check.addTarget(self, action: #selector(tappedCheck), for: .touchUpInside)
-        check.setImage(UIImage(systemName: "checkmark"), for: .normal)
-        check.tintColor = .subTitle
-        
-        termsLabel.font = .systemFont(ofSize: 14, weight: .medium)
     }
     
     func makeCellData(check: Bool, term: String) {
@@ -57,19 +66,19 @@ final class TermsTableCell: UITableViewCell {
                                       range: NSRange(location: 0, length: term.count)
         )
         attributedString.addAttribute(.foregroundColor,
-                                      value: UIColor.registrationColor,
+                                      value: UIColor.gray0,
                                       range: NSRange(location: 0, length: term.count)
         )
         
         termsLabel.attributedText = attributedString
+        
         self.check.isSelected = check
-
-        self.check.tintColor = check ? .allVegan : .subTitle
+        self.check.tintColor = check ? .main : .gray4
     }
     
     @objc func tappedCheck() {
         check.isSelected = !check.isSelected
-        check.tintColor = check.isSelected ? .allVegan : .subTitle
+        check.tintColor = check.isSelected ? .main : .gray4
         
         checkButtonTapped()
     }

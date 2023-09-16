@@ -27,6 +27,16 @@
 		C50F6B042A6BCD6900E942F5 /* CategoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6B032A6BCD6900E942F5 /* CategoryButton.swift */; };
 		C51000282AB5B8FB00F65C1F /* AppleUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51000272AB5B8FB00F65C1F /* AppleUserModel.swift */; };
 		C510002B2AB5BA7A00F65C1F /* CommonUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C510002A2AB5BA7A00F65C1F /* CommonUserModel.swift */; };
+		C51000382AB5F3BD00F65C1F /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51000372AB5F3BD00F65C1F /* UIFont+Extension.swift */; };
+		C510004B2AB5F76600F65C1F /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = C510003F2AB5F59600F65C1F /* Pretendard-Thin.otf */; };
+		C510004C2AB5F76600F65C1F /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = C510003C2AB5F59600F65C1F /* Pretendard-Light.otf */; };
+		C510004D2AB5F76600F65C1F /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = C51000412AB5F59600F65C1F /* Pretendard-ExtraLight.otf */; };
+		C510004E2AB5F76600F65C1F /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = C51000402AB5F59600F65C1F /* Pretendard-Medium.otf */; };
+		C510004F2AB5F76600F65C1F /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C510003B2AB5F59600F65C1F /* Pretendard-Bold.otf */; };
+		C51000502AB5F76600F65C1F /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = C510003D2AB5F59600F65C1F /* Pretendard-Black.otf */; };
+		C51000512AB5F76600F65C1F /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C510003A2AB5F59600F65C1F /* Pretendard-ExtraBold.otf */; };
+		C51000522AB5F76600F65C1F /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = C51000392AB5F59600F65C1F /* Pretendard-Regular.otf */; };
+		C51000532AB5F76600F65C1F /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C510003E2AB5F59600F65C1F /* Pretendard-SemiBold.otf */; };
 		C51132BF2A559838006E1EC3 /* NotificationCenter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51132BE2A559838006E1EC3 /* NotificationCenter+Extension.swift */; };
 		C51132C12A559BCA006E1EC3 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51132C02A559BCA006E1EC3 /* AppController.swift */; };
 		C51385422AAADB0E001AB827 /* EditNicNameButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51385412AAADB0E001AB827 /* EditNicNameButton.swift */; };
@@ -160,7 +170,7 @@
 		C5D8EB282A9D797000EF629F /* OtherActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D8EB272A9D797000EF629F /* OtherActionsView.swift */; };
 		C5D93D9F2A581EC800629C39 /* FirstRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D93D9E2A581EC800629C39 /* FirstRegistrationViewController.swift */; };
 		C5D93DA12A581F5A00629C39 /* FirstRegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D93DA02A581F5A00629C39 /* FirstRegistrationPresenter.swift */; };
-		C5D93DA32A58718300629C39 /* BottomButton1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D93DA22A58718300629C39 /* BottomButton1.swift */; };
+		C5D93DA32A58718300629C39 /* NextPageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D93DA22A58718300629C39 /* NextPageButton.swift */; };
 		C5E143A72AB43B8F007AC8C9 /* AVIROPostResultDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E143A62AB43B8F007AC8C9 /* AVIROPostResultDTO.swift */; };
 		C5E306E72A6FB4ED00C11CF7 /* MenuField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E306E62A6FB4ED00C11CF7 /* MenuField.swift */; };
 		C5E430AD2A5D142C00CB67EC /* LoginJson.json in Resources */ = {isa = PBXBuildFile; fileRef = C5E430AB2A5D142C00CB67EC /* LoginJson.json */; };
@@ -217,6 +227,16 @@
 		C50F6B032A6BCD6900E942F5 /* CategoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryButton.swift; sourceTree = "<group>"; };
 		C51000272AB5B8FB00F65C1F /* AppleUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleUserModel.swift; sourceTree = "<group>"; };
 		C510002A2AB5BA7A00F65C1F /* CommonUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonUserModel.swift; sourceTree = "<group>"; };
+		C51000372AB5F3BD00F65C1F /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
+		C51000392AB5F59600F65C1F /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		C510003A2AB5F59600F65C1F /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
+		C510003B2AB5F59600F65C1F /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		C510003C2AB5F59600F65C1F /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
+		C510003D2AB5F59600F65C1F /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
+		C510003E2AB5F59600F65C1F /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		C510003F2AB5F59600F65C1F /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
+		C51000402AB5F59600F65C1F /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		C51000412AB5F59600F65C1F /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
 		C51132BE2A559838006E1EC3 /* NotificationCenter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationCenter+Extension.swift"; sourceTree = "<group>"; };
 		C51132C02A559BCA006E1EC3 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		C51385412AAADB0E001AB827 /* EditNicNameButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNicNameButton.swift; sourceTree = "<group>"; };
@@ -354,7 +374,7 @@
 		C5D8EB272A9D797000EF629F /* OtherActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherActionsView.swift; sourceTree = "<group>"; };
 		C5D93D9E2A581EC800629C39 /* FirstRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstRegistrationViewController.swift; sourceTree = "<group>"; };
 		C5D93DA02A581F5A00629C39 /* FirstRegistrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstRegistrationPresenter.swift; sourceTree = "<group>"; };
-		C5D93DA22A58718300629C39 /* BottomButton1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomButton1.swift; sourceTree = "<group>"; };
+		C5D93DA22A58718300629C39 /* NextPageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextPageButton.swift; sourceTree = "<group>"; };
 		C5E143A62AB43B8F007AC8C9 /* AVIROPostResultDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROPostResultDTO.swift; sourceTree = "<group>"; };
 		C5E306E62A6FB4ED00C11CF7 /* MenuField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuField.swift; sourceTree = "<group>"; };
 		C5E430AB2A5D142C00CB67EC /* LoginJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = LoginJson.json; path = ../../../../../Downloads/LoginJson.json; sourceTree = "<group>"; };
@@ -422,6 +442,7 @@
 		C50367EC2A1791620020C6BB /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				C510002C2AB5F1E600F65C1F /* Fonts */,
 				C5E430AA2A5D13B600CB67EC /* Lottie */,
 				C52FA3422A175B20005E70DC /* AppDelegate.swift */,
 				C52FA3442A175B20005E70DC /* SceneDelegate.swift */,
@@ -556,6 +577,22 @@
 			path = UserModel;
 			sourceTree = "<group>";
 		};
+		C510002C2AB5F1E600F65C1F /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				C510003D2AB5F59600F65C1F /* Pretendard-Black.otf */,
+				C510003B2AB5F59600F65C1F /* Pretendard-Bold.otf */,
+				C510003A2AB5F59600F65C1F /* Pretendard-ExtraBold.otf */,
+				C51000412AB5F59600F65C1F /* Pretendard-ExtraLight.otf */,
+				C510003C2AB5F59600F65C1F /* Pretendard-Light.otf */,
+				C51000402AB5F59600F65C1F /* Pretendard-Medium.otf */,
+				C51000392AB5F59600F65C1F /* Pretendard-Regular.otf */,
+				C510003E2AB5F59600F65C1F /* Pretendard-SemiBold.otf */,
+				C510003F2AB5F59600F65C1F /* Pretendard-Thin.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		C51132BD2A559826006E1EC3 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -568,6 +605,7 @@
 				C50E6F6E2A8F10B500703B9E /* UILabel+Extension.swift */,
 				C58EC7CB2AB171C000401FF7 /* UIButton+Extension.swift */,
 				C59491D22AB0336100880B4B /* UIView+Extension.swift */,
+				C51000372AB5F3BD00F65C1F /* UIFont+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -804,7 +842,7 @@
 			children = (
 				C51385402AAADAF8001AB827 /* MyPage */,
 				C5C961962A8DA5680016E2F8 /* PlaceView */,
-				C5D93DA22A58718300629C39 /* BottomButton1.swift */,
+				C5D93DA22A58718300629C39 /* NextPageButton.swift */,
 				C568577C2A70E1F600F52715 /* BottomButton2.swift */,
 				C53893152A5EC0C500CB9A54 /* GenderButton.swift */,
 				C50F6B032A6BCD6900E942F5 /* CategoryButton.swift */,
@@ -1429,10 +1467,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				C52FA34F2A175B20005E70DC /* LaunchScreen.storyboard in Resources */,
+				C510004F2AB5F76600F65C1F /* Pretendard-Bold.otf in Resources */,
+				C51000512AB5F76600F65C1F /* Pretendard-ExtraBold.otf in Resources */,
 				C5E430AE2A5D142C00CB67EC /* RegistrationCompleted.json in Resources */,
+				C51000522AB5F76600F65C1F /* Pretendard-Regular.otf in Resources */,
+				C510004D2AB5F76600F65C1F /* Pretendard-ExtraLight.otf in Resources */,
 				C5E430AD2A5D142C00CB67EC /* LoginJson.json in Resources */,
+				C510004B2AB5F76600F65C1F /* Pretendard-Thin.otf in Resources */,
+				C51000502AB5F76600F65C1F /* Pretendard-Black.otf in Resources */,
+				C51000532AB5F76600F65C1F /* Pretendard-SemiBold.otf in Resources */,
+				C510004C2AB5F76600F65C1F /* Pretendard-Light.otf in Resources */,
 				C5D6E19F2A17B4410042679C /* API.plist in Resources */,
 				C52FA34C2A175B20005E70DC /* Assets.xcassets in Resources */,
+				C510004E2AB5F76600F65C1F /* Pretendard-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1541,6 +1588,7 @@
 				C52FA3432A175B20005E70DC /* AppDelegate.swift in Sources */,
 				C5C290812A8616E500ED5DCE /* PlaceInfoView.swift in Sources */,
 				C5B071E12A59454300AE709A /* BottomCell.swift in Sources */,
+				C51000382AB5F3BD00F65C1F /* UIFont+Extension.swift in Sources */,
 				C5FA0EAA2A94DB3E004AD8B4 /* ReportReviewViewController.swift in Sources */,
 				C5C90EBD2AA85E7000AB3668 /* AVIROOperationHourModel.swift in Sources */,
 				C513854E2AAD8E9F001AB827 /* AVIROPlaceReportDTO.swift in Sources */,
@@ -1562,7 +1610,7 @@
 				C5C290772A85E4FF00ED5DCE /* PlaceHomeView.swift in Sources */,
 				C5D93D9F2A581EC800629C39 /* FirstRegistrationViewController.swift in Sources */,
 				C528E4C02A5FF1CB002BD72E /* FinalRegistrationViewController.swift in Sources */,
-				C5D93DA32A58718300629C39 /* BottomButton1.swift in Sources */,
+				C5D93DA32A58718300629C39 /* NextPageButton.swift in Sources */,
 				C50DB7512A9B83550078B501 /* EditLocationChangeableAddressViewController.swift in Sources */,
 				C5A989992A959E040021B7C3 /* AVIROBookmarkModel.swift in Sources */,
 				C58EC7D02AB1B59100401FF7 /* AVIROEditLocation+DTO.swift in Sources */,
@@ -1749,7 +1797,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1803,7 +1851,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

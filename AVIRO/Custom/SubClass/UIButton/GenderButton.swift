@@ -11,7 +11,7 @@ final class GenderButton: UIButton {
     // MARK: selected 분기 처리
     override var isSelected: Bool {
         didSet {
-            self.backgroundColor = isSelected ? .allVegan : .backField
+            self.backgroundColor = isSelected ? .main : .gray6
         }
     }
     
@@ -22,7 +22,7 @@ final class GenderButton: UIButton {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
     
     override func setTitle(_ title: String?, for state: UIControl.State) {
@@ -32,8 +32,8 @@ final class GenderButton: UIButton {
         }
         
         let attributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: 16, weight: .semibold),
-            .foregroundColor: UIColor.subTitle ?? .lightGray
+            .font: UIFont.pretendard(size: 16, weight: .semibold),
+            .foregroundColor: UIColor.gray3 ?? .lightGray
         ]
         
         let attributedTitle = NSAttributedString(string: title, attributes: attributes)
@@ -42,11 +42,14 @@ final class GenderButton: UIButton {
 
         // selected title
         let selectedAttribute: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: 16, weight: .semibold),
-            .foregroundColor: UIColor.white
+            .font: UIFont.pretendard(size: 16, weight: .semibold),
+            .foregroundColor: UIColor.gray7 ?? .white
         ]
         
-        let selectedAttributedTitle = NSAttributedString(string: title, attributes: selectedAttribute)
+        let selectedAttributedTitle = NSAttributedString(
+            string: title,
+            attributes: selectedAttribute
+        )
 
         setAttributedTitle(selectedAttributedTitle, for: .selected)
     }
@@ -64,7 +67,7 @@ final class GenderButton: UIButton {
     
     // MARK: Button Attribute
     private func attribute() {
-        self.backgroundColor = .backField
+        self.backgroundColor = .gray6
         self.layer.cornerRadius = 26
         self.contentEdgeInsets = UIEdgeInsets(top: 16, left: 35, bottom: 16, right: 35)
     }

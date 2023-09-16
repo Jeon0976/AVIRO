@@ -55,8 +55,8 @@ final class HomeSearchViewController: UIViewController {
         return label
     }()
     
-    private lazy var noResultAndPushEnrollPlaceViewButton: BottomButton1 = {
-        let button = BottomButton1()
+    private lazy var noResultAndPushEnrollPlaceViewButton: NextPageButton = {
+        let button = NextPageButton()
         
         button.setTitle("새로운 가게 등록하기", for: .normal)
         button.addTarget(self, action: #selector(newEnrollPlaceButtonTapped), for: .touchUpInside)

@@ -8,13 +8,9 @@
 import UIKit
 import MessageUI
 
-import KeychainSwift
-
 final class MyPageViewController: UIViewController {
     private lazy var presenter = MyPageViewPresenter(viewController: self)
-    
-    private let keychain = KeychainSwift()
-    
+        
     private lazy var myInfoView: MyInfoView = {
         let view = MyInfoView()
         
@@ -143,6 +139,7 @@ extension MyPageViewController: MyPageViewProtocol {
     }
     
     private func whenTappedInquiries() {
+        // MARK: Login 기능 추가 시 기능 변경
         if MFMailComposeViewController.canSendMail() {
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
@@ -168,21 +165,7 @@ extension MyPageViewController: MyPageViewProtocol {
         
         let cancelAction = UIAlertAction(title: "취소", style: .default)
         let logoutAction = UIAlertAction(title: "로그아웃", style: .destructive) { _ in
-            let result = self.keychain.delete("userIdentifier")
-            
-            print("성공적인 로그아웃: \(result)")
-            
-            let vc = LoginViewController()
-            let presenter = LoginViewPresenter(viewController: vc)
-            vc.presenter = presenter
-            
-            presenter.whenAfterLogout = true 
-            
-            let rootViewController = UINavigationController(rootViewController: vc)
-            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-                windowScene.windows.first?.rootViewController = rootViewController
-                windowScene.windows.first?.makeKeyAndVisible()
-            }
+            self.presenter.whenAfterLogout()
         }
 
         [
@@ -207,18 +190,7 @@ extension MyPageViewController: MyPageViewProtocol {
         
         let cancelAction = UIAlertAction(title: "취소", style: .default)
         let withdrawalAction = UIAlertAction(title: "탈퇴하기", style: .destructive) { _ in
-            // TODO:
-            let vc = LoginViewController()
-            let presenter = LoginViewPresenter(viewController: vc)
-            vc.presenter = presenter
-
-            presenter.whenAfterWithdrawal = true
-            
-            let rootViewController = UINavigationController(rootViewController: vc)
-            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-                windowScene.windows.first?.rootViewController = rootViewController
-                windowScene.windows.first?.makeKeyAndVisible()
-            }
+            self.presenter.whenAfterWithdrawal()
         }
         
         [
@@ -229,6 +201,26 @@ extension MyPageViewController: MyPageViewProtocol {
         }
         
         present(alertController, animated: true)
+    }
+    
+    func pushLoginViewController(with: PushLoginViewEnum) {
+        let vc = LoginViewController()
+        let presenter = LoginViewPresenter(viewController: vc)
+        vc.presenter = presenter
+
+        switch with {
+        case .logout:
+            presenter.whenAfterLogout = true
+        case .withdrawal:
+            presenter.whenAfterWithdrawal = true
+
+        }
+        
+        let rootViewController = UINavigationController(rootViewController: vc)
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            windowScene.windows.first?.rootViewController = rootViewController
+            windowScene.windows.first?.makeKeyAndVisible()
+        }
     }
 }
 

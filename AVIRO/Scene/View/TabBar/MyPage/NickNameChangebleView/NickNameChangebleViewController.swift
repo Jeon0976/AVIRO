@@ -53,8 +53,8 @@ final class NickNameChangebleViewController: UIViewController {
         return label
     }()
     
-    private lazy var editNickNameButton: BottomButton1 = {
-        let button = BottomButton1()
+    private lazy var editNickNameButton: NextPageButton = {
+        let button = NextPageButton()
         
         button.setTitle("수정하기", for: .normal)
         button.isEnabled = false

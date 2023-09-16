@@ -8,7 +8,7 @@
 import UIKit
 
 // Enable 일때 설정 다시
-final class BottomButton1: UIButton {
+final class NextPageButton: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -16,7 +16,7 @@ final class BottomButton1: UIButton {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
     
     override func setTitle(_ title: String?, for state: UIControl.State) {
@@ -26,7 +26,7 @@ final class BottomButton1: UIButton {
         }
         
         let attributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: 19, weight: .semibold),
+            .font: UIFont.pretendard(size: 18, weight: .semibold),
             .foregroundColor: UIColor.gray7
         ]
         

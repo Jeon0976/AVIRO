@@ -8,9 +8,11 @@
 import UIKit
 
 protocol SecondRegistrationProtocol: NSObject {
-    func makeLayout()
-    func makeAttribute()
-    func invalidDate()
+    func setupLayout()
+    func setupAttribute()
+    func setupGesture()
+    func isInvalidDate()
+    func isValidDate()
     func birthInit()
     func pushThridRegistrationView(_ userInfoModel: AVIROUserSignUpDTO)
 }
@@ -33,8 +35,9 @@ final class SecondRegistrationPresenter {
     }
     
     func viewDidLoad() {
-        viewController?.makeLayout()
-        viewController?.makeAttribute()
+        viewController?.setupLayout()
+        viewController?.setupAttribute()
+        viewController?.setupGesture()
     }
     
     // MARK: 생일, 성별 회원 데이터에 추가 후 다음 페이지
@@ -42,7 +45,7 @@ final class SecondRegistrationPresenter {
         guard var userInfoModel = userInfoModel else { return }
         
         if isWrongBirth {
-            birth = ""
+            birth = "0"
         }
 
         if let gender = gender {
@@ -56,7 +59,6 @@ final class SecondRegistrationPresenter {
         userInfoModel.birthday = birth
         
         viewController?.pushThridRegistrationView(userInfoModel)
-        print(userInfoModel)
     }
     
     // MARK: String to Int (DateFormatter 활용) & Check Invaild Date
@@ -74,23 +76,21 @@ final class SecondRegistrationPresenter {
             let currentYear = calendar.component(.year, from: Date())
             
             if year > currentYear {
-                viewController?.invalidDate()
-                birth = ""
-            }
-            
-            if year < 1920 {
-                viewController?.invalidDate()
-                birth = ""
-            }
-            
-            if month < 1 || month > 12 || day < 1 || day > 31 {
-                viewController?.invalidDate()
-                birth = ""
+                viewController?.isInvalidDate()
+                birth = "0"
+            } else if year < 1920 {
+                viewController?.isInvalidDate()
+                birth = "0"
+            } else if month < 1 || month > 12 || day < 1 || day > 31 {
+                viewController?.isInvalidDate()
+                birth = "0"
                 return
+            } else {
+                viewController?.isValidDate()
             }
         } else {
-            viewController?.invalidDate()
-            birth = ""
+            viewController?.isInvalidDate()
+            birth = "0"
         }
     }
 }

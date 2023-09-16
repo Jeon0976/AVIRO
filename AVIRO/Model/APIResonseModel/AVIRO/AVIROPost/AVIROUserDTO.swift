@@ -9,9 +9,22 @@ import Foundation
 
 // MARK: Gender 확인
 enum Gender: String, Codable {
-    case female
     case male
+    case female
     case other
+    
+    init?(rawValue: String) {
+        switch rawValue {
+        case "남자":
+            self = .male
+        case "여자":
+            self = .female
+        case "기타":
+            self = .other
+        default:
+            return nil
+        }
+    }
 }
 
 // MARK: 유저 정보 input
