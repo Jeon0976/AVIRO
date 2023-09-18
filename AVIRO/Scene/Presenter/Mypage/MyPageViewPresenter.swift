@@ -59,6 +59,9 @@ final class MyPageViewPresenter {
     }
     
     func whenAfterLogout() {
+        MarkerModelArray.shared.deleteAllMarkerModel()
+        UserId.shared.whenLogout()
+        BookmarkArray.shared.deleteAllBookmark()
         self.keychain.delete("userIdentifier")
         
         viewController?.pushLoginViewController(with: .logout)
@@ -74,6 +77,10 @@ final class MyPageViewPresenter {
             if resultModel.statusCode == 200 {
                 self?.keychain.delete("userIdentifier")
                 DispatchQueue.main.async {
+                    MarkerModelArray.shared.deleteAllMarkerModel()
+                    UserId.shared.whenLogout()
+                    BookmarkArray.shared.deleteAllBookmark()
+                    
                     self?.viewController?.pushLoginViewController(with: .withdrawal)
                 }
             }

@@ -42,7 +42,7 @@ final class MarkerModelArray {
     
     func getMarkerFromIndex(_ index: Int) -> MarkerModel? {
         guard index < markers.count else { return nil }
-                
+        
         return markers[index]
     }
     
@@ -59,7 +59,7 @@ final class MarkerModelArray {
         if let index = markers.enumerated().first(where: { $0.element.marker.position == position })?.offset {
             return (markers[index], index)
         }
-
+        
         return (nil, nil)
     }
     
@@ -95,5 +95,9 @@ final class MarkerModelArray {
                 markers[index] = model
             }
         }
+    }
+    
+    func deleteAllMarkerModel() {
+        markers.removeAll()
     }
 }

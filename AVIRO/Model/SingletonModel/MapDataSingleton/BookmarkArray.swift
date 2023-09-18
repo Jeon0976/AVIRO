@@ -37,4 +37,8 @@ final class BookmarkArray {
             bookmarkList.remove(at: index)
         }
     }
+    
+    func deleteAllBookmark() {
+        bookmarkList.removeAll()
+    }
 }

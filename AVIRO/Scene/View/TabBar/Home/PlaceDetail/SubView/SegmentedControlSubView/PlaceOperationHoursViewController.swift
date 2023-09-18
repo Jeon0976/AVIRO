@@ -17,6 +17,7 @@ final class PlaceOperationHoursViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         self.model = model
+        print(model)
     }
 
     required init?(coder: NSCoder) {

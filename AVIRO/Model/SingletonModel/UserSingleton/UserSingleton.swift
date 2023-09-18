@@ -16,18 +16,6 @@ final class UserId {
     var userNickname = ""
     var marketingAgree = 0
     
-    func whenLogin(
-        userId: String,
-        userName: String,
-        userNickname: String,
-        marketingAgree: Int
-    ) {
-        self.userId = userId
-        self.userName = userName
-        self.userNickname = userNickname
-        self.marketingAgree = marketingAgree
-    }
-    
     private init(
         userId: String = "test",
         userName: String = "",
@@ -40,5 +28,25 @@ final class UserId {
         self.userEmail = userEmail
         self.userNickname = userNickName
         self.marketingAgree = marketingAgree
+    }
+    
+    func whenLogin(
+        userId: String,
+        userName: String,
+        userNickname: String,
+        marketingAgree: Int
+    ) {
+        self.userId = userId
+        self.userName = userName
+        self.userNickname = userNickname
+        self.marketingAgree = marketingAgree
+    }
+    
+    func whenLogout() {
+        self.userId = ""
+        self.userName = ""
+        self.userEmail = ""
+        self.userNickname = ""
+        self.marketingAgree = 0
     }
 }

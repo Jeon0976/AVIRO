@@ -776,6 +776,8 @@ extension EditPlaceInfoPresenter {
                 sun: sun?.operatingHours,
                 sunBreak: sun?.breakTime
             )
+            
+            print(model)
                         
             AVIROAPIManager().postEditPlaceOperation(model
             ) { resultModel in
