@@ -384,6 +384,9 @@ final class EditOperationHourChangebleView: UIView {
     }
     
     private func makeViewHeight() {
+        // inset 20
+        let dayLabelHeight = dayLabel.frame.height + 20
+        
         // inset 20, 20, separatedLine 1
         let topHeight = cancelButton.frame.height + 20 + 20 + 1
         // inset 20 20 20, separatedLine 1
@@ -392,7 +395,7 @@ final class EditOperationHourChangebleView: UIView {
         // inset 20, 20
         let bottomHeight = editButton.frame.height + 20 + 20
         
-        let totalHeight = topHeight + operationHeight + breakHegiht + bottomHeight
+        let totalHeight = dayLabelHeight + topHeight + operationHeight + breakHegiht + bottomHeight
         
         viewHeightConstraint?.constant = totalHeight
     }
@@ -564,7 +567,7 @@ final class EditOperationHourChangebleView: UIView {
                 breakTimeOpen.isEnabledButton(false)
                 breakTimeClosed.isEnabledButton(false)
             } else {
-                breakTimeClosed.isEnabledButton(true)
+                breakTimeOpen.isEnabledButton(true)
                 breakTimeClosed.isEnabledButton(true)
             }
         }
