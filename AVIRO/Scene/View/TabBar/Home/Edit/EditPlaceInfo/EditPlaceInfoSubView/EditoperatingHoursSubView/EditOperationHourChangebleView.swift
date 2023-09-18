@@ -8,13 +8,23 @@
 import UIKit
 
 final class EditOperationHourChangebleView: UIView {
+    
+    private lazy var dayLabel: UILabel = {
+        let label = UILabel()
+        
+        label.textColor = .gray0
+        label.font = .pretendard(size: 22, weight: .bold)
+        
+        return label
+    }()
+    
     private lazy var operatingHoursButton: UIButton = {
         let button = UIButton()
         
         button.setTitle("영업일", for: .normal)
         button.setTitleColor(.gray3, for: .normal)
         button.setTitleColor(.main, for: .selected)
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+        button.titleLabel?.font = .pretendard(size: 16, weight: .medium)
         
         button.setImage(UIImage(named: "RadioCircle"), for: .normal)
         button.setImage(UIImage(named: "RadioCircleClicked"), for: .selected)
@@ -34,8 +44,8 @@ final class EditOperationHourChangebleView: UIView {
         button.setTitle("휴무일", for: .normal)
         button.setTitleColor(.gray3, for: .normal)
         button.setTitleColor(.main, for: .selected)
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-        
+        button.titleLabel?.font = .pretendard(size: 16, weight: .medium)
+
         button.setImage(UIImage(named: "RadioCircle"), for: .normal)
         button.setImage(UIImage(named: "RadioCircleClicked"), for: .selected)
         
@@ -70,7 +80,7 @@ final class EditOperationHourChangebleView: UIView {
         
         label.text = "영업 시간"
         label.textColor = .gray0
-        label.font = .systemFont(ofSize: 17, weight: .bold)
+        label.font = .pretendard(size: 17, weight: .bold)
         
         return label
     }()
@@ -81,7 +91,7 @@ final class EditOperationHourChangebleView: UIView {
         button.setTitle("24시간", for: .normal)
 
         button.setTitleColor(.gray0, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+        button.titleLabel?.font = .pretendard(size: 16, weight: .medium)
         
         button.setImage(UIImage(named: "EmptyFrame"), for: .normal)
         button.setImage(UIImage(named: "Frame"), for: .selected)
@@ -136,9 +146,29 @@ final class EditOperationHourChangebleView: UIView {
         
         label.text = "휴식 시간"
         label.textColor = .gray0
-        label.font = .systemFont(ofSize: 17, weight: .bold)
+        label.font = .pretendard(size: 17, weight: .bold)
         
         return label
+    }()
+    
+    private lazy var breakTimeRefreshButton: UIButton = {
+        let button = UIButton()
+        
+        button.setTitle("없음", for: .normal)
+
+        button.setTitleColor(.gray0, for: .normal)
+        button.titleLabel?.font = .pretendard(size: 16, weight: .medium)
+        
+        button.setImage(UIImage(named: "EmptyFrame"), for: .normal)
+        button.setImage(UIImage(named: "Frame"), for: .selected)
+        
+        button.semanticContentAttribute = .forceLeftToRight
+        button.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 7)
+        button.titleEdgeInsets = .init(top: 0, left: 7, bottom: 0, right: 0)
+        
+        button.addTarget(self, action: #selector(breakTimeRefreshButtonTapped), for: .touchUpInside)
+                
+        return button
     }()
     
     private lazy var breakTimeOpen: EditTimeChangebleView = {
@@ -181,7 +211,7 @@ final class EditOperationHourChangebleView: UIView {
         let button = UIButton()
         
         button.setTitle("수정하기", for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .semibold)
+        button.titleLabel?.font = .pretendard(size: 16, weight: .semibold)
         button.setTitleColor(.gray2, for: .normal)
         button.backgroundColor = .gray6
         button.contentEdgeInsets = .init(top: 15, left: 25, bottom: 15, right: 25)
@@ -244,6 +274,8 @@ final class EditOperationHourChangebleView: UIView {
         viewHeightConstraint?.isActive = true
         
         [
+            dayLabel,
+            
             operatingHoursButton,
             dayOffButton,
             cancelButton,
@@ -257,6 +289,7 @@ final class EditOperationHourChangebleView: UIView {
             
             separatedLine2,
             breakTimeLabel,
+            breakTimeRefreshButton,
             breakTimeOpen,
             breakTimeClosed,
             openClosedLine2,
@@ -269,7 +302,10 @@ final class EditOperationHourChangebleView: UIView {
         }
         
         NSLayoutConstraint.activate([
-            operatingHoursButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+            dayLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+            dayLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            
+            operatingHoursButton.topAnchor.constraint(equalTo: dayLabel.bottomAnchor, constant: 20),
             operatingHoursButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             operatingHoursButton.widthAnchor.constraint(equalToConstant: 70),
             
@@ -312,6 +348,10 @@ final class EditOperationHourChangebleView: UIView {
             
             breakTimeLabel.topAnchor.constraint(equalTo: separatedLine2.bottomAnchor, constant: 20),
             breakTimeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            
+            breakTimeRefreshButton.topAnchor.constraint(equalTo: breakTimeLabel.topAnchor),
+            breakTimeRefreshButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            breakTimeRefreshButton.widthAnchor.constraint(equalToConstant: 70),
             
             breakTimeOpen.topAnchor.constraint(equalTo: breakTimeLabel.bottomAnchor, constant: 20),
             breakTimeOpen.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
@@ -357,7 +397,7 @@ final class EditOperationHourChangebleView: UIView {
         viewHeightConstraint?.constant = totalHeight
     }
     
-    func makeBindingData(_ operationHoursModel: EditOperationHoursModel) {
+    func setupDataBinding(_ operationHoursModel: EditOperationHoursModel) {
         day = operationHoursModel.day
         isToday = operationHoursModel.isToday
         
@@ -369,6 +409,8 @@ final class EditOperationHourChangebleView: UIView {
         editButtonIsEnabled = false
         open24hoursButton.isSelected = false
         initDayOff = ""
+        
+        dayLabel.text = day.rawValue + "요일"
         
         if operationHoursModel.operatingHours == "휴무" {
             initDayOff = operationHoursModel.operatingHours
@@ -512,6 +554,22 @@ final class EditOperationHourChangebleView: UIView {
 
     }
     
+    @objc private func breakTimeRefreshButtonTapped() {
+        if !dayOffButton.isSelected {
+            breakTimeRefreshButton.isSelected.toggle()
+            
+            if breakTimeRefreshButton.isSelected {
+                breakTimeOpen.makeLabelText("시간 선택")
+                breakTimeClosed.makeLabelText("시간 선택")
+                breakTimeOpen.isEnabledButton(false)
+                breakTimeClosed.isEnabledButton(false)
+            } else {
+                breakTimeClosed.isEnabledButton(true)
+                breakTimeClosed.isEnabledButton(true)
+            }
+        }
+    }
+    
     @objc private func editButtonTapped() {
         if editButtonIsEnabled {
             var operatingHours = "정보 없음"
@@ -544,7 +602,7 @@ final class EditOperationHourChangebleView: UIView {
             afterEditButtonTapped?(model)
         }
     }
-
+    
     private func whenAddTimeLabelCheckIsEnabledEditButton() {
         let operationIsInit = operationTimeOpen.loadTimeData() == "시간선택" || operationTimeClosed.loadTimeData() == "시간선택"
         

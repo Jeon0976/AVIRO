@@ -47,7 +47,7 @@ final class MenuTypeLabel: UILabel {
     
     private func makeAttribute() {
         self.layer.cornerRadius = 12
-        self.font = .systemFont(ofSize: 11, weight: .bold)
+        self.font = .pretendard(size: 11, weight: .bold)
         self.layer.borderWidth = 1
     }
     

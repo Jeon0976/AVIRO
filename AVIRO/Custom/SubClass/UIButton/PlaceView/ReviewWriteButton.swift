@@ -19,8 +19,9 @@ final class ReviewWriteButton: UIButton {
     }
     
     private func setAttribute() {
-        layer.cornerRadius = 27
         backgroundColor = .gray7
+
+        layer.cornerRadius = 27
         layer.borderColor = UIColor.main?.cgColor
         layer.borderWidth = 2
     }
@@ -32,7 +33,7 @@ final class ReviewWriteButton: UIButton {
         setImage(image?.withTintColor(.main!), for: .normal)
         
         setTitleColor(.main, for: .normal)
-        titleLabel?.font = .systemFont(ofSize: 16, weight: .semibold)
+        titleLabel?.font = .pretendard(size: 16, weight: .semibold)
         
         semanticContentAttribute = .forceLeftToRight
         

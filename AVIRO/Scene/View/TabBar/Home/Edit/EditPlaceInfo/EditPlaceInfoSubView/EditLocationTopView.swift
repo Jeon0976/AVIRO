@@ -13,7 +13,7 @@ final class EditLocationTopView: UIView {
         
         label.textColor = .gray0
         label.text = "가게 이름"
-        label.font = .systemFont(ofSize: 16, weight: .semibold)
+        label.font = .pretendard(size: 16, weight: .semibold)
         
         return label
     }()
@@ -32,7 +32,7 @@ final class EditLocationTopView: UIView {
         
         label.textColor = .gray0
         label.text = "카테고리"
-        label.font = .systemFont(ofSize: 16, weight: .semibold)
+        label.font = .pretendard(size: 16, weight: .semibold)
         
         return label
     }()

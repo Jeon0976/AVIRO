@@ -7,16 +7,6 @@
 
 import UIKit
 
-enum CommentReportType: String, CaseIterable {
-    case profanity = "욕설/비방/차별/혐오 후기예요."
-    case advertisement = "홍보/영리목적 후기예요."
-    case illegalInfo = "불법 정보 후기예요."
-    case obscene = "음란/청소년 유해 후기예요."
-    case personalInfo = "개인 정보 노출/유포/거래를 한 후기예요."
-    case spam = "도배/스팸 후기예요."
-    case others = "기타"
-}
-
 protocol ReportReviewProtocol: NSObject {
     func makeLayout()
     func makeGesture()
@@ -29,7 +19,7 @@ protocol ReportReviewProtocol: NSObject {
 final class ReportReviewPresenter {
     weak var viewController: ReportReviewProtocol?
     
-    private var reviewId: String?
+    private var reportIdModel: AVIROReportID!
     
     private var reportViews = [ReportCellView]()
     
@@ -44,10 +34,10 @@ final class ReportReviewPresenter {
     }
 
     init(viewController: ReportReviewProtocol,
-         reviewId: String? = nil
+         reportIdModel: AVIROReportID? = nil
     ) {
         self.viewController = viewController
-        self.reviewId = reviewId
+        self.reportIdModel = reportIdModel
     }
     
     func viewDidLoad() {
@@ -129,11 +119,11 @@ final class ReportReviewPresenter {
         viewController?.keyboardWillHide()
     }
     
-    func reportReview() -> (String, String) {
-        guard let id = reviewId,
-              let type = reportType
-        else { return ("", "") }
-        
-        return (id, type)
+    func reportReview() {
+//        guard let id = reviewId,
+//              let type = reportType
+//        else { return ("", "") }
+//
+//        return (id, type)
     }
 }

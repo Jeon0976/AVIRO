@@ -11,7 +11,7 @@ final class PlaceReviewsView: UIView {
     private lazy var title: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 20, weight: .bold)
+        label.font = .pretendard(size: 20, weight: .bold)
         label.textColor = .gray0
         label.numberOfLines = 1
         label.text = "후기"
@@ -22,7 +22,7 @@ final class PlaceReviewsView: UIView {
     private lazy var subTitle: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 13, weight: .medium)
+        label.font = .pretendard(size: 13, weight: .regular)
         label.textAlignment = .right
         label.numberOfLines = 1
         label.textColor = .gray2
@@ -34,9 +34,9 @@ final class PlaceReviewsView: UIView {
     private lazy var noReviews: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 17, weight: .medium)
+        label.font = .pretendard(size: 17, weight: .medium)
         label.textColor = .gray3
-        label.text = "등록된 후기가 없어요"
+        label.text = "아직 등록된 후기가 없어요."
         
         return label
     }()
@@ -79,16 +79,16 @@ final class PlaceReviewsView: UIView {
     
     private var cellHeights: [IndexPath: CGFloat] = [:]
     
-    private var reviewsArray = [ReviewData]()
+    private var reviewsArray = [AVIROReviewRawDataDTO]()
     
     private var whenReviewView = false
     
     var whenTappedShowMoreButton: (() -> Void)?
     
     var whenUploadReview: ((AVIROEnrollCommentDTO) -> Void)?
-    var whenAfterEditMyReview: ((AVIROEditCommenDTO) -> Void)?
+    var whenAfterEditMyReview: ((AVIROEditCommentDTO) -> Void)?
     
-    var whenReportReview: ((String) -> Void)?
+    var whenReportReview: ((AVIROReportID) -> Void)?
     var whenBeforeEditMyReview: ((String) -> Void)?
     
     private var placeId = ""
@@ -111,8 +111,8 @@ final class PlaceReviewsView: UIView {
         super.layoutSubviews()
     }
     
-    func keyboardWillShow(height: CGFloat) {
-        reviewInputView.keyboardWillShow(height: height)
+    func keyboardWillShow(notification: NSNotification, height: CGFloat) {
+        reviewInputView.keyboardWillShow(notification: notification, height: height)
     }
     
     func keyboardWillHide() {
@@ -165,7 +165,7 @@ final class PlaceReviewsView: UIView {
     }
     
     func dataBinding(placeId: String,
-                     reviewsModel: PlaceReviewsData?
+                     reviewsModel: AVIROReviewsModelArrayDTO?
     ) {
         guard let reviews = reviewsModel?.commentArray else { return }
         
@@ -194,7 +194,7 @@ final class PlaceReviewsView: UIView {
         reviewInputView.isHidden = false
     }
     
-    private func whenHaveReviews(_ reviews: [ReviewData]) {
+    private func whenHaveReviews(_ reviews: [AVIROReviewRawDataDTO]) {
         self.reviewsArray = reviews
         
         noReviews.isHidden = true
@@ -204,13 +204,13 @@ final class PlaceReviewsView: UIView {
     }
     
     private func whenNotHaveReviews() {
-        self.reviewsArray = [ReviewData]()
+        self.reviewsArray = [AVIROReviewRawDataDTO]()
         
         noReviews.isHidden = false
         reviewsTable.isHidden = true
     }
     
-    func dataBindingWhenInHomeView(_ reviewsModel: PlaceReviewsData?) {
+    func dataBindingWhenInHomeView(_ reviewsModel: AVIROReviewsModelArrayDTO?) {
         guard let reviews = reviewsModel?.commentArray else { return }
         
         self.subTitle.text = "\(reviews.count)개"
@@ -226,7 +226,7 @@ final class PlaceReviewsView: UIView {
         print(whenHomeViewReviewsCount)
     }
     
-    private func whenHaveReviewsInHomeView(_ reviews: [ReviewData]) {
+    private func whenHaveReviewsInHomeView(_ reviews: [AVIROReviewRawDataDTO]) {
         if reviews.count > 4 {
             self.reviewsArray = Array(reviews.prefix(4))
         } else {
@@ -249,7 +249,7 @@ final class PlaceReviewsView: UIView {
     }
     
     private func whenNotHaveReviewsInHomeView() {
-        self.reviewsArray = [ReviewData]()
+        self.reviewsArray = [AVIROReviewRawDataDTO]()
 
         reviewsHeightConstraint?.isActive = false
         viewHeightConstraint?.isActive = false
@@ -298,11 +298,13 @@ final class PlaceReviewsView: UIView {
     private func reviewsUpdateInHomeView(_ reviewModel: AVIROEnrollCommentDTO) {
         let nowDate = TimeUtility.nowDate()
 
-        let reviewModel = ReviewData(
+        let reviewModel = AVIROReviewRawDataDTO(
             commentId: reviewModel.commentId,
             userId: reviewModel.userId,
             content: reviewModel.content,
-            updatedTime: nowDate)
+            updatedTime: nowDate,
+            nickname: UserId.shared.userNickname
+        )
         
         reviewsArray.insert(reviewModel, at: 0)
         reviewsTable.reloadData()
@@ -311,19 +313,21 @@ final class PlaceReviewsView: UIView {
         subTitle.text = "\(whenHomeViewReviewsCount)개"
     }
     
-    func afterEditReviewAndUpdateInHomeView(_ reviewModel: AVIROEditCommenDTO) {
+    func afterEditReviewAndUpdateInHomeView(_ reviewModel: AVIROEditCommentDTO) {
         reviewsEditInHomeView(reviewModel)
         whenHaveReviewsInHomeView(self.reviewsArray)
     }
     
-    private func reviewsEditInHomeView(_ reviewModel: AVIROEditCommenDTO) {
+    private func reviewsEditInHomeView(_ reviewModel: AVIROEditCommentDTO) {
         let nowDate = TimeUtility.nowDate()
 
-        let reviewModel = ReviewData(
+        let reviewModel = AVIROReviewRawDataDTO(
             commentId: reviewModel.commentId,
             userId: reviewModel.userId,
             content: reviewModel.content,
-            updatedTime: nowDate)
+            updatedTime: nowDate,
+            nickname: UserId.shared.userNickname
+        )
         
         if let existingIndex = reviewsArray.firstIndex(where: { $0.commentId == reviewModel.commentId }) {
 
@@ -376,14 +380,20 @@ final class PlaceReviewsView: UIView {
             return
         }
                 
-        var postModel = AVIROEnrollCommentDTO(placeId: placeId, userId: UserId.shared.userId, content: text)
+        var postModel = AVIROEnrollCommentDTO(
+            placeId: placeId,
+            userId: UserId.shared.userId,
+            content: text
+        )
         postModel.commentId = editedReviewId
         
-        let reviewModel = ReviewData(
+        let reviewModel = AVIROReviewRawDataDTO(
             commentId: postModel.commentId,
             userId: postModel.userId,
             content: text,
-            updatedTime: nowDate)
+            updatedTime: nowDate,
+            nickname: UserId.shared.userNickname
+        )
         
         reviewsArray[index] = reviewModel
         
@@ -392,7 +402,7 @@ final class PlaceReviewsView: UIView {
         subTitle.text = "\(reviewsArray.count)개"
         editedReviewId = ""
         
-        let editModel = AVIROEditCommenDTO(
+        let editModel = AVIROEditCommentDTO(
             commentId: reviewModel.commentId,
             content: text,
             userId: reviewModel.userId
@@ -412,11 +422,13 @@ final class PlaceReviewsView: UIView {
             content: text
         )
                 
-        let reviewModel = ReviewData(
+        let reviewModel = AVIROReviewRawDataDTO(
             commentId: postModel.commentId,
             userId: postModel.userId,
             content: postModel.content,
-            updatedTime: nowDate)
+            updatedTime: nowDate,
+            nickname: UserId.shared.userNickname
+        )
         
         if reviewsArray.count == 0 {
             noReviews.isHidden = true
@@ -454,8 +466,6 @@ final class PlaceReviewsView: UIView {
     // MARK: Closure 처리
     private func handleClosure() {
         reviewInputView.enrollReview = { [weak self] text in
-            guard let placeId = self?.placeId else { return }
-            
             self?.updateReviewArray(text)
         }
         
@@ -470,7 +480,6 @@ extension PlaceReviewsView: UITableViewDataSource {
         reviewsArray.count
     }
     
-    // TODO: Place ID에 맞춰서 색상 변경하는거 업데이트!
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
             withIdentifier: PlaceReviewTableViewCell.identifier,
@@ -484,9 +493,18 @@ extension PlaceReviewsView: UITableViewDataSource {
         let reviewData = reviewsArray[indexPath.row]
         
         cell?.selectionStyle = .none
-        cell?.reportButtonTapped = { [weak self] (commentId, userId) in
+        cell?.reportButtonTapped = { [weak self] in
+            let userId = self?.reviewsArray[indexPath.row].userId ?? ""
+            let userNickname = self?.reviewsArray[indexPath.row].nickname ?? ""
+            let commentId = self?.reviewsArray[indexPath.row].commentId ?? ""
+            
             if userId != UserId.shared.userId {
-                self?.whenReportReview?(commentId)
+                let reportIdModel = AVIROReportID(
+                    commentId: commentId,
+                    userId: userId,
+                    nickname: userNickname
+                )
+                self?.whenReportReview?(reportIdModel)
             } else {
                 self?.whenBeforeEditMyReview?(commentId)
             }

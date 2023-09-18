@@ -67,19 +67,16 @@ final class PlaceListCell: UITableViewCell {
     
     // MARK: Attribute
     private func makeAttribute() {
-        title.numberOfLines = 2
-        title.font = .systemFont(ofSize: 18, weight: .medium)
-        title.lineBreakMode = .byCharWrapping
-        
-        address.numberOfLines = 2
-        address.font = .systemFont(ofSize: 15, weight: .medium)
-        address.lineBreakMode = .byCharWrapping
-                
-        distance.font = .systemFont(ofSize: 14, weight: .medium)
-        distance.textAlignment = .right
-        
+        title.numberOfLines = 1
+        title.font = .pretendard(size: 18, weight: .medium)
         title.textColor = .gray0
+
+        address.numberOfLines = 1
+        address.font = .pretendard(size: 15, weight: .regular)
         address.textColor = .gray3
+
+        distance.font = .pretendard(size: 14, weight: .regular)
+        distance.textAlignment = .right
         distance.textColor = .gray2
         
         icon.image = UIImage(named: "ListCellIcon")?.withRenderingMode(.alwaysTemplate)

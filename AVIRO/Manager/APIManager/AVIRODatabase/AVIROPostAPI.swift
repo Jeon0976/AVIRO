@@ -38,7 +38,7 @@ struct AVIROPostAPI {
     static let editMenuPath = "/prod/map/update/menu"
     
     static let userSignUpPath = "/prod/member/sign-up"
-    static let userCheckPath = "/prod/member"
+    static let userCheckPath = "/prod/member/info"
     static let userNicNameCheckPath = "/prod/member/check"
     static let userWithdrawPath = "/prod/member/withdraw"
     
@@ -174,8 +174,8 @@ struct AVIROPostAPI {
         return components
     }
     
-    // MARK: UserInfoEnroll
-    mutating func userInfoEnroll() -> URLComponents {
+    // MARK: user Sign up 
+    mutating func userSignup() -> URLComponents {
         var components = URLComponents()
         
         components.scheme = AVIROPostAPI.scheme

@@ -13,7 +13,7 @@ final class EditPhoneView: UIView {
         
         label.textColor = .gray0
         label.text = "가게 번호"
-        label.font = .systemFont(ofSize: 16, weight: .semibold)
+        label.font = .pretendard(size: 16, weight: .semibold)
         
         return label
     }()

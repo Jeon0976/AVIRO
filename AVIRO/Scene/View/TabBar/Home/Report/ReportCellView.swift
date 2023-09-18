@@ -22,7 +22,7 @@ final class ReportCellView: UIView {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 15, weight: .medium)
+        label.font = .pretendard(size: 15, weight: .medium)
         label.textColor = .gray0
         label.numberOfLines = 1
         

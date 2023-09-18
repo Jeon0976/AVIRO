@@ -12,7 +12,7 @@ final class PushCommentView: UIView {
         let textView = UITextView()
         
         textView.text = "식당에 대한 경험과 팁을 알려주세요!"
-        textView.font = .systemFont(ofSize: 16, weight: .medium)
+        textView.font = .pretendard(size: 15, weight: .medium)
         textView.textColor = .gray4
         textView.textContainerInset = UIEdgeInsets(top: 8, left: 10, bottom: 8, right: 10)
         
@@ -37,6 +37,7 @@ final class PushCommentView: UIView {
         
         button.setTitle("등록", for: .normal)
         button.setTitleColor(.gray4, for: .normal)
+        button.titleLabel?.font = .pretendard(size: 17, weight: .semibold)
         button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
         
         return button
@@ -247,14 +248,20 @@ final class PushCommentView: UIView {
     }
     
     // MARK: Keyboard Method 처리
-    func keyboardWillShow(height: CGFloat) {
-        UIView.animate(
-            withDuration: 0.3,
-            animations: { self.transform = CGAffineTransform(
-                translationX: 0,
-                y: -(height))
-            }
-        )
+    func keyboardWillShow(notification: NSNotification, height: CGFloat) {
+        if let userInfo = notification.userInfo {
+            let animationDuration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0.25
+            
+            let animationCurveRaw = (userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber)?.uintValue ?? UIView.AnimationOptions.curveEaseInOut.rawValue
+            let animationCurve = UIView.AnimationOptions(rawValue: animationCurveRaw)
+
+            UIView.animate(
+                withDuration: animationDuration,
+                delay: 0,
+                options: animationCurve, animations: {
+                    self.transform = CGAffineTransform(translationX: 0, y: -height)
+                }, completion: nil)
+        }
     }
     
     func keyboardWillHide() {

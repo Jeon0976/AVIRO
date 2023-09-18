@@ -25,13 +25,22 @@ final class NextPageButton: UIButton {
             return
         }
         
-        let attributes: [NSAttributedString.Key: Any] = [
+        let enabledAttributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.pretendard(size: 18, weight: .semibold),
             .foregroundColor: UIColor.gray7
         ]
         
-        let attributedTitle = NSAttributedString(string: title, attributes: attributes)
+        let disenabledAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.pretendard(size: 18, weight: .semibold),
+            .foregroundColor: UIColor.gray2
+        ]
+        
+        let attributedTitle = NSAttributedString(string: title, attributes: enabledAttributes)
+        
+        let disAttributedTitle = NSAttributedString(string: title, attributes: disenabledAttributes)
+        
         setAttributedTitle(attributedTitle, for: state)
+        setAttributedTitle(disAttributedTitle, for: .disabled)
     }
     
     private func setupButton() {
@@ -41,28 +50,9 @@ final class NextPageButton: UIButton {
         self.backgroundColor = .main
     }
      
-//    func setGradient() {
-//        let gradientLayer = CAGradientLayer()
-//        
-//        gradientLayer.frame = self.bounds
-//        gradientLayer.colors = [
-//            UIColor.allVegan?.cgColor ?? UIColor.purple.cgColor,
-//            UIColor.allVeganGradient?.cgColor ?? UIColor.blue.cgColor
-//        ]
-//        gradientLayer.startPoint = CGPoint(x: 0, y: 1)
-//        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
-//        gradientLayer.cornerRadius = 26
-//
-//        self.layer.insertSublayer(gradientLayer, at: 0)
-//    }
-//
-//    func removeGradient() {
-//        self.layer.sublayers?.first(where: { $0 is CAGradientLayer })?.removeFromSuperlayer()
-//    }
-//
     override var isEnabled: Bool {
          didSet {
-             self.backgroundColor = isEnabled ? .main : .gray4
+             self.backgroundColor = isEnabled ? .main : .gray5
          }
      }
  }

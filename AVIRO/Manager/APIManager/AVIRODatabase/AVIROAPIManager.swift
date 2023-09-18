@@ -188,7 +188,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
     }
     // MARK: Get Comment Info
     func getCommentInfo(placeId: String,
-                        completionHandler: @escaping((AVIROReviewsModel) -> Void)
+                        completionHandler: @escaping((AVIROReviewsModelDTO) -> Void)
     ) {
         guard let url = requestAPI.getCommentInfo(placeId: placeId).url else {
             print("url Error")
@@ -205,7 +205,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
             }
             
             if let data = data {
-                if let commentData = try? JSONDecoder().decode(AVIROReviewsModel.self, from: data) {
+                if let commentData = try? JSONDecoder().decode(AVIROReviewsModelDTO.self, from: data) {
                     completionHandler(commentData)
                 }
             }
@@ -274,9 +274,11 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
     }
     
     // MARK: Post UserInfo Model
-    func postUserModel(_ userModel: AVIROUserSignUpDTO,
-                       completionHandler: @escaping((AVIROPostResultDTO) -> Void)) {
-        guard let url = postAPI.userInfoEnroll().url else { print("url error"); return}
+    func postUserSignupModel(
+        _ userModel: AVIROUserSignUpDTO,
+        completionHandler: @escaping((AVIROPostResultDTO) -> Void)
+    ) {
+        guard let url = postAPI.userSignup().url else { print("url error"); return}
         
         guard let jsonData = try? JSONEncoder().encode(userModel) else {
             print("JSON Encode Error")
@@ -295,8 +297,8 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
             }
             
             if let data = data {
-                if let userInfo = try? JSONDecoder().decode(AVIROPostResultDTO.self, from: data) {
-                    completionHandler(userInfo)
+                if let resultModel = try? JSONDecoder().decode(AVIROPostResultDTO.self, from: data) {
+                    completionHandler(resultModel)
                 }
                 return
             }
@@ -375,7 +377,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
     
     // MARK: Post Edit Comment
     func postEditCommentModel(
-        _ commentEditModel: AVIROEditCommenDTO,
+        _ commentEditModel: AVIROEditCommentDTO,
         completionHandler: @escaping((AVIROPostResultDTO) -> Void)) {
             guard let url = postAPI.commentEdit().url else { return }
             
@@ -777,7 +779,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
     
     // MARK: Post Place Report
     func postPlaceReport(
-        _ reportModel: AVIROPlaceReportDTO,
+        _ reportModel: AVIROReportPlaceDTO,
         completionHandler: @escaping((AVIROPostResultDTO) -> Void)
     ) {
         guard let url = postAPI.placeReport().url else { return }

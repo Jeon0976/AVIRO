@@ -27,6 +27,8 @@ final class HomeSearchPresenter {
     
     var changedColorText = ""
     
+    var selectedPlace: ((String) -> Void)?
+    
     private var currentPage = 1
     /// 모든 필터링 결과 끝날 때 다른 함수 동작을 위한 변수
     private var isLoading = false
@@ -316,6 +318,7 @@ final class HomeSearchPresenter {
                 userInfo: userInfo
             )
             
+            selectedPlace?(model.title)
             viewController?.popViewController()
         }
     }

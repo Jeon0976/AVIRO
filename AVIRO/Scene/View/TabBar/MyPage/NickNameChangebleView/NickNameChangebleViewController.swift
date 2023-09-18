@@ -13,12 +13,25 @@ final class NickNameChangebleViewController: UIViewController {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "닉네임"
-        label.textColor = .gray0
-        label.font = .systemFont(ofSize: 18, weight: .semibold)
+        label.text = "오랜만이에요\n닉네임을 수정해주세요."
+        label.textColor = .main
+        label.font = .pretendard(size: 24, weight: .bold)
+        label.numberOfLines = 2
         
         return label
     }()
+    
+    private lazy var subtitleLabel: UILabel = {
+        let label = UILabel()
+       
+        label.text = "어비로에서 불릴 닉네임이에요."
+        label.textColor = .gray1
+        label.font = .pretendard(size: 14, weight: .regular)
+        label.numberOfLines = 1
+        
+        return label
+    }()
+    
     private lazy var nicNameField: RegistrationField = {
         let field = RegistrationField()
         
@@ -32,7 +45,7 @@ final class NickNameChangebleViewController: UIViewController {
         let label = UILabel()
         
         label.text = "이모지, 특수문자(-, _ 제외)를 사용할 수 없습니다."
-        label.font = .systemFont(ofSize: 13, weight: .medium)
+        label.font = .pretendard(size: 13, weight: .regular)
         label.textColor = .gray2
         label.numberOfLines = 2
         label.lineBreakMode = .byCharWrapping
@@ -46,7 +59,7 @@ final class NickNameChangebleViewController: UIViewController {
         let nickNameCount = UserId.shared.userNickname.count
         
         label.text = "(\(nickNameCount)/8)"
-        label.font = .systemFont(ofSize: 13, weight: .medium)
+        label.font = .pretendard(size: 13, weight: .regular)
         label.textColor = .gray2
         label.textAlignment = .right
         
@@ -76,6 +89,7 @@ extension NickNameChangebleViewController: NickNameChangebleProtocol {
     func setupLayout() {
         [
             titleLabel,
+            subtitleLabel,
             nicNameField,
             subInfo,
             subInfo2,
@@ -89,13 +103,16 @@ extension NickNameChangebleViewController: NickNameChangebleProtocol {
             titleLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 40),
             titleLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 30),
             
-            nicNameField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
+            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+            subtitleLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 30),
+            
+            nicNameField.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 30),
             nicNameField.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 30),
             nicNameField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -30),
             
             // subInfo
             subInfo.topAnchor.constraint(
-                equalTo: nicNameField.bottomAnchor, constant: 18),
+                equalTo: nicNameField.bottomAnchor, constant: 10),
             subInfo.leadingAnchor.constraint(
                 equalTo: view.leadingAnchor, constant: 40),
             subInfo.trailingAnchor.constraint(equalTo: subInfo2.leadingAnchor, constant: -10),

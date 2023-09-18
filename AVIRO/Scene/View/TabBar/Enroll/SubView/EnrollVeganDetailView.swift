@@ -14,7 +14,7 @@ final class EnrollVeganDetailView: UIView {
         
         label.textColor = .registrationColor
         label.text = "비건 메뉴 구성"
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.font = .pretendard(size: 18, weight: .bold)
         
         return label
     }()
@@ -25,7 +25,7 @@ final class EnrollVeganDetailView: UIView {
         
         label.textColor = .gray2
         label.text = "(중복 선택 가능)"
-        label.font = .systemFont(ofSize: 13, weight: .medium)
+        label.font = .pretendard(size: 13, weight: .medium)
         
         return label
     }()

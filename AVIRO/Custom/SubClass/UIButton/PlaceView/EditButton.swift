@@ -20,7 +20,7 @@ final class EditButton: UIButton {
     func setButton(_ title: String) {
         self.setTitle(title, for: .normal)
         self.setTitleColor(.changeButton, for: .normal)
-        self.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
+        self.titleLabel?.font = .pretendard(size: 14, weight: .medium)
         
         self.setImage(UIImage(named: "Edit"), for: .normal)
         
@@ -28,6 +28,7 @@ final class EditButton: UIButton {
 
         self.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 5)
         self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0)
+        
         self.semanticContentAttribute = .forceLeftToRight
     }
 }

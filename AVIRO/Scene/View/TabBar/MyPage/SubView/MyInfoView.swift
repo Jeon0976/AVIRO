@@ -20,10 +20,9 @@ final class MyInfoView: UIView {
     private lazy var nicknameLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 17, weight: .semibold)
-        label.text = UserId.shared.userId
+        label.font = .pretendard(size: 17, weight: .semibold)
+        label.text = UserId.shared.userNickname
         label.textColor = .gray0
-        
         
         return label
     }()
@@ -42,7 +41,7 @@ final class MyInfoView: UIView {
         
         label.text = "등록한 가게"
         label.textColor = .gray1
-        label.font = .systemFont(ofSize: 15, weight: .bold)
+        label.font = .pretendard(size: 15, weight: .bold)
         
         return label
     }()
@@ -52,7 +51,7 @@ final class MyInfoView: UIView {
         
         button.setTitle("0개", for: .normal)
         button.setTitleColor(.gray0, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
+        button.titleLabel?.font = .pretendard(size: 18, weight: .bold)
         
         return button
     }()
@@ -72,7 +71,7 @@ final class MyInfoView: UIView {
         
         label.text = "작성 후기"
         label.textColor = .gray1
-        label.font = .systemFont(ofSize: 15, weight: .bold)
+        label.font = .pretendard(size: 15, weight: .bold)
         
         return label
     }()
@@ -82,7 +81,7 @@ final class MyInfoView: UIView {
         
         button.setTitle("0개", for: .normal)
         button.setTitleColor(.gray0, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
+        button.titleLabel?.font = .pretendard(size: 18, weight: .bold)
         
         return button
     }()
@@ -102,7 +101,7 @@ final class MyInfoView: UIView {
         
         label.text = "즐겨찾기"
         label.textColor = .gray1
-        label.font = .systemFont(ofSize: 15, weight: .bold)
+        label.font = .pretendard(size: 15, weight: .bold)
         
         return label
     }()
@@ -112,7 +111,7 @@ final class MyInfoView: UIView {
         
         button.setTitle("0개", for: .normal)
         button.setTitleColor(.gray0, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
+        button.titleLabel?.font = .pretendard(size: 18, weight: .bold)
         
         return button
     }()

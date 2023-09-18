@@ -8,14 +8,14 @@
 import UIKit
 
 enum SettingsSection: Int, CaseIterable {
-    case displayMode
+//    case displayMode
     case information
     case account
     
     var rows: [SettingsRow] {
         switch self {
-        case .displayMode:
-            return [.displayMode]
+//        case .displayMode:
+//            return [.displayMode]
         case .information:
             return [.termsOfService, .privacyPolicy, .locationPolicy, .inquiries, .thanksTo]
         case .account:
@@ -25,12 +25,12 @@ enum SettingsSection: Int, CaseIterable {
 }
 
 enum SettingsRow: String {
-    case displayMode = "화면 모드 설정"
+//    case displayMode = "화면 모드 설정"
     case termsOfService = "서비스 이용약관"
     case privacyPolicy = "개인정보 수집 및 이용"
     case locationPolicy = "위치정보 수집 및 이용"
     case inquiries = "문의사항"
-    case thanksTo = "Thanks to"
+    case thanksTo = "감사한분들"
     case logout = "로그아웃"
     case versionInfo = "버전 정보"
 }
@@ -145,7 +145,7 @@ extension OtherActionsView: UITableViewDelegate {
         
         button.setAttributedTitle(attributedString, for: .normal)
         button.setTitleColor(.gray2, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        button.titleLabel?.font = .pretendard(size: 16, weight: .medium)
         button.addTarget(self, action: #selector(withdrawalTapped), for: .touchUpInside)
         
         footerView.addSubview(button)

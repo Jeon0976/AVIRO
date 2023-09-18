@@ -35,7 +35,7 @@ class EnrollField: UITextField {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
     
     // MARK: 기본 Text Inset
@@ -55,7 +55,7 @@ class EnrollField: UITextField {
     // MARK: Set Configuration
     private func configuration() {
         self.textColor = .gray0
-        self.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        self.font = .pretendard(size: 16, weight: .medium)
         self.backgroundColor = .gray6
         self.layer.cornerRadius = 10
     }
@@ -90,7 +90,7 @@ class EnrollField: UITextField {
         isAddLeftImage = !isAddLeftImage
         
         let image = UIImage(named: "Search")
-        image?.withTintColor(.systemGray)
+        image?.withTintColor(.gray2 ?? .systemGray2)
             
         let imageView = UIImageView(image: image)
         imageView.frame = CGRect(x: horizontalPadding, y: 0, width: imageViewSize, height: imageViewSize)

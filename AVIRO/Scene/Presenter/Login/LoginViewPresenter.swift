@@ -56,6 +56,8 @@ final class LoginViewPresenter {
         
         let userCheck = AVIROAppleUserCheckMemberDTO(userToken: appleUserModel.userIdentifier)
                 
+        print(userCheck)
+        
         AVIROAPIManager().postCheckUserModel(userCheck) { userInfo in
             print(userInfo)
             DispatchQueue.main.async { [weak self] in

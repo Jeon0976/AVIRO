@@ -14,7 +14,7 @@ struct AVIROEnrollCommentDTO: Encodable {
     let content: String
 }
 
-struct AVIROEditCommenDTO: Encodable {
+struct AVIROEditCommentDTO: Encodable {
     let commentId: String
     let content: String
     let userId: String

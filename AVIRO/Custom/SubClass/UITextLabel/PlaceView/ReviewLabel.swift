@@ -36,8 +36,6 @@ final class ReviewLabel: UILabel {
     }
     
     private func setAttribute() {
-        self.font = .systemFont(ofSize: 15, weight: .medium)
-        
         self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
     }
@@ -67,12 +65,14 @@ final class ReviewLabel: UILabel {
     }
     
     private func normalColorReview() {
+        self.font = .pretendard(size: 15, weight: .medium)
+        
         self.textColor = .gray0
         self.backgroundColor = .gray6
     }
     
     private func changedReviewColor() {
-        self.font = .systemFont(ofSize: 15, weight: .semibold)
+        self.font = .pretendard(size: 15, weight: .semibold)
         self.textColor = .main
         self.backgroundColor = .bgNavy
     }

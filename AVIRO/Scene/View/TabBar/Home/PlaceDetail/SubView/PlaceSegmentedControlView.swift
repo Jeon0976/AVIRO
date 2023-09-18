@@ -7,12 +7,15 @@
 
 import UIKit
 
+private enum Segmented: String {
+    case home = "홈"
+    case menu = "메뉴"
+    case reviews = "후기 (0)"
+}
+
 final class PlaceSegmentedControlView: UIView {
-    private let home = "홈"
-    private let menu = "메뉴"
-    private var reviews = "후기 (0)"
     
-    private lazy var items = [self.home, self.menu, self.reviews]
+    private lazy var items = [Segmented.home.rawValue, Segmented.menu.rawValue, Segmented.reviews.rawValue]
     
     private lazy var segmentedControl = UnderlineSegmentedControl(items: items)
     
@@ -71,9 +74,9 @@ final class PlaceSegmentedControlView: UIView {
     
     // review
     var whenUploadReview: ((AVIROEnrollCommentDTO) -> Void)?
-    var whenAfterEditReview: ((AVIROEditCommenDTO) -> Void)?
+    var whenAfterEditReview: ((AVIROEditCommentDTO) -> Void)?
     var updateReviewsCount: ((Int) -> Void)?
-    var reportReview: ((String) -> Void)?
+    var reportReview: ((AVIROReportID) -> Void)?
     var editMyReview: ((String) -> Void)?
     
     override init(frame: CGRect) {
@@ -187,8 +190,8 @@ final class PlaceSegmentedControlView: UIView {
         whenActiveSegmentedChanged()
     }
     
-    func keyboardWillShow(height: CGFloat) {
-        reviewView.keyboardWillShow(height: height)
+    func keyboardWillShow(notification: NSNotification, height: CGFloat) {
+        reviewView.keyboardWillShow(notification: notification, height: height)
     }
     
     func keyboardWillHide() {
@@ -198,7 +201,7 @@ final class PlaceSegmentedControlView: UIView {
     func allDataBinding(placeId: String,
                         infoModel: PlaceInfoData?,
                         menuModel: PlaceMenuData?,
-                        reviewsModel: PlaceReviewsData?
+                        reviewsModel: AVIROReviewsModelArrayDTO?
     ) {
         self.placeId = placeId
         
@@ -379,12 +382,12 @@ final class PlaceSegmentedControlView: UIView {
             self?.whenAfterEditReview?(postEditReviewModel)
         }
         
-        reviewView.whenReportReview = { [weak self] commentId in
-            self?.reportReview?(commentId)
+        reviewView.whenReportReview = { [weak self] reportIdModel in
+            self?.reportReview?(reportIdModel)
         }
         
-        homeView.reportReview = { [weak self] commentId in
-            self?.reportReview?(commentId)
+        homeView.reportReview = { [weak self] reportIdModel in
+            self?.reportReview?(reportIdModel)
         }
         
         reviewView.whenBeforeEditMyReview = { [weak self] commentId in

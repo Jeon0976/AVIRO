@@ -14,7 +14,7 @@ final class SettingCell: UITableViewCell {
         let button = UIButton()
         
         button.setTitleColor(.gray0, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 17, weight: .medium)
+        button.titleLabel?.font = .pretendard(size: 17, weight: .medium)
         button.addTarget(self,
                          action: #selector(buttonTapped),
                          for: .touchUpInside
@@ -41,7 +41,7 @@ final class SettingCell: UITableViewCell {
         
         label.text = "현재 1.0.0 / 최신 1.0.0"
         label.textColor = .gray2
-        label.font = .systemFont(ofSize: 15, weight: .medium)
+        label.font = .pretendard(size: 15, weight: .regular)
         
         return label
     }()
@@ -94,10 +94,10 @@ final class SettingCell: UITableViewCell {
     }
     
     func dataBinding(_ settingsRow: SettingsRow) {
-        if settingsRow == .displayMode {
-            pushButton.isHidden = false
-        }
-        
+//        if settingsRow == .displayMode {
+//            pushButton.isHidden = false
+//        }
+//        
         if settingsRow == .versionInfo {
             versionLabel.isHidden = false
         }

@@ -14,7 +14,7 @@ final class EditLocationAddressTextTableViewCell: UITableViewCell {
         let label = UILabel()
         
         label.numberOfLines = 1
-        label.font = .systemFont(ofSize: 16, weight: .medium)
+        label.font = .pretendard(size: 16, weight: .medium)
         label.textColor = .gray2
         
         return label
@@ -23,8 +23,8 @@ final class EditLocationAddressTextTableViewCell: UITableViewCell {
     private lazy var roadAddr: UILabel = {
         let label = UILabel()
         
-        label.numberOfLines = 3
-        label.font = .systemFont(ofSize: 16, weight: .medium)
+        label.numberOfLines = 2
+        label.font = .pretendard(size: 16, weight: .medium)
         label.textColor = .gray2
         
         return label
@@ -33,8 +33,8 @@ final class EditLocationAddressTextTableViewCell: UITableViewCell {
     private lazy var jibunAddr: UILabel = {
         let label = UILabel()
         
-        label.numberOfLines = 3
-        label.font = .systemFont(ofSize: 16, weight: .medium)
+        label.numberOfLines = 2
+        label.font = .pretendard(size: 16, weight: .medium)
         label.textColor = .gray2
         
         return label

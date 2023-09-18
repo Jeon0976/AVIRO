@@ -12,7 +12,7 @@ final class EditOperatingHourView: UIView {
         let label = UILabel()
         
         label.textColor = .gray0
-        label.font = .systemFont(ofSize: 15, weight: .medium)
+        label.font = .pretendard(size: 15, weight: .medium)
         
         return label
     }()
@@ -20,7 +20,7 @@ final class EditOperatingHourView: UIView {
     private lazy var operatinghourLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 15, weight: .medium)
+        label.font = .pretendard(size: 15, weight: .medium)
         
         return label
     }()
@@ -28,7 +28,7 @@ final class EditOperatingHourView: UIView {
     private lazy var breakTimeLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 15, weight: .medium)
+        label.font = .pretendard(size: 15, weight: .medium)
         label.textColor = .gray2
         
         return label

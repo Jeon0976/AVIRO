@@ -10,18 +10,47 @@ import UIKit
 final class HomeSearchViewTableViewCell: UITableViewCell {
     static let identifier = "HomeSearchViewTableViewCell"
     
-    var icon = UIImageView()
-    var title = UILabel()
-    var address = UILabel()
-    var distance = UILabel()
+    private lazy var icon: UIImageView = {
+        let imageView = UIImageView()
+        
+        return imageView
+    }()
     
-    // MARK: 최초 불러드릴 때 작업
+    private lazy var title: UILabel = {
+        let label = UILabel()
+        
+        label.numberOfLines = 1
+        label.font = .pretendard(size: 18, weight: .medium)
+        label.textColor = .gray0
+
+        return label
+    }()
+    
+    private lazy var address: UILabel = {
+        let label = UILabel()
+        
+        label.numberOfLines = 1
+        label.font = .pretendard(size: 15, weight: .regular)
+        label.textColor = .gray3
+
+        return label
+    }()
+    
+    private lazy var distance: UILabel = {
+        let label = UILabel()
+        
+        label.font = .pretendard(size: 14, weight: .regular)
+        label.textAlignment = .right
+        label.textColor = .gray2
+        
+        return label
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
   
         setupLayout()
-        setupAttribute()
     }
     
     required init?(coder: NSCoder) {
@@ -63,26 +92,6 @@ final class HomeSearchViewTableViewCell: UITableViewCell {
             distance.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ])
     }
-    
-    // MARK: Attribute
-    private func setupAttribute() {
-        title.numberOfLines = 2
-        title.font = .systemFont(ofSize: 18, weight: .medium)
-        title.lineBreakMode = .byCharWrapping
-        
-        address.numberOfLines = 2
-        address.font = .systemFont(ofSize: 15, weight: .medium)
-        address.lineBreakMode = .byCharWrapping
-                
-        distance.font = .systemFont(ofSize: 14, weight: .medium)
-        distance.textAlignment = .right
-        
-        title.textColor = .gray0
-        address.textColor = .gray3
-        distance.textColor = .gray2
-    }
-    
-    // MARK: cell data 바인딩
     
     func makeCellData(_ listData: MatchedPlaceListCell,
                       attributedTitle: NSAttributedString?,

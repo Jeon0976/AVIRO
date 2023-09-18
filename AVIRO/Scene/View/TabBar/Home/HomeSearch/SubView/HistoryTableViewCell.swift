@@ -21,8 +21,9 @@ final class HistoryTableViewCell: UITableViewCell {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         
-        label.numberOfLines = 2
+        label.numberOfLines = 1
         label.lineBreakMode = .byCharWrapping
+        label.font = .pretendard(size: 16, weight: .semibold)
         
         return label
     }()

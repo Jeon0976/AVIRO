@@ -30,7 +30,7 @@ final class PlaceHomeView: UIView {
     // review 관련 클로저
     var showMoreReviews: (() -> Void)?
     var showMoreReviewsAndWriteComment: (() -> Void)?
-    var reportReview: ((String) -> Void)?
+    var reportReview: ((AVIROReportID) -> Void)?
     var editMyReview: ((String) -> Void)?
     
     override init(frame: CGRect) {
@@ -101,7 +101,7 @@ final class PlaceHomeView: UIView {
     
     func dataBinding(infoModel: PlaceInfoData?,
                      menuModel: PlaceMenuData?,
-                     reviewsModel: PlaceReviewsData?
+                     reviewsModel: AVIROReviewsModelArrayDTO?
     ) {
         placeInfoView.dataBindingWhenInHomeView(infoModel)
         placeMenuView.dataBindingWhenInHomeView(menuModel)
@@ -116,7 +116,7 @@ final class PlaceHomeView: UIView {
         placeReviewsView.afterUpdateReviewAndUpdateInHomeView(postModel)
     }
     
-    func whenAfterEditReview(_ model: AVIROEditCommenDTO) {
+    func whenAfterEditReview(_ model: AVIROEditCommentDTO) {
         placeReviewsView.afterEditReviewAndUpdateInHomeView(model)
     }
     
@@ -166,8 +166,8 @@ final class PlaceHomeView: UIView {
             self?.showMoreReviews?()
         }
         
-        placeReviewsView.whenReportReview = { [weak self] commentId in
-            self?.reportReview?(commentId)
+        placeReviewsView.whenReportReview = { [weak self] reportIdModel in
+            self?.reportReview?(reportIdModel)
         }
         
         placeReviewsView.whenBeforeEditMyReview = { [weak self] commentId in

@@ -9,9 +9,10 @@ import UIKit
 
 // MARK: Place View State
 enum PlaceViewState {
-    case PopUp
-    case SlideUp
-    case Full
+    case noShow
+    case popup
+    case slideup
+    case full
 }
 
 final class PlaceView: UIView {
@@ -19,15 +20,17 @@ final class PlaceView: UIView {
     
     private lazy var segmentedControlView = PlaceSegmentedControlView()
     
-    var placeViewStated: PlaceViewState = PlaceViewState.PopUp {
+    var placeViewStated: PlaceViewState = PlaceViewState.noShow {
         didSet {
             switch placeViewStated {
-            case .PopUp:
+            case .popup:
                 whenViewPopUp()
-            case .SlideUp:
+            case .slideup:
                 whenViewSlideUp()
-            case .Full:
+            case .full:
                 whenViewFullUp()
+            default:
+                break
             }
             self.layoutIfNeeded()
         }
@@ -73,9 +76,9 @@ final class PlaceView: UIView {
     var editMenu: (() -> Void)?
     
     var whenUploadReview: ((AVIROEnrollCommentDTO) -> Void)?
-    var whenAfterEditReview: ((AVIROEditCommenDTO) -> Void)?
+    var whenAfterEditReview: ((AVIROEditCommentDTO) -> Void)?
     
-    var reportReview: ((String) -> Void)?
+    var reportReview: ((AVIROReportID) -> Void)?
     var editMyReview: ((String) -> Void)?
     
     override init(frame: CGRect) {
@@ -141,7 +144,7 @@ final class PlaceView: UIView {
     
     func allDataBinding(infoModel: PlaceInfoData?,
                         menuModel: PlaceMenuData?,
-                        reviewsModel: PlaceReviewsData?
+                        reviewsModel: AVIROReviewsModelArrayDTO?
     ) {
         segmentedControlView.allDataBinding(
             placeId: self.placeId,
@@ -157,18 +160,18 @@ final class PlaceView: UIView {
     }
     
     private func whenViewPopUp() {
-        summaryView.placeViewStated = .PopUp
+        summaryView.placeViewStated = .popup
         segmentedControlView.whenViewPopup()
     }
     
     private func whenViewSlideUp() {
-        summaryView.placeViewStated = .SlideUp
+        summaryView.placeViewStated = .slideup
         segmentedControlView.scrollViewIsUserIneraction(false)
         
     }
     
     private func whenViewFullUp() {
-        summaryView.placeViewStated = .Full
+        summaryView.placeViewStated = .full
         segmentedControlView.scrollViewIsUserIneraction(true)
     }
     
@@ -230,8 +233,8 @@ final class PlaceView: UIView {
             self?.summaryView.updateReviewsCount(reviewsCount)
         }
         
-        segmentedControlView.reportReview = { [weak self] commentId in
-            self?.reportReview?(commentId)
+        segmentedControlView.reportReview = { [weak self] reportIdModel in
+            self?.reportReview?(reportIdModel)
         }
         
         segmentedControlView.editMyReview = { [weak self] commentId in
@@ -239,8 +242,8 @@ final class PlaceView: UIView {
         }
     }
     
-    func keyboardWillShow(height: CGFloat) {
-        segmentedControlView.keyboardWillShow(height: height)
+    func keyboardWillShow(notification: NSNotification, height: CGFloat) {
+        segmentedControlView.keyboardWillShow(notification: notification, height: height)
     }
     
     func keyboardWillHide() {

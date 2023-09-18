@@ -13,7 +13,7 @@ final class EnrollMenuTableView: UIView {
         
         label.textColor = .gray0
         label.text = "메뉴 등록하기"
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.font = .pretendard(size: 18, weight: .bold)
         
         return label
     }()
@@ -23,7 +23,7 @@ final class EnrollMenuTableView: UIView {
         
         label.textColor = .gray2
         label.text = "어떤 메뉴를 판매하나요? 1개 이상 등록해주세요."
-        label.font = .systemFont(ofSize: 13, weight: .medium)
+        label.font = .pretendard(size: 13, weight: .medium)
         
         return label
     }()

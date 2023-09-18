@@ -22,7 +22,7 @@ class MainField: UITextField {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
     
     // MARK: 기본 Text Inset
@@ -42,7 +42,7 @@ class MainField: UITextField {
     // MARK: Set Configuration
     private func configuration() {
         self.textColor = .gray0
-        self.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        self.font = .pretendard(size: 18, weight: .medium)
         self.backgroundColor = .gray6
         self.layer.cornerRadius = 10
     }
@@ -50,7 +50,7 @@ class MainField: UITextField {
     // MARK: Text Edge Inset 값 설정
     /// Text Edge Inset 값 설정
     private func setTextInset() -> UIEdgeInsets {
-        var inset = UIEdgeInsets(
+        let inset = UIEdgeInsets(
             top: verticalPadding,
             left: horizontalPadding + imageViewSize + buttonPadding,
             bottom: verticalPadding,

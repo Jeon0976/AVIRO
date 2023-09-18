@@ -9,10 +9,22 @@ import UIKit
 
 import NMapsMap
 
+private enum Segmented: String {
+    case location = "위치"
+    case phone = "전화번호"
+    case operationHour = "영업시간"
+    case homepage = "홈페이지"
+}
+
 final class EditPlaceInfoViewController: UIViewController {
     lazy var presenter = EditPlaceInfoPresenter(viewController: self)
     
-    private let items = ["위치", "전화번호", "영업시간", "홈페이지"]
+    private let items = [
+        Segmented.location.rawValue,
+        Segmented.phone.rawValue,
+        Segmented.operationHour.rawValue,
+        Segmented.homepage.rawValue
+    ]
     
     private lazy var topLine: UIView = {
         let view = UIView()
@@ -100,7 +112,7 @@ final class EditPlaceInfoViewController: UIViewController {
 }
 
 extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
-    func makeLayout() {
+    func setupLayout() {
         [
             topLine,
             segmentedControl,
@@ -134,13 +146,14 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
             
             operationHourChangebleView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             operationHourChangebleView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-            operationHourChangebleView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1, constant: -32)
+            operationHourChangebleView.widthAnchor.constraint(
+                equalTo: self.view.widthAnchor, multiplier: 1, constant: -32)
         ])
         
-        makeSafeAreaViewLayout()
+        setupSafeAreaViewLayout()
     }
     
-    private func makeSafeAreaViewLayout() {
+    private func setupSafeAreaViewLayout() {
         [
             scrollView
         ].forEach {
@@ -199,7 +212,7 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         
     }
     
-    func makeAttribute() {
+    func setupAttribute() {
         self.view.backgroundColor = .gray7
         
         self.setupCustomBackButton()
@@ -207,7 +220,13 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         
         navigationItem.title = "정보 수정 요청하기"
         
-        let rightBarButton = UIBarButtonItem(title: "요청하기", style: .plain, target: self, action: #selector(editStoreButtonTapped))
+        let rightBarButton = UIBarButtonItem(
+            title: "요청하기",
+            style: .plain,
+            target: self,
+            action: #selector(editStoreButtonTapped)
+        )
+        
         navigationItem.rightBarButtonItem = rightBarButton
         navigationItem.rightBarButtonItem?.isEnabled = false
         
@@ -215,12 +234,21 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
             tabBarController.hiddenTabBarIncludeIsTranslucent(true)
         }
         
-        makeBlurEffect()
-        
-        activeLocation()
+        activeLocationView()
     }
     
-    func makeGesture() {
+    func setupBlurEffect() {
+        let blurEffectStyle = UIBlurEffect(style: UIBlurEffect.Style.dark)
+        
+        blurEffectView.effect = blurEffectStyle
+        blurEffectView.frame = view.bounds
+        blurEffectView.alpha = 0.6
+        blurEffectView.isHidden = true
+        operationHourChangebleView.isHidden = true
+    }
+    
+    
+    func setupGesture() {
         [
             leftSwipeGesture,
             rightSwipeGesture,
@@ -235,16 +263,6 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         
         leftSwipeGesture.addTarget(self, action: #selector(swipeGestureActive(_:)))
         rightSwipeGesture.addTarget(self, action: #selector(swipeGestureActive(_:)))
-    }
-    
-    private func makeBlurEffect() {
-        let blurEffectStyle = UIBlurEffect(style: UIBlurEffect.Style.dark)
-        
-        blurEffectView.effect = blurEffectStyle
-        blurEffectView.frame = view.bounds
-        blurEffectView.alpha = 0.6
-        blurEffectView.isHidden = true
-        operationHourChangebleView.isHidden = true
     }
     
     func whenViewWillAppearSelectedIndex(_ index: Int) {
@@ -308,7 +326,7 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         operationHourChangebleView.isHidden = !show
         
         guard let operationHoursModel = operationHoursModel else { return }
-        operationHourChangebleView.makeBindingData(operationHoursModel)
+        operationHourChangebleView.setupDataBinding(operationHoursModel)
     }
     
     @objc private func editStoreButtonTapped() {
@@ -337,19 +355,19 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     private func whenActiveSegmentedChanged() {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
-            activeLocation()
+            activeLocationView()
         case 1:
-            activePhone()
+            activePhoneView()
         case 2:
-            activeWorkingHours()
+            activeOperationHoursView()
         case 3:
-            activeHomepage()
+            activeHomepageView()
         default:
             break
         }
     }
     
-    private func activeLocation() {
+    private func activeLocationView() {
         editPhoneView.isHidden = true
         editHomePageView.isHidden = true
         editOperationHoursView.isHidden = true
@@ -358,7 +376,7 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         editLocationBottomView.isHidden = false
     }
     
-    private func activePhone() {
+    private func activePhoneView() {
         editLocationTopView.isHidden = true
         editLocationBottomView.isHidden = true
         editHomePageView.isHidden = true
@@ -367,7 +385,7 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         editPhoneView.isHidden = false
     }
     
-    private func activeWorkingHours() {
+    private func activeOperationHoursView() {
         editHomePageView.isHidden = true
         editLocationTopView.isHidden = true
         editLocationBottomView.isHidden = true
@@ -376,7 +394,7 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         editOperationHoursView.isHidden = false
     }
     
-    private func activeHomepage() {
+    private func activeHomepageView() {
         editOperationHoursView.isHidden = true
         editLocationTopView.isHidden = true
         editLocationBottomView.isHidden = true
@@ -431,8 +449,8 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     }
     
     func pushAddressEditViewController(placeMarkerModel: MarkerModel) {
-        let vc = EditLocationChangeableAddressViewController()
-        let presenter = EditLocationChangeableAddressPresenter(
+        let vc = ChangeableAddressViewController()
+        let presenter = ChangeableAddressPresenter(
             viewController: vc,
             placeMarkerModel: placeMarkerModel
         )

@@ -3,7 +3,6 @@
 //  AVIRO
 //
 //  Created by 전성훈 on 2023/08/14.
-//
 
 import UIKit
 
@@ -13,6 +12,8 @@ extension HomeViewController {
     }
     
     func whenClosedPlaceView() {
+        placeView.placeViewStated = .noShow
+        
         presenter.resetPreviouslyTouchedMarker()
         
         settingPlaceView()
@@ -31,7 +32,7 @@ extension HomeViewController {
     }
     
     func placeViewPopUp() {
-        placeView.placeViewStated = .PopUp
+        placeView.placeViewStated = .popup
       
         homeButtonIsHidden(false)
         viewNaviButtonHidden(true)
@@ -50,7 +51,7 @@ extension HomeViewController {
         moveToCameraWhenSlideUpView()
         homeButtonIsHidden(true)
 
-        placeView.placeViewStated = .SlideUp
+        placeView.placeViewStated = .slideup
         placeView.isLoadingDetail = true
         
         placeViewTopConstraint?.constant = -self.view.frame.height * 2/3
@@ -67,7 +68,7 @@ extension HomeViewController {
         homeButtonIsHidden(false)
         viewNaviButtonHidden(true)
         moveToCameraWhenPopupView()
-        placeView.placeViewStated = .PopUp
+        placeView.placeViewStated = .popup
         
         searchTextFieldTopConstraint?.constant = 16
 
@@ -81,7 +82,7 @@ extension HomeViewController {
     }
     
     func placeViewFullUp() {
-        placeView.placeViewStated = .Full
+        placeView.placeViewStated = .full
 
         viewNaviButtonHidden(true)
          

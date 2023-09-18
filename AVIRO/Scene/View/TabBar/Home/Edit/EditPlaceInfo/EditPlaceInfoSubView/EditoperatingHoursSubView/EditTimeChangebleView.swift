@@ -9,7 +9,7 @@ final class EditTimeChangebleView: UIView, UIContextMenuInteractionDelegate {
     private lazy var label: UILabel = {
         let lbl = UILabel()
         
-        lbl.font = .systemFont(ofSize: 16, weight: .medium)
+        lbl.font = .pretendard(size: 16, weight: .medium)
         
         return lbl
     }()

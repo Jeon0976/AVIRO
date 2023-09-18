@@ -13,13 +13,13 @@ final class CategoryButton: UIButton {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
     
     func setButton(_ title: String) {
         let attributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: 16, weight: .medium),
-            .foregroundColor: UIColor.registrationColor!
+            .font: UIFont.pretendard(size: 16, weight: .medium),
+            .foregroundColor: UIColor.gray0 ?? .label
         ]
         
         let attributedTitle = NSAttributedString(string: title, attributes: attributes)

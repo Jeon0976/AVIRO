@@ -26,8 +26,8 @@ final class MyPageViewController: UIViewController {
         
         view.afterTappedCell = { [weak self] settingValue in
             switch settingValue {
-            case .displayMode:
-                self?.whenTappedDisplayMode()
+//            case .displayMode:
+//                self?.whenTappedDisplayMode()
             case .termsOfService:
                 self?.whenTappedTermsOfService()
             case .privacyPolicy, .locationPolicy:
@@ -143,7 +143,7 @@ extension MyPageViewController: MyPageViewProtocol {
         if MFMailComposeViewController.canSendMail() {
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
-            mail.setToRecipients(["AVRIO@example.com"])
+            mail.setToRecipients(["aviro.kr.official@gmail.com"])
             mail.setSubject("[AVIRO] \(UserId.shared.userNickname)님의 문의 및 의견")
             mail.setMessageBody("본문 내용입니다.", isHTML: false)
             

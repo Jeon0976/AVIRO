@@ -11,7 +11,7 @@ final class PlaceInfoView: UIView {
     private var title: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 20, weight: .bold)
+        label.font = .pretendard(size: 20, weight: .bold)
         label.textColor = .gray0
         label.text = "가게 정보"
         
@@ -21,7 +21,7 @@ final class PlaceInfoView: UIView {
     private lazy var updatedTimeLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 13, weight: .medium)
+        label.font = .pretendard(size: 13, weight: .regular)
         label.textAlignment = .right
         label.textColor = .gray2
         
@@ -42,7 +42,7 @@ final class PlaceInfoView: UIView {
         label.textColor = .gray0
         label.numberOfLines = 0
         label.lineBreakMode = .byCharWrapping
-        label.font = .systemFont(ofSize: 16, weight: .medium)
+        label.font = .pretendard(size: 16, weight: .medium)
         
         return label
     }()
@@ -61,7 +61,7 @@ final class PlaceInfoView: UIView {
         button.setTitleColor(.changeButton, for: .normal)
         button.backgroundColor = .gray7
         button.contentHorizontalAlignment = .left
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+        button.titleLabel?.font = .pretendard(size: 16, weight: .medium)
         button.titleLabel?.numberOfLines = 1
         button.addTarget(self, action: #selector(phoneButtonTapped(_:)), for: .touchUpInside)
         
@@ -82,7 +82,7 @@ final class PlaceInfoView: UIView {
         button.setTitle("영업 시간 추가", for: .normal)
         button.setTitleColor(.changeButton, for: .normal)
         button.backgroundColor = .gray7
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+        button.titleLabel?.font = .pretendard(size: 16, weight: .medium)
         button.titleLabel?.textAlignment = .left
         button.addTarget(self, action: #selector(timePlusButtonTapped), for: .touchUpInside)
         
@@ -92,7 +92,7 @@ final class PlaceInfoView: UIView {
     private lazy var timeLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 16, weight: .medium)
+        label.font = .pretendard(size: 16, weight: .medium)
         label.textColor = .gray0
         label.numberOfLines = 1
         
@@ -104,7 +104,7 @@ final class PlaceInfoView: UIView {
         
         button.setTitle("더보기", for: .normal)
         button.setTitleColor(.gray2, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
+        button.titleLabel?.font = .pretendard(size: 14, weight: .regular)
         button.addTarget(self, action: #selector(timeTableShowButtonTapped), for: .touchUpInside)
         
         return button
@@ -123,7 +123,7 @@ final class PlaceInfoView: UIView {
         
         button.setTitleColor(.changeButton, for: .normal)
         button.backgroundColor = .gray7
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+        button.titleLabel?.font = .pretendard(size: 16, weight: .medium)
         button.titleLabel?.numberOfLines = 2
         button.titleLabel?.lineBreakMode = .byCharWrapping
         button.contentHorizontalAlignment = .left

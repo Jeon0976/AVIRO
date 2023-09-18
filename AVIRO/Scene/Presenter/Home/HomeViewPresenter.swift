@@ -11,13 +11,13 @@ import CoreLocation
 import NMapsMap
 
 protocol HomeViewProtocol: NSObject {
-    func makeLayout()
-    func makeAttribute()
-    func makeGesture()
+    func setupLayout()
+    func setupAttribute()
+    func setupGesture()
     func whenViewWillAppear()
     func whenViewWillAppearAfterSearchDataNotInAVIRO()
     func whenAfterPopEditPage()
-    func keyboardWillShow(height: CGFloat)
+    func keyboardWillShow(notification: NSNotification)
     func keyboardWillHide()
     func ifDenied()
     func requestSuccess()
@@ -36,7 +36,7 @@ protocol HomeViewProtocol: NSObject {
     )
     func afterSlideupPlaceView(infoModel: PlaceInfoData?,
                                menuModel: PlaceMenuData?,
-                               reviewsModel: PlaceReviewsData?
+                               reviewsModel: AVIROReviewsModelArrayDTO?
     )
     func showReportPlaceAlert()
     func isDuplicatedReport()
@@ -76,7 +76,7 @@ final class HomeViewPresenter: NSObject {
     private var selectedSummaryModel: PlaceSummaryData?
     private var selectedInfoModel: PlaceInfoData?
     private var selectedMenuModel: PlaceMenuData?
-    private var selectedReviewsModel: PlaceReviewsData?
+    private var selectedReviewsModel: AVIROReviewsModelArrayDTO?
     
     private var firstLocation = true
     
@@ -95,15 +95,14 @@ final class HomeViewPresenter: NSObject {
     }
     
     func viewDidLoad() {
-        locationManager.delegate = self
-        
-        locationAuthorization()
-        
-        viewController?.makeLayout()
-        viewController?.makeAttribute()
-        viewController?.makeGesture()
+        viewController?.setupLayout()
+        viewController?.setupAttribute()
+        viewController?.setupGesture()
         makeNotification()
-        
+
+        locationManager.delegate = self
+        locationAuthorization()
+                
         loadVeganData()
     }
     
@@ -115,9 +114,9 @@ final class HomeViewPresenter: NSObject {
         /// 내부에 viewWillAppear를 안 넣는 이유 -> viewWillapper할 때 naverMap을 isHidden처리하고 나서 hidden을 풀 면 네이버 map이 안 움직이는 버그 발생
         /// 좀 더 괜찮을 로직을 위해 새로운 view를 만들어서 naveMap위에 덮어쓰는 방식으로 수정해야 될 것 같음
         if !isFirstViewWillappear {
-            
+
             updateMarkerWhenViewWillAppear()
-            
+
             if !shouldKeepPlaceInfoView {
                 if !afterSearchDataInAVIRO {
                     viewController?.whenViewWillAppearAfterSearchDataNotInAVIRO()
@@ -145,7 +144,7 @@ final class HomeViewPresenter: NSObject {
     
     func viewDidAppear() {
         firstLocationUpdate()
-        
+
         if shouldKeepPlaceInfoView {
             viewController?.whenAfterPopEditPage()
             shouldKeepPlaceInfoView.toggle()
@@ -195,10 +194,7 @@ final class HomeViewPresenter: NSObject {
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-           let keyboardRectangle = keyboardFrame.cgRectValue
-            viewController?.keyboardWillShow(height: keyboardRectangle.height)
-        }
+        viewController?.keyboardWillShow(notification: notification)
     }
     
     @objc func keyboardWillHide() {
@@ -228,7 +224,11 @@ final class HomeViewPresenter: NSObject {
     // MARK: Marker Data singleton에 저장하기
     func saveMarkers(_ mapData: [HomeMapData]) {
         mapData.forEach { data in
-            let latLng = NMGLatLng(lat: data.y, lng: data.x)
+            let latLng = NMGLatLng(
+                lat: data.y,
+                lng: data.x
+            )
+            
             let marker = NMFMarker(position: latLng)
             let placeId = data.placeId
             var place: MapPlace
@@ -527,7 +527,7 @@ final class HomeViewPresenter: NSObject {
     func reportPlace(_ type: AVIROPlaceReportEnum) {
         guard let placeId = selectedPlaceId else { return }
         
-        let model = AVIROPlaceReportDTO(
+        let model = AVIROReportPlaceDTO(
             placeId: placeId,
             userId: UserId.shared.userId,
             content: type.rawValue)
@@ -619,7 +619,7 @@ final class HomeViewPresenter: NSObject {
         AVIROAPIManager().postCommentModel(postReviewModel)
     }
     
-    func editMyReview(_ postEditReviewModel: AVIROEditCommenDTO) {
+    func editMyReview(_ postEditReviewModel: AVIROEditCommentDTO) {
         AVIROAPIManager().postEditCommentModel(postEditReviewModel) { model in
             
         }

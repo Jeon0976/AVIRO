@@ -23,7 +23,7 @@ final class ReportReviewViewController: UIViewController {
         let label = UILabel()
         
         label.text = "신고하기"
-        label.font = .systemFont(ofSize: 18, weight: .semibold)
+        label.font = .pretendard(size: 18, weight: .semibold)
         label.textColor = .gray0
         
         return label
@@ -33,7 +33,7 @@ final class ReportReviewViewController: UIViewController {
         let button = UIButton()
         
         button.setTitle("완료", for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
+        button.titleLabel?.font = .pretendard(size: 18, weight: .semibold)
         button.setTitleColor(.gray3, for: .normal)
         button.addTarget(self, action: #selector(reportButtonTapped(_:)), for: .touchUpInside)
         
@@ -52,7 +52,7 @@ final class ReportReviewViewController: UIViewController {
         let label = UILabel()
         
         label.text = "신고사유 선택"
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.font = .pretendard(size: 18, weight: .bold)
         label.textColor = .gray0
         
         return label
@@ -71,7 +71,7 @@ final class ReportReviewViewController: UIViewController {
         
         textView.text = "기타 신고 사유를 입력해주세요.\n(최대 500자)"
         textView.textColor = .gray2
-        textView.font = .systemFont(ofSize: 16, weight: .medium)
+        textView.font = .pretendard(size: 16, weight: .medium)
         textView.textContainerInset = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
         
         textView.backgroundColor = .gray6
@@ -108,10 +108,7 @@ final class ReportReviewViewController: UIViewController {
     // TODO: API 생기면 수정
     @objc private func reportButtonTapped(_ sender: UIButton) {
         if sender.titleLabel?.textColor == .main {
-            let (id, type) = presenter.reportReview()
-            
-            print(id)
-            print(type)
+//            let (id, type) = presenter.reportReview()
             
             self.dismiss(animated: true)
         }

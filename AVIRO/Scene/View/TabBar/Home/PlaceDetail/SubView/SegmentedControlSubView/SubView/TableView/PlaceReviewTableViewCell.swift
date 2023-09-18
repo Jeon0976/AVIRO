@@ -10,10 +10,10 @@ import UIKit
 final class PlaceReviewTableViewCell: UITableViewCell {
     static let identifier = "PlaceReviewTableViewCell"
     
-    private lazy var userId: UILabel = {
+    private lazy var nickname: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 16, weight: .semibold)
+        label.font = .pretendard(size: 16, weight: .semibold)
         label.textColor = .gray0
         
         return label
@@ -22,7 +22,7 @@ final class PlaceReviewTableViewCell: UITableViewCell {
     private lazy var createdTime: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 13, weight: .medium)
+        label.font = .pretendard(size: 13, weight: .regular)
         label.textColor = .gray2
         
         return label
@@ -64,7 +64,7 @@ final class PlaceReviewTableViewCell: UITableViewCell {
     
     private var commentId = ""
     
-    var reportButtonTapped: ((String, String) -> Void)?
+    var reportButtonTapped: (() -> Void)?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -78,7 +78,7 @@ final class PlaceReviewTableViewCell: UITableViewCell {
     
     private func makeLayout() {
         [
-            userId,
+            nickname,
             createdTime
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -102,23 +102,30 @@ final class PlaceReviewTableViewCell: UITableViewCell {
         }
         
         NSLayoutConstraint.activate([
-            topStackView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0),
-            topStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
-            topStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
+            topStackView.topAnchor.constraint(
+                equalTo: self.contentView.topAnchor, constant: 0),
+            topStackView.leadingAnchor.constraint(
+                equalTo: self.contentView.leadingAnchor),
+            topStackView.trailingAnchor.constraint(
+                equalTo: self.contentView.trailingAnchor),
 
-            review.topAnchor.constraint(equalTo: topLabelStack.bottomAnchor, constant: 10),
-            review.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
-            review.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
-            review.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -15)
+            review.topAnchor.constraint(
+                equalTo: topLabelStack.bottomAnchor, constant: 10),
+            review.leadingAnchor.constraint(
+                equalTo: self.contentView.leadingAnchor),
+            review.trailingAnchor.constraint(
+                equalTo: self.contentView.trailingAnchor),
+            review.bottomAnchor.constraint(
+                equalTo: self.contentView.bottomAnchor, constant: -15)
         ])
     }
     
-    func bindingData(comment: ReviewData,
+    func bindingData(comment: AVIROReviewRawDataDTO,
                      isAbbreviated: Bool,
                      isMyReview: Bool
     ) {
         commentId = comment.commentId
-        userId.text = comment.userId
+        nickname.text = comment.nickname
         createdTime.text = comment.updatedTime
         
         review.setLabel(
@@ -127,8 +134,8 @@ final class PlaceReviewTableViewCell: UITableViewCell {
             isMyReview: isMyReview)
     }
     
+    // MARK: UpLoad 전 수정 -> nickname 수정 후
     @objc private func buttonTapped() {
-        guard let userId = userId.text else { return }
-        reportButtonTapped?(commentId, userId)
+        reportButtonTapped?()
     }
 }

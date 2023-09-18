@@ -19,7 +19,7 @@ final class PlaceMenuTableViewCell: UITableViewCell {
     private lazy var menuTitle: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 18, weight: .semibold)
+        label.font = .pretendard(size: 18, weight: .semibold)
         label.numberOfLines = 1
         label.textColor = .gray0
         
@@ -29,7 +29,7 @@ final class PlaceMenuTableViewCell: UITableViewCell {
     private lazy var menuPrice: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 17, weight: .medium)
+        label.font = .pretendard(size: 17, weight: .medium)
         label.numberOfLines = 1
         label.textColor = .gray0
         
@@ -39,7 +39,7 @@ final class PlaceMenuTableViewCell: UITableViewCell {
     private lazy var menuRequest: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 15, weight: .medium)
+        label.font = .pretendard(size: 15, weight: .medium)
         label.textColor = .gray1
         label.numberOfLines = 2
         
@@ -87,10 +87,12 @@ final class PlaceMenuTableViewCell: UITableViewCell {
             menuRequest.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor)
         ])
         
-        menuPriceBottomConstraint = menuPrice.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10)
+        menuPriceBottomConstraint = menuPrice.bottomAnchor.constraint(
+            equalTo: self.contentView.bottomAnchor, constant: -10)
         menuPriceBottomConstraint?.isActive = true
         
-        menuRequestBottomConstraint =  menuRequest.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10)
+        menuRequestBottomConstraint =  menuRequest.bottomAnchor.constraint(
+            equalTo: self.contentView.bottomAnchor, constant: -10)
         menuRequestBottomConstraint?.isActive = false
         
         menuRequest.isHidden = true

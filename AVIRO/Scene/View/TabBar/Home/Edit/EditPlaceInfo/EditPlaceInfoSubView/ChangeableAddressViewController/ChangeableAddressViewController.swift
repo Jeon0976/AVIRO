@@ -1,5 +1,5 @@
 //
-//  EditLocationChangeableAddressViewController.swift
+//  ChangeableAddressViewController.swift
 //  AVIRO
 //
 //  Created by 전성훈 on 2023/08/27.
@@ -9,10 +9,18 @@ import UIKit
 
 import NMapsMap
 
-final class EditLocationChangeableAddressViewController: UIViewController {
-    lazy var presenter = EditLocationChangeableAddressPresenter(viewController: self)
+private enum Segmented: String {
+    case address = "주소 검색"
+    case map = "지도에서 검색"
+}
+
+final class ChangeableAddressViewController: UIViewController {
+    lazy var presenter = ChangeableAddressPresenter(viewController: self)
     
-    private let items = ["주소 검색", "지도에서 검색"]
+    private let items = [
+        Segmented.address.rawValue,
+        Segmented.map.rawValue
+    ]
     
     private lazy var topLine: UIView = {
         let view = UIView()
@@ -74,7 +82,7 @@ final class EditLocationChangeableAddressViewController: UIViewController {
     }
 }
 
-extension EditLocationChangeableAddressViewController: EditLocationChangebleAddressProtocol {
+extension ChangeableAddressViewController: ChangebleAddressProtocol {
     func makeLayout() {
         [
             topLine,
@@ -202,7 +210,7 @@ extension EditLocationChangeableAddressViewController: EditLocationChangebleAddr
     }
 }
 
-extension EditLocationChangeableAddressViewController: UITableViewDataSource {
+extension ChangeableAddressViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return presenter.addressModelCount
     }
@@ -233,7 +241,7 @@ extension EditLocationChangeableAddressViewController: UITableViewDataSource {
     }
 }
 
-extension EditLocationChangeableAddressViewController: UITableViewDelegate {
+extension ChangeableAddressViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
@@ -256,7 +264,7 @@ extension EditLocationChangeableAddressViewController: UITableViewDelegate {
     }
 }
 
-extension EditLocationChangeableAddressViewController: UIGestureRecognizerDelegate {
+extension ChangeableAddressViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         if touch.view is UISegmentedControl {
             view.endEditing(true)

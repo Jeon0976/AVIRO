@@ -13,7 +13,7 @@ final class EditHomePageView: UIView {
         
         label.textColor = .gray0
         label.text = "홈페이지"
-        label.font = .systemFont(ofSize: 16, weight: .semibold)
+        label.font = .pretendard(size: 16, weight: .semibold)
         
         return label
     }()
@@ -26,7 +26,6 @@ final class EditHomePageView: UIView {
         field.makePlaceHolder(placeHolder)
         field.delegate = self
         field.keyboardType = .URL
-        field.font = .systemFont(ofSize: 16, weight: .medium)
         
         return field
     }()

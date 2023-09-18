@@ -13,7 +13,7 @@ enum AVIROPlaceReportEnum: String {
     case dubplicatedPlace = "중복등록"
 }
 
-struct AVIROPlaceReportDTO: Encodable {
+struct AVIROReportPlaceDTO: Encodable {
     let placeId: String
     let userId: String
     let content: AVIROPlaceReportEnum.RawValue

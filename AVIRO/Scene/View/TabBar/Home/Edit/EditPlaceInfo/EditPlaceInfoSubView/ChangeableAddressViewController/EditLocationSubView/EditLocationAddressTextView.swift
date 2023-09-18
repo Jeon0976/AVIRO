@@ -26,7 +26,7 @@ final class EditLocationAddressTextView: UIView {
         
         label.text = "도로명이나 지역명을 이용해서 검색해보세요."
         label.textColor = .gray1
-        label.font = .systemFont(ofSize: 15, weight: .medium)
+        label.font = .pretendard(size: 15, weight: .medium)
         
         return label
     }()

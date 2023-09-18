@@ -106,14 +106,10 @@ extension LoginViewController: LoginViewProtocol {
     
     // MARK: No Login Button Tapped
     @objc func tapNoLoginButton() {
-//        pushRegistration(AVIROUserSignUpDTO(userToken: "test",
-//                                       userName: "",
-//                                       userEmail: "",
-//                                       nickname: "",
-//                                       birthday: 0,
-//                                       gender: "",
-//                                       marketingAgree: false)
-//        )
+        UserId.shared.userId = "test"
+        UserId.shared.userNickname = "test"
+        
+        pushTabBar()
     }
     
     // MARK: Apple Login Tapped
@@ -156,7 +152,7 @@ extension LoginViewController: LoginViewProtocol {
         
         var style = ToastStyle()
         style.cornerRadius = 14
-        style.backgroundColor = .gray3?.withAlphaComponent(0.7) ?? .lightGray
+        style.backgroundColor = .gray3? ?? .lightGray
         
         style.titleColor = .gray7 ?? .white
         style.titleFont = .systemFont(ofSize: 17, weight: .medium)
@@ -190,8 +186,9 @@ extension LoginViewController: LoginViewProtocol {
 
 // MARK: Apple Login 처리 설정
 extension LoginViewController: ASAuthorizationControllerDelegate {
-    func authorizationController(controller: ASAuthorizationController,
-                                 didCompleteWithAuthorization authorization: ASAuthorization
+    func authorizationController(
+        controller: ASAuthorizationController,
+        didCompleteWithAuthorization authorization: ASAuthorization
     ) {
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             let userIdentifier = appleIDCredential.user
@@ -204,14 +201,14 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                 email: email
             )
             
-            
             presenter.whenCheckAfterAppleLogin(appleUserModel)
         }
     }
     
     // TODO: Error 처리
-    func authorizationController(controller: ASAuthorizationController,
-                                 didCompleteWithError error: Error
+    func authorizationController(
+        controller: ASAuthorizationController,
+        didCompleteWithError error: Error
     ) {
         
     }

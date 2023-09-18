@@ -16,7 +16,7 @@ final class PlaceListHeaderView: UIView {
         button.setTitle(title, for: .normal)
         button.setImage(UIImage(named: "DownSorting"), for: .normal)
         button.setTitleColor(.gray3, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 13, weight: .medium)
+        button.titleLabel?.font = .pretendard(size: 16, weight: .medium)
         button.semanticContentAttribute = .forceRightToLeft
         button.addTarget(self, action: #selector(locationPositionButtonTapped(_:)), for: .touchUpInside)
         button.titleLabel?.textAlignment = .left
@@ -32,7 +32,7 @@ final class PlaceListHeaderView: UIView {
         button.setTitle(title, for: .normal)
         button.setImage(UIImage(named: "DownSorting"), for: .normal)
         button.setTitleColor(.gray3, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 13, weight: .medium)
+        button.titleLabel?.font = .pretendard(size: 16, weight: .medium)
         button.titleLabel?.textAlignment = .left
 
         button.semanticContentAttribute = .forceRightToLeft

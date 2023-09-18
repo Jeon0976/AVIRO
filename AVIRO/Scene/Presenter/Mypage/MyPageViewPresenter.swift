@@ -49,7 +49,7 @@ final class MyPageViewPresenter {
     }
     
     private func loadMyData() {
-        let myNickName = UserId.shared.userId
+        let myNickName = UserId.shared.userNickname
         let myStar = String(BookmarkFacadeManager().loadAllData().count)
         
         let myPlace = "0"

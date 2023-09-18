@@ -32,7 +32,8 @@ final class PlaceSummaryView: UIView {
         
         label.textColor = .gray0
         label.clipsToBounds = true
-        label.font = .systemFont(ofSize: 24, weight: .heavy)
+        label.font = .pretendard(size: 24, weight: .heavy)
+        label.numberOfLines = 1
 
         return label
     }()
@@ -43,7 +44,7 @@ final class PlaceSummaryView: UIView {
         label.textColor = .gray2
         label.textAlignment = .left
         label.clipsToBounds = true
-        label.font = .systemFont(ofSize: 15, weight: .medium)
+        label.font = .pretendard(size: 15, weight: .regular)
 
         return label
     }()
@@ -60,7 +61,7 @@ final class PlaceSummaryView: UIView {
         let label = UILabel()
         
         label.textColor = .gray1
-        label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.font = .pretendard(size: 14, weight: .regular)
         label.text = "0m"
         
         return label
@@ -78,7 +79,7 @@ final class PlaceSummaryView: UIView {
         let label = UILabel()
         
         label.textColor = .gray1
-        label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.font = .pretendard(size: 14, weight: .regular)
         label.text = "0개"
         
         return label
@@ -89,7 +90,7 @@ final class PlaceSummaryView: UIView {
         
         label.textColor = .gray1
         label.clipsToBounds = true
-        label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.font = .pretendard(size: 15, weight: .regular)
         label.numberOfLines = 1
         label.textAlignment = .left
 
@@ -119,7 +120,8 @@ final class PlaceSummaryView: UIView {
     private lazy var whenSlideTopLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 15, weight: .medium)
+        label.font = .pretendard(size: 15, weight: .medium)
+        label.numberOfLines = 1
         
         return label
     }()
@@ -127,7 +129,7 @@ final class PlaceSummaryView: UIView {
     private lazy var whenSlideMiddleLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 24, weight: .heavy)
+        label.font = .pretendard(size: 24, weight: .heavy)
         label.textColor = .gray0
         label.numberOfLines = 3
         label.lineBreakMode = .byCharWrapping
@@ -135,10 +137,11 @@ final class PlaceSummaryView: UIView {
         return label
     }()
     
+    // MARK: 2개로 나눠야함...
     private lazy var whenSlideBottomLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.font = .pretendard(size: 14, weight: .regular)
         label.textColor = .gray2
         
         return label
@@ -157,7 +160,7 @@ final class PlaceSummaryView: UIView {
     private lazy var whenFullTitle: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 18, weight: .semibold)
+        label.font = .pretendard(size: 18, weight: .semibold)
         label.textAlignment = .center
         label.numberOfLines = 2
         label.lineBreakMode = .byCharWrapping
@@ -166,32 +169,33 @@ final class PlaceSummaryView: UIView {
     }()
     
     private var viewHeightConstraint: NSLayoutConstraint?
-//    private var isInit = true
     
-    var placeViewStated: PlaceViewState = PlaceViewState.PopUp {
+    var placeViewStated: PlaceViewState = PlaceViewState.popup {
         didSet {
             switch placeViewStated {
-            case .PopUp:
+            case .popup:
                 whenSlideUpViewIsShowUI(show: false)
                 whenFullHeightViewIsShowUI(show: false)
                 whenPopUpViewIsShowUI(show: true)
                 
                 whenPopUpViewHeight()
                 switchViewCorners(true)
-            case .SlideUp:
+            case .slideup:
                 whenFullHeightViewIsShowUI(show: false)
                 whenPopUpViewIsShowUI(show: false)
                 whenSlideUpViewIsShowUI(show: true)
 
                 whenSlideUpViewHeight()
                 switchViewCorners(true)
-            case .Full:
+            case .full:
                 whenSlideUpViewIsShowUI(show: false)
                 whenPopUpViewIsShowUI(show: false)
                 whenFullHeightViewIsShowUI(show: true)
 
                 whenFullHeightViewHeight()
                 switchViewCorners(false)
+            default:
+                break
             }
         }
     }
@@ -232,7 +236,7 @@ final class PlaceSummaryView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
     
     // MARK: Layout & Attribute

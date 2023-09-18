@@ -13,7 +13,7 @@ final class NoHistoryLabelView: UIView {
         let label = UILabel()
         
         label.numberOfLines = 2
-        label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.font = .pretendard(size: 14, weight: .medium)
         label.textColor = .gray3
         
         return label
@@ -23,7 +23,7 @@ final class NoHistoryLabelView: UIView {
         let label = UILabel()
         
         label.numberOfLines = 2
-        label.font = .systemFont(ofSize: 16, weight: .bold)
+        label.font = .pretendard(size: 16, weight: .bold)
         label.textColor = .gray1
         
         return label

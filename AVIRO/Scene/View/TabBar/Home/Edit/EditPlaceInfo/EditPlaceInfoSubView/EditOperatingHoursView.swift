@@ -13,7 +13,7 @@ final class EditOperatingHoursView: UIView {
         
         label.textColor = .gray0
         label.text = "영업시간"
-        label.font = .systemFont(ofSize: 16, weight: .semibold)
+        label.font = .pretendard(size: 18, weight: .bold)
         
         return label
     }()

@@ -10,9 +10,10 @@ import UIKit
 import NMapsMap
 
 protocol EditPlaceInfoProtocol: NSObject {
-    func makeLayout()
-    func makeAttribute()
-    func makeGesture()
+    func setupLayout()
+    func setupAttribute()
+    func setupBlurEffect()
+    func setupGesture()
     func handleClosure()
     func whenViewWillAppearSelectedIndex(_ index: Int)
     func isDetailFieldCheckBeforeKeyboardShowAndHide(
@@ -153,9 +154,10 @@ final class EditPlaceInfoPresenter {
     }
     
     func viewDidLoad() {
-        viewController?.makeLayout()
-        viewController?.makeAttribute()
-        viewController?.makeGesture()
+        viewController?.setupLayout()
+        viewController?.setupAttribute()
+        viewController?.setupBlurEffect()
+        viewController?.setupGesture()
         viewController?.handleClosure()
         
         dataBinding()

@@ -7,19 +7,20 @@
 
 import Foundation
 
-struct AVIROReviewsModel: Decodable {
+struct AVIROReviewsModelDTO: Decodable {
     let statusCode: Int
-    let data: PlaceReviewsData
+    let data: AVIROReviewsModelArrayDTO
 }
 
-struct PlaceReviewsData: Decodable {
-    let commentArray: [ReviewData]
+struct AVIROReviewsModelArrayDTO: Decodable {
+    let commentArray: [AVIROReviewRawDataDTO]
 }
 
-struct ReviewData: Codable {
+struct AVIROReviewRawDataDTO: Codable {
     var commentId: String
     var userId: String
     var content: String
     var updatedTime: String
+    // TODO: Nickname 수정 후 수정
     var nickname: String?
 }

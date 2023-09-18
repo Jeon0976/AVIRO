@@ -13,7 +13,7 @@ final class EditLocationBottomView: UIView {
     private lazy var addressLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 16, weight: .semibold)
+        label.font = .pretendard(size: 16, weight: .semibold)
         label.text = "가게 주소"
         label.textColor = .gray0
         

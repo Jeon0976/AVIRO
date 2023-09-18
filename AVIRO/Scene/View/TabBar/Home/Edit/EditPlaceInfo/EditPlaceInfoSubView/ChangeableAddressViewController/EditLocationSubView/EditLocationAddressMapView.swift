@@ -14,7 +14,7 @@ final class EditLocationAddressMapView: UIView {
         let label = UILabel()
         
         label.text = "지도를 움직여 아이콘을 원하는 위치로 옮겨보세요."
-        label.font = .systemFont(ofSize: 15, weight: .medium)
+        label.font = .pretendard(size: 15, weight: .medium)
         label.textColor = .gray1
         
         return label
@@ -33,7 +33,7 @@ final class EditLocationAddressMapView: UIView {
         
         label.textColor = .gray0
         label.numberOfLines = 2
-        label.font = .systemFont(ofSize: 17, weight: .medium)
+        label.font = .pretendard(size: 16, weight: .medium)
         
         return label
     }()
@@ -42,7 +42,7 @@ final class EditLocationAddressMapView: UIView {
         let button = UIButton()
         
         button.setTitle("등록", for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
+        button.titleLabel?.font = .pretendard(size: 18, weight: .semibold)
         button.contentEdgeInsets = UIEdgeInsets(top: 15, left: 20, bottom: 15, right: 20)
         button.backgroundColor = .gray6
         button.setTitleColor(.gray3, for: .normal)

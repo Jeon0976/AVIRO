@@ -14,12 +14,16 @@ final class EnrollStoreInfoView: UIView {
         
         label.textColor = .registrationColor
         label.text = "가게 기본 정보"
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.font = .pretendard(size: 18, weight: .bold)
         
         return label
     }()
     
-    lazy var titleField = EnrollField()
+    lazy var titleField: EnrollField = {
+        let field = EnrollField()
+        
+        return field
+    }()
     
     // MARK: Adderss
     lazy var address: UILabel = {
@@ -27,7 +31,7 @@ final class EnrollStoreInfoView: UIView {
         
         label.textColor = .registrationColor
         label.text = "가게 주소"
-        label.font = .systemFont(ofSize: 16, weight: .semibold)
+        label.font = .pretendard(size: 16, weight: .semibold)
         
         return label
     }()
@@ -40,7 +44,7 @@ final class EnrollStoreInfoView: UIView {
         
         label.textColor = .registrationColor
         label.text = "가게 번호"
-        label.font = .systemFont(ofSize: 16, weight: .semibold)
+        label.font = .pretendard(size: 16, weight: .semibold)
         
         return label
     }()
@@ -53,7 +57,7 @@ final class EnrollStoreInfoView: UIView {
         
         label.textColor = .registrationColor
         label.text = "카테고리"
-        label.font = .systemFont(ofSize: 16, weight: .semibold)
+        label.font =  .pretendard(size: 16, weight: .semibold)
         
         return label
     }()
@@ -81,7 +85,7 @@ final class EnrollStoreInfoView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
     
     // MARK: 최초 view Height 설정

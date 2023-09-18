@@ -11,7 +11,7 @@ final class PlaceMenuView: UIView {
     private lazy var title: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 20, weight: .bold)
+        label.font = .pretendard(size: 20, weight: .bold)
         label.textColor = .gray0
         label.text = "메뉴"
         
@@ -21,7 +21,7 @@ final class PlaceMenuView: UIView {
     private lazy var subTitle: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 13, weight: .medium)
+        label.font = .pretendard(size: 13, weight: .regular)
         label.textAlignment = .left
         label.textColor = .gray2
         
@@ -31,7 +31,7 @@ final class PlaceMenuView: UIView {
     private lazy var updatedTimeLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 13, weight: .medium)
+        label.font = .pretendard(size: 13, weight: .regular)
         label.textAlignment = .right
         label.textColor = .gray2
         
@@ -58,6 +58,7 @@ final class PlaceMenuView: UIView {
     
     private lazy var editButton: EditButton = {
         let button = EditButton()
+        
         button.setButton("메뉴 정보 수정하기")
         button.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
         
@@ -66,6 +67,7 @@ final class PlaceMenuView: UIView {
 
     private lazy var showMoreButton: ShowMoreButton = {
         let button = ShowMoreButton()
+        
         button.setButton("메뉴 더보기")
         button.addTarget(self, action: #selector(showMoreButtonTapped), for: .touchUpInside)
         

@@ -13,7 +13,7 @@ final class HistoryHeaderView: UIView {
         
         label.text = "최근검색어"
         label.textColor = .gray0
-        label.font = .systemFont(ofSize: 15, weight: .semibold)
+        label.font = .pretendard(size: 15, weight: .semibold)
         
         return label
     }()
@@ -22,7 +22,7 @@ final class HistoryHeaderView: UIView {
         let button = UIButton()
         
         button.setTitle("모두 지우기", for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
+        button.titleLabel?.font = .pretendard(size: 14, weight: .semibold)
         button.setTitleColor(.gray1, for: .normal)
         button.backgroundColor = .gray6
 

@@ -14,17 +14,110 @@ import Toast_Swift
 final class HomeViewController: UIViewController {
     lazy var presenter = HomeViewPresenter(viewController: self)
         
-    private lazy var naverMapView = NMFMapView()
+    private lazy var naverMapView: NMFMapView = {
+        let map = NMFMapView()
+        
+        map.addCameraDelegate(delegate: self)
+        map.touchDelegate = self
+        map.mapType = .basic
+        map.isIndoorMapEnabled = true
+        map.minZoomLevel = 5.0
+        map.extent = NMGLatLngBounds(
+            southWestLat: 31.43,
+            southWestLng: 122.37,
+            northEastLat: 44.35,
+            northEastLng: 132
+        )
+        
+        return map
+    }()
     
-    // 검색 기능 관련
-    private lazy var searchTextField = MainField()
+    private lazy var searchTextField: MainField = {
+        let field = MainField()
+        
+        field.makePlaceHolder("어디로 이동할까요?")
+        field.makeShadow()
+        field.delegate = self
+        
+        return field
+    }()
 
-    // 내 위치 최신화 관련
-    private lazy var loadLocationButton = HomeMapReferButton()
-    private lazy var starButton = HomeMapReferButton()
+    private lazy var loadLocationButton: HomeMapReferButton = {
+        let button = HomeMapReferButton()
+        
+        button.setImage(
+            UIImage(named: "current-location")?.withTintColor(.gray1!),
+            for: .normal
+        )
+        button.setImage(
+            UIImage(named: "current-locationDisable")?.withTintColor(.gray4!),
+            for: .disabled
+        )
+        button.addTarget(
+            self,
+            action: #selector(locationButtonTapped(_:)),
+            for: .touchUpInside
+        )
+        
+        return button
+    }()
     
-    private lazy var downBackButton = HomeTopButton()
-    private lazy var flagButton = HomeTopButton()
+    private lazy var starButton: HomeMapReferButton = {
+        let button = HomeMapReferButton()
+        
+        // starButton
+        button.setImage(
+            UIImage(named: "star")?.withTintColor(.gray1!),
+            for: .normal
+        )
+        button.setImage(
+            UIImage(named: "selectedStar"),
+            for: .selected
+        )
+        button.setImage(
+            UIImage(named: "starDisable")?.withTintColor(.gray4!),
+            for: .disabled
+        )
+        button.addTarget(
+            self,
+            action: #selector(starButtonTapped(_ :)),
+            for: .touchUpInside
+        )
+
+        return button
+    }()
+    
+    private lazy var downBackButton: HomeTopButton = {
+        let button = HomeTopButton()
+        
+        button.setImage(
+            UIImage(named: "DownBack"),
+            for: .normal
+        )
+        button.addTarget(
+            self,
+            action: #selector(downBackButtonTapped(_:)),
+            for: .touchUpInside
+        )
+        
+        return button
+    }()
+    
+    private lazy var flagButton: HomeTopButton = {
+        let button = HomeTopButton()
+        
+        button.setImage(
+            UIImage(named: "Flag"),
+            for: .normal
+        )
+        button.addTarget(
+            self,
+            action: #selector(flagButtonTapped(_:)),
+            for: .touchUpInside
+        )
+        
+        return button
+    }()
     
     private(set) lazy var placeView = PlaceView()
         
@@ -33,15 +126,12 @@ final class HomeViewController: UIViewController {
     
     private lazy var tapGesture = UITapGestureRecognizer()
 
-    /// view 위 아래 움직일때마다 height값과 layout의 시간 차 발생?하는것 같음
     private var isSlideUpView = false
     
     // store 뷰 관련
     private var upGesture = UISwipeGestureRecognizer()
     private var downGesture = UISwipeGestureRecognizer()
-    // 최초 화면 뷰
-    var firstPopupView = HomeFirstPopUpView()
-        
+
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -69,8 +159,7 @@ final class HomeViewController: UIViewController {
 }
 
 extension HomeViewController: HomeViewProtocol {
-    // MARK: Layout
-    func makeLayout() {
+    func setupLayout() {
         [
             naverMapView,
             loadLocationButton,
@@ -96,32 +185,42 @@ extension HomeViewController: HomeViewProtocol {
                 equalTo: view.trailingAnchor),
             
             // loadLoactionButton
-            loadLocationButton.bottomAnchor.constraint(equalTo: placeView.topAnchor, constant: -20),
+            loadLocationButton.bottomAnchor.constraint(
+                equalTo: placeView.topAnchor, constant: -20),
             loadLocationButton.trailingAnchor.constraint(
                 equalTo: naverMapView.trailingAnchor, constant: -20),
             
             // starButton
-            starButton.bottomAnchor.constraint(equalTo: loadLocationButton.topAnchor, constant: -10),
-            starButton.trailingAnchor.constraint(equalTo: loadLocationButton.trailingAnchor),
+            starButton.bottomAnchor.constraint(
+                equalTo: loadLocationButton.topAnchor, constant: -10),
+            starButton.trailingAnchor.constraint(
+                equalTo: loadLocationButton.trailingAnchor),
             
             // searchTextField
             searchTextField.leadingAnchor.constraint(
-                equalTo: naverMapView.leadingAnchor, constant: Layout.Inset.leadingTop),
+                equalTo: naverMapView.leadingAnchor, constant: 16),
             searchTextField.trailingAnchor.constraint(
-                equalTo: naverMapView.trailingAnchor, constant: Layout.Inset.trailingBottom),
+                equalTo: naverMapView.trailingAnchor, constant: -16),
             
             // placeView
-            placeView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            placeView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            placeView.heightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor),
-//
-            flagButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
-            flagButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 18),
+            placeView.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor),
+            placeView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor),
+            placeView.heightAnchor.constraint(
+                equalTo: self.view.safeAreaLayoutGuide.heightAnchor),
+
+            flagButton.trailingAnchor.constraint(
+                equalTo: self.view.trailingAnchor, constant: -16),
+            flagButton.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 18),
             flagButton.widthAnchor.constraint(equalToConstant: 40),
             flagButton.heightAnchor.constraint(equalToConstant: 40),
             
-            downBackButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
-            downBackButton.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 18),
+            downBackButton.leadingAnchor.constraint(
+                equalTo: self.view.leadingAnchor, constant: 16),
+            downBackButton.topAnchor.constraint(
+                equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 18),
             downBackButton.widthAnchor.constraint(equalToConstant: 40),
             downBackButton.heightAnchor.constraint(equalToConstant: 40)
         ])
@@ -135,51 +234,11 @@ extension HomeViewController: HomeViewProtocol {
         placeViewTopConstraint?.isActive = true
     }
     
-    // MARK: Attribute
-    func makeAttribute() {
-        // Navigation, View, TabBar
+    func setupAttribute() {
         view.backgroundColor = .gray7
-
-        let backItem = UIBarButtonItem()
-        backItem.title = ""
-        navigationItem.backBarButtonItem = backItem
-
-        // NFMAP
-        naverMapView.addCameraDelegate(delegate: self)
-        naverMapView.touchDelegate = self
-        naverMapView.mapType = .basic
-        naverMapView.isIndoorMapEnabled = true
-        naverMapView.minZoomLevel = 5.0
-        naverMapView.extent = NMGLatLngBounds(southWestLat: 31.43, southWestLng: 122.37, northEastLat: 44.35, northEastLng: 132)
-        
-        // searchTextField
-        searchTextField.makePlaceHolder("어디로 이동할까요?")
-        searchTextField.makeShadow()
-        searchTextField.delegate = self
-        
-        // downBack
-        downBackButton.setImage(UIImage(named: "DownBack"), for: .normal)
-        downBackButton.addTarget(self, action: #selector(downBackButtonTapped(_:)), for: .touchUpInside)
-        
-        // flag
-        flagButton.setImage(UIImage(named: "Flag"), for: .normal)
-        flagButton.addTarget(self, action: #selector(flagButtonTapped(_:)), for: .touchUpInside)
-        
-        // lodeLocationButton
-        loadLocationButton.setImage(UIImage(named: "current-location")?.withTintColor(.gray1!), for: .normal)
-        loadLocationButton.setImage(UIImage(named: "current-locationDisable")?.withTintColor(.gray4!), for: .disabled)
-        loadLocationButton.addTarget(self, action: #selector(locationButtonTapped(_:)), for: .touchUpInside)
-        
-        // starButton
-        starButton.setImage(UIImage(named: "star")?.withTintColor(.gray1!), for: .normal)
-        starButton.setImage(UIImage(named: "selectedStar"), for: .selected)
-        starButton.setImage(UIImage(named: "starDisable")?.withTintColor(.gray4!), for: .disabled)
-        starButton.addTarget(self, action: #selector(starButtonTapped(_ :)), for: .touchUpInside)
-
     }
     
-    // MARK: Gesture 설정
-    func makeGesture() {
+    func setupGesture() {
         placeView.addGestureRecognizer(upGesture)
         placeView.addGestureRecognizer(downGesture)
 
@@ -191,18 +250,21 @@ extension HomeViewController: HomeViewProtocol {
         
         view.addGestureRecognizer(tapGesture)
         tapGesture.delegate = self
-        
     }
     
-    // MARK: Keyboard Will Show
-    func keyboardWillShow(height: CGFloat) {
-        let tabbarHeight = tabBarController?.tabBar.frame.height ?? 0
-        let result = height - tabbarHeight
-        
-        placeView.keyboardWillShow(height: result)
+    func keyboardWillShow(notification: NSNotification) {
+        if let userInfo = notification.userInfo {
+            let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue ?? .zero
+            let keyboardHeight = keyboardFrame.height
+            
+            let tabbarHeight = tabBarController?.tabBar.frame.height ?? 0
+            
+            let result = keyboardHeight - tabbarHeight
+            
+            placeView.keyboardWillShow(notification: notification, height: result)
+        }
     }
     
-    // MARK: Keyboard Will Hide
     func keyboardWillHide() {
         placeView.keyboardWillHide()
     }
@@ -217,6 +279,8 @@ extension HomeViewController: HomeViewProtocol {
         }
         
         naverMapView.isHidden = false
+        
+        placeView.placeViewStated = .noShow
     }
 
     func whenAfterPopEditPage() {
@@ -304,11 +368,13 @@ extension HomeViewController: HomeViewProtocol {
                                      placeId: placeId,
                                      isStar: isStar
         )
+        
+        changedSearchField(with: placeModel.placeTitle)
     }
     
     func afterSlideupPlaceView(infoModel: PlaceInfoData?,
                                menuModel: PlaceMenuData?,
-                               reviewsModel: PlaceReviewsData?
+                               reviewsModel: AVIROReviewsModelArrayDTO?
     ) {
         // MARK: 다 하나씩 쪼겔 필요 있음
         placeView.allDataBinding(infoModel: infoModel,
@@ -498,9 +564,9 @@ extension HomeViewController {
         placeView.whenAfterEditReview = { [weak self] postReviewEditModel in
             self?.presenter.editMyReview(postReviewEditModel)
         }
-        
-        placeView.reportReview = { [weak self] commentId in
-            self?.makeReportReviewAlert(commentId)
+    
+        placeView.reportReview = { [weak self] reportIdModel in
+            self?.makeReportReviewAlert(reportIdModel)
         }
         
         placeView.editMyReview = { [weak self] commentId in
@@ -519,27 +585,15 @@ extension HomeViewController {
     private func makeToastButton(_ title: String) {
         var style = ToastStyle()
         style.cornerRadius = 14
-        style.backgroundColor = .gray3?.withAlphaComponent(0.7) ?? .lightGray
+        style.backgroundColor = .gray3? ?? .lightGray
         
         style.titleColor = .gray7 ?? .white
         style.titleFont = .systemFont(ofSize: 17, weight: .semibold)
-        
-        let centerX = (self.view.frame.size.width) / 2
-        let viewHeight = self.view.safeAreaLayoutGuide.layoutFrame.height + (self.tabBarController?.tabBar.frame.height ?? 0)
-        
-        let yPosition: CGFloat = viewHeight - 70
-        
-        self.view.makeToast(title,
-                            duration: 1.0,
-                            point: CGPoint(x: centerX, y: yPosition),
-                            title: nil,
-                            image: nil,
-                            style: style,
-                            completion: nil
-        )
+
+        self.view.makeToast(title, duration: 1.0, position: .bottom, style: style)
     }
     
-    private func makeReportReviewAlert(_ commentId: String) {
+    private func makeReportReviewAlert(_ reportIdModel: AVIROReportID) {
         let alertController = UIAlertController(
             title: nil,
             message: "더보기",
@@ -547,7 +601,7 @@ extension HomeViewController {
         )
         
         let reportAction = UIAlertAction(title: "후기 신고하기", style: .destructive) { _ in
-            self.presentReportReview(commentId)
+            self.presentReportReview(reportIdModel)
         }
         
         let cancel = UIAlertAction(title: "취소", style: .cancel)
@@ -623,11 +677,11 @@ extension HomeViewController {
         present(alertController, animated: true)
     }
     
-    private func presentReportReview(_ commentId: String) {
+    private func presentReportReview(_ reportIdModel: AVIROReportID) {
         let vc = ReportReviewViewController()
         let presenter = ReportReviewPresenter(
             viewController: vc,
-            reviewId: commentId
+            reportIdModel: reportIdModel
         )
         
         vc.presenter = presenter
@@ -740,7 +794,7 @@ extension HomeViewController {
                     naverMapView.isHidden = true
                     isSlideUpView = false
                 // view가 아직 slideup 안 되었고, popup일때 가능
-                } else if !isSlideUpView && placeView.placeViewStated == .PopUp {
+                } else if !isSlideUpView && placeView.placeViewStated == .popup {
                     placeViewSlideUp()
                     presenter.getPlaceModelDetail()
                     isSlideUpView = true
@@ -766,6 +820,7 @@ extension HomeViewController: UITextFieldDelegate {
     func animateTextFieldExpansion(textField: UITextField) {
         
         textField.placeholder = ""
+        textField.text = ""
         textField.leftView?.isHidden = true
         
         let startingFrame = textField.convert(textField.bounds, to: nil)
@@ -785,8 +840,16 @@ extension HomeViewController: UITextFieldDelegate {
         }, completion: { _ in
             let vc = HomeSearchViewController()
             
+            let presenter = HomeSearchPresenter(viewController: vc)
+            
+            vc.presenter = presenter
+            
             vc.afterNewEnrollPlaceButtonTapped = { [weak self] in
                 self?.tabBarController?.selectedIndex = 1
+            }
+            
+            presenter.selectedPlace = { [weak self] place in
+                self?.changedSearchField(with: place)
             }
             
             self.navigationController?.pushViewController(vc, animated: false)
@@ -797,6 +860,13 @@ extension HomeViewController: UITextFieldDelegate {
         })
     }
     
+    private func changedSearchField(with place: String) {
+        searchTextField.text = place
+    }
+    
+    private func afterSearchFieldInit() {
+        searchTextField.text = ""
+    }
 }
 
 // MARK: TapGestureDelegate
@@ -818,6 +888,10 @@ extension HomeViewController: NMFMapViewCameraDelegate {
     
     // 카메라 움직일 때
     func mapView(_ mapView: NMFMapView, cameraWillChangeByReason reason: Int, animated: Bool) {
+        if placeView.placeViewStated == .noShow {
+            afterSearchFieldInit()
+        }
+        
         loadLocationButton.isEnabled = false
         
         if !starButton.isSelected {
@@ -848,17 +922,3 @@ extension HomeViewController: NMFMapViewTouchDelegate {
         isSlideUpView = false
     }
 }
-
-//// MARK: Safari View Controller Delegate
-//extension HomeViewController: SFSafariViewControllerDelegate {
-//    // dismiss animation false
-//    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-//    }
-//
-//    func safariViewControllerWillOpenInBrowser(_ controller: SFSafariViewController) {
-////        print("Test")
-////        print(controller)
-////        controller.dismiss(animated: false, completion: nil)
-//
-//    }
-//}

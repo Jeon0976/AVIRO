@@ -11,7 +11,7 @@ final class OperationHourView: UIView {
     private lazy var dayLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 15, weight: .medium)
+        label.font = .pretendard(size: 15, weight: .medium)
         label.textColor = .gray1
         
         return label
@@ -20,7 +20,7 @@ final class OperationHourView: UIView {
     private lazy var operatingHourLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 15, weight: .medium)
+        label.font = .pretendard(size: 15, weight: .medium)
         label.textColor = .gray1
         
         return label
@@ -29,7 +29,7 @@ final class OperationHourView: UIView {
     private lazy var breakTimeLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .systemFont(ofSize: 15, weight: .medium)
+        label.font = .pretendard(size: 15, weight: .medium)
         label.textColor = .gray3
         
         return label
@@ -110,22 +110,22 @@ final class OperationHourView: UIView {
     }
     
     private func isToday() {
-        dayLabel.font = .systemFont(ofSize: 15, weight: .semibold)
+        dayLabel.font = .pretendard(size: 15, weight: .semibold)
         dayLabel.textColor = .main
         
-        operatingHourLabel.font = .systemFont(ofSize: 15, weight: .semibold)
+        operatingHourLabel.font = .pretendard(size: 15, weight: .semibold)
         operatingHourLabel.textColor = .main
 
-        breakTimeLabel.font = .systemFont(ofSize: 15, weight: .semibold)
+        breakTimeLabel.font = .pretendard(size: 15, weight: .semibold)
         breakTimeLabel.textColor = .main
     }
     
     private func isNotToday() {
-        dayLabel.font = .systemFont(ofSize: 15, weight: .medium)
+        dayLabel.font = .pretendard(size: 15, weight: .medium)
         dayLabel.textColor = .gray1
 
-        operatingHourLabel.font = .systemFont(ofSize: 15, weight: .medium)
-        breakTimeLabel.font = .systemFont(ofSize: 15, weight: .medium)
+        operatingHourLabel.font = .pretendard(size: 15, weight: .medium)
+        breakTimeLabel.font = .pretendard(size: 15, weight: .medium)
         breakTimeLabel.textColor = .gray3
     }
     

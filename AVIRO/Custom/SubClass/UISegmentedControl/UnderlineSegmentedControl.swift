@@ -89,11 +89,11 @@ final class UnderlineSegmentedControl: UISegmentedControl {
     func setAttributedTitle(
         _ normal: (UIColor?, UIFont) = (
             UIColor.gray2,
-            UIFont.systemFont(ofSize: 17, weight: .medium)
+            UIFont.pretendard(size: 17, weight: .regular)
         ),
         _ selected: (UIColor?, UIFont) = (
             UIColor.gray0,
-            UIFont.systemFont(ofSize: 17, weight: .semibold)
+            UIFont.pretendard(size: 17, weight: .semibold)
         )
     ) {
         guard let normalColor = normal.0 else { return }
