@@ -105,12 +105,9 @@ final class ReportReviewViewController: UIViewController {
         self.dismiss(animated: true)
     }
     
-    // TODO: API 생기면 수정
     @objc private func reportButtonTapped(_ sender: UIButton) {
         if sender.titleLabel?.textColor == .main {
-//            let (id, type) = presenter.reportReview()
-            
-            self.dismiss(animated: true)
+            presenter.reportReview()
         }
     }
 }
@@ -165,14 +162,18 @@ extension ReportReviewViewController: ReportReviewProtocol {
     private func makeReportViewCells() {
         var lastView: UIView?
         
-        for report in CommentReportType.allCases {
+        for report in AVIROCommentReportType.allCases {
             let cellView = ReportCellView()
             
             cellView.makeCellView(report.rawValue)
             cellView.translatesAutoresizingMaskIntoConstraints = false
             
             cellView.selectedReportType = { [weak self] type in
-                self?.presenter.selectedReportType(type)
+                var text = ""
+                if self?.reportTextView.textColor == .gray0 {
+                    text = self?.reportTextView.text ?? ""
+                }
+                self?.presenter.selectedReportType(type, text)
             }
             
             cellView.clickedOffSelectedType = { [weak self] type in
@@ -243,6 +244,10 @@ extension ReportReviewViewController: ReportReviewProtocol {
     func keyboardWillHide() {
         self.view.transform = .identity
     }
+    
+    func dismissViewController() {
+        self.dismiss(animated: true)
+    }
 }
 
 // MARK: TapGestureDelegate
@@ -266,12 +271,18 @@ extension ReportReviewViewController: UITextViewDelegate {
         }
     }
     
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-          let currentText = textView.text ?? ""
-          guard let stringRange = Range(range, in: currentText) else { return false }
-
-          let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
-          
-          return updatedText.count <= 500
-      }
+    func textView(
+        _ textView: UITextView,
+        shouldChangeTextIn range: NSRange,
+        replacementText text: String
+    ) -> Bool {
+        let currentText = textView.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
+        
+        presenter.updateContent(updatedText)
+        
+        return updatedText.count <= 500
+    }
 }

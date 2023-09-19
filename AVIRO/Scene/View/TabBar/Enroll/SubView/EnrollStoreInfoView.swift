@@ -9,10 +9,10 @@ import UIKit
 
 final class EnrollStoreInfoView: UIView {
     // MARK: Main Title
-    lazy var title: UILabel = {
+    lazy var titleLabel: UILabel = {
         let label = UILabel()
         
-        label.textColor = .registrationColor
+        label.textColor = .gray0
         label.text = "가게 기본 정보"
         label.font = .pretendard(size: 18, weight: .bold)
         
@@ -26,10 +26,10 @@ final class EnrollStoreInfoView: UIView {
     }()
     
     // MARK: Adderss
-    lazy var address: UILabel = {
+    lazy var addressLabel: UILabel = {
         let label = UILabel()
         
-        label.textColor = .registrationColor
+        label.textColor = .gray0
         label.text = "가게 주소"
         label.font = .pretendard(size: 16, weight: .semibold)
         
@@ -39,10 +39,10 @@ final class EnrollStoreInfoView: UIView {
     lazy var addressField = EnrollField()
     
     // MARK: Number
-    lazy var number: UILabel = {
+    lazy var numberLabel: UILabel = {
         let label = UILabel()
         
-        label.textColor = .registrationColor
+        label.textColor = .gray0
         label.text = "가게 번호"
         label.font = .pretendard(size: 16, weight: .semibold)
         
@@ -55,7 +55,7 @@ final class EnrollStoreInfoView: UIView {
     lazy var categoryLabel: UILabel = {
         let label = UILabel()
         
-        label.textColor = .registrationColor
+        label.textColor = .gray0
         label.text = "카테고리"
         label.font =  .pretendard(size: 16, weight: .semibold)
         
@@ -118,11 +118,11 @@ final class EnrollStoreInfoView: UIView {
         buttonStackView.distribution = .fillEqually
         
         [
-            title,
+            titleLabel,
             titleField,
-            address,
+            addressLabel,
             addressField,
-            number,
+            numberLabel,
             numberField,
             categoryLabel,
             buttonStackView
@@ -133,38 +133,38 @@ final class EnrollStoreInfoView: UIView {
         
         NSLayoutConstraint.activate([
             // title
-            title.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
-            title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+            titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             
             // titleField
-            titleField.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 20),
-            titleField.leadingAnchor.constraint(equalTo: title.leadingAnchor),
+            titleField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
+            titleField.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             titleField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             
             // address
-            address.topAnchor.constraint(equalTo: titleField.bottomAnchor, constant: 20),
-            address.leadingAnchor.constraint(equalTo: title.leadingAnchor),
+            addressLabel.topAnchor.constraint(equalTo: titleField.bottomAnchor, constant: 20),
+            addressLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             
             // addressField
-            addressField.topAnchor.constraint(equalTo: address.bottomAnchor, constant: 15),
-            addressField.leadingAnchor.constraint(equalTo: title.leadingAnchor),
+            addressField.topAnchor.constraint(equalTo: addressLabel.bottomAnchor, constant: 15),
+            addressField.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             addressField.trailingAnchor.constraint(equalTo: titleField.trailingAnchor),
             
             // number
-            number.topAnchor.constraint(equalTo: addressField.bottomAnchor, constant: 20),
-            number.leadingAnchor.constraint(equalTo: title.leadingAnchor),
+            numberLabel.topAnchor.constraint(equalTo: addressField.bottomAnchor, constant: 20),
+            numberLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             
             // number Field
-            numberField.topAnchor.constraint(equalTo: number.bottomAnchor, constant: 15),
-            numberField.leadingAnchor.constraint(equalTo: title.leadingAnchor),
+            numberField.topAnchor.constraint(equalTo: numberLabel.bottomAnchor, constant: 15),
+            numberField.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             numberField.trailingAnchor.constraint(equalTo: titleField.trailingAnchor),
             
             // category
-            categoryLabel.leadingAnchor.constraint(equalTo: title.leadingAnchor),
+            categoryLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             
             // buttonStackView
             buttonStackView.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 15),
-            buttonStackView.leadingAnchor.constraint(equalTo: title.leadingAnchor),
+            buttonStackView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             buttonStackView.trailingAnchor.constraint(equalTo: titleField.trailingAnchor)
         ])
         
@@ -207,7 +207,7 @@ final class EnrollStoreInfoView: UIView {
         showOtherDetail(true)
         changeCategoryTopConstraint(true)
         
-        let titleHeight = title.frame.height
+        let titleHeight = titleLabel.frame.height
         let titleFieldHeight = titleField.frame.height
         
         let categoryHeight = categoryLabel.frame.height
@@ -232,7 +232,7 @@ final class EnrollStoreInfoView: UIView {
         showOtherDetail(false)
         changeCategoryTopConstraint(false)
         
-        let titleHeight = title.frame.height
+        let titleHeight = titleLabel.frame.height
         let titleFieldHeight = titleField.frame.height
         let categoryHeight = categoryLabel.frame.height
         let buttonStackViewHeight = buttonStackView.frame.height
@@ -247,9 +247,9 @@ final class EnrollStoreInfoView: UIView {
     
     // MARK: 숨겨진 label, field 로직 처리
     private func showOtherDetail(_ show: Bool) {
-        address.isHidden = !show
+        addressLabel.isHidden = !show
         addressField.isHidden = !show
-        number.isHidden = !show
+        numberLabel.isHidden = !show
         numberField.isHidden = !show
     }
     

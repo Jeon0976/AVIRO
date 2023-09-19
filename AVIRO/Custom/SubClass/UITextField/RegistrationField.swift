@@ -67,9 +67,9 @@ class RegistrationField: UITextField {
     
     private func makeRightView(_ isPossible: Bool) -> UIView {
         let image = isPossible ?
-        UIImage(named: Image.Registration.check)?.withTintColor(.main!)
+        UIImage(named: "CheckArt")?.withTintColor(.main!)
         :
-        UIImage(named: Image.Registration.xCheck)
+        UIImage(named: "ErrorArt")
         
         let imageView = UIImageView(image: image)
         

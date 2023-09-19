@@ -684,6 +684,10 @@ extension HomeViewController {
             reportIdModel: reportIdModel
         )
         
+        presenter.afterReportPopView = { [weak self] text in
+            self?.makeToastButton(text)
+        }
+        
         vc.presenter = presenter
         
         present(vc, animated: true)

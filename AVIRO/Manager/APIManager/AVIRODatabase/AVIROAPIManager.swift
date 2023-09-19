@@ -239,7 +239,10 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
     }
     
     // MARK: Check User Model
-    func postCheckUserModel(_ userToken: AVIROAppleUserCheckMemberDTO, completionHandler: @escaping((AVIROAfterAppleUserCheckMemberDTO) -> Void)) {
+    func postCheckUserModel(
+        _ userToken: AVIROAppleUserCheckMemberDTO,
+        completionHandler: @escaping((AVIROAfterAppleUserCheckMemberDTO) -> Void)
+    ) {
         guard let url = postAPI.userCheck().url else { print("url error"); return}
         
         guard let jsonData = try? JSONEncoder().encode(userToken) else {
@@ -444,6 +447,42 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
                 }
             }.resume()
         }
+    
+    // MARK: Post Comment Report Model
+    func postCommentReportModel(
+        _ commentReportModel: AVIROReportCommentDTO,
+        completionHandler: @escaping((AVIROPostResultDTO) -> Void)
+    ) {
+        guard let url = postAPI.commentReport().url else { return }
+        
+        guard let jsonData = try? JSONEncoder().encode(commentReportModel) else {
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        session.dataTask(with: request) { data, response, error in
+            guard error == nil else {
+                print("error")
+                return
+            }
+            
+            guard response != nil else {
+                print(response ?? "response error")
+                return
+            }
+            
+            if let data = data {
+                if let placeResponse = try? JSONDecoder().decode(AVIROPostResultDTO.self, from: data) {
+                    completionHandler(placeResponse)
+                }
+                return
+            }
+        }.resume()
+    }
     
     // MARK: Post Nicname Check
     func postCheckNickname(

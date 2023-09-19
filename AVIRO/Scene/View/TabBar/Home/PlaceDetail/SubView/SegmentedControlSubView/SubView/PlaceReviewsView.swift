@@ -65,7 +65,7 @@ final class PlaceReviewsView: UIView {
     private lazy var separatedLine: UIView = {
         let view = UIView()
         
-        view.backgroundColor = .separateLine
+        view.backgroundColor = .gray5
         
         return view
     }()

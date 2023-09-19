@@ -54,7 +54,7 @@ final class EditMenuBottomView: UIView {
         return tableView
     }()
     
-    private lazy var menuPlusButton = BottomButton2()
+    private lazy var menuPlusButton = MenuPlusButton()
 
     // MARK: Constraint 조절
     private var menuPlusButtonTopConstraint: NSLayoutConstraint?

@@ -76,7 +76,7 @@ extension LoginViewController: LoginViewProtocol {
         titleLabel.textAlignment = .center
         
         // appleLoginButton
-        appleLoginButton.setTitle(StringValue.Login.apple, for: .normal)
+        appleLoginButton.setTitle("Apple로 로그인하기", for: .normal)
         appleLoginButton.setTitleColor(.white, for: .normal)
         appleLoginButton.setImage(UIImage(named: "Logo"), for: .normal)
         
@@ -93,8 +93,8 @@ extension LoginViewController: LoginViewProtocol {
         appleLoginButton.addTarget(self, action: #selector(tapAppleLogin), for: .touchUpInside)
         
         // noLoginButton
-        noLoginButton.setTitle(StringValue.Login.noLogin, for: .normal)
-        noLoginButton.setTitleColor(.subTitle, for: .normal)
+        noLoginButton.setTitle("테스트 아이디 로그인", for: .normal)
+        noLoginButton.setTitleColor(.gray5, for: .normal)
         noLoginButton.titleLabel?.font = .systemFont(ofSize: 14)
         noLoginButton.addTarget(self, action: #selector(tapNoLoginButton), for: .touchUpInside)
     }

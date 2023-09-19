@@ -12,7 +12,7 @@ final class EnrollVeganDetailView: UIView {
     private lazy var title: UILabel = {
         let label = UILabel()
         
-        label.textColor = .registrationColor
+        label.textColor = .gray0
         label.text = "비건 메뉴 구성"
         label.font = .pretendard(size: 18, weight: .bold)
         

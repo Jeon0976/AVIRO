@@ -56,8 +56,8 @@ final class PlaceMenuView: UIView {
         return tableView
     }()
     
-    private lazy var editButton: EditButton = {
-        let button = EditButton()
+    private lazy var editButton: EditInfoButton = {
+        let button = EditInfoButton()
         
         button.setButton("메뉴 정보 수정하기")
         button.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)

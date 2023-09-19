@@ -31,7 +31,7 @@ final class EnrollMenuTableView: UIView {
     let normalTableView = UITableView()
     let requestTableView = UITableView()
     
-    let menuPlusButton = BottomButton2()
+    let menuPlusButton = MenuPlusButton()
 
     // MARK: Constraint 조절
     var menuPlusButtonTopConstraint: NSLayoutConstraint?

@@ -42,7 +42,7 @@ final class FinalRegistrationViewController: UIViewController {
             finalButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
             finalButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             finalButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            finalButton.heightAnchor.constraint(equalToConstant: Layout.Button.height)
+            finalButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
@@ -54,7 +54,7 @@ final class FinalRegistrationViewController: UIViewController {
         // titleLabel
         titleLabel.text = "가입 완료\n환영합니다!"
         titleLabel.font = .systemFont(ofSize: 24, weight: .bold)
-        titleLabel.textColor = .allVegan
+        titleLabel.textColor = .main
         titleLabel.numberOfLines = 2
         titleLabel.textAlignment = .center
         

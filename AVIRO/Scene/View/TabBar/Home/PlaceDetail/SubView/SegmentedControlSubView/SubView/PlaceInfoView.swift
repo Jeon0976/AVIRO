@@ -139,8 +139,8 @@ final class PlaceInfoView: UIView {
         return view
     }()
     
-    private lazy var editInfoButton: EditButton = {
-        let button = EditButton()
+    private lazy var editInfoButton: EditInfoButton = {
+        let button = EditInfoButton()
         
         button.setButton("가게 정보 수정 요청하기")
         button.addTarget(self, action: #selector(editInfoButtonTapped), for: .touchUpInside)

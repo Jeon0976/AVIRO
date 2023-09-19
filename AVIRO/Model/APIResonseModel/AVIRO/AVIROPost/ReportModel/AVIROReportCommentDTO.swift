@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum CommentReportType: String, CaseIterable {
+enum AVIROCommentReportType: String, CaseIterable {
     case profanity = "욕설/비방/차별/혐오 후기예요."
     case advertisement = "홍보/영리목적 후기예요."
     case illegalInfo = "불법 정보 후기예요."
@@ -34,7 +34,7 @@ struct AVIROReportCommentDTO: Encodable {
     let userId: String
     let nickname: String
     let code: Int
-    let content: String?
+    let content: String
 }
 
 struct AVIROReportID {

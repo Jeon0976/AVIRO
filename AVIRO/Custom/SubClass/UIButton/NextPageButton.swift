@@ -1,5 +1,5 @@
 //
-//  TutorialResButton.swift
+//  NextPageButton.swift
 //  AVIRO
 //
 //  Created by 전성훈 on 2023/07/08.
@@ -7,7 +7,6 @@
 
 import UIKit
 
-// Enable 일때 설정 다시
 final class NextPageButton: UIButton {
     
     override init(frame: CGRect) {

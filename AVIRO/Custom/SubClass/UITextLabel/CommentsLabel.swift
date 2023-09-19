@@ -30,8 +30,8 @@ class CommentsLabel: UILabel {
         
         self.numberOfLines = 0
         self.lineBreakMode = .byWordWrapping
-        self.textColor = .mainTitle
-        self.backgroundColor = .separateLine
+        self.textColor = .gray0
+        self.backgroundColor = .gray6
         
         self.layer.cornerRadius = 15
         self.layer.masksToBounds = true

@@ -41,7 +41,7 @@ final class BottomCell: UICollectionViewCell {
     }
     
     private func makeAttribute() {
-        imageView.backgroundColor = .separateLine
+        imageView.backgroundColor = .gray5
         imageView.clipsToBounds = false
         
     }

@@ -9,10 +9,10 @@ import UIKit
 
 final class EditMenuTopView: UIView {
     // MARK: Main Title
-    private lazy var title: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         
-        label.textColor = .registrationColor
+        label.textColor = .gray0
         label.text = "비건 메뉴 구성"
         label.font = .pretendard(size: 18, weight: .bold)
         
@@ -20,7 +20,7 @@ final class EditMenuTopView: UIView {
     }()
     
     // MARK: Sub Title
-    private lazy var subTitle: UILabel = {
+    private lazy var subTitleLabel: UILabel = {
        let label = UILabel()
         
         label.textColor = .gray2
@@ -78,8 +78,8 @@ final class EditMenuTopView: UIView {
         buttonStackView.distribution = .equalSpacing
         
         [
-            title,
-            subTitle,
+            titleLabel,
+            subTitleLabel,
             buttonStackView
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -91,15 +91,15 @@ final class EditMenuTopView: UIView {
         
         NSLayoutConstraint.activate([
             // title
-            title.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
-            title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+            titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             
             // subTitile
-            subTitle.centerYAnchor.constraint(equalTo: title.centerYAnchor),
-            subTitle.leadingAnchor.constraint(equalTo: title.trailingAnchor, constant: 7),
+            subTitleLabel.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+            subTitleLabel.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 7),
             
             // buttonStackView
-            buttonStackView.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 20),
+            buttonStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
             buttonStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             buttonStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
         ])
@@ -175,7 +175,7 @@ final class EditMenuTopView: UIView {
     
     // MARK: View Height
     private func makeViewHeight() {
-        let titleHeight = title.frame.height
+        let titleHeight = titleLabel.frame.height
         let buttonStackViewHeight = buttonStackView.frame.height
         // TODO: Static value 수정할 때 수정 요망
         // 20, 20, 20

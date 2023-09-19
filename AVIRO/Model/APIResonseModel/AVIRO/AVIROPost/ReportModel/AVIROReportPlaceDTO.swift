@@ -16,5 +16,6 @@ enum AVIROPlaceReportEnum: String {
 struct AVIROReportPlaceDTO: Encodable {
     let placeId: String
     let userId: String
+    let nickname: String
     let content: AVIROPlaceReportEnum.RawValue
 }

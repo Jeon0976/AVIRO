@@ -102,7 +102,7 @@ final class TutorialViewController: UIViewController {
             nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
             nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            nextButton.heightAnchor.constraint(equalToConstant: Layout.Button.height)
+            nextButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
@@ -118,7 +118,7 @@ final class TutorialViewController: UIViewController {
         viewPageControl.numberOfPages = tutorial.count
         viewPageControl.currentPage = 0
         viewPageControl.currentPageIndicatorTintColor = .main
-        viewPageControl.pageIndicatorTintColor = .separateLine
+        viewPageControl.pageIndicatorTintColor = .gray5
         
         // nextButton
         nextButton.setTitle("다음으로", for: .normal)

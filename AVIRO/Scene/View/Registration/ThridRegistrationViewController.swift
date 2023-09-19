@@ -109,7 +109,7 @@ extension ThridRegistrationViewController: ThridRegistrationProtocol {
             nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
             nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            nextButton.heightAnchor.constraint(equalToConstant: Layout.Button.height)
+            nextButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     

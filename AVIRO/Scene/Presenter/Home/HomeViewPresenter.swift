@@ -530,6 +530,7 @@ final class HomeViewPresenter: NSObject {
         let model = AVIROReportPlaceDTO(
             placeId: placeId,
             userId: UserId.shared.userId,
+            nickname: UserId.shared.userNickname,
             content: type.rawValue)
 
         AVIROAPIManager().postPlaceReport(model) { [weak self] result in
