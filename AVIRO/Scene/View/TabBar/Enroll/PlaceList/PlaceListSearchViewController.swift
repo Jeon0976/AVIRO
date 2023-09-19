@@ -10,11 +10,35 @@ import UIKit
 final class PlaceListSearchViewController: UIViewController {
     lazy var presenter = PlaceListSearchViewPresenter(viewController: self)
     
-    private lazy var listTableView = UITableView()
-    private lazy var searchField = SearchField()
+    private lazy var listTableView: UITableView = {
+        let tableView = UITableView()
+        
+        tableView.backgroundColor = .gray7
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(
+            PlaceListCell.self,
+            forCellReuseIdentifier: PlaceListCell.identifier
+        )
+        tableView.separatorStyle = .singleLine
+        tableView.separatorColor = .gray5
+        
+        return tableView
+    }()
     
-    private lazy var tapGesture = UITapGestureRecognizer()
-    
+    private lazy var searchField: SearchField = {
+        let field = SearchField()
+        
+        field.makePlaceHolder("어떤 가게를 찾고 있나요?")
+        field.delegate = self
+        field.rightView?.isHidden = true
+        field.didTappedLeftButton = { [weak self] in
+            self?.popViewController()
+        }
+        
+        return field
+    }()
+        
     private lazy var noResultImageView: UIImageView = {
         let imageView = UIImageView()
         
@@ -24,31 +48,18 @@ final class PlaceListSearchViewController: UIViewController {
         return imageView
     }()
     
-    private lazy var noResultMainTitle: UILabel = {
-        let label = UILabel()
+    private lazy var noResultTitle: NoResultLabel = {
+        let label = NoResultLabel()
         
-        label.text = "아직 등록된 가게가 없어요"
-        label.font = .systemFont(ofSize: 20, weight: .bold)
-        label.textAlignment = .center
-        label.textColor = .gray0
+        let text = "검색결과가 없습니다\n다른 검색어를 입력해보세요"
+        label.setupLabel(text)
         label.isHidden = true
         
         return label
     }()
     
-    private lazy var noResultSubTitle: UILabel = {
-        let label = UILabel()
-        
-        label.text = "알고 있는 가게에 검색 결과가 없다면\n가게를 직접 등록해보세요."
-        label.numberOfLines = 2
-        label.textColor = .gray2
-        label.font = .systemFont(ofSize: 15, weight: .medium)
-        label.textAlignment = .center
-        label.isHidden = true
-        
-        return label
-    }()
-    
+    private lazy var tapGesture = UITapGestureRecognizer()
+
     private var searchTimer: DispatchWorkItem?
     
     /// SearchFieldTopConstraint
@@ -81,22 +92,22 @@ extension PlaceListSearchViewController: PlaceListProtocol {
             searchField,
             listTableView,
             noResultImageView,
-            noResultMainTitle,
-            noResultSubTitle
+            noResultTitle
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
         
-        searchFieldTopConstraint = searchField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15)
+        searchFieldTopConstraint = searchField.topAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15)
         searchFieldTopConstraint?.isActive = true
                 
         NSLayoutConstraint.activate([
             // searchField
             searchField.leadingAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: Layout.Inset.leadingTop),
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             searchField.trailingAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: Layout.Inset.trailingBottom),
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             
             // listTableView
             listTableView.topAnchor.constraint(equalTo: searchField.bottomAnchor),
@@ -109,35 +120,17 @@ extension PlaceListSearchViewController: PlaceListProtocol {
             noResultImageView.widthAnchor.constraint(equalToConstant: 120),
             noResultImageView.heightAnchor.constraint(equalToConstant: 120),
             
-            noResultMainTitle.topAnchor.constraint(equalTo: noResultImageView.bottomAnchor, constant: 30),
-            noResultMainTitle.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            
-            noResultSubTitle.topAnchor.constraint(equalTo: noResultMainTitle.bottomAnchor, constant: 15),
-            noResultSubTitle.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+            noResultTitle.topAnchor.constraint(
+                equalTo: noResultImageView.bottomAnchor, constant: 20),
+            noResultTitle.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
         ])
     }
     
     // MARK: Attribute
     func makeAttribute() {
         view.backgroundColor = .gray7
-        navigationItem.title = StringValue.PlaceListView.naviTitle
+        navigationItem.title = "가게 찾기"
         setupCustomBackButton()
-
-        // listTableView
-        listTableView.backgroundColor = .gray7
-        listTableView.dataSource = self
-        listTableView.delegate = self
-        listTableView.register(PlaceListCell.self, forCellReuseIdentifier: PlaceListCell.identifier)
-        listTableView.separatorStyle = .singleLine
-        listTableView.separatorColor = .gray5
-        
-        // search Textfield
-        searchField.makePlaceHolder("어떤 가게를 찾고 있나요?")
-        searchField.delegate = self
-        searchField.rightView?.isHidden = true
-        searchField.didTappedLeftButton = { [weak self] in
-            self?.popViewController()
-        }
     }
     
     // MARK: Gesture
@@ -151,8 +144,7 @@ extension PlaceListSearchViewController: PlaceListProtocol {
     func reloadTableView() {
         listTableView.isHidden = false
         noResultImageView.isHidden = true
-        noResultMainTitle.isHidden = true
-        noResultSubTitle.isHidden = true
+        noResultTitle.isHidden = true
         
         listTableView.reloadData()
     }
@@ -160,8 +152,7 @@ extension PlaceListSearchViewController: PlaceListProtocol {
     func noResultData() {
         listTableView.isHidden = true
         noResultImageView.isHidden = false
-        noResultMainTitle.isHidden = false
-        noResultSubTitle.isHidden = false
+        noResultTitle.isHidden = false
         
         listTableView.reloadData()
         searchField.activeShakeAfterNoSearchData()
@@ -242,7 +233,11 @@ extension PlaceListSearchViewController: UITableViewDataSource {
         let attributedTitle = title.changeColor(changedText: presenter.inrolledData ?? "")
         let attributedAddress = address.changeColor(changedText: presenter.inrolledData ?? "")
 
-        cell?.makeCellData(cellData, attributedTitle: attributedTitle, attributedAddress: attributedAddress)
+        cell?.makeCellData(
+            cellData,
+            attributedTitle: attributedTitle,
+            attributedAddress: attributedAddress
+        )
         
         cell?.backgroundColor = .white
         cell?.selectionStyle = .none
@@ -284,7 +279,10 @@ extension PlaceListSearchViewController: UITextFieldDelegate {
 
 extension PlaceListSearchViewController: UIGestureRecognizerDelegate {
     // MARK: keyboard 관련 gesture 메서드
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldReceive touch: UITouch
+    ) -> Bool {
         if touch.view is SearchField || touch.view is UIButton {
             return false
         }

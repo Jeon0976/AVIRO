@@ -38,6 +38,7 @@
 		C51000522AB5F76600F65C1F /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = C51000392AB5F59600F65C1F /* Pretendard-Regular.otf */; };
 		C51000532AB5F76600F65C1F /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C510003E2AB5F59600F65C1F /* Pretendard-SemiBold.otf */; };
 		C51000552AB8123600F65C1F /* AVIROReportCommentDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51000542AB8123600F65C1F /* AVIROReportCommentDTO.swift */; };
+		C51000582AB939A200F65C1F /* NoResultLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51000572AB939A200F65C1F /* NoResultLabel.swift */; };
 		C51132BF2A559838006E1EC3 /* NotificationCenter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51132BE2A559838006E1EC3 /* NotificationCenter+Extension.swift */; };
 		C51132C12A559BCA006E1EC3 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51132C02A559BCA006E1EC3 /* AppController.swift */; };
 		C51385422AAADB0E001AB827 /* EditNicNameButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51385412AAADB0E001AB827 /* EditNicNameButton.swift */; };
@@ -239,6 +240,7 @@
 		C51000402AB5F59600F65C1F /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		C51000412AB5F59600F65C1F /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
 		C51000542AB8123600F65C1F /* AVIROReportCommentDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROReportCommentDTO.swift; sourceTree = "<group>"; };
+		C51000572AB939A200F65C1F /* NoResultLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoResultLabel.swift; sourceTree = "<group>"; };
 		C51132BE2A559838006E1EC3 /* NotificationCenter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationCenter+Extension.swift"; sourceTree = "<group>"; };
 		C51132C02A559BCA006E1EC3 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		C51385412AAADB0E001AB827 /* EditNicNameButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNicNameButton.swift; sourceTree = "<group>"; };
@@ -869,6 +871,7 @@
 			children = (
 				C5C9619D2A8DEAED0016E2F8 /* PlaceView */,
 				C54BC0DC2A2C762C00B65439 /* CommentsLabel.swift */,
+				C51000572AB939A200F65C1F /* NoResultLabel.swift */,
 			);
 			path = UITextLabel;
 			sourceTree = "<group>";
@@ -1624,6 +1627,7 @@
 				C5D93DA32A58718300629C39 /* NextPageButton.swift in Sources */,
 				C50DB7512A9B83550078B501 /* ChangeableAddressViewController.swift in Sources */,
 				C5A989992A959E040021B7C3 /* AVIROBookmarkModel.swift in Sources */,
+				C51000582AB939A200F65C1F /* NoResultLabel.swift in Sources */,
 				C58EC7D02AB1B59100401FF7 /* AVIROEditLocation+DTO.swift in Sources */,
 				C5803F582A88C1990064A853 /* PlaceTopModel.swift in Sources */,
 				C5D36D2E2A76031E003328E8 /* Double+Extension.swift in Sources */,

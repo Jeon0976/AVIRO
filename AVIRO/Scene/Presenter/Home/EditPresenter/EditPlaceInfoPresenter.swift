@@ -647,7 +647,7 @@ extension EditPlaceInfoPresenter {
         if isChangedAddress {
             return AVIROEditCommonBeforeAfterDTO(before: beforeY, after: afterChangedYLat)
         } else if isChangedAddressDetail {
-            return AVIROEditCommonBeforeAfterDTO(before: beforeY, after: afterChangedYLat)
+            return AVIROEditCommonBeforeAfterDTO(before: beforeY, after: beforeY)
         } else {
             return nil
         }

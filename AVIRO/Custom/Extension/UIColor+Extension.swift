@@ -121,5 +121,5 @@ extension UIColor {
     static let bgRed = UIColor(named: "BG RED")
     
     /// ChangeButtonColor
-    static let changeButton = UIColor(named: "KEYWORD_BLUE")
+    static let keywordBlue = UIColor(named: "KEYWORD_BLUE")
 }

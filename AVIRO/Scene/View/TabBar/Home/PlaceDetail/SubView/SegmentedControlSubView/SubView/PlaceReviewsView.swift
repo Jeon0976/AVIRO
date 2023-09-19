@@ -31,12 +31,19 @@ final class PlaceReviewsView: UIView {
         return label
     }()
     
-    private lazy var noReviews: UILabel = {
-        let label = UILabel()
+    private lazy var noReviewsImageView: UIImageView = {
+        let imageView = UIImageView()
         
-        label.font = .pretendard(size: 17, weight: .medium)
-        label.textColor = .gray3
-        label.text = "아직 등록된 후기가 없어요."
+        imageView.backgroundColor = .gray2
+        
+        return imageView
+    }()
+    
+    private lazy var noReviews: NoResultLabel = {
+        let label = NoResultLabel()
+        
+        let text = "아직 등록된 후기가 없어요.\n소중한 후기를 작성해주세요!"
+        label.setupLabel(text)
         
         return label
     }()
@@ -125,6 +132,7 @@ final class PlaceReviewsView: UIView {
         [
             title,
             subTitle,
+            noReviewsImageView,
             noReviews,
             reviewsTable,
             separatedLine,
@@ -159,8 +167,13 @@ final class PlaceReviewsView: UIView {
             reviewInputView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             reviewInputView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             
-            noReviews.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            noReviews.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+            noReviewsImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            noReviewsImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            noReviewsImageView.heightAnchor.constraint(equalToConstant: 150),
+            noReviewsImageView.widthAnchor.constraint(equalToConstant: 150),
+            
+            noReviews.topAnchor.constraint(equalTo: noReviewsImageView.bottomAnchor, constant: 20),
+            noReviews.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
     }
     
@@ -198,6 +211,7 @@ final class PlaceReviewsView: UIView {
         self.reviewsArray = reviews
         
         noReviews.isHidden = true
+        noReviewsImageView.isHidden = true
         reviewsTable.isHidden = false
 
         reviewsTable.reloadData()
@@ -207,6 +221,7 @@ final class PlaceReviewsView: UIView {
         self.reviewsArray = [AVIROReviewRawDataDTO]()
         
         noReviews.isHidden = false
+        noReviewsImageView.isHidden = false
         reviewsTable.isHidden = true
     }
     
@@ -259,7 +274,7 @@ final class PlaceReviewsView: UIView {
         showMoreReviewsButton.isHidden = true
         separatedLine.isHidden = true
         
-        viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: 250)
+        viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: 300)
         viewHeightConstraint?.isActive = true
         
     }

@@ -844,10 +844,6 @@ extension HomeViewController: UITextFieldDelegate {
             
             vc.presenter = presenter
             
-            vc.afterNewEnrollPlaceButtonTapped = { [weak self] in
-                self?.tabBarController?.selectedIndex = 1
-            }
-            
             presenter.selectedPlace = { [weak self] place in
                 self?.changedSearchField(with: place)
             }

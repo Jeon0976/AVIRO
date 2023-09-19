@@ -41,7 +41,7 @@ extension String {
             let attributedText = NSMutableAttributedString(string: self)
             attributedText.addAttribute(
                 .foregroundColor, 
-                value: UIColor.main,
+                value: UIColor.keywordBlue,
                 range: NSRange(range, in: self)
             )
             

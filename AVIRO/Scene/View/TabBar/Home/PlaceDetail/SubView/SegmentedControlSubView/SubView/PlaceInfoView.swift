@@ -58,7 +58,7 @@ final class PlaceInfoView: UIView {
     private lazy var phoneButton: UIButton = {
         let button = UIButton()
         
-        button.setTitleColor(.changeButton, for: .normal)
+        button.setTitleColor(.keywordBlue, for: .normal)
         button.backgroundColor = .gray7
         button.contentHorizontalAlignment = .left
         button.titleLabel?.font = .pretendard(size: 16, weight: .medium)
@@ -80,7 +80,7 @@ final class PlaceInfoView: UIView {
         let button = UIButton()
         
         button.setTitle("영업 시간 추가", for: .normal)
-        button.setTitleColor(.changeButton, for: .normal)
+        button.setTitleColor(.keywordBlue, for: .normal)
         button.backgroundColor = .gray7
         button.titleLabel?.font = .pretendard(size: 16, weight: .medium)
         button.titleLabel?.textAlignment = .left
@@ -121,7 +121,7 @@ final class PlaceInfoView: UIView {
     private lazy var homePageButton: UIButton = {
         let button = UIButton()
         
-        button.setTitleColor(.changeButton, for: .normal)
+        button.setTitleColor(.keywordBlue, for: .normal)
         button.backgroundColor = .gray7
         button.titleLabel?.font = .pretendard(size: 16, weight: .medium)
         button.titleLabel?.numberOfLines = 2

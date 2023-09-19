@@ -19,7 +19,7 @@ final class EditButton: UIButton {
     
     func setButton(_ title: String) {
         self.setTitle(title, for: .normal)
-        self.setTitleColor(.changeButton, for: .normal)
+        self.setTitleColor(.keywordBlue, for: .normal)
         self.titleLabel?.font = .pretendard(size: 14, weight: .medium)
         
         self.setImage(UIImage(named: "Edit"), for: .normal)

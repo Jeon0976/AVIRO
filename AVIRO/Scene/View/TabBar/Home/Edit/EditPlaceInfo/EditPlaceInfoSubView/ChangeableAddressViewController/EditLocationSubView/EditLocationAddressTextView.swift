@@ -55,14 +55,12 @@ final class EditLocationAddressTextView: UIView {
         return imageView
     }()
     
-    private lazy var noResultLabel: UILabel = {
-        let label = UILabel()
+    private lazy var noResultLabel: NoResultLabel = {
+        let label = NoResultLabel()
         
-        label.text = "검색 결과가 없습니다.\n주소를 다시 입력해주세요"
-        label.textColor = .gray1
-        label.numberOfLines = 2
-        label.font = .systemFont(ofSize: 15, weight: .medium)
-        label.textAlignment = .center
+        let text = "검색 결과가 없습니다\n주소를 다시 입력해주세요"
+      
+        label.setupLabel(text)
         label.isHidden = true
         
         return label

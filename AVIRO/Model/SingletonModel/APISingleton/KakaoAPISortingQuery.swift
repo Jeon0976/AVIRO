@@ -14,9 +14,9 @@ enum KakaoSerachCoordinate {
     var value: String {
         switch self {
         case .MyCoordinate:
-            return "내 위치 중심"
+            return "내위치중심"
         case .CenterCoordinate:
-            return "지도 중심"
+            return "지도중심"
         }
     }
 }

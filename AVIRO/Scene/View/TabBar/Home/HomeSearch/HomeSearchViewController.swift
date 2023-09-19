@@ -30,49 +30,19 @@ final class HomeSearchViewController: UIViewController {
         return imageView
     }()
     
-    private lazy var noResultMainTitle: UILabel = {
-        let label = UILabel()
+    private lazy var noResultSubTitle: NoResultLabel = {
+        let label = NoResultLabel()
         
-        label.text = "아직 등록된 가게가 없어요"
-        label.font = .systemFont(ofSize: 20, weight: .bold)
-        label.textAlignment = .center
-        label.textColor = .gray0
+        let text = "알고 있는 가게가 결과에 없다면\n가게를 직접 등록해보세요."
+       
+        label.setupLabel(text)
         label.isHidden = true
         
         return label
     }()
-    
-    private lazy var noResultSubTitle: UILabel = {
-        let label = UILabel()
-        
-        label.text = "알고 있는 가게에 검색 결과가 없다면\n가게를 직접 등록해보세요."
-        label.numberOfLines = 2
-        label.textColor = .gray2
-        label.font = .systemFont(ofSize: 15, weight: .medium)
-        label.textAlignment = .center
-        label.isHidden = true
-        
-        return label
-    }()
-    
-    private lazy var noResultAndPushEnrollPlaceViewButton: NextPageButton = {
-        let button = NextPageButton()
-        
-        button.setTitle("새로운 가게 등록하기", for: .normal)
-        button.addTarget(self, action: #selector(newEnrollPlaceButtonTapped), for: .touchUpInside)
-        button.isHidden = true
-
-        return button
-    }()
-    
-    @objc private func newEnrollPlaceButtonTapped() {
-        afterNewEnrollPlaceButtonTapped?()
-    }
     
     /// API 호출 관련해서 다 입력이 끝나면 발동하도록 하는 변수
     private var searchTimer: DispatchWorkItem?
-
-    var afterNewEnrollPlaceButtonTapped: (() -> Void)?
     
     private lazy var tapGesture = UITapGestureRecognizer()
     
@@ -96,9 +66,7 @@ extension HomeSearchViewController: HomeSearchProtocol {
             placeListTableView,
             indicatorView,
             noResultImageView,
-            noResultMainTitle,
-            noResultSubTitle,
-            noResultAndPushEnrollPlaceViewButton
+            noResultSubTitle
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
@@ -144,7 +112,7 @@ extension HomeSearchViewController: HomeSearchProtocol {
             historyHeaderView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
             
             // historyTableView
-            historyTableView.topAnchor.constraint(equalTo: historyHeaderView.bottomAnchor),
+            historyTableView.topAnchor.constraint(equalTo: historyHeaderView.bottomAnchor, constant: 10),
             historyTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             historyTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             historyTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -157,15 +125,8 @@ extension HomeSearchViewController: HomeSearchProtocol {
             noResultImageView.widthAnchor.constraint(equalToConstant: 120),
             noResultImageView.heightAnchor.constraint(equalToConstant: 120),
             
-            noResultMainTitle.topAnchor.constraint(equalTo: noResultImageView.bottomAnchor, constant: 30),
-            noResultMainTitle.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            
-            noResultSubTitle.topAnchor.constraint(equalTo: noResultMainTitle.bottomAnchor, constant: 15),
-            noResultSubTitle.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            
-            noResultAndPushEnrollPlaceViewButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -25),
-            noResultAndPushEnrollPlaceViewButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 32),
-            noResultAndPushEnrollPlaceViewButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -32)
+            noResultSubTitle.topAnchor.constraint(equalTo: noResultImageView.bottomAnchor, constant: 20),
+            noResultSubTitle.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
         ])
     }
     
@@ -212,9 +173,7 @@ extension HomeSearchViewController: HomeSearchProtocol {
         placeListHeaderView.isHidden = !haveDatas
         
         noResultImageView.isHidden = haveDatas
-        noResultMainTitle.isHidden = haveDatas
         noResultSubTitle.isHidden = haveDatas
-        noResultAndPushEnrollPlaceViewButton.isHidden = haveDatas
         indicatorView.isHidden = true
     }
     
@@ -362,9 +321,7 @@ extension HomeSearchViewController {
             self.placeListTableView.isHidden = true
             self.placeListHeaderView.isHidden = true
             self.noResultImageView.isHidden = true
-            self.noResultMainTitle.isHidden = true
             self.noResultSubTitle.isHidden = true
-            self.noResultAndPushEnrollPlaceViewButton.isHidden = true
             
             self.searchFieldTopConstraint?.constant = 15
             self.view.layoutIfNeeded()

@@ -59,7 +59,7 @@ final class PlaceListHeaderView: UIView {
     
     private func makeLayout() {
         self.backgroundColor = .gray7
-        self.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        self.heightAnchor.constraint(equalToConstant: 55).isActive = true
         [
             locationPositionButton,
             sortingByButton
@@ -70,12 +70,13 @@ final class PlaceListHeaderView: UIView {
         
         NSLayoutConstraint.activate([
             locationPositionButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            locationPositionButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
-            locationPositionButton.widthAnchor.constraint(equalToConstant: 110),
+            locationPositionButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            locationPositionButton.widthAnchor.constraint(equalToConstant: 98),
             
-            sortingByButton.leadingAnchor.constraint(equalTo: locationPositionButton.trailingAnchor, constant: 10),
-            sortingByButton.topAnchor.constraint(equalTo: locationPositionButton.topAnchor),
-            sortingByButton.widthAnchor.constraint(equalToConstant: 90)
+            sortingByButton.leadingAnchor.constraint(
+                equalTo: locationPositionButton.trailingAnchor, constant: 10),
+            sortingByButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            sortingByButton.widthAnchor.constraint(equalToConstant: 85)
             
         ])
     }
@@ -92,22 +93,22 @@ final class PlaceListHeaderView: UIView {
         let actionSheet = UIAlertController(title: "검색 위치 설정", message: nil, preferredStyle: .actionSheet)
         
         let centerLocation = UIAlertAction(title: "지도 중심", style: .default) { _ in
-            self.locationPositionButton.setTitle("지도 중심", for: .normal)
+            self.locationPositionButton.setTitle("지도중심", for: .normal)
             KakaoAPISortingQuery.shared.coordinate = KakaoSerachCoordinate.CenterCoordinate
             self.touchedCanActiveSort?()
         }
         
         let myLocation = UIAlertAction(title: "내 위치 중심", style: .default) { _ in
-            self.locationPositionButton.setTitle("내 위치 중심", for: .normal)
+            self.locationPositionButton.setTitle("내위치중심", for: .normal)
             KakaoAPISortingQuery.shared.coordinate = KakaoSerachCoordinate.MyCoordinate
             self.touchedCanActiveSort?()
         }
         
-        let cancel = UIAlertAction(title: "취소하기", style: .cancel)
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
         
         centerLocation.setValue(isTop ? UIColor.systemBlue : UIColor.gray2, forKey: "titleTextColor")
         myLocation.setValue(isTop ? UIColor.gray2 : UIColor.systemBlue, forKey: "titleTextColor")
-        cancel.setValue(UIColor.systemRed, forKey: "titleTextColor")
+        cancel.setValue(UIColor.systemBlue, forKey: "titleTextColor")
         
         [
             centerLocation,
@@ -142,11 +143,11 @@ final class PlaceListHeaderView: UIView {
             self.touchedCanActiveSort?()
         }
         
-        let cancel = UIAlertAction(title: "취소하기", style: .cancel)
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
         
         accurancy.setValue(isTop ? UIColor.systemBlue : UIColor.gray2, forKey: "titleTextColor")
         distance.setValue(isTop ? UIColor.gray2 : UIColor.systemBlue, forKey: "titleTextColor")
-        cancel.setValue(UIColor.systemRed, forKey: "titleTextColor")
+        cancel.setValue(UIColor.systemBlue, forKey: "titleTextColor")
         
         [
             accurancy,
