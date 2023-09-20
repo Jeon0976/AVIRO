@@ -95,7 +95,7 @@ final class PlaceReviewsView: UIView {
     var whenUploadReview: ((AVIROEnrollCommentDTO) -> Void)?
     var whenAfterEditMyReview: ((AVIROEditCommentDTO) -> Void)?
     
-    var whenReportReview: ((AVIROReportID) -> Void)?
+    var whenReportReview: ((AVIROReportCommentModel) -> Void)?
     var whenBeforeEditMyReview: ((String) -> Void)?
     
     private var placeId = ""
@@ -509,17 +509,22 @@ extension PlaceReviewsView: UITableViewDataSource {
         
         cell?.selectionStyle = .none
         cell?.reportButtonTapped = { [weak self] in
-            let userId = self?.reviewsArray[indexPath.row].userId ?? ""
+            let createTime = self?.reviewsArray[indexPath.row].updatedTime ?? ""
+            let content = self?.reviewsArray[indexPath.row].content ?? ""
             let userNickname = self?.reviewsArray[indexPath.row].nickname ?? ""
             let commentId = self?.reviewsArray[indexPath.row].commentId ?? ""
+            let userId = self?.reviewsArray[indexPath.row].userId
             
             if userId != UserId.shared.userId {
-                let reportIdModel = AVIROReportID(
-                    commentId: commentId,
-                    userId: userId,
+                let reportModel = AVIROReportCommentModel(
+                    createdTime: createTime,
+                    placeTitle: "",
+                    id: commentId,
+                    content: content,
                     nickname: userNickname
                 )
-                self?.whenReportReview?(reportIdModel)
+              
+                self?.whenReportReview?(reportModel)
             } else {
                 self?.whenBeforeEditMyReview?(commentId)
             }

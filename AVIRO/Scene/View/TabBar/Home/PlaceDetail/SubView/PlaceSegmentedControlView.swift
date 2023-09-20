@@ -76,7 +76,7 @@ final class PlaceSegmentedControlView: UIView {
     var whenUploadReview: ((AVIROEnrollCommentDTO) -> Void)?
     var whenAfterEditReview: ((AVIROEditCommentDTO) -> Void)?
     var updateReviewsCount: ((Int) -> Void)?
-    var reportReview: ((AVIROReportID) -> Void)?
+    var reportReview: ((AVIROReportCommentModel) -> Void)?
     var editMyReview: ((String) -> Void)?
     
     override init(frame: CGRect) {
@@ -382,12 +382,12 @@ final class PlaceSegmentedControlView: UIView {
             self?.whenAfterEditReview?(postEditReviewModel)
         }
         
-        reviewView.whenReportReview = { [weak self] reportIdModel in
-            self?.reportReview?(reportIdModel)
+        reviewView.whenReportReview = { [weak self] reportCommentModel in
+            self?.reportReview?(reportCommentModel)
         }
         
-        homeView.reportReview = { [weak self] reportIdModel in
-            self?.reportReview?(reportIdModel)
+        homeView.reportReview = { [weak self] reportCommentModel in
+            self?.reportReview?(reportCommentModel)
         }
         
         reviewView.whenBeforeEditMyReview = { [weak self] commentId in

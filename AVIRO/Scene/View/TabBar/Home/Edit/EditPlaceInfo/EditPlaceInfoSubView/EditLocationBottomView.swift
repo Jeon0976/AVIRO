@@ -140,7 +140,11 @@ final class EditLocationBottomView: UIView {
         viewHeightConstraint?.constant = totalHeight
     }
     
-    func dataBinding(marker: NMFMarker, address: String) {
+    func dataBinding(
+        marker: NMFMarker,
+        address: String,
+        address2: String
+    ) {
         marker.mapView = naverMap
         
         let latLng = marker.position
@@ -150,6 +154,7 @@ final class EditLocationBottomView: UIView {
         naverMap.moveCamera(cameraUpdate)
         
         mainAddressField.text = address
+        detailAddressField.text = address2
     }
     
     func checkIsDetailField(notification: NSNotification) -> Bool {
@@ -189,6 +194,7 @@ extension EditLocationBottomView: UITextFieldDelegate {
         case 1:
             guard let addressDetail = textField.text else { return }
             afterChangedDetailAddress?(addressDetail)
+            print(addressDetail)
         default:
             return
         }

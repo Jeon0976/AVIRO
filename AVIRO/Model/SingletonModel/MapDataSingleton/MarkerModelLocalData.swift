@@ -9,8 +9,22 @@ import UIKit
 
 import NMapsMap
 
-final class MarkerModelArray {
-    static let shared = MarkerModelArray()
+// MARK: 아래 함수들 존재 유무 확인 필요
+protocol MarkerModelLocalDataProtocol {
+    func getMarkers() -> [NMFMarker]
+    func getMarkerModels() -> [MarkerModel]
+    func getOnlyStarMarkerModels() -> [MarkerModel]
+    func getMarkerFromIndex(_ index: Int) -> MarkerModel?
+    func getMarkerFromMarker(_ marker: NMFMarker) -> (MarkerModel?, Int?)
+    func setMarkerModel(_ markerModel: MarkerModel)
+    func changeMarkerModel(_ index: Int, _ markerModel: MarkerModel)
+    func updateMarkerModel(_ markerModel: MarkerModel)
+    func updateWhenStarButton(_ markerModel: [MarkerModel])
+    func deleteAllMarkerModel()
+}
+
+final class MarkerModelLocalData: MarkerModelLocalDataProtocol {
+    static let shared = MarkerModelLocalData()
     
     private var markers: [MarkerModel] = []
     
@@ -63,16 +77,16 @@ final class MarkerModelArray {
         return (nil, nil)
     }
     
-    func setData(_ markerModel: MarkerModel) {
+    func setMarkerModel(_ markerModel: MarkerModel) {
         guard !markers.contains(where: { $0.placeId == markerModel.placeId }) else { return }
         markers.append(markerModel)
     }
     
-    func change(_ index: Int, _ markerModel: MarkerModel) {
+    func changeMarkerModel(_ index: Int, _ markerModel: MarkerModel) {
         markers[index] = markerModel
     }
     
-    func updateData(_ markerModel: MarkerModel) {
+    func updateMarkerModel(_ markerModel: MarkerModel) {
         if let existingIndex = markers.firstIndex(where: { $0.placeId == markerModel.placeId }) {
             // placeId가 일치하는 마커가 이미 존재하는 경우
             

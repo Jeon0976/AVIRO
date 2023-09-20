@@ -257,11 +257,11 @@ final class HomeViewPresenter: NSObject {
                 isRequest: data.ifRequestVegan
             )
             
-            MarkerModelArray.shared.setData(markerModel)
+            MarkerModelLocalData.shared.setMarkerModel(markerModel)
         }
         
         DispatchQueue.main.async { [weak self] in
-            let markers = MarkerModelArray.shared.getMarkers()
+            let markers = MarkerModelLocalData.shared.getMarkers()
             self?.viewController?.loadMarkers(markers)
         }
     }
@@ -290,7 +290,7 @@ final class HomeViewPresenter: NSObject {
     // MARK: setMarkerToTouchedState
     /// 클릭한 마커 저장 후 viewController에 알리기
     private func setMarkerToTouchedState(_ marker: NMFMarker) {
-        let (markerModel, index) = MarkerModelArray.shared.getMarkerFromMarker(marker)
+        let (markerModel, index) = MarkerModelLocalData.shared.getMarkerFromMarker(marker)
         
         guard let validMarkerModel = markerModel else { return }
         
@@ -380,7 +380,7 @@ final class HomeViewPresenter: NSObject {
             )
         } else {
         // AVIRO에 데이터가 있을 때
-            let (markerModel, index) = MarkerModelArray.shared.getMarkerWhenSearchAfter(
+            let (markerModel, index) = MarkerModelLocalData.shared.getMarkerWhenSearchAfter(
                 afterSearchModel.x,
                 afterSearchModel.y
             )
@@ -411,7 +411,7 @@ final class HomeViewPresenter: NSObject {
     }
     
     private func whenAfterLoadStarButtonTapped() {
-        let markersModel = MarkerModelArray.shared.getMarkerModels()
+        let markersModel = MarkerModelLocalData.shared.getMarkerModels()
 
         let bookmarks = bookmarkManager.loadAllData()
         
@@ -430,12 +430,12 @@ final class HomeViewPresenter: NSObject {
         
         var starMarkers: [NMFMarker] = []
 
-        MarkerModelArray.shared.updateWhenStarButton(starMarkersModel)
+        MarkerModelLocalData.shared.updateWhenStarButton(starMarkersModel)
         viewController?.afterLoadStarButton(noMarkers: noMarkers, starMarkers: starMarkers)
     }
     
     private func whenAfterLoadNotStarButtonTapped() {
-        var starMarkersModel = MarkerModelArray.shared.getOnlyStarMarkerModels()
+        var starMarkersModel = MarkerModelLocalData.shared.getOnlyStarMarkerModels()
                 
         for index in 0..<starMarkersModel.count {
             switch starMarkersModel[index].mapPlace {
@@ -449,9 +449,9 @@ final class HomeViewPresenter: NSObject {
             starMarkersModel[index].isStar = false
         }
         
-        MarkerModelArray.shared.updateWhenStarButton(starMarkersModel)
+        MarkerModelLocalData.shared.updateWhenStarButton(starMarkersModel)
 
-        let markers = MarkerModelArray.shared.getMarkers()
+        let markers = MarkerModelLocalData.shared.getMarkers()
         
         viewController?.loadMarkers(markers)
     }
@@ -524,22 +524,29 @@ final class HomeViewPresenter: NSObject {
         }
     }
     
-    func reportPlace(_ type: AVIROPlaceReportEnum) {
+    func reportPlace(_ type: AVIROReportPlaceEnum) {
         guard let placeId = selectedPlaceId else { return }
         
         let model = AVIROReportPlaceDTO(
             placeId: placeId,
             userId: UserId.shared.userId,
             nickname: UserId.shared.userNickname,
-            content: type.rawValue)
+            code: type.code
+        )
 
         AVIROAPIManager().postPlaceReport(model) { [weak self] result in
+            print(result)
             if result.statusCode == 200 {
                 DispatchQueue.main.async {
                     self?.viewController?.isSuccessReportPlaceActionSheet()
                 }
             }
         }
+    }
+    
+    func getPlace() -> String {
+        guard let place = selectedSummaryModel?.title else { return "" }
+        return place
     }
     
     func loadPlaceOperationHours() {
@@ -609,7 +616,7 @@ final class HomeViewPresenter: NSObject {
         selectedMarkerModel.isSome = changedMarkerModel.isSome
         selectedMarkerModel.isRequest = changedMarkerModel.isRequest
         
-        MarkerModelArray.shared.change(selectedMarkerIndex, selectedMarkerModel)
+        MarkerModelLocalData.shared.changeMarkerModel(selectedMarkerIndex, selectedMarkerModel)
         
         self.selectedMarkerModel = selectedMarkerModel
         

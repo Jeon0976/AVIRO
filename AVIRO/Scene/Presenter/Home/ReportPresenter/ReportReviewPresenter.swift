@@ -22,7 +22,7 @@ final class ReportReviewPresenter {
     
     private var reportViews = [ReportCellView]()
 
-    private var reportIdModel: AVIROReportID!
+    private var commentModel: AVIROReportCommentModel!
     private var reportType: String? {
         didSet {
             if reportType != nil {
@@ -50,10 +50,10 @@ final class ReportReviewPresenter {
     var afterReportPopView: ((String) -> Void)?
 
     init(viewController: ReportReviewProtocol,
-         reportIdModel: AVIROReportID? = nil
+         reportIdModel: AVIROReportCommentModel? = nil
     ) {
         self.viewController = viewController
-        self.reportIdModel = reportIdModel
+        self.commentModel = reportIdModel
         
     }
     
@@ -148,18 +148,20 @@ final class ReportReviewPresenter {
         else { return }
         
         let reportModel = AVIROReportCommentDTO(
-            commentId: reportIdModel.commentId,
-            userId: reportIdModel.userId,
-            nickname: reportIdModel.nickname,
+            commentId: commentModel.id,
+            title: commentModel.placeTitle,
+            createdTime: commentModel.createdTime,
+            commentContent: commentModel.content,
+            commentNickname: commentModel.nickname,
+            userId: UserId.shared.userId,
+            nickname: UserId.shared.userNickname,
             code: type,
-            content: reportContent
+            content: typeString
         )
-        
-        print(reportModel)
-        
+                
         AVIROAPIManager().postCommentReportModel(reportModel) { [weak self] resultModel in
-            
             print(resultModel)
+
             if resultModel.statusCode == 200 {
                 DispatchQueue.main.async {
                     let message = resultModel.message ?? ""

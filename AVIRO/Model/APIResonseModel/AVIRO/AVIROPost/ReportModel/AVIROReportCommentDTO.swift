@@ -18,27 +18,40 @@ enum AVIROCommentReportType: String, CaseIterable {
     
     var code: Int {
         switch self {
-        case .profanity: return 1
-        case .advertisement: return 2
-        case .illegalInfo: return 3
-        case .obscene: return 4
-        case .personalInfo: return 5
-        case .spam: return 6
-        case .others: return 7
+        case .profanity:
+            return 1
+        case .advertisement:
+            return 2
+        case .illegalInfo:
+            return 3
+        case .obscene:
+            return 4
+        case .personalInfo:
+            return 5
+        case .spam:
+            return 6
+        case .others:
+            return 7
         }
     }
 }
 
 struct AVIROReportCommentDTO: Encodable {
     let commentId: String
+    let title: String
+    let createdTime: String
+    let commentContent: String
+    let commentNickname: String
     let userId: String
     let nickname: String
     let code: Int
     let content: String
 }
 
-struct AVIROReportID {
-    let commentId: String
-    let userId: String
+struct AVIROReportCommentModel {
+    let createdTime: String
+    var placeTitle: String
+    let id: String
+    let content: String
     let nickname: String
 }

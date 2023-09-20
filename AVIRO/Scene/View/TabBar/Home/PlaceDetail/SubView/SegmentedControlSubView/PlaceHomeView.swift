@@ -30,7 +30,7 @@ final class PlaceHomeView: UIView {
     // review 관련 클로저
     var showMoreReviews: (() -> Void)?
     var showMoreReviewsAndWriteComment: (() -> Void)?
-    var reportReview: ((AVIROReportID) -> Void)?
+    var reportReview: ((AVIROReportCommentModel) -> Void)?
     var editMyReview: ((String) -> Void)?
     
     override init(frame: CGRect) {
@@ -166,8 +166,8 @@ final class PlaceHomeView: UIView {
             self?.showMoreReviews?()
         }
         
-        placeReviewsView.whenReportReview = { [weak self] reportIdModel in
-            self?.reportReview?(reportIdModel)
+        placeReviewsView.whenReportReview = { [weak self] reportCommentModel in
+            self?.reportReview?(reportCommentModel)
         }
         
         placeReviewsView.whenBeforeEditMyReview = { [weak self] commentId in

@@ -25,7 +25,8 @@ protocol EditPlaceInfoProtocol: NSObject {
         title: String,
         category: String,
         marker: NMFMarker,
-        address: String
+        address: String,
+        address2: String
     )
     func dataBindingPhone(phone: String)
     func dataBindingOperatingHours(
@@ -242,11 +243,14 @@ final class EditPlaceInfoPresenter {
     
     private func dataBindingLocation() {
         guard let placeSummary = placeSummary,
-              let placeMarkerModel = placeMarkerModel else { return }
+              let placeMarkerModel = placeMarkerModel,
+              let placeInfo = placeInfo
+        else { return }
         
         let title = placeSummary.title
         let category = placeSummary.category
-        let address = placeSummary.address
+        let address = placeInfo.address
+        let address2 = placeInfo.address2 ?? ""
         
         let markerPosition = placeMarkerModel.marker.position
         let markerImage = placeMarkerModel.marker.iconImage
@@ -258,7 +262,8 @@ final class EditPlaceInfoPresenter {
             title: title,
             category: category,
             marker: newMarker,
-            address: address
+            address: address,
+            address2: address2
         )
     }
     
@@ -392,7 +397,6 @@ extension EditPlaceInfoPresenter {
         } else {
             isChangedAddressDetail = false
         }
-        
     }
     
     private func checkIsChangedPhone() {
@@ -562,7 +566,7 @@ extension EditPlaceInfoPresenter {
                 x: whenRequestAndLoadXLongitude(beforeAddress: beforeAddress),
                 y: whenRequestAndLoadYLatitude(beforeAddress: beforeAddress)
             )
-            
+
             AVIROAPIManager().postEditPlaceLocation(model
             ) { resultModel in
                 print(resultModel.statusCode)
@@ -601,8 +605,7 @@ extension EditPlaceInfoPresenter {
     ) -> AVIROEditCommonBeforeAfterDTO? {
         if (isChangedAddress || isChangedAddressDetail)
             &&
-            (afterChangedAddressDetail != ""
-             &&
+            (
              afterChangedAddressDetail != beforeDetailAddress
             ) {
             return AVIROEditCommonBeforeAfterDTO(
@@ -612,8 +615,7 @@ extension EditPlaceInfoPresenter {
         } else if
             (isChangedAddress || isChangedAddressDetail)
                 &&
-            (afterChangedAddressDetail == ""
-             ||
+            (
              afterChangedAddressDetail == beforeDetailAddress
             ) {
             return AVIROEditCommonBeforeAfterDTO(

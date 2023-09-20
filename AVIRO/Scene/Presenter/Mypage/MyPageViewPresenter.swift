@@ -59,7 +59,7 @@ final class MyPageViewPresenter {
     }
     
     func whenAfterLogout() {
-        MarkerModelArray.shared.deleteAllMarkerModel()
+        MarkerModelLocalData.shared.deleteAllMarkerModel()
         UserId.shared.whenLogout()
         BookmarkArray.shared.deleteAllBookmark()
         self.keychain.delete("userIdentifier")
@@ -77,7 +77,7 @@ final class MyPageViewPresenter {
             if resultModel.statusCode == 200 {
                 self?.keychain.delete("userIdentifier")
                 DispatchQueue.main.async {
-                    MarkerModelArray.shared.deleteAllMarkerModel()
+                    MarkerModelLocalData.shared.deleteAllMarkerModel()
                     UserId.shared.whenLogout()
                     BookmarkArray.shared.deleteAllBookmark()
                     

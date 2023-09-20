@@ -430,10 +430,18 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     func dataBindingLocation(title: String,
                              category: String,
                              marker: NMFMarker,
-                             address: String
+                             address: String,
+                             address2: String
     ) {
-        editLocationTopView.dataBinding(title: title, category: category)
-        editLocationBottomView.dataBinding(marker: marker, address: address)
+        editLocationTopView.dataBinding(
+            title: title,
+            category: category
+        )
+        editLocationBottomView.dataBinding(
+            marker: marker,
+            address: address,
+            address2: address2
+        )
     }
     
     func dataBindingPhone(phone: String) {

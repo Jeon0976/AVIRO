@@ -44,4 +44,3 @@ extension UIColor {
     /// 모든 화이트
     static let gray7 = UIColor(named: "GRAY7")
 }
-

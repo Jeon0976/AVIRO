@@ -593,7 +593,7 @@ extension HomeViewController {
         self.view.makeToast(title, duration: 1.0, position: .bottom, style: style)
     }
     
-    private func makeReportReviewAlert(_ reportIdModel: AVIROReportID) {
+    private func makeReportReviewAlert(_ reportCommentModel: AVIROReportCommentModel) {
         let alertController = UIAlertController(
             title: nil,
             message: "더보기",
@@ -601,7 +601,15 @@ extension HomeViewController {
         )
         
         let reportAction = UIAlertAction(title: "후기 신고하기", style: .destructive) { _ in
-            self.presentReportReview(reportIdModel)
+            let finalReportCommentModel = AVIROReportCommentModel(
+                createdTime: reportCommentModel.createdTime,
+                placeTitle: self.presenter.getPlace(),
+                id: reportCommentModel.id,
+                content: reportCommentModel.content,
+                nickname: reportCommentModel.nickname
+            )
+  
+            self.presentReportReview(finalReportCommentModel)
         }
         
         let cancel = UIAlertAction(title: "취소", style: .cancel)
@@ -677,7 +685,7 @@ extension HomeViewController {
         present(alertController, animated: true)
     }
     
-    private func presentReportReview(_ reportIdModel: AVIROReportID) {
+    private func presentReportReview(_ reportIdModel: AVIROReportCommentModel) {
         let vc = ReportReviewViewController()
         let presenter = ReportReviewPresenter(
             viewController: vc,
@@ -748,17 +756,17 @@ extension HomeViewController {
         )
         
         let lostPlace = UIAlertAction(title: "없어진 가게예요", style: .default) { _ in
-            let type = AVIROPlaceReportEnum.noPlace
+            let type = AVIROReportPlaceEnum.noPlace
             self.presenter.reportPlace(type)
         }
         
         let notVeganPlace = UIAlertAction(title: "비건 메뉴가 없는 가게예요", style: .default) { _ in
-            let type = AVIROPlaceReportEnum.noVegan
+            let type = AVIROReportPlaceEnum.noVegan
             self.presenter.reportPlace(type)
         }
          
         let duplicatedPlace = UIAlertAction(title: "중복 등록된 가게예요", style: .default) { _ in
-            let type = AVIROPlaceReportEnum.dubplicatedPlace
+            let type = AVIROReportPlaceEnum.dubplicatedPlace
             self.presenter.reportPlace(type)
         }
         

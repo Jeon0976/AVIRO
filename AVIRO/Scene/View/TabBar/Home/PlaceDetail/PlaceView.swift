@@ -78,7 +78,7 @@ final class PlaceView: UIView {
     var whenUploadReview: ((AVIROEnrollCommentDTO) -> Void)?
     var whenAfterEditReview: ((AVIROEditCommentDTO) -> Void)?
     
-    var reportReview: ((AVIROReportID) -> Void)?
+    var reportReview: ((AVIROReportCommentModel) -> Void)?
     var editMyReview: ((String) -> Void)?
     
     override init(frame: CGRect) {
@@ -233,8 +233,8 @@ final class PlaceView: UIView {
             self?.summaryView.updateReviewsCount(reviewsCount)
         }
         
-        segmentedControlView.reportReview = { [weak self] reportIdModel in
-            self?.reportReview?(reportIdModel)
+        segmentedControlView.reportReview = { [weak self] reportCommentModel in
+            self?.reportReview?(reportCommentModel)
         }
         
         segmentedControlView.editMyReview = { [weak self] commentId in

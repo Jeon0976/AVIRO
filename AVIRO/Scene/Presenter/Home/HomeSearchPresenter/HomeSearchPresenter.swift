@@ -251,6 +251,7 @@ final class HomeSearchPresenter {
             let title = $0.title
             let x = $0.x
             let y = $0.y
+            
             let model = ForMatchedAVIRO(
                 title: title,
                 x: x,
