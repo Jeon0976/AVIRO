@@ -6,20 +6,95 @@
 //
 
 import UIKit
-import AuthenticationServices
 
-import Lottie
 import Toast_Swift
+
+private enum Text: String {
+    case apple = "Apple로 로그인하기"
+    
+}
+
+private enum Layout {
+    enum Margin: CGFloat {
+        case small = 10
+        case medium = 20
+        case large = 30
+        case largeToView = 40
+    }
+    
+    enum Size: CGFloat {
+        case subInfo2Width = 32
+        case nextButtonHeight = 50
+    }
+}
 
 final class LoginViewController: UIViewController {
     lazy var presenter = LoginViewPresenter(viewController: self)
         
-    var titleLabel = UILabel()
-    var appleLoginButton = UIButton()
-    var noLoginButton = UIButton()
-    
-    let loginAnimation = LottieAnimationView(name: "LoginJson")
+    private lazy var titleImageView: UIImageView = {
+        let imageView = UIImageView()
         
+        imageView.image = UIImage.loginTitle
+        imageView.clipsToBounds = false
+        
+        return imageView
+    }()
+    
+    private lazy var mainImageView: UIImageView = {
+        let imageView = UIImageView()
+        
+        imageView.image = UIImage.loginCharacter
+        imageView.clipsToBounds = false
+        
+        return imageView
+    }()
+    
+    private lazy var shadowImageView: UIImageView = {
+        let imageView = UIImageView()
+        
+        imageView.image = UIImage.loginCharacterEllipse
+        imageView.clipsToBounds = false
+        
+        return imageView
+    }()
+    
+    private lazy var appleLoginButton: UIButton = {
+        let button = UIButton()
+        
+        button.setTitle(Text.apple.rawValue, for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.setImage(UIImage.apple, for: .normal)
+        
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: 0)
+        
+        button.titleLabel?.font = CFont.font.medium17
+        
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 2
+        button.layer.cornerRadius = 26
+        button.clipsToBounds = true
+        button.backgroundColor = .black
+        
+        button.addTarget(
+            self,
+            action: #selector(tapAppleLogin),
+            for: .touchUpInside
+        )
+        
+        return button
+    }()
+    
+    private lazy var noLoginButton: UIButton = {
+        let button = UIButton()
+        
+        button.setTitle("테스트 아이디 로그인", for: .normal)
+        button.setTitleColor(.gray5, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 14)
+        button.addTarget(self, action: #selector(tapNoLoginButton), for: .touchUpInside)
+        
+        return button
+    }()
+            
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,18 +102,22 @@ final class LoginViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewDidLoad()
+        super.viewWillAppear(animated)
         
         presenter.viewWillAppear()
     }
     
+    @objc private func tapAppleLogin() {
+        presenter.clickedAppleLogin()
+    }
 }
 
 extension LoginViewController: LoginViewProtocol {
-    // MARK: Make Layout
-    func makeLayout() {
+    func setupLayout() {
         [
-            titleLabel,
+            titleImageView,
+            mainImageView,
+            shadowImageView,
             appleLoginButton,
             noLoginButton
         ].forEach {
@@ -47,81 +126,68 @@ extension LoginViewController: LoginViewProtocol {
         }
         
         NSLayoutConstraint.activate([
-            // titleLabel
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
+            titleImageView.topAnchor.constraint(
+                equalTo: self.view.safeAreaLayoutGuide.topAnchor,
+                constant: 80
+            ),
+            titleImageView.centerXAnchor.constraint(
+                equalTo: self.view.centerXAnchor
+            ),
             
-            // appleLoginButton
+            mainImageView.centerYAnchor.constraint(
+                equalTo: self.view.centerYAnchor
+            ),
+            mainImageView.centerXAnchor.constraint(
+                equalTo: self.view.centerXAnchor
+            ),
+            
+            shadowImageView.topAnchor.constraint(
+                equalTo: mainImageView.bottomAnchor,
+                constant: 15
+            ),
+            shadowImageView.centerXAnchor.constraint(
+                equalTo: self.view.centerXAnchor
+            ),
+            
             appleLoginButton.bottomAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -60),
-            appleLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 26.5),
-            appleLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -26.5),
-            appleLoginButton.heightAnchor.constraint(equalToConstant: 50),
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                constant: -60
+            ),
+            appleLoginButton.leadingAnchor.constraint(
+                equalTo: self.view.leadingAnchor,
+                constant: 26.5
+            ),
+            appleLoginButton.trailingAnchor.constraint(
+                equalTo: self.view.trailingAnchor,
+                constant: -26.5
+            ),
+            appleLoginButton.heightAnchor.constraint(
+                equalToConstant: 50
+            ),
             
             // TODO: 추후 없애기
-            noLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            noLoginButton.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            noLoginButton.centerXAnchor.constraint(
+                equalTo: view.centerXAnchor
+            ),
+            noLoginButton.bottomAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor
+            )
         ])
     }
     
-    // MARK: Make Attribute
-    func makeAttribute() {
+    func setupAttribute() {
         view.backgroundColor = .gray7
-        
-        // titleLabel
-        titleLabel.text = "어디서든 비건으로\n어비로 시작하기"
-        titleLabel.numberOfLines = 0
-        titleLabel.font = .systemFont(ofSize: 30, weight: .bold)
-        titleLabel.textColor = .main
-        titleLabel.textAlignment = .center
-        
-        // appleLoginButton
-        appleLoginButton.setTitle("Apple로 로그인하기", for: .normal)
-        appleLoginButton.setTitleColor(.white, for: .normal)
-        appleLoginButton.setImage(UIImage(named: "Logo"), for: .normal)
-        
-        appleLoginButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -12, bottom: 0, right: 0)
-        
-        appleLoginButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
-        
-        appleLoginButton.layer.borderColor = UIColor.black.cgColor
-        appleLoginButton.layer.borderWidth = 2
-        appleLoginButton.layer.cornerRadius = 26
-        appleLoginButton.clipsToBounds = true
-        appleLoginButton.backgroundColor = .black
-        
-        appleLoginButton.addTarget(self, action: #selector(tapAppleLogin), for: .touchUpInside)
-        
-        // noLoginButton
-        noLoginButton.setTitle("테스트 아이디 로그인", for: .normal)
-        noLoginButton.setTitleColor(.gray5, for: .normal)
-        noLoginButton.titleLabel?.font = .systemFont(ofSize: 14)
-        noLoginButton.addTarget(self, action: #selector(tapNoLoginButton), for: .touchUpInside)
-    }
-    
-    func makeNaviAttribute() {
         navigationController?.navigationBar.isHidden = true
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+
+        applyGradientToView(colors: [UIColor.bgNavy, .gray7])
     }
     
     // MARK: No Login Button Tapped
     @objc func tapNoLoginButton() {
         MyData.my.id = "test"
-        MyData.my.nickname = "test"
+        MyData.my.nickname = "테스트"
         
         pushTabBar()
-    }
-    
-    // MARK: Apple Login Tapped
-    @objc func tapAppleLogin() {
-        let request = ASAuthorizationAppleIDProvider().createRequest()
-        request.requestedScopes = [.fullName, .email]
-        
-        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-        authorizationController.delegate = self
-        authorizationController.presentationContextProvider = self
-            as? ASAuthorizationControllerPresentationContextProviding
-        authorizationController.performRequests()
     }
     
     // MARK: Push TabBar Viewcontroller
@@ -133,10 +199,6 @@ extension LoginViewController: LoginViewProtocol {
     
     // MARK: Push Registration ViewController
     func pushRegistration(_ userModel: CommonUserModel) {
-        
-        navigationController?.navigationBar.isHidden = false
-        navigationItem.backButtonTitle = ""
-        
         let viewController = FirstRegistrationViewController()
         
         let presenter = FirstRegistrationPresenter(viewController: viewController,
@@ -156,13 +218,10 @@ extension LoginViewController: LoginViewProtocol {
         
         style.titleColor = .gray7
         style.titleFont = .pretendard(size: 17, weight: .medium)
-        
-        let centerX = (self.view.frame.size.width) / 2
-        let yPosition = self.view.frame.height - 150
                 
         self.view.makeToast(title,
                             duration: 1.0,
-                            point: CGPoint(x: centerX, y: yPosition),
+                            position: .bottom,
                             title: nil,
                             image: nil,
                             style: style,
@@ -181,36 +240,6 @@ extension LoginViewController: LoginViewProtocol {
         alertController.addAction(checkAction)
         
         present(alertController, animated: true)
-    }
-}
-
-// MARK: Apple Login 처리 설정
-extension LoginViewController: ASAuthorizationControllerDelegate {
-    func authorizationController(
-        controller: ASAuthorizationController,
-        didCompleteWithAuthorization authorization: ASAuthorization
-    ) {
-        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
-            let userIdentifier = appleIDCredential.user
-            let fullName = appleIDCredential.fullName?.formatted() ?? ""
-            let email = appleIDCredential.email ?? ""
-            
-            let appleUserModel = AppleUserModel(
-                userIdentifier: userIdentifier,
-                name: fullName,
-                email: email
-            )
-            
-            presenter.whenCheckAfterAppleLogin(appleUserModel)
-        }
-    }
-    
-    // TODO: Error 처리
-    func authorizationController(
-        controller: ASAuthorizationController,
-        didCompleteWithError error: Error
-    ) {
-        
     }
 }
 

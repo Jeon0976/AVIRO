@@ -17,11 +17,27 @@ protocol FirstRegistrationProtocol: NSObject {
 
 final class FirstRegistrationPresenter {
     weak var viewController: FirstRegistrationProtocol?
+    
     private let aviroManager = AVIROAPIManager()
 
     var userModel: CommonUserModel!
     var signupModel: AVIROUserSignUpDTO!
-    var userNickname: String?
+    
+    var userNickname: String? {
+        didSet {
+            timer?.invalidate()
+            
+            timer = Timer.scheduledTimer(
+                timeInterval: 0.2,
+                target: self,
+                selector: #selector(checkDuplication),
+                userInfo: nil,
+                repeats: false
+            )
+        }
+    }
+    
+    private var timer: Timer?
         
     init(viewController: FirstRegistrationProtocol,
          userModel: CommonUserModel? = nil
@@ -43,8 +59,11 @@ final class FirstRegistrationPresenter {
     
     func viewDidLoad() {
         viewController?.setupLayout()
-        viewController?.setupAttribute()
         viewController?.setupGesture()
+    }
+    
+    func viewWillAppear() {
+        viewController?.setupAttribute()
     }
     
     func insertUserNickName(_ userName: String) {
@@ -55,7 +74,8 @@ final class FirstRegistrationPresenter {
         userNickname?.count ?? 0
     }
     
-    func checkDuplication() {
+    @objc private func checkDuplication() {
+        
         guard let userNickname = userNickname else { return }
         
         let nickname = AVIRONicknameIsDuplicatedCheckDTO(nickname: userNickname)

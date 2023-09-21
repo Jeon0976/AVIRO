@@ -34,7 +34,8 @@ final class PlaceReviewsView: UIView {
     private lazy var noReviewsImageView: UIImageView = {
         let imageView = UIImageView()
         
-        imageView.backgroundColor = .gray2
+        imageView.image = UIImage.noResultCharacter
+        imageView.clipsToBounds = false
         
         return imageView
     }()
@@ -169,8 +170,6 @@ final class PlaceReviewsView: UIView {
             
             noReviewsImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             noReviewsImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            noReviewsImageView.heightAnchor.constraint(equalToConstant: 150),
-            noReviewsImageView.widthAnchor.constraint(equalToConstant: 150),
             
             noReviews.topAnchor.constraint(equalTo: noReviewsImageView.bottomAnchor, constant: 20),
             noReviews.centerXAnchor.constraint(equalTo: self.centerXAnchor)
@@ -237,20 +236,21 @@ final class PlaceReviewsView: UIView {
         }
         
         reviewInputView.isHidden = true
-    
-        print(whenHomeViewReviewsCount)
     }
     
     private func whenHaveReviewsInHomeView(_ reviews: [AVIROReviewRawDataDTO]) {
         if reviews.count > 4 {
             self.reviewsArray = Array(reviews.prefix(4))
+            showMoreReviewsButton.isHidden = false
         } else {
             self.reviewsArray = reviews
+            showMoreReviewsButton.isHidden = true
         }
         
         noReviews.isHidden = true
+        noReviewsImageView.isHidden = true
+        
         reviewsTable.isHidden = false
-        showMoreReviewsButton.isHidden = false
         separatedLine.isHidden = false
 
         reviewsTable.reloadData()
@@ -270,10 +270,12 @@ final class PlaceReviewsView: UIView {
         viewHeightConstraint?.isActive = false
         
         noReviews.isHidden = false
-        reviewsTable.isHidden = true
-        showMoreReviewsButton.isHidden = true
-        separatedLine.isHidden = true
+        noReviewsImageView.isHidden = false
         
+        reviewsTable.isHidden = true
+        separatedLine.isHidden = true
+        showMoreReviewsButton.isHidden = true
+
         viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: 300)
         viewHeightConstraint?.isActive = true
         

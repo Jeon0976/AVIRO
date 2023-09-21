@@ -11,13 +11,14 @@ protocol MyDataProtocol {
     func whenLogin(
         userId: String,
         userName: String,
+        userEmail: String,
         userNickname: String,
         marketingAgree: Int
     )
     func whenLogout()
 }
 
-final class MyData: MyDataProtocol{
+final class MyData: MyDataProtocol {
     static let my = MyData()
     
     var id = ""
@@ -43,11 +44,13 @@ final class MyData: MyDataProtocol{
     func whenLogin(
         userId: String,
         userName: String,
+        userEmail: String,
         userNickname: String,
         marketingAgree: Int
     ) {
         self.id = userId
         self.name = userName
+        self.email = userEmail
         self.nickname = userNickname
         self.marketingAgree = marketingAgree
     }

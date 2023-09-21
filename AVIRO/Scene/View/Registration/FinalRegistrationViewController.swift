@@ -7,24 +7,60 @@
 
 import UIKit
 
-import Lottie
+private enum Text: String {
+    case title = "가입 완료\n환영합니다!"
+    case next = "어비로 바로 시작하기"
+}
+
+private enum Layout {
+    enum Margin: CGFloat {
+        case small = 10
+        case medium = 20
+        case large = 30
+        case largeToView = 40
+    }
+    
+    enum Size: CGFloat {
+        case nextButtonHeight = 50
+    }
+}
 
 final class FinalRegistrationViewController: UIViewController {
     
-    var fanfareAnimation = LottieAnimationView(name: "RegistrationCompleted")
-    var titleLabel = UILabel()
-    var finalButton = NextPageButton()
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        
+        label.text = Text.title.rawValue
+        label.textColor = .main
+        label.textAlignment = .center
+        label.font = CFont.font.bold24
+        label.numberOfLines = 2
+        
+        return label
+    }()
+    
+    private lazy var finalButton: NextPageButton = {
+        let button = NextPageButton()
+        
+        button.setTitle(Text.next.rawValue, for: .normal)
+        button.addTarget(
+            self,
+            action: #selector(buttonTapped),
+            for: .touchUpInside
+        )
+        
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        makeLayout()
-        makeAttribute()
+        setupLayout()
+        setupAttribute()
     }
     
-    private func makeLayout() {
+    private func setupLayout() {
         [
-            fanfareAnimation,
             titleLabel,
             finalButton
         ].forEach {
@@ -33,43 +69,42 @@ final class FinalRegistrationViewController: UIViewController {
         }
         
         NSLayoutConstraint.activate([
-            fanfareAnimation.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            fanfareAnimation.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            titleLabel.centerXAnchor.constraint(
+                equalTo: view.centerXAnchor
+            ),
+            titleLabel.centerYAnchor.constraint(
+                equalTo: view.centerYAnchor
+            ),
             
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            
-            finalButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
-            finalButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            finalButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            finalButton.heightAnchor.constraint(equalToConstant: 50)
+            finalButton.bottomAnchor.constraint(
+                equalTo: view.bottomAnchor,
+                constant: -Layout.Margin.largeToView.rawValue
+            ),
+            finalButton.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: Layout.Margin.medium.rawValue
+            ),
+            finalButton.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor,
+                constant: -Layout.Margin.medium.rawValue
+            ),
+            finalButton.heightAnchor.constraint(
+                equalToConstant: Layout.Size.nextButtonHeight.rawValue
+            )
         ])
     }
     
-    private func makeAttribute() {
-        // view ...
-        view.backgroundColor = .white
+    private func setupAttribute() {
+        view.backgroundColor = .gray7
         navigationController?.navigationBar.isHidden = true
-        
-        // titleLabel
-        titleLabel.text = "가입 완료\n환영합니다!"
-        titleLabel.font = .systemFont(ofSize: 24, weight: .bold)
-        titleLabel.textColor = .main
-        titleLabel.numberOfLines = 2
-        titleLabel.textAlignment = .center
-        
-        // fanfareAnimation
-        fanfareAnimation.play()
-        fanfareAnimation.loopMode = .loop
-        
-        // finalButton
-        finalButton.setTitle("어비로 바로 시작하기", for: .normal)
-        finalButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
     
     @objc func buttonTapped() {
         let viewController = TabBarViewController()
         
-        navigationController?.pushViewController(viewController, animated: true)
+        navigationController?.pushViewController(
+            viewController,
+            animated: true
+        )
     }
 }

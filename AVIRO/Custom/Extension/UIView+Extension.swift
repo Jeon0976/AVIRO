@@ -7,7 +7,7 @@
 
 import UIKit
 
-fileprivate enum AniKeyPath: String {
+private enum AniKeyPath: String {
     case position
 }
 

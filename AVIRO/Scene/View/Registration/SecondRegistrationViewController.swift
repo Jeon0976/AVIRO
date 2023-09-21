@@ -80,7 +80,25 @@ final class SecondRegistrationViewController: UIViewController {
     }()
     
     private lazy var genderButton: [GenderButton] = []
-    private lazy var genderStackView = UIStackView()
+    private lazy var genderStackView: UIStackView = {
+        let stackView = UIStackView()
+        
+        [
+            male,
+            female,
+            other
+        ].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            stackView.addArrangedSubview($0)
+        }
+        
+        stackView.axis = .horizontal
+        stackView.spacing = Layout.Spacing.gender.rawValue
+        stackView.distribution = .equalSpacing
+        
+        return stackView
+    }()
+    
     private lazy var male: GenderButton = {
         let button = GenderButton()
         
@@ -133,23 +151,16 @@ final class SecondRegistrationViewController: UIViewController {
         
         presenter.viewDidLoad()
      }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        presenter.viewWillAppear()
+    }
 }
 
 extension SecondRegistrationViewController: SecondRegistrationProtocol {
     func setupLayout() {
-        [
-            male,
-            female,
-            other
-        ].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            genderStackView.addArrangedSubview($0)
-        }
-        
-        genderStackView.axis = .horizontal
-        genderStackView.spacing = Layout.Spacing.gender.rawValue
-        genderStackView.distribution = .equalSpacing
-        
         [
             titleLabel,
             subtitleLabel,
@@ -257,14 +268,20 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
             )
         ])
     }
-    
+        
     func setupAttribute() {
-        // view ...
         view.backgroundColor = .gray7
-        navigationItem.backButtonTitle = ""
+        navigationController?.navigationBar.isHidden = false
         setupCustomBackButton(true)
+    }
     
-        // genderbutton
+    func setupGesture() {
+        tapGesture.delegate = self
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    func setupGenderButton() {
         genderButton = [male, female, other]
         
         genderButton.forEach {
@@ -275,13 +292,6 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
             )
         }
         genderStackView.backgroundColor = .gray7
-        
-    }
-    
-    func setupGesture() {
-        tapGesture.delegate = self
-        tapGesture.cancelsTouchesInView = false
-        view.addGestureRecognizer(tapGesture)
     }
     
     // MARK: InvalidDate

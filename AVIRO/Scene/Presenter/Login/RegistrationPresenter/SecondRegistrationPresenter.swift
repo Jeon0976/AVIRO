@@ -9,8 +9,9 @@ import UIKit
 
 protocol SecondRegistrationProtocol: NSObject {
     func setupLayout()
-    func setupAttribute()
+    func setupGenderButton()
     func setupGesture()
+    func setupAttribute()
     func isInvalidDate()
     func isValidDate()
     func birthInit()
@@ -35,8 +36,12 @@ final class SecondRegistrationPresenter {
     
     func viewDidLoad() {
         viewController?.setupLayout()
-        viewController?.setupAttribute()
         viewController?.setupGesture()
+        viewController?.setupGenderButton()
+    }
+    
+    func viewWillAppear() {
+        viewController?.setupAttribute()
     }
     
     func pushUserInfo() {

@@ -102,7 +102,6 @@ final class FirstRegistrationViewController: UIViewController {
     }()
     
     private var tapGesture = UITapGestureRecognizer()
-    private var timer: Timer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,10 +109,15 @@ final class FirstRegistrationViewController: UIViewController {
         presenter.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        presenter.viewWillAppear()
+    }
+    
 }
 
 extension FirstRegistrationViewController: FirstRegistrationProtocol {
-    // MARK: Layout
     func setupLayout() {
         [
             titleLabel,
@@ -128,7 +132,6 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
         }
         
         NSLayoutConstraint.activate([
-            // titleLabel
             titleLabel.topAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.topAnchor,
                 constant: Layout.Margin.largeToView.rawValue
@@ -138,7 +141,6 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
                 constant: Layout.Margin.large.rawValue
             ),
             
-            // subTitle
             subtitleLabel.topAnchor.constraint(
                 equalTo: titleLabel.bottomAnchor,
                 constant: Layout.Margin.small.rawValue
@@ -147,7 +149,6 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
                 equalTo: titleLabel.leadingAnchor
             ),
             
-            // nicNameField
             nicknameField.topAnchor.constraint(
                 equalTo: subtitleLabel.bottomAnchor,
                 constant: Layout.Margin.large.rawValue
@@ -161,7 +162,6 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
                 constant: -Layout.Margin.large.rawValue
             ),
             
-            // subInfo
             subInfo.topAnchor.constraint(
                 equalTo: nicknameField.bottomAnchor,
                 constant: Layout.Margin.small.rawValue
@@ -175,7 +175,6 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
                 constant: -Layout.Margin.small.rawValue
             ),
             
-            // subInfo2
             subInfo2.topAnchor.constraint(
                 equalTo: subInfo.topAnchor),
             subInfo2.trailingAnchor.constraint(
@@ -186,7 +185,6 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
                 equalToConstant: Layout.Size.subInfo2Width.rawValue
             ),
             
-            // next Button
             nextButton.bottomAnchor.constraint(
                 equalTo: view.bottomAnchor,
                 constant: -Layout.Margin.largeToView.rawValue
@@ -206,10 +204,9 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
     }
     
     func setupAttribute() {
-        // view, naivgation, ..
         view.backgroundColor = .gray7
-        navigationItem.backButtonTitle = ""
-        setupCustomBackButton(true)
+        navigationItem.hidesBackButton = true
+        navigationController?.navigationBar.isHidden = false
     }
     
     func setupGesture() {
@@ -288,26 +285,9 @@ extension FirstRegistrationViewController: UITextFieldDelegate {
         }
         
         presenter.insertUserNickName(currentText)
-        
-        checkNicknameDuplicationAfterDelay()
     }
     
     private func changebleNickNameCount(_ count: Int) {
         self.subInfo2.text = "(\(count)/8)"
-    }
-    
-    private func checkNicknameDuplicationAfterDelay() {
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(
-            timeInterval: 0.5,
-            target: self,
-            selector: #selector(checkDuplication),
-            userInfo: nil,
-            repeats: false
-        )
-    }
-    
-    @objc private func checkDuplication() {
-        presenter.checkDuplication()
     }
 }

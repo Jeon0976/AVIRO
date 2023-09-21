@@ -519,13 +519,13 @@
 			path = Custom;
 			sourceTree = "<group>";
 		};
-		C50DB7372A99D4C80078B501 /* PlaceList */ = {
+		C50DB7372A99D4C80078B501 /* EnrollPlaceList */ = {
 			isa = PBXGroup;
 			children = (
 				C50DB7412A99DCDA0078B501 /* PlaceListSearchViewController.swift */,
 				C50DB7402A99DCDA0078B501 /* PlaceListCell.swift */,
 			);
-			path = PlaceList;
+			path = EnrollPlaceList;
 			sourceTree = "<group>";
 		};
 		C50DB74F2A9B83300078B501 /* ChangeableAddressViewController */ = {
@@ -806,7 +806,7 @@
 			children = (
 				C50F6AF22A68FD0A00E942F5 /* EnrollPlaceViewController.swift */,
 				C50F6AF72A68FFAF00E942F5 /* SubView */,
-				C50DB7372A99D4C80078B501 /* PlaceList */,
+				C50DB7372A99D4C80078B501 /* EnrollPlaceList */,
 			);
 			path = Enroll;
 			sourceTree = "<group>";
@@ -845,6 +845,15 @@
 				C5351B5B2A19F60200116D50 /* PlaceListSearchViewPresenter.swift */,
 			);
 			path = PlaceList;
+			sourceTree = "<group>";
+		};
+		C53856B22ABC6FBF00D52DEC /* OperationHours */ = {
+			isa = PBXGroup;
+			children = (
+				C5ED46922AAEB02F00F2DA04 /* PlaceOperationHoursViewController.swift */,
+				C5ED46962AAEB40500F2DA04 /* PlaceOperationSubView */,
+			);
+			path = OperationHours;
 			sourceTree = "<group>";
 		};
 		C54BC0D82A2C2CEE00B65439 /* UIButton */ = {
@@ -978,6 +987,7 @@
 		C595ACCF2A84A21100D35123 /* SubView */ = {
 			isa = PBXGroup;
 			children = (
+				C53856B22ABC6FBF00D52DEC /* OperationHours */,
 				C595ACD02A84A4EB00D35123 /* PlaceSummaryView.swift */,
 				C5C290732A85E4EC00ED5DCE /* PlaceSegmentedControlView.swift */,
 				C5C290752A85E4EF00ED5DCE /* SegmentedControlSubView */,
@@ -1073,8 +1083,6 @@
 			isa = PBXGroup;
 			children = (
 				C5C290762A85E4FF00ED5DCE /* PlaceHomeView.swift */,
-				C5ED46922AAEB02F00F2DA04 /* PlaceOperationHoursViewController.swift */,
-				C5ED46962AAEB40500F2DA04 /* PlaceOperationSubView */,
 				C5C2907F2A8616C500ED5DCE /* SubView */,
 			);
 			path = SegmentedControlSubView;

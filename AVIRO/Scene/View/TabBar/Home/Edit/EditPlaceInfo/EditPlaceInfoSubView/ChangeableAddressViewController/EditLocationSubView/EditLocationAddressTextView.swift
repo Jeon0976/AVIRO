@@ -49,7 +49,8 @@ final class EditLocationAddressTextView: UIView {
     private lazy var noResultImageView: UIImageView = {
         let imageView = UIImageView()
         
-        imageView.backgroundColor = .gray6
+        imageView.image = UIImage.noResultCharacter
+        imageView.clipsToBounds = false
         imageView.isHidden = true
         
         return imageView
@@ -107,8 +108,6 @@ final class EditLocationAddressTextView: UIView {
             
             noResultImageView.topAnchor.constraint(equalTo: addressTextField.bottomAnchor, constant: 30),
             noResultImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            noResultImageView.widthAnchor.constraint(equalToConstant: 80),
-            noResultImageView.heightAnchor.constraint(equalToConstant: 80),
             
             noResultLabel.topAnchor.constraint(equalTo: noResultImageView.bottomAnchor, constant: 30),
             noResultLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor)

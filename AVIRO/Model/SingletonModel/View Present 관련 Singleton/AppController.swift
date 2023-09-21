@@ -68,6 +68,7 @@ final class AppController {
                     MyData.my.whenLogin(
                         userId: userId,
                         userName: userName,
+                        userEmail: userEmail,
                         userNickname: userNickname,
                         marketingAgree: marketingAgree
                     )

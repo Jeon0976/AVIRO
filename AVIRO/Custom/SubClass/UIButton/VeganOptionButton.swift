@@ -55,7 +55,7 @@ final class VeganOptionButton: UIButton {
         let title = veganOption.buttontitle
         let image = veganOption.icon
                 
-        setImage(image, for: .normal)
+        setImage(image.withRenderingMode(.alwaysTemplate), for: .normal)
         
         let attributedString = NSMutableAttributedString(string: title)
         let paragraphStyle = NSMutableParagraphStyle()

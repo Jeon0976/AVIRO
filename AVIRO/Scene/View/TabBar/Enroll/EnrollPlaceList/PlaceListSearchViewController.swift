@@ -42,7 +42,8 @@ final class PlaceListSearchViewController: UIViewController {
     private lazy var noResultImageView: UIImageView = {
         let imageView = UIImageView()
         
-        imageView.backgroundColor = .gray6
+        imageView.image = UIImage.noResultCharacter
+        imageView.clipsToBounds = false
         imageView.isHidden = true
         
         return imageView
@@ -117,8 +118,6 @@ extension PlaceListSearchViewController: PlaceListProtocol {
             
             noResultImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             noResultImageView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-            noResultImageView.widthAnchor.constraint(equalToConstant: 120),
-            noResultImageView.heightAnchor.constraint(equalToConstant: 120),
             
             noResultTitle.topAnchor.constraint(
                 equalTo: noResultImageView.bottomAnchor, constant: 20),

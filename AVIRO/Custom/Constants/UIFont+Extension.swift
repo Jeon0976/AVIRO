@@ -17,6 +17,7 @@ final class CFont {
     private(set) var medium14: UIFont = .pretendard(size: 14, weight: .medium)
     private(set) var medium15: UIFont = .pretendard(size: 15, weight: .medium)
     private(set) var medium16: UIFont = .pretendard(size: 16, weight: .medium)
+    private(set) var medium17: UIFont = .pretendard(size: 17, weight: .medium)
     private(set) var medium18: UIFont = .pretendard(size: 18, weight: .medium)
     
     private(set) var semibold15: UIFont = .pretendard(size: 15, weight: .semibold)
@@ -31,7 +32,6 @@ final class CFont {
     
     init() {}
 }
-
 
 extension UIFont {
     static func pretendard(size fontSize: CGFloat, weight: UIFont.Weight) -> UIFont {

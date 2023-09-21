@@ -39,4 +39,25 @@ extension UIViewController {
         
         navigationController?.popViewController(animated: animated)
     }
+    
+    func applyGradientToView(
+        colors: [UIColor],
+        locations: [NSNumber]? = nil,
+        startPoint: CGPoint = CGPoint(x: 0.5, y: 0.0),
+        endPoint: CGPoint = CGPoint(x: 0.5, y: 1.0)
+    ) {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = colors.map { $0.cgColor }
+        gradientLayer.locations = locations
+        gradientLayer.startPoint = startPoint
+        gradientLayer.endPoint = endPoint
+        gradientLayer.frame = self.view.bounds
+        
+        self.view.layer.sublayers?.filter {
+            $0 is CAGradientLayer
+        }
+        .forEach { $0.removeFromSuperlayer() }
+        
+        self.view.layer.insertSublayer(gradientLayer, at: 0)
+    }
 }

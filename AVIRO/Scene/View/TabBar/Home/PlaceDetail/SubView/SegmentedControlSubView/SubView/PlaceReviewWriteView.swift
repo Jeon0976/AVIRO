@@ -11,8 +11,9 @@ final class PlaceReviewWriteView: UIView {
     private lazy var mainImage: UIImageView = {
         let imageView = UIImageView()
 
-        imageView.backgroundColor = .gray5
-
+        imageView.image = UIImage.enrollCharacter
+        imageView.clipsToBounds = false
+        
         return imageView
     }()
     
@@ -81,8 +82,6 @@ final class PlaceReviewWriteView: UIView {
         NSLayoutConstraint.activate([
             mainImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
             mainImage.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            mainImage.widthAnchor.constraint(equalToConstant: 80),
-            mainImage.heightAnchor.constraint(equalToConstant: 80),
             
             title.topAnchor.constraint(equalTo: mainImage.bottomAnchor, constant: 20),
             title.centerXAnchor.constraint(equalTo: self.centerXAnchor),

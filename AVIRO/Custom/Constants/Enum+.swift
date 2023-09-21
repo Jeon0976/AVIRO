@@ -14,6 +14,11 @@ enum UDKey: String {
     case tutorial = "Tutorial"
 }
 
+// MARK: Keychain
+enum KeychainKey: String {
+    case appleIdentifier = "AppleIdentifier"
+}
+
 // MARK: TableViewCell Identifier
 enum TVIdentifier: String {
     case terms = "TermsTableCell"

@@ -8,6 +8,13 @@
 import UIKit
 
 extension UIImage {
+    // MARK: Main
+    static let loginTitle = UIImage(named: "LoginTitle")!
+    static let loginCharacter = UIImage(named: "LoginCharacter")!
+    static let loginCharacterEllipse = UIImage(named: "LoginCharacterEllipse")!
+    static let enrollCharacter = UIImage(named: "EnrollCharacter")!
+    static let noResultCharacter = UIImage(named: "NoResultCharacter")!
+    
     // MARK: Icon 관련 Image
     static let allBox = UIImage(named: "AllBox")!
     static let someBox = UIImage(named: "SomeBox")!
@@ -49,6 +56,8 @@ extension UIImage {
     static let user2 = UIImage(named: "user2")!
     
     // MARK: Assets Img
+    static let apple = UIImage(named: "AppleLogo")!
+    
     static let back = UIImage(named: "Back")!
     static let downBack = UIImage(named: "DownBack")!
     static let close = UIImage(named: "Close")!
