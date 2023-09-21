@@ -27,7 +27,6 @@ class EnrollField: UITextField {
         }
     }
     
-    // MARK: Init 설정
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -38,29 +37,29 @@ class EnrollField: UITextField {
         fatalError()
     }
     
-    // MARK: 기본 Text Inset
-    override func textRect(forBounds bounds: CGRect) -> CGRect {
+    override func textRect(
+        forBounds bounds: CGRect
+    ) -> CGRect {
         let inset = setTextInset()
             
         return bounds.inset(by: inset)
     }
     
-    // MARK: Editing Text Inset
-    override func editingRect(forBounds bounds: CGRect) -> CGRect {
+    override func editingRect(
+        forBounds bounds: CGRect
+    ) -> CGRect {
         let inset = setTextInset()
         
         return bounds.inset(by: inset)
     }
     
-    // MARK: Set Configuration
     private func configuration() {
         self.textColor = .gray0
-        self.font = .pretendard(size: 16, weight: .medium)
+        self.font = CFont.font.medium16
         self.backgroundColor = .gray6
         self.layer.cornerRadius = 10
     }
     
-    // MARK: Text Edge Inset 값 설정
     /// Text Edge Inset 값 설정
     private func setTextInset() -> UIEdgeInsets {
         var inset = UIEdgeInsets(
@@ -84,16 +83,23 @@ class EnrollField: UITextField {
         
         return inset
     }
-    // MARK: Left Image 넣기
+
     /// Left Image 넣기
     func addLeftImage() {
         isAddLeftImage = !isAddLeftImage
         
-        let image = UIImage(named: "Search")
-        image?.withTintColor(.gray2 ?? .systemGray2)
+        let image = UIImage.searchIcon
+        
+        image.withTintColor(.gray2)
             
         let imageView = UIImageView(image: image)
-        imageView.frame = CGRect(x: horizontalPadding, y: 0, width: imageViewSize, height: imageViewSize)
+        
+        imageView.frame = CGRect(
+            x: horizontalPadding,
+            y: 0,
+            width: imageViewSize,
+            height: imageViewSize
+        )
         
         let paddingWidth = horizontalPadding + buttonPadding + imageViewSize
         
@@ -113,16 +119,32 @@ class EnrollField: UITextField {
     func addRightPushViewControllerButton() {
         isAddRightButton = !isAddRightButton
         
-        let image = UIImage(named: "PushView")
+        let image = UIImage.pushView
         
         let button = UIButton()
         button.setImage(image, for: .normal)
-        button.frame = CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize)
-        button.addTarget(self, action: #selector(rightPushViewButtonTapped), for: .touchUpInside)
+        button.frame = CGRect(
+            x: 0,
+            y: 0,
+            width: buttonSize,
+            height: buttonSize
+        )
+        button.addTarget(
+            self,
+            action: #selector(rightPushViewButtonTapped),
+            for: .touchUpInside
+        )
         
         let paddingWidth = horizontalPadding + buttonPadding + buttonSize
         
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: paddingWidth, height: buttonSize))
+        let paddingView = UIView(
+            frame: CGRect(
+                x: 0,
+                y: 0,
+                width: paddingWidth,
+                height: buttonSize
+            )
+        )
         
         paddingView.addSubview(button)
         
@@ -135,12 +157,21 @@ class EnrollField: UITextField {
     }
     
     func addRightCancelButton() {
-        let image = UIImage(named: "X-Circle")?.withRenderingMode(.alwaysTemplate)
+        let image = UIImage.closeCircle.withRenderingMode(.alwaysTemplate)
         
         rightButton.setImage(image, for: .normal)
         rightButton.tintColor = .gray2
-        rightButton.frame = .init(x: horizontalPadding, y: 0, width: buttonSize, height: buttonSize)
-        rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
+        rightButton.frame = .init(
+            x: horizontalPadding,
+            y: 0,
+            width: buttonSize,
+            height: buttonSize
+        )
+        rightButton.addTarget(
+            self,
+            action: #selector(rightButtonTapped),
+            for: .touchUpInside
+        )
         
         let paddingWidth = horizontalPadding + buttonPadding + buttonSize
         
@@ -168,7 +199,7 @@ class EnrollField: UITextField {
     func makePlaceHolder(_ placeHolder: String) {
         self.attributedPlaceholder = NSAttributedString(
             string: placeHolder,
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray3 ?? .systemGray4]
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray3]
         )
     }
     

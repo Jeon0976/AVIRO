@@ -10,21 +10,29 @@ import UIKit
 extension UIButton {
     func countCurrentLines() -> Int {
         guard let text = self.titleLabel?.text else { return 0 }
-
+        
         let rect = CGSize(
             width: self.bounds.width,
             height: CGFloat.greatestFiniteMagnitude
         )
-
+        
         let labelSize = text.boundingRect(
             with: rect,
             options: .usesLineFragmentOrigin,
-            attributes: [NSAttributedString.Key.font: titleLabel?.font ?? UIFont.systemFont(ofSize: 16, weight: .medium)],
+            attributes: [
+                NSAttributedString.Key.font: titleLabel?.font ?? CFont.font.medium16
+            ],
             context: nil
         )
-
-        let numberOfLine = Int(ceil(CGFloat(labelSize.height) / (titleLabel?.font?.lineHeight ?? 1)))
-
+        
+        let numberOfLine = Int(
+            ceil(
+                CGFloat(labelSize.height)
+                /
+                (titleLabel?.font?.lineHeight ?? 1)
+            )
+        )
+        
         return numberOfLine
     }
 }

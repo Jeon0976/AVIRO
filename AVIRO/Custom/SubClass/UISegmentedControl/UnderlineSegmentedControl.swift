@@ -78,22 +78,40 @@ final class UnderlineSegmentedControl: UISegmentedControl {
     
     private func removeBackgroundAndDivider() {
         let image = UIImage()
-        self.setBackgroundImage(image, for: .normal, barMetrics: .default)
-        self.setBackgroundImage(image, for: .selected, barMetrics: .default)
-        self.setBackgroundImage(image, for: .highlighted, barMetrics: .default)
+        self.setBackgroundImage(
+            image,
+            for: .normal,
+            barMetrics: .default
+        )
         
-        self.setDividerImage(image, forLeftSegmentState: .selected, rightSegmentState: .normal, barMetrics: .default)
+        self.setBackgroundImage(
+            image,
+            for: .selected,
+            barMetrics: .default
+        )
+        self.setBackgroundImage(
+            image,
+            for: .highlighted,
+            barMetrics: .default
+        )
+        
+        self.setDividerImage(
+            image,
+            forLeftSegmentState: .selected,
+            rightSegmentState: .normal,
+            barMetrics: .default
+        )
     }
     
     /// normal, selected 일 때 color와 font 설정
     func setAttributedTitle(
         _ normal: (UIColor?, UIFont) = (
             UIColor.gray2,
-            UIFont.pretendard(size: 17, weight: .regular)
+            CFont.font.regular17
         ),
         _ selected: (UIColor?, UIFont) = (
             UIColor.gray0,
-            UIFont.pretendard(size: 17, weight: .semibold)
+            CFont.font.semibold17
         )
     ) {
         guard let normalColor = normal.0 else { return }

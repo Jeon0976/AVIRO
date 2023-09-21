@@ -37,37 +37,39 @@
 		C51000512AB5F76600F65C1F /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C510003A2AB5F59600F65C1F /* Pretendard-ExtraBold.otf */; };
 		C51000522AB5F76600F65C1F /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = C51000392AB5F59600F65C1F /* Pretendard-Regular.otf */; };
 		C51000532AB5F76600F65C1F /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C510003E2AB5F59600F65C1F /* Pretendard-SemiBold.otf */; };
-		C51000552AB8123600F65C1F /* AVIROReportCommentDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51000542AB8123600F65C1F /* AVIROReportCommentDTO.swift */; };
+		C51000552AB8123600F65C1F /* AVIROReportReview+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51000542AB8123600F65C1F /* AVIROReportReview+DTO.swift */; };
 		C51000582AB939A200F65C1F /* NoResultLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51000572AB939A200F65C1F /* NoResultLabel.swift */; };
 		C510005A2AB998F600F65C1F /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51000592AB998F600F65C1F /* UIImage+Extension.swift */; };
 		C510005C2AB9C39500F65C1F /* MarkerModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C510005B2AB9C39500F65C1F /* MarkerModelManager.swift */; };
+		C510005E2ABAA3C700F65C1F /* Enum+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C510005D2ABAA3C700F65C1F /* Enum+.swift */; };
+		C51000612ABAE61F00F65C1F /* ReportReviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51000602ABAE61F00F65C1F /* ReportReviewModel.swift */; };
+		C51000632ABAE6A200F65C1F /* MenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51000622ABAE6A200F65C1F /* MenuModel.swift */; };
 		C51132C12A559BCA006E1EC3 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51132C02A559BCA006E1EC3 /* AppController.swift */; };
-		C51385422AAADB0E001AB827 /* EditNicNameButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51385412AAADB0E001AB827 /* EditNicNameButton.swift */; };
+		C51385422AAADB0E001AB827 /* EditNickNameButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51385412AAADB0E001AB827 /* EditNickNameButton.swift */; };
 		C51385452AAAE493001AB827 /* MyDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51385442AAAE493001AB827 /* MyDataModel.swift */; };
 		C51385472AAAF3BB001AB827 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51385462AAAF3BB001AB827 /* SettingCell.swift */; };
 		C513854A2AAB3B13001AB827 /* NickNameChangebleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51385492AAB3B13001AB827 /* NickNameChangebleViewController.swift */; };
 		C513854C2AAB3B52001AB827 /* NickNameChangeblePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513854B2AAB3B52001AB827 /* NickNameChangeblePresenter.swift */; };
-		C513854E2AAD8E9F001AB827 /* AVIROReportPlaceDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513854D2AAD8E9F001AB827 /* AVIROReportPlaceDTO.swift */; };
-		C51385502AAD921F001AB827 /* AVIROPlaceReportCheckDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513854F2AAD921F001AB827 /* AVIROPlaceReportCheckDTO.swift */; };
-		C5166E492A9305A9003495AA /* AVIROSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5166E482A9305A9003495AA /* AVIROSummaryModel.swift */; };
-		C5166E4D2A945228003495AA /* UserSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5166E4C2A945228003495AA /* UserSingleton.swift */; };
+		C513854E2AAD8E9F001AB827 /* AVIROReportPlace+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513854D2AAD8E9F001AB827 /* AVIROReportPlace+DTO.swift */; };
+		C51385502AAD921F001AB827 /* AVIROPlaceReportCheck+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513854F2AAD921F001AB827 /* AVIROPlaceReportCheck+DTO.swift */; };
+		C5166E492A9305A9003495AA /* AVIROPlaceSummary+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5166E482A9305A9003495AA /* AVIROPlaceSummary+DTO.swift */; };
+		C5166E4D2A945228003495AA /* MyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5166E4C2A945228003495AA /* MyData.swift */; };
 		C51AED1D2A8A192D0015FBC2 /* ChangedViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51AED1C2A8A192D0015FBC2 /* ChangedViewAction.swift */; };
 		C51AED1F2A8B2BC80015FBC2 /* HomeTopButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51AED1E2A8B2BC80015FBC2 /* HomeTopButton.swift */; };
 		C51AED212A8B2BDB0015FBC2 /* HomeMapReferButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51AED202A8B2BDB0015FBC2 /* HomeMapReferButton.swift */; };
 		C51AED232A8B7B000015FBC2 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51AED222A8B7B000015FBC2 /* UIViewController+Extension.swift */; };
-		C51B09B82A82155200916BBD /* MarkerModelLocalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B09B72A82155200916BBD /* MarkerModelLocalData.swift */; };
+		C51B09B82A82155200916BBD /* LocalMarkerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B09B72A82155200916BBD /* LocalMarkerData.swift */; };
 		C51B09BA2A8215D800916BBD /* MarkerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B09B92A8215D800916BBD /* MarkerModel.swift */; };
 		C51B09BC2A82397800916BBD /* Marker+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B09BB2A82397800916BBD /* Marker+Extension.swift */; };
-		C51BBAD52A78D53D00BF5B7C /* AVIROCheckPlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51BBAD42A78D53D00BF5B7C /* AVIROCheckPlaceModel.swift */; };
-		C51BBAD72A78D5AB00BF5B7C /* PlaceCheckModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51BBAD62A78D5AB00BF5B7C /* PlaceCheckModel.swift */; };
+		C51BBAD52A78D53D00BF5B7C /* AVIROCheckPlace+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51BBAD42A78D53D00BF5B7C /* AVIROCheckPlace+DTO.swift */; };
 		C52066212A7CA9050038ECCD /* MainField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066202A7CA9050038ECCD /* MainField.swift */; };
 		C52066232A7CAC910038ECCD /* NoHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066222A7CAC910038ECCD /* NoHistoryView.swift */; };
 		C52066262A7CC3CE0038ECCD /* NoHistoryLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066252A7CC3CE0038ECCD /* NoHistoryLabelView.swift */; };
 		C52066292A7CD5FC0038ECCD /* HistoryTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066282A7CD5FC0038ECCD /* HistoryTableModel.swift */; };
 		C520662D2A7CE1CC0038ECCD /* SearchHistoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C520662C2A7CE1CC0038ECCD /* SearchHistoryManager.swift */; };
 		C520662F2A7E485B0038ECCD /* MatchedPlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C520662E2A7E485B0038ECCD /* MatchedPlaceModel.swift */; };
-		C52066312A7E4A580038ECCD /* PlaceModelBeforeMatchedAVIRO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066302A7E4A580038ECCD /* PlaceModelBeforeMatchedAVIRO.swift */; };
-		C52066332A7E80350038ECCD /* MatchedPlaceListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066322A7E80350038ECCD /* MatchedPlaceListCell.swift */; };
+		C52066312A7E4A580038ECCD /* AVIROMainSearchCompare+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066302A7E4A580038ECCD /* AVIROMainSearchCompare+DTO.swift */; };
+		C52066332A7E80350038ECCD /* MatchedPlaceCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066322A7E80350038ECCD /* MatchedPlaceCellModel.swift */; };
 		C52066352A7F3FAE0038ECCD /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066342A7F3FAE0038ECCD /* HistoryTableViewCell.swift */; };
 		C52066382A808DAD0038ECCD /* HistoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066372A808DAD0038ECCD /* HistoryHeaderView.swift */; };
 		C520663A2A808DC40038ECCD /* PlaceListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52066392A808DC40038ECCD /* PlaceListHeaderView.swift */; };
@@ -82,20 +84,21 @@
 		C52FA3472A175B20005E70DC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FA3462A175B20005E70DC /* HomeViewController.swift */; };
 		C52FA34C2A175B20005E70DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C52FA34B2A175B20005E70DC /* Assets.xcassets */; };
 		C52FA34F2A175B20005E70DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C52FA34D2A175B20005E70DC /* LaunchScreen.storyboard */; };
-		C5351B4D2A19223300116D50 /* KakaoMapRequestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B4C2A19223300116D50 /* KakaoMapRequestAPI.swift */; };
-		C5351B502A19225A00116D50 /* KakaoMapResponseKeywordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B4F2A19225A00116D50 /* KakaoMapResponseKeywordModel.swift */; };
+		C5351B4D2A19223300116D50 /* KakaoMapAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B4C2A19223300116D50 /* KakaoMapAPI.swift */; };
+		C5351B502A19225A00116D50 /* KakaoKeywordPlace+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B4F2A19225A00116D50 /* KakaoKeywordPlace+DTO.swift */; };
 		C5351B542A19A7B100116D50 /* MyCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B532A19A7B100116D50 /* MyCoordinate.swift */; };
 		C5351B562A19B67900116D50 /* CustomAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B552A19B67900116D50 /* CustomAlertController.swift */; };
 		C5351B5C2A19F60200116D50 /* PlaceListSearchViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B5B2A19F60200116D50 /* PlaceListSearchViewPresenter.swift */; };
 		C5351B602A19F9A700116D50 /* PlaceListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B5F2A19F9A700116D50 /* PlaceListModel.swift */; };
 		C5351B622A1A083400116D50 /* PlaceListCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B612A1A083400116D50 /* PlaceListCellModel.swift */; };
 		C5351B672A1A154C00116D50 /* PageEndingCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B662A1A154C00116D50 /* PageEndingCheck.swift */; };
-		C5351B7A2A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B792A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift */; };
+		C5351B7A2A1B439000116D50 /* KakaoCoordinatePlace+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B792A1B439000116D50 /* KakaoCoordinatePlace+DTO.swift */; };
+		C53856B12ABC13ED00D52DEC /* AVIROMyContributionCount+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53856B02ABC13ED00D52DEC /* AVIROMyContributionCount+DTO.swift */; };
 		C53893162A5EC0C500CB9A54 /* GenderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53893152A5EC0C500CB9A54 /* GenderButton.swift */; };
-		C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547A8B92A17D8D4004D1339 /* KakaoMapRequestManager.swift */; };
+		C547A8BA2A17D8D4004D1339 /* KakaoMapAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547A8B92A17D8D4004D1339 /* KakaoMapAPIManager.swift */; };
 		C54BC0DB2A2C2D0D00B65439 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54BC0DA2A2C2D0D00B65439 /* UIColor+Extension.swift */; };
-		C54BC0DD2A2C762C00B65439 /* CommentsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54BC0DC2A2C762C00B65439 /* CommentsLabel.swift */; };
-		C5538AAF2A1BB81200661DE2 /* AVIROEnrollPlaceDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5538AAE2A1BB81200661DE2 /* AVIROEnrollPlaceDTO.swift */; };
+		C54BC0DD2A2C762C00B65439 /* CommentsLabel+Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54BC0DC2A2C762C00B65439 /* CommentsLabel+Deprecated.swift */; };
+		C5538AAF2A1BB81200661DE2 /* AVIROEnrollPlace+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5538AAE2A1BB81200661DE2 /* AVIROEnrollPlace+DTO.swift */; };
 		C567C1502A56611500D4B426 /* TopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C567C14F2A56611500D4B426 /* TopCell.swift */; };
 		C568577D2A70E1F600F52715 /* MenuPlusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C568577C2A70E1F600F52715 /* MenuPlusButton.swift */; };
 		C56857802A7113C600F52715 /* NormalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C568577F2A7113C600F52715 /* NormalTableViewCell.swift */; };
@@ -104,7 +107,7 @@
 		C5732C712A41739000CDC499 /* AVIROAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C702A41739000CDC499 /* AVIROAPIManager.swift */; };
 		C5732C732A41778A00CDC499 /* AVIROPostAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C722A41778A00CDC499 /* AVIROPostAPI.swift */; };
 		C5732C752A41962D00CDC499 /* AVIRORequestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C742A41962D00CDC499 /* AVIRORequestAPI.swift */; };
-		C5732C772A41A0A500CDC499 /* AVIROMapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C762A41A0A500CDC499 /* AVIROMapModel.swift */; };
+		C5732C772A41A0A500CDC499 /* AVIROMapMarker+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C762A41A0A500CDC499 /* AVIROMapMarker+DTO.swift */; };
 		C5732C7C2A41D41B00CDC499 /* VeganTableFieldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C7B2A41D41B00CDC499 /* VeganTableFieldModel.swift */; };
 		C5732C7E2A41D42700CDC499 /* RequestTableFieldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5732C7D2A41D42700CDC499 /* RequestTableFieldModel.swift */; };
 		C5803F582A88C1990064A853 /* PlaceTopModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5803F572A88C1990064A853 /* PlaceTopModel.swift */; };
@@ -117,7 +120,7 @@
 		C58EC7D42AB1B5C400401FF7 /* AVIROEditURL+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58EC7D32AB1B5C400401FF7 /* AVIROEditURL+DTO.swift */; };
 		C58EC7D62AB1B61500401FF7 /* AVIROEditCommonBeforeAfterDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58EC7D52AB1B61500401FF7 /* AVIROEditCommonBeforeAfterDTO.swift */; };
 		C593B6472A4AB3A700D224CE /* PushCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593B6462A4AB3A700D224CE /* PushCommentView.swift */; };
-		C593B64B2A4AEA9800D224CE /* AVIROCommentDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593B64A2A4AEA9800D224CE /* AVIROCommentDTO.swift */; };
+		C593B64B2A4AEA9800D224CE /* AVIROReview+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593B64A2A4AEA9800D224CE /* AVIROReview+DTO.swift */; };
 		C593B64F2A4C490600D224CE /* MyPageViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593B64E2A4C490600D224CE /* MyPageViewPresenter.swift */; };
 		C59491D32AB0336100880B4B /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59491D22AB0336100880B4B /* UIView+Extension.swift */; };
 		C595ACCD2A84A1A200D35123 /* PlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C595ACCC2A84A1A200D35123 /* PlaceView.swift */; };
@@ -134,9 +137,9 @@
 		C5A201C92A98A70800A54381 /* EditHomePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A201C82A98A70800A54381 /* EditHomePageView.swift */; };
 		C5A3C3C42A39658A0050AB3D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A3C3C32A39658A0050AB3D /* LoginViewController.swift */; };
 		C5A3C3C62A39659B0050AB3D /* LoginViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A3C3C52A39659B0050AB3D /* LoginViewPresenter.swift */; };
-		C5A989972A959D920021B7C3 /* BookmarkPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A989962A959D920021B7C3 /* BookmarkPostModel.swift */; };
-		C5A989992A959E040021B7C3 /* AVIROBookmarkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A989982A959E040021B7C3 /* AVIROBookmarkModel.swift */; };
-		C5A9899B2A95A6B50021B7C3 /* BookmarkArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A9899A2A95A6B50021B7C3 /* BookmarkArray.swift */; };
+		C5A989972A959D920021B7C3 /* AVIROUpdateBookmark+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A989962A959D920021B7C3 /* AVIROUpdateBookmark+DTO.swift */; };
+		C5A989992A959E040021B7C3 /* AVIROBookmark+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A989982A959E040021B7C3 /* AVIROBookmark+DTO.swift */; };
+		C5A9899B2A95A6B50021B7C3 /* LocalBookmarkData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A9899A2A95A6B50021B7C3 /* LocalBookmarkData.swift */; };
 		C5A9899E2A95A7940021B7C3 /* BookmarkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A9899D2A95A7940021B7C3 /* BookmarkManager.swift */; };
 		C5B071E12A59454300AE709A /* BottomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B071E02A59454300AE709A /* BottomCell.swift */; };
 		C5B071E52A59B4AC00AE709A /* RegistrationField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B071E42A59B4AC00AE709A /* RegistrationField.swift */; };
@@ -153,7 +156,7 @@
 		C5C90EB72AA7078300AB3668 /* EditOperationHoursModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C90EB62AA7078300AB3668 /* EditOperationHoursModel.swift */; };
 		C5C90EB92AA78D0200AB3668 /* EditOperationHourChangebleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C90EB82AA78D0200AB3668 /* EditOperationHourChangebleView.swift */; };
 		C5C90EBB2AA7F79600AB3668 /* EditTimeChangebleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C90EBA2AA7F79600AB3668 /* EditTimeChangebleView.swift */; };
-		C5C90EBD2AA85E7000AB3668 /* AVIROOperationHourModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C90EBC2AA85E7000AB3668 /* AVIROOperationHourModel.swift */; };
+		C5C90EBD2AA85E7000AB3668 /* AVIROOperationHours+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C90EBC2AA85E7000AB3668 /* AVIROOperationHours+DTO.swift */; };
 		C5C915492A777F8500C7CB93 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C915482A777F8500C7CB93 /* SearchField.swift */; };
 		C5C961932A8D9EE20016E2F8 /* PlaceMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C961922A8D9EE20016E2F8 /* PlaceMenuTableViewCell.swift */; };
 		C5C961952A8D9EED0016E2F8 /* PlaceReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C961942A8D9EED0016E2F8 /* PlaceReviewTableViewCell.swift */; };
@@ -169,14 +172,13 @@
 		C5D93D9F2A581EC800629C39 /* FirstRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D93D9E2A581EC800629C39 /* FirstRegistrationViewController.swift */; };
 		C5D93DA12A581F5A00629C39 /* FirstRegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D93DA02A581F5A00629C39 /* FirstRegistrationPresenter.swift */; };
 		C5D93DA32A58718300629C39 /* NextPageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D93DA22A58718300629C39 /* NextPageButton.swift */; };
-		C5E143A72AB43B8F007AC8C9 /* AVIROPostResultDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E143A62AB43B8F007AC8C9 /* AVIROPostResultDTO.swift */; };
+		C5E143A72AB43B8F007AC8C9 /* AVIROResult+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E143A62AB43B8F007AC8C9 /* AVIROResult+DTO.swift */; };
 		C5E306E72A6FB4ED00C11CF7 /* MenuField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E306E62A6FB4ED00C11CF7 /* MenuField.swift */; };
 		C5E430AD2A5D142C00CB67EC /* LoginJson.json in Resources */ = {isa = PBXBuildFile; fileRef = C5E430AB2A5D142C00CB67EC /* LoginJson.json */; };
 		C5E430AE2A5D142C00CB67EC /* RegistrationCompleted.json in Resources */ = {isa = PBXBuildFile; fileRef = C5E430AC2A5D142C00CB67EC /* RegistrationCompleted.json */; };
 		C5E430B32A5DADBE00CB67EC /* SecondRegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E430B22A5DADBE00CB67EC /* SecondRegistrationPresenter.swift */; };
 		C5E430B52A5DAE9800CB67EC /* SecondRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E430B42A5DAE9800CB67EC /* SecondRegistrationViewController.swift */; };
-		C5E7B7A92A4D3CDF00CA2090 /* AVIROUserDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E7B7A82A4D3CDF00CA2090 /* AVIROUserDTO.swift */; };
-		C5EB50E42A1C685100B29CC1 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50E32A1C685100B29CC1 /* TabBarItem.swift */; };
+		C5E7B7A92A4D3CDF00CA2090 /* AVIROUser+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E7B7A82A4D3CDF00CA2090 /* AVIROUser+DTO.swift */; };
 		C5EB50EA2A1C705900B29CC1 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50E92A1C705900B29CC1 /* MyPageViewController.swift */; };
 		C5EB50EC2A1C72C600B29CC1 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB50EB2A1C72C600B29CC1 /* TabBarViewController.swift */; };
 		C5EB51082A209F6900B29CC1 /* HomeSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB51072A209F6900B29CC1 /* HomeSearchViewController.swift */; };
@@ -191,14 +193,14 @@
 		C5FD92E32A9C6C1E00CF4673 /* EditLocationAddressTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92E22A9C6C1E00CF4673 /* EditLocationAddressTextTableViewCell.swift */; };
 		C5FD92EB2A9C786600CF4673 /* PublicAPIRequestComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92EA2A9C786600CF4673 /* PublicAPIRequestComponents.swift */; };
 		C5FD92ED2A9C7AE800CF4673 /* PublicAPIRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92EC2A9C7AE800CF4673 /* PublicAPIRequestManager.swift */; };
-		C5FD92F02A9C803600CF4673 /* EditAddressTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92EF2A9C803600CF4673 /* EditAddressTableModel.swift */; };
+		C5FD92F02A9C803600CF4673 /* PublicAddress+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92EF2A9C803600CF4673 /* PublicAddress+DTO.swift */; };
 		C5FD92F22A9C805700CF4673 /* PublicXMLParserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92F12A9C805700CF4673 /* PublicXMLParserDelegate.swift */; };
-		C5FD92F42A9CD2FC00CF4673 /* KakaoMapResponseAddressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92F32A9CD2FC00CF4673 /* KakaoMapResponseAddressModel.swift */; };
+		C5FD92F42A9CD2FC00CF4673 /* KakaoAddressPlace+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92F32A9CD2FC00CF4673 /* KakaoAddressPlace+DTO.swift */; };
 		C5FD92F72A9CDB9300CF4673 /* EditMenuTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92F62A9CDB9300CF4673 /* EditMenuTopView.swift */; };
 		C5FD92F92A9CDB9E00CF4673 /* EditMenuBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92F82A9CDB9E00CF4673 /* EditMenuBottomView.swift */; };
-		C5FF13532A42C8810026981D /* AVIROPlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FF13522A42C8810026981D /* AVIROPlaceModel.swift */; };
-		C5FF13552A42C88D0026981D /* AVIROMenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FF13542A42C88D0026981D /* AVIROMenuModel.swift */; };
-		C5FF13572A42C8970026981D /* AVIROReviewsModelDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FF13562A42C8970026981D /* AVIROReviewsModelDTO.swift */; };
+		C5FF13532A42C8810026981D /* AVIROPlaceInfo+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FF13522A42C8810026981D /* AVIROPlaceInfo+DTO.swift */; };
+		C5FF13552A42C88D0026981D /* AVIROPlaceMenus+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FF13542A42C88D0026981D /* AVIROPlaceMenus+DTO.swift */; };
+		C5FF13572A42C8970026981D /* AVIROPlaceReviews+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FF13562A42C8970026981D /* AVIROPlaceReviews+DTO.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -234,37 +236,39 @@
 		C510003F2AB5F59600F65C1F /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
 		C51000402AB5F59600F65C1F /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		C51000412AB5F59600F65C1F /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
-		C51000542AB8123600F65C1F /* AVIROReportCommentDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROReportCommentDTO.swift; sourceTree = "<group>"; };
+		C51000542AB8123600F65C1F /* AVIROReportReview+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROReportReview+DTO.swift"; sourceTree = "<group>"; };
 		C51000572AB939A200F65C1F /* NoResultLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoResultLabel.swift; sourceTree = "<group>"; };
 		C51000592AB998F600F65C1F /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		C510005B2AB9C39500F65C1F /* MarkerModelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerModelManager.swift; sourceTree = "<group>"; };
+		C510005D2ABAA3C700F65C1F /* Enum+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Enum+.swift"; sourceTree = "<group>"; };
+		C51000602ABAE61F00F65C1F /* ReportReviewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportReviewModel.swift; sourceTree = "<group>"; };
+		C51000622ABAE6A200F65C1F /* MenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuModel.swift; sourceTree = "<group>"; };
 		C51132C02A559BCA006E1EC3 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
-		C51385412AAADB0E001AB827 /* EditNicNameButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNicNameButton.swift; sourceTree = "<group>"; };
+		C51385412AAADB0E001AB827 /* EditNickNameButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNickNameButton.swift; sourceTree = "<group>"; };
 		C51385442AAAE493001AB827 /* MyDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDataModel.swift; sourceTree = "<group>"; };
 		C51385462AAAF3BB001AB827 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		C51385492AAB3B13001AB827 /* NickNameChangebleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameChangebleViewController.swift; sourceTree = "<group>"; };
 		C513854B2AAB3B52001AB827 /* NickNameChangeblePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameChangeblePresenter.swift; sourceTree = "<group>"; };
-		C513854D2AAD8E9F001AB827 /* AVIROReportPlaceDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROReportPlaceDTO.swift; sourceTree = "<group>"; };
-		C513854F2AAD921F001AB827 /* AVIROPlaceReportCheckDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROPlaceReportCheckDTO.swift; sourceTree = "<group>"; };
-		C5166E482A9305A9003495AA /* AVIROSummaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROSummaryModel.swift; sourceTree = "<group>"; };
-		C5166E4C2A945228003495AA /* UserSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSingleton.swift; sourceTree = "<group>"; };
+		C513854D2AAD8E9F001AB827 /* AVIROReportPlace+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROReportPlace+DTO.swift"; sourceTree = "<group>"; };
+		C513854F2AAD921F001AB827 /* AVIROPlaceReportCheck+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROPlaceReportCheck+DTO.swift"; sourceTree = "<group>"; };
+		C5166E482A9305A9003495AA /* AVIROPlaceSummary+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROPlaceSummary+DTO.swift"; sourceTree = "<group>"; };
+		C5166E4C2A945228003495AA /* MyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyData.swift; sourceTree = "<group>"; };
 		C51AED1C2A8A192D0015FBC2 /* ChangedViewAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangedViewAction.swift; sourceTree = "<group>"; };
 		C51AED1E2A8B2BC80015FBC2 /* HomeTopButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTopButton.swift; sourceTree = "<group>"; };
 		C51AED202A8B2BDB0015FBC2 /* HomeMapReferButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMapReferButton.swift; sourceTree = "<group>"; };
 		C51AED222A8B7B000015FBC2 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
-		C51B09B72A82155200916BBD /* MarkerModelLocalData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerModelLocalData.swift; sourceTree = "<group>"; };
+		C51B09B72A82155200916BBD /* LocalMarkerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalMarkerData.swift; sourceTree = "<group>"; };
 		C51B09B92A8215D800916BBD /* MarkerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerModel.swift; sourceTree = "<group>"; };
 		C51B09BB2A82397800916BBD /* Marker+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Marker+Extension.swift"; sourceTree = "<group>"; };
-		C51BBAD42A78D53D00BF5B7C /* AVIROCheckPlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROCheckPlaceModel.swift; sourceTree = "<group>"; };
-		C51BBAD62A78D5AB00BF5B7C /* PlaceCheckModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCheckModel.swift; sourceTree = "<group>"; };
+		C51BBAD42A78D53D00BF5B7C /* AVIROCheckPlace+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROCheckPlace+DTO.swift"; sourceTree = "<group>"; };
 		C52066202A7CA9050038ECCD /* MainField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainField.swift; sourceTree = "<group>"; };
 		C52066222A7CAC910038ECCD /* NoHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoHistoryView.swift; sourceTree = "<group>"; };
 		C52066252A7CC3CE0038ECCD /* NoHistoryLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoHistoryLabelView.swift; sourceTree = "<group>"; };
 		C52066282A7CD5FC0038ECCD /* HistoryTableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableModel.swift; sourceTree = "<group>"; };
 		C520662C2A7CE1CC0038ECCD /* SearchHistoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryManager.swift; sourceTree = "<group>"; };
 		C520662E2A7E485B0038ECCD /* MatchedPlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchedPlaceModel.swift; sourceTree = "<group>"; };
-		C52066302A7E4A580038ECCD /* PlaceModelBeforeMatchedAVIRO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModelBeforeMatchedAVIRO.swift; sourceTree = "<group>"; };
-		C52066322A7E80350038ECCD /* MatchedPlaceListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchedPlaceListCell.swift; sourceTree = "<group>"; };
+		C52066302A7E4A580038ECCD /* AVIROMainSearchCompare+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROMainSearchCompare+DTO.swift"; sourceTree = "<group>"; };
+		C52066322A7E80350038ECCD /* MatchedPlaceCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchedPlaceCellModel.swift; sourceTree = "<group>"; };
 		C52066342A7F3FAE0038ECCD /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
 		C52066372A808DAD0038ECCD /* HistoryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryHeaderView.swift; sourceTree = "<group>"; };
 		C52066392A808DC40038ECCD /* PlaceListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListHeaderView.swift; sourceTree = "<group>"; };
@@ -282,20 +286,21 @@
 		C52FA34E2A175B20005E70DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C52FA3502A175B20005E70DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5351B4A2A1919F700116D50 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		C5351B4C2A19223300116D50 /* KakaoMapRequestAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapRequestAPI.swift; sourceTree = "<group>"; };
-		C5351B4F2A19225A00116D50 /* KakaoMapResponseKeywordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapResponseKeywordModel.swift; sourceTree = "<group>"; };
+		C5351B4C2A19223300116D50 /* KakaoMapAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapAPI.swift; sourceTree = "<group>"; };
+		C5351B4F2A19225A00116D50 /* KakaoKeywordPlace+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KakaoKeywordPlace+DTO.swift"; sourceTree = "<group>"; };
 		C5351B532A19A7B100116D50 /* MyCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCoordinate.swift; sourceTree = "<group>"; };
 		C5351B552A19B67900116D50 /* CustomAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertController.swift; sourceTree = "<group>"; };
 		C5351B5B2A19F60200116D50 /* PlaceListSearchViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListSearchViewPresenter.swift; sourceTree = "<group>"; };
 		C5351B5F2A19F9A700116D50 /* PlaceListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListModel.swift; sourceTree = "<group>"; };
 		C5351B612A1A083400116D50 /* PlaceListCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListCellModel.swift; sourceTree = "<group>"; };
 		C5351B662A1A154C00116D50 /* PageEndingCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageEndingCheck.swift; sourceTree = "<group>"; };
-		C5351B792A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapResponseCoordinateModel.swift; sourceTree = "<group>"; };
+		C5351B792A1B439000116D50 /* KakaoCoordinatePlace+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KakaoCoordinatePlace+DTO.swift"; sourceTree = "<group>"; };
+		C53856B02ABC13ED00D52DEC /* AVIROMyContributionCount+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROMyContributionCount+DTO.swift"; sourceTree = "<group>"; };
 		C53893152A5EC0C500CB9A54 /* GenderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderButton.swift; sourceTree = "<group>"; };
-		C547A8B92A17D8D4004D1339 /* KakaoMapRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapRequestManager.swift; sourceTree = "<group>"; };
+		C547A8B92A17D8D4004D1339 /* KakaoMapAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapAPIManager.swift; sourceTree = "<group>"; };
 		C54BC0DA2A2C2D0D00B65439 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
-		C54BC0DC2A2C762C00B65439 /* CommentsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsLabel.swift; sourceTree = "<group>"; };
-		C5538AAE2A1BB81200661DE2 /* AVIROEnrollPlaceDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROEnrollPlaceDTO.swift; sourceTree = "<group>"; };
+		C54BC0DC2A2C762C00B65439 /* CommentsLabel+Deprecated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsLabel+Deprecated.swift"; sourceTree = "<group>"; };
+		C5538AAE2A1BB81200661DE2 /* AVIROEnrollPlace+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROEnrollPlace+DTO.swift"; sourceTree = "<group>"; };
 		C567C14F2A56611500D4B426 /* TopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCell.swift; sourceTree = "<group>"; };
 		C568577C2A70E1F600F52715 /* MenuPlusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuPlusButton.swift; sourceTree = "<group>"; };
 		C568577F2A7113C600F52715 /* NormalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalTableViewCell.swift; sourceTree = "<group>"; };
@@ -304,7 +309,7 @@
 		C5732C702A41739000CDC499 /* AVIROAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROAPIManager.swift; sourceTree = "<group>"; };
 		C5732C722A41778A00CDC499 /* AVIROPostAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROPostAPI.swift; sourceTree = "<group>"; };
 		C5732C742A41962D00CDC499 /* AVIRORequestAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIRORequestAPI.swift; sourceTree = "<group>"; };
-		C5732C762A41A0A500CDC499 /* AVIROMapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROMapModel.swift; sourceTree = "<group>"; };
+		C5732C762A41A0A500CDC499 /* AVIROMapMarker+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROMapMarker+DTO.swift"; sourceTree = "<group>"; };
 		C5732C7B2A41D41B00CDC499 /* VeganTableFieldModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganTableFieldModel.swift; sourceTree = "<group>"; };
 		C5732C7D2A41D42700CDC499 /* RequestTableFieldModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTableFieldModel.swift; sourceTree = "<group>"; };
 		C5803F572A88C1990064A853 /* PlaceTopModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTopModel.swift; sourceTree = "<group>"; };
@@ -317,7 +322,7 @@
 		C58EC7D32AB1B5C400401FF7 /* AVIROEditURL+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROEditURL+DTO.swift"; sourceTree = "<group>"; };
 		C58EC7D52AB1B61500401FF7 /* AVIROEditCommonBeforeAfterDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROEditCommonBeforeAfterDTO.swift; sourceTree = "<group>"; };
 		C593B6462A4AB3A700D224CE /* PushCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushCommentView.swift; sourceTree = "<group>"; };
-		C593B64A2A4AEA9800D224CE /* AVIROCommentDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROCommentDTO.swift; sourceTree = "<group>"; };
+		C593B64A2A4AEA9800D224CE /* AVIROReview+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROReview+DTO.swift"; sourceTree = "<group>"; };
 		C593B64C2A4BFD9A00D224CE /* AVIRO.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AVIRO.entitlements; sourceTree = "<group>"; };
 		C593B64E2A4C490600D224CE /* MyPageViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewPresenter.swift; sourceTree = "<group>"; };
 		C59491D22AB0336100880B4B /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
@@ -335,9 +340,9 @@
 		C5A201C82A98A70800A54381 /* EditHomePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditHomePageView.swift; sourceTree = "<group>"; };
 		C5A3C3C32A39658A0050AB3D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C5A3C3C52A39659B0050AB3D /* LoginViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewPresenter.swift; sourceTree = "<group>"; };
-		C5A989962A959D920021B7C3 /* BookmarkPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkPostModel.swift; sourceTree = "<group>"; };
-		C5A989982A959E040021B7C3 /* AVIROBookmarkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROBookmarkModel.swift; sourceTree = "<group>"; };
-		C5A9899A2A95A6B50021B7C3 /* BookmarkArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkArray.swift; sourceTree = "<group>"; };
+		C5A989962A959D920021B7C3 /* AVIROUpdateBookmark+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROUpdateBookmark+DTO.swift"; sourceTree = "<group>"; };
+		C5A989982A959E040021B7C3 /* AVIROBookmark+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROBookmark+DTO.swift"; sourceTree = "<group>"; };
+		C5A9899A2A95A6B50021B7C3 /* LocalBookmarkData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalBookmarkData.swift; sourceTree = "<group>"; };
 		C5A9899D2A95A7940021B7C3 /* BookmarkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkManager.swift; sourceTree = "<group>"; };
 		C5B071E02A59454300AE709A /* BottomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomCell.swift; sourceTree = "<group>"; };
 		C5B071E42A59B4AC00AE709A /* RegistrationField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationField.swift; sourceTree = "<group>"; };
@@ -354,7 +359,7 @@
 		C5C90EB62AA7078300AB3668 /* EditOperationHoursModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditOperationHoursModel.swift; sourceTree = "<group>"; };
 		C5C90EB82AA78D0200AB3668 /* EditOperationHourChangebleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditOperationHourChangebleView.swift; sourceTree = "<group>"; };
 		C5C90EBA2AA7F79600AB3668 /* EditTimeChangebleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTimeChangebleView.swift; sourceTree = "<group>"; };
-		C5C90EBC2AA85E7000AB3668 /* AVIROOperationHourModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROOperationHourModel.swift; sourceTree = "<group>"; };
+		C5C90EBC2AA85E7000AB3668 /* AVIROOperationHours+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROOperationHours+DTO.swift"; sourceTree = "<group>"; };
 		C5C915482A777F8500C7CB93 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		C5C961922A8D9EE20016E2F8 /* PlaceMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceMenuTableViewCell.swift; sourceTree = "<group>"; };
 		C5C961942A8D9EED0016E2F8 /* PlaceReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceReviewTableViewCell.swift; sourceTree = "<group>"; };
@@ -370,14 +375,13 @@
 		C5D93D9E2A581EC800629C39 /* FirstRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstRegistrationViewController.swift; sourceTree = "<group>"; };
 		C5D93DA02A581F5A00629C39 /* FirstRegistrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstRegistrationPresenter.swift; sourceTree = "<group>"; };
 		C5D93DA22A58718300629C39 /* NextPageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextPageButton.swift; sourceTree = "<group>"; };
-		C5E143A62AB43B8F007AC8C9 /* AVIROPostResultDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROPostResultDTO.swift; sourceTree = "<group>"; };
+		C5E143A62AB43B8F007AC8C9 /* AVIROResult+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROResult+DTO.swift"; sourceTree = "<group>"; };
 		C5E306E62A6FB4ED00C11CF7 /* MenuField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuField.swift; sourceTree = "<group>"; };
 		C5E430AB2A5D142C00CB67EC /* LoginJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = LoginJson.json; path = ../../../../../Downloads/LoginJson.json; sourceTree = "<group>"; };
 		C5E430AC2A5D142C00CB67EC /* RegistrationCompleted.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = RegistrationCompleted.json; path = ../../../../../Downloads/RegistrationCompleted.json; sourceTree = "<group>"; };
 		C5E430B22A5DADBE00CB67EC /* SecondRegistrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondRegistrationPresenter.swift; sourceTree = "<group>"; };
 		C5E430B42A5DAE9800CB67EC /* SecondRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondRegistrationViewController.swift; sourceTree = "<group>"; };
-		C5E7B7A82A4D3CDF00CA2090 /* AVIROUserDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROUserDTO.swift; sourceTree = "<group>"; };
-		C5EB50E32A1C685100B29CC1 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
+		C5E7B7A82A4D3CDF00CA2090 /* AVIROUser+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROUser+DTO.swift"; sourceTree = "<group>"; };
 		C5EB50E92A1C705900B29CC1 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		C5EB50EB2A1C72C600B29CC1 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		C5EB51072A209F6900B29CC1 /* HomeSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchViewController.swift; sourceTree = "<group>"; };
@@ -392,14 +396,14 @@
 		C5FD92E22A9C6C1E00CF4673 /* EditLocationAddressTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocationAddressTextTableViewCell.swift; sourceTree = "<group>"; };
 		C5FD92EA2A9C786600CF4673 /* PublicAPIRequestComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicAPIRequestComponents.swift; sourceTree = "<group>"; };
 		C5FD92EC2A9C7AE800CF4673 /* PublicAPIRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicAPIRequestManager.swift; sourceTree = "<group>"; };
-		C5FD92EF2A9C803600CF4673 /* EditAddressTableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAddressTableModel.swift; sourceTree = "<group>"; };
+		C5FD92EF2A9C803600CF4673 /* PublicAddress+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PublicAddress+DTO.swift"; sourceTree = "<group>"; };
 		C5FD92F12A9C805700CF4673 /* PublicXMLParserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicXMLParserDelegate.swift; sourceTree = "<group>"; };
-		C5FD92F32A9CD2FC00CF4673 /* KakaoMapResponseAddressModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapResponseAddressModel.swift; sourceTree = "<group>"; };
+		C5FD92F32A9CD2FC00CF4673 /* KakaoAddressPlace+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KakaoAddressPlace+DTO.swift"; sourceTree = "<group>"; };
 		C5FD92F62A9CDB9300CF4673 /* EditMenuTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuTopView.swift; sourceTree = "<group>"; };
 		C5FD92F82A9CDB9E00CF4673 /* EditMenuBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuBottomView.swift; sourceTree = "<group>"; };
-		C5FF13522A42C8810026981D /* AVIROPlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROPlaceModel.swift; sourceTree = "<group>"; };
-		C5FF13542A42C88D0026981D /* AVIROMenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROMenuModel.swift; sourceTree = "<group>"; };
-		C5FF13562A42C8970026981D /* AVIROReviewsModelDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIROReviewsModelDTO.swift; sourceTree = "<group>"; };
+		C5FF13522A42C8810026981D /* AVIROPlaceInfo+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROPlaceInfo+DTO.swift"; sourceTree = "<group>"; };
+		C5FF13542A42C88D0026981D /* AVIROPlaceMenus+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROPlaceMenus+DTO.swift"; sourceTree = "<group>"; };
+		C5FF13562A42C8970026981D /* AVIROPlaceReviews+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROPlaceReviews+DTO.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -492,12 +496,12 @@
 			isa = PBXGroup;
 			children = (
 				C51000292AB5B90200F65C1F /* UserModel */,
-				C5EB51012A20926800B29CC1 /* TapBarModel */,
 				C5EB51022A20927400B29CC1 /* HomeViewModel */,
 				C5732C7A2A41D3F800CDC499 /* EnrollViewModel */,
 				C51385432AAAE47C001AB827 /* MyPageModel */,
 				C5351B7B2A1B52A000116D50 /* PlaceListModel */,
 				C5351B782A1B437600116D50 /* APIResonseModel */,
+				C51B09B62A82046000916BBD /* LocalDataModel */,
 				C5351B652A1A128D00116D50 /* SingletonModel */,
 			);
 			path = Model;
@@ -590,8 +594,16 @@
 		C51000562AB8124200F65C1F /* ReportModel */ = {
 			isa = PBXGroup;
 			children = (
-				C513854D2AAD8E9F001AB827 /* AVIROReportPlaceDTO.swift */,
-				C51000542AB8123600F65C1F /* AVIROReportCommentDTO.swift */,
+				C513854D2AAD8E9F001AB827 /* AVIROReportPlace+DTO.swift */,
+				C51000542AB8123600F65C1F /* AVIROReportReview+DTO.swift */,
+			);
+			path = ReportModel;
+			sourceTree = "<group>";
+		};
+		C510005F2ABAE60C00F65C1F /* ReportModel */ = {
+			isa = PBXGroup;
+			children = (
+				C51000602ABAE61F00F65C1F /* ReportReviewModel.swift */,
 			);
 			path = ReportModel;
 			sourceTree = "<group>";
@@ -601,11 +613,11 @@
 			children = (
 				C5D8E8622A3DEC3900D88A43 /* String+Extension.swift */,
 				C5D36D2D2A76031E003328E8 /* Double+Extension.swift */,
-				C51B09BB2A82397800916BBD /* Marker+Extension.swift */,
 				C58EC7CB2AB171C000401FF7 /* UIButton+Extension.swift */,
 				C50E6F6E2A8F10B500703B9E /* UILabel+Extension.swift */,
 				C59491D22AB0336100880B4B /* UIView+Extension.swift */,
 				C51AED222A8B7B000015FBC2 /* UIViewController+Extension.swift */,
+				C51B09BB2A82397800916BBD /* Marker+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -613,7 +625,7 @@
 		C51385402AAADAF8001AB827 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
-				C51385412AAADB0E001AB827 /* EditNicNameButton.swift */,
+				C51385412AAADB0E001AB827 /* EditNickNameButton.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -637,11 +649,11 @@
 		C5166E472A930583003495AA /* AVIRODetailPlace */ = {
 			isa = PBXGroup;
 			children = (
-				C5166E482A9305A9003495AA /* AVIROSummaryModel.swift */,
-				C5FF13522A42C8810026981D /* AVIROPlaceModel.swift */,
-				C5FF13542A42C88D0026981D /* AVIROMenuModel.swift */,
-				C5FF13562A42C8970026981D /* AVIROReviewsModelDTO.swift */,
-				C5C90EBC2AA85E7000AB3668 /* AVIROOperationHourModel.swift */,
+				C5166E482A9305A9003495AA /* AVIROPlaceSummary+DTO.swift */,
+				C5FF13522A42C8810026981D /* AVIROPlaceInfo+DTO.swift */,
+				C5FF13542A42C88D0026981D /* AVIROPlaceMenus+DTO.swift */,
+				C5FF13562A42C8970026981D /* AVIROPlaceReviews+DTO.swift */,
+				C5C90EBC2AA85E7000AB3668 /* AVIROOperationHours+DTO.swift */,
 			);
 			path = AVIRODetailPlace;
 			sourceTree = "<group>";
@@ -654,12 +666,12 @@
 			path = SubView;
 			sourceTree = "<group>";
 		};
-		C5166E4B2A945214003495AA /* UserSingleton */ = {
+		C5166E4B2A945214003495AA /* MyData */ = {
 			isa = PBXGroup;
 			children = (
-				C5166E4C2A945228003495AA /* UserSingleton.swift */,
+				C5166E4C2A945228003495AA /* MyData.swift */,
 			);
-			path = UserSingleton;
+			path = MyData;
 			sourceTree = "<group>";
 		};
 		C51AED1B2A8A19060015FBC2 /* ViewController */ = {
@@ -670,13 +682,13 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
-		C51B09B62A82046000916BBD /* MapDataSingleton */ = {
+		C51B09B62A82046000916BBD /* LocalDataModel */ = {
 			isa = PBXGroup;
 			children = (
-				C51B09B72A82155200916BBD /* MarkerModelLocalData.swift */,
-				C5A9899A2A95A6B50021B7C3 /* BookmarkArray.swift */,
+				C51B09B72A82155200916BBD /* LocalMarkerData.swift */,
+				C5A9899A2A95A6B50021B7C3 /* LocalBookmarkData.swift */,
 			);
-			path = MapDataSingleton;
+			path = LocalDataModel;
 			sourceTree = "<group>";
 		};
 		C52066242A7CACA80038ECCD /* SubView */ = {
@@ -696,7 +708,7 @@
 			children = (
 				C52066282A7CD5FC0038ECCD /* HistoryTableModel.swift */,
 				C520662E2A7E485B0038ECCD /* MatchedPlaceModel.swift */,
-				C52066322A7E80350038ECCD /* MatchedPlaceListCell.swift */,
+				C52066322A7E80350038ECCD /* MatchedPlaceCellModel.swift */,
 			);
 			path = HomeSearchViewModel;
 			sourceTree = "<group>";
@@ -710,12 +722,12 @@
 			path = HeaderView;
 			sourceTree = "<group>";
 		};
-		C520663D2A80C60D0038ECCD /* ViewSingleton */ = {
+		C520663D2A80C60D0038ECCD /* ViewLogic */ = {
 			isa = PBXGroup;
 			children = (
 				C51132C02A559BCA006E1EC3 /* AppController.swift */,
 			);
-			name = ViewSingleton;
+			name = ViewLogic;
 			path = "View Present 관련 Singleton";
 			sourceTree = "<group>";
 		};
@@ -772,8 +784,8 @@
 		C5351B4E2A19223600116D50 /* KakaoMap */ = {
 			isa = PBXGroup;
 			children = (
-				C547A8B92A17D8D4004D1339 /* KakaoMapRequestManager.swift */,
-				C5351B4C2A19223300116D50 /* KakaoMapRequestAPI.swift */,
+				C547A8B92A17D8D4004D1339 /* KakaoMapAPIManager.swift */,
+				C5351B4C2A19223300116D50 /* KakaoMapAPI.swift */,
 			);
 			path = KakaoMap;
 			sourceTree = "<group>";
@@ -781,9 +793,8 @@
 		C5351B652A1A128D00116D50 /* SingletonModel */ = {
 			isa = PBXGroup;
 			children = (
-				C5166E4B2A945214003495AA /* UserSingleton */,
-				C51B09B62A82046000916BBD /* MapDataSingleton */,
-				C520663D2A80C60D0038ECCD /* ViewSingleton */,
+				C520663D2A80C60D0038ECCD /* ViewLogic */,
+				C5166E4B2A945214003495AA /* MyData */,
 				C520663E2A80C6220038ECCD /* CoordinateSingleton */,
 				C520663F2A80C6450038ECCD /* APISingleton */,
 			);
@@ -824,7 +835,6 @@
 			children = (
 				C5351B5F2A19F9A700116D50 /* PlaceListModel.swift */,
 				C5351B612A1A083400116D50 /* PlaceListCellModel.swift */,
-				C51BBAD62A78D5AB00BF5B7C /* PlaceCheckModel.swift */,
 			);
 			path = PlaceListModel;
 			sourceTree = "<group>";
@@ -857,7 +867,7 @@
 			isa = PBXGroup;
 			children = (
 				C5C9619D2A8DEAED0016E2F8 /* PlaceView */,
-				C54BC0DC2A2C762C00B65439 /* CommentsLabel.swift */,
+				C54BC0DC2A2C762C00B65439 /* CommentsLabel+Deprecated.swift */,
 				C51000572AB939A200F65C1F /* NoResultLabel.swift */,
 			);
 			path = UITextLabel;
@@ -906,6 +916,7 @@
 			children = (
 				C5732C7B2A41D41B00CDC499 /* VeganTableFieldModel.swift */,
 				C5732C7D2A41D42700CDC499 /* RequestTableFieldModel.swift */,
+				C51000622ABAE6A200F65C1F /* MenuModel.swift */,
 			);
 			path = EnrollViewModel;
 			sourceTree = "<group>";
@@ -932,12 +943,12 @@
 			children = (
 				C51000562AB8124200F65C1F /* ReportModel */,
 				C5C90EAD2AA5B71800AB3668 /* EditPostModel */,
-				C5538AAE2A1BB81200661DE2 /* AVIROEnrollPlaceDTO.swift */,
-				C593B64A2A4AEA9800D224CE /* AVIROCommentDTO.swift */,
-				C5E7B7A82A4D3CDF00CA2090 /* AVIROUserDTO.swift */,
-				C52066302A7E4A580038ECCD /* PlaceModelBeforeMatchedAVIRO.swift */,
-				C5A989962A959D920021B7C3 /* BookmarkPostModel.swift */,
-				C5E143A62AB43B8F007AC8C9 /* AVIROPostResultDTO.swift */,
+				C5538AAE2A1BB81200661DE2 /* AVIROEnrollPlace+DTO.swift */,
+				C593B64A2A4AEA9800D224CE /* AVIROReview+DTO.swift */,
+				C5E7B7A82A4D3CDF00CA2090 /* AVIROUser+DTO.swift */,
+				C52066302A7E4A580038ECCD /* AVIROMainSearchCompare+DTO.swift */,
+				C5A989962A959D920021B7C3 /* AVIROUpdateBookmark+DTO.swift */,
+				C5E143A62AB43B8F007AC8C9 /* AVIROResult+DTO.swift */,
 			);
 			path = AVIROPost;
 			sourceTree = "<group>";
@@ -945,11 +956,12 @@
 		C593B6492A4AEA7400D224CE /* AVIROGet */ = {
 			isa = PBXGroup;
 			children = (
-				C51BBAD42A78D53D00BF5B7C /* AVIROCheckPlaceModel.swift */,
-				C5732C762A41A0A500CDC499 /* AVIROMapModel.swift */,
-				C5A989982A959E040021B7C3 /* AVIROBookmarkModel.swift */,
+				C5732C762A41A0A500CDC499 /* AVIROMapMarker+DTO.swift */,
+				C5A989982A959E040021B7C3 /* AVIROBookmark+DTO.swift */,
+				C51BBAD42A78D53D00BF5B7C /* AVIROCheckPlace+DTO.swift */,
+				C513854F2AAD921F001AB827 /* AVIROPlaceReportCheck+DTO.swift */,
+				C53856B02ABC13ED00D52DEC /* AVIROMyContributionCount+DTO.swift */,
 				C5166E472A930583003495AA /* AVIRODetailPlace */,
-				C513854F2AAD921F001AB827 /* AVIROPlaceReportCheckDTO.swift */,
 			);
 			path = AVIROGet;
 			sourceTree = "<group>";
@@ -1155,6 +1167,7 @@
 				C51000372AB5F3BD00F65C1F /* UIFont+Extension.swift */,
 				C54BC0DA2A2C2D0D00B65439 /* UIColor+Extension.swift */,
 				C51000592AB998F600F65C1F /* UIImage+Extension.swift */,
+				C510005D2ABAA3C700F65C1F /* Enum+.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -1252,20 +1265,13 @@
 			path = MyPage;
 			sourceTree = "<group>";
 		};
-		C5EB51012A20926800B29CC1 /* TapBarModel */ = {
-			isa = PBXGroup;
-			children = (
-				C5EB50E32A1C685100B29CC1 /* TabBarItem.swift */,
-			);
-			path = TapBarModel;
-			sourceTree = "<group>";
-		};
 		C5EB51022A20927400B29CC1 /* HomeViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				C51B09B92A8215D800916BBD /* MarkerModel.swift */,
 				C5803F562A88C1810064A853 /* PlaceViewModel */,
 				C5C90EB02AA5EC8900AB3668 /* EditModel */,
+				C510005F2ABAE60C00F65C1F /* ReportModel */,
 				C52066272A7CD5E60038ECCD /* HomeSearchViewModel */,
 			);
 			path = HomeViewModel;
@@ -1355,7 +1361,7 @@
 		C5FD92EE2A9C800A00CF4673 /* Public */ = {
 			isa = PBXGroup;
 			children = (
-				C5FD92EF2A9C803600CF4673 /* EditAddressTableModel.swift */,
+				C5FD92EF2A9C803600CF4673 /* PublicAddress+DTO.swift */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -1372,9 +1378,9 @@
 		C5FF13502A42C8630026981D /* KakaoMap */ = {
 			isa = PBXGroup;
 			children = (
-				C5351B4F2A19225A00116D50 /* KakaoMapResponseKeywordModel.swift */,
-				C5351B792A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift */,
-				C5FD92F32A9CD2FC00CF4673 /* KakaoMapResponseAddressModel.swift */,
+				C5351B4F2A19225A00116D50 /* KakaoKeywordPlace+DTO.swift */,
+				C5351B792A1B439000116D50 /* KakaoCoordinatePlace+DTO.swift */,
+				C5FD92F32A9CD2FC00CF4673 /* KakaoAddressPlace+DTO.swift */,
 			);
 			path = KakaoMap;
 			sourceTree = "<group>";
@@ -1564,26 +1570,25 @@
 				C5C290742A85E4EC00ED5DCE /* PlaceSegmentedControlView.swift in Sources */,
 				C52FA3472A175B20005E70DC /* HomeViewController.swift in Sources */,
 				C5FD92E32A9C6C1E00CF4673 /* EditLocationAddressTextTableViewCell.swift in Sources */,
-				C51BBAD72A78D5AB00BF5B7C /* PlaceCheckModel.swift in Sources */,
 				C54BC0DB2A2C2D0D00B65439 /* UIColor+Extension.swift in Sources */,
 				C52FA3432A175B20005E70DC /* AppDelegate.swift in Sources */,
 				C5C290812A8616E500ED5DCE /* PlaceInfoView.swift in Sources */,
 				C5B071E12A59454300AE709A /* BottomCell.swift in Sources */,
 				C51000382AB5F3BD00F65C1F /* UIFont+Extension.swift in Sources */,
 				C5FA0EAA2A94DB3E004AD8B4 /* ReportReviewViewController.swift in Sources */,
-				C5C90EBD2AA85E7000AB3668 /* AVIROOperationHourModel.swift in Sources */,
-				C513854E2AAD8E9F001AB827 /* AVIROReportPlaceDTO.swift in Sources */,
+				C5C90EBD2AA85E7000AB3668 /* AVIROOperationHours+DTO.swift in Sources */,
+				C513854E2AAD8E9F001AB827 /* AVIROReportPlace+DTO.swift in Sources */,
 				C520663C2A80C0450038ECCD /* CenterCoordinate.swift in Sources */,
 				C58EC7D22AB1B5AD00401FF7 /* AVIROEditPhone+DTO.swift in Sources */,
 				C5C961932A8D9EE20016E2F8 /* PlaceMenuTableViewCell.swift in Sources */,
-				C5351B502A19225A00116D50 /* KakaoMapResponseKeywordModel.swift in Sources */,
+				C5351B502A19225A00116D50 /* KakaoKeywordPlace+DTO.swift in Sources */,
 				C52066412A8129510038ECCD /* KakaoAPISortingQuery.swift in Sources */,
-				C5351B4D2A19223300116D50 /* KakaoMapRequestAPI.swift in Sources */,
+				C5351B4D2A19223300116D50 /* KakaoMapAPI.swift in Sources */,
 				C520662F2A7E485B0038ECCD /* MatchedPlaceModel.swift in Sources */,
 				C5A201B72A986EDF00A54381 /* EditMenuViewController.swift in Sources */,
 				C5D8EB262A9D790800EF629F /* MyInfoView.swift in Sources */,
 				C5A201C92A98A70800A54381 /* EditHomePageView.swift in Sources */,
-				C5166E492A9305A9003495AA /* AVIROSummaryModel.swift in Sources */,
+				C5166E492A9305A9003495AA /* AVIROPlaceSummary+DTO.swift in Sources */,
 				C5A9899E2A95A7940021B7C3 /* BookmarkManager.swift in Sources */,
 				C50F6AFB2A68FFC300E942F5 /* EnrollVeganDetailView.swift in Sources */,
 				C5C90EB92AA78D0200AB3668 /* EditOperationHourChangebleView.swift in Sources */,
@@ -1593,21 +1598,21 @@
 				C528E4C02A5FF1CB002BD72E /* FinalRegistrationViewController.swift in Sources */,
 				C5D93DA32A58718300629C39 /* NextPageButton.swift in Sources */,
 				C50DB7512A9B83550078B501 /* ChangeableAddressViewController.swift in Sources */,
-				C5A989992A959E040021B7C3 /* AVIROBookmarkModel.swift in Sources */,
+				C5A989992A959E040021B7C3 /* AVIROBookmark+DTO.swift in Sources */,
 				C51000582AB939A200F65C1F /* NoResultLabel.swift in Sources */,
 				C58EC7D02AB1B59100401FF7 /* AVIROEditLocation+DTO.swift in Sources */,
 				C5803F582A88C1990064A853 /* PlaceTopModel.swift in Sources */,
 				C5D36D2E2A76031E003328E8 /* Double+Extension.swift in Sources */,
-				C54BC0DD2A2C762C00B65439 /* CommentsLabel.swift in Sources */,
+				C54BC0DD2A2C762C00B65439 /* CommentsLabel+Deprecated.swift in Sources */,
 				C5EB51082A209F6900B29CC1 /* HomeSearchViewController.swift in Sources */,
 				C5351B562A19B67900116D50 /* CustomAlertController.swift in Sources */,
-				C5538AAF2A1BB81200661DE2 /* AVIROEnrollPlaceDTO.swift in Sources */,
-				C51000552AB8123600F65C1F /* AVIROReportCommentDTO.swift in Sources */,
+				C5538AAF2A1BB81200661DE2 /* AVIROEnrollPlace+DTO.swift in Sources */,
+				C51000552AB8123600F65C1F /* AVIROReportReview+DTO.swift in Sources */,
 				C50F6AF32A68FD0A00E942F5 /* EnrollPlaceViewController.swift in Sources */,
 				C5732C7E2A41D42700CDC499 /* RequestTableFieldModel.swift in Sources */,
 				C5C961982A8DA5880016E2F8 /* EditInfoButton.swift in Sources */,
-				C5A989972A959D920021B7C3 /* BookmarkPostModel.swift in Sources */,
-				C5E7B7A92A4D3CDF00CA2090 /* AVIROUserDTO.swift in Sources */,
+				C5A989972A959D920021B7C3 /* AVIROUpdateBookmark+DTO.swift in Sources */,
+				C5E7B7A92A4D3CDF00CA2090 /* AVIROUser+DTO.swift in Sources */,
 				C5A201C32A98A61F00A54381 /* EditLocationBottomView.swift in Sources */,
 				C52066232A7CAC910038ECCD /* NoHistoryView.swift in Sources */,
 				C5E306E72A6FB4ED00C11CF7 /* MenuField.swift in Sources */,
@@ -1618,7 +1623,7 @@
 				C510005C2AB9C39500F65C1F /* MarkerModelManager.swift in Sources */,
 				C5FD92ED2A9C7AE800CF4673 /* PublicAPIRequestManager.swift in Sources */,
 				C50367F52A1795D10020C6BB /* HomeViewPresenter.swift in Sources */,
-				C5FD92F42A9CD2FC00CF4673 /* KakaoMapResponseAddressModel.swift in Sources */,
+				C5FD92F42A9CD2FC00CF4673 /* KakaoAddressPlace+DTO.swift in Sources */,
 				C5ED46952AAEB3F300F2DA04 /* OperationHourView.swift in Sources */,
 				C5C9619A2A8DA5950016E2F8 /* ShowMoreButton.swift in Sources */,
 				C5351B622A1A083400116D50 /* PlaceListCellModel.swift in Sources */,
@@ -1634,10 +1639,12 @@
 				C50DB7542A9B838F0078B501 /* ChangeableAddressPresenter.swift in Sources */,
 				C58EC7D42AB1B5C400401FF7 /* AVIROEditURL+DTO.swift in Sources */,
 				C50F6B022A6BC8E400E942F5 /* EnrollField.swift in Sources */,
-				C51B09B82A82155200916BBD /* MarkerModelLocalData.swift in Sources */,
-				C5A9899B2A95A6B50021B7C3 /* BookmarkArray.swift in Sources */,
+				C510005E2ABAA3C700F65C1F /* Enum+.swift in Sources */,
+				C51B09B82A82155200916BBD /* LocalMarkerData.swift in Sources */,
+				C5A9899B2A95A6B50021B7C3 /* LocalBookmarkData.swift in Sources */,
 				C520662D2A7CE1CC0038ECCD /* SearchHistoryManager.swift in Sources */,
 				C51AED232A8B7B000015FBC2 /* UIViewController+Extension.swift in Sources */,
+				C51000632ABAE6A200F65C1F /* MenuModel.swift in Sources */,
 				C5D8EB282A9D797000EF629F /* OtherActionsView.swift in Sources */,
 				C5C961952A8D9EED0016E2F8 /* PlaceReviewTableViewCell.swift in Sources */,
 				C5A3C3C62A39659B0050AB3D /* LoginViewPresenter.swift in Sources */,
@@ -1645,17 +1652,17 @@
 				C50DB7422A99DCDA0078B501 /* PlaceListCell.swift in Sources */,
 				C50DB7432A99DCDA0078B501 /* PlaceListSearchViewController.swift in Sources */,
 				C5FD92F22A9C805700CF4673 /* PublicXMLParserDelegate.swift in Sources */,
-				C5166E4D2A945228003495AA /* UserSingleton.swift in Sources */,
+				C5166E4D2A945228003495AA /* MyData.swift in Sources */,
 				C58B9AAE2A5675B9008AEAC3 /* TutorialViewController.swift in Sources */,
-				C5FF13552A42C88D0026981D /* AVIROMenuModel.swift in Sources */,
+				C5FF13552A42C88D0026981D /* AVIROPlaceMenus+DTO.swift in Sources */,
 				C56E7A112A971504009CCAF2 /* ReportCellView.swift in Sources */,
-				C52066332A7E80350038ECCD /* MatchedPlaceListCell.swift in Sources */,
+				C52066332A7E80350038ECCD /* MatchedPlaceCellModel.swift in Sources */,
 				C595ACCD2A84A1A200D35123 /* PlaceView.swift in Sources */,
-				C51385422AAADB0E001AB827 /* EditNicNameButton.swift in Sources */,
-				C547A8BA2A17D8D4004D1339 /* KakaoMapRequestManager.swift in Sources */,
+				C51385422AAADB0E001AB827 /* EditNickNameButton.swift in Sources */,
+				C547A8BA2A17D8D4004D1339 /* KakaoMapAPIManager.swift in Sources */,
 				C5351B672A1A154C00116D50 /* PageEndingCheck.swift in Sources */,
-				C5732C772A41A0A500CDC499 /* AVIROMapModel.swift in Sources */,
-				C5FF13532A42C8810026981D /* AVIROPlaceModel.swift in Sources */,
+				C5732C772A41A0A500CDC499 /* AVIROMapMarker+DTO.swift in Sources */,
+				C5FF13532A42C8810026981D /* AVIROPlaceInfo+DTO.swift in Sources */,
 				C5351B5C2A19F60200116D50 /* PlaceListSearchViewPresenter.swift in Sources */,
 				C513854A2AAB3B13001AB827 /* NickNameChangebleViewController.swift in Sources */,
 				C50E6F6F2A8F10B500703B9E /* UILabel+Extension.swift in Sources */,
@@ -1663,30 +1670,31 @@
 				C5C90EB72AA7078300AB3668 /* EditOperationHoursModel.swift in Sources */,
 				C528E4BA2A5F9A3E002BD72E /* ThridRegistrationViewController.swift in Sources */,
 				C528E4BC2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift in Sources */,
+				C51000612ABAE61F00F65C1F /* ReportReviewModel.swift in Sources */,
 				C5C290792A85E51000ED5DCE /* PlaceMenuView.swift in Sources */,
 				C5A201B42A986EC300A54381 /* EditPlaceInfoViewController.swift in Sources */,
 				C51AED1D2A8A192D0015FBC2 /* ChangedViewAction.swift in Sources */,
 				C51B09BC2A82397800916BBD /* Marker+Extension.swift in Sources */,
 				C528E4BE2A5FB816002BD72E /* TermsTableCell.swift in Sources */,
-				C5EB50E42A1C685100B29CC1 /* TabBarItem.swift in Sources */,
+				C53856B12ABC13ED00D52DEC /* AVIROMyContributionCount+DTO.swift in Sources */,
 				C5A201BB2A986F9B00A54381 /* EditMenuPresenter.swift in Sources */,
 				C5C90EBB2AA7F79600AB3668 /* EditTimeChangebleView.swift in Sources */,
 				C5C9619C2A8DB1D80016E2F8 /* MenuTypeLabel.swift in Sources */,
-				C5351B7A2A1B439000116D50 /* KakaoMapResponseCoordinateModel.swift in Sources */,
+				C5351B7A2A1B439000116D50 /* KakaoCoordinatePlace+DTO.swift in Sources */,
 				C50E6F6D2A8E5AAC00703B9E /* ReviewLabel.swift in Sources */,
 				C5C290852A86173F00ED5DCE /* PlaceReviewWriteView.swift in Sources */,
-				C51BBAD52A78D53D00BF5B7C /* AVIROCheckPlaceModel.swift in Sources */,
+				C51BBAD52A78D53D00BF5B7C /* AVIROCheckPlace+DTO.swift in Sources */,
 				C56857802A7113C600F52715 /* NormalTableViewCell.swift in Sources */,
-				C52066312A7E4A580038ECCD /* PlaceModelBeforeMatchedAVIRO.swift in Sources */,
+				C52066312A7E4A580038ECCD /* AVIROMainSearchCompare+DTO.swift in Sources */,
 				C5C9619F2A8DEB230016E2F8 /* ReviewWriteButton.swift in Sources */,
-				C5E143A72AB43B8F007AC8C9 /* AVIROPostResultDTO.swift in Sources */,
+				C5E143A72AB43B8F007AC8C9 /* AVIROResult+DTO.swift in Sources */,
 				C5E430B52A5DAE9800CB67EC /* SecondRegistrationViewController.swift in Sources */,
-				C593B64B2A4AEA9800D224CE /* AVIROCommentDTO.swift in Sources */,
+				C593B64B2A4AEA9800D224CE /* AVIROReview+DTO.swift in Sources */,
 				C5C90EB52AA6D80300AB3668 /* EditOperatingHourView.swift in Sources */,
 				C5C90EAF2AA5B7F300AB3668 /* AVIROEditMenuModel+DTO.swift in Sources */,
 				C5A201C12A98A5DD00A54381 /* EditLocationTopView.swift in Sources */,
 				C593B64F2A4C490600D224CE /* MyPageViewPresenter.swift in Sources */,
-				C5FF13572A42C8970026981D /* AVIROReviewsModelDTO.swift in Sources */,
+				C5FF13572A42C8970026981D /* AVIROPlaceReviews+DTO.swift in Sources */,
 				C5B071E52A59B4AC00AE709A /* RegistrationField.swift in Sources */,
 				C53893162A5EC0C500CB9A54 /* GenderButton.swift in Sources */,
 				C50F6AFD2A68FFCB00E942F5 /* EnrollMenuTableView.swift in Sources */,
@@ -1700,12 +1708,12 @@
 				C5A201BD2A98708800A54381 /* EditPlaceInfoPresenter.swift in Sources */,
 				C5EB50EC2A1C72C600B29CC1 /* TabBarViewController.swift in Sources */,
 				C59491D32AB0336100880B4B /* UIView+Extension.swift in Sources */,
-				C51385502AAD921F001AB827 /* AVIROPlaceReportCheckDTO.swift in Sources */,
+				C51385502AAD921F001AB827 /* AVIROPlaceReportCheck+DTO.swift in Sources */,
 				C51385472AAAF3BB001AB827 /* SettingCell.swift in Sources */,
 				C568577D2A70E1F600F52715 /* MenuPlusButton.swift in Sources */,
 				C51132C12A559BCA006E1EC3 /* AppController.swift in Sources */,
 				C5FD92F92A9CDB9E00CF4673 /* EditMenuBottomView.swift in Sources */,
-				C5FD92F02A9C803600CF4673 /* EditAddressTableModel.swift in Sources */,
+				C5FD92F02A9C803600CF4673 /* PublicAddress+DTO.swift in Sources */,
 				C593B6472A4AB3A700D224CE /* PushCommentView.swift in Sources */,
 				C51AED1F2A8B2BC80015FBC2 /* HomeTopButton.swift in Sources */,
 				C5FA0EAC2A94DF39004AD8B4 /* ReportReviewPresenter.swift in Sources */,

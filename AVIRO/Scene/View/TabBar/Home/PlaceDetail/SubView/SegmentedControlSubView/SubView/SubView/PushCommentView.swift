@@ -17,7 +17,7 @@ final class PushCommentView: UIView {
         textView.textContainerInset = UIEdgeInsets(top: 8, left: 10, bottom: 8, right: 10)
         
         textView.layer.cornerRadius = 5
-        textView.layer.borderColor = UIColor.gray4?.cgColor
+        textView.layer.borderColor = UIColor.gray4.cgColor
         textView.layer.borderWidth = 0.5
         
         textView.isEditable = true

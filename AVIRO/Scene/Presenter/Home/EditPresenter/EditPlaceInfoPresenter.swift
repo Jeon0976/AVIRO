@@ -47,8 +47,8 @@ final class EditPlaceInfoPresenter {
     private var selectedIndex: Int!
     private var placeId: String?
     private var placeMarkerModel: MarkerModel?
-    private var placeSummary: PlaceSummaryData?
-    private var placeInfo: PlaceInfoData?
+    private var placeSummary: AVIROPlaceSummary?
+    private var placeInfo: AVIROPlaceInfo?
     private var placeOperationModels: [EditOperationHoursModel]?
     
     private var newMarker = NMFMarker()
@@ -64,7 +64,7 @@ final class EditPlaceInfoPresenter {
         }
     }
     
-    var afterChangedCategory = Category.restaurant {
+    var afterChangedCategory = PlaceCategory.restaurant {
         didSet {
             checkIsChangedCategory()
         }
@@ -142,8 +142,8 @@ final class EditPlaceInfoPresenter {
     init(viewController: EditPlaceInfoProtocol,
          placeMarkerModel: MarkerModel? = nil,
          placeId: String? = nil,
-         placeSummary: PlaceSummaryData? = nil,
-         placeInfo: PlaceInfoData? = nil,
+         placeSummary: AVIROPlaceSummary? = nil,
+         placeInfo: AVIROPlaceInfo? = nil,
          selectedIndex: Int = 0
     ) {
         self.viewController = viewController
@@ -311,7 +311,7 @@ final class EditPlaceInfoPresenter {
     }
 
     private func changedMarkerLocation() {
-        KakaoMapRequestManager().kakaoMapAddressSearch(
+        KakaoMapAPIManager().kakaoMapAddressSearch(
             address: afterChangedAddress
         ) { [weak self] addressModel in
             guard let documents = addressModel.documents, documents.count > 0 else { return }
@@ -475,8 +475,8 @@ extension EditPlaceInfoPresenter {
               let placeTitle = placeSummary?.title
         else { return }
         
-        let userId = UserId.shared.userId
-        let nickName = UserId.shared.userNickname
+        let userId = MyData.my.id
+        let nickName = MyData.my.nickname
         
         let dispatchGroup = DispatchGroup()
         

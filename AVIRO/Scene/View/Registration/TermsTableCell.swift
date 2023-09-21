@@ -7,31 +7,48 @@
 
 import UIKit
 
+private enum Layout: CGFloat {
+    case cellToCell = 8
+    case imageToText = 10
+}
+
 final class TermsTableCell: UITableViewCell {
-    static let identifier = "TermsTableCell"
-    
-    private lazy var check: UIButton = {
+    private lazy var checkButton: UIButton = {
         let button = UIButton()
         
-        button.addTarget(self, action: #selector(tappedCheck), for: .touchUpInside)
-        button.setImage(UIImage(systemName: "checkmark"), for: .normal)
+        button.setImage(
+            UIImage.approveCondition.withRenderingMode(.alwaysTemplate),
+            for: .normal
+        )
         button.tintColor = .gray4
-        
+        button.addTarget(
+            self,
+            action: #selector(tappedCheck),
+            for: .touchUpInside
+        )
+
         return button
     }()
     
     private lazy var termsLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .pretendard(size: 14, weight: .medium)
+        label.font = CFont.font.medium14
+        label.textColor = .gray0
         
         return label
     }()
     
     var checkButtonTapped: (() -> Void) = { }
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(
+        style: UITableViewCell.CellStyle,
+        reuseIdentifier: String?
+    ) {
+        super.init(
+            style: style,
+            reuseIdentifier: reuseIdentifier
+        )
         
         setupLayout()
     }
@@ -42,7 +59,7 @@ final class TermsTableCell: UITableViewCell {
     
     private func setupLayout() {
         [
-            check,
+            checkButton,
             termsLabel
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -50,35 +67,49 @@ final class TermsTableCell: UITableViewCell {
         }
         
         NSLayoutConstraint.activate([
-            check.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            check.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            check.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            checkButton.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor
+            ),
+            checkButton.topAnchor.constraint(
+                equalTo: contentView.topAnchor,
+                constant: Layout.cellToCell.rawValue
+            ),
+            checkButton.bottomAnchor.constraint(
+                equalTo: contentView.bottomAnchor,
+                constant: -Layout.cellToCell.rawValue
+            ),
             
-            termsLabel.leadingAnchor.constraint(equalTo: check.trailingAnchor, constant: 10),
-            termsLabel.centerYAnchor.constraint(equalTo: check.centerYAnchor)
+            termsLabel.leadingAnchor.constraint(
+                equalTo: checkButton.trailingAnchor,
+                constant: Layout.imageToText.rawValue
+            ),
+            termsLabel.centerYAnchor.constraint(
+                equalTo: checkButton.centerYAnchor)
         ])
     }
     
     func makeCellData(check: Bool, term: String) {
         let attributedString = NSMutableAttributedString(string: term)
-        attributedString.addAttribute(.underlineStyle,
-                                      value: NSUnderlineStyle.single.rawValue,
-                                      range: NSRange(location: 0, length: term.count)
+        attributedString.addAttribute(
+            .underlineStyle,
+            value: NSUnderlineStyle.single.rawValue,
+            range: NSRange(location: 0, length: term.count)
         )
-        attributedString.addAttribute(.foregroundColor,
-                                      value: UIColor.gray0,
-                                      range: NSRange(location: 0, length: term.count)
+        attributedString.addAttribute(
+            .foregroundColor,
+            value: UIColor.gray0,
+            range: NSRange(location: 0, length: term.count)
         )
         
         termsLabel.attributedText = attributedString
         
-        self.check.isSelected = check
-        self.check.tintColor = check ? .main : .gray4
+        self.checkButton.isSelected = check
+        self.checkButton.tintColor = check ? .main : .gray4
     }
     
     @objc func tappedCheck() {
-        check.isSelected = !check.isSelected
-        check.tintColor = check.isSelected ? .main : .gray4
+        checkButton.isSelected = !checkButton.isSelected
+        checkButton.tintColor = checkButton.isSelected ? .main : .gray4
         
         checkButtonTapped()
     }

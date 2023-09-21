@@ -18,6 +18,19 @@ final class EditOperationHourChangebleView: UIView {
         return label
     }()
     
+    private lazy var cancelButton: UIButton = {
+        let button = UIButton()
+        
+        button.setImage(UIImage.closeCircle26, for: .normal)
+        button.addTarget(
+            self,
+            action: #selector(cancelButtonTapped),
+            for: .touchUpInside
+        )
+        
+        return button
+    }()
+    
     private lazy var operatingHoursButton: UIButton = {
         let button = UIButton()
         
@@ -54,15 +67,6 @@ final class EditOperationHourChangebleView: UIView {
         button.titleEdgeInsets = .init(top: 0, left: 2, bottom: 0, right: 0)
         
         button.addTarget(self, action: #selector(dayOffButtonTapped), for: .touchUpInside)
-        
-        return button
-    }()
-    
-    private lazy var cancelButton: UIButton = {
-        let button = UIButton()
-        
-        button.setImage(UIImage(named: "X-Circle"), for: .normal)
-        button.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         
         return button
     }()
@@ -275,10 +279,10 @@ final class EditOperationHourChangebleView: UIView {
         
         [
             dayLabel,
-            
+            cancelButton,
+
             operatingHoursButton,
             dayOffButton,
-            cancelButton,
             separatedLine1,
             
             operatingHoursLabel,
@@ -305,6 +309,11 @@ final class EditOperationHourChangebleView: UIView {
             dayLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
             dayLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             
+            cancelButton.centerYAnchor.constraint(equalTo: dayLabel.centerYAnchor),
+            cancelButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            cancelButton.widthAnchor.constraint(equalToConstant: 26),
+            cancelButton.heightAnchor.constraint(equalToConstant: 26),
+            
             operatingHoursButton.topAnchor.constraint(equalTo: dayLabel.bottomAnchor, constant: 20),
             operatingHoursButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             operatingHoursButton.widthAnchor.constraint(equalToConstant: 70),
@@ -313,10 +322,7 @@ final class EditOperationHourChangebleView: UIView {
             dayOffButton.leadingAnchor.constraint(equalTo: operatingHoursButton.trailingAnchor, constant: 10),
             dayOffButton.widthAnchor.constraint(equalToConstant: 70),
             
-            cancelButton.centerYAnchor.constraint(equalTo: operatingHoursButton.centerYAnchor),
-            cancelButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            
-            separatedLine1.topAnchor.constraint(equalTo: operatingHoursButton.bottomAnchor, constant: 20),
+            separatedLine1.topAnchor.constraint(equalTo: operatingHoursButton.bottomAnchor, constant: 10),
             separatedLine1.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             separatedLine1.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1, constant: -32),
             separatedLine1.heightAnchor.constraint(equalToConstant: 1),
@@ -388,7 +394,7 @@ final class EditOperationHourChangebleView: UIView {
         let dayLabelHeight = dayLabel.frame.height + 20
         
         // inset 20, 20, separatedLine 1
-        let topHeight = cancelButton.frame.height + 20 + 20 + 1
+        let topHeight = operatingHoursButton.frame.height + 10 + 20 + 1
         // inset 20 20 20, separatedLine 1
         let operationHeight = operatingHoursLabel.frame.height + operationTimeOpen.frame.height + 20 + 20 + 20 + 1
         let breakHegiht = breakTimeLabel.frame.height + breakTimeOpen.frame.height + 20 + 20 + 20 + 1

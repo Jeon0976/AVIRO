@@ -76,7 +76,7 @@ final class ReportCellView: UIView {
     
     private func makeAttribute() {
         self.layer.cornerRadius = 10
-        self.layer.borderColor = UIColor.gray4?.cgColor
+        self.layer.borderColor = UIColor.gray4.cgColor
         self.layer.borderWidth = 1
     }
     
@@ -97,11 +97,11 @@ final class ReportCellView: UIView {
         
         if clickButton.isSelected {
             selectedReportType?(text)
-            self.layer.borderColor = UIColor.main?.cgColor
+            self.layer.borderColor = UIColor.main.cgColor
         } else {
-            self.layer.borderColor = UIColor.gray4?.cgColor
+            self.layer.borderColor = UIColor.gray4.cgColor
             clickedOffSelectedType?(text)
-            if titleLabel.text == AVIROCommentReportType.others.rawValue {
+            if titleLabel.text == AVIROReportReviewType.others.rawValue {
                 isHiddenTextView?(true)
             }
         }
@@ -114,11 +114,11 @@ final class ReportCellView: UIView {
         
         if clickButton.isSelected {
             selectedReportType?(text)
-            self.layer.borderColor = UIColor.main?.cgColor
+            self.layer.borderColor = UIColor.main.cgColor
         } else {
-            self.layer.borderColor = UIColor.gray4?.cgColor
+            self.layer.borderColor = UIColor.gray4.cgColor
             clickedOffSelectedType?(text)
-            if titleLabel.text == AVIROCommentReportType.others.rawValue {
+            if titleLabel.text == AVIROReportReviewType.others.rawValue {
                 isHiddenTextView?(true)
             }
         }
@@ -130,7 +130,7 @@ final class ReportCellView: UIView {
     
     func initLabelView() {
         clickButton.isSelected = false
-        self.layer.borderColor = UIColor.gray4?.cgColor
+        self.layer.borderColor = UIColor.gray4.cgColor
     }
     
     func checkCell() -> String {

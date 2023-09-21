@@ -50,7 +50,7 @@ final class EditLocationTopView: UIView {
     private var viewHeightConstraint: NSLayoutConstraint?
     
     var afterChangedTitle: ((String) -> Void)?
-    var afterChangedCategory: ((Category) -> Void)?
+    var afterChangedCategory: ((PlaceCategory) -> Void)?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -121,10 +121,10 @@ final class EditLocationTopView: UIView {
         self.layer.cornerRadius = 10
         self.backgroundColor = .gray7
         
-        restaurantButton.setButton(Category.restaurant.title)
-        cafeButton.setButton(Category.cafe.title)
-        bakeryButton.setButton(Category.bakery.title)
-        barButton.setButton(Category.bar.title)
+        restaurantButton.setButton(PlaceCategory.restaurant.title)
+        cafeButton.setButton(PlaceCategory.cafe.title)
+        bakeryButton.setButton(PlaceCategory.bakery.title)
+        barButton.setButton(PlaceCategory.bar.title)
 
         categoryButtons = [
             restaurantButton,
@@ -157,7 +157,7 @@ final class EditLocationTopView: UIView {
             button.isSelected = (button == sender)
         }
         
-        var selectedCategory: Category?
+        var selectedCategory: PlaceCategory?
         if sender == restaurantButton {
             selectedCategory = .restaurant
         } else if sender == cafeButton {
@@ -176,7 +176,7 @@ final class EditLocationTopView: UIView {
     func dataBinding(title: String, category: String) {
         self.placeField.text = title
         
-        if let category = Category(title: category) {
+        if let category = PlaceCategory(title: category) {
             switch category {
             case .bakery:
                 bakeryButton.isSelected.toggle()

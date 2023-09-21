@@ -35,7 +35,7 @@ final class NickNameChangebleViewController: UIViewController {
     private lazy var nicNameField: RegistrationField = {
         let field = RegistrationField()
         
-        field.text = UserId.shared.userNickname
+        field.text = MyData.my.nickname
         field.addRightCancelButton()
         
         return field
@@ -56,7 +56,7 @@ final class NickNameChangebleViewController: UIViewController {
     private lazy var subInfo2: UILabel = {
         let label = UILabel()
         
-        let nickNameCount = UserId.shared.userNickname.count
+        let nickNameCount = MyData.my.nickname.count
         
         label.text = "(\(nickNameCount)/8)"
         label.font = .pretendard(size: 13, weight: .regular)
@@ -71,6 +71,11 @@ final class NickNameChangebleViewController: UIViewController {
         
         button.setTitle("수정하기", for: .normal)
         button.isEnabled = false
+        button.addTarget(
+            self,
+            action: #selector(editNicknameButtonTapped),
+            for: .touchUpInside
+        )
         
         return button
     }()
@@ -156,7 +161,7 @@ extension NickNameChangebleViewController: NickNameChangebleProtocol {
             editNickNameButton.isEnabled = false
             nicNameField.isPossible = false
             self.subInfo.textColor = .red
-            nicNameField.activeShakeAfterNoSearchData()
+            nicNameField.activeHshakeEffect()
         }
     }
     
@@ -166,6 +171,10 @@ extension NickNameChangebleViewController: NickNameChangebleProtocol {
         self.editNickNameButton.isEnabled = false
         nicNameField.isPossible = nil
         nicNameField.addRightCancelButton()
+    }
+    
+    func popViewController() {
+        navigationController?.popViewController(animated: true)
     }
 }
 
@@ -188,7 +197,7 @@ extension NickNameChangebleViewController: UITextFieldDelegate {
         
         if currentText.count > 8 {
             textField.text = limitText(currentText)
-            textField.activeShakeAfterNoSearchData()
+            textField.activeHshakeEffect()
             return
         }
         
@@ -212,16 +221,21 @@ extension NickNameChangebleViewController: UITextFieldDelegate {
 
     private func checkNicknameDuplicationAfterDelay() {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(timeInterval: 0.5,
-                                     target: self,
-                                     selector: #selector(checkDuplication),
-                                     userInfo: nil,
-                                     repeats: false
+        timer = Timer.scheduledTimer(
+            timeInterval: 0.5,
+            target: self,
+            selector: #selector(checkDuplication),
+            userInfo: nil,
+            repeats: false
         )
     }
     
     @objc private func checkDuplication() {
         presenter.checkDuplication()
+    }
+    
+    @objc private func editNicknameButtonTapped() {
+        presenter.updateMyNickname()
     }
 }
 

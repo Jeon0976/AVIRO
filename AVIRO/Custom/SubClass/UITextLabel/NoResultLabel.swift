@@ -20,9 +20,9 @@ final class NoResultLabel: UILabel {
     }
     
     private func setupAttribute() {
+        self.font = CFont.font.medium15
         self.textColor = .gray2
         self.numberOfLines = 2
-        self.font = .pretendard(size: 15, weight: .medium)
     }
     
     func setupLabel(_ value: String) {

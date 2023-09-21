@@ -126,7 +126,7 @@ final class ChangeableAddressPresenter {
     func whenAfterChangedCoordinate(_ coordinate: NMGLatLng) {
         let lat = String(coordinate.lat)
         let lng = String(coordinate.lng)
-        KakaoMapRequestManager().kakaoMapCoordinateSearch(longtitude: lng, latitude: lat) { [weak self] coordinateModel in
+        KakaoMapAPIManager().kakaoMapCoordinateSearch(longtitude: lng, latitude: lat) { [weak self] coordinateModel in
             
             guard let firstDocument = coordinateModel.documents?.first,
                   let address = firstDocument.address?.address else {

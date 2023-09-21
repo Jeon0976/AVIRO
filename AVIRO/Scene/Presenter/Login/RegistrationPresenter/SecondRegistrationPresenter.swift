@@ -25,11 +25,10 @@ final class SecondRegistrationPresenter {
     var birth = ""
     var gender: Gender?
     var isWrongBirth = true
-    
-    private let aviroManager = AVIROAPIManager()
-    
+        
     init(viewController: SecondRegistrationProtocol,
-         userInfoModel: AVIROUserSignUpDTO? = nil) {
+         userInfoModel: AVIROUserSignUpDTO? = nil
+    ) {
         self.viewController = viewController
         self.userInfoModel = userInfoModel
     }
@@ -40,7 +39,6 @@ final class SecondRegistrationPresenter {
         viewController?.setupGesture()
     }
     
-    // MARK: 생일, 성별 회원 데이터에 추가 후 다음 페이지
     func pushUserInfo() {
         guard var userInfoModel = userInfoModel else { return }
         
@@ -61,36 +59,12 @@ final class SecondRegistrationPresenter {
         viewController?.pushThridRegistrationView(userInfoModel)
     }
     
-    // MARK: String to Int (DateFormatter 활용) & Check Invaild Date
     func checkInvalidDate() {
-        let dateFormatter = DateFormatter()
-        
-        dateFormatter.dateFormat = "yyyy.MM.dd"
-        
-        if let date = dateFormatter.date(from: birth) {
-            let calendar = Calendar.current
-            let year = calendar.component(.year, from: date)
-            let month = calendar.component(.month, from: date)
-            let day = calendar.component(.day, from: date)
-            
-            let currentYear = calendar.component(.year, from: Date())
-            
-            if year > currentYear {
-                viewController?.isInvalidDate()
-                birth = "0"
-            } else if year < 1920 {
-                viewController?.isInvalidDate()
-                birth = "0"
-            } else if month < 1 || month > 12 || day < 1 || day > 31 {
-                viewController?.isInvalidDate()
-                birth = "0"
-                return
-            } else {
-                viewController?.isValidDate()
-            }
+        if TimeUtility.isValidDate(birth) {
+            viewController?.isValidDate()
         } else {
-            viewController?.isInvalidDate()
             birth = "0"
+            viewController?.isInvalidDate()
         }
     }
 }

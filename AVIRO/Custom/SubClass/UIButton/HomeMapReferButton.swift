@@ -20,11 +20,18 @@ final class HomeMapReferButton: UIButton {
     
     private func setAttribute() {
         self.backgroundColor = .gray7
+        
         self.layer.cornerRadius = 15
-        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowRadius = 5
         self.layer.shadowOpacity = 0.15
         self.layer.shadowOffset = .init(width: 1, height: 3)
-        self.layer.shadowRadius = 5
-        self.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
+        self.layer.shadowColor = UIColor.black.cgColor
+
+        self.contentEdgeInsets = UIEdgeInsets(
+            top: 12,
+            left: 12,
+            bottom: 12,
+            right: 12
+        )
     }
 }

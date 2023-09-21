@@ -40,7 +40,8 @@ struct AVIROPostAPI {
     
     static let userSignUpPath = "/prod/member/sign-up"
     static let userCheckPath = "/prod/member/info"
-    static let userNicNameCheckPath = "/prod/member/check"
+    static let userNicnameCheckPath = "/prod/member/check"
+    static let userNicknameChangeablePath = "/prod/member/update/nickname"
     static let userWithdrawPath = "/prod/member/withdraw"
     
     // MARK: Place Enroll
@@ -208,17 +209,29 @@ struct AVIROPostAPI {
         return components
     }
     
-    // MARK: Nicname Check
-    mutating func nicnameCheck() -> URLComponents {
+    // MARK: Nickname Check
+    mutating func nicknameCheck() -> URLComponents {
         var components = URLComponents()
         
         components.scheme = AVIROPostAPI.scheme
         components.host = host
-        components.path = AVIROPostAPI.userNicNameCheckPath
+        components.path = AVIROPostAPI.userNicnameCheckPath
         
         return components
     }
     
+    // MARK: Nickname change
+    mutating func nicknameChange() -> URLComponents {
+        var components = URLComponents()
+        
+        components.scheme = AVIROPostAPI.scheme
+        components.host = host
+        components.path = AVIROPostAPI.userNicknameChangeablePath
+        
+        return components
+    }
+    
+    // MARK: Withdrawal
     mutating func userWithdraw() -> URLComponents {
         var components = URLComponents()
         

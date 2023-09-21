@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct MyDataModel {
     var id: String
     var place: String

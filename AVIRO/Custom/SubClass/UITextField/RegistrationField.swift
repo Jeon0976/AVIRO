@@ -16,7 +16,12 @@ class RegistrationField: UITextField {
     
     private var rightButton = UIButton()
 
-    private let inset = UIEdgeInsets(top: 15, left: 20, bottom: 15, right: 20)
+    private let inset = UIEdgeInsets(
+        top: 15,
+        left: 20,
+        bottom: 15,
+        right: 20
+    )
     private let rightButtonInset = CGFloat(5)
         
     var isPossible: Bool? {
@@ -45,57 +50,87 @@ class RegistrationField: UITextField {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
     
     // text Inset
-    override open func textRect(forBounds bounds: CGRect) -> CGRect {
+    override open func textRect(
+        forBounds bounds: CGRect
+    ) -> CGRect {
         return bounds.inset(by: inset)
     }
     
-    override open func editingRect(forBounds bounds: CGRect) -> CGRect {
+    override open func editingRect(
+        forBounds bounds: CGRect
+    ) -> CGRect {
         return bounds.inset(by: inset)
     }
     
     private func configuration() {
+        self.font = CFont.font.medium18
         self.textColor = .gray0
         self.layer.cornerRadius = 25
         self.backgroundColor = .gray6
         self.rightViewMode = .unlessEditing
-        self.font = .pretendard(size: 18, weight: .medium)
     }
     
-    private func makeRightView(_ isPossible: Bool) -> UIView {
+    private func makeRightView(
+        _ isPossible: Bool
+    ) -> UIView {
         let image = isPossible ?
-        UIImage(named: "CheckArt")?.withTintColor(.main!)
+        UIImage.checkArt.withTintColor(.main)
         :
-        UIImage(named: "ErrorArt")
+        UIImage.errorArt
         
         let imageView = UIImageView(image: image)
         
         imageView.contentMode = .scaleAspectFit
-        imageView.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        imageView.frame = CGRect(
+            x: 0,
+            y: 0,
+            width: 24,
+            height: 24
+        )
         
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 24))
+        let paddingView = UIView(
+            frame: CGRect(
+                x: 0,
+                y: 0,
+                width: 40,
+                height: 24
+            )
+        )
+        
         paddingView.addSubview(imageView)
     
         return paddingView
     }
     
-    func makePlaceHolder(_ placeHolder: String) {
+    func makePlaceHolder(
+        _ placeHolder: String
+    ) {
         self.attributedPlaceholder = NSAttributedString(
             string: placeHolder,
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray3 ?? UIColor.lightGray]
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray3]
         )
     }
     
     func addRightCancelButton() {
-        let image = UIImage(named: "X-Circle")?.withRenderingMode(.alwaysTemplate)
+        let image = UIImage.closeCircle.withRenderingMode(.alwaysTemplate)
         
         rightButton.setImage(image, for: .normal)
         rightButton.tintColor = .gray2
-        rightButton.frame = .init(x: 0, y: 0, width: buttonSize, height: buttonSize)
-        rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
+        rightButton.frame = .init(
+            x: 0,
+            y: 0,
+            width: buttonSize,
+            height: buttonSize
+        )
+        rightButton.addTarget(
+            self,
+            action: #selector(rightButtonTapped),
+            for: .touchUpInside
+        )
                 
         let paddingView = UIView(frame: CGRect(
             x: 0,
@@ -110,8 +145,9 @@ class RegistrationField: UITextField {
         rightViewMode = .always
     }
     
-    // MARK: Right Button 클릭 시
-    @objc func rightButtonTapped(_ sender: UIButton) {
+    @objc func rightButtonTapped(
+        _ sender: UIButton
+    ) {
         self.text = ""
         self.rightButtonHidden = true
     }

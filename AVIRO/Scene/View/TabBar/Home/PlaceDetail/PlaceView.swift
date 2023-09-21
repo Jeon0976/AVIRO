@@ -75,10 +75,10 @@ final class PlaceView: UIView {
     
     var editMenu: (() -> Void)?
     
-    var whenUploadReview: ((AVIROEnrollCommentDTO) -> Void)?
-    var whenAfterEditReview: ((AVIROEditCommentDTO) -> Void)?
+    var whenUploadReview: ((AVIROEnrollReviewDTO) -> Void)?
+    var whenAfterEditReview: ((AVIROEditReviewDTO) -> Void)?
     
-    var reportReview: ((AVIROReportCommentModel) -> Void)?
+    var reportReview: ((AVIROReportReviewModel) -> Void)?
     var editMyReview: ((String) -> Void)?
     
     override init(frame: CGRect) {
@@ -130,7 +130,7 @@ final class PlaceView: UIView {
         isLoadingTopView = false
     }
     
-    func menuModelBinding(menuModel: PlaceMenuData?) {
+    func menuModelBinding(menuModel: AVIROPlaceMenus?) {
         segmentedControlView.refreshMenuData(menuModel)
     }
     
@@ -142,9 +142,9 @@ final class PlaceView: UIView {
         segmentedControlView.deleteMyReview(commentId)
     }
     
-    func allDataBinding(infoModel: PlaceInfoData?,
-                        menuModel: PlaceMenuData?,
-                        reviewsModel: AVIROReviewsModelArrayDTO?
+    func allDataBinding(infoModel: AVIROPlaceInfo?,
+                        menuModel: AVIROPlaceMenus?,
+                        reviewsModel: AVIROReviewsArrayDTO?
     ) {
         segmentedControlView.allDataBinding(
             placeId: self.placeId,

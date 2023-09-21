@@ -27,7 +27,7 @@ final class MenuTypeLabel: UILabel {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        makeAttribute()
+        setAttribute()
     }
     
     required init?(coder: NSCoder) {
@@ -35,31 +35,40 @@ final class MenuTypeLabel: UILabel {
     }
     
     override func drawText(in rect: CGRect) {
-        let insets = UIEdgeInsets(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
+        let insets = UIEdgeInsets(
+            top: topInset,
+            left: leftInset,
+            bottom: bottomInset,
+            right: rightInset
+        )
+        
         super.drawText(in: rect.inset(by: insets))
     }
 
     override var intrinsicContentSize: CGSize {
         let size = super.intrinsicContentSize
-        return CGSize(width: size.width + leftInset + rightInset,
-                      height: size.height + topInset + bottomInset)
+        
+        return CGSize(
+            width: size.width + leftInset + rightInset,
+            height: size.height + topInset + bottomInset
+        )
     }
     
-    private func makeAttribute() {
+    private func setAttribute() {
         self.layer.cornerRadius = 12
-        self.font = .pretendard(size: 11, weight: .bold)
         self.layer.borderWidth = 1
+        self.font = CFont.font.bold11
     }
     
     private func isVeganType() {
         self.text = "비건"
         self.textColor = .all
-        self.layer.borderColor = UIColor.all?.cgColor
+        self.layer.borderColor = UIColor.all.cgColor
     }
     
     private func isNeedToRequestType() {
         self.text = "요청시 비건"
         self.textColor = .request
-        self.layer.borderColor = UIColor.request?.cgColor
+        self.layer.borderColor = UIColor.request.cgColor
     }
 }

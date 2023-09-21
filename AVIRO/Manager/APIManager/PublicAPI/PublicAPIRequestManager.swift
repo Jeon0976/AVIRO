@@ -11,7 +11,7 @@ protocol PublicAPIRequestManagerProtocol {
     func publicAddressSearch(
         currentPage: String,
         keyword: String,
-        completion: @escaping (Result<EditAddressTableModel, Error>) -> Void)
+        completion: @escaping (Result<PublicAddressDTO, Error>) -> Void)
 }
 
 final class PublicAPIRequestManager: PublicAPIRequestManagerProtocol {
@@ -26,7 +26,7 @@ final class PublicAPIRequestManager: PublicAPIRequestManagerProtocol {
     func publicAddressSearch(
         currentPage: String,
         keyword: String,
-        completion: @escaping (Result<EditAddressTableModel, Error>) -> Void
+        completion: @escaping (Result<PublicAddressDTO, Error>) -> Void
     ) {
         guard let url = api.searchAddress(currentPage: currentPage, keyword: keyword).url else {
             completion(.failure(NSError(domain: "", code: 400, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))

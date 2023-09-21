@@ -8,6 +8,16 @@
 import UIKit
 
 extension String {
+    // MARK: Nickname 갯수 제한 8개
+    var limitedNickname: String {
+        if self.count > 8 {
+            let startIndex = self.startIndex
+            let endIndex = self.index(startIndex, offsetBy: 7)
+            return String(self[startIndex...endIndex])
+        }
+        return self
+    }
+    
     // MARK: Text m/k 변환
     /// Text m/k 변환
     func convertDistanceUnit() -> String {
@@ -30,7 +40,9 @@ extension String {
         let noCommaString = self.replacingOccurrences(of: ",", with: "")
         
         if let number = Int(noCommaString) {
-            return numberFormatter.string(from: NSNumber(value: number))
+            return numberFormatter.string(
+                from: NSNumber(value: number)
+            )
         }
         return self
     }

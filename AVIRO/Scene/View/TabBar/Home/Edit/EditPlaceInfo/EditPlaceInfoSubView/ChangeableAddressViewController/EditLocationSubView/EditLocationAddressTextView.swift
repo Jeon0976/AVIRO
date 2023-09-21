@@ -145,7 +145,7 @@ final class EditLocationAddressTextView: UIView {
         noResultImageView.isHidden = false
         addressTableView.isHidden = true
         
-        addressTextField.activeShakeAfterNoSearchData()
+        addressTextField.activeHshakeEffect()
     }
 }
 

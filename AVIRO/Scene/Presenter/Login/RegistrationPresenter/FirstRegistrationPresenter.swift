@@ -8,9 +8,9 @@
 import UIKit
 
 protocol FirstRegistrationProtocol: NSObject {
-    func makeLayout()
-    func makeAttribute()
-    func makeGesture()
+    func setupLayout()
+    func setupAttribute()
+    func setupGesture()
     func changeSubInfo(subInfo: String, isVaild: Bool)
     func pushSecondRegistrationView(_ signupModel: AVIROUserSignUpDTO)
 }
@@ -42,12 +42,11 @@ final class FirstRegistrationPresenter {
     }
     
     func viewDidLoad() {
-        viewController?.makeLayout()
-        viewController?.makeAttribute()
-        viewController?.makeGesture()
+        viewController?.setupLayout()
+        viewController?.setupAttribute()
+        viewController?.setupGesture()
     }
     
-    // MARK: Nickname Setting Method
     func insertUserNickName(_ userName: String) {
         userNickname = userName
     }
@@ -56,13 +55,13 @@ final class FirstRegistrationPresenter {
         userNickname?.count ?? 0
     }
     
-    // MARK: Nickmane Check Method
     func checkDuplication() {
         guard let userNickname = userNickname else { return }
         
         let nickname = AVIRONicknameIsDuplicatedCheckDTO(nickname: userNickname)
+        
         aviroManager.postCheckNickname(nickname) { result in
-            let result = AVIROAfterNicknameIsDuplicatedCheckDTO(
+            let result = AVIRONicknameIsDuplicatedCheckResultDTO(
                 statusCode: result.statusCode,
                 isValid: result.isValid,
                 message: result.message
@@ -77,7 +76,6 @@ final class FirstRegistrationPresenter {
         }
     }
     
-    // MARK: Nicmane + UserModel Push Method
     func pushUserInfo() {
         guard let userNickname = userNickname else { return }
         signupModel.nickname = userNickname

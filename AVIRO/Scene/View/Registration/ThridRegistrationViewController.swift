@@ -7,25 +7,48 @@
 
 import UIKit
 
+private enum Text: String {
+    case title = "이용약관에\n동의해주세요."
+    case subtitle = "정책 및 약관을 클릭해 모든 내용을 확인해주세요."
+    case next = "다음으로"
+    case allAccept = "전체 동의"
+}
+
+private enum Layout {
+    enum Margin: CGFloat {
+        case small = 10
+        case medium = 20
+        case large = 30
+        case largeToView = 40
+    }
+    
+    enum Size: CGFloat {
+        case termsTableViewHeight = 220
+        case nextButtonHeight = 50
+        case headrHeight = 55
+    }
+}
+
 final class ThridRegistrationViewController: UIViewController {
+
     lazy var presenter = ThridRegistrationPresenter(viewController: self)
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "이용약관에\n동의해주세요."
-        label.font = .pretendard(size: 24, weight: .bold)
+        label.text = Text.title.rawValue
+        label.font = CFont.font.bold24
         label.textColor = .main
         label.numberOfLines = 2
         
         return label
     }()
     
-    private lazy var subTitleLabel: UILabel = {
+    private lazy var subtitleLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "정책 및 약관을 클릭해 모든 내용을 확인해주세요."
-        label.font = .pretendard(size: 14, weight: .regular)
+        label.text = Text.subtitle.rawValue
+        label.font = CFont.font.regular14
         label.textColor = .gray1
         
         return label
@@ -38,7 +61,7 @@ final class ThridRegistrationViewController: UIViewController {
         tableView.delegate = self
         tableView.register(
             TermsTableCell.self,
-            forCellReuseIdentifier: TermsTableCell.identifier
+            forCellReuseIdentifier: TVIdentifier.terms.rawValue
         )
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
@@ -51,21 +74,30 @@ final class ThridRegistrationViewController: UIViewController {
     private lazy var allAcceptButton: UIButton = {
         let button = UIButton()
         
-        button.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
+        button.setImage(
+            UIImage.allApproveCondition.withRenderingMode(.alwaysTemplate),
+            for: .normal
+        )
         button.tintColor = .gray4
-        button.addTarget(self, action: #selector(allAcceptButtonTapped(_:)), for: .touchUpInside)
+        button.addTarget(
+            self,
+            action: #selector(allAcceptButtonTapped(_:)),
+            for: .touchUpInside
+        )
         
         return button
     }()
-    
-    private var isAllAccepted = false
-    
+        
     private lazy var nextButton: NextPageButton = {
         let button = NextPageButton()
         
-        button.setTitle("다음으로", for: .normal)
-        button.addTarget(self, action: #selector(tappedNextButton), for: .touchUpInside)
+        button.setTitle(Text.next.rawValue, for: .normal)
         button.isEnabled = false
+        button.addTarget(
+            self,
+            action: #selector(tappedNextButton),
+            for: .touchUpInside
+        )
         
         return button
     }()
@@ -82,7 +114,7 @@ extension ThridRegistrationViewController: ThridRegistrationProtocol {
     func makeLayout() {
         [
             titleLabel,
-            subTitleLabel,
+            subtitleLabel,
             termsTableView,
             nextButton
         ].forEach {
@@ -92,30 +124,61 @@ extension ThridRegistrationViewController: ThridRegistrationProtocol {
         
         NSLayoutConstraint.activate([
             // titleLabel
-            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
-            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            titleLabel.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor,
+                constant: Layout.Margin.largeToView.rawValue
+            ),
+            titleLabel.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: Layout.Margin.large.rawValue
+            ),
             
             // subTitleLabel
-            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-            subTitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            subtitleLabel.topAnchor.constraint(
+                equalTo: titleLabel.bottomAnchor,
+                constant: Layout.Margin.small.rawValue
+            ),
+            subtitleLabel.leadingAnchor.constraint(
+                equalTo: titleLabel.leadingAnchor
+            ),
             
             // termsTableView
-            termsTableView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            termsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            termsTableView.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor, constant: 30),
-            termsTableView.heightAnchor.constraint(equalToConstant: 220),
+            termsTableView.leadingAnchor.constraint(
+                equalTo: titleLabel.leadingAnchor
+            ),
+            termsTableView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor,
+                constant: -Layout.Margin.large.rawValue
+            ),
+            termsTableView.topAnchor.constraint(
+                equalTo: subtitleLabel.bottomAnchor,
+                constant: Layout.Margin.large.rawValue
+            ),
+            termsTableView.heightAnchor.constraint(
+                equalToConstant: Layout.Size.termsTableViewHeight.rawValue
+            ),
             
             // nextButton
-            nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
-            nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            nextButton.heightAnchor.constraint(equalToConstant: 50)
+            nextButton.bottomAnchor.constraint(
+                equalTo: view.bottomAnchor,
+                constant: -Layout.Margin.largeToView.rawValue
+            ),
+            nextButton.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: Layout.Margin.medium.rawValue
+            ),
+            nextButton.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor,
+                constant: -Layout.Margin.medium.rawValue
+            ),
+            nextButton.heightAnchor.constraint(
+                equalToConstant: Layout.Size.nextButtonHeight.rawValue
+            )
         ])
     }
     
     // MARK: Attribute
     func makeAttribute() {
-        // view ...
         view.backgroundColor = .gray7
         setupCustomBackButton(true)
     }
@@ -126,12 +189,12 @@ extension ThridRegistrationViewController: ThridRegistrationProtocol {
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    @objc func tappedNextButton() {
+    @objc private func tappedNextButton() {
         presenter.pushUserInfo()
     }
 
     // MARK: All Accept Button 클릭 시
-    @objc func allAcceptButtonTapped(_ sender: UIButton) {
+    @objc private func allAcceptButtonTapped(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
 
         sender.tintColor = sender.isSelected ? .main : .gray4
@@ -152,8 +215,8 @@ extension ThridRegistrationViewController: UITableViewDelegate {
         headerView.backgroundColor = tableView.backgroundColor
         
         let allAcceptLabel = UILabel()
-        allAcceptLabel.text = "전체 동의"
-        allAcceptLabel.font = .pretendard(size: 20, weight: .semibold)
+        allAcceptLabel.text = Text.allAccept.rawValue
+        allAcceptLabel.font = CFont.font.semibold20
         allAcceptLabel.textColor = .gray0
         
         [
@@ -165,12 +228,25 @@ extension ThridRegistrationViewController: UITableViewDelegate {
         }
         
         NSLayoutConstraint.activate([
-            allAcceptButton.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
-            allAcceptButton.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 10),
-            allAcceptButton.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10),
+            allAcceptButton.leadingAnchor.constraint(
+                equalTo: headerView.leadingAnchor
+            ),
+            allAcceptButton.topAnchor.constraint(
+                equalTo: headerView.topAnchor,
+                constant: Layout.Margin.small.rawValue
+            ),
+            allAcceptButton.bottomAnchor.constraint(
+                equalTo: headerView.bottomAnchor,
+                constant: -Layout.Margin.small.rawValue
+            ),
             
-            allAcceptLabel.leadingAnchor.constraint(equalTo: allAcceptButton.trailingAnchor, constant: 10),
-            allAcceptLabel.centerYAnchor.constraint(equalTo: allAcceptButton.centerYAnchor)
+            allAcceptLabel.leadingAnchor.constraint(
+                equalTo: allAcceptButton.trailingAnchor,
+                constant: Layout.Margin.small.rawValue
+            ),
+            allAcceptLabel.centerYAnchor.constraint(
+                equalTo: allAcceptButton.centerYAnchor
+            )
         ])
         
         return headerView
@@ -180,38 +256,43 @@ extension ThridRegistrationViewController: UITableViewDelegate {
         _ tableView: UITableView,
         heightForHeaderInSection section: Int
     ) -> CGFloat {
-        55
+        Layout.Size.headrHeight.rawValue
     }
 }
 
 extension ThridRegistrationViewController: UITableViewDataSource {
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter.terms.count
+    func tableView(
+        _ tableView: UITableView,
+        numberOfRowsInSection section: Int
+    ) -> Int {
+        presenter.getTerms().count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
-            withIdentifier: TermsTableCell.identifier,
+            withIdentifier: TVIdentifier.terms.rawValue,
             for: indexPath
         ) as? TermsTableCell
         
-        let term = presenter.terms[indexPath.row]
-        
+        let termKey = Array(presenter.getTerms().keys)[indexPath.row]
+        let termValue = presenter.getTerms()[termKey] ?? false
+
         cell?.selectionStyle = .none
         cell?.backgroundColor = termsTableView.backgroundColor
         
-        cell?.makeCellData(check: term.1, term: term.0)
+        cell?.makeCellData(check: termValue, term: termKey.rawValue)
         
-        cell?.checkButtonTapped = { [unowned self] in
-            self.presenter.terms[indexPath.row].1 = !self.presenter.terms[indexPath.row].1
-            self.checkAllRequiredTerms()
+        cell?.checkButtonTapped = { [weak self] in
+            self?.presenter.clickedTerm(termKey)
+            self?.checkAllRequiredTerms()
         }
                 
         return cell ?? UITableViewCell()
     }
     
-    // MARK: Check All Required Terms
     private func checkAllRequiredTerms() {
         // 하나 하나 체크 해서 전부다 채크 했을 경우
         let result = presenter.checkAllRequiredTerms()

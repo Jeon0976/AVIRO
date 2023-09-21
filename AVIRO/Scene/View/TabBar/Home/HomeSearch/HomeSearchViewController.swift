@@ -163,7 +163,7 @@ extension HomeSearchViewController: HomeSearchProtocol {
     func placeListNoResultData() {
         placeListTableView.reloadData()
 
-        searchField.activeShakeAfterNoSearchData()
+        searchField.activeHshakeEffect()
         
         resultAfterViewShow(haveDatas: false)
     }
@@ -402,7 +402,7 @@ extension HomeSearchViewController: UITableViewDataSource {
                 icon = UIImage(named: "ListCellIcon")
             }
             
-            let cellData = MatchedPlaceListCell(
+            let cellData = MatchedPlaceCellModel(
                 icon: icon ?? UIImage(named: "ListCellIcon")!,
                 title: title,
                 address: address,

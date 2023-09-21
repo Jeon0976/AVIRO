@@ -29,7 +29,7 @@ final class EnrollPlacePresenter {
     weak var viewController: EnrollPlaceProtocol?
         
     private var storeNormalData: PlaceListModel?
-    private var category: Category?
+    private var category: PlaceCategory?
     
     private var normalTableModel = [
         VeganTableFieldModel(
@@ -213,14 +213,14 @@ final class EnrollPlacePresenter {
     // MARK: Category Button 클릭 시
     func categoryTapped(_ title: String) {
         switch title {
-        case Category.restaurant.title:
-            category = Category.restaurant
-        case Category.cafe.title:
-            category = Category.cafe
-        case Category.bakery.title:
-            category = Category.bakery
-        case Category.bar.title:
-            category = Category.bar
+        case PlaceCategory.restaurant.title:
+            category = PlaceCategory.restaurant
+        case PlaceCategory.cafe.title:
+            category = PlaceCategory.cafe
+        case PlaceCategory.bakery.title:
+            category = PlaceCategory.bakery
+        case PlaceCategory.bar.title:
+            category = PlaceCategory.bar
         default:
             category = nil
         }
@@ -231,13 +231,13 @@ final class EnrollPlacePresenter {
     func veganOptionButtonTapped(_ button: VeganOptionButton) {
         guard let title = button.titleLabel?.text else { return }
     
-        if title == VeganOption.allVegan.value {
+        if title == VeganOption.all.buttontitle {
             viewController?.allVeganTapped()
         } else {
             switch title {
-            case VeganOption.someVegan.value:
+            case VeganOption.some.buttontitle:
                 viewController?.someVeganTapped()
-            case VeganOption.requestVegan.value:
+            case VeganOption.request.buttontitle:
                 viewController?.requestVeganTapped()
             default:
                 break
@@ -437,7 +437,7 @@ extension EnrollPlacePresenter {
         }
         
         veganModel = AVIROEnrollPlaceDTO(
-            userId: UserId.shared.userId,
+            userId: MyData.my.id,
             title: storeNormalData?.title ?? "",
             category: category?.title ?? "",
             address: storeNormalData?.address ?? "",
@@ -452,7 +452,7 @@ extension EnrollPlacePresenter {
         let normalTableModel = totalData["normalTableModel"] as? [VeganTableFieldModel] ?? []
         let requestTableModel = totalData["requestTableModel"] as? [RequestTableFieldModel] ?? []
         
-        var menuArray: [MenuArray] = []
+        var menuArray: [AVIROMenu] = []
                 
         if isPresentingDefaultTable {
             let hasEmptyData = normalTableModel.contains { $0.menu == "" || $0.price == ""} || normalTableModel.isEmpty
@@ -461,7 +461,7 @@ extension EnrollPlacePresenter {
                 return
             }
             normalTableModel.forEach {
-                let menu = MenuArray(
+                let menu = AVIROMenu(
                     menuType: MenuType.vegan.rawValue,
                     menu: $0.menu,
                     price: $0.price,
@@ -489,7 +489,7 @@ extension EnrollPlacePresenter {
             }
             
             requestTableModel.forEach {
-                let menu = MenuArray(
+                let menu = AVIROMenu(
                     menuType: $0.isCheck ? MenuType.needToRequset.rawValue : MenuType.vegan.rawValue,
                     menu: $0.menu,
                     price: $0.price,

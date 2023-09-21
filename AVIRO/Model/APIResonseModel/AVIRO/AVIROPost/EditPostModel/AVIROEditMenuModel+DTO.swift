@@ -14,6 +14,6 @@ struct AVIROEditMenuModel: Encodable {
     let someMenuVegan: Bool
     let ifRequestVegan: Bool
     let deleteArray: [String]
-    let updateArray: [MenuArray]
-    let insertArray: [MenuArray]
+    let updateArray: [AVIROMenu]
+    let insertArray: [AVIROMenu]
 }

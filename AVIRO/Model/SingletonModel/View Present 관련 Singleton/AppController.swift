@@ -55,28 +55,24 @@ final class AppController {
         // TODO: 로그인 기능 추가 시 업데이트
         let userCheck = AVIROAppleUserCheckMemberDTO(userToken: userIdentifier)
         
-        print(userCheck)
         // 회원이 서버에 없을 때
         AVIROAPIManager().postCheckUserModel(userCheck) { userInfo in
             DispatchQueue.main.async { [weak self] in
                 if userInfo.statusCode == 200 {
-                    print("TestTest")
                     let userId = userInfo.data?.userId ?? ""
                     let userName = userInfo.data?.userName ?? ""
                     let userEmail = userInfo.data?.userEmail ?? ""
                     let userNickname = userInfo.data?.nickname ?? ""
                     let marketingAgree = userInfo.data?.marketingAgree ?? 0
                     
-                    UserId.shared.whenLogin(
+                    MyData.my.whenLogin(
                         userId: userId,
                         userName: userName,
                         userNickname: userNickname,
                         marketingAgree: marketingAgree
                     )
-                    print(userInfo)
                     self?.setHomeView()
                 } else {
-                    print(userInfo)
                     self?.setLoginView()
                 }
             }

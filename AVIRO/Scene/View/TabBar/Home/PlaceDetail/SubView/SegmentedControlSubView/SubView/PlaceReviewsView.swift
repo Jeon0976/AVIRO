@@ -92,10 +92,10 @@ final class PlaceReviewsView: UIView {
     
     var whenTappedShowMoreButton: (() -> Void)?
     
-    var whenUploadReview: ((AVIROEnrollCommentDTO) -> Void)?
-    var whenAfterEditMyReview: ((AVIROEditCommentDTO) -> Void)?
+    var whenUploadReview: ((AVIROEnrollReviewDTO) -> Void)?
+    var whenAfterEditMyReview: ((AVIROEditReviewDTO) -> Void)?
     
-    var whenReportReview: ((AVIROReportCommentModel) -> Void)?
+    var whenReportReview: ((AVIROReportReviewModel) -> Void)?
     var whenBeforeEditMyReview: ((String) -> Void)?
     
     private var placeId = ""
@@ -178,7 +178,7 @@ final class PlaceReviewsView: UIView {
     }
     
     func dataBinding(placeId: String,
-                     reviewsModel: AVIROReviewsModelArrayDTO?
+                     reviewsModel: AVIROReviewsArrayDTO?
     ) {
         guard let reviews = reviewsModel?.commentArray else { return }
         
@@ -225,7 +225,7 @@ final class PlaceReviewsView: UIView {
         reviewsTable.isHidden = true
     }
     
-    func dataBindingWhenInHomeView(_ reviewsModel: AVIROReviewsModelArrayDTO?) {
+    func dataBindingWhenInHomeView(_ reviewsModel: AVIROReviewsArrayDTO?) {
         guard let reviews = reviewsModel?.commentArray else { return }
         
         self.subTitle.text = "\(reviews.count)개"
@@ -303,14 +303,14 @@ final class PlaceReviewsView: UIView {
         viewHeightConstraint?.isActive = true
     }
     
-    func afterUpdateReviewAndUpdateInHomeView(_ reviewModel: AVIROEnrollCommentDTO) {
+    func afterUpdateReviewAndUpdateInHomeView(_ reviewModel: AVIROEnrollReviewDTO) {
         print(whenHomeViewReviewsCount)
 
         reviewsUpdateInHomeView(reviewModel)
         whenHaveReviewsInHomeView(self.reviewsArray)
     }
     
-    private func reviewsUpdateInHomeView(_ reviewModel: AVIROEnrollCommentDTO) {
+    private func reviewsUpdateInHomeView(_ reviewModel: AVIROEnrollReviewDTO) {
         let nowDate = TimeUtility.nowDate()
 
         let reviewModel = AVIROReviewRawDataDTO(
@@ -318,7 +318,7 @@ final class PlaceReviewsView: UIView {
             userId: reviewModel.userId,
             content: reviewModel.content,
             updatedTime: nowDate,
-            nickname: UserId.shared.userNickname
+            nickname: MyData.my.nickname
         )
         
         reviewsArray.insert(reviewModel, at: 0)
@@ -328,12 +328,12 @@ final class PlaceReviewsView: UIView {
         subTitle.text = "\(whenHomeViewReviewsCount)개"
     }
     
-    func afterEditReviewAndUpdateInHomeView(_ reviewModel: AVIROEditCommentDTO) {
+    func afterEditReviewAndUpdateInHomeView(_ reviewModel: AVIROEditReviewDTO) {
         reviewsEditInHomeView(reviewModel)
         whenHaveReviewsInHomeView(self.reviewsArray)
     }
     
-    private func reviewsEditInHomeView(_ reviewModel: AVIROEditCommentDTO) {
+    private func reviewsEditInHomeView(_ reviewModel: AVIROEditReviewDTO) {
         let nowDate = TimeUtility.nowDate()
 
         let reviewModel = AVIROReviewRawDataDTO(
@@ -341,7 +341,7 @@ final class PlaceReviewsView: UIView {
             userId: reviewModel.userId,
             content: reviewModel.content,
             updatedTime: nowDate,
-            nickname: UserId.shared.userNickname
+            nickname: MyData.my.nickname
         )
         
         if let existingIndex = reviewsArray.firstIndex(where: { $0.commentId == reviewModel.commentId }) {
@@ -395,9 +395,9 @@ final class PlaceReviewsView: UIView {
             return
         }
                 
-        var postModel = AVIROEnrollCommentDTO(
+        var postModel = AVIROEnrollReviewDTO(
             placeId: placeId,
-            userId: UserId.shared.userId,
+            userId: MyData.my.id,
             content: text
         )
         postModel.commentId = editedReviewId
@@ -407,7 +407,7 @@ final class PlaceReviewsView: UIView {
             userId: postModel.userId,
             content: text,
             updatedTime: nowDate,
-            nickname: UserId.shared.userNickname
+            nickname: MyData.my.nickname
         )
         
         reviewsArray[index] = reviewModel
@@ -417,7 +417,7 @@ final class PlaceReviewsView: UIView {
         subTitle.text = "\(reviewsArray.count)개"
         editedReviewId = ""
         
-        let editModel = AVIROEditCommentDTO(
+        let editModel = AVIROEditReviewDTO(
             commentId: reviewModel.commentId,
             content: text,
             userId: reviewModel.userId
@@ -431,9 +431,9 @@ final class PlaceReviewsView: UIView {
         
         let nowDate = TimeUtility.nowDate()
         
-        let postModel = AVIROEnrollCommentDTO(
+        let postModel = AVIROEnrollReviewDTO(
             placeId: placeId,
-            userId: UserId.shared.userId,
+            userId: MyData.my.id,
             content: text
         )
                 
@@ -442,7 +442,7 @@ final class PlaceReviewsView: UIView {
             userId: postModel.userId,
             content: postModel.content,
             updatedTime: nowDate,
-            nickname: UserId.shared.userNickname
+            nickname: MyData.my.nickname
         )
         
         if reviewsArray.count == 0 {
@@ -515,8 +515,8 @@ extension PlaceReviewsView: UITableViewDataSource {
             let commentId = self?.reviewsArray[indexPath.row].commentId ?? ""
             let userId = self?.reviewsArray[indexPath.row].userId
             
-            if userId != UserId.shared.userId {
-                let reportModel = AVIROReportCommentModel(
+            if userId != MyData.my.id {
+                let reportModel = AVIROReportReviewModel(
                     createdTime: createTime,
                     placeTitle: "",
                     id: commentId,
@@ -531,13 +531,13 @@ extension PlaceReviewsView: UITableViewDataSource {
         }
         
         if whenReviewView {
-            if UserId.shared.userId == reviewData.userId {
+            if MyData.my.id == reviewData.userId {
                 cell?.bindingData(comment: reviewData, isAbbreviated: false, isMyReview: true)
             } else {
                 cell?.bindingData(comment: reviewData, isAbbreviated: false, isMyReview: false)
             }
         } else {
-            if UserId.shared.userId == reviewData.userId {
+            if MyData.my.id == reviewData.userId {
                 cell?.bindingData(comment: reviewData, isAbbreviated: true, isMyReview: true)
             } else {
                 cell?.bindingData(comment: reviewData, isAbbreviated: true, isMyReview: false)

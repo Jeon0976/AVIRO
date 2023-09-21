@@ -17,11 +17,11 @@ final class CenterCoordinate {
     var highPrioriy = false
     
     var latitudeString: String {
-        return String(format: "%.4f", latitude ?? "")
+        return String(format: "%.5f", latitude ?? "")
     }
     
     var longitudeString: String {
-        return String(format: "%.4f", longitude ?? "")
+        return String(format: "%.5f", longitude ?? "")
     }
     
     private init(latitude: Double? = nil,

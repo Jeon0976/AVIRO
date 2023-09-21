@@ -24,33 +24,44 @@ extension NMFMarker {
     func changeIcon(_ place: MapPlace, _ isSelected: Bool) {
         switch place {
         case .All:
-            self.iconImage = isSelected ? MapIcon.allMapClicked.image : MapIcon.allMap.image
+            self.iconImage = isSelected ?
+            MapIcon.allMapClicked.image
+            :
+            MapIcon.allMap.image
+            
         case .Some:
-            self.iconImage = isSelected ? MapIcon.someMapClicked.image : MapIcon.someMap.image
+            self.iconImage = isSelected ?
+            MapIcon.someMapClicked.image
+            :
+            MapIcon.someMap.image
+            
         case .Request:
-            self.iconImage = isSelected ? MapIcon.requestMapClicked.image : MapIcon.requestMap.image
-        }
-    }
-    
-    func makeStarIcon(_ place: MapPlace) {
-        switch place {
-        case .All:
-            self.iconImage = MapIcon.allMapStar.image
-        case .Some:
-            self.iconImage = MapIcon.someMapStar.image
-        case .Request:
-            self.iconImage = MapIcon.requestMapStar.image
+            self.iconImage = isSelected ?
+            MapIcon.requestMapClicked.image
+            :
+            MapIcon.requestMap.image
         }
     }
     
     func changeStarIcon(_ place: MapPlace, _ isSelected: Bool) {
         switch place {
         case .All:
-            self.iconImage = isSelected ? MapIcon.allMapStarClicked.image : MapIcon.allMapStar.image
+            self.iconImage = isSelected ?
+            MapIcon.allMapStarClicked.image
+            :
+            MapIcon.allMapStar.image
+            
         case .Some:
-            self.iconImage = isSelected ? MapIcon.someMapStarClicked.image : MapIcon.someMapStar.image
+            self.iconImage = isSelected ?
+            MapIcon.someMapStarClicked.image
+            :
+            MapIcon.someMapStar.image
+            
         case .Request:
-            self.iconImage = isSelected ? MapIcon.requestMapStarClicked.image : MapIcon.requestMapStar.image
+            self.iconImage = isSelected ?
+            MapIcon.requestMapStarClicked.image
+            :
+            MapIcon.requestMapStar.image
         }
     }
 }

@@ -32,6 +32,8 @@ struct AVIRORequestAPI {
     static let commentPath = "/prod/map/load/comment"
     static let operationHourPath = "/prod/map/load/timetable"
         
+    static let myContributionCount = "/prod/mypage/count"
+    
     // MARK: Key
     static let userId = "userId"
     
@@ -160,7 +162,7 @@ struct AVIRORequestAPI {
     }
     
     // MARK: Check Place
-    mutating func getCheckPlace(placeModel: PlaceCheckModel) -> URLComponents {
+    mutating func getCheckPlace(placeModel: AVIROCheckPlaceDTO) -> URLComponents {
         var components = URLComponents()
         
         components.scheme = AVIRORequestAPI.scheme
@@ -188,6 +190,21 @@ struct AVIRORequestAPI {
         components.queryItems = [
             URLQueryItem(name: AVIRORequestAPI.placeId, value: model.placeId),
             URLQueryItem(name: AVIRORequestAPI.userId, value: model.userId)
+        ]
+        
+        return components
+    }
+    
+    // MARK: My Contribution count
+    mutating func getMyContributionCount(userId: String) -> URLComponents {
+        var components = URLComponents()
+        
+        components.scheme = AVIRORequestAPI.scheme
+        components.host = host
+        components.path = AVIRORequestAPI.myContributionCount
+        
+        components.queryItems = [
+            URLQueryItem(name: AVIRORequestAPI.userId, value: userId)
         ]
         
         return components

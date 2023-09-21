@@ -21,14 +21,14 @@ final class MyInfoView: UIView {
         let label = UILabel()
         
         label.font = .pretendard(size: 17, weight: .semibold)
-        label.text = UserId.shared.userNickname
+        label.text = MyData.my.nickname
         label.textColor = .gray0
         
         return label
     }()
     
-    private lazy var editNickname: EditNicNameButton = {
-        let button = EditNicNameButton()
+    private lazy var editNickname: EditNickNameButton = {
+        let button = EditNickNameButton()
         
         button.makeButton("닉네임 수정하기")
         button.addTarget(self, action: #selector(tappedNicNameButton), for: .touchUpInside)

@@ -19,7 +19,7 @@ final class PlaceReviewWriteView: UIView {
     private lazy var title: UILabel = {
         let label = UILabel()
         
-        let userId = UserId.shared.userNickname
+        let userId = MyData.my.nickname
         label.text = userId + "님의 후기를 들려주세요!"
         label.font = .pretendard(size: 17, weight: .semibold)
         label.textColor = .gray0

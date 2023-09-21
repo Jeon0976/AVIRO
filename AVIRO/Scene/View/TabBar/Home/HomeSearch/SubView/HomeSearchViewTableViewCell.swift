@@ -93,7 +93,7 @@ final class HomeSearchViewTableViewCell: UITableViewCell {
         ])
     }
     
-    func makeCellData(_ listData: MatchedPlaceListCell,
+    func makeCellData(_ listData: MatchedPlaceCellModel,
                       attributedTitle: NSAttributedString?,
                       attributedAddress: NSAttributedString?
     ) {

@@ -73,10 +73,10 @@ final class PlaceSegmentedControlView: UIView {
     var editMenu: (() -> Void)?
     
     // review
-    var whenUploadReview: ((AVIROEnrollCommentDTO) -> Void)?
-    var whenAfterEditReview: ((AVIROEditCommentDTO) -> Void)?
+    var whenUploadReview: ((AVIROEnrollReviewDTO) -> Void)?
+    var whenAfterEditReview: ((AVIROEditReviewDTO) -> Void)?
     var updateReviewsCount: ((Int) -> Void)?
-    var reportReview: ((AVIROReportCommentModel) -> Void)?
+    var reportReview: ((AVIROReportReviewModel) -> Void)?
     var editMyReview: ((String) -> Void)?
     
     override init(frame: CGRect) {
@@ -199,9 +199,9 @@ final class PlaceSegmentedControlView: UIView {
     }
     
     func allDataBinding(placeId: String,
-                        infoModel: PlaceInfoData?,
-                        menuModel: PlaceMenuData?,
-                        reviewsModel: AVIROReviewsModelArrayDTO?
+                        infoModel: AVIROPlaceInfo?,
+                        menuModel: AVIROPlaceMenus?,
+                        reviewsModel: AVIROReviewsArrayDTO?
     ) {
         self.placeId = placeId
         
@@ -301,7 +301,7 @@ final class PlaceSegmentedControlView: UIView {
         reviewView.isUserInteractionEnabled = enabled
     }
     
-    func refreshMenuData(_ menuModel: PlaceMenuData?) {
+    func refreshMenuData(_ menuModel: AVIROPlaceMenus?) {
         homeView.refreshMenuData(menuModel)
         menuView.dataBinding(menuModel)
     }

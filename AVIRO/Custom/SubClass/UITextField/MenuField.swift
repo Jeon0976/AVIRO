@@ -7,7 +7,23 @@
 
 import UIKit
 
+fileprivate enum VariablePriceEnum: String {
+    case variable = "변동가"
+    case cancel = "변동취소"
+    
+    init?(value: String) {
+        switch value {
+        case "변동가": self = .variable
+        case "변동취소": self = .cancel
+        default: return nil
+        }
+    }
+}
+
 final class MenuField: UITextField {
+    private var variable = VariablePriceEnum.variable.rawValue
+    private var cancel = VariablePriceEnum.cancel.rawValue
+    
     private var horizontalPadding: CGFloat = 16
     private var verticalPadding: CGFloat = 12
     private var buttonPadding: CGFloat = 10
@@ -36,16 +52,20 @@ final class MenuField: UITextField {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
     
-    override func textRect(forBounds bounds: CGRect) -> CGRect {
+    override func textRect(
+        forBounds bounds: CGRect
+    ) -> CGRect {
         let inset = setTextInset()
         
         return bounds.inset(by: inset)
     }
     
-    override func editingRect(forBounds bounds: CGRect) -> CGRect {
+    override func editingRect(
+        forBounds bounds: CGRect
+    ) -> CGRect {
         let inset = setTextInset()
         
         return bounds.inset(by: inset)
@@ -53,7 +73,7 @@ final class MenuField: UITextField {
     
     private func configuration() {
         textColor = .gray0
-        font = .pretendard(size: 15, weight: .medium)
+        font = CFont.font.medium15
         backgroundColor = .gray6
         layer.cornerRadius = 10
     }
@@ -80,7 +100,7 @@ final class MenuField: UITextField {
     func makePlaceHolder(_ placeHolder: String) {
         self.attributedPlaceholder = NSAttributedString(
             string: placeHolder,
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray3 ?? .systemGray4]
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray3]
         )
     }
     
@@ -88,12 +108,19 @@ final class MenuField: UITextField {
     func addRightButton() {
         isAddRightButton = !isAddRightButton
         
-        let image = UIImage(named: "Dots")?.withRenderingMode(.alwaysTemplate)
+        let image = UIImage.dots.withRenderingMode(.alwaysTemplate)
         
         let button = UIButton()
+        
         button.setImage(image, for: .normal)
         button.tintColor = .gray2
-        button.frame = .init(x: horizontalPadding, y: 0, width: buttonSize, height: buttonSize)
+        
+        button.frame = .init(
+            x: horizontalPadding,
+            y: 0,
+            width: buttonSize,
+            height: buttonSize
+        )
         
         button.menu = setButtonMenu()
 
@@ -126,26 +153,35 @@ final class MenuField: UITextField {
     // MARK: SetButton Menu 
     private func setButtonMenu() -> UIMenu {
         var variablePrice: UIAction
-
-        if self.text == "변동가" {
-            variablePrice = UIAction(title: "변동취소", handler: { [weak self] _ in
-                self?.text = ""
-                self?.variablePriceChanged?("")
-            })
+        
+        if self.text == variable {
+            variablePrice = UIAction(
+                title: cancel,
+                handler: { [weak self] _ in
+                    self?.text = ""
+                    self?.variablePriceChanged?("")
+                })
         } else {
-            variablePrice = UIAction(title: "변동가", handler: { [weak self] _ in
-                self?.text = "변동가"
-                self?.variablePriceChanged?("변동가")
-            })
+            variablePrice = UIAction(
+                title: VariablePriceEnum.variable.rawValue,
+                handler: { [weak self] _ in
+                    self?.text = VariablePriceEnum.variable.rawValue
+                    self?.variablePriceChanged?(VariablePriceEnum.variable.rawValue)
+                })
         }
-
-        let cancel = UIAction(title: "취소", attributes: .destructive) { _ in }
-        let menu = UIMenu(title: "변동가격",
-                          identifier: nil,
-                          options: .displayInline,
-                          children: [variablePrice, cancel]
+        
+        let cancel = UIAction(
+            title: "취소",
+            attributes: .destructive
+        ) { _ in }
+        
+        let menu = UIMenu(
+            title: "변동가격",
+            identifier: nil,
+            options: .displayInline,
+            children: [variablePrice, cancel]
         )
-
+        
         return menu
     }
 }

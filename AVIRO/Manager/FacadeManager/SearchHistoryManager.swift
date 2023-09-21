@@ -52,7 +52,7 @@ struct SearchHistoryManager: SearchHistoryManagerProtocol {
     // MARK: Data 제거하기
     func deleteHistoryModel(_ value: HistoryTableModel) {
         var currentTable: [HistoryTableModel] = getHistoryModel()
-        currentTable = currentTable.filter { $0.id != value.id}
+        currentTable = currentTable.filter { $0.id != value.id }
         
         UserDefaults.standard.set(
             try? PropertyListEncoder().encode(currentTable),

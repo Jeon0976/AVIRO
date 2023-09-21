@@ -119,10 +119,10 @@ final class EnrollVeganDetailView: UIView {
     
     // MARK: Attribute
     private func makeAttribute() {
-        allVeganButton.setButton("모든 메뉴가\n비건", UIImage(named: "AllOption")!)
-        someVeganButton.setButton("일부 메뉴만\n비건", UIImage(named: "SomeOption")!)
-        requestVeganButton.setButton("비건 메뉴로\n요청 가능", UIImage(named: "RequestOption")!)
-        
+        allVeganButton.setButton(.all)
+        someVeganButton.setButton(.some)
+        requestVeganButton.setButton(.request)
+
         allVeganButton.changedColor = .all
         someVeganButton.changedColor = .some
         requestVeganButton.changedColor = .request

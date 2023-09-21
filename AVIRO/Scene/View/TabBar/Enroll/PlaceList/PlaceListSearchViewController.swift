@@ -155,7 +155,7 @@ extension PlaceListSearchViewController: PlaceListProtocol {
         noResultTitle.isHidden = false
         
         listTableView.reloadData()
-        searchField.activeShakeAfterNoSearchData()
+        searchField.activeHshakeEffect()
     }
     
     // MARK: Pop View Controller

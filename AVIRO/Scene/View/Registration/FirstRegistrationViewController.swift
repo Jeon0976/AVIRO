@@ -7,34 +7,57 @@
 
 import UIKit
 
+private enum Text: String {
+    case title = "반가워요!\n닉네임을 정해주세요."
+    case subtitle = "어비로에 불릴 닉네임이에요."
+    case nicknamePlaceHolder = "닉네임을 입력해주세요"
+    case subInfo = "이모지, 특수문자(-, _ 제외)를 사용할 수 없습니다."
+    case subInfo2 = "(0/8)"
+    case next = "다음으로"
+}
+
+private enum Layout {
+    enum Margin: CGFloat {
+        case small = 10
+        case medium = 20
+        case large = 30
+        case largeToView = 40
+    }
+    
+    enum Size: CGFloat {
+        case subInfo2Width = 32
+        case nextButtonHeight = 50
+    }
+}
+
 final class FirstRegistrationViewController: UIViewController {
     lazy var presenter = FirstRegistrationPresenter(viewController: self)
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "반가워요!\n닉네임을 정해주세요."
-        label.font = .pretendard(size: 24, weight: .bold)
+        label.text = Text.title.rawValue
+        label.font = CFont.font.bold24
         label.textColor = .main
         label.numberOfLines = 2
         
         return label
     }()
 
-    private lazy var subTitleLabel: UILabel = {
+    private lazy var subtitleLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "어비로에 불릴 닉네임이에요."
-        label.font = .pretendard(size: 14, weight: .regular)
+        label.text = Text.subtitle.rawValue
+        label.font = CFont.font.regular14
         label.textColor = .gray1
         
         return label
     }()
     
-    private lazy var nicNameField: RegistrationField = {
+    private lazy var nicknameField: RegistrationField = {
         let field = RegistrationField()
         
-        field.makePlaceHolder("닉네임을 입력해주세요")
+        field.makePlaceHolder(Text.nicknamePlaceHolder.rawValue)
         field.isPossible = nil
         field.delegate = self
         
@@ -44,8 +67,8 @@ final class FirstRegistrationViewController: UIViewController {
     private lazy var subInfo: UILabel = {
         let label = UILabel()
         
-        label.text = "이모지, 특수문자(-, _ 제외)를 사용할 수 없습니다."
-        label.font = .pretendard(size: 13, weight: .regular)
+        label.text = Text.subInfo.rawValue
+        label.font = CFont.font.regular13
         label.numberOfLines = 2
         label.lineBreakMode = .byCharWrapping
         label.textColor = .gray2
@@ -56,8 +79,8 @@ final class FirstRegistrationViewController: UIViewController {
     private lazy var subInfo2: UILabel = {
         let label = UILabel()
         
-        label.text = "(0/8)"
-        label.font = .pretendard(size: 13, weight: .regular)
+        label.text = Text.subInfo2.rawValue
+        label.font =  CFont.font.regular13
         label.textColor = .gray2
         label.textAlignment = .right
         
@@ -67,7 +90,7 @@ final class FirstRegistrationViewController: UIViewController {
     private lazy var nextButton: NextPageButton = {
         let button = NextPageButton()
         
-        button.setTitle("다음으로", for: .normal)
+        button.setTitle(Text.next.rawValue, for: .normal)
         button.isEnabled = false
         button.addTarget(
             self,
@@ -91,11 +114,11 @@ final class FirstRegistrationViewController: UIViewController {
 
 extension FirstRegistrationViewController: FirstRegistrationProtocol {
     // MARK: Layout
-    func makeLayout() {
+    func setupLayout() {
         [
             titleLabel,
-            subTitleLabel,
-            nicNameField,
+            subtitleLabel,
+            nicknameField,
             subInfo,
             subInfo2,
             nextButton
@@ -107,93 +130,136 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
         NSLayoutConstraint.activate([
             // titleLabel
             titleLabel.topAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
+                equalTo: view.safeAreaLayoutGuide.topAnchor,
+                constant: Layout.Margin.largeToView.rawValue
+            ),
             titleLabel.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor, constant: 30),
+                equalTo: view.leadingAnchor,
+                constant: Layout.Margin.large.rawValue
+            ),
             
             // subTitle
-            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-            subTitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            subtitleLabel.topAnchor.constraint(
+                equalTo: titleLabel.bottomAnchor,
+                constant: Layout.Margin.small.rawValue
+            ),
+            subtitleLabel.leadingAnchor.constraint(
+                equalTo: titleLabel.leadingAnchor
+            ),
             
             // nicNameField
-            nicNameField.topAnchor.constraint(
-                equalTo: subTitleLabel.bottomAnchor, constant: 30),
-            nicNameField.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor, constant: 30),
-            nicNameField.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor, constant: -30),
+            nicknameField.topAnchor.constraint(
+                equalTo: subtitleLabel.bottomAnchor,
+                constant: Layout.Margin.large.rawValue
+            ),
+            nicknameField.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: Layout.Margin.large.rawValue
+            ),
+            nicknameField.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor,
+                constant: -Layout.Margin.large.rawValue
+            ),
             
             // subInfo
             subInfo.topAnchor.constraint(
-                equalTo: nicNameField.bottomAnchor, constant: 18),
+                equalTo: nicknameField.bottomAnchor,
+                constant: Layout.Margin.small.rawValue
+            ),
             subInfo.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor, constant: 40),
-            subInfo.trailingAnchor.constraint(equalTo: subInfo2.leadingAnchor, constant: -10),
+                equalTo: view.leadingAnchor,
+                constant: Layout.Margin.largeToView.rawValue
+            ),
+            subInfo.trailingAnchor.constraint(
+                equalTo: subInfo2.leadingAnchor,
+                constant: -Layout.Margin.small.rawValue
+            ),
             
             // subInfo2
             subInfo2.topAnchor.constraint(
                 equalTo: subInfo.topAnchor),
             subInfo2.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor, constant: -40),
-            subInfo2.widthAnchor.constraint(equalToConstant: 32),
+                equalTo: view.trailingAnchor,
+                constant: -Layout.Margin.largeToView.rawValue
+            ),
+            subInfo2.widthAnchor.constraint(
+                equalToConstant: Layout.Size.subInfo2Width.rawValue
+            ),
             
             // next Button
             nextButton.bottomAnchor.constraint(
-                equalTo: view.bottomAnchor, constant: -40),
-            nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+                equalTo: view.bottomAnchor,
+                constant: -Layout.Margin.largeToView.rawValue
+            ),
+            nextButton.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: Layout.Margin.medium.rawValue
+            ),
+            nextButton.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor,
+                constant: -Layout.Margin.medium.rawValue
+            ),
+            nextButton.heightAnchor.constraint(
+                equalToConstant: Layout.Size.nextButtonHeight.rawValue
+            )
         ])
     }
     
-    // MARK: Attribute
-    func makeAttribute() {
+    func setupAttribute() {
         // view, naivgation, ..
-        view.backgroundColor = .white
+        view.backgroundColor = .gray7
         navigationItem.backButtonTitle = ""
         setupCustomBackButton(true)
     }
     
-    func makeGesture() {
-        tapGesture.cancelsTouchesInView = false
+    func setupGesture() {
         tapGesture.delegate = self
         view.addGestureRecognizer(tapGesture)
     }
     
-    // MARK: check Result
-    func changeSubInfo(subInfo: String, isVaild: Bool) {
+    func changeSubInfo(
+        subInfo: String,
+        isVaild: Bool
+    ) {
         self.subInfo.text = subInfo
         
         if isVaild {
             nextButton.isEnabled = true
-            nicNameField.isPossible = true
+            nicknameField.isPossible = true
             self.subInfo.textColor = .gray2
         } else {
             nextButton.isEnabled = false
-            nicNameField.isPossible = false
+            nicknameField.isPossible = false
             self.subInfo.textColor = .warning
-            nicNameField.activeShakeAfterNoSearchData()
+            nicknameField.activeHshakeEffect()
         }
     }
     
-    // MARK: Push Second Registration View
-    func pushSecondRegistrationView(_ userInfoModel: AVIROUserSignUpDTO) {
+    func pushSecondRegistrationView(
+        _ userInfoModel: AVIROUserSignUpDTO
+    ) {
         let viewController = SecondRegistrationViewController()
-        let presenter = SecondRegistrationPresenter(viewController: viewController,
-                                                    userInfoModel: userInfoModel)
+        
+        let presenter = SecondRegistrationPresenter(
+            viewController: viewController,
+            userInfoModel: userInfoModel
+        )
         
         viewController.presenter = presenter
         
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    @objc func tappedNextButton() {
+    @objc private func tappedNextButton() {
         presenter.pushUserInfo()
     }
 }
 
-// MARK: 키보드 내리기
 extension FirstRegistrationViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldReceive touch: UITouch
+    ) -> Bool {
         if touch.view is UITextField {
             return false
         }
@@ -204,9 +270,8 @@ extension FirstRegistrationViewController: UIGestureRecognizerDelegate {
 }
 
 extension FirstRegistrationViewController: UITextFieldDelegate {
-    // MARK: TextField 값이 변하고 있을 때
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        nicNameField.isPossible = nil
+        nicknameField.isPossible = nil
         nextButton.isEnabled = false
         
         if let count = textField.text?.count {
@@ -215,9 +280,10 @@ extension FirstRegistrationViewController: UITextFieldDelegate {
         
         let currentText = textField.text ?? ""
         
+        // TODO: 분기 두 개 들어가서 리펙토링 필요
         if currentText.count > 8 {
-            textField.text = limitText(currentText)
-            textField.activeShakeAfterNoSearchData()
+            textField.text = currentText.limitedNickname
+            textField.activeHshakeEffect()
             return
         }
         
@@ -230,22 +296,14 @@ extension FirstRegistrationViewController: UITextFieldDelegate {
         self.subInfo2.text = "(\(count)/8)"
     }
     
-    private func limitText(_ text: String) -> String {
-        let startIndex = text.startIndex
-        let endIndex = text.index(startIndex, offsetBy: 8 - 1)
-        
-        let fixedText = String(text[startIndex...endIndex])
-                
-        return fixedText
-    }
-    
     private func checkNicknameDuplicationAfterDelay() {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(timeInterval: 0.5,
-                                     target: self,
-                                     selector: #selector(checkDuplication),
-                                     userInfo: nil,
-                                     repeats: false
+        timer = Timer.scheduledTimer(
+            timeInterval: 0.5,
+            target: self,
+            selector: #selector(checkDuplication),
+            userInfo: nil,
+            repeats: false
         )
     }
     
@@ -253,29 +311,3 @@ extension FirstRegistrationViewController: UITextFieldDelegate {
         presenter.checkDuplication()
     }
 }
-
-// MARK: View Preview
-#if DEBUG
-import SwiftUI
-
-struct FirstRegistrationViewControllerPresentable: UIViewControllerRepresentable {
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        
-    }
-    
-    func makeUIViewController(context: Context) -> some UIViewController {
-        let vc =  FirstRegistrationViewController()
-        
-        let presenter = FirstRegistrationPresenter(viewController: vc)
-        vc.presenter = presenter
-        
-        return vc
-    }
-}
-
-struct  FirstRegistrationViewControllerPresentablePreviewProvider: PreviewProvider {
-    static var previews: some View {
-        FirstRegistrationViewControllerPresentable()
-    }
-}
-#endif

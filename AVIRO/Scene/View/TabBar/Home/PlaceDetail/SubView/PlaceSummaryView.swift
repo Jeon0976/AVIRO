@@ -110,7 +110,7 @@ final class PlaceSummaryView: UIView {
     lazy var shareButton: UIButton = {
         let button = UIButton()
         
-        button.setImage(UIImage(named: "share")?.withTintColor(.main!), for: .normal)
+        button.setImage(UIImage(named: "share")?.withTintColor(.main), for: .normal)
         button.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
         
         return button
@@ -304,15 +304,15 @@ final class PlaceSummaryView: UIView {
 
         switch placeModel.placeState {
         case .All:
-            placeIconImage = UIImage(named: "Allbox")
+            placeIconImage = UIImage(named: "AllBox")
             whenSlideTopLabel.textColor = .all
             whenSlideTopLabelString = "모든 메뉴가 비건"
         case .Some:
-            placeIconImage = UIImage(named: "Somebox")
+            placeIconImage = UIImage(named: "SomeBox")
             whenSlideTopLabel.textColor = .some
             whenSlideTopLabelString = "일부 메뉴만 비건"
         case .Request:
-            placeIconImage = UIImage(named: "Requestbox")
+            placeIconImage = UIImage(named: "RequestBox")
             whenSlideTopLabel.textColor = .request
             whenSlideTopLabelString = "비건 메뉴로 요청 가능"
         }

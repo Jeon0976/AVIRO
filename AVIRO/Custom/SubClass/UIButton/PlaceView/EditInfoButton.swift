@@ -17,17 +17,28 @@ final class EditInfoButton: UIButton {
         fatalError()
     }
     
+
     func setButton(_ title: String) {
         self.setTitle(title, for: .normal)
         self.setTitleColor(.keywordBlue, for: .normal)
-        self.titleLabel?.font = .pretendard(size: 14, weight: .medium)
+        self.titleLabel?.font = CFont.font.medium14
         
-        self.setImage(UIImage(named: "Edit"), for: .normal)
+        self.setImage(UIImage.editInfo, for: .normal)
         
         self.backgroundColor = .gray7
-
-        self.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 5)
-        self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0)
+        
+        self.imageEdgeInsets = UIEdgeInsets(
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 5
+        )
+        self.titleEdgeInsets = UIEdgeInsets(
+            top: 0,
+            left: 5,
+            bottom: 0,
+            right: 0
+        )
         
         self.semanticContentAttribute = .forceLeftToRight
     }

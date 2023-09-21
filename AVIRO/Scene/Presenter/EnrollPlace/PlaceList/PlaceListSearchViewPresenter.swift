@@ -58,7 +58,7 @@ final class PlaceListSearchViewPresenter: NSObject {
         let longitude = MyCoordinate.shared.longitudeString
         let latitude = MyCoordinate.shared.latitudeString
         
-        KakaoMapRequestManager().kakaoMapKeywordSearch(query: query,
+        KakaoMapAPIManager().kakaoMapKeywordSearch(query: query,
                                       longitude: longitude,
                                       latitude: latitude,
                                       page: "\(currentPage)") { [weak self] model in
@@ -106,7 +106,7 @@ final class PlaceListSearchViewPresenter: NSObject {
         let longitude = MyCoordinate.shared.longitudeString
         let latitude = MyCoordinate.shared.latitudeString
         
-        KakaoMapRequestManager().kakaoMapKeywordSearch(
+        KakaoMapAPIManager().kakaoMapKeywordSearch(
             query: query,
             longitude: longitude,
             latitude: latitude,
@@ -137,7 +137,7 @@ final class PlaceListSearchViewPresenter: NSObject {
     // MARK: Item 클릭 될 떄
     func didSelectRowAt(_ indexPath: IndexPath) {
         let selectedItem = placeList[indexPath.row]
-        let placeModel = PlaceCheckModel(
+        let placeModel = AVIROCheckPlaceDTO(
             title: selectedItem.title,
             address: selectedItem.address,
             x: String(selectedItem.x),

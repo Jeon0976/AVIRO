@@ -8,7 +8,6 @@
 import UIKit
 
 final class GenderButton: UIButton {
-    // MARK: selected 분기 처리
     override var isSelected: Bool {
         didSet {
             self.backgroundColor = isSelected ? .main : .gray6
@@ -18,32 +17,38 @@ final class GenderButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        attribute()
+        setAttribute()
     }
     
     required init?(coder: NSCoder) {
         fatalError()
     }
     
-    override func setTitle(_ title: String?, for state: UIControl.State) {
+    override func setTitle(
+        _ title: String?,
+        for state: UIControl.State
+    ) {
         guard let title = title else {
             super.setTitle(title, for: state)
             return
         }
         
         let attributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.pretendard(size: 16, weight: .semibold),
-            .foregroundColor: UIColor.gray3 ?? .lightGray
+            .font: CFont.font.semibold16,
+            .foregroundColor: UIColor.gray3
         ]
         
-        let attributedTitle = NSAttributedString(string: title, attributes: attributes)
+        let attributedTitle = NSAttributedString(
+            string: title,
+            attributes: attributes
+        )
         
         setAttributedTitle(attributedTitle, for: state)
 
         // selected title
         let selectedAttribute: [NSAttributedString.Key: Any] = [
-            .font: UIFont.pretendard(size: 16, weight: .semibold),
-            .foregroundColor: UIColor.gray7 ?? .white
+            .font: CFont.font.semibold16,
+            .foregroundColor: UIColor.gray7
         ]
         
         let selectedAttributedTitle = NSAttributedString(
@@ -62,13 +67,19 @@ final class GenderButton: UIButton {
         let depth = 20.0
         let viewWidth = Double(self.superview?.frame.width ?? 0)
         let buttonWidth = (viewWidth - depth) / 3.0
-        self.widthAnchor.constraint(equalToConstant: CGFloat(buttonWidth)).isActive = true
+        
+        self.widthAnchor.constraint(
+            equalToConstant: CGFloat(buttonWidth)).isActive = true
     }
     
-    // MARK: Button Attribute
-    private func attribute() {
+    private func setAttribute() {
         self.backgroundColor = .gray6
         self.layer.cornerRadius = 26
-        self.contentEdgeInsets = UIEdgeInsets(top: 16, left: 35, bottom: 16, right: 35)
+        self.contentEdgeInsets = UIEdgeInsets(
+            top: 16,
+            left: 35,
+            bottom: 16,
+            right: 35
+        )
     }
 }

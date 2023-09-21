@@ -20,11 +20,13 @@ final class HomeTopButton: UIButton {
     
     func setAttribute() {
         self.backgroundColor = .gray7
+        
         self.layer.cornerRadius = 20
-        self.isHidden = true
-        self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowRadius = 10
         self.layer.shadowOpacity = 0.15
         self.layer.shadowOffset = CGSize(width: 1, height: 3)
+        self.layer.shadowColor = UIColor.black.cgColor
+
+        self.isHidden = true
     }
 }

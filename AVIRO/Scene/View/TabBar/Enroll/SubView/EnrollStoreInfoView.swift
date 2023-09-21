@@ -179,10 +179,10 @@ final class EnrollStoreInfoView: UIView {
         numberField.textColor = .gray3
         addressField.textColor = .gray3
         
-        restaurantButton.setButton(Category.restaurant.title)
-        cafeButton.setButton(Category.cafe.title)
-        bakeryButton.setButton(Category.bakery.title)
-        barButton.setButton(Category.bar.title)
+        restaurantButton.setButton(PlaceCategory.restaurant.title)
+        cafeButton.setButton(PlaceCategory.cafe.title)
+        bakeryButton.setButton(PlaceCategory.bakery.title)
+        barButton.setButton(PlaceCategory.bar.title)
 
         categoryButtons = [
             restaurantButton,

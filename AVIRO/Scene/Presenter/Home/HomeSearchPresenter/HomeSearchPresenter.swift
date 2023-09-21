@@ -156,7 +156,7 @@ final class HomeSearchPresenter {
             latitude = CenterCoordinate.shared.latitude ?? 0.0
         }
         
-        KakaoMapRequestManager().kakaoMapLocationSearch(
+        KakaoMapAPIManager().kakaoMapLocationSearch(
             query: query,
             longitude: String(longitude),
             latitude: String(latitude),
@@ -217,7 +217,7 @@ final class HomeSearchPresenter {
             latitude = CenterCoordinate.shared.latitude ?? 0.0
         }
         
-        KakaoMapRequestManager().kakaoMapLocationSearch(
+        KakaoMapAPIManager().kakaoMapLocationSearch(
             query: query,
             longitude: String(longitude),
             latitude: String(latitude),
@@ -244,15 +244,15 @@ final class HomeSearchPresenter {
     
     // MARK: AVIRO 데이터와 비교하기 위한 데이터 만들기
     private func makeToPlaceFromAVIROData(placeList: [PlaceListModel]) {
-        var beforeMatchedArray = [ForMatchedAVIRO]()
-        var afterMatchedArray = [AfterMatchedAVIRO]()
+        var beforeMatchedArray = [AVIROForMatchedModel]()
+        var afterMatchedArray = [AVIROAfterMatchedModel]()
         
         placeList.forEach {
             let title = $0.title
             let x = $0.x
             let y = $0.y
             
-            let model = ForMatchedAVIRO(
+            let model = AVIROForMatchedModel(
                 title: title,
                 x: x,
                 y: y
@@ -261,7 +261,7 @@ final class HomeSearchPresenter {
             beforeMatchedArray.append(model)
         }
                 
-        let beforeMatchedRequestModel = PlaceModelBeforeMatchedAVIRO(placeArray: beforeMatchedArray)
+        let beforeMatchedRequestModel = AVIROBeforeComparePlaceDTO(placeArray: beforeMatchedArray)
         AVIROAPIManager().postPlaceListMatched(beforeMatchedRequestModel) { placeModelAfterMatched in
             afterMatchedArray = placeModelAfterMatched.body
             DispatchQueue.main.async { [weak self] in
@@ -275,7 +275,7 @@ final class HomeSearchPresenter {
     // MARK: 비교 기반 데이터로 table 데이터에 바인딩
     // TODO: 오류 및 API 호출 관련해서 다 입력 끝나면 발동하게 수정??
     private func bindingToTableData(
-        afterMatched: [AfterMatchedAVIRO],
+        afterMatched: [AVIROAfterMatchedModel],
         placeList: [PlaceListModel]
     ) {
         for (index, place) in placeList.enumerated() {

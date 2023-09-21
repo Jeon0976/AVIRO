@@ -66,7 +66,7 @@ final class MyPageViewController: UIViewController {
 }
 
 extension MyPageViewController: MyPageViewProtocol {
-    func makeLayout() {
+    func setupLayout() {
        [
             myInfoView,
             otherActionsView
@@ -101,7 +101,7 @@ extension MyPageViewController: MyPageViewProtocol {
         ])
     }
     
-    func makeAttribute() {
+    func setupAttribute() {
         view.backgroundColor = .gray7
         
         scrollView.backgroundColor = .gray6
@@ -144,7 +144,7 @@ extension MyPageViewController: MyPageViewProtocol {
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
             mail.setToRecipients(["aviro.kr.official@gmail.com"])
-            mail.setSubject("[AVIRO] \(UserId.shared.userNickname)님의 문의 및 의견")
+            mail.setSubject("[AVIRO] \(MyData.my.nickname)님의 문의 및 의견")
             mail.setMessageBody("본문 내용입니다.", isHTML: false)
             
             present(mail, animated: true)

@@ -48,30 +48,43 @@ final class SearchField: UITextField {
         fatalError()
     }
     
-    override func textRect(forBounds bounds: CGRect) -> CGRect {
+    override func textRect(
+        forBounds bounds: CGRect
+    ) -> CGRect {
         return bounds.inset(by: textInset)
     }
     
-    override func editingRect(forBounds bounds: CGRect) -> CGRect {
+    override func editingRect(
+        forBounds bounds: CGRect
+    ) -> CGRect {
         return bounds.inset(by: textInset)
     }
     
     // MARK: Configuration
     private func configuration() {
         textColor = .keywordBlue
-        font = .pretendard(size: 18, weight: .medium)
+        font = CFont.font.medium18
         backgroundColor = .gray6
         layer.cornerRadius = 10
     }
     
     // MARK: Make left Button
     private func makeLeftButton() {
-        let image = UIImage(named: "Search")?.withRenderingMode(.alwaysTemplate)
+        let image = UIImage.searchIcon.withRenderingMode(.alwaysTemplate)
         
         leftButton.setImage(image, for: .normal)
         leftButton.tintColor = .gray2
-        leftButton.frame = .init(x: horizontalPadding, y: 0, width: buttonSize, height: buttonSize)
-        leftButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
+        leftButton.frame = .init(
+            x: horizontalPadding,
+            y: 0,
+            width: buttonSize,
+            height: buttonSize
+        )
+        leftButton.addTarget(
+            self,
+            action: #selector(leftButtonTapped),
+            for: .touchUpInside
+        )
         
         let paddingView = UIView(frame: CGRect(
             x: 0,
@@ -88,7 +101,7 @@ final class SearchField: UITextField {
     
     // MARK: Left button 바꾸기
     func changeLeftButton() {
-        let changedImage = UIImage(named: "Back")?.withRenderingMode(.alwaysTemplate)
+        let changedImage = UIImage.back.withRenderingMode(.alwaysTemplate)
         leftButton.setImage(changedImage, for: .normal)
         
         changedLeftButton = true
@@ -96,7 +109,7 @@ final class SearchField: UITextField {
     
     // MARK: Left Button 원 상태로 돌리기
     func initLeftButton() {
-        let initImage = UIImage(named: "Search")?.withRenderingMode(.alwaysTemplate)
+        let initImage = UIImage.searchIcon.withRenderingMode(.alwaysTemplate)
         leftButton.setImage(initImage, for: .normal)
     }
     
@@ -112,12 +125,21 @@ final class SearchField: UITextField {
     
     // MARK: Make Right Button
     private func makeRightButton() {
-        let image = UIImage(named: "X-Circle")?.withRenderingMode(.alwaysTemplate)
+        let image = UIImage.closeCircle.withRenderingMode(.alwaysTemplate)
         
         rightButton.setImage(image, for: .normal)
         rightButton.tintColor = .gray2
-        rightButton.frame = .init(x: horizontalPadding, y: 0, width: buttonSize, height: buttonSize)
-        rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
+        rightButton.frame = .init(
+            x: horizontalPadding,
+            y: 0,
+            width: buttonSize,
+            height: buttonSize
+        )
+        rightButton.addTarget(
+            self,
+            action: #selector(rightButtonTapped),
+            for: .touchUpInside
+        )
         
         let paddingView = UIView(frame: CGRect(
             x: 0,
@@ -142,7 +164,7 @@ final class SearchField: UITextField {
     func makePlaceHolder(_ placeHolder: String) {
         self.attributedPlaceholder = NSAttributedString(
             string: placeHolder,
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray3 ?? .systemGray4]
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray3]
         )
     }
 }

@@ -8,12 +8,10 @@
 import Foundation
 
 final class BookmarkFacadeManager {
-    private let bookmarkArray = BookmarkArray.shared
-    
-    private let userId = UserId.shared.userId
-    
+    private let bookmarkArray = LocalBookmarkData.shared
+        
     func fetchAllData() {
-        AVIROAPIManager().getBookmarkModels(userId: userId) { [weak self] bookmarkModel in
+        AVIROAPIManager().getBookmarkModels(userId: MyData.my.id) { [weak self] bookmarkModel in
             let dataArray = bookmarkModel.bookmarks
             self?.bookmarkArray.updateAllData(dataArray)
         }
@@ -26,10 +24,11 @@ final class BookmarkFacadeManager {
     func updateAllData() {
         let bookmarks = bookmarkArray.loadAllData()
         
-        let postModel = BookmarkPostModel(placeList: bookmarks, userId: userId)
+        let postModel = AVIROUpdateBookmarkDTO(placeList: bookmarks, userId: MyData.my.id)
         
         // MARK: Error 처리
         AVIROAPIManager().postBookmarkModel(bookmarkModel: postModel) { statusCode in
+            
         }
     }
     

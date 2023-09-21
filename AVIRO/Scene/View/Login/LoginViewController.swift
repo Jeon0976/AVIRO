@@ -106,8 +106,8 @@ extension LoginViewController: LoginViewProtocol {
     
     // MARK: No Login Button Tapped
     @objc func tapNoLoginButton() {
-        UserId.shared.userId = "test"
-        UserId.shared.userNickname = "test"
+        MyData.my.id = "test"
+        MyData.my.nickname = "test"
         
         pushTabBar()
     }
@@ -152,10 +152,10 @@ extension LoginViewController: LoginViewProtocol {
         
         var style = ToastStyle()
         style.cornerRadius = 14
-        style.backgroundColor = .gray3? ?? .lightGray
+        style.backgroundColor = .gray3
         
-        style.titleColor = .gray7 ?? .white
-        style.titleFont = .systemFont(ofSize: 17, weight: .medium)
+        style.titleColor = .gray7
+        style.titleFont = .pretendard(size: 17, weight: .medium)
         
         let centerX = (self.view.frame.size.width) / 2
         let yPosition = self.view.frame.height - 150

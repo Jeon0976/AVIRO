@@ -96,7 +96,7 @@ final class PlaceMenuView: UIView {
     
     private var cellHeights: [IndexPath: CGFloat] = [:]
 
-    private var menuArray = [MenuArray]()
+    private var menuArray = [AVIROMenu]()
     
     private var whenMenuView = false
     
@@ -142,7 +142,7 @@ final class PlaceMenuView: UIView {
         ])
     }
     
-    func dataBinding(_ menuModel: PlaceMenuData?) {
+    func dataBinding(_ menuModel: AVIROPlaceMenus?) {
         guard let menuModel = menuModel else { return }
         
         whenMenuView = true
@@ -159,7 +159,7 @@ final class PlaceMenuView: UIView {
         showMoreButton.isHidden = true
     }
         
-    func dataBindingWhenInHomeView(_ menuModel: PlaceMenuData?) {
+    func dataBindingWhenInHomeView(_ menuModel: AVIROPlaceMenus?) {
         
         guard let menuModel = menuModel else { return }
         

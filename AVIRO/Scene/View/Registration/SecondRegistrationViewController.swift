@@ -7,25 +7,54 @@
 
 import UIKit
 
+private enum Text: String {
+    case title = "곧 어비로를\n사용할 수 있어요!"
+    case subtitle = "연도와 성별은 선택사항이에요."
+    case birthPlaceHolder = "0000.00.00"
+    case birthSub = "태어난 연도를 입력해주세요 (선택)"
+    case birthSubWarning = "올바른 형식으로 입력해주세요"
+    case male = "남자"
+    case female = "여자"
+    case otherGender = "기타"
+    case genderSub = "성별을 선택해주세요 (선택)"
+    case next = "다음으로"
+}
+
+private enum Layout {
+    enum Margin: CGFloat {
+        case small = 10
+        case medium = 20
+        case large = 30
+        case largeToView = 40
+    }
+    
+    enum Size: CGFloat {
+        case nextButtonHeight = 50
+    }
+    
+    enum Spacing: CGFloat {
+        case gender = 10
+    }
+}
+
 final class SecondRegistrationViewController: UIViewController {
     lazy var presenter = SecondRegistrationPresenter(viewController: self)
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "곧 어비로를\n사용할 수 있어요!"
-        label.font = .pretendard(size: 24, weight: .bold)
+        label.text = Text.title.rawValue
+        label.font = CFont.font.bold24
         label.textColor = .main
         label.numberOfLines = 2
         
         return label
     }()
-    
-    private lazy var subTitleLabel: UILabel = {
+    private lazy var subtitleLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "연도와 성별은 선택사항이에요."
-        label.font = .pretendard(size: 14, weight: .regular)
+        label.text = Text.subtitle.rawValue
+        label.font = CFont.font.regular14
         label.textColor = .gray1
         
         return label
@@ -35,18 +64,16 @@ final class SecondRegistrationViewController: UIViewController {
         let field = RegistrationField()
         
         field.keyboardType = .numberPad
-        field.makePlaceHolder("0000.00.00")
+        field.makePlaceHolder(Text.birthPlaceHolder.rawValue)
         field.delegate = self
         
         return field
     }()
-    
-    private lazy var birthExample: UILabel = {
+    private lazy var birthSubLabel: UILabel = {
         let label = UILabel()
         
-        // birthExample
-        label.text = "태어난 연도를 입력해주세요 (선택)"
-        label.font = .pretendard(size: 13, weight: .regular)
+        label.text = Text.birthSub.rawValue
+        label.font = CFont.font.regular13
         label.textColor = .gray2
         
         return label
@@ -54,36 +81,32 @@ final class SecondRegistrationViewController: UIViewController {
     
     private lazy var genderButton: [GenderButton] = []
     private lazy var genderStackView = UIStackView()
-
     private lazy var male: GenderButton = {
         let button = GenderButton()
         
-        button.setTitle("남자", for: .normal)
+        button.setTitle(Text.male.rawValue, for: .normal)
         
         return button
     }()
-    
     private lazy var female: GenderButton = {
         let button = GenderButton()
         
-        button.setTitle("여자", for: .normal)
+        button.setTitle(Text.female.rawValue, for: .normal)
 
         return button
     }()
-    
     private lazy var other: GenderButton = {
         let button = GenderButton()
         
-        button.setTitle("기타", for: .normal)
+        button.setTitle(Text.otherGender.rawValue, for: .normal)
         
         return button
     }()
-    
-    private lazy var genderExample: UILabel = {
+    private lazy var genderSubLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "성별을 선택해주세요 (선택)"
-        label.font = .pretendard(size: 13, weight: .regular)
+        label.text = Text.genderSub.rawValue
+        label.font = CFont.font.regular13
         label.textColor = .gray2
         
         return label
@@ -92,8 +115,12 @@ final class SecondRegistrationViewController: UIViewController {
     private lazy var nextButton: NextPageButton = {
         let button = NextPageButton()
         
-        button.setTitle("다음으로", for: .normal)
-        button.addTarget(self, action: #selector(tappedNextButton), for: .touchUpInside)
+        button.setTitle(Text.next.rawValue, for: .normal)
+        button.addTarget(
+            self,
+            action: #selector(tappedNextButton),
+            for: .touchUpInside
+        )
         
         return button
     }()
@@ -120,16 +147,16 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
         }
         
         genderStackView.axis = .horizontal
-        genderStackView.spacing = 10
+        genderStackView.spacing = Layout.Spacing.gender.rawValue
         genderStackView.distribution = .equalSpacing
         
         [
             titleLabel,
-            subTitleLabel,
+            subtitleLabel,
             birthField,
-            birthExample,
+            birthSubLabel,
             genderStackView,
-            genderExample,
+            genderSubLabel,
             nextButton
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -138,39 +165,96 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
         
         NSLayoutConstraint.activate([
             // titleLabel
-            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
-            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            titleLabel.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor,
+                constant: Layout.Margin.largeToView.rawValue
+            ),
+            titleLabel.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: Layout.Margin.large.rawValue
+            ),
             
             // subTitleLabel
-            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-            subTitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            subtitleLabel.topAnchor.constraint(
+                equalTo: titleLabel.bottomAnchor,
+                constant: Layout.Margin.small.rawValue
+            ),
+            subtitleLabel.leadingAnchor.constraint(
+                equalTo: titleLabel.leadingAnchor
+            ),
             
             // birthFiled
-            birthField.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor, constant: 30),
-            birthField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-            birthField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            birthField.topAnchor.constraint(
+                equalTo: subtitleLabel.bottomAnchor,
+                constant: Layout.Margin.large.rawValue
+            ),
+            birthField.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: Layout.Margin.large.rawValue
+            ),
+            birthField.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor,
+                constant: -Layout.Margin.large.rawValue
+            ),
             
             // birthExample
-            birthExample.topAnchor.constraint(equalTo: birthField.bottomAnchor, constant: 18),
-            birthExample.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-            birthExample.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+            birthSubLabel.topAnchor.constraint(
+                equalTo: birthField.bottomAnchor,
+                constant: Layout.Margin.small.rawValue
+            ),
+            birthSubLabel.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: Layout.Margin.largeToView.rawValue
+            ),
+            birthSubLabel.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor,
+                constant: -Layout.Margin.largeToView.rawValue
+            ),
             
             // genderStack
-            genderStackView.topAnchor.constraint(equalTo: birthExample.bottomAnchor, constant: 30),
-            genderStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-            genderStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            genderStackView.topAnchor.constraint(
+                equalTo: birthSubLabel.bottomAnchor,
+                constant: Layout.Margin.large.rawValue
+            ),
+            genderStackView.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: Layout.Margin.large.rawValue
+            ),
+            genderStackView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor,
+                constant: -Layout.Margin.large.rawValue
+            ),
             
             // genderExample
-            genderExample.topAnchor.constraint(equalTo: genderStackView.bottomAnchor, constant: 18),
-            genderExample.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-            genderExample.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 40),
+            genderSubLabel.topAnchor.constraint(
+                equalTo: genderStackView.bottomAnchor,
+                constant: Layout.Margin.small.rawValue
+            ),
+            genderSubLabel.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: Layout.Margin.largeToView.rawValue
+            ),
+            genderSubLabel.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor,
+                constant: Layout.Margin.largeToView.rawValue
+            ),
             
             // next Button
             nextButton.bottomAnchor.constraint(
-                equalTo: view.bottomAnchor, constant: -40),
-            nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            nextButton.heightAnchor.constraint(equalToConstant: 50)
+                equalTo: view.bottomAnchor,
+                constant: -Layout.Margin.largeToView.rawValue
+            ),
+            nextButton.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: Layout.Margin.medium.rawValue
+            ),
+            nextButton.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor,
+                constant: -Layout.Margin.medium.rawValue
+            ),
+            nextButton.heightAnchor.constraint(
+                equalToConstant: Layout.Size.nextButtonHeight.rawValue
+            )
         ])
     }
     
@@ -184,7 +268,11 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
         genderButton = [male, female, other]
         
         genderButton.forEach {
-            $0.addTarget(self, action: #selector(genderButtonTapped(_:)), for: .touchUpInside)
+            $0.addTarget(
+                self,
+                action: #selector(genderButtonTapped(_:)),
+                for: .touchUpInside
+            )
         }
         genderStackView.backgroundColor = .gray7
         
@@ -199,37 +287,43 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
     // MARK: InvalidDate
     func isInvalidDate() {
         birthField.backgroundColor = .bgRed
-        birthExample.textColor = .warning
-        birthExample.text = "올바른 형식으로 입력해주세요"
+        birthSubLabel.textColor = .warning
+        birthSubLabel.text = Text.birthSubWarning.rawValue
         presenter.isWrongBirth = true
     }
     
     func isValidDate() {
         birthField.backgroundColor = .bgNavy
-        birthExample.textColor = .gray2
-        birthExample.text = "태어난 연도를 입력해주세요 (선택)"
+        birthSubLabel.textColor = .gray2
+        birthSubLabel.text = Text.birthSub.rawValue
         presenter.isWrongBirth = false
     }
     
     // MARK: Birth Init
     func birthInit() {
         birthField.backgroundColor = .bgNavy
-        birthExample.textColor = .gray2
-        birthExample.text = "태어난 연도를 입력해주세요 (선택)"
+        birthSubLabel.textColor = .gray2
+        birthSubLabel.text = Text.birthSub.rawValue
         presenter.isWrongBirth = false
     }
     
     // MARK: Push Thrid RegistrationView
-    func pushThridRegistrationView(_ userInfoModel: AVIROUserSignUpDTO) {
+    func pushThridRegistrationView(
+        _ userInfoModel: AVIROUserSignUpDTO
+    ) {
         let viewController = ThridRegistrationViewController()
-        let presenter = ThridRegistrationPresenter(viewController: viewController,
-                                                   userInfo: userInfoModel)
+        
+        let presenter = ThridRegistrationPresenter(
+            viewController: viewController,
+            userInfo: userInfoModel
+        )
+        
         viewController.presenter = presenter
         
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    @objc func genderButtonTapped(_ sender: GenderButton) {
+    @objc private func genderButtonTapped(_ sender: GenderButton) {
         for button in genderButton {
             button.isSelected = (button == sender)
             
@@ -240,14 +334,17 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
         }
     }
     
-    @objc func tappedNextButton() {
+    @objc private func tappedNextButton() {
         presenter.pushUserInfo()
     }
 }
 
 // MARK: 키보드 내리기
 extension SecondRegistrationViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldReceive touch: UITouch
+    ) -> Bool {
         if touch.view is UITextField {
             return false
         }
@@ -258,11 +355,13 @@ extension SecondRegistrationViewController: UIGestureRecognizerDelegate {
 }
 
 extension SecondRegistrationViewController: UITextFieldDelegate {
-    // MARK: 년, 월 단위로 . 찍기
+    // MARK: 리펙토링 필요
+    // TODO: 4
     func textFieldDidChangeSelection(_ textField: UITextField) {
         guard var text = textField.text else { return }
 
         birthInit()
+        
         if text.count > 10 {
             text = String(text.prefix(10))
         }
@@ -275,16 +374,16 @@ extension SecondRegistrationViewController: UITextFieldDelegate {
         presenter.birth = text
 
         timer?.invalidate()
-        timer = Timer.scheduledTimer(timeInterval: 0.5,
-                                     target: self,
-                                     selector: #selector(checkInvalidDate),
-                                     userInfo: nil,
-                                     repeats: false
+        timer = Timer.scheduledTimer(
+            timeInterval: 0.5,
+            target: self,
+            selector: #selector(checkInvalidDate),
+            userInfo: nil,
+            repeats: false
         )
 
     }
     
-    // MARK: 다음 숫자 덮어쓰기
     func textField(_ textField: UITextField,
                    shouldChangeCharactersIn range: NSRange,
                    replacementString string: String
@@ -305,15 +404,21 @@ extension SecondRegistrationViewController: UITextFieldDelegate {
 
             // 최대 개수 넘어가는 것을 방지
             let newCursorPosition = min(range.location + 1, newText.count)
-            let cursorPosition = textField.position(from: textField.beginningOfDocument, offset: newCursorPosition)
-            textField.selectedTextRange = textField.textRange(from: cursorPosition!, to: cursorPosition!)
+            let cursorPosition = textField.position(
+                from: textField.beginningOfDocument,
+                offset: newCursorPosition
+            )
+            textField.selectedTextRange = textField.textRange(
+                from: cursorPosition!,
+                to: cursorPosition!
+            )
+            
             return false
         }
         
         return true
     }
 
-    // MARK: String to Int (DateFormatter 활용)
     @objc func checkInvalidDate() {
         presenter.checkInvalidDate()
     }

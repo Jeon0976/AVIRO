@@ -98,7 +98,7 @@ final class PlaceMenuTableViewCell: UITableViewCell {
         menuRequest.isHidden = true
     }
     
-    func dataBinding(_ menu: MenuArray) {
+    func dataBinding(_ menu: AVIROMenu) {
         var type: MenuType?
         
         if menu.menuType == MenuType.vegan.rawValue {

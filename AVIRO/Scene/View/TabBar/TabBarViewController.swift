@@ -17,8 +17,8 @@ class TabBarViewController: UITabBarController {
     }
     
     private func setupViewController() {
-        let tabBarViewControllers: [UIViewController] = TabBarItem.allCases.map { tabCase in
-            let viewController = tabCase.viewController
+        let tabBarViewControllers: [UIViewController] = TBItem.allCases.map { tabCase in
+            let viewController = tabCase.vc
             
             let tabBarItem = UITabBarItem(
                 title: tabCase.title,
@@ -39,7 +39,7 @@ class TabBarViewController: UITabBarController {
         tabBar.backgroundColor = .gray7
         tabBar.tintColor = .main
         tabBar.layer.borderWidth = 0.5
-        tabBar.layer.borderColor = UIColor.gray5?.cgColor
+        tabBar.layer.borderColor = UIColor.gray5.cgColor
         
         let attributesNormal: [NSAttributedString.Key: Any] = [
             .font: UIFont.pretendard(size: 11, weight: .semibold),

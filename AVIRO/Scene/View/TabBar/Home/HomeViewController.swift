@@ -46,11 +46,11 @@ final class HomeViewController: UIViewController {
         let button = HomeMapReferButton()
         
         button.setImage(
-            UIImage(named: "current-location")?.withTintColor(.gray1!),
+            UIImage(named: "current-location")?.withTintColor(.gray1),
             for: .normal
         )
         button.setImage(
-            UIImage(named: "current-locationDisable")?.withTintColor(.gray4!),
+            UIImage(named: "current-locationDisable")?.withTintColor(.gray4),
             for: .disabled
         )
         button.addTarget(
@@ -67,7 +67,7 @@ final class HomeViewController: UIViewController {
         
         // starButton
         button.setImage(
-            UIImage(named: "star")?.withTintColor(.gray1!),
+            UIImage(named: "star")?.withTintColor(.gray1),
             for: .normal
         )
         button.setImage(
@@ -75,7 +75,7 @@ final class HomeViewController: UIViewController {
             for: .selected
         )
         button.setImage(
-            UIImage(named: "starDisable")?.withTintColor(.gray4!),
+            UIImage(named: "starDisable")?.withTintColor(.gray4),
             for: .disabled
         )
         button.addTarget(
@@ -372,9 +372,9 @@ extension HomeViewController: HomeViewProtocol {
         changedSearchField(with: placeModel.placeTitle)
     }
     
-    func afterSlideupPlaceView(infoModel: PlaceInfoData?,
-                               menuModel: PlaceMenuData?,
-                               reviewsModel: AVIROReviewsModelArrayDTO?
+    func afterSlideupPlaceView(infoModel: AVIROPlaceInfo?,
+                               menuModel: AVIROPlaceMenus?,
+                               reviewsModel: AVIROReviewsArrayDTO?
     ) {
         // MARK: 다 하나씩 쪼겔 필요 있음
         placeView.allDataBinding(infoModel: infoModel,
@@ -412,8 +412,8 @@ extension HomeViewController: HomeViewProtocol {
     func pushEditPlaceInfoViewController(
         placeMarkerModel: MarkerModel,
         placeId: String,
-        placeSummary: PlaceSummaryData,
-        placeInfo: PlaceInfoData,
+        placeSummary: AVIROPlaceSummary,
+        placeInfo: AVIROPlaceInfo,
         editSegmentedIndex: Int
     ) {
         let vc = EditPlaceInfoViewController()
@@ -435,7 +435,7 @@ extension HomeViewController: HomeViewProtocol {
                                     isAll: Bool,
                                     isSome: Bool,
                                     isRequest: Bool,
-                                    menuArray: [MenuArray]) {
+                                    menuArray: [AVIROMenu]) {
         let vc = EditMenuViewController()
         let presenter = EditMenuPresenter(viewController: vc,
                                           placeId: placeId,
@@ -458,7 +458,7 @@ extension HomeViewController: HomeViewProtocol {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func refreshMenuView(_ menuData: PlaceMenuData?) {
+    func refreshMenuView(_ menuData: AVIROPlaceMenus?) {
         placeView.menuModelBinding(menuModel: menuData)
     }
     
@@ -585,15 +585,15 @@ extension HomeViewController {
     private func makeToastButton(_ title: String) {
         var style = ToastStyle()
         style.cornerRadius = 14
-        style.backgroundColor = .gray3? ?? .lightGray
+        style.backgroundColor = .gray3
         
-        style.titleColor = .gray7 ?? .white
+        style.titleColor = .gray7
         style.titleFont = .systemFont(ofSize: 17, weight: .semibold)
 
         self.view.makeToast(title, duration: 1.0, position: .bottom, style: style)
     }
     
-    private func makeReportReviewAlert(_ reportCommentModel: AVIROReportCommentModel) {
+    private func makeReportReviewAlert(_ reportCommentModel: AVIROReportReviewModel) {
         let alertController = UIAlertController(
             title: nil,
             message: "더보기",
@@ -601,7 +601,7 @@ extension HomeViewController {
         )
         
         let reportAction = UIAlertAction(title: "후기 신고하기", style: .destructive) { _ in
-            let finalReportCommentModel = AVIROReportCommentModel(
+            let finalReportCommentModel = AVIROReportReviewModel(
                 createdTime: reportCommentModel.createdTime,
                 placeTitle: self.presenter.getPlace(),
                 id: reportCommentModel.id,
@@ -664,8 +664,9 @@ extension HomeViewController {
         )
         
         let deleteMyReview = UIAlertAction(title: "예", style: .default) { _ in
-            let deleteCommentModel = AVIRODeleteCommentDTO(commentId: commentId,
-                                                            userId: UserId.shared.userId
+            let deleteCommentModel = AVIRODeleteReveiwDTO(
+                commentId: commentId,
+                userId: MyData.my.id
             )
             
             self.presenter.deleteMyReview(deleteCommentModel)
@@ -685,7 +686,7 @@ extension HomeViewController {
         present(alertController, animated: true)
     }
     
-    private func presentReportReview(_ reportIdModel: AVIROReportCommentModel) {
+    private func presentReportReview(_ reportIdModel: AVIROReportReviewModel) {
         let vc = ReportReviewViewController()
         let presenter = ReportReviewPresenter(
             viewController: vc,
@@ -756,17 +757,17 @@ extension HomeViewController {
         )
         
         let lostPlace = UIAlertAction(title: "없어진 가게예요", style: .default) { _ in
-            let type = AVIROReportPlaceEnum.noPlace
+            let type = AVIROReportPlaceType.noPlace
             self.presenter.reportPlace(type)
         }
         
         let notVeganPlace = UIAlertAction(title: "비건 메뉴가 없는 가게예요", style: .default) { _ in
-            let type = AVIROReportPlaceEnum.noVegan
+            let type = AVIROReportPlaceType.noVegan
             self.presenter.reportPlace(type)
         }
          
         let duplicatedPlace = UIAlertAction(title: "중복 등록된 가게예요", style: .default) { _ in
-            let type = AVIROReportPlaceEnum.dubplicatedPlace
+            let type = AVIROReportPlaceType.dubplicatedPlace
             self.presenter.reportPlace(type)
         }
         

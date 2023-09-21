@@ -13,12 +13,13 @@ protocol NickNameChangebleProtocol: NSObject {
     func setupGesture()
     func changeSubInfo(subInfo: String, isVaild: Bool)
     func initSubInfo()
+    func popViewController()
 }
 
 final class NickNameChangeblePresenter {
     weak var viewController: NickNameChangebleProtocol?
     
-    private var initNickName = UserId.shared.userNickname
+    private var initNickName = MyData.my.nickname
     var userNickname: String?
     
     init(viewController: NickNameChangebleProtocol) {
@@ -43,18 +44,42 @@ final class NickNameChangeblePresenter {
         if userNickname != initNickName {
             AVIROAPIManager().postCheckNickname(nickname) { result in
                 
-                let result = AVIROAfterNicknameIsDuplicatedCheckDTO(
+                let result = AVIRONicknameIsDuplicatedCheckResultDTO(
                     statusCode: result.statusCode,
                     isValid: result.isValid,
                     message: result.message
                 )
                 
                 DispatchQueue.main.async { [weak self] in
-                    self?.viewController?.changeSubInfo(subInfo: result.message, isVaild: result.isValid ?? false)
+                    self?.viewController?.changeSubInfo(
+                        subInfo: result.message,
+                        isVaild: result.isValid ?? false
+                    )
                 }
             }
         } else {
             self.viewController?.initSubInfo()
+        }
+    }
+    
+    func updateMyNickname() {
+        guard let userNickname = userNickname else { return }
+        
+        let model = AVIRONicknameChagneableDTO(
+            userId: MyData.my.id,
+            nickname: userNickname
+        )
+        
+        AVIROAPIManager().postChangeNickname(model) { [weak self] resultModel in
+            if resultModel.statusCode == 200 {
+                DispatchQueue.main.async {
+                    MyData.my.nickname = userNickname
+                    print("성공!")
+                    self?.viewController?.popViewController()
+                }
+            } else {
+                print(resultModel)
+            }
         }
     }
 }

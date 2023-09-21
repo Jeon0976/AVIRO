@@ -18,35 +18,55 @@ final class NextPageButton: UIButton {
         fatalError()
     }
     
-    override func setTitle(_ title: String?, for state: UIControl.State) {
+    override func setTitle(
+        _ title: String?,
+        for state: UIControl.State
+    ) {
         guard let title = title else {
             super.setTitle(title, for: state)
             return
         }
         
         let enabledAttributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.pretendard(size: 18, weight: .semibold),
+            .font: CFont.font.semibold18,
             .foregroundColor: UIColor.gray7
         ]
         
         let disenabledAttributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.pretendard(size: 18, weight: .semibold),
+            .font: CFont.font.semibold18,
             .foregroundColor: UIColor.gray2
         ]
         
-        let attributedTitle = NSAttributedString(string: title, attributes: enabledAttributes)
+        let attributedTitle = NSAttributedString(
+            string: title,
+            attributes: enabledAttributes
+        )
         
-        let disAttributedTitle = NSAttributedString(string: title, attributes: disenabledAttributes)
+        let disAttributedTitle = NSAttributedString(
+            string: title,
+            attributes: disenabledAttributes
+        )
         
-        setAttributedTitle(attributedTitle, for: state)
-        setAttributedTitle(disAttributedTitle, for: .disabled)
+        setAttributedTitle(
+            attributedTitle,
+            for: state
+        )
+        setAttributedTitle(
+            disAttributedTitle,
+            for: .disabled
+        )
     }
     
     private func setupButton() {
         self.layer.cornerRadius = 25
-        self.contentEdgeInsets = UIEdgeInsets(top: 15, left: 25, bottom: 15, right: 25)
         self.clipsToBounds = true
         self.backgroundColor = .main
+        self.contentEdgeInsets = UIEdgeInsets(
+            top: 15,
+            left: 25,
+            bottom: 15,
+            right: 25
+        )
     }
      
     override var isEnabled: Bool {

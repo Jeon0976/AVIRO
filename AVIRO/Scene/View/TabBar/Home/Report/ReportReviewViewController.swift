@@ -162,7 +162,7 @@ extension ReportReviewViewController: ReportReviewProtocol {
     private func makeReportViewCells() {
         var lastView: UIView?
         
-        for report in AVIROCommentReportType.allCases {
+        for report in AVIROReportReviewType.allCases {
             let cellView = ReportCellView()
             
             cellView.makeCellView(report.rawValue)

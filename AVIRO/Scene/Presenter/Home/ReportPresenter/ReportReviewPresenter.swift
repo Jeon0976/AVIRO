@@ -22,11 +22,11 @@ final class ReportReviewPresenter {
     
     private var reportViews = [ReportCellView]()
 
-    private var commentModel: AVIROReportCommentModel!
+    private var commentModel: AVIROReportReviewModel!
     private var reportType: String? {
         didSet {
             if reportType != nil {
-                if reportType == AVIROCommentReportType.others.rawValue && reportContent == "" {
+                if reportType == AVIROReportReviewType.others.rawValue && reportContent == "" {
                     viewController?.isEnabledReportButton(false)
                 } else {
                     viewController?.isEnabledReportButton(true)
@@ -39,9 +39,9 @@ final class ReportReviewPresenter {
     
     private var reportContent = "" {
         didSet {
-            if reportContent != "" && reportType == AVIROCommentReportType.others.rawValue {
+            if reportContent != "" && reportType == AVIROReportReviewType.others.rawValue {
                 viewController?.isEnabledReportButton(true)
-            } else if reportContent == "" && reportType == AVIROCommentReportType.others.rawValue {
+            } else if reportContent == "" && reportType == AVIROReportReviewType.others.rawValue {
                 viewController?.isEnabledReportButton(false)
             }
         }
@@ -50,7 +50,7 @@ final class ReportReviewPresenter {
     var afterReportPopView: ((String) -> Void)?
 
     init(viewController: ReportReviewProtocol,
-         reportIdModel: AVIROReportCommentModel? = nil
+         reportIdModel: AVIROReportReviewModel? = nil
     ) {
         self.viewController = viewController
         self.commentModel = reportIdModel
@@ -117,7 +117,7 @@ final class ReportReviewPresenter {
     func selectedReportType(_ type: String, _ text: String) {
         self.reportType = type
         
-        if type == AVIROCommentReportType.others.rawValue {
+        if type == AVIROReportReviewType.others.rawValue {
             updateContent(text)
             viewController?.showTextView(true)
         } else {
@@ -144,17 +144,17 @@ final class ReportReviewPresenter {
     
     func reportReview() {
         guard let typeString = reportType,
-              let type =  AVIROCommentReportType(rawValue: typeString)?.code
+              let type =  AVIROReportReviewType(rawValue: typeString)?.code
         else { return }
         
-        let reportModel = AVIROReportCommentDTO(
+        let reportModel = AVIROReportReviewDTO(
             commentId: commentModel.id,
             title: commentModel.placeTitle,
             createdTime: commentModel.createdTime,
             commentContent: commentModel.content,
             commentNickname: commentModel.nickname,
-            userId: UserId.shared.userId,
-            nickname: UserId.shared.userNickname,
+            userId: MyData.my.id,
+            nickname: MyData.my.nickname,
             code: type,
             content: typeString
         )

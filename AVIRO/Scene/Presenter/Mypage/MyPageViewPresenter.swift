@@ -15,8 +15,8 @@ enum PushLoginViewEnum {
 }
 
 protocol MyPageViewProtocol: NSObject {
-    func makeLayout()
-    func makeAttribute()
+    func setupLayout()
+    func setupAttribute()
     func updateMyData(_ myDataModel: MyDataModel)
     func pushLoginViewController(with: PushLoginViewEnum)
 }
@@ -40,8 +40,8 @@ final class MyPageViewPresenter {
     }
     
     func viewDidLoad() {
-        viewController?.makeLayout()
-        viewController?.makeAttribute()
+        viewController?.setupLayout()
+        viewController?.setupAttribute()
     }
     
     func viewWillAppear() {
@@ -49,19 +49,32 @@ final class MyPageViewPresenter {
     }
     
     private func loadMyData() {
-        let myNickName = UserId.shared.userNickname
+        let myNickName = MyData.my.nickname
         let myStar = String(BookmarkFacadeManager().loadAllData().count)
         
-        let myPlace = "0"
-        let myReview = "0"
+        var myPlace = "0"
+        var myReview = "0"
         
-        myDataModel = MyDataModel(id: myNickName, place: myPlace, review: myReview, star: myStar)
+        AVIROAPIManager().getMyContributionCount(MyData.my.id) { [weak self] contributionCountModel in
+            if contributionCountModel.statusCode == 200 {
+                myPlace = String(contributionCountModel.data.placeCount)
+                myReview = String(contributionCountModel.data.commentCount)
+            }
+            
+            self?.myDataModel = MyDataModel(
+                id: myNickName,
+                place: myPlace,
+                review: myReview,
+                star: myStar
+            )
+        }
     }
     
     func whenAfterLogout() {
-        MarkerModelLocalData.shared.deleteAllMarkerModel()
-        UserId.shared.whenLogout()
-        BookmarkArray.shared.deleteAllBookmark()
+        LocalMarkerData.shared.deleteAllMarkerModel()
+        LocalBookmarkData.shared.deleteAllBookmark()
+        MyData.my.whenLogout()
+        
         self.keychain.delete("userIdentifier")
         
         viewController?.pushLoginViewController(with: .logout)
@@ -73,14 +86,14 @@ final class MyPageViewPresenter {
         let userModel = AVIROUserWithdrawDTO(userToken: userToken)
         
         AVIROAPIManager().postUserWithrawal(userModel) { [weak self] resultModel in
-            print(resultModel)
             if resultModel.statusCode == 200 {
+                LocalMarkerData.shared.deleteAllMarkerModel()
+                LocalBookmarkData.shared.deleteAllBookmark()
+                MyData.my.whenLogout()
+
                 self?.keychain.delete("userIdentifier")
+                
                 DispatchQueue.main.async {
-                    MarkerModelLocalData.shared.deleteAllMarkerModel()
-                    UserId.shared.whenLogout()
-                    BookmarkArray.shared.deleteAllBookmark()
-                    
                     self?.viewController?.pushLoginViewController(with: .withdrawal)
                 }
             }

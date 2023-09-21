@@ -152,7 +152,7 @@ final class TutorialViewController: UIViewController {
     
     // MARK: Login View
     private func pushLoginView() {
-        UserDefaults.standard.set(true, forKey: "Tutorial")
+        UserDefaults.standard.set(true, forKey: UDKey.tutorial.rawValue)
         let loginVC = LoginViewController()
         
         self.navigationController?.pushViewController(loginVC, animated: true)

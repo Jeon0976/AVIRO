@@ -9,7 +9,7 @@ import Foundation
 
 class PublicXMLParserDelegate: NSObject, XMLParserDelegate {
     
-    var results = EditAddressTableModel(juso: [])
+    var results = PublicAddressDTO(juso: [])
     var currentElement: String?
     var currentJuso: Juso?
     var currentData: String = ""

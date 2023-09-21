@@ -126,7 +126,7 @@ final class EditMenuPresenter {
         }
     }
     
-    private var menuArray: [MenuArray]?
+    private var menuArray: [AVIROMenu]?
     private var initAll: Bool!
     private var initSome: Bool!
     private var initRequest: Bool!
@@ -164,7 +164,7 @@ final class EditMenuPresenter {
          isAll: Bool? = nil,
          isSome: Bool? = nil,
          isRequest: Bool? = nil,
-         menuArray: [MenuArray]? = nil
+         menuArray: [AVIROMenu]? = nil
     ) {
         self.viewController = viewController
         self.placeId = placeId
@@ -316,7 +316,7 @@ final class EditMenuPresenter {
         }
     }
     
-    func checkMenuData(_ indexPath: IndexPath) -> MenuArray? {
+    func checkMenuData(_ indexPath: IndexPath) -> AVIROMenu? {
         
         guard let menuArray = menuArray else { return nil }
         
@@ -707,7 +707,7 @@ final class EditMenuPresenter {
         
         let editMenu = AVIROEditMenuModel(
             placeId: placeId,
-            userId: UserId.shared.userId,
+            userId: MyData.my.id,
             allVegan: isAll,
             someMenuVegan: isSome,
             ifRequestVegan: isRequest,
@@ -731,8 +731,8 @@ final class EditMenuPresenter {
         return deletedArray
     }
     
-    private func filteringUpdatedMenuData(_ isDefaultMenuTable: Bool) -> [MenuArray] {
-        var updatedMenuArray = [MenuArray]()
+    private func filteringUpdatedMenuData(_ isDefaultMenuTable: Bool) -> [AVIROMenu] {
+        var updatedMenuArray = [AVIROMenu]()
         
         if isDefaultMenuTable {
             updateMenuArrayId.forEach { updatedMenu in
@@ -763,14 +763,14 @@ final class EditMenuPresenter {
         return updatedMenuArray
     }
     
-    private func checkUpdatedMenuDataWhenVeganMenu(_ menu: VeganTableFieldModelForEdit) -> MenuArray? {
+    private func checkUpdatedMenuDataWhenVeganMenu(_ menu: VeganTableFieldModelForEdit) -> AVIROMenu? {
         guard let initVeganMenuArray = initVeganMenuArray else { return nil }
         
-        var menuData: MenuArray?
+        var menuData: AVIROMenu?
         
         initVeganMenuArray.forEach { initMenu in
             if initMenu.id == menu.id  {
-                menuData = MenuArray(
+                menuData = AVIROMenu(
                     menuId: menu.id,
                     menuType: MenuType.vegan.rawValue,
                     menu: menu.menu,
@@ -784,14 +784,14 @@ final class EditMenuPresenter {
         return menuData
     }
     
-    private func checkUpdatedMenuDataWhenRequestMenu(_ menu: RequestTableFieldModelForEdit) -> MenuArray? {
+    private func checkUpdatedMenuDataWhenRequestMenu(_ menu: RequestTableFieldModelForEdit) -> AVIROMenu? {
         guard let initRequestVeganMenuArray = initRequestVeganMenuArray else { return nil }
         
-        var menuData: MenuArray?
+        var menuData: AVIROMenu?
         
         initRequestVeganMenuArray.forEach { initMenu in
             if initMenu.id == menu.id {
-                menuData = MenuArray(
+                menuData = AVIROMenu(
                     menuId: menu.id,
                     menuType: menu.isCheck ? MenuType.needToRequset.rawValue : MenuType.vegan.rawValue,
                     menu: menu.menu,
@@ -805,8 +805,8 @@ final class EditMenuPresenter {
         return menuData
     }
     
-    private func filteringInsertMenuData(_ isDefaultMenuTable: Bool) -> [MenuArray] {
-        var insertMenuArray = [MenuArray]()
+    private func filteringInsertMenuData(_ isDefaultMenuTable: Bool) -> [AVIROMenu] {
+        var insertMenuArray = [AVIROMenu]()
         
         if isDefaultMenuTable {
             insertMenuArrayId.forEach { insertMenu in
@@ -837,13 +837,13 @@ final class EditMenuPresenter {
         return insertMenuArray
     }
     
-    private func checkInsertedMenuDataWhenVeganMenu(_ menu: VeganTableFieldModelForEdit) -> MenuArray? {
+    private func checkInsertedMenuDataWhenVeganMenu(_ menu: VeganTableFieldModelForEdit) -> AVIROMenu? {
         guard let initVeganMenuArray = initVeganMenuArray else { return nil }
         
-        var menuData: MenuArray?
+        var menuData: AVIROMenu?
         
         if !initVeganMenuArray.contains(where: { $0.id == menu.id }) {
-            menuData = MenuArray(
+            menuData = AVIROMenu(
                 menuId: menu.id,
                 menuType: MenuType.vegan.rawValue,
                 menu: menu.menu,
@@ -856,13 +856,13 @@ final class EditMenuPresenter {
         return menuData
     }
     
-    private func checkInsertedMenuDataWhenRequestMenu(_ menu: RequestTableFieldModelForEdit) -> MenuArray? {
+    private func checkInsertedMenuDataWhenRequestMenu(_ menu: RequestTableFieldModelForEdit) -> AVIROMenu? {
         guard let initRequestVeganMenuArray = initRequestVeganMenuArray else { return nil }
         
-        var menuData: MenuArray?
+        var menuData: AVIROMenu?
         
         if !initRequestVeganMenuArray.contains(where: { $0.id == menu.id }) {
-            menuData = MenuArray(
+            menuData = AVIROMenu(
                 menuId: menu.id,
                 menuType: menu.isCheck ? MenuType.needToRequset.rawValue : MenuType.vegan.rawValue,
                 menu: menu.menu,

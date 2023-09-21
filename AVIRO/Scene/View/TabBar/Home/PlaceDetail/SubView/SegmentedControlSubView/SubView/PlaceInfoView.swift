@@ -296,7 +296,7 @@ final class PlaceInfoView: UIView {
         viewHeightConstraint?.constant = totalHeight
     }
     
-    func dataBindingWhenInHomeView(_ infoModel: PlaceInfoData?) {
+    func dataBindingWhenInHomeView(_ infoModel: AVIROPlaceInfo?) {
         guard let infoModel = infoModel else { return }
 
         addressLabel.text = infoModel.address + " " + (infoModel.address2 ?? "")

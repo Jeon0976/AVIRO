@@ -8,7 +8,6 @@
 import UIKit
 
 final class ReviewLabel: UILabel {
-    
     private var topInset: CGFloat = 12.0
     private var bottomInset: CGFloat = 12.0
     private var leftInset: CGFloat = 16.0
@@ -25,14 +24,23 @@ final class ReviewLabel: UILabel {
     }
     
     override func drawText(in rect: CGRect) {
-        let insets = UIEdgeInsets(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
+        let insets = UIEdgeInsets(
+            top: topInset,
+            left: leftInset,
+            bottom: bottomInset,
+            right: rightInset
+        )
+        
         super.drawText(in: rect.inset(by: insets))
     }
 
     override var intrinsicContentSize: CGSize {
         let size = super.intrinsicContentSize
-        return CGSize(width: size.width + leftInset + rightInset,
-                      height: size.height + topInset + bottomInset)
+        
+        return CGSize(
+            width: size.width + leftInset + rightInset,
+            height: size.height + topInset + bottomInset
+        )
     }
     
     private func setAttribute() {
@@ -65,14 +73,15 @@ final class ReviewLabel: UILabel {
     }
     
     private func normalColorReview() {
-        self.font = .pretendard(size: 15, weight: .medium)
+        self.font = CFont.font.medium15
         
         self.textColor = .gray0
         self.backgroundColor = .gray6
     }
     
     private func changedReviewColor() {
-        self.font = .pretendard(size: 15, weight: .semibold)
+        self.font = CFont.font.semibold15
+        
         self.textColor = .main
         self.backgroundColor = .bgNavy
     }

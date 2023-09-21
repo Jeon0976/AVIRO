@@ -56,10 +56,7 @@ final class LoginViewPresenter {
         
         let userCheck = AVIROAppleUserCheckMemberDTO(userToken: appleUserModel.userIdentifier)
                 
-        print(userCheck)
-        
         AVIROAPIManager().postCheckUserModel(userCheck) { userInfo in
-            print(userInfo)
             DispatchQueue.main.async { [weak self] in
                 if userInfo.data != nil {
                     let userId = userInfo.data?.userId ?? ""
@@ -68,7 +65,7 @@ final class LoginViewPresenter {
                     let userNickname = userInfo.data?.nickname ?? ""
                     let marketingAgree = userInfo.data?.marketingAgree ?? 0
                     
-                    UserId.shared.whenLogin(
+                    MyData.my.whenLogin(
                         userId: userId,
                         userName: userName,
                         userNickname: userNickname,
