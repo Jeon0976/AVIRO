@@ -240,7 +240,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
     }
     
     // MARK: Check User Model
-    func postCheckUserModel(
+    func postCheckAppleUserModel(
         _ userToken: AVIROAppleUserCheckMemberDTO,
         completionHandler: @escaping((AVIROAfterAppleUserCheckMemberDTO) -> Void)
     ) {
@@ -280,7 +280,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
     // MARK: Post UserInfo Model
     func postUserSignupModel(
         _ userModel: AVIROUserSignUpDTO,
-        completionHandler: @escaping((AVIROResultDTO) -> Void)
+        completionHandler: @escaping((AVIROUserSignUpResultDTO) -> Void)
     ) {
         guard let url = postAPI.userSignup().url else { print("url error"); return}
         
@@ -301,7 +301,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
             }
             
             if let data = data {
-                if let resultModel = try? JSONDecoder().decode(AVIROResultDTO.self, from: data) {
+                if let resultModel = try? JSONDecoder().decode(AVIROUserSignUpResultDTO.self, from: data) {
                     completionHandler(resultModel)
                 }
                 return

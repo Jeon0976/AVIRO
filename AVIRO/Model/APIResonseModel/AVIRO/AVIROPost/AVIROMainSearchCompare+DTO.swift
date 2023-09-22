@@ -23,6 +23,7 @@ struct AVIROAfterComparePlaceDTO: Decodable {
 }
 
 struct AVIROAfterMatchedModel: Decodable {
+    let placeId: String
     let index: Int
     let allVegan: Bool
     let someMenuVegan: Bool

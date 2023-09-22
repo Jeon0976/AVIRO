@@ -15,3 +15,6 @@ excluded:
 
 type_body_length:
 - 500
+
+large_tuple:
+- 3

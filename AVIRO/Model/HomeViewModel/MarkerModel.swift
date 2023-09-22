@@ -28,6 +28,8 @@ struct MarkerModel {
         didSet {
             if isStar {
                 marker.changeStarIcon(mapPlace, isCliced)
+            } else {
+                marker.changeIcon(mapPlace, isCliced)
             }
         }
     }

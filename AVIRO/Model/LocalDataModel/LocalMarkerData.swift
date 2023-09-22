@@ -18,7 +18,7 @@ protocol LocalMarkerDataProtocol {
     func getMarkerFromMarker(_ marker: NMFMarker) -> (MarkerModel?, Int?)
     func setMarkerModel(_ markerModel: MarkerModel)
     func changeMarkerModel(_ index: Int, _ markerModel: MarkerModel)
-    func updateMarkerModel(_ markerModel: MarkerModel)
+    func updateWhenClickedMarker(_ markerModel: MarkerModel)
     func updateWhenStarButton(_ markerModel: [MarkerModel])
     func deleteAllMarkerModel()
 }
@@ -68,9 +68,12 @@ final class LocalMarkerData: LocalMarkerDataProtocol {
         return (nil, nil)
     }
     
-    func getMarkerWhenSearchAfter(_ lng: Double, _ lat: Double) -> (MarkerModel?, Int?) {
-        let position = NMGLatLng(lat: lat, lng: lng)
-        if let index = markers.enumerated().first(where: { $0.element.marker.position == position })?.offset {
+    func getMarkerWhenSearchAfter(_ afterSearchModel: MatchedPlaceModel
+    ) -> (MarkerModel?, Int?) {
+        if let index = markers.enumerated()
+            .first(where: {
+                $0.element.placeId == afterSearchModel.placeId
+            })?.offset {
             return (markers[index], index)
         }
         
@@ -86,23 +89,12 @@ final class LocalMarkerData: LocalMarkerDataProtocol {
         markers[index] = markerModel
     }
     
-    func updateMarkerModel(_ markerModel: MarkerModel) {
-        if let existingIndex = markers.firstIndex(where: { $0.placeId == markerModel.placeId }) {
-            // placeId가 일치하는 마커가 이미 존재하는 경우
-            
-            let existingMarker = markers[existingIndex]
-            
-            if existingMarker.marker.position.lat != markerModel.marker.position.lat || existingMarker.marker.position.lng != markerModel.marker.position.lng {
-                // lat 혹은 lng 값이 다를 경우에만 덮어쓰기
-                markers[existingIndex] = markerModel
-            }
-            
-        } else {
-            // placeId가 일치하는 마커가 존재하지 않는 경우, 추가
-            markers.append(markerModel)
+    func updateWhenClickedMarker(_ markerModel: MarkerModel) {
+        if let index = markers.firstIndex(where: { $0.placeId == markerModel.placeId }) {
+            markers[index].isCliced = markerModel.isCliced
         }
     }
-    
+
     func updateWhenStarButton(_ makerModel: [MarkerModel]) {
         makerModel.forEach { model in
             if let index = markers.firstIndex(where: { $0.placeId == model.placeId}) {

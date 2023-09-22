@@ -203,7 +203,7 @@ extension MyPageViewController: MyPageViewProtocol {
         present(alertController, animated: true)
     }
     
-    func pushLoginViewController(with: PushLoginViewEnum) {
+    func pushLoginViewController(with: LoginRedirectReason) {
         let vc = LoginViewController()
         let presenter = LoginViewPresenter(viewController: vc)
         vc.presenter = presenter

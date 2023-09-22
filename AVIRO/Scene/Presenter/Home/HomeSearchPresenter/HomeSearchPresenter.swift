@@ -281,15 +281,19 @@ final class HomeSearchPresenter {
         for (index, place) in placeList.enumerated() {
             let matched = afterMatched.first(where: { $0.index == index})
             
+            let roundedX = Double(round(1000 * place.x) / 1000)
+            let roundedY = Double(round(1000 * place.y) / 1000)
+
             let matchedPlace = MatchedPlaceModel(
+                placeId: matched?.placeId ?? "",
                 title: place.title,
                 distance: place.distance,
                 address: place.address,
                 allVegan: matched?.allVegan ?? false,
                 someVegan: matched?.someMenuVegan ?? false,
                 requestVegan: matched?.ifRequestVegan ?? false,
-                x: place.x,
-                y: place.y
+                x: roundedX,
+                y: roundedY
             )
 
             matchedPlaceModel.append(matchedPlace)
@@ -311,10 +315,10 @@ final class HomeSearchPresenter {
         if isEndCompare {
             let model = matchedPlaceModel[indexPath.row]
 
-            let userInfo: [String: Any] = ["checkIsInAVRIO": model]
+            let userInfo: [String: Any] = [UDKey.matchedPlaceModel.rawValue: model]
 
             NotificationCenter.default.post(
-                name: NSNotification.Name("checkIsInAVRIO"),
+                name: NSNotification.Name(UDKey.matchedPlaceModel.rawValue),
                 object: nil,
                 userInfo: userInfo
             )

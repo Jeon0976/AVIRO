@@ -11,23 +11,24 @@ import NMapsMap
 
 // MARK: UserDefaults Key
 enum UDKey: String {
-    case tutorial = "Tutorial"
+    case tutorial
+    case matchedPlaceModel
 }
 
 // MARK: Keychain
 enum KeychainKey: String {
-    case appleIdentifier = "AppleIdentifier"
+    case userId
 }
 
 // MARK: TableViewCell Identifier
 enum TVIdentifier: String {
-    case terms = "TermsTableCell"
+    case termsTableCell
     
 }
 
 // MARK: CollectionViewCell Identifier
 enum CVIdentifier: String {
-    case test = "tes"
+    case test
 }
 
 // MARK: Defalut Coordinate
@@ -108,7 +109,6 @@ enum Gender: String, Codable {
         }
     }
 }
-
 
 // MARK: Map Marker
 // TODO: Vegan Option과 통일 작업 필요
@@ -215,6 +215,7 @@ enum VeganOption {
 }
 
 // MARK: Place Category
+// TODO: CaseIterable를 활용해서 enum 갯수만큼 button 만들기로 리펙토링
 enum PlaceCategory: String {
     case restaurant
     case cafe
@@ -305,4 +306,3 @@ enum AVIROReportReviewType: String, CaseIterable {
         }
     }
 }
-

@@ -9,7 +9,7 @@ import UIKit
 
 import KeychainSwift
 
-enum PushLoginViewEnum {
+enum LoginRedirectReason {
     case logout
     case withdrawal
 }
@@ -18,7 +18,7 @@ protocol MyPageViewProtocol: NSObject {
     func setupLayout()
     func setupAttribute()
     func updateMyData(_ myDataModel: MyDataModel)
-    func pushLoginViewController(with: PushLoginViewEnum)
+    func pushLoginViewController(with: LoginRedirectReason)
 }
 
 final class MyPageViewPresenter {
@@ -75,15 +75,13 @@ final class MyPageViewPresenter {
         LocalBookmarkData.shared.deleteAllBookmark()
         MyData.my.whenLogout()
         
-        self.keychain.delete("userIdentifier")
+        self.keychain.delete(KeychainKey.userId.rawValue)
         
         viewController?.pushLoginViewController(with: .logout)
     }
     
     func whenAfterWithdrawal() {
-        guard let userToken = self.keychain.get("userIdentifier") else { return }
-        
-        let userModel = AVIROUserWithdrawDTO(userToken: userToken)
+        let userModel = AVIROUserWithdrawDTO(userId: MyData.my.id)
         
         AVIROAPIManager().postUserWithrawal(userModel) { [weak self] resultModel in
             if resultModel.statusCode == 200 {
@@ -91,7 +89,7 @@ final class MyPageViewPresenter {
                 LocalBookmarkData.shared.deleteAllBookmark()
                 MyData.my.whenLogout()
 
-                self?.keychain.delete("userIdentifier")
+                self?.keychain.delete(KeychainKey.userId.rawValue)
                 
                 DispatchQueue.main.async {
                     self?.viewController?.pushLoginViewController(with: .withdrawal)

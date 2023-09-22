@@ -356,7 +356,7 @@ extension HomeSearchViewController: UITextFieldDelegate {
         searchTimer = task
 
         // 0.5초 후에 작업을 실행합니다.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: task)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: task)
     }
     
 }

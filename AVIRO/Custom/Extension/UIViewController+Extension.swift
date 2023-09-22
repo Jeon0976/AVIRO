@@ -6,8 +6,61 @@
 //
 
 import UIKit
+import SafariServices
+
+import Toast_Swift
 
 extension UIViewController {
+    
+    typealias AlertAction = (
+        title: String,
+        style: UIAlertAction.Style,
+        handler: (() -> Void)?
+    )
+    
+    func showAlert(
+        title: String?,
+        message: String?,
+        preferredStyle: UIAlertController.Style = .alert,
+        actions: [AlertAction] = [("확인", .default, nil)]
+    ) {
+        let alertController = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: preferredStyle
+        )
+        
+        for action in actions {
+            let actionItem = UIAlertAction(
+                title: action.title,
+                style: action.style
+            ) { _ in
+                action.handler?()
+            }
+            
+            if action.style == .destructive {
+                actionItem.setValue(UIColor.warning, forKey: "titleTextColor")
+            }
+            
+            alertController.addAction(actionItem)
+        }
+        
+        present(alertController, animated: true)
+    }
+    
+    func showActionSheet(
+        title: String?,
+        message: String?,
+        actions: [AlertAction]
+    ) {
+        showAlert(
+            title: title,
+            message: message,
+            preferredStyle: .actionSheet,
+            actions: actions
+        )
+    }
+    
     func setupCustomBackButton(_ animatied: Bool = false) {
         let backButton = UIButton()
         
@@ -34,7 +87,7 @@ extension UIViewController {
         self.navigationItem.leftBarButtonItem = barButtonItem
     }
     
-    @objc func customBackButtonTapped(_ sender: UIButton) {
+    @objc private func customBackButtonTapped(_ sender: UIButton) {
         let animated = sender.tag == 1
         
         navigationController?.popViewController(animated: animated)
@@ -59,5 +112,33 @@ extension UIViewController {
         .forEach { $0.removeFromSuperlayer() }
         
         self.view.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    func showSimpleToast(
+        with title: String,
+        position: ToastPosition = .bottom
+    ) {
+        var style = ToastStyle()
+        
+        style.cornerRadius = 14
+        style.backgroundColor = .gray3
+        style.titleColor = .gray7
+        style.titleFont = CFont.font.medium17
+        
+        self.view.makeToast(
+            title,
+            duration: 1.0,
+            position: position,
+            title: nil,
+            image: nil,
+            style: style,
+            completion: nil
+        )
+    }
+    
+    func showWebView(with url: URL) {
+        let safariViewController = SFSafariViewController(url: url)
+        safariViewController.dismissButtonStyle = .cancel
+        present(safariViewController, animated: true)
     }
 }

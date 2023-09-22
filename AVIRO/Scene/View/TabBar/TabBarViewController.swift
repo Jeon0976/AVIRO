@@ -42,12 +42,12 @@ class TabBarViewController: UITabBarController {
         tabBar.layer.borderColor = UIColor.gray5.cgColor
         
         let attributesNormal: [NSAttributedString.Key: Any] = [
-            .font: UIFont.pretendard(size: 11, weight: .semibold),
+            .font: CFont.font.bold11,
             .foregroundColor: UIColor.gray2
         ]
         
         let attributesSelected: [NSAttributedString.Key: Any] = [
-            .font: UIFont.pretendard(size: 11, weight: .semibold),
+            .font: CFont.font.bold11,
             .foregroundColor: UIColor.main
         ]
         
@@ -55,10 +55,6 @@ class TabBarViewController: UITabBarController {
         UITabBarItem.appearance().setTitleTextAttributes(attributesSelected, for: .selected)
     }
     
-    // MARK: tabBar 숨길때 사용하는 method
-    /// 처음 hidden으로 했다가 상태창 등이 나올때 view의 높이가 달라지는 버그가 생김
-    /// tabBar의 isTranslucent 때문인것 같음
-    ///
     func hiddenTabBarIncludeIsTranslucent(_ hidden: Bool) {
         
         self.tabBar.isTranslucent = hidden

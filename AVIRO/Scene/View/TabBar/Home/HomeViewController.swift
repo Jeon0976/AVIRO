@@ -6,10 +6,8 @@
 //
 
 import UIKit
-import SafariServices
 
 import NMapsMap
-import Toast_Swift
 
 final class HomeViewController: UIViewController {
     lazy var presenter = HomeViewPresenter(viewController: self)
@@ -18,8 +16,8 @@ final class HomeViewController: UIViewController {
         let map = NMFMapView()
         
         map.addCameraDelegate(delegate: self)
-        map.touchDelegate = self
         map.mapType = .basic
+        map.touchDelegate = self
         map.isIndoorMapEnabled = true
         map.minZoomLevel = 5.0
         map.extent = NMGLatLngBounds(
@@ -319,15 +317,9 @@ extension HomeViewController: HomeViewProtocol {
     }
     
     // MARK: Map Star button True
-    func afterLoadStarButton(noMarkers: [NMFMarker],
-                             starMarkers: [NMFMarker]
-    ) {
+    func afterLoadStarButton(noMarkers: [NMFMarker]) {
         noMarkers.forEach {
             $0.mapView = nil
-        }
-        
-        starMarkers.forEach {
-            $0.mapView = naverMapView
         }
     }
 
@@ -524,7 +516,7 @@ extension HomeViewController {
         
         placeView.whenTopViewStarTapped = { [weak self] selected in
             let title: String = selected ? "즐겨찾기가 추가되었습니다." : "즐겨찾기가 삭제되었습니다."
-            self?.makeToastButton(title)
+            self?.showToastAlert(title)
             self?.presenter.updateBookmark(selected)
         }
             
@@ -566,7 +558,7 @@ extension HomeViewController {
         }
     
         placeView.reportReview = { [weak self] reportIdModel in
-            self?.makeReportReviewAlert(reportIdModel)
+            self?.showReportReviewAlert(reportIdModel)
         }
         
         placeView.editMyReview = { [weak self] commentId in
@@ -577,79 +569,69 @@ extension HomeViewController {
     // MARK: Clousre Private 함수
     private func openWebLink(url: URL) {
         presenter.shouldKeepPlaceInfoViewState(true)
-        let safariViewController = SFSafariViewController(url: url)
-        safariViewController.dismissButtonStyle = .cancel
-        present(safariViewController, animated: true)
+        showWebView(with: url)
     }
     
-    private func makeToastButton(_ title: String) {
-        var style = ToastStyle()
-        style.cornerRadius = 14
-        style.backgroundColor = .gray3
-        
-        style.titleColor = .gray7
-        style.titleFont = .systemFont(ofSize: 17, weight: .semibold)
-
-        self.view.makeToast(title, duration: 1.0, position: .bottom, style: style)
+    private func showToastAlert(_ title: String) {
+        showSimpleToast(with: title)
     }
     
-    private func makeReportReviewAlert(_ reportCommentModel: AVIROReportReviewModel) {
-        let alertController = UIAlertController(
-            title: nil,
-            message: "더보기",
-            preferredStyle: .actionSheet
+    private func showReportReviewAlert(_ reportCommentModel: AVIROReportReviewModel) {
+        let reportAction: AlertAction = (
+            title: "후기 신고하기",
+            style: .destructive,
+            handler: {
+                let finalReportCommentModel = AVIROReportReviewModel(
+                    createdTime: reportCommentModel.createdTime,
+                    placeTitle: self.presenter.getPlace(),
+                    id: reportCommentModel.id,
+                    content: reportCommentModel.content,
+                    nickname: reportCommentModel.nickname
+                )
+                self.presentReportReview(finalReportCommentModel)
+            }
         )
         
-        let reportAction = UIAlertAction(title: "후기 신고하기", style: .destructive) { _ in
-            let finalReportCommentModel = AVIROReportReviewModel(
-                createdTime: reportCommentModel.createdTime,
-                placeTitle: self.presenter.getPlace(),
-                id: reportCommentModel.id,
-                content: reportCommentModel.content,
-                nickname: reportCommentModel.nickname
-            )
-  
-            self.presentReportReview(finalReportCommentModel)
-        }
+        let cancelAction: AlertAction = (
+            title: "취소",
+            style: .cancel,
+            handler: nil
+        )
         
-        let cancel = UIAlertAction(title: "취소", style: .cancel)
-        
-        [
-            reportAction,
-            cancel
-        ].forEach {
-            alertController.addAction($0)
-        }
-        
-        present(alertController, animated: true)
+        showActionSheet(
+            title: nil,
+            message: "더보기",
+            actions: [reportAction, cancelAction]
+        )
     }
     
     private func makeEditMyReviewAlert(_ commentId: String) {
-        let alertController = UIAlertController(
-            title: nil,
-            message: "댓글 더보기",
-            preferredStyle: .actionSheet
+        let editMyReviewAction: AlertAction = (
+            title: "수정하기",
+            style: .default,
+            handler: {
+                self.editMyReview(commentId)
+            }
         )
         
-        let editMyReview = UIAlertAction(title: "수정하기", style: .default) { _ in
-            self.editMyReview(commentId)
-        }
+        let deleteMyReviewAction: AlertAction = (
+            title: "삭제하기",
+            style: .destructive,
+            handler: {
+                self.showDeleteMyReviewAlert(commentId)
+            }
+        )
         
-        let deleteMyReview = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
-            self.showDeleteMyReviewAlert(commentId)
-        }
-        
-        let cancel = UIAlertAction(title: "취소", style: .cancel)
-        
-        [
-            editMyReview,
-            deleteMyReview,
-            cancel
-        ].forEach {
-            alertController.addAction($0)
-        }
-        
-        present(alertController, animated: true)
+        let cancelAction: AlertAction = (
+            title: "취소",
+            style: .cancel,
+            handler: nil
+        )
+        showActionSheet(
+            title: nil,
+            message: "댓글 더보기",
+            actions: [editMyReviewAction, deleteMyReviewAction, cancelAction]
+        )
     }
     
     private func editMyReview(_ commentId: String) {
@@ -694,7 +676,7 @@ extension HomeViewController {
         )
         
         presenter.afterReportPopView = { [weak self] text in
-            self?.makeToastButton(text)
+            self?.showToastAlert(text)
         }
         
         vc.presenter = presenter

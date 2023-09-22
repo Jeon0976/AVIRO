@@ -7,6 +7,8 @@
 
 import UIKit
 
+import KeychainSwift
+
 protocol ThridRegistrationProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
@@ -24,7 +26,8 @@ final class ThridRegistrationPresenter {
     weak var viewController: ThridRegistrationProtocol?
 
     private let aviroManager = AVIROAPIManager()
-
+    private let keyChain = KeychainSwift()
+    
     var userInfoModel: AVIROUserSignUpDTO?
         
     private var terms: [Term: Bool] = [
@@ -76,12 +79,13 @@ final class ThridRegistrationPresenter {
         
         userInfoModel.marketingAgree = terms[.marketing] ?? false
         
-        print(userInfoModel)
         // TODO: 마지막 페이지 완성후 테스트
         aviroManager.postUserSignupModel(userInfoModel) { userInfo in
-            print(userInfo)
             DispatchQueue.main.async { [weak self] in
-                self?.viewController?.pushFinalRegistrationView()
+                if let userId = userInfo.userId {
+                    self?.keyChain.set(userId, forKey: KeychainKey.userId.rawValue)
+                    self?.viewController?.pushFinalRegistrationView()
+                }
             }
         }
     }

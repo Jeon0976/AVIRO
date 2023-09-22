@@ -13,7 +13,7 @@ import KeychainSwift
 final class AppController {
     static let shared = AppController()
     
-    private var userIdentifier: String?
+    private var userKey: String?
     
     private let keychain = KeychainSwift()
     
@@ -25,7 +25,7 @@ final class AppController {
     }
     
     private init() {
-        self.userIdentifier = keychain.get("userIdentifier")
+        self.userKey = keychain.get(KeychainKey.userId.rawValue)
     }
     
     // MARK: 외부랑 소통할 메서드
@@ -41,22 +41,22 @@ final class AppController {
     private func checkState() {
 
         // 최초 튜토리얼 화면 안 봤을 때
-        guard UserDefaults.standard.bool(forKey: "Tutorial") else {
+        guard UserDefaults.standard.bool(forKey: UDKey.tutorial.rawValue) else {
             setTutorialView()
             return
         }
 
         // 자동로그인 토큰 없을 때
-        guard let userIdentifier = userIdentifier else {
+        guard let userKey = userKey else {
             setLoginView()
             return
         }
 
         // TODO: 로그인 기능 추가 시 업데이트
-        let userCheck = AVIROAppleUserCheckMemberDTO(userToken: userIdentifier)
+        let userCheck = AVIROAppleUserCheckMemberDTO(userToken: userKey)
         
         // 회원이 서버에 없을 때
-        AVIROAPIManager().postCheckUserModel(userCheck) { userInfo in
+        AVIROAPIManager().postCheckAppleUserModel(userCheck) { userInfo in
             DispatchQueue.main.async { [weak self] in
                 if userInfo.statusCode == 200 {
                     let userId = userInfo.data?.userId ?? ""
@@ -73,6 +73,7 @@ final class AppController {
                         marketingAgree: marketingAgree
                     )
                     self?.setHomeView()
+                    self?.keychain.set(userId, forKey: KeychainKey.userId.rawValue)
                 } else {
                     self?.setLoginView()
                 }

@@ -349,7 +349,6 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
     }
 }
 
-// MARK: 키보드 내리기
 extension SecondRegistrationViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(
         _ gestureRecognizer: UIGestureRecognizer,
@@ -358,7 +357,6 @@ extension SecondRegistrationViewController: UIGestureRecognizerDelegate {
         if touch.view is UITextField {
             return false
         }
-        
         view.endEditing(true)
         return true
     }

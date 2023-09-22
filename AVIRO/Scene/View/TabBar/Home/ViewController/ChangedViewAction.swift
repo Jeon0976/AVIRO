@@ -18,7 +18,7 @@ extension HomeViewController {
         
         settingPlaceView()
         
-        UIView.animate(withDuration: 0.25) {
+        UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
     }
@@ -76,7 +76,7 @@ extension HomeViewController {
         
         placeViewTopConstraint?.constant = height
         
-        UIView.animate(withDuration: 0.1) {
+        UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
     }
@@ -89,7 +89,7 @@ extension HomeViewController {
         let constant = -self.view.safeAreaLayoutGuide.layoutFrame.height
         placeViewTopConstraint?.constant = constant
         
-        UIView.animate(withDuration: 0.25) {
+        UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
     }

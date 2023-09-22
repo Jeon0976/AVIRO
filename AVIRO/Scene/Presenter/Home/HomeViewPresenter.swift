@@ -27,9 +27,7 @@ protocol HomeViewProtocol: NSObject {
     func moveToCameraWhenHasAVIRO(_ markerModel:
                                   MarkerModel)
     func loadMarkers(_ markers: [NMFMarker])
-    func afterLoadStarButton(noMarkers: [NMFMarker],
-                             starMarkers: [NMFMarker]
-    )
+    func afterLoadStarButton(noMarkers: [NMFMarker])
     func afterClickedMarker(placeModel: PlaceTopModel,
                             placeId: String,
                             isStar: Bool
@@ -286,7 +284,11 @@ final class HomeViewPresenter: NSObject {
    func resetPreviouslyTouchedMarker() {
        /// 최초 터치 이후 작동을 위한 분기처리
         if hasTouchedMarkerBefore {
-            selectedMarkerModel?.isCliced = false
+            if var selectedMarkerModel = selectedMarkerModel {
+                selectedMarkerModel.isCliced = false
+                LocalMarkerData.shared.updateWhenClickedMarker(selectedMarkerModel)
+            }
+            
             selectedMarkerModel = nil
             selectedMarkerIndex = 0
             selectedPlaceId = nil
@@ -305,7 +307,6 @@ final class HomeViewPresenter: NSObject {
         guard let validMarkerModel = markerModel else { return }
         
         guard let validIndex = index else { return }
-        
         getPlaceSummaryModel(validMarkerModel)
         
         selectedMarkerIndex = validIndex
@@ -314,6 +315,8 @@ final class HomeViewPresenter: NSObject {
         selectedMarkerModel?.isCliced = true
         
         hasTouchedMarkerBefore = true
+        
+        LocalMarkerData.shared.updateWhenClickedMarker(selectedMarkerModel!)
         
         viewController?.moveToCameraWhenHasAVIRO(validMarkerModel)
     }
@@ -368,14 +371,15 @@ final class HomeViewPresenter: NSObject {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(checkIsInAVRIONotificaiton(_:)),
-            name: NSNotification.Name("checkIsInAVRIO"),
+            name: NSNotification.Name(UDKey.matchedPlaceModel.rawValue),
             object: nil
         )
     }
     
     // MARK: Notification Method afterMainSearch
     @objc func checkIsInAVRIONotificaiton(_ noficiation: Notification) {
-        guard let checkIsInAVIRO = noficiation.userInfo?["checkIsInAVRIO"] as? MatchedPlaceModel else { return }
+        guard let checkIsInAVIRO = noficiation.userInfo?[UDKey.matchedPlaceModel.rawValue]
+                as? MatchedPlaceModel else { return }
         
         afterMainSearch(checkIsInAVIRO)
     }
@@ -390,10 +394,7 @@ final class HomeViewPresenter: NSObject {
             )
         } else {
         // AVIRO에 데이터가 있을 때
-            let (markerModel, index) = LocalMarkerData.shared.getMarkerWhenSearchAfter(
-                afterSearchModel.x,
-                afterSearchModel.y
-            )
+            let (markerModel, index) = LocalMarkerData.shared.getMarkerWhenSearchAfter(afterSearchModel)
             
             guard let markerModel = markerModel else { return }
             guard let index = index else { return }
@@ -437,25 +438,15 @@ final class HomeViewPresenter: NSObject {
                 noMarkers.append(model.marker)
             }
         }
-        
-        var starMarkers: [NMFMarker] = []
-
+                
         LocalMarkerData.shared.updateWhenStarButton(starMarkersModel)
-        viewController?.afterLoadStarButton(noMarkers: noMarkers, starMarkers: starMarkers)
+        viewController?.afterLoadStarButton(noMarkers: noMarkers)
     }
     
     private func whenAfterLoadNotStarButtonTapped() {
         var starMarkersModel = LocalMarkerData.shared.getOnlyStarMarkerModels()
                 
         for index in 0..<starMarkersModel.count {
-            switch starMarkersModel[index].mapPlace {
-            case .All:
-                starMarkersModel[index].marker.makeIcon(.All)
-            case .Some:
-                starMarkersModel[index].marker.makeIcon(.Some)
-            case .Request:
-                starMarkersModel[index].marker.makeIcon(.Request)
-            }
             starMarkersModel[index].isStar = false
         }
         

@@ -8,6 +8,7 @@
 import UIKit
 
 struct MatchedPlaceModel {
+    var placeId: String = ""
     let title: String
     let distance: String
     let address: String

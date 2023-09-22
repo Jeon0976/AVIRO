@@ -62,14 +62,9 @@ final class LoginViewPresenter: NSObject {
     
     // MARK: Login 후 최초인지 아닌지 확인 처리
     func whenCheckAfterAppleLogin(_ appleUserModel: AppleUserModel) {
-        keychain.set(
-            appleUserModel.userIdentifier,
-            forKey: KeychainKey.appleIdentifier.rawValue
-        )
-        
         let userCheck = AVIROAppleUserCheckMemberDTO(userToken: appleUserModel.userIdentifier)
         
-        AVIROAPIManager().postCheckUserModel(userCheck) { [weak self] userInfo in
+        AVIROAPIManager().postCheckAppleUserModel(userCheck) { [weak self] userInfo in
             if userInfo.data != nil {
                 let userId = userInfo.data?.userId ?? ""
                 let userName = userInfo.data?.userName ?? ""
@@ -86,6 +81,7 @@ final class LoginViewPresenter: NSObject {
                 )
                 
                 DispatchQueue.main.async {
+                    self?.keychain.set(userId, forKey: KeychainKey.userId.rawValue)
                     self?.viewController?.pushTabBar()
                 }
             } else {

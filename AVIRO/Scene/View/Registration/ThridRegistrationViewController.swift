@@ -61,7 +61,7 @@ final class ThridRegistrationViewController: UIViewController {
         tableView.delegate = self
         tableView.register(
             TermsTableCell.self,
-            forCellReuseIdentifier: TVIdentifier.terms.rawValue
+            forCellReuseIdentifier: TVIdentifier.termsTableCell.rawValue
         )
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
@@ -110,7 +110,6 @@ final class ThridRegistrationViewController: UIViewController {
 }
 
 extension ThridRegistrationViewController: ThridRegistrationProtocol {
-    // MARK: Layout
     func makeLayout() {
         [
             titleLabel,
@@ -123,7 +122,6 @@ extension ThridRegistrationViewController: ThridRegistrationProtocol {
         }
         
         NSLayoutConstraint.activate([
-            // titleLabel
             titleLabel.topAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.topAnchor,
                 constant: Layout.Margin.largeToView.rawValue
@@ -133,7 +131,6 @@ extension ThridRegistrationViewController: ThridRegistrationProtocol {
                 constant: Layout.Margin.large.rawValue
             ),
             
-            // subTitleLabel
             subtitleLabel.topAnchor.constraint(
                 equalTo: titleLabel.bottomAnchor,
                 constant: Layout.Margin.small.rawValue
@@ -142,7 +139,6 @@ extension ThridRegistrationViewController: ThridRegistrationProtocol {
                 equalTo: titleLabel.leadingAnchor
             ),
             
-            // termsTableView
             termsTableView.leadingAnchor.constraint(
                 equalTo: titleLabel.leadingAnchor
             ),
@@ -158,7 +154,6 @@ extension ThridRegistrationViewController: ThridRegistrationProtocol {
                 equalToConstant: Layout.Size.termsTableViewHeight.rawValue
             ),
             
-            // nextButton
             nextButton.bottomAnchor.constraint(
                 equalTo: view.bottomAnchor,
                 constant: -Layout.Margin.largeToView.rawValue
@@ -177,7 +172,6 @@ extension ThridRegistrationViewController: ThridRegistrationProtocol {
         ])
     }
     
-    // MARK: Attribute
     func makeAttribute() {
         view.backgroundColor = .gray7
         setupCustomBackButton(true)
@@ -193,7 +187,6 @@ extension ThridRegistrationViewController: ThridRegistrationProtocol {
         presenter.pushUserInfo()
     }
 
-    // MARK: All Accept Button 클릭 시
     @objc private func allAcceptButtonTapped(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
 
@@ -206,7 +199,6 @@ extension ThridRegistrationViewController: ThridRegistrationProtocol {
 }
 
 extension ThridRegistrationViewController: UITableViewDelegate {
-    // MARK: Table HeaderView
     func tableView(
         _ tableView: UITableView,
         viewForHeaderInSection section: Int
@@ -273,7 +265,7 @@ extension ThridRegistrationViewController: UITableViewDataSource {
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
-            withIdentifier: TVIdentifier.terms.rawValue,
+            withIdentifier: TVIdentifier.termsTableCell.rawValue,
             for: indexPath
         ) as? TermsTableCell
         
@@ -294,7 +286,6 @@ extension ThridRegistrationViewController: UITableViewDataSource {
     }
     
     private func checkAllRequiredTerms() {
-        // 하나 하나 체크 해서 전부다 채크 했을 경우
         let result = presenter.checkAllRequiredTerms()
         
         if result.0 {

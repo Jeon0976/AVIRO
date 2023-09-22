@@ -7,24 +7,24 @@
 
 import UIKit
 
-import Toast_Swift
-
 private enum Text: String {
     case apple = "Apple로 로그인하기"
+    case logoutToast = "로그아웃이 완료되었습니다."
+    case withdrawalTitle = "회원탈퇴가 완료되었어요."
+    case withdrawalMessage = "함께한 시간이 아쉽지만,\n언제든지 돌아오는 문을 열어둘게요.\n어비로의 비건 여정은 계속될 거에요!"
     
 }
 
 private enum Layout {
     enum Margin: CGFloat {
-        case small = 10
-        case medium = 20
-        case large = 30
-        case largeToView = 40
+        case titleToView = 80
+        case shadowToMain = 15
+        case appleToBottom = 60
+        case buttonH = 26.5
     }
     
     enum Size: CGFloat {
-        case subInfo2Width = 32
-        case nextButtonHeight = 50
+        case buttonHeight = 50
     }
 }
 
@@ -65,8 +65,12 @@ final class LoginViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.setImage(UIImage.apple, for: .normal)
         
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: 0)
-        
+        button.imageEdgeInsets = UIEdgeInsets(
+            top: 0,
+            left: -8,
+            bottom: 0,
+            right: 0
+        )
         button.titleLabel?.font = CFont.font.medium17
         
         button.layer.borderColor = UIColor.black.cgColor
@@ -128,7 +132,7 @@ extension LoginViewController: LoginViewProtocol {
         NSLayoutConstraint.activate([
             titleImageView.topAnchor.constraint(
                 equalTo: self.view.safeAreaLayoutGuide.topAnchor,
-                constant: 80
+                constant: Layout.Margin.titleToView.rawValue
             ),
             titleImageView.centerXAnchor.constraint(
                 equalTo: self.view.centerXAnchor
@@ -143,7 +147,7 @@ extension LoginViewController: LoginViewProtocol {
             
             shadowImageView.topAnchor.constraint(
                 equalTo: mainImageView.bottomAnchor,
-                constant: 15
+                constant: Layout.Margin.shadowToMain.rawValue
             ),
             shadowImageView.centerXAnchor.constraint(
                 equalTo: self.view.centerXAnchor
@@ -151,18 +155,18 @@ extension LoginViewController: LoginViewProtocol {
             
             appleLoginButton.bottomAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-                constant: -60
+                constant: -Layout.Margin.appleToBottom.rawValue
             ),
             appleLoginButton.leadingAnchor.constraint(
                 equalTo: self.view.leadingAnchor,
-                constant: 26.5
+                constant: Layout.Margin.buttonH.rawValue
             ),
             appleLoginButton.trailingAnchor.constraint(
                 equalTo: self.view.trailingAnchor,
-                constant: -26.5
+                constant: -Layout.Margin.buttonH.rawValue
             ),
             appleLoginButton.heightAnchor.constraint(
-                equalToConstant: 50
+                equalToConstant: Layout.Size.buttonHeight.rawValue
             ),
             
             // TODO: 추후 없애기
@@ -201,8 +205,10 @@ extension LoginViewController: LoginViewProtocol {
     func pushRegistration(_ userModel: CommonUserModel) {
         let viewController = FirstRegistrationViewController()
         
-        let presenter = FirstRegistrationPresenter(viewController: viewController,
-                                                   userModel: userModel)
+        let presenter = FirstRegistrationPresenter(
+            viewController: viewController,
+            userModel: userModel
+        )
         
         viewController.presenter = presenter
 
@@ -210,30 +216,18 @@ extension LoginViewController: LoginViewProtocol {
     }
     
     func afterLogoutAndMakeToastButton() {
-        let title = "로그아웃이 완료되었습니다."
-        
-        var style = ToastStyle()
-        style.cornerRadius = 14
-        style.backgroundColor = .gray3
-        
-        style.titleColor = .gray7
-        style.titleFont = .pretendard(size: 17, weight: .medium)
-                
-        self.view.makeToast(title,
-                            duration: 1.0,
-                            position: .bottom,
-                            title: nil,
-                            image: nil,
-                            style: style,
-                            completion: nil
-        )
+        showSimpleToast(with: Text.logoutToast.rawValue)
     }
     
     func afterWithdrawalUserShowAlert() {
-        let alertTitle = "회원탈퇴가 완료되었어요."
-        let alertMessage = "함께한 시간이 아쉽지만,\n언제든지 돌아오는 문을 열어둘게요.\n어비로의 비건 여정은 계속될 거에요!"
+        let alertTitle = Text.withdrawalTitle.rawValue
+        let alertMessage = Text.withdrawalMessage.rawValue
         
-        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+        let alertController = UIAlertController(
+            title: alertTitle,
+            message: alertMessage,
+            preferredStyle: .alert
+        )
         
         let checkAction = UIAlertAction(title: "확인", style: .default)
         
