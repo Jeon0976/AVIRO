@@ -182,6 +182,8 @@ extension LoginViewController: LoginViewProtocol {
     func setupAttribute() {
         view.backgroundColor = .gray7
         navigationController?.navigationBar.isHidden = true
+        // 스와이프 뒤로가기 막기
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
 
         applyGradientToView(colors: [UIColor.bgNavy, .gray7])
     }
@@ -190,8 +192,9 @@ extension LoginViewController: LoginViewProtocol {
     @objc func tapNoLoginButton() {
         MyData.my.id = "test"
         MyData.my.nickname = "테스트"
-        
-        pushTabBar()
+        let model = CommonUserModel(token: "", name: "", email: "")
+        pushRegistration(model)
+//        pushTabBar()
     }
     
     // MARK: Push TabBar Viewcontroller

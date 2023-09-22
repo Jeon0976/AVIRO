@@ -55,7 +55,7 @@ class TabBarViewController: UITabBarController {
         UITabBarItem.appearance().setTitleTextAttributes(attributesSelected, for: .selected)
     }
     
-    func hiddenTabBarIncludeIsTranslucent(_ hidden: Bool) {
+    func hiddenTabBar(_ hidden: Bool) {
         
         self.tabBar.isTranslucent = hidden
         self.tabBar.isHidden = hidden

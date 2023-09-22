@@ -138,7 +138,7 @@ extension NickNameChangebleViewController: NickNameChangebleProtocol {
     
     func setupAttribute() {
         self.view.backgroundColor = .gray7
-        self.setupCustomBackButton(true)
+        self.setupBack(true)
         
         self.navigationItem.title = "닉네임 수정"
         

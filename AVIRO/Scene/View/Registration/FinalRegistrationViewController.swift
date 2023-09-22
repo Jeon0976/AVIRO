@@ -96,6 +96,7 @@ final class FinalRegistrationViewController: UIViewController {
     
     private func setupAttribute() {
         view.backgroundColor = .gray7
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         navigationController?.navigationBar.isHidden = true
     }
     

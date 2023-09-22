@@ -31,11 +31,18 @@ enum CVIdentifier: String {
     case test
 }
 
+// MARK: 이용 약관
+enum Policy: String {
+    case termsOfService = "https://sponge-nose-882.notion.site/259b51ac0b4a41d7aaf5ea2b89a768f8?pvs=4"
+    case privacy = "https://sponge-nose-882.notion.site/c98c9103ebdb44cfadd8cd1d11600f99?pvs=4"
+    case location =  "https://sponge-nose-882.notion.site/50102bd385664c89ab39f1b290fb033e?pvs=4"
+}
+
 // MARK: Defalut Coordinate
 /// 광안리 해수욕장
 enum DefaultCoordinate: Double {
-    case lat = 35.153354
-    case lon = 129.118924
+    case lat = 129.118924
+    case lon = 35.153354
 }
 
 // MARK: TabBar

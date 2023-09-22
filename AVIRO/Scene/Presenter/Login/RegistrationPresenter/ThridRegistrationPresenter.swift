@@ -17,10 +17,9 @@ protocol ThridRegistrationProtocol: NSObject {
 
 final class ThridRegistrationPresenter {
     enum Term: String {
-           case aviroUsage = "어비로 이용 약관 (필수)"
-           case personalInfo = "개인정보 수집 및 이용에 대한 동의 (필수)"
-           case locationService = "위치기반 서비스 이용약관 (필수)"
-           case marketing = "이벤트 및 마케팅 활용 동의 (선택)"
+           case aviroUsage = "어비로 이용 약관 동의 (필수)"
+           case personalInfo = "개인정보 수집 및 이용 동의 (필수)"
+           case locationService = "위치기반 서비스 이용약관 동의 (필수)"
     }
 
     weak var viewController: ThridRegistrationProtocol?
@@ -30,11 +29,10 @@ final class ThridRegistrationPresenter {
     
     var userInfoModel: AVIROUserSignUpDTO?
         
-    private var terms: [Term: Bool] = [
-        .aviroUsage: false,
-        .personalInfo: false,
-        .locationService: false,
-        .marketing: false
+    var terms: [(Term, Bool)] = [
+        (.aviroUsage, false),
+        (.personalInfo, false),
+        (.locationService, false)
     ]
     
     init(viewController: ThridRegistrationProtocol, userInfo: AVIROUserSignUpDTO? = nil) {
@@ -47,39 +45,25 @@ final class ThridRegistrationPresenter {
         viewController?.makeAttribute()
     }
     
-    func getTerms() -> [Term: Bool] {
-        return terms
-    }
-    
-    func clickedTerm(_ term: Term) {
-        terms[term]?.toggle()
-        print(terms)
+    func clickedTerm(at index: Int) {
+        terms[index].1.toggle()
     }
     
     func allAcceptButtonTapped(_ isSelcted: Bool) {
-        for (term, _) in terms {
-            terms[term] = isSelcted
+        for index in terms.indices {
+            terms[index].1 = isSelcted
         }
     }
     
-    func checkAllRequiredTerms() -> (Bool, Bool) {
-        // 하나 하나 체크 해서 전부다 체크 했을 경우
-        let allTermsAllAgreed = terms.allSatisfy { $0.value }
-        
-        // nextButton 활성 조건
-        let requiredTermsAllAgreed = terms.filter {
-            $0.key.rawValue.contains("필수")
-        }.allSatisfy { $0.value }
-                
-        return (allTermsAllAgreed, requiredTermsAllAgreed)
+    func checkAllRequiredTerms() -> Bool {
+        return !terms.contains(where: { $0.1 == false })
     }
     
     func pushUserInfo() {
         guard var userInfoModel = userInfoModel else { return }
         
-        userInfoModel.marketingAgree = terms[.marketing] ?? false
+        userInfoModel.marketingAgree = false
         
-        // TODO: 마지막 페이지 완성후 테스트
         aviroManager.postUserSignupModel(userInfoModel) { userInfo in
             DispatchQueue.main.async { [weak self] in
                 if let userId = userInfo.userId {

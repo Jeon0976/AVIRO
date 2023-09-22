@@ -129,7 +129,7 @@ extension PlaceListSearchViewController: PlaceListProtocol {
     func makeAttribute() {
         view.backgroundColor = .gray7
         navigationItem.title = "가게 찾기"
-        setupCustomBackButton()
+        setupBack()
     }
     
     // MARK: Gesture

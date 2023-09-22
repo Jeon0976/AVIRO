@@ -84,7 +84,7 @@ extension EditMenuViewController: EditMenuProtocol {
         self.view.backgroundColor = .gray7
         self.scrollView.backgroundColor = .gray6
         
-        self.setupCustomBackButton()
+        self.setupBack()
         
         navigationController?.navigationBar.isHidden = false
         
@@ -95,7 +95,7 @@ extension EditMenuViewController: EditMenuProtocol {
         navigationItem.rightBarButtonItem?.isEnabled = false
         
         if let tabBarController = self.tabBarController as? TabBarViewController {
-            tabBarController.hiddenTabBarIncludeIsTranslucent(true)
+            tabBarController.hiddenTabBar(true)
         }
         
         editMenuBottomView.setTableViewDelegate(self)

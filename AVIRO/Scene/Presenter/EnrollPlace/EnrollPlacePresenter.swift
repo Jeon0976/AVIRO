@@ -108,7 +108,7 @@ final class EnrollPlacePresenter {
     }
 
     // MARK: Report Store
-    func reportStore() {
+    func uploadStore() {
         guard let veganModel = veganModel else {
             return
         }
@@ -117,6 +117,9 @@ final class EnrollPlacePresenter {
         AVIROAPIManager().postPlaceModel(veganModel) { [weak self] responseModel in
             DispatchQueue.main.async {
                 if responseModel.statusCode == 200 {
+                    CenterCoordinate.shared.longitude = veganModel.x
+                    CenterCoordinate.shared.latitude = veganModel.y
+                    
                     self?.viewController?.popViewController()
                 } else {
                     self?.viewController?.pushAlertController()

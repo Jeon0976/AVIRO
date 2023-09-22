@@ -23,7 +23,7 @@ private enum Layout {
     }
     
     enum Size: CGFloat {
-        case termsTableViewHeight = 220
+        case termsTableViewHeight = 195
         case nextButtonHeight = 50
         case headrHeight = 55
     }
@@ -174,7 +174,7 @@ extension ThridRegistrationViewController: ThridRegistrationProtocol {
     
     func makeAttribute() {
         view.backgroundColor = .gray7
-        setupCustomBackButton(true)
+        setupBack(true)
     }
     
     func pushFinalRegistrationView() {
@@ -250,6 +250,25 @@ extension ThridRegistrationViewController: UITableViewDelegate {
     ) -> CGFloat {
         Layout.Size.headrHeight.rawValue
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0:
+            if let url = URL(string: Policy.termsOfService.rawValue) {
+                showWebView(with: url)
+            }
+        case 1:
+            if let url = URL(string: Policy.privacy.rawValue) {
+                showWebView(with: url)
+            }
+        case 2:
+            if let url = URL(string: Policy.location.rawValue) {
+                showWebView(with: url)
+            }
+        default:
+            break
+        }
+    }
 }
 
 extension ThridRegistrationViewController: UITableViewDataSource {
@@ -257,7 +276,7 @@ extension ThridRegistrationViewController: UITableViewDataSource {
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
     ) -> Int {
-        presenter.getTerms().count
+        presenter.terms.count
     }
     
     func tableView(
@@ -269,16 +288,15 @@ extension ThridRegistrationViewController: UITableViewDataSource {
             for: indexPath
         ) as? TermsTableCell
         
-        let termKey = Array(presenter.getTerms().keys)[indexPath.row]
-        let termValue = presenter.getTerms()[termKey] ?? false
-
+        let term = presenter.terms[indexPath.row]
+        
         cell?.selectionStyle = .none
         cell?.backgroundColor = termsTableView.backgroundColor
         
-        cell?.makeCellData(check: termValue, term: termKey.rawValue)
+        cell?.makeCellData(check: term.1, term: term.0.rawValue)
         
         cell?.checkButtonTapped = { [weak self] in
-            self?.presenter.clickedTerm(termKey)
+            self?.presenter.clickedTerm(at: indexPath.row)
             self?.checkAllRequiredTerms()
         }
                 
@@ -288,12 +306,12 @@ extension ThridRegistrationViewController: UITableViewDataSource {
     private func checkAllRequiredTerms() {
         let result = presenter.checkAllRequiredTerms()
         
-        if result.0 {
+        if result {
             allAcceptButton.tintColor = .main
         } else {
             allAcceptButton.tintColor = .gray4
         }
         
-        nextButton.isEnabled = result.1
+        nextButton.isEnabled = result
     }
 }

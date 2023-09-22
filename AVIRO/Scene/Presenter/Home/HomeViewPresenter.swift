@@ -19,41 +19,44 @@ protocol HomeViewProtocol: NSObject {
     func whenAfterPopEditPage()
     func keyboardWillShow(notification: NSNotification)
     func keyboardWillHide()
-    func ifDenied()
-    func requestSuccess()
-    func saveCenterCoordinate()
-    func moveToCameraWhenNoAVIRO(_ lng: Double,
-                                 _ lat: Double)
-    func moveToCameraWhenHasAVIRO(_ markerModel:
-                                  MarkerModel)
+    func ifDeniedLocation()
+    func isSuccessLocation()
+    func moveToCameraWhenNoAVIRO(_ lng: Double, _ lat: Double)
+    func moveToCameraWhenHasAVIRO(_ markerModel: MarkerModel)
     func loadMarkers(_ markers: [NMFMarker])
     func afterLoadStarButton(noMarkers: [NMFMarker])
-    func afterClickedMarker(placeModel: PlaceTopModel,
-                            placeId: String,
-                            isStar: Bool
+    func afterClickedMarker(
+        placeModel: PlaceTopModel,
+        placeId: String,
+        isStar: Bool
     )
-    func afterSlideupPlaceView(infoModel: AVIROPlaceInfo?,
-                               menuModel: AVIROPlaceMenus?,
-                               reviewsModel: AVIROReviewsArrayDTO?
+    func afterSlideupPlaceView(
+        infoModel: AVIROPlaceInfo?,
+        menuModel: AVIROPlaceMenus?,
+        reviewsModel: AVIROReviewsArrayDTO?
     )
     func showReportPlaceAlert()
     func isDuplicatedReport()
     func isSuccessReportPlaceActionSheet()
     func pushPlaceInfoOpreationHoursViewController(_ models: [EditOperationHoursModel])
-    func pushEditPlaceInfoViewController(placeMarkerModel: MarkerModel,
-                                         placeId: String,
-                                         placeSummary: AVIROPlaceSummary,
-                                         placeInfo: AVIROPlaceInfo,
-                                         editSegmentedIndex: Int
+    func pushEditPlaceInfoViewController(
+        placeMarkerModel: MarkerModel,
+        placeId: String,
+        placeSummary: AVIROPlaceSummary,
+        placeInfo: AVIROPlaceInfo,
+        editSegmentedIndex: Int
     )
-    func pushEditMenuViewController(placeId: String,
-                                    isAll: Bool,
-                                    isSome: Bool,
-                                    isRequest: Bool,
-                                    menuArray: [AVIROMenu])
+    func pushEditMenuViewController(
+        placeId: String,
+        isAll: Bool,
+        isSome: Bool,
+        isRequest: Bool,
+        menuArray: [AVIROMenu]
+    )
     func refreshMenuView(_ menuData: AVIROPlaceMenus?)
     func refreshMapPlace(_ mapPlace: MapPlace)
     func deleteMyReviewInView(_ commentId: String)
+    func showToastAlert(_ title: String)
 }
 
 final class HomeViewPresenter: NSObject {
@@ -75,9 +78,7 @@ final class HomeViewPresenter: NSObject {
     private var selectedInfoModel: AVIROPlaceInfo?
     private var selectedMenuModel: AVIROPlaceMenus?
     private var selectedReviewsModel: AVIROReviewsArrayDTO?
-    
-    private var firstLocation = true
-    
+        
     private var selectedPlaceId: String?
     
     init(viewController: HomeViewProtocol) {
@@ -109,8 +110,6 @@ final class HomeViewPresenter: NSObject {
 
         viewController?.whenViewWillAppear()
 
-        /// 내부에 viewWillAppear를 안 넣는 이유 -> viewWillapper할 때 naverMap을 isHidden처리하고 나서 hidden을 풀 면 네이버 map이 안 움직이는 버그 발생
-        /// 좀 더 괜찮을 로직을 위해 새로운 view를 만들어서 naveMap위에 덮어쓰는 방식으로 수정해야 될 것 같음
         if !isFirstViewWillappear {
 
             updateMarkerWhenViewWillAppear()
@@ -125,6 +124,17 @@ final class HomeViewPresenter: NSObject {
         } else {
             isFirstViewWillappear.toggle()
         }
+        
+        moveToCamraWhenAfterEnrollPlace()
+    }
+    
+    private func moveToCamraWhenAfterEnrollPlace() {
+        CenterCoordinate.shared.coordinateChanged = { [weak self] in
+            self?.viewController?.moveToCameraWhenNoAVIRO(
+                CenterCoordinate.shared.longitude ?? 0.0,
+                CenterCoordinate.shared.latitude ?? 0.0
+            )
+        }
     }
     
     private func updateMarkerWhenViewWillAppear() {
@@ -133,7 +143,7 @@ final class HomeViewPresenter: NSObject {
         let getMarkerModel = AVIROMapModelDTO(
             longitude: MyCoordinate.shared.longitudeString,
             latitude: MyCoordinate.shared.latitudeString,
-            wide: "100",
+            wide: "0.0",
             time: dateTime
         )
         
@@ -145,8 +155,6 @@ final class HomeViewPresenter: NSObject {
     }
     
     func viewDidAppear() {
-        firstLocationUpdate()
-
         if shouldKeepPlaceInfoView {
             viewController?.whenAfterPopEditPage()
             shouldKeepPlaceInfoView.toggle()
@@ -209,7 +217,7 @@ final class HomeViewPresenter: NSObject {
         let getMarkerModel = AVIROMapModelDTO(
             longitude: MyCoordinate.shared.longitudeString,
             latitude: MyCoordinate.shared.latitudeString,
-            wide: "100",
+            wide: "0.0",
             time: nil
         )
         
@@ -299,7 +307,6 @@ final class HomeViewPresenter: NSObject {
         }
     }
     
-    // MARK: setMarkerToTouchedState
     /// 클릭한 마커 저장 후 viewController에 알리기
     private func setMarkerToTouchedState(_ marker: NMFMarker) {
         let (markerModel, index) = LocalMarkerData.shared.getMarkerFromMarker(marker)
@@ -321,7 +328,6 @@ final class HomeViewPresenter: NSObject {
         viewController?.moveToCameraWhenHasAVIRO(validMarkerModel)
     }
     
-    // MARK: Get PlaceModel
     /// 클릭 된 마커 데이터 받기 위한 api 호출
     private func getPlaceSummaryModel(_ markerModel: MarkerModel) {
         let mapPlace = markerModel.mapPlace
@@ -351,6 +357,7 @@ final class HomeViewPresenter: NSObject {
             
             DispatchQueue.main.async { [weak self] in
                 let isStar = self?.bookmarkManager.checkData(placeId)
+                
                 self?.viewController?.afterClickedMarker(
                     placeModel: placeTopModel,
                     placeId: placeId,
@@ -536,7 +543,6 @@ final class HomeViewPresenter: NSObject {
         )
 
         AVIROAPIManager().postPlaceReport(model) { [weak self] result in
-            print(result)
             if result.statusCode == 200 {
                 DispatchQueue.main.async {
                     self?.viewController?.isSuccessReportPlaceActionSheet()
@@ -612,6 +618,7 @@ final class HomeViewPresenter: NSObject {
     
     func afterEditMenuChangedMarker(_ changedMarkerModel: EditMenuChangedMarkerModel) {
         guard var selectedMarkerModel = selectedMarkerModel else { return }
+        
         selectedMarkerModel.mapPlace = changedMarkerModel.mapPlace
         selectedMarkerModel.isAll = changedMarkerModel.isAll
         selectedMarkerModel.isSome = changedMarkerModel.isSome
@@ -625,18 +632,35 @@ final class HomeViewPresenter: NSObject {
     }
     
     func uploadReview(_ postReviewModel: AVIROEnrollReviewDTO) {
-        AVIROAPIManager().postCommentModel(postReviewModel)
+        AVIROAPIManager().postCommentModel(postReviewModel) { [weak self] model in
+            if let message = model.message {
+                DispatchQueue.main.async {
+                    self?.viewController?.showToastAlert(message)
+                }
+            }
+        }
+        
     }
     
     func editMyReview(_ postEditReviewModel: AVIROEditReviewDTO) {
-        AVIROAPIManager().postEditCommentModel(postEditReviewModel) { model in
-            
+        AVIROAPIManager().postEditCommentModel(postEditReviewModel) { [weak self] model in
+            if let message = model.message {
+                DispatchQueue.main.async {
+                    self?.viewController?.showToastAlert(message)
+                }
+            }
         }
     }
     
+    // MARK: 수정 요망
     func deleteMyReview(_ postDeleteReviewModel: AVIRODeleteReveiwDTO) {
         AVIROAPIManager().postDeleteCommentModel(postDeleteReviewModel) { [weak self] model in
             DispatchQueue.main.async {
+                if let message = model.message {
+                    self?.viewController?.showToastAlert(message)
+                } else {
+                    self?.viewController?.showToastAlert("삭제에 성공했습니다.")
+                }
                 self?.viewController?.deleteMyReviewInView(postDeleteReviewModel.commentId)
             }
         }
@@ -645,49 +669,34 @@ final class HomeViewPresenter: NSObject {
 
 // MARK: user location 불러오기 관련 작업들
 extension HomeViewPresenter: CLLocationManagerDelegate {
+    func locationUpdate() {
+        locationAuthorization()
+    }
+
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        locationAuthorization()
+    }
+    
     private func locationAuthorization() {
-        
         switch locationManager.authorizationStatus {
-        case .denied:
-            viewController?.ifDenied()
-            // TODO: 만약 거절했을 시 앞으로 해야할 작업
+        case .notDetermined:
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
             
-        case .notDetermined, .restricted:
             locationManager.requestWhenInUseAuthorization()
+        case .authorizedAlways, .authorizedWhenInUse:
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.startUpdatingLocation()
+            
+            viewController?.isSuccessLocation()
+            
+        case .denied, .restricted:
+            viewController?.ifDeniedLocation()
+
         default:
             break
         }
     }
     
-    // MARK: 개인 location data 불러오기 작업
-    // 1. viewWillAppear 일때
-    // 2. 위치 확인 데이터 누를 때
-    func locationUpdate() {
-        if locationManager.authorizationStatus != .authorizedAlways,
-           locationManager.authorizationStatus != .authorizedWhenInUse {
-            viewController?.ifDenied()
-        } else {
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.startUpdatingLocation()
-            viewController?.requestSuccess()
-        }
-    }
-    
-    // MARK: first location data 불러오기
-    func firstLocationUpdate() {
-        guard firstLocation else { return }
-        if locationManager.authorizationStatus != .authorizedAlways,
-           locationManager.authorizationStatus != .authorizedWhenInUse {
-            viewController?.ifDenied()
-        } else {
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.startUpdatingLocation()
-            viewController?.requestSuccess()
-        }
-        
-        firstLocation.toggle()
-    }
-
     // MARK: 개인 Location Data 불러오고 나서 할 작업
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
@@ -696,5 +705,6 @@ extension HomeViewPresenter: CLLocationManagerDelegate {
         MyCoordinate.shared.longitude = location.coordinate.longitude
                 
         locationManager.stopUpdatingLocation()
+        viewController?.isSuccessLocation()
     }
 }

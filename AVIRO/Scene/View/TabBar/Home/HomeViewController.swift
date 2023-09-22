@@ -9,6 +9,44 @@ import UIKit
 
 import NMapsMap
 
+private enum Text: String {
+    case yes = "예"
+    case no = "아니오"
+    case cancel = "취소"
+    case more = "더보기"
+    case edit = "수정하기"
+    case delete = "삭제하기"
+    case report = "신고하기"
+    case searchPlaceHolder = "어디로 이동할까요?"
+    case starPlus = "즐겨찾기가 추가되었습니다."
+    case starDelete = "즐겨찾기가 삭제되었습니다."
+    case reportReview = "후기 신고하기"
+    case deleteMyReviewAlert = "정말로 삭제하시겠어요?\n삭제하면 다시 복구할 수 없어요."
+    case reportPlace = "가게 신고하기"
+    case reportPlaceReasonTitle = "신고 이유가 궁금해요!"
+    case reasonLost = "없어진 가게예요"
+    case reasonNotVegan = "비건 메뉴가 없는 가게예요"
+    case reasonDuplicated = "중복 등록된 가게예요"
+    case successReportPlaceTitle = "신고가 완료되었어요"
+    case alreadyReportPlaceTitle = "이미 신고한 가계예요"
+    case reportPlaceMessage = "3건 이상의 신고가 들어오면\n가게는 자동으로 삭제돼요."
+}
+
+private enum Layout {
+    enum Margin: CGFloat {
+        case small = 10
+        case regular = 16
+        case topButtonToView = 18
+        case medium = 20
+        case large = 30
+        case largeToView = 40
+    }
+    
+    enum Size: CGFloat {
+        case topButtonSize = 50
+    }
+}
+
 final class HomeViewController: UIViewController {
     lazy var presenter = HomeViewPresenter(viewController: self)
         
@@ -33,7 +71,7 @@ final class HomeViewController: UIViewController {
     private lazy var searchTextField: MainField = {
         let field = MainField()
         
-        field.makePlaceHolder("어디로 이동할까요?")
+        field.makePlaceHolder(Text.searchPlaceHolder.rawValue)
         field.makeShadow()
         field.delegate = self
         
@@ -44,11 +82,11 @@ final class HomeViewController: UIViewController {
         let button = HomeMapReferButton()
         
         button.setImage(
-            UIImage(named: "current-location")?.withTintColor(.gray1),
+            UIImage.currentButton.withTintColor(.gray1),
             for: .normal
         )
         button.setImage(
-            UIImage(named: "current-locationDisable")?.withTintColor(.gray4),
+            UIImage.currentButtonDisable.withTintColor(.gray4),
             for: .disabled
         )
         button.addTarget(
@@ -65,15 +103,15 @@ final class HomeViewController: UIViewController {
         
         // starButton
         button.setImage(
-            UIImage(named: "star")?.withTintColor(.gray1),
+            UIImage.starIcon.withTintColor(.gray1),
             for: .normal
         )
         button.setImage(
-            UIImage(named: "selectedStar"),
+            UIImage.starIconClicked,
             for: .selected
         )
         button.setImage(
-            UIImage(named: "starDisable")?.withTintColor(.gray4),
+            UIImage.starIconDisable.withTintColor(.gray4),
             for: .disabled
         )
         button.addTarget(
@@ -89,9 +127,10 @@ final class HomeViewController: UIViewController {
         let button = HomeTopButton()
         
         button.setImage(
-            UIImage(named: "DownBack"),
+            UIImage.downBack,
             for: .normal
         )
+        
         button.addTarget(
             self,
             action: #selector(downBackButtonTapped(_:)),
@@ -105,9 +144,10 @@ final class HomeViewController: UIViewController {
         let button = HomeTopButton()
         
         button.setImage(
-            UIImage(named: "Flag"),
+            UIImage.flag,
             for: .normal
         )
+        
         button.addTarget(
             self,
             action: #selector(flagButtonTapped(_:)),
@@ -122,13 +162,11 @@ final class HomeViewController: UIViewController {
     private(set) var placeViewTopConstraint: NSLayoutConstraint?
     private(set) var searchTextFieldTopConstraint: NSLayoutConstraint?
     
-    private lazy var tapGesture = UITapGestureRecognizer()
+    private lazy var isSlideUpView = false
 
-    private var isSlideUpView = false
-    
-    // store 뷰 관련
-    private var upGesture = UISwipeGestureRecognizer()
-    private var downGesture = UISwipeGestureRecognizer()
+    private lazy var tapGesture = UITapGestureRecognizer()
+    private lazy var upGesture = UISwipeGestureRecognizer()
+    private lazy var downGesture = UISwipeGestureRecognizer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -172,63 +210,87 @@ extension HomeViewController: HomeViewProtocol {
         }
 
         NSLayoutConstraint.activate([
-            // naverMapView
             naverMapView.topAnchor.constraint(
-                equalTo: view.topAnchor),
+                equalTo: view.topAnchor
+            ),
             naverMapView.bottomAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 40),
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                constant: Layout.Margin.largeToView.rawValue
+            ),
             naverMapView.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor),
+                equalTo: view.leadingAnchor
+            ),
             naverMapView.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor),
+                equalTo: view.trailingAnchor
+            ),
             
-            // loadLoactionButton
             loadLocationButton.bottomAnchor.constraint(
-                equalTo: placeView.topAnchor, constant: -20),
+                equalTo: placeView.topAnchor,
+                constant: -Layout.Margin.medium.rawValue
+            ),
             loadLocationButton.trailingAnchor.constraint(
-                equalTo: naverMapView.trailingAnchor, constant: -20),
+                equalTo: naverMapView.trailingAnchor,
+                constant: -Layout.Margin.medium.rawValue
+            ),
             
-            // starButton
             starButton.bottomAnchor.constraint(
-                equalTo: loadLocationButton.topAnchor, constant: -10),
+                equalTo: loadLocationButton.topAnchor,
+                constant: -Layout.Margin.small.rawValue
+            ),
             starButton.trailingAnchor.constraint(
-                equalTo: loadLocationButton.trailingAnchor),
+                equalTo: loadLocationButton.trailingAnchor
+            ),
             
-            // searchTextField
             searchTextField.leadingAnchor.constraint(
-                equalTo: naverMapView.leadingAnchor, constant: 16),
+                equalTo: naverMapView.leadingAnchor,
+                constant: Layout.Margin.regular.rawValue
+            ),
             searchTextField.trailingAnchor.constraint(
-                equalTo: naverMapView.trailingAnchor, constant: -16),
+                equalTo: naverMapView.trailingAnchor,
+                constant: -Layout.Margin.regular.rawValue
+            ),
             
-            // placeView
             placeView.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor),
+                equalTo: view.leadingAnchor
+            ),
             placeView.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor),
+                equalTo: view.trailingAnchor
+            ),
             placeView.heightAnchor.constraint(
-                equalTo: self.view.safeAreaLayoutGuide.heightAnchor),
+                equalTo: self.view.safeAreaLayoutGuide.heightAnchor
+            ),
 
             flagButton.trailingAnchor.constraint(
-                equalTo: self.view.trailingAnchor, constant: -16),
+                equalTo: self.view.trailingAnchor,
+                constant: -Layout.Margin.regular.rawValue
+            ),
             flagButton.topAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 18),
-            flagButton.widthAnchor.constraint(equalToConstant: 40),
-            flagButton.heightAnchor.constraint(equalToConstant: 40),
+                equalTo: view.safeAreaLayoutGuide.topAnchor,
+                constant: Layout.Margin.topButtonToView.rawValue
+            ),
+            flagButton.widthAnchor.constraint(equalToConstant: Layout.Size.topButtonSize.rawValue),
+            flagButton.heightAnchor.constraint(equalToConstant: Layout.Size.topButtonSize.rawValue),
             
             downBackButton.leadingAnchor.constraint(
-                equalTo: self.view.leadingAnchor, constant: 16),
+                equalTo: self.view.leadingAnchor,
+                constant: Layout.Margin.regular.rawValue
+            ),
             downBackButton.topAnchor.constraint(
-                equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 18),
-            downBackButton.widthAnchor.constraint(equalToConstant: 40),
-            downBackButton.heightAnchor.constraint(equalToConstant: 40)
+                equalTo: flagButton.topAnchor
+            ),
+            downBackButton.widthAnchor.constraint(equalToConstant: Layout.Size.topButtonSize.rawValue),
+            downBackButton.heightAnchor.constraint(equalToConstant: Layout.Size.topButtonSize.rawValue)
         ])
                         
         searchTextFieldTopConstraint = searchTextField.topAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16)
+            equalTo: view.safeAreaLayoutGuide.topAnchor,
+            constant: Layout.Margin.regular.rawValue
+        )
         searchTextFieldTopConstraint?.isActive = true
         
         placeViewTopConstraint = placeView.topAnchor.constraint(
-            equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+            equalTo: self.view.safeAreaLayoutGuide.bottomAnchor
+        )
         placeViewTopConstraint?.isActive = true
     }
     
@@ -237,17 +299,23 @@ extension HomeViewController: HomeViewProtocol {
     }
     
     func setupGesture() {
-        placeView.addGestureRecognizer(upGesture)
-        placeView.addGestureRecognizer(downGesture)
+        tapGesture.delegate = self
 
         upGesture.direction = .up
         downGesture.direction = .down
         
-        upGesture.addTarget(self, action: #selector(swipeGestureActived(_:)))
-        downGesture.addTarget(self, action: #selector(swipeGestureActived(_:)))
+        upGesture.addTarget(
+            self,
+            action: #selector(swipeGestureActived(_:))
+        )
+        downGesture.addTarget(
+            self,
+            action: #selector(swipeGestureActived(_:))
+        )
         
+        placeView.addGestureRecognizer(upGesture)
+        placeView.addGestureRecognizer(downGesture)
         view.addGestureRecognizer(tapGesture)
-        tapGesture.delegate = self
     }
     
     func keyboardWillShow(notification: NSNotification) {
@@ -267,13 +335,11 @@ extension HomeViewController: HomeViewProtocol {
         placeView.keyboardWillHide()
     }
     
-    // MARK: View Will Appear할 때 navigation & Tab Bar hidden Setting
     func whenViewWillAppear() {
         navigationController?.navigationBar.isHidden = true
         
-        // TabBar Controller
         if let tabBarController = self.tabBarController as? TabBarViewController {
-            tabBarController.hiddenTabBarIncludeIsTranslucent(false)
+            tabBarController.hiddenTabBar(false)
         }
         
         naverMapView.isHidden = false
@@ -285,45 +351,30 @@ extension HomeViewController: HomeViewProtocol {
         naverMapView.isHidden = true
     }
     
+    // 존재 의문
     func whenViewWillAppearAfterSearchDataNotInAVIRO() {
         whenViewWillAppearInitPlaceView()
     }
 
-    // MARK: 위치 denided or approval
-    // 위치 denied 할 때
-    func ifDenied() {
-        MyCoordinate.shared.longitude = 129.118924
-        MyCoordinate.shared.latitude = 35.153354
-        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: 35.153354, lng: 129.118924))
+    func ifDeniedLocation() {
+        MyCoordinate.shared.longitude = DefaultCoordinate.lon.rawValue
+        MyCoordinate.shared.latitude = DefaultCoordinate.lat.rawValue
+        
+        let cameraUpdate = NMFCameraUpdate(
+            scrollTo: NMGLatLng(
+                lat: DefaultCoordinate.lon.rawValue,
+                lng: DefaultCoordinate.lat.rawValue
+            )
+        )
         naverMapView.moveCamera(cameraUpdate)
+        
+        showDeniedLocationAlert()
     }
     
-    // 위치 승인 되었을 때
-    func requestSuccess() {
+    func isSuccessLocation() {
         naverMapView.positionMode = .direction
     }
-    
-    // MARK: center 위치 coordinate 저장하기
-    func saveCenterCoordinate() {
-        let center = naverMapView.cameraPosition.target
-        presenter.saveCenterCoordinate(center)
-    }
-    
-    // MARK: Marker Map에 대입하는 메소드
-    func loadMarkers(_ markers: [NMFMarker]) {
-        markers.forEach {
-            $0.mapView = naverMapView
-        }
-    }
-    
-    // MARK: Map Star button True
-    func afterLoadStarButton(noMarkers: [NMFMarker]) {
-        noMarkers.forEach {
-            $0.mapView = nil
-        }
-    }
 
-    // MARK: AVIRO에 데이터가 없을 때 지도 이동
     func moveToCameraWhenNoAVIRO(_ lng: Double, _ lat: Double) {
         let latlng = NMGLatLng(lat: lat, lng: lng)
         let cameraUpdate = NMFCameraUpdate(scrollTo: latlng, zoomTo: 14)
@@ -333,7 +384,6 @@ extension HomeViewController: HomeViewProtocol {
         naverMapView.moveCamera(cameraUpdate)
     }
     
-    // MARK: AVIRO에 데이터가 있을 때 지도 이동
     func moveToCameraWhenHasAVIRO(_ markerModel: MarkerModel) {
         let latlng = markerModel.marker.position
         let cameraUpdate = NMFCameraUpdate(scrollTo: latlng, zoomTo: 14)
@@ -343,54 +393,56 @@ extension HomeViewController: HomeViewProtocol {
         naverMapView.moveCamera(cameraUpdate)
     }
     
-    // 최초 데이터를 받기 전 popup
     private func popupPlaceView() {
         placeViewPopUp()
         isSlideUpView = false
         placeView.isLoadingTopView = true
     }
     
-    // MARK: place view에 data binding
-    func afterClickedMarker(placeModel: PlaceTopModel,
-                            placeId: String,
-                            isStar: Bool
+    func loadMarkers(_ markers: [NMFMarker]) {
+        markers.forEach {
+            $0.mapView = naverMapView
+        }
+    }
+    
+    func afterLoadStarButton(noMarkers: [NMFMarker]) {
+        noMarkers.forEach {
+            $0.mapView = nil
+        }
+    }
+    
+    func afterClickedMarker(
+        placeModel: PlaceTopModel,
+        placeId: String,
+        isStar: Bool
     ) {
-        popupPlaceView()
-        placeView.summaryDataBinding(placeModel: placeModel,
-                                     placeId: placeId,
-                                     isStar: isStar
+        placeView.summaryDataBinding(
+            placeModel: placeModel,
+            placeId: placeId,
+            isStar: isStar
         )
         
         changedSearchField(with: placeModel.placeTitle)
     }
     
-    func afterSlideupPlaceView(infoModel: AVIROPlaceInfo?,
-                               menuModel: AVIROPlaceMenus?,
-                               reviewsModel: AVIROReviewsArrayDTO?
+    func afterSlideupPlaceView(
+        infoModel: AVIROPlaceInfo?,
+        menuModel: AVIROPlaceMenus?,
+        reviewsModel: AVIROReviewsArrayDTO?
     ) {
         // MARK: 다 하나씩 쪼겔 필요 있음
-        placeView.allDataBinding(infoModel: infoModel,
-                                 menuModel: menuModel,
-                                 reviewsModel: reviewsModel
+        placeView.allDataBinding(
+            infoModel: infoModel,
+            menuModel: menuModel,
+            reviewsModel: reviewsModel
         )
     }
     
     func isSuccessReportPlaceActionSheet() {
-        let alertController = UIAlertController(
-            title: "신고가 완료되었어요",
-            message: "3건 이상의 신고가 들어오면\n가게는 자동으로 삭제돼요.",
-            preferredStyle: .alert
+        showAlert(
+            title: Text.successReportPlaceTitle.rawValue,
+            message: Text.reportPlaceMessage.rawValue
         )
-        
-        let check = UIAlertAction(title: "확인", style: .cancel)
-        
-        [
-            check
-        ].forEach {
-            alertController.addAction($0)
-        }
-        
-        present(alertController, animated: true)
     }
     
     func pushPlaceInfoOpreationHoursViewController(_ models: [EditOperationHoursModel]) {
@@ -423,18 +475,22 @@ extension HomeViewController: HomeViewProtocol {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func pushEditMenuViewController(placeId: String,
-                                    isAll: Bool,
-                                    isSome: Bool,
-                                    isRequest: Bool,
-                                    menuArray: [AVIROMenu]) {
+    func pushEditMenuViewController(
+        placeId: String,
+        isAll: Bool,
+        isSome: Bool,
+        isRequest: Bool,
+        menuArray: [AVIROMenu]
+    ) {
         let vc = EditMenuViewController()
-        let presenter = EditMenuPresenter(viewController: vc,
-                                          placeId: placeId,
-                                          isAll: isAll,
-                                          isSome: isSome,
-                                          isRequest: isRequest,
-                                          menuArray: menuArray
+        
+        let presenter = EditMenuPresenter(
+            viewController: vc,
+            placeId: placeId,
+            isAll: isAll,
+            isSome: isSome,
+            isRequest: isRequest,
+            menuArray: menuArray
         )
         
         presenter.afterEditMenuChangedMenus = { [weak self] in
@@ -461,10 +517,86 @@ extension HomeViewController: HomeViewProtocol {
     func deleteMyReviewInView(_ commentId: String) {
         placeView.deleteMyReview(commentId)
     }
+    
+    func showToastAlert(_ title: String) {
+        showSimpleToast(with: title)
+    }
+    
+    func isDuplicatedReport() {
+        showAlert(
+            title: Text.alreadyReportPlaceTitle.rawValue,
+            message: Text.reportPlaceMessage.rawValue
+        )
+    }
+    
+    func showReportPlaceAlert() {
+        let reportPlace: AlertAction = (
+            title: Text.reportPlace.rawValue,
+            style: .destructive,
+            handler: {
+                self.reasonForReportPlaceActionSheet()
+            }
+        )
+        
+        let cancel: AlertAction = (
+            title: Text.cancel.rawValue,
+            style: .cancel,
+            handler: nil
+        )
+        
+        showAlert(
+            title: nil,
+            message: Text.report.rawValue,
+            actions: [reportPlace, cancel]
+        )
+    }
+    
 }
 
-// MARK: View Refer & Objc Action
 extension HomeViewController {
+    @objc private func downBackButtonTapped(_ sender: UIButton) {
+        placeViewPopUpAfterInitPlacePopViewHeight()
+        isSlideUpView = false
+    }
+    
+    @objc private func flagButtonTapped(_ sender: UIButton) {
+        presenter.checkReportPlaceDuplecated()
+    }
+    
+    @objc private func starButtonTapped(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        presenter.loadBookmark(sender.isSelected)
+    }
+    
+    @objc private func locationButtonTapped(_ sender: UIButton) {
+        self.presenter.locationUpdate()
+    }
+    
+    @objc private func swipeGestureActived(_ gesture: UISwipeGestureRecognizer) {
+        if gesture.direction == .up {
+            // TopView가 로딩이 다 끝난 후 가능
+            if !placeView.isLoadingTopView {
+                // view가 slideup되고, detail view가 loading이 끝난 후 가능
+                if isSlideUpView && !placeView.isLoadingDetail {
+                    placeViewFullUp()
+                    naverMapView.isHidden = true
+                    isSlideUpView = false
+                // view가 아직 slideup 안 되었고, popup일때 가능
+                } else if !isSlideUpView && placeView.placeViewStated == .popup {
+                    placeViewSlideUp()
+                    presenter.getPlaceModelDetail()
+                    isSlideUpView = true
+                }
+            }
+        } else if gesture.direction == .down {
+            // view가 slideup일때만 down gesture 가능
+            if isSlideUpView {
+                placeViewPopUpAfterInitPlacePopViewHeight()
+                isSlideUpView = false
+            }
+        }
+    }
+    
     func homeButtonIsHidden(_ hidden: Bool) {
         loadLocationButton.isHidden = hidden
         starButton.isHidden = hidden
@@ -475,7 +607,6 @@ extension HomeViewController {
         flagButton.isHidden = hidden
     }
     
-    // MARK: Slide UP View 할때 지도 이동
     func moveToCameraWhenSlideUpView() {
         let yPosition = naverMapView.frame.height * 1/4
         let point = CGPoint(x: 0, y: -yPosition)
@@ -487,7 +618,6 @@ extension HomeViewController {
         naverMapView.moveCamera(cameraUpdate)
     }
     
-    // MARK: Slide -> Pop Up View 할때 지도 이동
     func moveToCameraWhenPopupView() {
         let yPosition = naverMapView.frame.height * 1/4
         let point = CGPoint(x: 0, y: yPosition)
@@ -507,15 +637,12 @@ extension HomeViewController {
         }
         
         placeView.whenShareTapped = { [weak self] shareObject in
-            let vc = UIActivityViewController(activityItems: shareObject, applicationActivities: nil)
-            vc.popoverPresentationController?.permittedArrowDirections = []
-            
-            vc.popoverPresentationController?.sourceView = self?.view
-            self?.present(vc, animated: true)
+            self?.showShareAlert(with: shareObject)
         }
         
         placeView.whenTopViewStarTapped = { [weak self] selected in
-            let title: String = selected ? "즐겨찾기가 추가되었습니다." : "즐겨찾기가 삭제되었습니다."
+            let title: String = selected ? Text.starPlus.rawValue : Text.starDelete.rawValue
+            
             self?.showToastAlert(title)
             self?.presenter.updateBookmark(selected)
         }
@@ -548,7 +675,6 @@ extension HomeViewController {
             self?.presenter.editMenu()
         }
         
-        // TODO: api 요청 성공 하면 view 바뀌게 수정
         placeView.whenUploadReview = { [weak self] postReviewModel in
             self?.presenter.uploadReview(postReviewModel)
         }
@@ -566,19 +692,14 @@ extension HomeViewController {
         }
     }
     
-    // MARK: Clousre Private 함수
     private func openWebLink(url: URL) {
         presenter.shouldKeepPlaceInfoViewState(true)
         showWebView(with: url)
     }
     
-    private func showToastAlert(_ title: String) {
-        showSimpleToast(with: title)
-    }
-    
     private func showReportReviewAlert(_ reportCommentModel: AVIROReportReviewModel) {
         let reportAction: AlertAction = (
-            title: "후기 신고하기",
+            title: Text.reportReview.rawValue,
             style: .destructive,
             handler: {
                 let finalReportCommentModel = AVIROReportReviewModel(
@@ -593,21 +714,21 @@ extension HomeViewController {
         )
         
         let cancelAction: AlertAction = (
-            title: "취소",
+            title: Text.cancel.rawValue,
             style: .cancel,
             handler: nil
         )
         
         showActionSheet(
             title: nil,
-            message: "더보기",
+            message: Text.more.rawValue,
             actions: [reportAction, cancelAction]
         )
     }
     
     private func makeEditMyReviewAlert(_ commentId: String) {
         let editMyReviewAction: AlertAction = (
-            title: "수정하기",
+            title: Text.edit.rawValue,
             style: .default,
             handler: {
                 self.editMyReview(commentId)
@@ -615,7 +736,7 @@ extension HomeViewController {
         )
         
         let deleteMyReviewAction: AlertAction = (
-            title: "삭제하기",
+            title: Text.delete.rawValue,
             style: .destructive,
             handler: {
                 self.showDeleteMyReviewAlert(commentId)
@@ -623,14 +744,18 @@ extension HomeViewController {
         )
         
         let cancelAction: AlertAction = (
-            title: "취소",
+            title: Text.cancel.rawValue,
             style: .cancel,
             handler: nil
         )
         showActionSheet(
             title: nil,
-            message: "댓글 더보기",
-            actions: [editMyReviewAction, deleteMyReviewAction, cancelAction]
+            message: Text.more.rawValue,
+            actions: [
+                editMyReviewAction,
+                deleteMyReviewAction,
+                cancelAction
+            ]
         )
     }
     
@@ -639,33 +764,30 @@ extension HomeViewController {
     }
     
     private func showDeleteMyReviewAlert(_ commentId: String) {
-        let alertController = UIAlertController(
-            title: "삭제하기",
-            message: "정말로 삭제하시겠어요?\n삭제하면 다시 복구할 수 없어요.",
-            preferredStyle: .alert
+        let deleteMyReview: AlertAction = (
+            title: Text.yes.rawValue,
+            style: .destructive,
+            handler: {
+                let deleteCommentModel = AVIRODeleteReveiwDTO(
+                    commentId: commentId,
+                    userId: MyData.my.id
+                )
+                
+                self.presenter.deleteMyReview(deleteCommentModel)
+            }
         )
         
-        let deleteMyReview = UIAlertAction(title: "예", style: .default) { _ in
-            let deleteCommentModel = AVIRODeleteReveiwDTO(
-                commentId: commentId,
-                userId: MyData.my.id
-            )
-            
-            self.presenter.deleteMyReview(deleteCommentModel)
-        }
+        let cancel: AlertAction = (
+            title: Text.no.rawValue,
+            style: .default,
+            handler: nil
+        )
         
-        deleteMyReview.setValue(UIColor.red, forKey: "titleTextColor")
-        
-        let cancel = UIAlertAction(title: "아니오", style: .default)
-        
-        [
-            deleteMyReview,
-            cancel
-        ].forEach {
-            alertController.addAction($0)
-        }
-        
-        present(alertController, animated: true)
+        showAlert(
+            title: Text.delete.rawValue,
+            message: Text.deleteMyReviewAlert.rawValue,
+            actions: [deleteMyReview, cancel]
+        )
     }
     
     private func presentReportReview(_ reportIdModel: AVIROReportReviewModel) {
@@ -683,156 +805,68 @@ extension HomeViewController {
         
         present(vc, animated: true)
     }
-    
-    // MARK: Down Back Button Tapped
-    @objc private func downBackButtonTapped(_ sender: UIButton) {
-        placeViewPopUpAfterInitPlacePopViewHeight()
-        isSlideUpView = false
-    }
-    // MARK: Flag Button Tapped
-    @objc private func flagButtonTapped(_ sender: UIButton) {
-        presenter.checkReportPlaceDuplecated()
-    }
-    
-    func isDuplicatedReport() {
-        let alertController = UIAlertController(
-            title: "이미 신고한 가계예요",
-            message: "3건 이상의 신고가 들어오면\n가게는 자동으로 삭제돼요.",
-            preferredStyle: .alert
-        )
-        
-        let check = UIAlertAction(title: "확인", style: .cancel)
-        
-        alertController.addAction(check)
-        
-        present(alertController, animated: true)
-    }
-    
-    func showReportPlaceAlert() {
-        let alertController = UIAlertController(
-            title: nil,
-            message: "신고하기",
-            preferredStyle: .actionSheet
-        )
-            
-        let reportPlace = UIAlertAction(title: "가게 신고하기", style: .destructive) { _ in
-            self.reasonForReportPlaceActionSheet( )
-        }
-        
-        let cancel = UIAlertAction(title: "취소", style: .cancel)
-        
-        [
-            reportPlace,
-            cancel
-        ].forEach {
-            alertController.addAction($0)
-        }
-        
-        present(alertController, animated: true)
-    }
-    
+
     private func reasonForReportPlaceActionSheet() {
-        let alertController = UIAlertController(
-            title: "신고 이유가 궁금해요!",
-            message: "3건 이상의 신고가 들어오면\n가게는 자동으로 삭제돼요.",
-            preferredStyle: .alert
+        let lostPlace: AlertAction = (
+            title: Text.reasonLost.rawValue,
+            style: .default,
+            handler: {
+                let type = AVIROReportPlaceType.noPlace
+                self.presenter.reportPlace(type)
+            }
         )
         
-        let lostPlace = UIAlertAction(title: "없어진 가게예요", style: .default) { _ in
-            let type = AVIROReportPlaceType.noPlace
-            self.presenter.reportPlace(type)
-        }
-        
-        let notVeganPlace = UIAlertAction(title: "비건 메뉴가 없는 가게예요", style: .default) { _ in
-            let type = AVIROReportPlaceType.noVegan
-            self.presenter.reportPlace(type)
-        }
-         
-        let duplicatedPlace = UIAlertAction(title: "중복 등록된 가게예요", style: .default) { _ in
-            let type = AVIROReportPlaceType.dubplicatedPlace
-            self.presenter.reportPlace(type)
-        }
-        
-        let cancel = UIAlertAction(title: "취소", style: .cancel)
-        
-        [
-            lostPlace,
-            notVeganPlace,
-            duplicatedPlace,
-            cancel
-        ].forEach {
-            alertController.addAction($0)
-        }
-        
-        present(alertController, animated: true)
-    }
-    
-    // MARK: Star Button Tapped
-    @objc private func starButtonTapped(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        presenter.loadBookmark(sender.isSelected)
-    }
-    
-    // MARK: Location Button Tapped
-    @objc private func locationButtonTapped(_ sender: UIButton) {
-        self.presenter.locationUpdate()
-    }
-    
-    // MARK: Swipte Gestrue Actived
-    @objc private func swipeGestureActived(_ gesture: UISwipeGestureRecognizer) {
-        if gesture.direction == .up {
-            // TopView가 로딩이 다 끝난 후 가능
-            if !placeView.isLoadingTopView {
-                // view가 slideup되고, detail view가 loading이 끝난 후 가능
-                if isSlideUpView && !placeView.isLoadingDetail {
-                    placeViewFullUp()
-                    naverMapView.isHidden = true
-                    isSlideUpView = false
-                // view가 아직 slideup 안 되었고, popup일때 가능
-                } else if !isSlideUpView && placeView.placeViewStated == .popup {
-                    placeViewSlideUp()
-                    presenter.getPlaceModelDetail()
-                    isSlideUpView = true
-                }
+        let notVeganPlace: AlertAction = (
+            title: Text.reasonNotVegan.rawValue,
+            style: .default,
+            handler: {
+                let type = AVIROReportPlaceType.noVegan
+                self.presenter.reportPlace(type)
             }
-        } else if gesture.direction == .down {
-            // view가 slideup일때만 down gesture 가능
-            if isSlideUpView {
-                placeViewPopUpAfterInitPlacePopViewHeight()
-                isSlideUpView = false
+        )
+        
+        let duplicatedPlace: AlertAction = (
+            title: Text.reasonDuplicated.rawValue,
+            style: .default,
+            handler: {
+                let type = AVIROReportPlaceType.dubplicatedPlace
+                self.presenter.reportPlace(type)
             }
-        }
+        )
+        
+        let cancel: AlertAction = (
+            title: Text.cancel.rawValue,
+            style: .cancel,
+            handler: nil
+        )
+        
+        showAlert(
+            title: Text.reportPlaceReasonTitle.rawValue,
+            message: Text.reportPlaceMessage.rawValue,
+            actions: [
+                lostPlace,
+                notVeganPlace,
+                duplicatedPlace,
+                cancel
+            ]
+        )
     }
 }
 
-// MARK: Text Field Delegate
 extension HomeViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         animateTextFieldExpansion(textField: textField)
         return false
     }
     
-    func animateTextFieldExpansion(textField: UITextField) {
-        
+    private func animateTextFieldExpansion(textField: UITextField) {
         textField.placeholder = ""
         textField.text = ""
         textField.leftView?.isHidden = true
         
         let startingFrame = textField.convert(textField.bounds, to: nil)
-        let snapshot = textField.snapshotView(afterScreenUpdates: true)
-        snapshot?.frame = startingFrame
         
-        guard let snapshot = snapshot else { return }
-        view.addSubview(snapshot)
-        
-        let targetScaleX = view.frame.width / startingFrame.width
-        let targetScaleY = view.frame.height / startingFrame.height
-        
-        UIView.animate(withDuration: 0.15, animations: {
-            snapshot.transform = CGAffineTransform(scaleX: targetScaleX, y: targetScaleY)
-            snapshot.center = self.view.center
-            
-        }, completion: { _ in
+        textField.activeExpansion(from: startingFrame, to: self.view) { [weak self] in
             let vc = HomeSearchViewController()
             
             let presenter = HomeSearchPresenter(viewController: vc)
@@ -843,12 +877,11 @@ extension HomeViewController: UITextFieldDelegate {
                 self?.changedSearchField(with: place)
             }
             
-            self.navigationController?.pushViewController(vc, animated: false)
-            snapshot.removeFromSuperview()
+            self?.navigationController?.pushViewController(vc, animated: false)
             
             textField.leftView?.isHidden = false
-            textField.placeholder = "어디로 이동할까요?"
-        })
+            textField.placeholder = Text.searchPlaceHolder.rawValue
+        }
     }
     
     private func changedSearchField(with place: String) {
@@ -862,7 +895,10 @@ extension HomeViewController: UITextFieldDelegate {
 
 // MARK: TapGestureDelegate
 extension HomeViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldReceive touch: UITouch
+    ) -> Bool {
         if touch.view is UITextView || touch.view is UIButton {
             return false
         }
@@ -872,13 +908,11 @@ extension HomeViewController: UIGestureRecognizerDelegate {
     }
 }
 extension HomeViewController: NMFMapViewCameraDelegate {
-    func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
-        
-        saveCenterCoordinate()
-    }
-    
-    // 카메라 움직일 때
-    func mapView(_ mapView: NMFMapView, cameraWillChangeByReason reason: Int, animated: Bool) {
+    func mapView(
+        _ mapView: NMFMapView,
+        cameraWillChangeByReason reason: Int,
+        animated: Bool
+    ) {
         if placeView.placeViewStated == .noShow {
             afterSearchFieldInit()
         }
@@ -900,9 +934,12 @@ extension HomeViewController: NMFMapViewCameraDelegate {
     }
 }
 
-// MARK: Map 빈 공간 클릭 할 때
 extension HomeViewController: NMFMapViewTouchDelegate {
-    func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
+    func mapView(
+        _ mapView: NMFMapView,
+        didTapMap latlng: NMGLatLng,
+        point: CGPoint
+    ) {
         loadLocationButton.isEnabled = true
 
         if !starButton.isSelected {

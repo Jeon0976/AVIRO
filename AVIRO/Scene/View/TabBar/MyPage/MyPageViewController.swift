@@ -26,12 +26,12 @@ final class MyPageViewController: UIViewController {
         
         view.afterTappedCell = { [weak self] settingValue in
             switch settingValue {
-//            case .displayMode:
-//                self?.whenTappedDisplayMode()
             case .termsOfService:
                 self?.whenTappedTermsOfService()
-            case .privacyPolicy, .locationPolicy:
-                self?.whenTappedPolicy()
+            case .privacyPolicy:
+                self?.whenTappedPrivacyPolicy()
+            case .locationPolicy:
+                self?.whenTappedLocationPlicy()
             case .inquiries:
                 self?.whenTappedInquiries()
             case .thanksTo:
@@ -131,27 +131,25 @@ extension MyPageViewController: MyPageViewProtocol {
     }
     
     private func whenTappedTermsOfService() {
-        
+        if let url = URL(string: Policy.termsOfService.rawValue) {
+            showWebView(with: url)
+        }
     }
     
-    private func whenTappedPolicy() {
-        
+    private func whenTappedPrivacyPolicy() {
+        if let url = URL(string: Policy.privacy.rawValue) {
+            showWebView(with: url)
+        }
+    }
+    
+    private func whenTappedLocationPlicy() {
+        if let url = URL(string: Policy.location.rawValue) {
+            showWebView(with: url)
+        }
     }
     
     private func whenTappedInquiries() {
-        // MARK: Login 기능 추가 시 기능 변경
-        if MFMailComposeViewController.canSendMail() {
-            let mail = MFMailComposeViewController()
-            mail.mailComposeDelegate = self
-            mail.setToRecipients(["aviro.kr.official@gmail.com"])
-            mail.setSubject("[AVIRO] \(MyData.my.nickname)님의 문의 및 의견")
-            mail.setMessageBody("본문 내용입니다.", isHTML: false)
-            
-            present(mail, animated: true)
-        } else {
-            // TODO: 메일 작업
-            print("메일 설정하세요")
-        }
+        showMailView()
     }
     
     private func whenTappedThanksTo() {
@@ -221,15 +219,5 @@ extension MyPageViewController: MyPageViewProtocol {
             windowScene.windows.first?.rootViewController = rootViewController
             windowScene.windows.first?.makeKeyAndVisible()
         }
-    }
-}
-
-extension MyPageViewController: MFMailComposeViewControllerDelegate {
-    func mailComposeController(
-        _ controller: MFMailComposeViewController,
-        didFinishWith result: MFMailComposeResult,
-        error: Error?
-    ) {
-        controller.dismiss(animated: true)
     }
 }

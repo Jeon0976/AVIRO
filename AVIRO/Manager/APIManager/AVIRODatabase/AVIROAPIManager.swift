@@ -349,7 +349,10 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
     }
     
     // MARK: Post Comment Model
-    func postCommentModel(_ commentModel: AVIROEnrollReviewDTO) {
+    func postCommentModel(
+        _ commentModel: AVIROEnrollReviewDTO,
+        completionHandler: @escaping((AVIROResultDTO) -> Void)
+    ) {
         guard let url = postAPI.commentUpload().url else { return }
         
         guard let jsonData = try? JSONEncoder().encode(commentModel) else {
@@ -367,13 +370,15 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
                 return
             }
             
-            guard data != nil else {
-                print("data error")
+            guard response != nil else {
+                print(response ?? "response error")
                 return
             }
             
-            guard response != nil else {
-                print(response ?? "response error")
+            if let data = data {
+                if let placeResponse = try? JSONDecoder().decode(AVIROResultDTO.self, from: data) {
+                    completionHandler(placeResponse)
+                }
                 return
             }
         }.resume()

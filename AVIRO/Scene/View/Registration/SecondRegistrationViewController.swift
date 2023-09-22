@@ -272,7 +272,7 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
     func setupAttribute() {
         view.backgroundColor = .gray7
         navigationController?.navigationBar.isHidden = false
-        setupCustomBackButton(true)
+        setupBack(true)
     }
     
     func setupGesture() {

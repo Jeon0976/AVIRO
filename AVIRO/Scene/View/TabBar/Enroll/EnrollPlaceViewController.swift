@@ -309,7 +309,7 @@ extension EnrollPlaceViewController {
         navigationItem.title = "가게 등록하기"
         navigationController?.navigationBar.isHidden = false
         
-        let rightBarButton = UIBarButtonItem(title: "등록하기", style: .plain, target: self, action: #selector(reportStore))
+        let rightBarButton = UIBarButtonItem(title: "등록하기", style: .plain, target: self, action: #selector(uploadStore))
         navigationItem.rightBarButtonItem = rightBarButton
         navigationItem.rightBarButtonItem?.isEnabled = false
         let backButton = UIButton()
@@ -333,7 +333,7 @@ extension EnrollPlaceViewController {
         bar?.standardAppearance.backgroundImage = nil
     
         if let tabBarController = self.tabBarController as? TabBarViewController {
-            tabBarController.hiddenTabBarIncludeIsTranslucent(true)
+            tabBarController.hiddenTabBar(true)
         }
     }
     
@@ -385,8 +385,8 @@ extension EnrollPlaceViewController {
 
 extension EnrollPlaceViewController {
     // MARK: Report Button Tapped
-    @objc func reportStore() {
-        presenter.reportStore()
+    @objc func uploadStore() {
+        presenter.uploadStore()
     }
     
     // MARK: 홈 화면으로 돌아가기

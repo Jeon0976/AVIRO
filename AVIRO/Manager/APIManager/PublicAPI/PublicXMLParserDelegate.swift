@@ -14,7 +14,13 @@ class PublicXMLParserDelegate: NSObject, XMLParserDelegate {
     var currentJuso: Juso?
     var currentData: String = ""
     
-    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
+    func parser(
+        _ parser: XMLParser,
+        didStartElement elementName: String,
+        namespaceURI: String?,
+        qualifiedName qName: String?,
+        attributes attributeDict: [String: String] = [:]
+    ) {
         currentElement = elementName
         
         if elementName == "juso" {
@@ -22,11 +28,19 @@ class PublicXMLParserDelegate: NSObject, XMLParserDelegate {
         }
     }
     
-    func parser(_ parser: XMLParser, foundCharacters string: String) {
+    func parser(
+        _ parser: XMLParser,
+        foundCharacters string: String
+    ) {
         currentData = string
     }
     
-    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+    func parser(
+        _ parser: XMLParser,
+        didEndElement elementName: String,
+        namespaceURI: String?,
+        qualifiedName qName: String?
+    ) {
         switch elementName {
         case "totalCount":
             results.totalCount = currentData

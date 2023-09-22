@@ -215,7 +215,7 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     func setupAttribute() {
         self.view.backgroundColor = .gray7
         
-        self.setupCustomBackButton()
+        self.setupBack()
         navigationController?.navigationBar.isHidden = false
         
         navigationItem.title = "정보 수정 요청하기"
@@ -231,7 +231,7 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         navigationItem.rightBarButtonItem?.isEnabled = false
         
         if let tabBarController = self.tabBarController as? TabBarViewController {
-            tabBarController.hiddenTabBarIncludeIsTranslucent(true)
+            tabBarController.hiddenTabBar(true)
         }
         
         activeLocationView()

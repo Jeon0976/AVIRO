@@ -119,7 +119,7 @@ extension ChangeableAddressViewController: ChangebleAddressProtocol {
     func makeAttribute() {
         self.view.backgroundColor = .gray7
         
-        self.setupCustomBackButton()
+        self.setupBack()
         
         navigationItem.title = "주소"
         

@@ -226,11 +226,11 @@ extension HomeSearchViewController {
         
         navigationItem.title = "검색하기"
         navigationController?.navigationBar.isHidden = false
-        setupCustomBackButton()
+        setupBack()
 
         // TabBar Controller
         if let tabBarController = self.tabBarController as? TabBarViewController {
-            tabBarController.hiddenTabBarIncludeIsTranslucent(true)
+            tabBarController.hiddenTabBar(true)
         }
     }
 

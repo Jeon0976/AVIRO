@@ -11,10 +11,17 @@ import Foundation
 final class CenterCoordinate {
     static let shared = CenterCoordinate()
     
-    var latitude: Double?
-    var longitude: Double?
+    var latitude: Double? {
+        didSet {
+            coordinateChanged?()
+        }
+    }
     
-    var highPrioriy = false
+    var longitude: Double? {
+        didSet {
+            coordinateChanged?()
+        }
+    }
     
     var latitudeString: String {
         return String(format: "%.5f", latitude ?? "")
@@ -23,6 +30,8 @@ final class CenterCoordinate {
     var longitudeString: String {
         return String(format: "%.5f", longitude ?? "")
     }
+    
+    var coordinateChanged: (() -> Void)?
     
     private init(latitude: Double? = nil,
                  longitude: Double? = nil

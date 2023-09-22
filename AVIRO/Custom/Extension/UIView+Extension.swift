@@ -36,4 +36,28 @@ extension UIView {
             forKey: AniKeyPath.position.rawValue
         )
     }
- }
+    
+    func activeExpansion(
+        from startingFrame: CGRect,
+        to targetView: UIView,
+        completion: @escaping () -> Void
+    ) {
+        let snapshot = self.snapshotView(afterScreenUpdates: true)
+        snapshot?.frame = startingFrame
+
+        guard let snapshot = snapshot else { return }
+        targetView.addSubview(snapshot)
+
+        let targetScaleX = targetView.frame.width / startingFrame.width
+        let targetScaleY = targetView.frame.height / startingFrame.height
+        
+        UIView.animate(withDuration: 0.15, animations: {
+            snapshot.transform = CGAffineTransform(scaleX: targetScaleX, y: targetScaleY)
+            snapshot.center = targetView.center
+
+        }, completion: { _ in
+            completion()
+            snapshot.removeFromSuperview()
+        })
+    }
+}

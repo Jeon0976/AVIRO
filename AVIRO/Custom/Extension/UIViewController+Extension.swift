@@ -7,11 +7,12 @@
 
 import UIKit
 import SafariServices
+import MessageUI
 
 import Toast_Swift
 
 extension UIViewController {
-    
+    // MARK: Alert
     typealias AlertAction = (
         title: String,
         style: UIAlertAction.Style,
@@ -61,7 +62,101 @@ extension UIViewController {
         )
     }
     
-    func setupCustomBackButton(_ animatied: Bool = false) {
+    func showDeniedLocationAlert() {
+        let cancelAction: AlertAction = (
+            title: "취소",
+            style: .default,
+            handler: nil
+        )
+        
+        let settingAction: AlertAction = (
+            title: "설정하기",
+            style: .default,
+            handler: {
+                guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                    return
+                }
+                
+                if UIApplication.shared.canOpenURL(settingsUrl) {
+                    UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
+                        print("Settings opened: \(success)")
+                    })
+                }
+            }
+        )
+        let title = "위치정보 이용에 대한 액세스 권한이 없어요"
+        let message = "앱 설정으로 가서 액세스 권한을 수정 할 수 있어요. 이동하시겠어요?"
+        showAlert(
+            title: title,
+            message: message,
+            actions: [cancelAction, settingAction]
+        )
+    }
+    
+    // MARK: Share Alert
+    func showShareAlert(with activityItems: [String]) {
+        let vc = UIActivityViewController(
+            activityItems: activityItems,
+            applicationActivities: nil
+        )
+        
+        vc.popoverPresentationController?.permittedArrowDirections = []
+        
+        vc.popoverPresentationController?.sourceView = view
+        self.present(vc, animated: true)
+        
+    }
+    
+    // MARK: Toast Alert
+    func showSimpleToast(
+        with title: String,
+        position: ToastPosition = .bottom
+    ) {
+        var style = ToastStyle()
+        
+        style.cornerRadius = 14
+        style.backgroundColor = .gray3.withAlphaComponent(0.9)
+        style.titleColor = .gray6
+        style.titleFont = CFont.font.medium17
+        
+        self.view.makeToast(
+            title,
+            duration: 0.5,
+            position: position,
+            title: nil,
+            image: nil,
+            style: style,
+            completion: nil
+        )
+    }
+    
+    // MARK: Web View
+    func showWebView(with url: URL) {
+        let safariViewController = SFSafariViewController(url: url)
+        safariViewController.dismissButtonStyle = .cancel
+        present(safariViewController, animated: true)
+    }
+
+    // MARK: Mail View
+    func showMailView() {
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients(["aviro.kr.official@gmail.com"])
+            mail.setSubject("[AVIRO] \(MyData.my.nickname)님의 문의 및 의견")
+            mail.setMessageBody(" ", isHTML: false)
+            
+            present(mail, animated: true)
+        } else {
+            showAlert(
+                title: "등록된 메일 계정이 없습니다",
+                message: "메일 계정을 설정해주세요."
+            )
+        }
+    }
+        
+    // MARK: Back Button
+    func setupBack(_ animatied: Bool = false) {
         let backButton = UIButton()
         
         backButton.setImage(
@@ -93,6 +188,7 @@ extension UIViewController {
         navigationController?.popViewController(animated: animated)
     }
     
+    // MARK: Gradient View
     func applyGradientToView(
         colors: [UIColor],
         locations: [NSNumber]? = nil,
@@ -113,32 +209,14 @@ extension UIViewController {
         
         self.view.layer.insertSublayer(gradientLayer, at: 0)
     }
-    
-    func showSimpleToast(
-        with title: String,
-        position: ToastPosition = .bottom
+}
+
+extension UIViewController: MFMailComposeViewControllerDelegate {
+    public func mailComposeController(
+        _ controller: MFMailComposeViewController,
+        didFinishWith result: MFMailComposeResult,
+        error: Error?
     ) {
-        var style = ToastStyle()
-        
-        style.cornerRadius = 14
-        style.backgroundColor = .gray3
-        style.titleColor = .gray7
-        style.titleFont = CFont.font.medium17
-        
-        self.view.makeToast(
-            title,
-            duration: 1.0,
-            position: position,
-            title: nil,
-            image: nil,
-            style: style,
-            completion: nil
-        )
-    }
-    
-    func showWebView(with url: URL) {
-        let safariViewController = SFSafariViewController(url: url)
-        safariViewController.dismissButtonStyle = .cancel
-        present(safariViewController, animated: true)
+        controller.dismiss(animated: true)
     }
 }
