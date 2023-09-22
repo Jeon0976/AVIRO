@@ -242,16 +242,7 @@ extension EnrollPlaceViewController: EnrollPlaceProtocol {
     func pushAlertController() {
         let title = "이미 등록된 가게입니다"
         let message = "다른 유저가 이미 등록한 가게예요.\n홈 화면에서 검색해보세요."
-        let alertController = UIAlertController(
-            title: title,
-            message: message,
-            preferredStyle: .alert
-        )
-        let action = UIAlertAction(title: "확인", style: .default)
-        
-        alertController.addAction(action)
-        
-        present(alertController, animated: true)
+        showAlert(title: title, message: message)
     }
 }
 

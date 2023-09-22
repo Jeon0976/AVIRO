@@ -13,11 +13,11 @@ final class PlaceOperationHoursViewController: UIViewController {
 
     var model: [EditOperationHoursModel]?
     
-    init(_ model: [EditOperationHoursModel] = [EditOperationHoursModel]()) {
+    init(_ model: [EditOperationHoursModel] = [EditOperationHoursModel]()
+    ) {
         super.init(nibName: nil, bundle: nil)
 
         self.model = model
-        print(model)
     }
 
     required init?(coder: NSCoder) {
@@ -41,9 +41,15 @@ final class PlaceOperationHoursViewController: UIViewController {
         }
         
         NSLayoutConstraint.activate([
-            operationHoursView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-            operationHoursView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
-            operationHoursView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16)
+            operationHoursView.centerYAnchor.constraint(
+                equalTo: self.view.centerYAnchor
+            ),
+            operationHoursView.leadingAnchor.constraint(
+                equalTo: self.view.leadingAnchor, constant: 16
+            ),
+            operationHoursView.trailingAnchor.constraint(
+                equalTo: self.view.trailingAnchor, constant: -16
+            )
         ])
     }
     

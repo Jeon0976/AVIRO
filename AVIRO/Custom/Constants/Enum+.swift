@@ -266,6 +266,14 @@ enum Day: String {
     case sun = "일"
 }
 
+// MARK: Place View State
+enum PlaceViewState {
+    case noShow
+    case popup
+    case slideup
+    case full
+}
+
 // MARK: Report Place
 enum AVIROReportPlaceType: String {
     case noPlace = "없어짐"

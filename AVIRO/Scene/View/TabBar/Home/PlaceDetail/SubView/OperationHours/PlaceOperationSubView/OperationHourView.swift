@@ -11,7 +11,7 @@ final class OperationHourView: UIView {
     private lazy var dayLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .pretendard(size: 15, weight: .medium)
+        label.font = CFont.font.medium15
         label.textColor = .gray1
         
         return label
@@ -20,7 +20,7 @@ final class OperationHourView: UIView {
     private lazy var operatingHourLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .pretendard(size: 15, weight: .medium)
+        label.font = CFont.font.medium15
         label.textColor = .gray1
         
         return label
@@ -29,7 +29,7 @@ final class OperationHourView: UIView {
     private lazy var breakTimeLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .pretendard(size: 15, weight: .medium)
+        label.font = CFont.font.medium15
         label.textColor = .gray3
         
         return label
@@ -110,22 +110,23 @@ final class OperationHourView: UIView {
     }
     
     private func isToday() {
-        dayLabel.font = .pretendard(size: 15, weight: .semibold)
+        dayLabel.font = CFont.font.semibold15
         dayLabel.textColor = .main
         
-        operatingHourLabel.font = .pretendard(size: 15, weight: .semibold)
+        operatingHourLabel.font = CFont.font.semibold15
+
         operatingHourLabel.textColor = .main
 
-        breakTimeLabel.font = .pretendard(size: 15, weight: .semibold)
+        breakTimeLabel.font = CFont.font.semibold15
         breakTimeLabel.textColor = .main
     }
     
     private func isNotToday() {
-        dayLabel.font = .pretendard(size: 15, weight: .medium)
+        dayLabel.font = CFont.font.medium15
         dayLabel.textColor = .gray1
 
-        operatingHourLabel.font = .pretendard(size: 15, weight: .medium)
-        breakTimeLabel.font = .pretendard(size: 15, weight: .medium)
+        operatingHourLabel.font = CFont.font.medium15
+        breakTimeLabel.font = CFont.font.medium15
         breakTimeLabel.textColor = .gray3
     }
     

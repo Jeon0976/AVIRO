@@ -28,6 +28,7 @@ final class CFont {
 
     private(set) var bold11: UIFont = .pretendard(size: 11, weight: .bold)
     private(set) var bold15: UIFont = .pretendard(size: 15, weight: .bold)
+    private(set) var bold20: UIFont = .pretendard(size: 20, weight: .bold)
     private(set) var bold24: UIFont = .pretendard(size: 24, weight: .bold)
     
     init() {}

@@ -7,14 +7,6 @@
 
 import UIKit
 
-// MARK: Place View State
-enum PlaceViewState {
-    case noShow
-    case popup
-    case slideup
-    case full
-}
-
 final class PlaceView: UIView {
     private lazy var summaryView = PlaceSummaryView()
     

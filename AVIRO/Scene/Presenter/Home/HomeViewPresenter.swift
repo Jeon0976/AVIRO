@@ -128,6 +128,21 @@ final class HomeViewPresenter: NSObject {
         moveToCamraWhenAfterEnrollPlace()
     }
     
+    func viewDidAppear() {
+        if shouldKeepPlaceInfoView {
+            viewController?.whenAfterPopEditPage()
+            shouldKeepPlaceInfoView.toggle()
+        }
+    }
+    
+    func viewWillDisappear() {
+        if !shouldKeepPlaceInfoView {
+            initMarkerState()
+        }
+
+        removeKeyboardNotification()
+    }
+    
     private func moveToCamraWhenAfterEnrollPlace() {
         CenterCoordinate.shared.coordinateChanged = { [weak self] in
             self?.viewController?.moveToCameraWhenNoAVIRO(
@@ -150,23 +165,9 @@ final class HomeViewPresenter: NSObject {
         AVIROAPIManager().getNerbyPlaceModels(
             mapModel: getMarkerModel
         ) { [weak self] mapDatas in
-            self?.saveMarkers(mapDatas.data.updatedPlace)
+            print(mapDatas)
+            self?.updateMarkers(mapDatas.data.updatedPlace)
         }
-    }
-    
-    func viewDidAppear() {
-        if shouldKeepPlaceInfoView {
-            viewController?.whenAfterPopEditPage()
-            shouldKeepPlaceInfoView.toggle()
-        }
-    }
-    
-    func viewWillDisappear() {
-        if !shouldKeepPlaceInfoView {
-            initMarkerState()
-        }
-
-        removeKeyboardNotification()
     }
     
     // MARK: 전화, url 들어가고 난 후에도 계속 place 정보 보여주기 위한 함수
@@ -237,49 +238,66 @@ final class HomeViewPresenter: NSObject {
     }
     
     // MARK: Marker Data singleton에 저장하기
-    func saveMarkers(_ mapData: [AVIROMarkerModel]?) {
+    private func saveMarkers(_ mapData: [AVIROMarkerModel]?) {
         guard let mapData = mapData else { return }
+        
+        var markerModels = [MarkerModel]()
+        
         mapData.forEach { data in
-            let latLng = NMGLatLng(
-                lat: data.y,
-                lng: data.x
-            )
-            
-            let marker = NMFMarker(position: latLng)
-            let placeId = data.placeId
-            var place: MapPlace
-            
-            if data.allVegan {
-                place = MapPlace.All
-            } else if data.someMenuVegan {
-                place = MapPlace.Some
-            } else {
-                place = MapPlace.Request
-            }
-            
-            marker.makeIcon(place)
-            marker.touchHandler = { [weak self] _ in
-                self?.touchedMarker(marker)
-                
-                return true
-            }
-            
-            let markerModel = MarkerModel(
-                placeId: placeId,
-                marker: marker,
-                mapPlace: place,
-                isAll: data.allVegan,
-                isSome: data.someMenuVegan,
-                isRequest: data.ifRequestVegan
-            )
-            
-            LocalMarkerData.shared.setMarkerModel(markerModel)
+            let markerModel = createMarkerModel(from: data)
+            markerModels.append(markerModel)
         }
+        
+        LocalMarkerData.shared.setMarkerModel(markerModels)
         
         DispatchQueue.main.async { [weak self] in
             let markers = LocalMarkerData.shared.getMarkers()
             self?.viewController?.loadMarkers(markers)
         }
+    }
+    
+    private func updateMarkers(_ mapData: [AVIROMarkerModel]?) {
+        guard let mapData = mapData else { return }
+        
+        mapData.forEach { data in
+            let markerModel = createMarkerModel(from: data)
+            LocalMarkerData.shared.updateMarkerModel(markerModel)
+        }
+        
+        DispatchQueue.main.async { [weak self] in
+            let markers = LocalMarkerData.shared.getUpdatedMarkers()
+            self?.viewController?.loadMarkers(markers)
+        }
+    }
+
+    private func createMarkerModel(from data: AVIROMarkerModel) -> MarkerModel {
+        let latLng = NMGLatLng(lat: data.y, lng: data.x)
+        let marker = NMFMarker(position: latLng)
+        let placeId = data.placeId
+        var place: MapPlace
+        
+        if data.allVegan {
+            place = MapPlace.All
+        } else if data.someMenuVegan {
+            place = MapPlace.Some
+        } else {
+            place = MapPlace.Request
+        }
+        
+        marker.makeIcon(place)
+        marker.touchHandler = { [weak self] _ in
+            self?.touchedMarker(marker)
+            return true
+        }
+        
+        return MarkerModel(
+            placeId: placeId,
+            marker: marker,
+            mapPlace: place,
+            isAll: data.allVegan,
+            isSome: data.someMenuVegan,
+            isRequest: data.ifRequestVegan
+        )
     }
     
     // MARK: Marker Touched Method

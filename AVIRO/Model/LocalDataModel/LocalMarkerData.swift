@@ -16,10 +16,12 @@ protocol LocalMarkerDataProtocol {
     func getOnlyStarMarkerModels() -> [MarkerModel]
     func getMarkerFromIndex(_ index: Int) -> MarkerModel?
     func getMarkerFromMarker(_ marker: NMFMarker) -> (MarkerModel?, Int?)
-    func setMarkerModel(_ markerModel: MarkerModel)
+    func setMarkerModel(_ markerModels: [MarkerModel])
     func changeMarkerModel(_ index: Int, _ markerModel: MarkerModel)
     func updateWhenClickedMarker(_ markerModel: MarkerModel)
     func updateWhenStarButton(_ markerModel: [MarkerModel])
+    func updateMarkerModel(_ markerModel: MarkerModel)
+    func getUpdatedMarkers() -> [NMFMarker]
     func deleteAllMarkerModel()
 }
 
@@ -27,6 +29,8 @@ final class LocalMarkerData: LocalMarkerDataProtocol {
     static let shared = LocalMarkerData()
     
     private var markers: [MarkerModel] = []
+    
+    private var updatedMarkers: [NMFMarker] = []
     
     private init() {}
     
@@ -80,9 +84,8 @@ final class LocalMarkerData: LocalMarkerDataProtocol {
         return (nil, nil)
     }
     
-    func setMarkerModel(_ markerModel: MarkerModel) {
-        guard !markers.contains(where: { $0.placeId == markerModel.placeId }) else { return }
-        markers.append(markerModel)
+    func setMarkerModel(_ markerModels: [MarkerModel]) {
+        markers = markerModels
     }
     
     func changeMarkerModel(_ index: Int, _ markerModel: MarkerModel) {
@@ -101,6 +104,21 @@ final class LocalMarkerData: LocalMarkerDataProtocol {
                 markers[index] = model
             }
         }
+    }
+    
+    func updateMarkerModel(_ markerModel: MarkerModel) {
+        if let index = markers.firstIndex(where: { $0.placeId == markerModel.placeId }) {
+            markers[index] = markerModel
+        } else {
+            markers.append(markerModel)
+            updatedMarkers.append(markerModel.marker)
+        }
+    }
+
+    func getUpdatedMarkers() -> [NMFMarker] {
+        let markers = updatedMarkers
+        updatedMarkers.removeAll()
+        return markers
     }
     
     func deleteAllMarkerModel() {

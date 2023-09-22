@@ -13,7 +13,7 @@ final class OperationHoursView: UIView {
         
         label.text = "영업 시간"
         label.textColor = .gray0
-        label.font = .pretendard(size: 20, weight: .bold)
+        label.font = CFont.font.bold20
         
         return label
     }()
@@ -21,8 +21,12 @@ final class OperationHoursView: UIView {
     private lazy var cancelButton: UIButton = {
         let button = UIButton()
         
-        button.setImage(UIImage(named: "X-Circle"), for: .normal)
-        button.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        button.setImage(UIImage.closeCircle, for: .normal)
+        button.addTarget(
+            self,
+            action: #selector(cancelButtonTapped),
+            for: .touchUpInside
+        )
         
         return button
     }()
@@ -58,6 +62,7 @@ final class OperationHoursView: UIView {
     
     private func setupLayout() {
         self.viewHeight = heightAnchor.constraint(equalToConstant: 0)
+        
         viewHeight?.isActive = true
         
         [
@@ -87,28 +92,28 @@ final class OperationHoursView: UIView {
             monView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             
             tueView.topAnchor.constraint(equalTo: monView.bottomAnchor, constant: 9),
-            tueView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            tueView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            tueView.leadingAnchor.constraint(equalTo: monView.leadingAnchor),
+            tueView.trailingAnchor.constraint(equalTo: monView.trailingAnchor),
             
             wedView.topAnchor.constraint(equalTo: tueView.bottomAnchor, constant: 9),
-            wedView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            wedView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            wedView.leadingAnchor.constraint(equalTo: monView.leadingAnchor),
+            wedView.trailingAnchor.constraint(equalTo: monView.trailingAnchor),
             
             thuView.topAnchor.constraint(equalTo: wedView.bottomAnchor, constant: 9),
-            thuView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            thuView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            thuView.leadingAnchor.constraint(equalTo: monView.leadingAnchor),
+            thuView.trailingAnchor.constraint(equalTo: monView.trailingAnchor),
             
             friView.topAnchor.constraint(equalTo: thuView.bottomAnchor, constant: 9),
-            friView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            friView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            friView.leadingAnchor.constraint(equalTo: monView.leadingAnchor),
+            friView.trailingAnchor.constraint(equalTo: monView.trailingAnchor),
             
             satView.topAnchor.constraint(equalTo: friView.bottomAnchor, constant: 9),
-            satView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            satView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            satView.leadingAnchor.constraint(equalTo: monView.leadingAnchor),
+            satView.trailingAnchor.constraint(equalTo: monView.trailingAnchor),
             
             sunView.topAnchor.constraint(equalTo: satView.bottomAnchor, constant: 9),
-            sunView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            sunView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
+            sunView.leadingAnchor.constraint(equalTo: monView.leadingAnchor),
+            sunView.trailingAnchor.constraint(equalTo: monView.trailingAnchor),
         ])
     }
     
