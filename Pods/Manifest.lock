@@ -1,16 +1,22 @@
 PODS:
   - KeychainSwift (20.0.0)
-  - lottie-ios (4.2.0)
+  - lottie-ios (4.3.1)
   - NMapsGeometry (1.0.1)
   - NMapsMap (3.17.0):
     - NMapsGeometry
+  - Realm (10.42.3):
+    - Realm/Headers (= 10.42.3)
+  - Realm/Headers (10.42.3)
+  - RealmSwift (10.42.3):
+    - Realm (= 10.42.3)
   - Toast-Swift (5.0.1)
 
 DEPENDENCIES:
   - KeychainSwift
   - lottie-ios
   - NMapsMap
-  - Toast-Swift (~> 5.0.1)
+  - RealmSwift
+  - Toast-Swift
 
 SPEC REPOS:
   trunk:
@@ -18,15 +24,19 @@ SPEC REPOS:
     - lottie-ios
     - NMapsGeometry
     - NMapsMap
+    - Realm
+    - RealmSwift
     - Toast-Swift
 
 SPEC CHECKSUMS:
   KeychainSwift: 0ce6a4d13f7228054d1a71bb1b500448fb2ab837
-  lottie-ios: 809ecf2d460ed650a6aed7aa88b2ec45fab4779c
+  lottie-ios: 6279047f1cc31b395e11f1fc24f3dab68cbf0df2
   NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
   NMapsMap: a5b909a31b6f3d27a670f6eb2ddc913c38975474
+  Realm: ac7fa0100533e1c91511b19a58e837f9cfd80bb7
+  RealmSwift: a06d4e3c623a5f236bd9fe214f0bfdfee20312c2
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
 
-PODFILE CHECKSUM: 6b53ef04c15b3e1c13e3b21dfc986348bb47d07c
+PODFILE CHECKSUM: a1d7d28e35b38bf664393ca225a3e654aecc6735
 
 COCOAPODS: 1.12.1

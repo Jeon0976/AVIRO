@@ -234,7 +234,6 @@ extension HomeSearchViewController {
         }
     }
 
-    // MARK: Search Field Attribute
     private func makeSearchFieldAttribute() {
         searchField.delegate = self
         searchField.rightButtonHidden = true

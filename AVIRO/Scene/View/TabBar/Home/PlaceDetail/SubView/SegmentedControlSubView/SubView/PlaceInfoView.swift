@@ -92,8 +92,7 @@ final class PlaceInfoView: UIView {
     private lazy var timeLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .pretendard(size: 16, weight: .medium)
-        label.textColor = .gray0
+        label.font = CFont.font.medium16
         label.numberOfLines = 1
         
         return label
@@ -308,8 +307,6 @@ final class PlaceInfoView: UIView {
             phoneButton.setTitle(infoModel.phone, for: .normal)
         }
         
-        print(infoModel)
-        
         if !infoModel.haveTime {
             showOperationButton()
         } else {
@@ -350,12 +347,32 @@ final class PlaceInfoView: UIView {
 
     }
     
-    private func showOperationLabel(_ state: String, _ operating: String) {
+    private func showOperationLabel(_ stateString: String, _ operating: String) {
         timeLabel.isHidden = false
         timeTableShowButton.isHidden = false
         timePlusButton.isHidden = true
+
+        guard let state = OperationState(rawValue: stateString) else {
+            timeLabel.text = stateString + " " + operating
+            return
+        }
         
-        timeLabel.text = state + " " + operating
+        let fullText = stateString + " " + operating
+        
+        let attributedString = NSMutableAttributedString(string: fullText)
+        
+        attributedString.addAttribute(
+            .foregroundColor,
+            value: state.color,
+            range: NSRange(location: 0, length: stateString.count)
+        )
+        attributedString.addAttribute(
+            .foregroundColor,
+            value: UIColor.gray0,
+            range: NSRange(location: stateString.count, length: operating.count + 1)
+        )
+        
+        timeLabel.attributedText = attributedString
     }
     
     @objc private func phoneButtonTapped(_ sender: UIButton) {

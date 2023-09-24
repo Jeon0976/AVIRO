@@ -18,18 +18,30 @@ private enum Text: String {
     case delete = "삭제하기"
     case report = "신고하기"
     case searchPlaceHolder = "어디로 이동할까요?"
+    
     case starPlus = "즐겨찾기가 추가되었습니다."
     case starDelete = "즐겨찾기가 삭제되었습니다."
+    
     case reportReview = "후기 신고하기"
     case deleteMyReviewAlert = "정말로 삭제하시겠어요?\n삭제하면 다시 복구할 수 없어요."
+    
     case reportPlace = "가게 신고하기"
     case reportPlaceReasonTitle = "신고 이유가 궁금해요!"
+    
     case reasonLost = "없어진 가게예요"
     case reasonNotVegan = "비건 메뉴가 없는 가게예요"
     case reasonDuplicated = "중복 등록된 가게예요"
+    
     case successReportPlaceTitle = "신고가 완료되었어요"
     case alreadyReportPlaceTitle = "이미 신고한 가계예요"
     case reportPlaceMessage = "3건 이상의 신고가 들어오면\n가게는 자동으로 삭제돼요."
+    
+    case editRequestSuccess = "수정 요청이 완료되었어요"
+    case editSuccess = "수정 완료되었어요"
+
+    case editRequestPlaceSubtitle = "조금만 기다려주세요!\n관리자가 매일 꼼꼼하게 검수하고 있어요."
+    
+    case editMenuSubtitle = "소중한 정보 감사해요.\n수정해주신 정보로 업데이트 되었어요!"
 }
 
 private enum Layout {
@@ -343,36 +355,29 @@ extension HomeViewController: HomeViewProtocol {
         }
         
         naverMapView.isHidden = false
-        
-        placeView.placeViewStated = .noShow
     }
 
     func whenAfterPopEditPage() {
         naverMapView.isHidden = true
     }
     
-    // 존재 의문
     func whenViewWillAppearAfterSearchDataNotInAVIRO() {
         whenViewWillAppearInitPlaceView()
     }
 
-    func ifDeniedLocation() {
-        MyCoordinate.shared.longitude = DefaultCoordinate.lon.rawValue
-        MyCoordinate.shared.latitude = DefaultCoordinate.lat.rawValue
-        
+    func isSuccessLocation() {
+        naverMapView.positionMode = .direction
+    }
+    
+    func ifDeniedLocation(_ mapCoor: NMGLatLng) {
         let cameraUpdate = NMFCameraUpdate(
-            scrollTo: NMGLatLng(
-                lat: DefaultCoordinate.lon.rawValue,
-                lng: DefaultCoordinate.lat.rawValue
-            )
+            scrollTo: mapCoor
         )
         naverMapView.moveCamera(cameraUpdate)
         
-        showDeniedLocationAlert()
-    }
-    
-    func isSuccessLocation() {
-        naverMapView.positionMode = .direction
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.showDeniedLocationAlert()
+        }
     }
 
     func moveToCameraWhenNoAVIRO(_ lng: Double, _ lat: Double) {
@@ -472,6 +477,13 @@ extension HomeViewController: HomeViewProtocol {
         
         vc.presenter = presenter
         
+        presenter.afterReportShowAlert = { [weak self] in
+            self?.showAlert(
+                title: Text.editRequestSuccess.rawValue,
+                message: Text.editRequestPlaceSubtitle.rawValue
+            )
+        }
+        
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -494,6 +506,10 @@ extension HomeViewController: HomeViewProtocol {
         )
         
         presenter.afterEditMenuChangedMenus = { [weak self] in
+            self?.showAlert(
+                title: Text.editSuccess.rawValue,
+                message: Text.editMenuSubtitle.rawValue
+            )
             self?.presenter.afterEditMenu()
         }
         
@@ -549,6 +565,12 @@ extension HomeViewController: HomeViewProtocol {
             message: Text.report.rawValue,
             actions: [reportPlace, cancel]
         )
+    }
+    
+    private func saveCenterCoordinate() {
+        let center = naverMapView.cameraPosition.target
+        
+        presenter.saveCenterCoordinate(center)
     }
     
 }
@@ -899,7 +921,7 @@ extension HomeViewController: UIGestureRecognizerDelegate {
         _ gestureRecognizer: UIGestureRecognizer,
         shouldReceive touch: UITouch
     ) -> Bool {
-        if touch.view is UITextView || touch.view is UIButton {
+        if touch.view is PushCommentView || touch.view is UITextView || touch.view is UIButton {
             return false
         }
         
@@ -908,6 +930,14 @@ extension HomeViewController: UIGestureRecognizerDelegate {
     }
 }
 extension HomeViewController: NMFMapViewCameraDelegate {
+    func mapView(
+        _ mapView: NMFMapView,
+        cameraDidChangeByReason reason: Int,
+        animated: Bool
+    ) {
+        saveCenterCoordinate()
+    }
+    
     func mapView(
         _ mapView: NMFMapView,
         cameraWillChangeByReason reason: Int,

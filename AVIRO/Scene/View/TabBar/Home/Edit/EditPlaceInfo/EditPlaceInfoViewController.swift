@@ -484,7 +484,7 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     }
     
     func popViewController() {
-        navigationController?.popViewController(animated: true)
+        navigationController?.popViewController(animated: false)
     }
 }
 

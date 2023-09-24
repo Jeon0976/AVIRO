@@ -44,6 +44,7 @@ final class ReviewLabel: UILabel {
     }
     
     private func setAttribute() {
+        self.lineBreakMode = .byCharWrapping
         self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
     }

@@ -31,15 +31,16 @@ struct AVIROPostAPI {
     
     static let commentUploadPath = "/prod/map/add/comment"
     static let commentEditPath = "/prod/map/update/comment"
-    static let commentDeletePath = "/prod/map/delete/comment"
     static let commentReportPath = "/prod/map/report/comment"
 
     static let bookmarkPostPath = "/prod/map/add/bookmark"
     
     static let editMenuPath = "/prod/map/update/menu"
     
+    static let userIdCheckPath = "/prod/member"
+    static let appleUserCheckPath = "/prod/member/apple"
+
     static let userSignUpPath = "/prod/member/sign-up"
-    static let userCheckPath = "/prod/member/info"
     static let userNicnameCheckPath = "/prod/member/check"
     static let userNicknameChangeablePath = "/prod/member/update/nickname"
     static let userWithdrawPath = "/prod/member/withdraw"
@@ -143,17 +144,6 @@ struct AVIROPostAPI {
         return components
     }
     
-    // MARK: Comment Delete
-    mutating func commentDelete() -> URLComponents {
-        var components = URLComponents()
-        
-        components.scheme = AVIROPostAPI.scheme
-        components.host = host
-        components.path = AVIROPostAPI.commentDeletePath
-        
-        return components
-    }
-    
     // MARK: Comment Report
     mutating func commentReport() -> URLComponents {
         var components = URLComponents()
@@ -187,6 +177,28 @@ struct AVIROPostAPI {
         return components
     }
     
+    // MARK: UserId Check
+    mutating func userIdCheck() -> URLComponents {
+        var components = URLComponents()
+        
+        components.scheme = AVIROPostAPI.scheme
+        components.host = host
+        components.path = AVIROPostAPI.userIdCheckPath
+        
+        return components
+    }
+    
+    // MARK: AppleUserCheck
+    mutating func appleUserCheck() -> URLComponents {
+        var components = URLComponents()
+        
+        components.scheme = AVIROPostAPI.scheme
+        components.host = host
+        components.path = AVIROPostAPI.appleUserCheckPath
+        
+        return components
+    }
+    
     // MARK: user Sign up 
     mutating func userSignup() -> URLComponents {
         var components = URLComponents()
@@ -194,17 +206,6 @@ struct AVIROPostAPI {
         components.scheme = AVIROPostAPI.scheme
         components.host = host
         components.path = AVIROPostAPI.userSignUpPath
-        
-        return components
-    }
-    
-    // MARK: UserCheck
-    mutating func userCheck() -> URLComponents {
-        var components = URLComponents()
-        
-        components.scheme = AVIROPostAPI.scheme
-        components.host = host
-        components.path = AVIROPostAPI.userCheckPath
         
         return components
     }

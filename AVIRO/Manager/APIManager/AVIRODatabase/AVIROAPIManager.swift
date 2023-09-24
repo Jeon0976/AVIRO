@@ -16,6 +16,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
     
     var postAPI = AVIROPostAPI()
     var requestAPI = AVIRORequestAPI()
+    var deleteAPI = AVIRODeleteAPI()
     
     init(session: URLSession = .shared) {
         self.session = session
@@ -130,7 +131,6 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
             if let data = data {
                 if let placeSummary = try? JSONDecoder().decode(AVIROSummaryResultDTO.self, from: data) {
                     completionHandler(placeSummary)
-                    print(placeSummary.data)
                 }
             }
         }.resume()
@@ -240,11 +240,11 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
     }
     
     // MARK: Check User Model
-    func postCheckAppleUserModel(
-        _ userToken: AVIROAppleUserCheckMemberDTO,
-        completionHandler: @escaping((AVIROAfterAppleUserCheckMemberDTO) -> Void)
+    func postUserIdCheck(
+        _ userToken: AVIROUserCheckDTO,
+        completionHandler: @escaping((AIVROUserCheckResultDTO) -> Void)
     ) {
-        guard let url = postAPI.userCheck().url else { print("url error"); return}
+        guard let url = postAPI.userIdCheck().url else { print("url error"); return}
         
         guard let jsonData = try? JSONEncoder().encode(userToken) else {
             print("JSON Encode Error")
@@ -263,7 +263,45 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
             }
             
             if let data = data {
-                if let userCheck = try? JSONDecoder().decode(AVIROAfterAppleUserCheckMemberDTO.self, from: data) {
+                if let userCheck = try? JSONDecoder().decode(AIVROUserCheckResultDTO.self, from: data) {
+                    completionHandler(userCheck)
+                }
+                return
+            }
+            
+            guard response != nil else {
+                print("respose error")
+                return
+            }
+            print(response ?? "")
+        }.resume()
+    }
+    
+    // MARK: Check User Model
+    func postCheckAppleUserModel(
+        _ userToken: AVIROAppleUserCheckMemberDTO,
+        completionHandler: @escaping((AIVROUserCheckResultDTO) -> Void)
+    ) {
+        guard let url = postAPI.appleUserCheck().url else { print("url error"); return}
+        
+        guard let jsonData = try? JSONEncoder().encode(userToken) else {
+            print("JSON Encode Error")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        session.dataTask(with: request) { data, response, error in
+            guard error == nil else {
+                print("error")
+                return
+            }
+            
+            if let data = data {
+                if let userCheck = try? JSONDecoder().decode(AIVROUserCheckResultDTO.self, from: data) {
                     completionHandler(userCheck)
                 }
                 return
@@ -419,18 +457,21 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
             }.resume()
         }
     
-    // MARK: Post Delete Comment
-    func postDeleteCommentModel(
+    // MARK: Delete Comment
+    func deleteReviewModel(
         _ commentDeleteModel: AVIRODeleteReveiwDTO,
         completionHandler: @escaping((AVIROResultDTO) -> Void)) {
-            guard let url = postAPI.commentDelete().url else { return }
-            
+            guard let url = deleteAPI.deleteComment(
+                commentId: commentDeleteModel.commentId,
+                userId: commentDeleteModel.userId
+            ).url else { return }
+                        
             guard let jsonData = try? JSONEncoder().encode(commentDeleteModel) else {
                 return
             }
             
             var request = URLRequest(url: url)
-            request.httpMethod = "POST"
+            request.httpMethod = "DELETE"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpBody = jsonData
             

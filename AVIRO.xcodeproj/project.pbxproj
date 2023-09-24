@@ -95,9 +95,11 @@
 		C5351B7A2A1B439000116D50 /* KakaoCoordinatePlace+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B792A1B439000116D50 /* KakaoCoordinatePlace+DTO.swift */; };
 		C53856B12ABC13ED00D52DEC /* AVIROMyContributionCount+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53856B02ABC13ED00D52DEC /* AVIROMyContributionCount+DTO.swift */; };
 		C53893162A5EC0C500CB9A54 /* GenderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53893152A5EC0C500CB9A54 /* GenderButton.swift */; };
+		C54657882ABF2DBA003A0BCB /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = C54657872ABF2DBA003A0BCB /* API.plist */; };
 		C547A8BA2A17D8D4004D1339 /* KakaoMapAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547A8B92A17D8D4004D1339 /* KakaoMapAPIManager.swift */; };
 		C54BC0DB2A2C2D0D00B65439 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54BC0DA2A2C2D0D00B65439 /* UIColor+Extension.swift */; };
 		C54BC0DD2A2C762C00B65439 /* CommentsLabel+Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54BC0DC2A2C762C00B65439 /* CommentsLabel+Deprecated.swift */; };
+		C552D5342ABE8CA500933D8A /* AVIRODeleteAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C552D5332ABE8CA500933D8A /* AVIRODeleteAPI.swift */; };
 		C5538AAF2A1BB81200661DE2 /* AVIROEnrollPlace+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5538AAE2A1BB81200661DE2 /* AVIROEnrollPlace+DTO.swift */; };
 		C567C1502A56611500D4B426 /* TopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C567C14F2A56611500D4B426 /* TopCell.swift */; };
 		C568577D2A70E1F600F52715 /* MenuPlusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C568577C2A70E1F600F52715 /* MenuPlusButton.swift */; };
@@ -165,7 +167,6 @@
 		C5C9619C2A8DB1D80016E2F8 /* MenuTypeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C9619B2A8DB1D80016E2F8 /* MenuTypeLabel.swift */; };
 		C5C9619F2A8DEB230016E2F8 /* ReviewWriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C9619E2A8DEB230016E2F8 /* ReviewWriteButton.swift */; };
 		C5D36D2E2A76031E003328E8 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D36D2D2A76031E003328E8 /* Double+Extension.swift */; };
-		C5D6E19F2A17B4410042679C /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5D6E19E2A17B4410042679C /* API.plist */; };
 		C5D8E8632A3DEC3900D88A43 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D8E8622A3DEC3900D88A43 /* String+Extension.swift */; };
 		C5D8EB262A9D790800EF629F /* MyInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D8EB252A9D790800EF629F /* MyInfoView.swift */; };
 		C5D8EB282A9D797000EF629F /* OtherActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D8EB272A9D797000EF629F /* OtherActionsView.swift */; };
@@ -283,7 +284,6 @@
 		C52FA3442A175B20005E70DC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		C52FA3462A175B20005E70DC /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		C52FA34B2A175B20005E70DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		C52FA34E2A175B20005E70DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C52FA3502A175B20005E70DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5351B4A2A1919F700116D50 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		C5351B4C2A19223300116D50 /* KakaoMapAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapAPI.swift; sourceTree = "<group>"; };
@@ -297,9 +297,12 @@
 		C5351B792A1B439000116D50 /* KakaoCoordinatePlace+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KakaoCoordinatePlace+DTO.swift"; sourceTree = "<group>"; };
 		C53856B02ABC13ED00D52DEC /* AVIROMyContributionCount+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROMyContributionCount+DTO.swift"; sourceTree = "<group>"; };
 		C53893152A5EC0C500CB9A54 /* GenderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderButton.swift; sourceTree = "<group>"; };
+		C54657862ABF2D82003A0BCB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C54657872ABF2DBA003A0BCB /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = API.plist; path = AVIRO/Utils/API.plist; sourceTree = SOURCE_ROOT; };
 		C547A8B92A17D8D4004D1339 /* KakaoMapAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapAPIManager.swift; sourceTree = "<group>"; };
 		C54BC0DA2A2C2D0D00B65439 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		C54BC0DC2A2C762C00B65439 /* CommentsLabel+Deprecated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsLabel+Deprecated.swift"; sourceTree = "<group>"; };
+		C552D5332ABE8CA500933D8A /* AVIRODeleteAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIRODeleteAPI.swift; sourceTree = "<group>"; };
 		C5538AAE2A1BB81200661DE2 /* AVIROEnrollPlace+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROEnrollPlace+DTO.swift"; sourceTree = "<group>"; };
 		C567C14F2A56611500D4B426 /* TopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCell.swift; sourceTree = "<group>"; };
 		C568577C2A70E1F600F52715 /* MenuPlusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuPlusButton.swift; sourceTree = "<group>"; };
@@ -368,7 +371,6 @@
 		C5C9619B2A8DB1D80016E2F8 /* MenuTypeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTypeLabel.swift; sourceTree = "<group>"; };
 		C5C9619E2A8DEB230016E2F8 /* ReviewWriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewWriteButton.swift; sourceTree = "<group>"; };
 		C5D36D2D2A76031E003328E8 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
-		C5D6E19E2A17B4410042679C /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = API.plist; sourceTree = "<group>"; };
 		C5D8E8622A3DEC3900D88A43 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		C5D8EB252A9D790800EF629F /* MyInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoView.swift; sourceTree = "<group>"; };
 		C5D8EB272A9D797000EF629F /* OtherActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherActionsView.swift; sourceTree = "<group>"; };
@@ -447,7 +449,7 @@
 				C52FA34B2A175B20005E70DC /* Assets.xcassets */,
 				C52FA34D2A175B20005E70DC /* LaunchScreen.storyboard */,
 				C52FA3502A175B20005E70DC /* Info.plist */,
-				C5D6E19E2A17B4410042679C /* API.plist */,
+				C54657872ABF2DBA003A0BCB /* API.plist */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -916,6 +918,7 @@
 				C5732C702A41739000CDC499 /* AVIROAPIManager.swift */,
 				C5732C722A41778A00CDC499 /* AVIROPostAPI.swift */,
 				C5732C742A41962D00CDC499 /* AVIRORequestAPI.swift */,
+				C552D5332ABE8CA500933D8A /* AVIRODeleteAPI.swift */,
 			);
 			path = AVIRODatabase;
 			sourceTree = "<group>";
@@ -1474,9 +1477,9 @@
 				C51000502AB5F76600F65C1F /* Pretendard-Black.otf in Resources */,
 				C51000532AB5F76600F65C1F /* Pretendard-SemiBold.otf in Resources */,
 				C510004C2AB5F76600F65C1F /* Pretendard-Light.otf in Resources */,
-				C5D6E19F2A17B4410042679C /* API.plist in Resources */,
 				C52FA34C2A175B20005E70DC /* Assets.xcassets in Resources */,
 				C510004E2AB5F76600F65C1F /* Pretendard-Medium.otf in Resources */,
+				C54657882ABF2DBA003A0BCB /* API.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1647,6 +1650,7 @@
 				C50DB7542A9B838F0078B501 /* ChangeableAddressPresenter.swift in Sources */,
 				C58EC7D42AB1B5C400401FF7 /* AVIROEditURL+DTO.swift in Sources */,
 				C50F6B022A6BC8E400E942F5 /* EnrollField.swift in Sources */,
+				C552D5342ABE8CA500933D8A /* AVIRODeleteAPI.swift in Sources */,
 				C510005E2ABAA3C700F65C1F /* Enum+.swift in Sources */,
 				C51B09B82A82155200916BBD /* LocalMarkerData.swift in Sources */,
 				C5A9899B2A95A6B50021B7C3 /* LocalBookmarkData.swift in Sources */,
@@ -1735,7 +1739,7 @@
 		C52FA34D2A175B20005E70DC /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				C52FA34E2A175B20005E70DC /* Base */,
+				C54657862ABF2D82003A0BCB /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -1747,6 +1751,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -1807,6 +1812,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

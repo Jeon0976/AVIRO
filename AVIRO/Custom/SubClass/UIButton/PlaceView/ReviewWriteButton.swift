@@ -18,21 +18,21 @@ final class ReviewWriteButton: UIButton {
         fatalError()
     }
     
-    private func setAttribute() {
-        backgroundColor = .gray7
-
-        layer.cornerRadius = 27
+    private func setAttribute() {        
+        layer.cornerRadius = 24
         layer.borderColor = UIColor.main.cgColor
         layer.borderWidth = 2
+        self.backgroundColor = .main
+        self.clipsToBounds = true
     }
     
     func setButton(_ title: String = "지금 후기 작성하기",
                    _ image: UIImage? = UIImage.pencil
     ) {
         setTitle(title, for: .normal)
-        setImage(image?.withTintColor(.main), for: .normal)
+        setImage(image?.withTintColor(.gray7), for: .normal)
         
-        setTitleColor(.main, for: .normal)
+        setTitleColor(.gray7, for: .normal)
         titleLabel?.font = CFont.font.semibold16
         
         semanticContentAttribute = .forceLeftToRight
@@ -48,13 +48,6 @@ final class ReviewWriteButton: UIButton {
             left: 10,
             bottom: 0,
             right: 0
-        )
-        
-        contentEdgeInsets = .init(
-            top: 14,
-            left: 20,
-            bottom: 14,
-            right: 20
         )
     }
 }

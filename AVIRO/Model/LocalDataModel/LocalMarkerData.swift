@@ -89,6 +89,7 @@ final class LocalMarkerData: LocalMarkerDataProtocol {
     }
     
     func changeMarkerModel(_ index: Int, _ markerModel: MarkerModel) {
+
         markers[index] = markerModel
     }
     
@@ -108,11 +109,21 @@ final class LocalMarkerData: LocalMarkerDataProtocol {
     
     func updateMarkerModel(_ markerModel: MarkerModel) {
         if let index = markers.firstIndex(where: { $0.placeId == markerModel.placeId }) {
-            markers[index] = markerModel
+            
+            var updateMarker = markerModel
+            
+            updateMarker.marker = markers[index].marker
+            
+            markers[index] = updateMarker
         } else {
             markers.append(markerModel)
             updatedMarkers.append(markerModel.marker)
         }
+        
+    }
+    
+    private func markerDataRefresh() {
+        
     }
 
     func getUpdatedMarkers() -> [NMFMarker] {

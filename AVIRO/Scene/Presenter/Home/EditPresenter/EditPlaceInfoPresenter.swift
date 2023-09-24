@@ -139,6 +139,8 @@ final class EditPlaceInfoPresenter {
         }
     }
     
+    var afterReportShowAlert: (() -> Void)?
+    
     init(viewController: EditPlaceInfoProtocol,
          placeMarkerModel: MarkerModel? = nil,
          placeId: String? = nil,
@@ -513,6 +515,7 @@ extension EditPlaceInfoPresenter {
         dispatchGroup.notify(queue: .main
         ) { [weak self] in
             self?.viewController?.popViewController()
+            self?.afterReportShowAlert?()
         }
     }
     

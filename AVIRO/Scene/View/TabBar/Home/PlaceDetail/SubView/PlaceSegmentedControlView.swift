@@ -162,7 +162,7 @@ final class PlaceSegmentedControlView: UIView {
     
     private func makeAttribute() {
         self.backgroundColor = .gray7
-        scrollView.backgroundColor = .clear
+        scrollView.backgroundColor = .gray6
         
         segmentedControl.setAttributedTitle()
         segmentedControl.addTarget(self, action: #selector(segmentedChanged(segment:)), for: .valueChanged)

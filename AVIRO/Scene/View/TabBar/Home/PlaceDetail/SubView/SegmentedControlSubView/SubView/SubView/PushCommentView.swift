@@ -38,7 +38,7 @@ final class PushCommentView: UIView {
         button.setTitle("등록", for: .normal)
         button.setTitleColor(.gray4, for: .normal)
         button.titleLabel?.font = .pretendard(size: 17, weight: .semibold)
-        button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(enrollButtonTapped(_:)), for: .touchUpInside)
         
         return button
     }()
@@ -155,11 +155,12 @@ final class PushCommentView: UIView {
         viewHeight?.constant = separatorHeight + textView + inset
     }
     
-    @objc private func buttonTapped(_ sender: UIButton) {
+    @objc private func enrollButtonTapped(_ sender: UIButton) {
         if sender.titleLabel?.textColor == .gray0 {
             guard let text = textView.text else { return }
             enrollReview?(text)
 
+            self.endEditing(true)
             initTextView()
         } else {
             return
@@ -250,22 +251,37 @@ final class PushCommentView: UIView {
     // MARK: Keyboard Method 처리
     func keyboardWillShow(notification: NSNotification, height: CGFloat) {
         if let userInfo = notification.userInfo {
-            let animationDuration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0.25
+            let animationDuration = (userInfo[
+                UIResponder.keyboardAnimationDurationUserInfoKey
+            ] as? NSNumber)?
+                .doubleValue ?? 0.25
             
-            let animationCurveRaw = (userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber)?.uintValue ?? UIView.AnimationOptions.curveEaseInOut.rawValue
+            let animationCurveRaw = (userInfo[
+                UIResponder.keyboardAnimationCurveUserInfoKey
+            ] as? NSNumber)?
+                .uintValue ?? UIView.AnimationOptions.curveEaseInOut.rawValue
+            
             let animationCurve = UIView.AnimationOptions(rawValue: animationCurveRaw)
-
+            
             UIView.animate(
                 withDuration: animationDuration,
-                delay: 0,
+                delay: 0.023,
                 options: animationCurve, animations: {
-                    self.transform = CGAffineTransform(translationX: 0, y: -height)
-                }, completion: nil)
+                    self.transform = CGAffineTransform(
+                        translationX: 0,
+                        y: -height
+                    )
+                },
+                completion: nil
+            )
         }
     }
     
     func keyboardWillHide() {
-        self.transform = .identity
+        UIView.performWithoutAnimation {
+            self.transform = .identity
+        }
+        
     }
 }
 

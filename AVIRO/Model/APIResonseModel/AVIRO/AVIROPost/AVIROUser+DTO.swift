@@ -11,7 +11,7 @@ struct AVIROUserCheckDTO: Encodable {
     let userId: String
 }
 
-struct AIVROUserCheckResultDTO: Encodable {
+struct AIVROUserCheckResultDTO: Decodable {
     let statusCode: Int
     let data: AVIROUserDataDTO?
     let message: String?
@@ -19,12 +19,6 @@ struct AIVROUserCheckResultDTO: Encodable {
 
 struct AVIROAppleUserCheckMemberDTO: Encodable {
     let userToken: String
-}
-
-struct AVIROAfterAppleUserCheckMemberDTO: Codable {
-    let statusCode: Int
-    let data: AVIROUserDataDTO?
-    let message: String?
 }
 
 struct AVIROUserDataDTO: Codable {

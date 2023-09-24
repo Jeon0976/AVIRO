@@ -113,12 +113,12 @@ final class EnrollPlacePresenter {
             return
         }
          
-        // TODO: 수정 예정
         AVIROAPIManager().postPlaceModel(veganModel) { [weak self] responseModel in
             DispatchQueue.main.async {
                 if responseModel.statusCode == 200 {
                     CenterCoordinate.shared.longitude = veganModel.x
                     CenterCoordinate.shared.latitude = veganModel.y
+                    CenterCoordinate.shared.isChangedFromEnrollView = true
                     
                     self?.viewController?.popViewController()
                 } else {

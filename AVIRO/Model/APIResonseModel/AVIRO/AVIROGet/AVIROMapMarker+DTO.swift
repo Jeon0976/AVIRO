@@ -27,11 +27,19 @@ struct AVIROMapModelResultDataDTO: Decodable {
 
 // MARK: 관련 로직 확인해보기
 // TODO: 2
-struct AVIROMarkerModel: Decodable {
+struct AVIROMarkerModel: Codable, Hashable {
     let placeId: String
     let x: Double
     let y: Double
     let allVegan: Bool
     let someMenuVegan: Bool
     let ifRequestVegan: Bool
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(placeId)
+    }
+    
+    static func ==(lhs: AVIROMarkerModel, rhs: AVIROMarkerModel) -> Bool {
+        return lhs.placeId == rhs.placeId
+    }
 }

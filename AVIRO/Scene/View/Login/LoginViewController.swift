@@ -19,7 +19,7 @@ private enum Layout {
     enum Margin: CGFloat {
         case titleToView = 80
         case shadowToMain = 15
-        case appleToBottom = 60
+        case appleToBottom = 40
         case buttonH = 26.5
     }
     
@@ -139,7 +139,7 @@ extension LoginViewController: LoginViewProtocol {
             ),
             
             mainImageView.centerYAnchor.constraint(
-                equalTo: self.view.centerYAnchor
+                equalTo: self.view.centerYAnchor, constant: 60
             ),
             mainImageView.centerXAnchor.constraint(
                 equalTo: self.view.centerXAnchor
@@ -192,9 +192,8 @@ extension LoginViewController: LoginViewProtocol {
     @objc func tapNoLoginButton() {
         MyData.my.id = "test"
         MyData.my.nickname = "테스트"
-        let model = CommonUserModel(token: "", name: "", email: "")
-        pushRegistration(model)
-//        pushTabBar()
+
+        pushTabBar()
     }
     
     // MARK: Push TabBar Viewcontroller

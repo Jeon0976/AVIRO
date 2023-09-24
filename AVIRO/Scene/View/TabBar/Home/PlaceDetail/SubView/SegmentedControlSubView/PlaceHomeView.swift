@@ -52,6 +52,7 @@ final class PlaceHomeView: UIView {
     
     private func makeLayout() {
         self.backgroundColor = .gray6
+        
         // 300 + 200 + 250 + 200
         viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: 0)
         viewHeightConstraint?.isActive = true
@@ -107,7 +108,7 @@ final class PlaceHomeView: UIView {
         placeMenuView.dataBindingWhenInHomeView(menuModel)
         placeReviewsView.dataBindingWhenInHomeView(reviewsModel)
     }
-    
+        
     func refreshMenuData(_ menuModel: AVIROPlaceMenus?) {
         placeMenuView.dataBindingWhenInHomeView(menuModel)
     }

@@ -41,8 +41,8 @@ enum Policy: String {
 // MARK: Defalut Coordinate
 /// 광안리 해수욕장
 enum DefaultCoordinate: Double {
-    case lat = 129.118924
-    case lon = 35.153354
+    case lat = 35.153354
+    case lng = 129.118924
 }
 
 // MARK: TabBar
@@ -253,6 +253,27 @@ enum PlaceCategory: String {
 enum MenuType: String {
     case vegan
     case needToRequset
+}
+
+// MARK: Operation State
+enum OperationState: String {
+    case beforeOpening = "영업전"
+    case operating = "영업중"
+    case closed = "영업종료"
+    case breakTime = "휴식시간"
+    case holiday = "휴무일"
+    case noInfoToday = "오늘 정보 없음"
+    
+    var color: UIColor {
+        switch self {
+        case .breakTime, .holiday:
+            return .warning
+        case .noInfoToday:
+            return .gray2
+        default:
+            return .gray0
+        }
+    }
 }
 
 // MARK: Day

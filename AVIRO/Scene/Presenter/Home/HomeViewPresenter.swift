@@ -19,7 +19,7 @@ protocol HomeViewProtocol: NSObject {
     func whenAfterPopEditPage()
     func keyboardWillShow(notification: NSNotification)
     func keyboardWillHide()
-    func ifDeniedLocation()
+    func ifDeniedLocation(_ mapCoor: NMGLatLng)
     func isSuccessLocation()
     func moveToCameraWhenNoAVIRO(_ lng: Double, _ lat: Double)
     func moveToCameraWhenHasAVIRO(_ markerModel: MarkerModel)
@@ -81,6 +81,8 @@ final class HomeViewPresenter: NSObject {
         
     private var selectedPlaceId: String?
     
+    private var nowDateTime = TimeUtility.nowDateAndTime()
+    
     init(viewController: HomeViewProtocol) {
         self.viewController = viewController
     }
@@ -94,38 +96,49 @@ final class HomeViewPresenter: NSObject {
     }
     
     func viewDidLoad() {
+        locationManager.delegate = self
+        whenFirstLocationauthorization { [weak self] in
+            self?.loadVeganData()
+        }
+            
+        makeNotification()
+        handleClosure()
+
         viewController?.setupLayout()
         viewController?.setupAttribute()
         viewController?.setupGesture()
-        makeNotification()
-
-        locationManager.delegate = self
-        locationAuthorization()
                 
-        loadVeganData()
     }
     
     func viewWillAppear() {
         addKeyboardNotification()
 
+        handleMarkerUpdate()
+        handleViewWillAppearActions()
+    }
+    
+    private func handleMarkerUpdate() {
+        if !shouldKeepPlaceInfoView && !isFirstViewWillappear {
+            updateMarkerDataFromServer()
+        }
+    }
+    
+    private func handleViewWillAppearActions() {
         viewController?.whenViewWillAppear()
-
-        if !isFirstViewWillappear {
-
-            updateMarkerWhenViewWillAppear()
-
-            if !shouldKeepPlaceInfoView {
-                if !afterSearchDataInAVIRO {
-                    viewController?.whenViewWillAppearAfterSearchDataNotInAVIRO()
-                } else {
-                    afterSearchDataInAVIRO.toggle()
-                }
-            }
-        } else {
+        
+        if isFirstViewWillappear {
             isFirstViewWillappear.toggle()
+            
+            return
         }
         
-        moveToCamraWhenAfterEnrollPlace()
+        if shouldKeepPlaceInfoView { return }
+        
+        if afterSearchDataInAVIRO {
+            afterSearchDataInAVIRO.toggle()
+        } else {
+            viewController?.whenViewWillAppearAfterSearchDataNotInAVIRO()
+        }
     }
     
     func viewDidAppear() {
@@ -143,30 +156,20 @@ final class HomeViewPresenter: NSObject {
         removeKeyboardNotification()
     }
     
-    private func moveToCamraWhenAfterEnrollPlace() {
-        CenterCoordinate.shared.coordinateChanged = { [weak self] in
-            self?.viewController?.moveToCameraWhenNoAVIRO(
-                CenterCoordinate.shared.longitude ?? 0.0,
-                CenterCoordinate.shared.latitude ?? 0.0
-            )
-        }
-    }
-    
-    private func updateMarkerWhenViewWillAppear() {
-        let dateTime = TimeUtility.nowDateAndTime()
-        
+    private func updateMarkerDataFromServer() {
         let getMarkerModel = AVIROMapModelDTO(
             longitude: MyCoordinate.shared.longitudeString,
             latitude: MyCoordinate.shared.latitudeString,
             wide: "0.0",
-            time: dateTime
+            time: nowDateTime
         )
-        
+                
         AVIROAPIManager().getNerbyPlaceModels(
             mapModel: getMarkerModel
         ) { [weak self] mapDatas in
-            print(mapDatas)
-            self?.updateMarkers(mapDatas.data.updatedPlace)
+            if mapDatas.data.amount != 0 {
+                self?.updateMarkers(mapDatas.data.updatedPlace)
+            }
         }
     }
     
@@ -221,14 +224,13 @@ final class HomeViewPresenter: NSObject {
             wide: "0.0",
             time: nil
         )
-        
+                
         AVIROAPIManager().getNerbyPlaceModels(
             mapModel: getMarkerModel
         ) { [weak self] mapDatas in
             self?.saveMarkers(mapDatas.data.updatedPlace)
         }
         
-        /// bookmark 초기 데이터 불러오기
         bookmarkManager.fetchAllData()
     }
     
@@ -242,7 +244,7 @@ final class HomeViewPresenter: NSObject {
         guard let mapData = mapData else { return }
         
         var markerModels = [MarkerModel]()
-        
+
         mapData.forEach { data in
             let markerModel = createMarkerModel(from: data)
             markerModels.append(markerModel)
@@ -259,7 +261,9 @@ final class HomeViewPresenter: NSObject {
     private func updateMarkers(_ mapData: [AVIROMarkerModel]?) {
         guard let mapData = mapData else { return }
         
-        mapData.forEach { data in
+        let uniqueMapData = Array(Set(mapData))
+
+        uniqueMapData.forEach { data in
             let markerModel = createMarkerModel(from: data)
             LocalMarkerData.shared.updateMarkerModel(markerModel)
         }
@@ -267,6 +271,7 @@ final class HomeViewPresenter: NSObject {
         DispatchQueue.main.async { [weak self] in
             let markers = LocalMarkerData.shared.getUpdatedMarkers()
             self?.viewController?.loadMarkers(markers)
+            self?.nowDateTime = TimeUtility.nowDateAndTime()
         }
     }
 
@@ -290,7 +295,7 @@ final class HomeViewPresenter: NSObject {
             return true
         }
         
-        return MarkerModel(
+        let test =  MarkerModel(
             placeId: placeId,
             marker: marker,
             mapPlace: place,
@@ -298,16 +303,19 @@ final class HomeViewPresenter: NSObject {
             isSome: data.someMenuVegan,
             isRequest: data.ifRequestVegan
         )
+                
+        return test
     }
     
     // MARK: Marker Touched Method
     private func touchedMarker(_ marker: NMFMarker) {
         resetPreviouslyTouchedMarker()
+        
         setMarkerToTouchedState(marker)
     }
     
     // MARK: Reset Previous Marker
-   func resetPreviouslyTouchedMarker() {
+   private func resetPreviouslyTouchedMarker() {
        /// 최초 터치 이후 작동을 위한 분기처리
         if hasTouchedMarkerBefore {
             if var selectedMarkerModel = selectedMarkerModel {
@@ -328,7 +336,7 @@ final class HomeViewPresenter: NSObject {
     /// 클릭한 마커 저장 후 viewController에 알리기
     private func setMarkerToTouchedState(_ marker: NMFMarker) {
         let (markerModel, index) = LocalMarkerData.shared.getMarkerFromMarker(marker)
-        
+                
         guard let validMarkerModel = markerModel else { return }
         
         guard let validIndex = index else { return }
@@ -641,9 +649,9 @@ final class HomeViewPresenter: NSObject {
         selectedMarkerModel.isAll = changedMarkerModel.isAll
         selectedMarkerModel.isSome = changedMarkerModel.isSome
         selectedMarkerModel.isRequest = changedMarkerModel.isRequest
-        
+
         LocalMarkerData.shared.changeMarkerModel(selectedMarkerIndex, selectedMarkerModel)
-        
+
         self.selectedMarkerModel = selectedMarkerModel
         
         viewController?.refreshMapPlace(changedMarkerModel.mapPlace)
@@ -657,7 +665,15 @@ final class HomeViewPresenter: NSObject {
                 }
             }
         }
-        
+    }
+    
+    private func handleClosure() {
+        CenterCoordinate.shared.coordinateChanged = { [weak self] in
+            self?.viewController?.moveToCameraWhenNoAVIRO(
+                CenterCoordinate.shared.longitude ?? 0.0,
+                CenterCoordinate.shared.latitude ?? 0.0
+            )
+        }
     }
     
     func editMyReview(_ postEditReviewModel: AVIROEditReviewDTO) {
@@ -672,7 +688,7 @@ final class HomeViewPresenter: NSObject {
     
     // MARK: 수정 요망
     func deleteMyReview(_ postDeleteReviewModel: AVIRODeleteReveiwDTO) {
-        AVIROAPIManager().postDeleteCommentModel(postDeleteReviewModel) { [weak self] model in
+        AVIROAPIManager().deleteReviewModel(postDeleteReviewModel) { [weak self] model in
             DispatchQueue.main.async {
                 if let message = model.message {
                     self?.viewController?.showToastAlert(message)
@@ -695,27 +711,36 @@ extension HomeViewPresenter: CLLocationManagerDelegate {
         locationAuthorization()
     }
     
+    private func whenFirstLocationauthorization(completion: @escaping () -> Void) {
+        handleLocationAuthorization {
+            completion()
+        }
+    }
+
     private func locationAuthorization() {
+        handleLocationAuthorization()
+    }
+    
+    private func handleLocationAuthorization(completion: (() -> Void)? = nil) {
         switch locationManager.authorizationStatus {
         case .notDetermined:
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            
             locationManager.requestWhenInUseAuthorization()
+            
         case .authorizedAlways, .authorizedWhenInUse:
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.startUpdatingLocation()
             
-            viewController?.isSuccessLocation()
-            
         case .denied, .restricted:
-            viewController?.ifDeniedLocation()
-
+            if !isFirstViewWillappear {
+                ifDeniedLocation()
+            }
         default:
             break
         }
+        
+        completion?()
     }
-    
-    // MARK: 개인 Location Data 불러오고 나서 할 작업
+
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         
@@ -723,6 +748,20 @@ extension HomeViewPresenter: CLLocationManagerDelegate {
         MyCoordinate.shared.longitude = location.coordinate.longitude
                 
         locationManager.stopUpdatingLocation()
+        
+        ifSuccessLocation()
+    }
+    
+    private func ifSuccessLocation() {
         viewController?.isSuccessLocation()
+    }
+    
+    private func ifDeniedLocation() {
+        MyCoordinate.shared.latitude = DefaultCoordinate.lat.rawValue
+        MyCoordinate.shared.longitude = DefaultCoordinate.lng.rawValue
+
+        let mapCoor = NMGLatLng(lat: DefaultCoordinate.lat.rawValue, lng: DefaultCoordinate.lng.rawValue)
+        
+        viewController?.ifDeniedLocation(mapCoor)
     }
 }

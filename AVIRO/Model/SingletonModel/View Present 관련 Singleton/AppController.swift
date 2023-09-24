@@ -51,12 +51,12 @@ final class AppController {
             setLoginView()
             return
         }
-
-        // TODO: 로그인 기능 추가 시 업데이트
-        let userCheck = AVIROAppleUserCheckMemberDTO(userToken: userKey)
+        
+        // MARK: 자동로그인을 userDefaults를 통해서 하면 안되나??
+        let userCheck = AVIROUserCheckDTO(userId: userKey)
         
         // 회원이 서버에 없을 때
-        AVIROAPIManager().postCheckAppleUserModel(userCheck) { userInfo in
+        AVIROAPIManager().postUserIdCheck(userCheck) { userInfo in
             DispatchQueue.main.async { [weak self] in
                 if userInfo.statusCode == 200 {
                     let userId = userInfo.data?.userId ?? ""

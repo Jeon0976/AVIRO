@@ -14,7 +14,7 @@ extension HomeViewController {
     func whenClosedPlaceView() {
         placeView.placeViewStated = .noShow
         
-        presenter.resetPreviouslyTouchedMarker()
+        presenter.initMarkerState()
         
         settingPlaceView()
         
@@ -24,6 +24,8 @@ extension HomeViewController {
     }
     
     private func settingPlaceView() {
+        placeView.placeViewStated = .noShow
+        
         homeButtonIsHidden(false)
         viewNaviButtonHidden(true)
         searchTextFieldTopConstraint?.constant = 16

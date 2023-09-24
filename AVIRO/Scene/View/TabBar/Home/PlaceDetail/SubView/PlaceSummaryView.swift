@@ -278,7 +278,7 @@ final class PlaceSummaryView: UIView {
               let address = addressLabel.text else { return }
         
         let aviro = "[어비로]\n"
-        let totalString = aviro + title + "\n" + address + "\n" + "어비로 링크"
+        let totalString = aviro + title + "\n" + address + "\n" + "https://apps.apple.com/app/6449352804"
         
         let shareObject = [totalString]
         whenShareButtonTapped?(shareObject)
@@ -342,15 +342,15 @@ final class PlaceSummaryView: UIView {
         
         switch mapPlace {
         case .All:
-            placeIconImage = UIImage(named: "Allbox")
+            placeIconImage = UIImage.allBox
             whenSlideTopLabel.textColor = .all
             whenSlideTopLabelString = "모든 메뉴가 비건"
         case .Some:
-            placeIconImage = UIImage(named: "Somebox")
+            placeIconImage = UIImage.someBox
             whenSlideTopLabel.textColor = .some
             whenSlideTopLabelString = "일부 메뉴만 비건"
         case .Request:
-            placeIconImage = UIImage(named: "Requestbox")
+            placeIconImage = UIImage.requestBox
             whenSlideTopLabel.textColor = .request
             whenSlideTopLabelString = "비건 메뉴로 요청 가능"
         }
@@ -477,7 +477,7 @@ extension PlaceSummaryView {
 
         let guideBarHeight = guideBar.frame.height
         let placeIconHeight = placeIcon.frame.height
-        let addressHeight = addressLabel.frame.height
+        let addressHeight = addressLabel.frame.height == 0.0 ? CGFloat(18) : addressLabel.frame.height
         // 5 + 20 + 7 + 7 + 30 +
         let inset: CGFloat = 69
 

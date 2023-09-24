@@ -891,12 +891,15 @@ final class EditMenuPresenter {
             mapPlace = .Request
         }
                 
-
-        let editMenuChangedMarkerModel = EditMenuChangedMarkerModel(mapPlace: mapPlace, isAll: isAll, isSome: isSome, isRequest: isRequest)
+        let editMenuChangedMarkerModel = EditMenuChangedMarkerModel(
+            mapPlace: mapPlace,
+            isAll: isAll,
+            isSome: isSome,
+            isRequest: isRequest
+        )
         
         AVIROAPIManager().postEditMenu(editMenu) { [weak self] result in
             DispatchQueue.main.async {
-                print(result)
                 if result.statusCode == 200 {
                     self?.viewController?.popViewController()
                     self?.afterEditMenuChangedMenus?()

@@ -17,7 +17,7 @@ final class LocationUtility {
               let longitude = MyCoordinate.shared.longitude else {
             let calculatedDistance = distanceBetweenPoints(
                 lat1: DefaultCoordinate.lat.rawValue,
-                lon1: DefaultCoordinate.lon.rawValue,
+                lon1: DefaultCoordinate.lng.rawValue,
                 lat2: y_lat,
                 lon2: x_lng
             )

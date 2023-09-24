@@ -11,15 +11,16 @@ import Foundation
 final class CenterCoordinate {
     static let shared = CenterCoordinate()
     
-    var latitude: Double? {
-        didSet {
-            coordinateChanged?()
-        }
-    }
+    var latitude: Double?
     
-    var longitude: Double? {
+    var longitude: Double?
+    
+    var isChangedFromEnrollView = false {
         didSet {
-            coordinateChanged?()
+            if isChangedFromEnrollView {
+                coordinateChanged?()
+                isChangedFromEnrollView.toggle()
+            }
         }
     }
     

@@ -88,7 +88,8 @@ final class PlaceReviewWriteView: UIView {
             
             writeReviewButton.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 20),
             writeReviewButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            writeReviewButton.widthAnchor.constraint(equalToConstant: 220)
+            writeReviewButton.widthAnchor.constraint(equalToConstant: 188),
+            writeReviewButton.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
     

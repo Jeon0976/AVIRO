@@ -12,7 +12,7 @@ import NMapsMap
 // MARK: Map Place didSet 수정 확인
 struct MarkerModel {
     let placeId: String
-    let marker: NMFMarker
+    var marker: NMFMarker
     // MARK: 수정 중 일때만 Map Place 변경 가능 
     var mapPlace: MapPlace {
         didSet {

@@ -85,6 +85,9 @@ final class PlaceReviewsView: UIView {
     private var viewHeightConstraint: NSLayoutConstraint?
     private var reviewsHeightConstraint: NSLayoutConstraint?
     
+    private var whenNoReviewLabelTopConstraintInHomeView: NSLayoutConstraint?
+    private var whenNoReviewLabelTopConstraintInReviewView: NSLayoutConstraint?
+    
     private var cellHeights: [IndexPath: CGFloat] = [:]
     
     private var reviewsArray = [AVIROReviewRawDataDTO]()
@@ -115,8 +118,9 @@ final class PlaceReviewsView: UIView {
         fatalError()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    func resetAllData() {
+        reviewsArray = []
+        reviewsTable.reloadData()
     }
     
     func keyboardWillShow(notification: NSNotification, height: CGFloat) {
@@ -171,9 +175,17 @@ final class PlaceReviewsView: UIView {
             noReviewsImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             noReviewsImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             
-            noReviews.topAnchor.constraint(equalTo: noReviewsImageView.bottomAnchor, constant: 20),
             noReviews.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
+        
+        whenNoReviewLabelTopConstraintInHomeView = noReviews.topAnchor.constraint(
+            equalTo: title.bottomAnchor,
+            constant: 100
+        )
+        whenNoReviewLabelTopConstraintInReviewView = noReviews.topAnchor.constraint(
+            equalTo: noReviewsImageView.bottomAnchor,
+            constant: 20
+        )
     }
     
     func dataBinding(placeId: String,
@@ -219,6 +231,9 @@ final class PlaceReviewsView: UIView {
     private func whenNotHaveReviews() {
         self.reviewsArray = [AVIROReviewRawDataDTO]()
         
+        whenNoReviewLabelTopConstraintInHomeView?.isActive = false
+        whenNoReviewLabelTopConstraintInReviewView?.isActive = true
+        
         noReviews.isHidden = false
         noReviewsImageView.isHidden = false
         reviewsTable.isHidden = true
@@ -228,7 +243,9 @@ final class PlaceReviewsView: UIView {
         guard let reviews = reviewsModel?.commentArray else { return }
         
         self.subTitle.text = "\(reviews.count)개"
+        
         whenHomeViewReviewsCount = reviews.count
+        
         if reviews.count > 0 {
             whenHaveReviewsInHomeView(reviews)
         } else {
@@ -265,20 +282,25 @@ final class PlaceReviewsView: UIView {
     
     private func whenNotHaveReviewsInHomeView() {
         self.reviewsArray = [AVIROReviewRawDataDTO]()
+        
+        let text = "아직 등록된 후기가 없어요."
+        noReviews.setupLabel(text)
 
         reviewsHeightConstraint?.isActive = false
         viewHeightConstraint?.isActive = false
         
         noReviews.isHidden = false
-        noReviewsImageView.isHidden = false
+        noReviewsImageView.isHidden = true
         
         reviewsTable.isHidden = true
         separatedLine.isHidden = true
         showMoreReviewsButton.isHidden = true
 
-        viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: 300)
+        viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: 250)
         viewHeightConstraint?.isActive = true
-        
+
+        whenNoReviewLabelTopConstraintInHomeView?.isActive = true
+        whenNoReviewLabelTopConstraintInReviewView?.isActive = false
     }
     
     private func updateTableViewHeight() {
@@ -306,7 +328,6 @@ final class PlaceReviewsView: UIView {
     }
     
     func afterUpdateReviewAndUpdateInHomeView(_ reviewModel: AVIROEnrollReviewDTO) {
-        print(whenHomeViewReviewsCount)
 
         reviewsUpdateInHomeView(reviewModel)
         whenHaveReviewsInHomeView(self.reviewsArray)
