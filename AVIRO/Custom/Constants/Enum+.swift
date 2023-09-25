@@ -36,6 +36,7 @@ enum Policy: String {
     case termsOfService = "https://sponge-nose-882.notion.site/259b51ac0b4a41d7aaf5ea2b89a768f8?pvs=4"
     case privacy = "https://sponge-nose-882.notion.site/c98c9103ebdb44cfadd8cd1d11600f99?pvs=4"
     case location =  "https://sponge-nose-882.notion.site/50102bd385664c89ab39f1b290fb033e?pvs=4"
+    case thanksto = "https://sponge-nose-882.notion.site/8bfc56f574f542648a2d95c938e2f96f"
 }
 
 // MARK: Defalut Coordinate
@@ -54,7 +55,7 @@ enum TBItem: CaseIterable {
     
     var title: String {
         switch self {
-        case .home: return "탐색하기"
+        case .home: return "홈"
         case .plus: return "등록하기"
         case .myPage: return "마이페이지"
         }
@@ -66,8 +67,8 @@ enum TBItem: CaseIterable {
     ) {
         switch self {
         case .home: return (
-            UIImage.map1,
-            UIImage.map2
+            UIImage.home1,
+            UIImage.home2
             )
 
         case .plus: return (

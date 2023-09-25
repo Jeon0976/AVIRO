@@ -250,6 +250,8 @@ extension EnrollPlaceViewController: EnrollPlaceProtocol {
 extension EnrollPlaceViewController {
     // MARK: Init Data
     private func initData() {
+        navigationItem.rightBarButtonItem?.isEnabled = false
+
         presenter.initData()
         initStoreInfoView()
         initVeganDetailView()

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Property 1=bxs-user.svg.png",
+      "filename" : "user2.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Property 1=bxs-user.svg@2x.png",
+      "filename" : "user2@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Property 1=bxs-user.svg@3x.png",
+      "filename" : "user2@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -95,10 +95,10 @@
 		C5351B7A2A1B439000116D50 /* KakaoCoordinatePlace+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B792A1B439000116D50 /* KakaoCoordinatePlace+DTO.swift */; };
 		C53856B12ABC13ED00D52DEC /* AVIROMyContributionCount+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53856B02ABC13ED00D52DEC /* AVIROMyContributionCount+DTO.swift */; };
 		C53893162A5EC0C500CB9A54 /* GenderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53893152A5EC0C500CB9A54 /* GenderButton.swift */; };
+		C541521D2AC125E100F39826 /* TutorialTopLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C541521C2AC125E100F39826 /* TutorialTopLabel.swift */; };
 		C54657882ABF2DBA003A0BCB /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = C54657872ABF2DBA003A0BCB /* API.plist */; };
 		C547A8BA2A17D8D4004D1339 /* KakaoMapAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547A8B92A17D8D4004D1339 /* KakaoMapAPIManager.swift */; };
 		C54BC0DB2A2C2D0D00B65439 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54BC0DA2A2C2D0D00B65439 /* UIColor+Extension.swift */; };
-		C54BC0DD2A2C762C00B65439 /* CommentsLabel+Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54BC0DC2A2C762C00B65439 /* CommentsLabel+Deprecated.swift */; };
 		C552D5342ABE8CA500933D8A /* AVIRODeleteAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C552D5332ABE8CA500933D8A /* AVIRODeleteAPI.swift */; };
 		C5538AAF2A1BB81200661DE2 /* AVIROEnrollPlace+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5538AAE2A1BB81200661DE2 /* AVIROEnrollPlace+DTO.swift */; };
 		C567C1502A56611500D4B426 /* TopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C567C14F2A56611500D4B426 /* TopCell.swift */; };
@@ -175,8 +175,6 @@
 		C5D93DA32A58718300629C39 /* NextPageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D93DA22A58718300629C39 /* NextPageButton.swift */; };
 		C5E143A72AB43B8F007AC8C9 /* AVIROResult+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E143A62AB43B8F007AC8C9 /* AVIROResult+DTO.swift */; };
 		C5E306E72A6FB4ED00C11CF7 /* MenuField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E306E62A6FB4ED00C11CF7 /* MenuField.swift */; };
-		C5E430AD2A5D142C00CB67EC /* LoginJson.json in Resources */ = {isa = PBXBuildFile; fileRef = C5E430AB2A5D142C00CB67EC /* LoginJson.json */; };
-		C5E430AE2A5D142C00CB67EC /* RegistrationCompleted.json in Resources */ = {isa = PBXBuildFile; fileRef = C5E430AC2A5D142C00CB67EC /* RegistrationCompleted.json */; };
 		C5E430B32A5DADBE00CB67EC /* SecondRegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E430B22A5DADBE00CB67EC /* SecondRegistrationPresenter.swift */; };
 		C5E430B52A5DAE9800CB67EC /* SecondRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E430B42A5DAE9800CB67EC /* SecondRegistrationViewController.swift */; };
 		C5E7B7A92A4D3CDF00CA2090 /* AVIROUser+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E7B7A82A4D3CDF00CA2090 /* AVIROUser+DTO.swift */; };
@@ -297,11 +295,11 @@
 		C5351B792A1B439000116D50 /* KakaoCoordinatePlace+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KakaoCoordinatePlace+DTO.swift"; sourceTree = "<group>"; };
 		C53856B02ABC13ED00D52DEC /* AVIROMyContributionCount+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROMyContributionCount+DTO.swift"; sourceTree = "<group>"; };
 		C53893152A5EC0C500CB9A54 /* GenderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderButton.swift; sourceTree = "<group>"; };
+		C541521C2AC125E100F39826 /* TutorialTopLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialTopLabel.swift; sourceTree = "<group>"; };
 		C54657862ABF2D82003A0BCB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C54657872ABF2DBA003A0BCB /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = API.plist; path = AVIRO/Utils/API.plist; sourceTree = SOURCE_ROOT; };
 		C547A8B92A17D8D4004D1339 /* KakaoMapAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapAPIManager.swift; sourceTree = "<group>"; };
 		C54BC0DA2A2C2D0D00B65439 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
-		C54BC0DC2A2C762C00B65439 /* CommentsLabel+Deprecated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsLabel+Deprecated.swift"; sourceTree = "<group>"; };
 		C552D5332ABE8CA500933D8A /* AVIRODeleteAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIRODeleteAPI.swift; sourceTree = "<group>"; };
 		C5538AAE2A1BB81200661DE2 /* AVIROEnrollPlace+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROEnrollPlace+DTO.swift"; sourceTree = "<group>"; };
 		C567C14F2A56611500D4B426 /* TopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCell.swift; sourceTree = "<group>"; };
@@ -379,8 +377,6 @@
 		C5D93DA22A58718300629C39 /* NextPageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextPageButton.swift; sourceTree = "<group>"; };
 		C5E143A62AB43B8F007AC8C9 /* AVIROResult+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROResult+DTO.swift"; sourceTree = "<group>"; };
 		C5E306E62A6FB4ED00C11CF7 /* MenuField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuField.swift; sourceTree = "<group>"; };
-		C5E430AB2A5D142C00CB67EC /* LoginJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = LoginJson.json; path = ../../../../../Downloads/LoginJson.json; sourceTree = "<group>"; };
-		C5E430AC2A5D142C00CB67EC /* RegistrationCompleted.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = RegistrationCompleted.json; path = ../../../../../Downloads/RegistrationCompleted.json; sourceTree = "<group>"; };
 		C5E430B22A5DADBE00CB67EC /* SecondRegistrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondRegistrationPresenter.swift; sourceTree = "<group>"; };
 		C5E430B42A5DAE9800CB67EC /* SecondRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondRegistrationViewController.swift; sourceTree = "<group>"; };
 		C5E7B7A82A4D3CDF00CA2090 /* AVIROUser+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROUser+DTO.swift"; sourceTree = "<group>"; };
@@ -878,8 +874,8 @@
 			isa = PBXGroup;
 			children = (
 				C5C9619D2A8DEAED0016E2F8 /* PlaceView */,
-				C54BC0DC2A2C762C00B65439 /* CommentsLabel+Deprecated.swift */,
 				C51000572AB939A200F65C1F /* NoResultLabel.swift */,
+				C541521C2AC125E100F39826 /* TutorialTopLabel.swift */,
 			);
 			path = UITextLabel;
 			sourceTree = "<group>";
@@ -1247,8 +1243,6 @@
 		C5E430AA2A5D13B600CB67EC /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
-				C5E430AB2A5D142C00CB67EC /* LoginJson.json */,
-				C5E430AC2A5D142C00CB67EC /* RegistrationCompleted.json */,
 			);
 			path = Lottie;
 			sourceTree = "<group>";
@@ -1469,10 +1463,8 @@
 				C52FA34F2A175B20005E70DC /* LaunchScreen.storyboard in Resources */,
 				C510004F2AB5F76600F65C1F /* Pretendard-Bold.otf in Resources */,
 				C51000512AB5F76600F65C1F /* Pretendard-ExtraBold.otf in Resources */,
-				C5E430AE2A5D142C00CB67EC /* RegistrationCompleted.json in Resources */,
 				C51000522AB5F76600F65C1F /* Pretendard-Regular.otf in Resources */,
 				C510004D2AB5F76600F65C1F /* Pretendard-ExtraLight.otf in Resources */,
-				C5E430AD2A5D142C00CB67EC /* LoginJson.json in Resources */,
 				C510004B2AB5F76600F65C1F /* Pretendard-Thin.otf in Resources */,
 				C51000502AB5F76600F65C1F /* Pretendard-Black.otf in Resources */,
 				C51000532AB5F76600F65C1F /* Pretendard-SemiBold.otf in Resources */,
@@ -1614,7 +1606,6 @@
 				C58EC7D02AB1B59100401FF7 /* AVIROEditLocation+DTO.swift in Sources */,
 				C5803F582A88C1990064A853 /* PlaceTopModel.swift in Sources */,
 				C5D36D2E2A76031E003328E8 /* Double+Extension.swift in Sources */,
-				C54BC0DD2A2C762C00B65439 /* CommentsLabel+Deprecated.swift in Sources */,
 				C5EB51082A209F6900B29CC1 /* HomeSearchViewController.swift in Sources */,
 				C5351B562A19B67900116D50 /* CustomAlertController.swift in Sources */,
 				C5538AAF2A1BB81200661DE2 /* AVIROEnrollPlace+DTO.swift in Sources */,
@@ -1707,6 +1698,7 @@
 				C5A201C12A98A5DD00A54381 /* EditLocationTopView.swift in Sources */,
 				C593B64F2A4C490600D224CE /* MyPageViewPresenter.swift in Sources */,
 				C5FF13572A42C8970026981D /* AVIROPlaceReviews+DTO.swift in Sources */,
+				C541521D2AC125E100F39826 /* TutorialTopLabel.swift in Sources */,
 				C5B071E52A59B4AC00AE709A /* RegistrationField.swift in Sources */,
 				C53893162A5EC0C500CB9A54 /* GenderButton.swift in Sources */,
 				C50F6AFD2A68FFCB00E942F5 /* EnrollMenuTableView.swift in Sources */,
@@ -1805,6 +1797,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1859,6 +1852,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1893,7 +1887,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1927,7 +1921,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -32,22 +32,18 @@ final class BottomCell: UICollectionViewCell {
         }
         
         NSLayoutConstraint.activate([
-            // imageView
-            imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            imageView.heightAnchor.constraint(equalToConstant: contentView.frame.height - 100),
-            imageView.widthAnchor.constraint(equalToConstant: contentView.frame.width - 100)
+            imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 20),
+            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         ])
     }
     
-    private func makeAttribute() {
-        imageView.backgroundColor = .gray5
-        imageView.clipsToBounds = false
-        
+    private func makeAttribute() {        
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
     }
-    
-    // TODO: Image 들어올 때 image nil값 처리
-    // TODO: image 생성되면 수정 코드
+
     func setupData(image: UIImage?) {
         imageView.image = image
     }

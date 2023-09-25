@@ -193,13 +193,15 @@ extension UIViewController {
         colors: [UIColor],
         locations: [NSNumber]? = nil,
         startPoint: CGPoint = CGPoint(x: 0.5, y: 0.0),
-        endPoint: CGPoint = CGPoint(x: 0.5, y: 1.0)
+        endPoint: CGPoint = CGPoint(x: 0.5, y: 1.0),
+        transform: CATransform3D? = nil
     ) {
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = colors.map { $0.cgColor }
         gradientLayer.locations = locations
         gradientLayer.startPoint = startPoint
         gradientLayer.endPoint = endPoint
+        gradientLayer.transform = transform ?? CATransform3DIdentity
         gradientLayer.frame = self.view.bounds
         
         self.view.layer.sublayers?.filter {
@@ -208,6 +210,18 @@ extension UIViewController {
         .forEach { $0.removeFromSuperlayer() }
         
         self.view.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    func applyGradientToLoginView() {
+        let colors = [
+            UIColor.bgNavy,
+            UIColor(red: 0.968, green: 0.989, blue: 1, alpha: 1),
+            UIColor(red: 0.973, green: 0.99, blue: 1, alpha: 1),
+            UIColor(red: 0.995, green: 0.998, blue: 1, alpha: 1),
+            UIColor(red: 1, green: 1, blue: 1, alpha: 1)
+        ]
+        
+        applyGradientToView(colors: colors)
     }
 }
 

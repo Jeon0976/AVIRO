@@ -12,7 +12,6 @@ private enum Text: String {
     case logoutToast = "로그아웃이 완료되었습니다."
     case withdrawalTitle = "회원탈퇴가 완료되었어요."
     case withdrawalMessage = "함께한 시간이 아쉽지만,\n언제든지 돌아오는 문을 열어둘게요.\n어비로의 비건 여정은 계속될 거에요!"
-    
 }
 
 private enum Layout {
@@ -185,7 +184,7 @@ extension LoginViewController: LoginViewProtocol {
         // 스와이프 뒤로가기 막기
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
 
-        applyGradientToView(colors: [UIColor.bgNavy, .gray7])
+        applyGradientToLoginView()
     }
     
     // MARK: No Login Button Tapped

@@ -43,4 +43,6 @@ extension UIColor {
     static let gray6 = UIColor(named: "GRAY6")!
     /// 모든 화이트
     static let gray7 = UIColor(named: "GRAY7")!
+    
+    static let tutorialBackgroud = UIColor(red: 0.97, green: 0.99, blue: 1, alpha: 1)
 }

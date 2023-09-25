@@ -39,46 +39,46 @@ final class AppController {
     
     // MARK: 불러올 view 확인 메서드
     private func checkState() {
-
-        // 최초 튜토리얼 화면 안 봤을 때
-        guard UserDefaults.standard.bool(forKey: UDKey.tutorial.rawValue) else {
-            setTutorialView()
-            return
-        }
-
-        // 자동로그인 토큰 없을 때
-        guard let userKey = userKey else {
-            setLoginView()
-            return
-        }
-        
-        // MARK: 자동로그인을 userDefaults를 통해서 하면 안되나??
-        let userCheck = AVIROUserCheckDTO(userId: userKey)
-        
-        // 회원이 서버에 없을 때
-        AVIROAPIManager().postUserIdCheck(userCheck) { userInfo in
-            DispatchQueue.main.async { [weak self] in
-                if userInfo.statusCode == 200 {
-                    let userId = userInfo.data?.userId ?? ""
-                    let userName = userInfo.data?.userName ?? ""
-                    let userEmail = userInfo.data?.userEmail ?? ""
-                    let userNickname = userInfo.data?.nickname ?? ""
-                    let marketingAgree = userInfo.data?.marketingAgree ?? 0
-                    
-                    MyData.my.whenLogin(
-                        userId: userId,
-                        userName: userName,
-                        userEmail: userEmail,
-                        userNickname: userNickname,
-                        marketingAgree: marketingAgree
-                    )
-                    self?.setHomeView()
-                    self?.keychain.set(userId, forKey: KeychainKey.userId.rawValue)
-                } else {
-                    self?.setLoginView()
-                }
-            }
-        }
+        setTutorialView()
+//        // 최초 튜토리얼 화면 안 봤을 때
+//        guard UserDefaults.standard.bool(forKey: UDKey.tutorial.rawValue) else {
+//            setTutorialView()
+//            return
+//        }
+//
+//        // 자동로그인 토큰 없을 때
+//        guard let userKey = userKey else {
+//            setLoginView()
+//            return
+//        }
+//
+//        // MARK: 자동로그인을 userDefaults를 통해서 하면 안되나??
+//        let userCheck = AVIROUserCheckDTO(userId: userKey)
+//
+//        // 회원이 서버에 없을 때
+//        AVIROAPIManager().postUserIdCheck(userCheck) { userInfo in
+//            DispatchQueue.main.async { [weak self] in
+//                if userInfo.statusCode == 200 {
+//                    let userId = userInfo.data?.userId ?? ""
+//                    let userName = userInfo.data?.userName ?? ""
+//                    let userEmail = userInfo.data?.userEmail ?? ""
+//                    let userNickname = userInfo.data?.nickname ?? ""
+//                    let marketingAgree = userInfo.data?.marketingAgree ?? 0
+//
+//                    MyData.my.whenLogin(
+//                        userId: userId,
+//                        userName: userName,
+//                        userEmail: userEmail,
+//                        userNickname: userNickname,
+//                        marketingAgree: marketingAgree
+//                    )
+//                    self?.setHomeView()
+//                    self?.keychain.set(userId, forKey: KeychainKey.userId.rawValue)
+//                } else {
+//                    self?.setLoginView()
+//                }
+//            }
+//        }
     }
     
     // MARK: tutorial View

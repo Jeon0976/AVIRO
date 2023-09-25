@@ -8,6 +8,18 @@
 import UIKit
 import MessageUI
 
+private enum Text: String {
+    case title = "마이페이지"
+
+    case cancel = "취소"
+
+    case logoutTitle = "로그아웃 하시겠어요?"
+    case logoutAction = "로그아웃"
+    case withdrawalTitle = "정말로 어비로를 떠나시는 건가요?"
+    case withdrawalSubtitle = "회원탈퇴 이후, 내가 등록한 가게와 댓글은\n사라지지 않지만, 다시 볼 수 없어요.\n정말로 탈퇴하시겠어요?"
+    case withdrawalAction = "탈퇴하기"
+}
+
 final class MyPageViewController: UIViewController {
     private lazy var presenter = MyPageViewPresenter(viewController: self)
         
@@ -106,11 +118,12 @@ extension MyPageViewController: MyPageViewProtocol {
         
         scrollView.backgroundColor = .gray6
         
-        navigationItem.title = "마이페이지"
+        navigationItem.title = Text.title.rawValue
         navigationController?.navigationBar.isHidden = false
     }
 
     func updateMyData(_ myDataModel: MyDataModel) {
+        myInfoView.updateImage()
         myInfoView.updateId(myDataModel.id)
         myInfoView.updateMyPlace(myDataModel.place)
         myInfoView.updateMyReview(myDataModel.review)
@@ -153,52 +166,54 @@ extension MyPageViewController: MyPageViewProtocol {
     }
     
     private func whenTappedThanksTo() {
-        
+        if let url = URL(string: Policy.thanksto.rawValue) {
+            showWebView(with: url)
+        }
     }
     
     private func whenTappedLogOut() {
-        let alertTitle = "로그아웃 하시겠어요?"
+        let cancelAction: AlertAction = (
+            title: Text.cancel.rawValue,
+            style: .default,
+            handler: nil
+        )
         
-        let alertController = UIAlertController(title: alertTitle, message: nil, preferredStyle: .alert)
+        let logoutAction: AlertAction = (
+            title: Text.logoutAction.rawValue,
+            style: .destructive,
+            handler: {
+                self.presenter.whenAfterLogout()
+            }
+        )
         
-        let cancelAction = UIAlertAction(title: "취소", style: .default)
-        let logoutAction = UIAlertAction(title: "로그아웃", style: .destructive) { _ in
-            self.presenter.whenAfterLogout()
-        }
-
-        [
-            cancelAction,
-            logoutAction
-        ].forEach {
-            alertController.addAction($0)
-        }
-        
-        present(alertController, animated: true)
+        showAlert(
+            title: Text.logoutTitle.rawValue,
+            message: nil,
+            actions: [cancelAction, logoutAction]
+        )
     }
     
     private func whenTappedWithdrawal() {
-        let alertTitle = "정말로 어비로를 떠나시는 건가요?"
-        let alertMessage = "회원탈퇴 이후, 내가 등록한 가게와 댓글은\n사라지지 않지만, 다시 볼 수 없어요.\n정말로 탈퇴하시겠어요?"
         
-        let alertController = UIAlertController(
-            title: alertTitle,
-            message: alertMessage,
-            preferredStyle: .alert
+        let cancelAction: AlertAction = (
+            title: Text.cancel.rawValue,
+            style: .default,
+            handler: nil
         )
         
-        let cancelAction = UIAlertAction(title: "취소", style: .default)
-        let withdrawalAction = UIAlertAction(title: "탈퇴하기", style: .destructive) { _ in
-            self.presenter.whenAfterWithdrawal()
-        }
+        let withdrawalAction: AlertAction = (
+            title: Text.withdrawalAction.rawValue,
+            style: .destructive,
+            handler: {
+                self.presenter.whenAfterWithdrawal()
+            }
+        )
         
-        [
-            cancelAction,
-            withdrawalAction
-        ].forEach {
-            alertController.addAction($0)
-        }
-        
-        present(alertController, animated: true)
+        showAlert(
+            title: Text.withdrawalTitle.rawValue,
+            message: Text.withdrawalSubtitle.rawValue,
+            actions: [cancelAction, withdrawalAction]
+        )
     }
     
     func pushLoginViewController(with: LoginRedirectReason) {

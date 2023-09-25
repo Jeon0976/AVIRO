@@ -14,22 +14,28 @@ final class CFont {
     private(set) var regular14: UIFont = .pretendard(size: 14, weight: .regular)
     private(set) var regular17: UIFont = .pretendard(size: 17, weight: .regular)
         
+    private(set) var medium11: UIFont = .pretendard(size: 11, weight: .medium)
     private(set) var medium14: UIFont = .pretendard(size: 14, weight: .medium)
     private(set) var medium15: UIFont = .pretendard(size: 15, weight: .medium)
     private(set) var medium16: UIFont = .pretendard(size: 16, weight: .medium)
     private(set) var medium17: UIFont = .pretendard(size: 17, weight: .medium)
     private(set) var medium18: UIFont = .pretendard(size: 18, weight: .medium)
     
+    private(set) var semibold11: UIFont = .pretendard(size: 11, weight: .semibold)
     private(set) var semibold15: UIFont = .pretendard(size: 15, weight: .semibold)
     private(set) var semibold16: UIFont = .pretendard(size: 16, weight: .semibold)
     private(set) var semibold17: UIFont = .pretendard(size: 17, weight: .semibold)
     private(set) var semibold18: UIFont = .pretendard(size: 18, weight: .semibold)
     private(set) var semibold20: UIFont = .pretendard(size: 20, weight: .semibold)
+    private(set) var semibold31: UIFont = .pretendard(size: 31, weight: .semibold)
 
     private(set) var bold11: UIFont = .pretendard(size: 11, weight: .bold)
     private(set) var bold15: UIFont = .pretendard(size: 15, weight: .bold)
     private(set) var bold20: UIFont = .pretendard(size: 20, weight: .bold)
     private(set) var bold24: UIFont = .pretendard(size: 24, weight: .bold)
+    
+    private(set) var heavy17: UIFont = .pretendard(size: 17, weight: .heavy)
+    private(set) var heavy31: UIFont = .pretendard(size: 31, weight: .heavy)
     
     init() {}
 }

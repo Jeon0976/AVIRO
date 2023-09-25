@@ -11,9 +11,6 @@ final class MyInfoView: UIView {
     private lazy var userImage: UIImageView = {
         let imageView = UIImageView()
         
-        imageView.backgroundColor = .gray5
-        imageView.layer.cornerRadius = 40
-        
         return imageView
     }()
     
@@ -234,6 +231,24 @@ final class MyInfoView: UIView {
         self.layer.cornerRadius = 15
         self.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
     }
+    
+    func updateImage() {
+            let randomIndex = Int.random(in: 1...5)
+            switch randomIndex {
+            case 1:
+                userImage.image = UIImage.myIcon1
+            case 2:
+                userImage.image = UIImage.myIcon2
+            case 3:
+                userImage.image = UIImage.myIcon3
+            case 4:
+                userImage.image = UIImage.myIcon4
+            case 5:
+                userImage.image = UIImage.myIcon5
+            default:
+                break
+            }
+        }
     
     func updateId(_ id: String) {
         self.nicknameLabel.text = id

@@ -8,12 +8,25 @@
 import UIKit
 
 extension UIImage {
+    // MARK: Screen Shot
+    static let screen1 = UIImage(named: "Contents 1")
+    static let screen2 = UIImage(named: "Contents 2")
+    static let screen3 = UIImage(named: "Contents 3")
+    static let screen4 = UIImage(named: "Contents 4")
+
+    
     // MARK: Main
     static let loginTitle = UIImage(named: "LoginTitle")!
     static let loginCharacter = UIImage(named: "LoginCharacter")!
     static let loginCharacterEllipse = UIImage(named: "LoginCharacterEllipse")!
     static let enrollCharacter = UIImage(named: "EnrollCharacter")!
     static let noResultCharacter = UIImage(named: "NoResultCharacter")!
+    
+    static let myIcon1 = UIImage(named: "MyIcon1")
+    static let myIcon2 = UIImage(named: "MyIcon2")
+    static let myIcon3 = UIImage(named: "MyIcon3")
+    static let myIcon4 = UIImage(named: "MyIcon4")
+    static let myIcon5 = UIImage(named: "MyIcon5")
     
     // MARK: Icon 관련 Image
     static let allBox = UIImage(named: "AllBox")!
@@ -46,11 +59,11 @@ extension UIImage {
     static let requestOptionButton = UIImage(named: "RequestOption")!
     
     // MARK: Tab Bar Icon
-    static let map1 = UIImage(named: "map1")!
-    static let map2 = UIImage(named: "map2")!
+    static let home1 = UIImage(named: "home1")!
+    static let home2 = UIImage(named: "home2")!
     
-    static let edit1 = UIImage(named: "edit1")!
-    static let edit2 = UIImage(named: "edit2")!
+    static let edit1 = UIImage(named: "square1")!
+    static let edit2 = UIImage(named: "square2")!
     
     static let user1 = UIImage(named: "user1")!
     static let user2 = UIImage(named: "user2")!

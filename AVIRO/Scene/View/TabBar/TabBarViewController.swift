@@ -37,17 +37,16 @@ class TabBarViewController: UITabBarController {
     // MARK: TabBar Attribute
     private func setupTabBar() {
         tabBar.backgroundColor = .gray7
-        tabBar.tintColor = .main
         tabBar.layer.borderWidth = 0.5
         tabBar.layer.borderColor = UIColor.gray5.cgColor
         
         let attributesNormal: [NSAttributedString.Key: Any] = [
-            .font: CFont.font.bold11,
+            .font: CFont.font.semibold11,
             .foregroundColor: UIColor.gray2
         ]
         
         let attributesSelected: [NSAttributedString.Key: Any] = [
-            .font: CFont.font.bold11,
+            .font: CFont.font.medium11,
             .foregroundColor: UIColor.main
         ]
         
