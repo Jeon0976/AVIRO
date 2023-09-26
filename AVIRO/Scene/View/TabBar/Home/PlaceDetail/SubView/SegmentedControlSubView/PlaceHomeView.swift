@@ -102,7 +102,7 @@ final class PlaceHomeView: UIView {
     
     func dataBinding(infoModel: AVIROPlaceInfo?,
                      menuModel: AVIROPlaceMenus?,
-                     reviewsModel: AVIROReviewsArrayDTO?
+                     reviewsModel: AVIROReviewsArray?
     ) {
         placeInfoView.dataBindingWhenInHomeView(infoModel)
         placeMenuView.dataBindingWhenInHomeView(menuModel)

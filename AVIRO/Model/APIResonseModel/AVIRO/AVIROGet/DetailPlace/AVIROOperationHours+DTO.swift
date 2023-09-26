@@ -9,10 +9,10 @@ import Foundation
 
 struct AVIROOperationHoursDTO: Decodable {
     let statusCode: Int
-    let data: AVIROOperationWeekDTO
+    let data: AVIROOperationWeek
 }
 
-struct AVIROOperationWeekDTO: Decodable {
+struct AVIROOperationWeek: Decodable {
     let mon: AVIROOperationHoursRawData
     let tue: AVIROOperationHoursRawData
     let wed: AVIROOperationHoursRawData
@@ -34,7 +34,7 @@ struct AVIROOperationHoursRawData: Decodable {
     }
 }
 
-extension AVIROOperationWeekDTO {
+extension AVIROOperationWeek {
     func toEditOperationHoursModels() -> [EditOperationHoursModel] {
         return [
             EditOperationHoursModel(

@@ -42,6 +42,11 @@ private enum Text: String {
     case editRequestPlaceSubtitle = "조금만 기다려주세요!\n관리자가 매일 꼼꼼하게 검수하고 있어요."
     
     case editMenuSubtitle = "소중한 정보 감사해요.\n수정해주신 정보로 업데이트 되었어요!"
+    
+    case error = "에러"
+    case retry = "제시도"
+    
+    case failLoadMarker = "마커 데이터를 불러오는데 실패 했습니다."
 }
 
 private enum Layout {
@@ -361,7 +366,7 @@ extension HomeViewController: HomeViewProtocol {
         naverMapView.isHidden = true
     }
     
-    func whenViewWillAppearAfterSearchDataNotInAVIRO() {
+    func whenViewWillAppearOffAllCondition() {
         whenViewWillAppearInitPlaceView()
     }
 
@@ -433,7 +438,7 @@ extension HomeViewController: HomeViewProtocol {
     func afterSlideupPlaceView(
         infoModel: AVIROPlaceInfo?,
         menuModel: AVIROPlaceMenus?,
-        reviewsModel: AVIROReviewsArrayDTO?
+        reviewsModel: AVIROReviewsArray?
     ) {
         // MARK: 다 하나씩 쪼겔 필요 있음
         placeView.allDataBinding(
@@ -871,6 +876,26 @@ extension HomeViewController {
                 duplicatedPlace,
                 cancel
             ]
+        )
+    }
+    
+    func showErrorAlert(_ error: String) {
+        showAlert(title: Text.error.rawValue, message: error)
+    }
+    
+    func showErrorAlertWhenLoadMarker() {
+        let action: AlertAction = (
+            title: Text.retry.rawValue,
+            style: .destructive,
+            handler: {
+                self.presenter.loadVeganData()
+            }
+        )
+        
+        showAlert(
+            title: Text.error.rawValue,
+            message: Text.failLoadMarker.rawValue,
+            actions: [action]
         )
     }
 }

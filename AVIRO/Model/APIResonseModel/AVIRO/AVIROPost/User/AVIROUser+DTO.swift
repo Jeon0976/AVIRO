@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct AVIROUserCheckDTO: Encodable {
+struct AVIROCheckUserDTO: Encodable {
     let userId: String
 }
 
-struct AIVROUserCheckResultDTO: Decodable {
+struct AVIROCheckUserResultDTO: Decodable {
     let statusCode: Int
     let data: AVIROUserDataDTO?
     let message: String?

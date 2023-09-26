@@ -17,6 +17,7 @@ protocol LoginViewProtocol: NSObject {
     func pushRegistration(_ userModel: CommonUserModel)
     func afterLogoutAndMakeToastButton()
     func afterWithdrawalUserShowAlert()
+    func showErrorAlert(_ error: Error)
 }
 
 final class LoginViewPresenter: NSObject {
@@ -122,11 +123,10 @@ extension LoginViewPresenter: ASAuthorizationControllerDelegate {
         }
     }
     
-    // TODO: Error 처리
     func authorizationController(
         controller: ASAuthorizationController,
         didCompleteWithError error: Error
     ) {
-        
+        viewController?.showErrorAlert(error)
     }
 }

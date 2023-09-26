@@ -120,7 +120,7 @@ final class PlaceReviewTableViewCell: UITableViewCell {
         ])
     }
     
-    func bindingData(comment: AVIROReviewRawDataDTO,
+    func bindingData(comment: AVIROReviewRawData,
                      isAbbreviated: Bool,
                      isMyReview: Bool
     ) {

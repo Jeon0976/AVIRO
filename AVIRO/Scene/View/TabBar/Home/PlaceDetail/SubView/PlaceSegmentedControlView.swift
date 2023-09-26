@@ -201,7 +201,7 @@ final class PlaceSegmentedControlView: UIView {
     func allDataBinding(placeId: String,
                         infoModel: AVIROPlaceInfo?,
                         menuModel: AVIROPlaceMenus?,
-                        reviewsModel: AVIROReviewsArrayDTO?
+                        reviewsModel: AVIROReviewsArray?
     ) {
         self.placeId = placeId
         

@@ -236,6 +236,13 @@ extension LoginViewController: LoginViewProtocol {
         
         present(alertController, animated: true)
     }
+    
+    func showErrorAlert(_ error: Error) {
+        showAlert(
+            title: "에러",
+            message: error.localizedDescription
+        )
+    }
 }
 
 // MARK: View Preview

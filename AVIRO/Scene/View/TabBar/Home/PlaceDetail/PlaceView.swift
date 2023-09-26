@@ -136,7 +136,7 @@ final class PlaceView: UIView {
     
     func allDataBinding(infoModel: AVIROPlaceInfo?,
                         menuModel: AVIROPlaceMenus?,
-                        reviewsModel: AVIROReviewsArrayDTO?
+                        reviewsModel: AVIROReviewsArray?
     ) {
         segmentedControlView.allDataBinding(
             placeId: self.placeId,

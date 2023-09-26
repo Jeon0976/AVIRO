@@ -171,7 +171,6 @@ extension RequestTableViewCell: UITextFieldDelegate {
     ) -> Bool {
         if textField == priceField {
             if textField.text == "변동가" {
-                textField.endEditing(true)
                 return false
             } else if let result = textField.text, let textRange = Range(range, in: result) {
                 let updateText = result.replacingCharacters(in: textRange, with: string)

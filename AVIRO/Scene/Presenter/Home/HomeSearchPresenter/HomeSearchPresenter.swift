@@ -156,7 +156,7 @@ final class HomeSearchPresenter {
             latitude = CenterCoordinate.shared.latitude ?? 0.0
         }
         
-        KakaoMapAPIManager().kakaoMapLocationSearch(
+        KakaoAPIManager().kakaoMapLocationSearch(
             query: query,
             longitude: String(longitude),
             latitude: String(latitude),
@@ -217,7 +217,7 @@ final class HomeSearchPresenter {
             latitude = CenterCoordinate.shared.latitude ?? 0.0
         }
         
-        KakaoMapAPIManager().kakaoMapLocationSearch(
+        KakaoAPIManager().kakaoMapLocationSearch(
             query: query,
             longitude: String(longitude),
             latitude: String(latitude),
@@ -262,6 +262,7 @@ final class HomeSearchPresenter {
         }
                 
         let beforeMatchedRequestModel = AVIROBeforeComparePlaceDTO(placeArray: beforeMatchedArray)
+                
         AVIROAPIManager().postPlaceListMatched(beforeMatchedRequestModel) { placeModelAfterMatched in
             afterMatchedArray = placeModelAfterMatched.body
             DispatchQueue.main.async { [weak self] in

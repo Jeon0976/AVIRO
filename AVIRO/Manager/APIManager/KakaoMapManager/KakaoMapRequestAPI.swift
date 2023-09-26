@@ -32,11 +32,7 @@ struct KakaoMapRequestAPI {
     static let mainSearchCategory = "CE7, FD6, SW8, AT4, PO3"
     
     // MARK: Search 등록하기 Components 만들기 함수
-    func searchPlace(query: String,
-                     longitude: String,
-                     latitude: String,
-                     page: String
-    ) -> URLComponents {
+    func searchPlace(model: KakaoKeywordSearchDTO) -> URLComponents {
         var components = URLComponents()
         
         components.scheme = KakaoMapRequestAPI.scheme
@@ -44,24 +40,38 @@ struct KakaoMapRequestAPI {
         components.path = KakaoMapRequestAPI.keywordPath
         
         components.queryItems = [
-            URLQueryItem(name: KakaoMapRequestAPI.query, value: query),
-            URLQueryItem(name: KakaoMapRequestAPI.category, value: KakaoMapRequestAPI.inrollCategory),
-            URLQueryItem(name: KakaoMapRequestAPI.longitude, value: longitude),
-            URLQueryItem(name: KakaoMapRequestAPI.latitude, value: latitude),
-            URLQueryItem(name: KakaoMapRequestAPI.sort, value: KakaoMapRequestAPI.accuracy),
-            URLQueryItem(name: KakaoMapRequestAPI.page, value: page)
+            URLQueryItem(
+                name: KakaoMapRequestAPI.query,
+                value: model.query
+            ),
+            URLQueryItem(
+                name: KakaoMapRequestAPI.category,
+                value: KakaoMapRequestAPI.inrollCategory
+            ),
+            URLQueryItem(
+                name: KakaoMapRequestAPI.longitude,
+                value: model.lng
+            ),
+            URLQueryItem(
+                name: KakaoMapRequestAPI.latitude,
+                value: model.lat
+            ),
+            URLQueryItem(
+                name: KakaoMapRequestAPI.sort,
+                value: KakaoMapRequestAPI.accuracy
+            ),
+            URLQueryItem(
+                name: KakaoMapRequestAPI.page,
+                value: model.page
+            )
         ]
         
         return components
     }
     
     // MARK: Search Location Components 만들기 함수
-    func searchLocation(query: String,
-                        longitude: String,
-                        latitude: String,
-                        page: String,
-                        isAccuracy: KakaoSearchHowToSort
-    ) -> URLComponents {
+    func searchLocation(model: KakaoKeywordSearchDTO) -> URLComponents {
+        guard let isAccuracy = model.isAccuracy else { return URLComponents() }
         var components = URLComponents()
         
         components.scheme = KakaoMapRequestAPI.scheme
@@ -69,21 +79,38 @@ struct KakaoMapRequestAPI {
         components.path = KakaoMapRequestAPI.keywordPath
         
         components.queryItems = [
-            URLQueryItem(name: KakaoMapRequestAPI.query, value: query),
-            URLQueryItem(name: KakaoMapRequestAPI.category, value: KakaoMapRequestAPI.mainSearchCategory),
-            URLQueryItem(name: KakaoMapRequestAPI.longitude, value: longitude),
-            URLQueryItem(name: KakaoMapRequestAPI.latitude, value: latitude),
-            URLQueryItem(name: KakaoMapRequestAPI.sort,
-                         value: isAccuracy == KakaoSearchHowToSort.accuracy ? KakaoMapRequestAPI.accuracy : KakaoMapRequestAPI.distance),
-            URLQueryItem(name: KakaoMapRequestAPI.page, value: page)
+            URLQueryItem(
+                name: KakaoMapRequestAPI.query,
+                value: model.query
+            ),
+            URLQueryItem(
+                name: KakaoMapRequestAPI.category,
+                value: KakaoMapRequestAPI.mainSearchCategory
+            ),
+            URLQueryItem(
+                name: KakaoMapRequestAPI.longitude,
+                value: model.lng
+            ),
+            URLQueryItem(
+                name: KakaoMapRequestAPI.latitude,
+                value: model.lat
+            ),
+            URLQueryItem(
+                name: KakaoMapRequestAPI.sort,
+                value: isAccuracy ==
+                KakaoSearchHowToSort.accuracy ? KakaoMapRequestAPI.accuracy : KakaoMapRequestAPI.distance
+            ),
+            URLQueryItem(
+                name: KakaoMapRequestAPI.page,
+                value: model.page
+            )
         ]
         
         return components
     }
     
     // MARK: Coordinate Search Components 만들기 함수
-    func searchCoodinate(longitude: String,
-                         latitude: String) -> URLComponents {
+    func searchCoodinate(model: KakaoCoordinateSearchDTO) -> URLComponents {
         var components = URLComponents()
         
         components.scheme = KakaoMapRequestAPI.scheme
@@ -91,8 +118,8 @@ struct KakaoMapRequestAPI {
         components.path = KakaoMapRequestAPI.coordinatePath
         
         components.queryItems = [
-            URLQueryItem(name: KakaoMapRequestAPI.longitude, value: longitude),
-            URLQueryItem(name: KakaoMapRequestAPI.latitude, value: latitude)
+            URLQueryItem(name: KakaoMapRequestAPI.longitude, value: model.lng),
+            URLQueryItem(name: KakaoMapRequestAPI.latitude, value: model.lat)
         ]
         
         return components

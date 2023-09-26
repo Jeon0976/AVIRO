@@ -9,14 +9,14 @@ import Foundation
 
 struct AVIROReviewsResultDTO: Decodable {
     let statusCode: Int
-    let data: AVIROReviewsArrayDTO
+    let data: AVIROReviewsArray
 }
 
-struct AVIROReviewsArrayDTO: Decodable {
-    let commentArray: [AVIROReviewRawDataDTO]
+struct AVIROReviewsArray: Decodable {
+    let commentArray: [AVIROReviewRawData]
 }
 
-struct AVIROReviewRawDataDTO: Codable {
+struct AVIROReviewRawData: Codable {
     var commentId: String
     var userId: String
     var content: String

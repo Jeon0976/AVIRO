@@ -90,7 +90,7 @@ final class PlaceReviewsView: UIView {
     
     private var cellHeights: [IndexPath: CGFloat] = [:]
     
-    private var reviewsArray = [AVIROReviewRawDataDTO]()
+    private var reviewsArray = [AVIROReviewRawData]()
     
     private var whenReviewView = false
     
@@ -189,7 +189,7 @@ final class PlaceReviewsView: UIView {
     }
     
     func dataBinding(placeId: String,
-                     reviewsModel: AVIROReviewsArrayDTO?
+                     reviewsModel: AVIROReviewsArray?
     ) {
         guard let reviews = reviewsModel?.commentArray else { return }
         
@@ -218,7 +218,7 @@ final class PlaceReviewsView: UIView {
         reviewInputView.isHidden = false
     }
     
-    private func whenHaveReviews(_ reviews: [AVIROReviewRawDataDTO]) {
+    private func whenHaveReviews(_ reviews: [AVIROReviewRawData]) {
         self.reviewsArray = reviews
         
         noReviews.isHidden = true
@@ -229,7 +229,7 @@ final class PlaceReviewsView: UIView {
     }
     
     private func whenNotHaveReviews() {
-        self.reviewsArray = [AVIROReviewRawDataDTO]()
+        self.reviewsArray = [AVIROReviewRawData]()
         
         whenNoReviewLabelTopConstraintInHomeView?.isActive = false
         whenNoReviewLabelTopConstraintInReviewView?.isActive = true
@@ -239,7 +239,7 @@ final class PlaceReviewsView: UIView {
         reviewsTable.isHidden = true
     }
     
-    func dataBindingWhenInHomeView(_ reviewsModel: AVIROReviewsArrayDTO?) {
+    func dataBindingWhenInHomeView(_ reviewsModel: AVIROReviewsArray?) {
         guard let reviews = reviewsModel?.commentArray else { return }
         
         self.subTitle.text = "\(reviews.count)개"
@@ -255,7 +255,7 @@ final class PlaceReviewsView: UIView {
         reviewInputView.isHidden = true
     }
     
-    private func whenHaveReviewsInHomeView(_ reviews: [AVIROReviewRawDataDTO]) {
+    private func whenHaveReviewsInHomeView(_ reviews: [AVIROReviewRawData]) {
         if reviews.count > 4 {
             self.reviewsArray = Array(reviews.prefix(4))
             showMoreReviewsButton.isHidden = false
@@ -281,7 +281,7 @@ final class PlaceReviewsView: UIView {
     }
     
     private func whenNotHaveReviewsInHomeView() {
-        self.reviewsArray = [AVIROReviewRawDataDTO]()
+        self.reviewsArray = [AVIROReviewRawData]()
         
         let text = "아직 등록된 후기가 없어요."
         noReviews.setupLabel(text)
@@ -336,7 +336,7 @@ final class PlaceReviewsView: UIView {
     private func reviewsUpdateInHomeView(_ reviewModel: AVIROEnrollReviewDTO) {
         let nowDate = TimeUtility.nowDate()
 
-        let reviewModel = AVIROReviewRawDataDTO(
+        let reviewModel = AVIROReviewRawData(
             commentId: reviewModel.commentId,
             userId: reviewModel.userId,
             content: reviewModel.content,
@@ -359,7 +359,7 @@ final class PlaceReviewsView: UIView {
     private func reviewsEditInHomeView(_ reviewModel: AVIROEditReviewDTO) {
         let nowDate = TimeUtility.nowDate()
 
-        let reviewModel = AVIROReviewRawDataDTO(
+        let reviewModel = AVIROReviewRawData(
             commentId: reviewModel.commentId,
             userId: reviewModel.userId,
             content: reviewModel.content,
@@ -425,7 +425,7 @@ final class PlaceReviewsView: UIView {
         )
         postModel.commentId = editedReviewId
         
-        let reviewModel = AVIROReviewRawDataDTO(
+        let reviewModel = AVIROReviewRawData(
             commentId: postModel.commentId,
             userId: postModel.userId,
             content: text,
@@ -460,7 +460,7 @@ final class PlaceReviewsView: UIView {
             content: text
         )
                 
-        let reviewModel = AVIROReviewRawDataDTO(
+        let reviewModel = AVIROReviewRawData(
             commentId: postModel.commentId,
             userId: postModel.userId,
             content: postModel.content,

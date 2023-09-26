@@ -11,7 +11,3 @@ struct AVIROUpdateBookmarkDTO: Encodable {
     let placeList: [String]
     let userId: String
 }
-
-struct AVIROUpdateBookmarkResultDTO: Decodable {
-    let statusCode: Int
-}

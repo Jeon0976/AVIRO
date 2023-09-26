@@ -11,10 +11,10 @@ final class BookmarkFacadeManager {
     private let bookmarkArray = LocalBookmarkData.shared
         
     func fetchAllData() {
-        AVIROAPIManager().getBookmarkModels(userId: MyData.my.id) { [weak self] bookmarkModel in
-            let dataArray = bookmarkModel.bookmarks
-            self?.bookmarkArray.updateAllData(dataArray)
-        }
+//        AVIROAPIManager().getBookmarkModels(userId: MyData.my.id) { [weak self] bookmarkModel in
+//            let dataArray = bookmarkModel.bookmarks
+//            self?.bookmarkArray.updateAllData(dataArray)
+//        }
     }
     
     func loadAllData() -> [String] {

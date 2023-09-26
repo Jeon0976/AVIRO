@@ -313,7 +313,7 @@ final class EditPlaceInfoPresenter {
     }
 
     private func changedMarkerLocation() {
-        KakaoMapAPIManager().kakaoMapAddressSearch(
+        KakaoAPIManager().kakaoMapAddressSearch(
             address: afterChangedAddress
         ) { [weak self] addressModel in
             guard let documents = addressModel.documents, documents.count > 0 else { return }

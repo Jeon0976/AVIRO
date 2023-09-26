@@ -27,19 +27,19 @@ struct MarkerModel {
     var isStar = false {
         didSet {
             if isStar {
-                marker.changeStarIcon(mapPlace, isCliced)
+                marker.changeStarIcon(mapPlace, isClicked)
             } else {
-                marker.changeIcon(mapPlace, isCliced)
+                marker.changeIcon(mapPlace, isClicked)
             }
         }
     }
     
-    var isCliced = false {
+    var isClicked = false {
         didSet {
             if isStar {
-                marker.changeStarIcon(mapPlace, isCliced)
+                marker.changeStarIcon(mapPlace, isClicked)
             } else {
-                marker.changeIcon(mapPlace, isCliced)
+                marker.changeIcon(mapPlace, isClicked)
             }
         }
     }

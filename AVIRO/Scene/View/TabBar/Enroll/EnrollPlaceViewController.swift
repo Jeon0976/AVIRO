@@ -201,9 +201,12 @@ extension EnrollPlaceViewController: EnrollPlaceProtocol {
     func menuTableReload(isPresentingDefaultTable: Bool) {
         if isPresentingDefaultTable {
             changeMenuTable(isPresentingDefaultTable)
+                        
             menuTableView.normalTableView.reloadData()
+                        
         } else {
             changeMenuTable(isPresentingDefaultTable)
+            
             menuTableView.requestTableView.reloadData()
         }
     }
@@ -215,7 +218,7 @@ extension EnrollPlaceViewController: EnrollPlaceProtocol {
         
         UIView.animate(
             withDuration: 0.3,
-            animations: { self.scrollView.transform = CGAffineTransform(
+            animations: { self.view.transform = CGAffineTransform(
                 translationX: 0,
                 y: -(result))
             }
@@ -224,7 +227,7 @@ extension EnrollPlaceViewController: EnrollPlaceProtocol {
     
     // MARK: Keyboard Will Hide
     func keyboardWillHide() {
-        self.scrollView.transform = .identity
+        self.view.transform = .identity
     }
     
     // MARK: Enable Right Button
@@ -352,7 +355,11 @@ extension EnrollPlaceViewController {
     private func menuTableViewAttribute() {
         menuTableView.normalTableView.dataSource = self
         menuTableView.requestTableView.dataSource = self
-        menuTableView.menuPlusButton.addTarget(self, action: #selector(menuPlusButtonTapped), for: .touchUpInside)
+        menuTableView.menuPlusButton.addTarget(
+            self,
+            action: #selector(menuPlusButtonTapped),
+            for: .touchUpInside
+        )
     }
         
     // MARK: Menu Table View Show
@@ -418,18 +425,22 @@ extension EnrollPlaceViewController {
 
 // MARK: TapGestureDelegate
 extension EnrollPlaceViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        if touch.view is MenuField || touch.view is UIButton {
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldReceive touch: UITouch
+    ) -> Bool {
+        if touch.view is EnrollVeganDetailView || touch.view is EnrollStoreInfoView || touch.view is UINavigationBar {
+            view.endEditing(true)
+            return true
+        } else {
             return false
         }
-        
-        view.endEditing(true)
-        return true
     }
 }
 
 // MARK: TextField가 선택되었을 때 Method
 extension EnrollPlaceViewController: UITextFieldDelegate {
+
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textField == storeInfoView.titleField {
             let viewController = PlaceListSearchViewController()

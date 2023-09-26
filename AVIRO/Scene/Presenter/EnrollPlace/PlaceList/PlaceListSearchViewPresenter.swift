@@ -58,7 +58,7 @@ final class PlaceListSearchViewPresenter: NSObject {
         let longitude = MyCoordinate.shared.longitudeString
         let latitude = MyCoordinate.shared.latitudeString
         
-        KakaoMapAPIManager().kakaoMapKeywordSearch(query: query,
+        KakaoAPIManager().kakaoMapKeywordSearch(query: query,
                                       longitude: longitude,
                                       latitude: latitude,
                                       page: "\(currentPage)") { [weak self] model in
@@ -106,7 +106,7 @@ final class PlaceListSearchViewPresenter: NSObject {
         let longitude = MyCoordinate.shared.longitudeString
         let latitude = MyCoordinate.shared.latitudeString
         
-        KakaoMapAPIManager().kakaoMapKeywordSearch(
+        KakaoAPIManager().kakaoMapKeywordSearch(
             query: query,
             longitude: longitude,
             latitude: latitude,

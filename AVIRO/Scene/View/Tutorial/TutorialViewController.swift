@@ -20,7 +20,7 @@ final class TutorialViewController: UIViewController {
     private let tutorial = [
         Tutorial(
             title: "가게 탐색",
-            subtitle: "메뉴 구성에 따라\n",
+            subtitle: "가게를 메뉴 구성에 따라\n",
             subtitle2: "3가지로 구분했어요",
             image: UIImage.screen1),
         Tutorial(
@@ -271,26 +271,3 @@ extension TutorialViewController: UICollectionViewDataSource {
     }
     
 }
-
-// MARK: View Preview
-#if DEBUG
-import SwiftUI
-
-struct TutorialViewControllerPresentable: UIViewControllerRepresentable {
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        
-    }
-    
-    func makeUIViewController(context: Context) -> some UIViewController {
-        let vc = TutorialViewController()
-        
-        return vc
-    }
-}
-
-struct TutorialViewControllerPresentablePreviewProvider: PreviewProvider {
-    static var previews: some View {
-        TutorialViewControllerPresentable()
-    }
-}
-#endif

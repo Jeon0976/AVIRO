@@ -7,35 +7,11 @@
 
 import Foundation
 
-struct KakaoKeywordPlaceArrayDTO: Decodable {
-    let meta: KakaoKeywordMetaDataDTO
-    let documents: [KakaoKeywordPlaceDTO]
+struct KakaoKeywordSearchDTO {
+    let query: String
+    let lng: String
+    let lat: String
+    var page: String
+    let isAccuracy: KakaoSearchHowToSort?
 }
 
-struct KakaoKeywordMetaDataDTO: Decodable {
-    let isEnd: Bool
-    
-    enum CodingKeys: String, CodingKey {
-        case isEnd = "is_end"
-    }
-}
-
-struct KakaoKeywordPlaceDTO: Decodable {
-    let name: String
-    let address: String
-    let phone: String
-    let url: String
-    let xToLongitude: String
-    let yToLatitude: String
-    let distance: String
-    
-    enum CodingKeys: String, CodingKey {
-        case name = "place_name"
-        case address = "road_address_name"
-        case phone
-        case url = "place_url"
-        case xToLongitude = "x"
-        case yToLatitude = "y"
-        case distance
-    }
-}

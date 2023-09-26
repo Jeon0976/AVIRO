@@ -84,6 +84,19 @@ final class LocalMarkerData: LocalMarkerDataProtocol {
         return (nil, nil)
     }
     
+    func getMarkerWhenEnrollAfter(x: Double, y: Double) -> (MarkerModel?, Int?) {
+        let latlng = NMGLatLng(lat: x, lng: y)
+        
+        if let index = markers.enumerated()
+            .first(where: {
+                $0.element.marker.position == latlng
+            })?.offset {
+            return (markers[index], index)
+        }
+
+        return (nil, nil)
+    }
+    
     func setMarkerModel(_ markerModels: [MarkerModel]) {
         markers = markerModels
     }
@@ -95,7 +108,7 @@ final class LocalMarkerData: LocalMarkerDataProtocol {
     
     func updateWhenClickedMarker(_ markerModel: MarkerModel) {
         if let index = markers.firstIndex(where: { $0.placeId == markerModel.placeId }) {
-            markers[index].isCliced = markerModel.isCliced
+            markers[index].isClicked = markerModel.isClicked
         }
     }
 
@@ -128,7 +141,9 @@ final class LocalMarkerData: LocalMarkerDataProtocol {
 
     func getUpdatedMarkers() -> [NMFMarker] {
         let markers = updatedMarkers
+        
         updatedMarkers.removeAll()
+        
         return markers
     }
     

@@ -49,7 +49,7 @@ final class EnrollMenuTableView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
     
     // MARK: 학습 필요
@@ -171,13 +171,10 @@ final class EnrollMenuTableView: UIView {
             let height = CGFloat(55 * count)
             normalTableViewHeight?.constant = height
             viewHeightConstraint?.constant = defaultTotalHeight + height
-            self.layoutIfNeeded()
         } else {
             let height = CGFloat(110 * count)
             requestTableViewHeight?.constant = height
             viewHeightConstraint?.constant = defaultTotalHeight + height
-            self.layoutIfNeeded()
-
         }
     }
 }

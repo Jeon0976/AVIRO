@@ -7,16 +7,22 @@
 
 import Foundation
 
-protocol KakaoMapAPIProtocol {
-    
-}
-
-final class KakaoMapAPIManager: KakaoMapAPIProtocol {
-    private let session: URLSession
+final class KakaoAPIManager: KakaoAPIManagerProtocol{
+    let session: URLSession
     
     let api = KakaoMapRequestAPI()
     
-    var kakaoMapAPIKey = ""
+    private var kakaoMapAPIKey: String? = {
+        guard let path = Bundle.main.url(forResource: "API", withExtension: "plist"),
+              let dict = NSDictionary(contentsOf: path) as? [String: Any],
+              let key = dict["KakaoMapAPI_ Authorization _Key"] as? String else {
+            print("Failed to load KakaoMapAPI from API.plist")
+            return nil
+        }
+        return key
+    }()
+    
+    private lazy var headers = ["Authorization": "\(kakaoMapAPIKey ?? "")"]
     
     init(session: URLSession = .shared) {
         self.session = session
@@ -27,7 +33,7 @@ final class KakaoMapAPIManager: KakaoMapAPIProtocol {
                                longitude: String,
                                latitude: String,
                                page: String,
-                               completionHandler: @escaping ((KakaoKeywordPlaceArrayDTO) -> Void)
+                               completionHandler: @escaping ((KakaoKeywordResultDTO) -> Void)
     ) {
         guard let url = api.searchPlace(
             query: query,
@@ -53,7 +59,7 @@ final class KakaoMapAPIManager: KakaoMapAPIProtocol {
             }
             
             if let data = data {
-                if let searchData = try? JSONDecoder().decode(KakaoKeywordPlaceArrayDTO.self, from: data) {
+                if let searchData = try? JSONDecoder().decode(KakaoKeywordResultDTO.self, from: data) {
                     completionHandler(searchData)
                 }
             }
@@ -66,7 +72,7 @@ final class KakaoMapAPIManager: KakaoMapAPIProtocol {
                                 latitude: String,
                                 page: String,
                                 isAccuracy: KakaoSearchHowToSort,
-                                completionHandler: @escaping ((KakaoKeywordPlaceArrayDTO) -> Void)
+                                completionHandler: @escaping ((KakaoKeywordResultDTO) -> Void)
     ) {
         guard let url = api.searchLocation(
             query: query,
@@ -93,7 +99,7 @@ final class KakaoMapAPIManager: KakaoMapAPIProtocol {
             }
             
             if let data = data {
-                if let searchData = try? JSONDecoder().decode(KakaoKeywordPlaceArrayDTO.self, from: data) {
+                if let searchData = try? JSONDecoder().decode(KakaoKeywordResultDTO.self, from: data) {
                     completionHandler(searchData)
                 }
             }
@@ -103,7 +109,7 @@ final class KakaoMapAPIManager: KakaoMapAPIProtocol {
     // MARK: Coodinate Search
     func kakaoMapCoordinateSearch(longtitude: String,
                                   latitude: String,
-                                  completionHandler: @escaping ((KakaoCoordinatePlaceDTO) -> Void)
+                                  completionHandler: @escaping ((KakaoCoordinateSearchResultDTO) -> Void)
     ) {
         guard let url = api.searchCoodinate(longitude: longtitude, latitude: latitude).url else { return }
         
@@ -124,7 +130,7 @@ final class KakaoMapAPIManager: KakaoMapAPIProtocol {
             }
             
             if let data = data {
-                if let searchData = try? JSONDecoder().decode(KakaoCoordinatePlaceDTO.self, from: data) {
+                if let searchData = try? JSONDecoder().decode(KakaoCoordinateSearchResultDTO.self, from: data) {
                     completionHandler(searchData)
                 }
             }
