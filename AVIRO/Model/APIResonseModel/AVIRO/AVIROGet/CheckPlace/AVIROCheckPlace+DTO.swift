@@ -17,4 +17,5 @@ struct AVIROCheckPlaceDTO: Encodable {
 struct AVIROCheckPlaceResultDTO: Decodable {
     let statusCode: Int
     let registered: Bool
+    let message: String?
 }

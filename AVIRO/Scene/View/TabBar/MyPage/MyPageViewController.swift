@@ -18,6 +18,8 @@ private enum Text: String {
     case withdrawalTitle = "정말로 어비로를 떠나시는 건가요?"
     case withdrawalSubtitle = "회원탈퇴 이후, 내가 등록한 가게와 댓글은\n사라지지 않지만, 다시 볼 수 없어요.\n정말로 탈퇴하시겠어요?"
     case withdrawalAction = "탈퇴하기"
+    
+    case error = "에러"
 }
 
 final class MyPageViewController: UIViewController {
@@ -233,6 +235,16 @@ extension MyPageViewController: MyPageViewProtocol {
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
             windowScene.windows.first?.rootViewController = rootViewController
             windowScene.windows.first?.makeKeyAndVisible()
+        }
+    }
+    
+    func showErrorAlert(with error: String, title: String? = nil) {
+        DispatchQueue.main.async { [weak self] in
+            if let title = title {
+                self?.showAlert(title: title, message: error)
+            } else {
+                self?.showAlert(title: Text.error.rawValue, message: error)
+            }
         }
     }
 }

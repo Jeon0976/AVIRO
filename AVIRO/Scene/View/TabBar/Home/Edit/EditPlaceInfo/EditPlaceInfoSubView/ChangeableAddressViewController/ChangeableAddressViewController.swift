@@ -14,6 +14,10 @@ private enum Segmented: String {
     case map = "지도에서 검색"
 }
 
+private enum Text: String {
+    case error = "에러"
+}
+
 final class ChangeableAddressViewController: UIViewController {
     lazy var presenter = ChangeableAddressPresenter(viewController: self)
     
@@ -186,14 +190,18 @@ extension ChangeableAddressViewController: ChangebleAddressProtocol {
     }
     
     func afterChangedAddressWhenMapView(_ address: String) {
-        editLocationDetailMapView.changedAddress(address)
+        DispatchQueue.main.async { [weak self] in
+            self?.editLocationDetailMapView.changedAddress(address)
+        }
     }
     
     func afterResultShowTable(with totalCount: Int) {
-        if totalCount == 0 {
-            noResultData()
-        } else {
-            reloadData()
+        DispatchQueue.main.async { [weak self] in
+            if totalCount == 0 {
+                self?.noResultData()
+            } else {
+                self?.reloadData()
+            }
         }
     }
     
@@ -207,6 +215,16 @@ extension ChangeableAddressViewController: ChangebleAddressProtocol {
     
     func popViewController() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    func showErrorAlert(with error: String, title: String? = nil) {
+        DispatchQueue.main.async { [weak self] in
+            if let title = title {
+                self?.showAlert(title: title, message: error)
+            } else {
+                self?.showAlert(title: Text.error.rawValue, message: error)
+            }
+        }
     }
 }
 

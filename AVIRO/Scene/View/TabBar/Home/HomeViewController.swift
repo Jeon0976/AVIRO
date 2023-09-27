@@ -313,6 +313,15 @@ extension HomeViewController: HomeViewProtocol {
     
     func setupAttribute() {
         view.backgroundColor = .gray7
+        
+        if let tabBarController = tabBarController as? TabBarViewController {
+            tabBarController.homeTabBarButtonTapped = { [weak self] in
+                print("Test")
+                self?.presenter.initMarkerState()
+                self?.whenViewWillAppearInitPlaceView()
+                self?.afterSearchFieldInit()
+            }
+        }
     }
     
     func setupGesture() {
@@ -449,18 +458,22 @@ extension HomeViewController: HomeViewProtocol {
     }
     
     func isSuccessReportPlaceActionSheet() {
-        showAlert(
-            title: Text.successReportPlaceTitle.rawValue,
-            message: Text.reportPlaceMessage.rawValue
-        )
+        DispatchQueue.main.async { [weak self] in
+            self?.showAlert(
+                title: Text.successReportPlaceTitle.rawValue,
+                message: Text.reportPlaceMessage.rawValue
+            )
+        }
     }
     
     func pushPlaceInfoOpreationHoursViewController(_ models: [EditOperationHoursModel]) {
-        let vc = PlaceOperationHoursViewController(models)
-        
-        vc.modalPresentationStyle = .overFullScreen
-        
-        present(vc, animated: false)
+        DispatchQueue.main.async { [weak self] in
+            let vc = PlaceOperationHoursViewController(models)
+            
+            vc.modalPresentationStyle = .overFullScreen
+            
+            self?.present(vc, animated: false)
+        }
     }
     
     func pushEditPlaceInfoViewController(
@@ -511,15 +524,19 @@ extension HomeViewController: HomeViewProtocol {
         )
         
         presenter.afterEditMenuChangedMenus = { [weak self] in
-            self?.showAlert(
-                title: Text.editSuccess.rawValue,
-                message: Text.editMenuSubtitle.rawValue
-            )
-            self?.presenter.afterEditMenu()
+            DispatchQueue.main.async {
+                self?.showAlert(
+                    title: Text.editSuccess.rawValue,
+                    message: Text.editMenuSubtitle.rawValue
+                )
+                self?.presenter.afterEditMenu()
+            }
         }
         
         presenter.afterEditMenuChangedVeganMarker = { [weak self] changedMarkerModel in
-            self?.presenter.afterEditMenuChangedMarker(changedMarkerModel)
+            DispatchQueue.main.async {
+                self?.presenter.afterEditMenuChangedMarker(changedMarkerModel)
+            }
         }
         
         vc.presenter = presenter
@@ -528,7 +545,9 @@ extension HomeViewController: HomeViewProtocol {
     }
     
     func refreshMenuView(_ menuData: AVIROPlaceMenus?) {
-        placeView.menuModelBinding(menuModel: menuData)
+        DispatchQueue.main.async { [weak self] in
+            self?.placeView.menuModelBinding(menuModel: menuData)
+        }
     }
     
     func refreshMapPlace(_ mapPlace: MapPlace) {
@@ -536,40 +555,48 @@ extension HomeViewController: HomeViewProtocol {
     }
     
     func deleteMyReviewInView(_ commentId: String) {
-        placeView.deleteMyReview(commentId)
+        DispatchQueue.main.async { [weak self] in
+            self?.placeView.deleteMyReview(commentId)
+        }
     }
     
     func showToastAlert(_ title: String) {
-        showSimpleToast(with: title)
+        DispatchQueue.main.async { [weak self] in
+            self?.showSimpleToast(with: title)
+        }
     }
     
     func isDuplicatedReport() {
-        showAlert(
-            title: Text.alreadyReportPlaceTitle.rawValue,
-            message: Text.reportPlaceMessage.rawValue
-        )
+        DispatchQueue.main.async { [weak self] in
+            self?.showAlert(
+                title: Text.alreadyReportPlaceTitle.rawValue,
+                message: Text.reportPlaceMessage.rawValue
+            )
+        }
     }
     
     func showReportPlaceAlert() {
-        let reportPlace: AlertAction = (
-            title: Text.reportPlace.rawValue,
-            style: .destructive,
-            handler: {
-                self.reasonForReportPlaceActionSheet()
-            }
-        )
-        
-        let cancel: AlertAction = (
-            title: Text.cancel.rawValue,
-            style: .cancel,
-            handler: nil
-        )
-        
-        showAlert(
-            title: nil,
-            message: Text.report.rawValue,
-            actions: [reportPlace, cancel]
-        )
+        DispatchQueue.main.async { [weak self] in
+            let reportPlace: AlertAction = (
+                title: Text.reportPlace.rawValue,
+                style: .destructive,
+                handler: {
+                    self?.reasonForReportPlaceActionSheet()
+                }
+            )
+            
+            let cancel: AlertAction = (
+                title: Text.cancel.rawValue,
+                style: .cancel,
+                handler: nil
+            )
+            
+            self?.showAlert(
+                title: nil,
+                message: Text.report.rawValue,
+                actions: [reportPlace, cancel]
+            )
+        }
     }
     
     private func saveCenterCoordinate() {
@@ -879,24 +906,32 @@ extension HomeViewController {
         )
     }
     
-    func showErrorAlert(_ error: String) {
-        showAlert(title: Text.error.rawValue, message: error)
+    func showErrorAlert(with error: String, title: String? = nil) {
+        DispatchQueue.main.async { [weak self] in
+            if let title = title {
+                self?.showAlert(title: title, message: error)
+            } else {
+                self?.showAlert(title: Text.error.rawValue, message: error)
+            }
+        }
     }
     
     func showErrorAlertWhenLoadMarker() {
-        let action: AlertAction = (
-            title: Text.retry.rawValue,
-            style: .destructive,
-            handler: {
-                self.presenter.loadVeganData()
-            }
-        )
-        
-        showAlert(
-            title: Text.error.rawValue,
-            message: Text.failLoadMarker.rawValue,
-            actions: [action]
-        )
+        DispatchQueue.main.async { [weak self] in
+            let action: AlertAction = (
+                title: Text.retry.rawValue,
+                style: .destructive,
+                handler: {
+                    self?.presenter.loadVeganData()
+                }
+            )
+            
+            self?.showAlert(
+                title: Text.error.rawValue,
+                message: Text.failLoadMarker.rawValue,
+                actions: [action]
+            )
+        }
     }
 }
 
@@ -971,21 +1006,6 @@ extension HomeViewController: NMFMapViewCameraDelegate {
         if placeView.placeViewStated == .noShow {
             afterSearchFieldInit()
         }
-        
-        loadLocationButton.isEnabled = false
-        
-        if !starButton.isSelected {
-            starButton.isEnabled = false
-        }
-    }
-    
-    // 카메라 멈출 때
-    func mapViewCameraIdle(_ mapView: NMFMapView) {
-        loadLocationButton.isEnabled = true
-        
-        if !starButton.isSelected {
-            starButton.isEnabled = true
-        }
     }
 }
 
@@ -995,12 +1015,6 @@ extension HomeViewController: NMFMapViewTouchDelegate {
         didTapMap latlng: NMGLatLng,
         point: CGPoint
     ) {
-        loadLocationButton.isEnabled = true
-
-        if !starButton.isSelected {
-            starButton.isEnabled = true
-        }
-        
         whenClosedPlaceView()
         isSlideUpView = false
     }

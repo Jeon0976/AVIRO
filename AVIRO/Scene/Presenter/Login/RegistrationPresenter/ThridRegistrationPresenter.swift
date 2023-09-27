@@ -13,6 +13,7 @@ protocol ThridRegistrationProtocol: NSObject {
     func makeLayout()
     func makeAttribute()
     func pushFinalRegistrationView()
+    func showErrorAlert(with error: String, title: String?)
 }
 
 final class ThridRegistrationPresenter {
@@ -24,7 +25,6 @@ final class ThridRegistrationPresenter {
 
     weak var viewController: ThridRegistrationProtocol?
 
-    private let aviroManager = AVIROAPIManager()
     private let keyChain = KeychainSwift()
     
     var userInfoModel: AVIROUserSignUpDTO?
@@ -64,14 +64,22 @@ final class ThridRegistrationPresenter {
         
         userInfoModel.marketingAgree = false
         
-        aviroManager.postUserSignupModel(userInfoModel) { userInfo in
-            DispatchQueue.main.async { [weak self] in
-                if let userId = userInfo.userId {
-                    self?.keyChain.set(userId, forKey: KeychainKey.userId.rawValue)
-                    self?.viewController?.pushFinalRegistrationView()
+        AVIROAPIManager().createUser(with: userInfoModel) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.statusCode == 200 {
+                    if let id = success.userId {
+                        self?.keyChain.set(id, forKey: KeychainKey.userId.rawValue)
+                        self?.viewController?.pushFinalRegistrationView()
+                    }
+                } else {
+                    if let message = success.message {
+                        self?.viewController?.showErrorAlert(with: message, title: nil)
+                    }
                 }
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
     }
-    
 }

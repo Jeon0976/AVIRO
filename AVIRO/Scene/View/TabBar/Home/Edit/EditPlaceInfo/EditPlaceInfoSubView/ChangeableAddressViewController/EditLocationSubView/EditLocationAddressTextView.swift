@@ -172,7 +172,7 @@ extension EditLocationAddressTextView: UITextFieldDelegate {
         // 타이머 작업을 저장합니다.
         searchTimer = task
 
-        // 0.3초 후에 작업을 실행합니다.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: task)
+        // 0.15초 후에 작업을 실행합니다.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15, execute: task)
     }
 }

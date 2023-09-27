@@ -20,6 +20,7 @@ protocol EditMenuProtocol: NSObject {
     func updateMenuTableView(_ isPresentingDefaultTable: Bool)
     func menuTableReload(_ isPresentingDefaultTable: Bool)
     func popViewController()
+    func showErrorAlert(with error: String, title: String?)
 }
 
 final class EditMenuPresenter {
@@ -898,13 +899,21 @@ final class EditMenuPresenter {
             isRequest: isRequest
         )
         
-        AVIROAPIManager().postEditMenu(editMenu) { [weak self] result in
-            DispatchQueue.main.async {
-                if result.statusCode == 200 {
-                    self?.viewController?.popViewController()
+        AVIROAPIManager().editMenu(with: editMenu) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.statusCode == 200 {
                     self?.afterEditMenuChangedMenus?()
                     self?.afterEditMenuChangedVeganMarker?(editMenuChangedMarkerModel)
+                    self?.viewController?.popViewController()
+                } else {
+                    if let message = success.message {
+                        self?.viewController?.showErrorAlert(with: message, title: nil)
+
+                    }
                 }
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
     }

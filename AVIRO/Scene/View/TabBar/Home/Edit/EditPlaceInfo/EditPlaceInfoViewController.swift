@@ -16,6 +16,11 @@ private enum Segmented: String {
     case homepage = "홈페이지"
 }
 
+private enum Text: String {
+    case error = "에러"
+    
+}
+
 final class EditPlaceInfoViewController: UIViewController {
     lazy var presenter = EditPlaceInfoPresenter(viewController: self)
     
@@ -290,7 +295,7 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         editLocationBottomView.afterChangedDetailAddress = { [weak self] addressDetail in
             self?.presenter.afterChangedAddressDetail = addressDetail
         }
-
+        
         editPhoneView.afterChangedPhone = { [weak self] phone in
             self?.presenter.afterChangedPhone = phone
         }
@@ -449,7 +454,9 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     }
     
     func dataBindingOperatingHours(operatingHourModels: [EditOperationHoursModel]) {
-        editOperationHoursView.dataBinding(operatingHourModels)
+        DispatchQueue.main.async { [weak self] in
+            self?.editOperationHoursView.dataBinding(operatingHourModels)
+        }
     }
     
     func dataBindingHomepage(homepage: String) {
@@ -476,7 +483,9 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     }
     
     func updateNaverMap(_ latLng: NMGLatLng) {
-        editLocationBottomView.changedNaverMap(latLng)
+        DispatchQueue.main.async { [weak self] in
+            self?.editLocationBottomView.changedNaverMap(latLng)
+        }
     }
     
     func editStoreButtonChangeableState(_ state: Bool) {
@@ -485,6 +494,16 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     
     func popViewController() {
         navigationController?.popViewController(animated: false)
+    }
+    
+    func showErrorAlert(with error: String, title: String? = nil) {
+        DispatchQueue.main.async { [weak self] in
+            if let title = title {
+                self?.showAlert(title: title, message: error)
+            } else {
+                self?.showAlert(title: Text.error.rawValue, message: error)
+            }
+        }
     }
 }
 

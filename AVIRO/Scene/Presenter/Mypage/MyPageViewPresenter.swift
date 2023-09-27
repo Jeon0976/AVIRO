@@ -19,6 +19,7 @@ protocol MyPageViewProtocol: NSObject {
     func setupAttribute()
     func updateMyData(_ myDataModel: MyDataModel)
     func pushLoginViewController(with: LoginRedirectReason)
+    func showErrorAlert(with error: String, title: String?)
 }
 
 final class MyPageViewPresenter {
@@ -52,21 +53,30 @@ final class MyPageViewPresenter {
         let myNickName = MyData.my.nickname
         let myStar = String(BookmarkFacadeManager().loadAllData().count)
         
-        var myPlace = "0"
-        var myReview = "0"
-        
-        AVIROAPIManager().getMyContributionCount(MyData.my.id) { [weak self] contributionCountModel in
-            if contributionCountModel.statusCode == 200 {
-                myPlace = String(contributionCountModel.data.placeCount)
-                myReview = String(contributionCountModel.data.commentCount)
+        AVIROAPIManager().loadMyContributedCount(with: MyData.my.id) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.statusCode == 200 {
+                    if let myPlace = success.data?.placeCount,
+                       let myReview = success.data?.commentCount {
+                        
+                        let myPlaceString = String(myPlace)
+                        let myReviewString = String(myReview)
+                        
+                        self?.myDataModel = MyDataModel(
+                            id: myNickName,
+                            place: myPlaceString,
+                            review: myReviewString,
+                            star: myStar
+                        )
+                    }
+                } else {
+                    self?.viewController?.showErrorAlert(with: "서버 에러", title: nil)
+                }
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+
             }
-            
-            self?.myDataModel = MyDataModel(
-                id: myNickName,
-                place: myPlace,
-                review: myReview,
-                star: myStar
-            )
         }
     }
     
@@ -83,17 +93,27 @@ final class MyPageViewPresenter {
     func whenAfterWithdrawal() {
         let userModel = AVIROUserWithdrawDTO(userId: MyData.my.id)
         
-        AVIROAPIManager().postUserWithrawal(userModel) { [weak self] resultModel in
-            if resultModel.statusCode == 200 {
-                LocalMarkerData.shared.deleteAllMarkerModel()
-                LocalBookmarkData.shared.deleteAllBookmark()
-                MyData.my.whenLogout()
+        AVIROAPIManager().withdrawalUser(with: userModel) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.statusCode == 200 {
+                    LocalBookmarkData.shared.deleteAllBookmark()
+                    MyData.my.whenLogout()
+                    self?.keychain.delete(KeychainKey.userId.rawValue)
+                    
+                    DispatchQueue.main.async {
+                        LocalMarkerData.shared.deleteAllMarkerModel()
 
-                self?.keychain.delete(KeychainKey.userId.rawValue)
-                
-                DispatchQueue.main.async {
-                    self?.viewController?.pushLoginViewController(with: .withdrawal)
+                        self?.viewController?.pushLoginViewController(with: .withdrawal)
+                    }
+                } else {
+                    if let message = success.message {
+                        self?.viewController?.showErrorAlert(with: message, title: nil)
+                    }
                 }
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+
             }
         }
     }

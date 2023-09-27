@@ -9,11 +9,14 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
     
+    var homeTabBarButtonTapped: (() -> Void)?
+    
     // MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViewController()
+        self.delegate = self
     }
     
     private func setupViewController() {
@@ -63,28 +66,12 @@ class TabBarViewController: UITabBarController {
             setupTabBar()
         }
     }
-    
 }
 
-// MARK: View Preview
-#if DEBUG
-import SwiftUI
-
-struct TabBarViewControllerPresentable: UIViewControllerRepresentable {
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        
-    }
-    
-    func makeUIViewController(context: Context) -> some UIViewController {
-        let vc = TabBarViewController()
-        
-        return vc
+extension TabBarViewController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        if selectedIndex == 0 {
+            homeTabBarButtonTapped?()
+        }
     }
 }
-
-struct TabBarViewControllerPresentablePreviewProvider: PreviewProvider {
-    static var previews: some View {
-        TabBarViewControllerPresentable()
-    }
-}
-#endif

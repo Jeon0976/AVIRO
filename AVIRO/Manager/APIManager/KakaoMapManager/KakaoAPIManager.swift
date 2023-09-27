@@ -28,142 +28,66 @@ final class KakaoAPIManager: KakaoAPIManagerProtocol{
         self.session = session
     }
     
-    // MARK: Keyword Search
-    func kakaoMapKeywordSearch(query: String,
-                               longitude: String,
-                               latitude: String,
-                               page: String,
-                               completionHandler: @escaping ((KakaoKeywordResultDTO) -> Void)
+    func keywordSearchPlace(
+        with model: KakaoKeywordSearchDTO,
+        completionHandler: @escaping (Result<KakaoKeywordResultDTO, APIError>) -> Void
     ) {
-        guard let url = api.searchPlace(
-            query: query,
-            longitude: longitude,
-            latitude: latitude,
-            page: page
-        ).url else { return }
-                
-        guard let keyUrl = Bundle.main.url(forResource: "API", withExtension: "plist"),
-              let dictionary = NSDictionary(contentsOf: keyUrl) as? [String: Any] else { return }
+        guard let url = api.searchPlace(model: model).url else {
+            completionHandler(.failure(.urlError))
+            return
+        }
         
-        kakaoMapAPIKey = (dictionary["KakaoMapAPI_ Authorization _Key"] as? String)!
-                
-        var request = URLRequest(url: url)
-        
-        request.httpMethod = "GET"
-        request.setValue(kakaoMapAPIKey, forHTTPHeaderField: "Authorization")
-        
-        session.dataTask(with: request) { data, _, error in
-            if let error = error {
-                // TODO: urlsession 오류
-                print(error.localizedDescription)
-            }
-            
-            if let data = data {
-                if let searchData = try? JSONDecoder().decode(KakaoKeywordResultDTO.self, from: data) {
-                    completionHandler(searchData)
-                }
-            }
-        }.resume()
+        performRequest(
+            with: url,
+            headers: headers,
+            completionHandler: completionHandler)
     }
     
-    // MARK: Keyword Location Search
-    func kakaoMapLocationSearch(query: String,
-                                longitude: String,
-                                latitude: String,
-                                page: String,
-                                isAccuracy: KakaoSearchHowToSort,
-                                completionHandler: @escaping ((KakaoKeywordResultDTO) -> Void)
+    func allSearchPlace(
+        with model: KakaoKeywordSearchDTO,
+        completionHandler: @escaping (Result<KakaoKeywordResultDTO, APIError>) -> Void
     ) {
-        guard let url = api.searchLocation(
-            query: query,
-            longitude: longitude,
-            latitude: latitude,
-            page: page,
-            isAccuracy: isAccuracy
-        ).url else { return }
+        guard let url = api.searchLocation(model: model).url else {
+            completionHandler(.failure(.urlError))
+            return
+        }
         
-        guard let keyUrl = Bundle.main.url(forResource: "API", withExtension: "plist"),
-              let dictionary = NSDictionary(contentsOf: keyUrl) as? [String: Any] else { return }
-        
-        kakaoMapAPIKey = (dictionary["KakaoMapAPI_ Authorization _Key"] as? String)!
-        
-        var request = URLRequest(url: url)
-        
-        request.httpMethod = "GET"
-        request.setValue(kakaoMapAPIKey, forHTTPHeaderField: "Authorization")
-        
-        session.dataTask(with: request) { data, _, error in
-            if let error = error {
-                // TODO: urlsession 오류
-                print(error.localizedDescription)
-            }
-            
-            if let data = data {
-                if let searchData = try? JSONDecoder().decode(KakaoKeywordResultDTO.self, from: data) {
-                    completionHandler(searchData)
-                }
-            }
-        }.resume()
+        performRequest(
+            with: url,
+            headers: headers,
+            completionHandler: completionHandler
+        )
     }
     
-    // MARK: Coodinate Search
-    func kakaoMapCoordinateSearch(longtitude: String,
-                                  latitude: String,
-                                  completionHandler: @escaping ((KakaoCoordinateSearchResultDTO) -> Void)
+    func coordinateSearch(
+        with model: KakaoCoordinateSearchDTO,
+        completionHandler: @escaping (Result<KakaoCoordinateSearchResultDTO, APIError>) -> Void
     ) {
-        guard let url = api.searchCoodinate(longitude: longtitude, latitude: latitude).url else { return }
+        guard let url = api.searchCoodinate(model: model).url else {
+            completionHandler(.failure(.urlError))
+            return
+        }
         
-        guard let keyUrl = Bundle.main.url(forResource: "API", withExtension: "plist"),
-              let dictionary = NSDictionary(contentsOf: keyUrl) as? [String: Any] else { return }
-        
-        kakaoMapAPIKey = (dictionary["KakaoMapAPI_ Authorization _Key"] as? String)!
-        
-        var request = URLRequest(url: url)
-        
-        request.httpMethod = "GET"
-        request.setValue(kakaoMapAPIKey, forHTTPHeaderField: "Authorization")
-        
-        session.dataTask(with: request) { data, _, error in
-            if let error = error {
-                // TODO: urlsession 오류
-                print(error.localizedDescription)
-            }
-            
-            if let data = data {
-                if let searchData = try? JSONDecoder().decode(KakaoCoordinateSearchResultDTO.self, from: data) {
-                    completionHandler(searchData)
-                }
-            }
-        }.resume()
+        performRequest(
+            with: url,
+            headers: headers,
+            completionHandler: completionHandler
+        )
     }
     
-    // MARK: Address Search
-    func kakaoMapAddressSearch(address: String,
-                               completionHandler: @escaping ((KakaoAddressPlaceDTO) -> Void)
+    func addressSearch(
+        with address: String,
+        completionHandler: @escaping (Result<KakaoAddressPlaceDTO, APIError>) -> Void
     ) {
-        guard let url = api.searchAddress(query: address).url else { return }
+        guard let url = api.searchAddress(query: address).url else {
+            completionHandler(.failure(.urlError))
+            return
+        }
         
-        guard let keyUrl = Bundle.main.url(forResource: "API", withExtension: "plist"),
-              let dictionary = NSDictionary(contentsOf: keyUrl) as? [String: Any] else { return }
-        
-        kakaoMapAPIKey = (dictionary["KakaoMapAPI_ Authorization _Key"] as? String)!
-        
-        var request = URLRequest(url: url)
-        
-        request.httpMethod = "GET"
-        request.setValue(kakaoMapAPIKey, forHTTPHeaderField: "Authorization")
-        
-        session.dataTask(with: request) { data, _, error in
-            if let error = error {
-                // TODO: urlsession 오류
-                print(error.localizedDescription)
-            }
-            
-            if let data = data {
-                if let searchData = try? JSONDecoder().decode(KakaoAddressPlaceDTO.self, from: data) {
-                    completionHandler(searchData)
-                }
-            }
-        }.resume()
+        performRequest(
+            with: url,
+            headers: headers,
+            completionHandler: completionHandler
+        )
     }
 }

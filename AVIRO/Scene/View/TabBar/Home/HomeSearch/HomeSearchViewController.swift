@@ -7,6 +7,10 @@
 
 import UIKit
 
+private enum Text: String {
+    case error = "에러"
+}
+
 final class HomeSearchViewController: UIViewController {
     lazy var presenter = HomeSearchPresenter(viewController: self)
     
@@ -154,17 +158,21 @@ extension HomeSearchViewController: HomeSearchProtocol {
     }
     
     func placeListTableReloadData() {
-        placeListTableView.reloadData()
-        
-        resultAfterViewShow(haveDatas: true)
+        DispatchQueue.main.async { [weak self] in
+            self?.placeListTableView.reloadData()
+            
+            self?.resultAfterViewShow(haveDatas: true)
+        }
     }
     
     func placeListNoResultData() {
-        placeListTableView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            self?.placeListTableView.reloadData()
 
-        searchField.activeHshakeEffect()
-        
-        resultAfterViewShow(haveDatas: false)
+            self?.searchField.activeHshakeEffect()
+            
+            self?.resultAfterViewShow(haveDatas: false)
+        }
     }
     
     private func resultAfterViewShow(haveDatas: Bool) {
@@ -355,9 +363,18 @@ extension HomeSearchViewController: UITextFieldDelegate {
         searchTimer = task
 
         // 0.5초 후에 작업을 실행합니다.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: task)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15, execute: task)
     }
     
+    func showErrorAlert(with error: String, title: String? = nil) {
+        DispatchQueue.main.async { [weak self] in
+            if let title = title {
+                self?.showAlert(title: title, message: error)
+            } else {
+                self?.showAlert(title: Text.error.rawValue, message: error)
+            }
+        }
+    }
 }
 
 extension HomeSearchViewController: UITableViewDataSource {

@@ -16,6 +16,7 @@ protocol HomeSearchProtocol: NSObject {
     func historyListTableReload()
     func insertTitleToTextField(_ query: String)
     func popViewController()
+    func showErrorAlert(with error: String, title: String?)
 }
 
 final class HomeSearchPresenter {
@@ -30,7 +31,7 @@ final class HomeSearchPresenter {
     var selectedPlace: ((String) -> Void)?
     
     private var currentPage = 1
-    /// 모든 필터링 결과 끝날 때 다른 함수 동작을 위한 변수
+    private var isEnding = false
     private var isLoading = false
     private var isEndCompare = false
     
@@ -135,52 +136,6 @@ final class HomeSearchPresenter {
         }
     }
     
-    // MARK: 검색 후 KakaoMap Location Search API 호출
-    private func initialSearchData(
-        query: String,
-        completion: @escaping ([PlaceListModel]) -> Void
-    ) {
-        currentPage = 1
-        let query = query
-        
-        var longitude: Double
-        var latitude: Double
-        
-        let whichLocation = KakaoAPISortingQuery.shared.coordinate
-        
-        if whichLocation == KakaoSerachCoordinate.MyCoordinate {
-            longitude = MyCoordinate.shared.longitude ?? 0.0
-            latitude = MyCoordinate.shared.latitude ?? 0.0
-        } else {
-            longitude = CenterCoordinate.shared.longitude ?? 0.0
-            latitude = CenterCoordinate.shared.latitude ?? 0.0
-        }
-        
-        KakaoAPIManager().kakaoMapLocationSearch(
-            query: query,
-            longitude: String(longitude),
-            latitude: String(latitude),
-            page: "\(currentPage)",
-            isAccuracy: KakaoAPISortingQuery.shared.sorting
-        ) { model in
-            let placeList = model.documents.map { location in
-                let placeListCellModel = PlaceListModel(
-                    title: location.name,
-                    distance: location.distance,
-                    address: location.address,
-                    phone: location.phone,
-                    x: Double(location.xToLongitude)!,
-                    y: Double(location.yToLatitude)!
-                )
-                return placeListCellModel
-            }
-            
-            PageEndingCheck.shared.isend = model.meta.isEnd
-            
-            completion(placeList)
-        }
-    }
-    
     // MARK: Paging후 KakaoMap Load -> AVIRO 데이터 비교
     func afterPagingSearchAndCompareAVIROData(_ query: String) {
         pagingSearchData(query: query) { [weak self] placeList in
@@ -188,22 +143,34 @@ final class HomeSearchPresenter {
         }
     }
     
-    // MARK: Paging후 KakaoMap Location Search API 호출
-    private func pagingSearchData(query: String, completion: @escaping ([PlaceListModel]) -> Void
+    private func initialSearchData(
+        query: String,
+        completion: @escaping ([PlaceListModel]) -> Void
     ) {
-        if isLoading {
+        currentPage = 1
+        isEnding = false
+        searchPlaceData(query: query, page: currentPage, completion: completion)
+    }
+    
+    private func pagingSearchData(
+        query: String,
+        completion: @escaping ([PlaceListModel]) -> Void
+    ) {
+        currentPage += 1
+        searchPlaceData(query: query, page: currentPage, completion: completion)
+    }
+    
+    private func searchPlaceData(
+        query: String,
+        page: Int,
+        completion: @escaping ([PlaceListModel]) -> Void
+    ) {
+        if isEnding || isLoading {
             return
         }
         
         isLoading = true
-        currentPage += 1
         
-        if PageEndingCheck.shared.isend == true {
-            return
-        }
-  
-        isEndCompare = false
-
         var longitude: Double
         var latitude: Double
         
@@ -217,15 +184,19 @@ final class HomeSearchPresenter {
             latitude = CenterCoordinate.shared.latitude ?? 0.0
         }
         
-        KakaoAPIManager().kakaoMapLocationSearch(
+        let model = KakaoKeywordSearchDTO(
             query: query,
-            longitude: String(longitude),
-            latitude: String(latitude),
-            page: "\(currentPage)",
+            lng: String(longitude),
+            lat: String(latitude),
+            page: "\(page)",
             isAccuracy: KakaoAPISortingQuery.shared.sorting
-        ) { model in
+        )
+        
+        KakaoAPIManager().allSearchPlace(with: model) { [weak self] result in
+            switch result {
+            case .success(let model):
                 let placeList = model.documents.map { location in
-                    let placeListCellModel = PlaceListModel(
+                    PlaceListModel(
                         title: location.name,
                         distance: location.distance,
                         address: location.address,
@@ -233,13 +204,17 @@ final class HomeSearchPresenter {
                         x: Double(location.xToLongitude)!,
                         y: Double(location.yToLatitude)!
                     )
-                    return placeListCellModel
                 }
                 
-                PageEndingCheck.shared.isend = model.meta.isEnd
+                self?.isEnding = model.meta.isEnd
                 
                 completion(placeList)
+                
+            case .failure(let error):
+                self?.isLoading = false
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
+        }
     }
     
     // MARK: AVIRO 데이터와 비교하기 위한 데이터 만들기
@@ -263,12 +238,20 @@ final class HomeSearchPresenter {
                 
         let beforeMatchedRequestModel = AVIROBeforeComparePlaceDTO(placeArray: beforeMatchedArray)
                 
-        AVIROAPIManager().postPlaceListMatched(beforeMatchedRequestModel) { placeModelAfterMatched in
-            afterMatchedArray = placeModelAfterMatched.body
-            DispatchQueue.main.async { [weak self] in
-                self?.bindingToTableData(
-                    afterMatched: afterMatchedArray,
-                    placeList: placeList)
+        AVIROAPIManager().checkPlaceList(with: beforeMatchedRequestModel) { [weak self] result in
+            switch result {
+            case .success(let model):
+                if model.statusCode == 200 {
+                    self?.bindingToTableData(afterMatched: model.body, placeList: placeList)
+                } else {
+                    self?.isLoading = false
+                    self?.isEndCompare = true
+                    self?.viewController?.showErrorAlert(with: "", title: "비교 에러")
+                }
+            case .failure(let error):
+                self?.isLoading = false
+                self?.isEndCompare = true
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
     }
@@ -279,6 +262,10 @@ final class HomeSearchPresenter {
         afterMatched: [AVIROAfterMatchedModel],
         placeList: [PlaceListModel]
     ) {
+        defer {
+            isEndCompare = true
+            isLoading = false
+        }
         for (index, place) in placeList.enumerated() {
             let matched = afterMatched.first(where: { $0.index == index})
             
@@ -306,9 +293,6 @@ final class HomeSearchPresenter {
         } else {
             viewController?.placeListTableReloadData()
         }
-        
-        isLoading = false
-        isEndCompare = true
     }
     
     // 선택된 것이 AVIRO에 있는지 확인하는 함수

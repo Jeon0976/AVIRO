@@ -196,7 +196,7 @@
 		C5FA0EAC2A94DF39004AD8B4 /* ReportReviewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FA0EAB2A94DF39004AD8B4 /* ReportReviewPresenter.swift */; };
 		C5FD92E32A9C6C1E00CF4673 /* EditLocationAddressTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92E22A9C6C1E00CF4673 /* EditLocationAddressTextTableViewCell.swift */; };
 		C5FD92EB2A9C786600CF4673 /* PublicAPIRequestComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92EA2A9C786600CF4673 /* PublicAPIRequestComponents.swift */; };
-		C5FD92ED2A9C7AE800CF4673 /* PublicAPIRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92EC2A9C7AE800CF4673 /* PublicAPIRequestManager.swift */; };
+		C5FD92ED2A9C7AE800CF4673 /* PublicAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92EC2A9C7AE800CF4673 /* PublicAPIManager.swift */; };
 		C5FD92F02A9C803600CF4673 /* PublicAddress+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92EF2A9C803600CF4673 /* PublicAddress+DTO.swift */; };
 		C5FD92F22A9C805700CF4673 /* PublicXMLParserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92F12A9C805700CF4673 /* PublicXMLParserDelegate.swift */; };
 		C5FD92F42A9CD2FC00CF4673 /* KakaoAddressPlace+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92F32A9CD2FC00CF4673 /* KakaoAddressPlace+DTO.swift */; };
@@ -403,7 +403,7 @@
 		C5FA0EAB2A94DF39004AD8B4 /* ReportReviewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportReviewPresenter.swift; sourceTree = "<group>"; };
 		C5FD92E22A9C6C1E00CF4673 /* EditLocationAddressTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocationAddressTextTableViewCell.swift; sourceTree = "<group>"; };
 		C5FD92EA2A9C786600CF4673 /* PublicAPIRequestComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicAPIRequestComponents.swift; sourceTree = "<group>"; };
-		C5FD92EC2A9C7AE800CF4673 /* PublicAPIRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicAPIRequestManager.swift; sourceTree = "<group>"; };
+		C5FD92EC2A9C7AE800CF4673 /* PublicAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicAPIManager.swift; sourceTree = "<group>"; };
 		C5FD92EF2A9C803600CF4673 /* PublicAddress+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PublicAddress+DTO.swift"; sourceTree = "<group>"; };
 		C5FD92F12A9C805700CF4673 /* PublicXMLParserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicXMLParserDelegate.swift; sourceTree = "<group>"; };
 		C5FD92F32A9CD2FC00CF4673 /* KakaoAddressPlace+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KakaoAddressPlace+DTO.swift"; sourceTree = "<group>"; };
@@ -1321,9 +1321,9 @@
 				C52FA3462A175B20005E70DC /* HomeViewController.swift */,
 				C51AED1B2A8A19060015FBC2 /* ViewController */,
 				C5EB51102A20CC6800B29CC1 /* PlaceDetail */,
-				C5FA0EA82A94D935004AD8B4 /* Edit */,
-				C5FA0EA72A94D92B004AD8B4 /* Report */,
 				C5EB51062A209F5700B29CC1 /* HomeSearch */,
+				C5FA0EA72A94D92B004AD8B4 /* Report */,
+				C5FA0EA82A94D935004AD8B4 /* Edit */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1414,7 +1414,7 @@
 		C5FD92E82A9C77CE00CF4673 /* PublicManager */ = {
 			isa = PBXGroup;
 			children = (
-				C5FD92EC2A9C7AE800CF4673 /* PublicAPIRequestManager.swift */,
+				C5FD92EC2A9C7AE800CF4673 /* PublicAPIManager.swift */,
 				C5FD92EA2A9C786600CF4673 /* PublicAPIRequestComponents.swift */,
 				C5FD92F12A9C805700CF4673 /* PublicXMLParserDelegate.swift */,
 			);
@@ -1697,7 +1697,7 @@
 				C5E430B32A5DADBE00CB67EC /* SecondRegistrationPresenter.swift in Sources */,
 				C5EB510D2A20A4B400B29CC1 /* HomeSearchViewTableViewCell.swift in Sources */,
 				C510005C2AB9C39500F65C1F /* MarkerModelManager.swift in Sources */,
-				C5FD92ED2A9C7AE800CF4673 /* PublicAPIRequestManager.swift in Sources */,
+				C5FD92ED2A9C7AE800CF4673 /* PublicAPIManager.swift in Sources */,
 				C50367F52A1795D10020C6BB /* HomeViewPresenter.swift in Sources */,
 				C5FD92F42A9CD2FC00CF4673 /* KakaoAddressPlace+DTO.swift in Sources */,
 				C5ED46952AAEB3F300F2DA04 /* OperationHourView.swift in Sources */,

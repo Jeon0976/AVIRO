@@ -8,7 +8,6 @@
 import Foundation
 
 final class AVIROAPIManager: AVIROAPIMangerProtocol {
-
     var session: URLSession
     
     var postAPI = AVIROPostAPI()
@@ -46,7 +45,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
     
     func createBookmarkModel(
         with bookmarkModel: AVIROUpdateBookmarkDTO,
-        completionHandler: @escaping (Result<AVIROBookmarkModelResultDTO, APIError>) -> Void
+        completionHandler: @escaping (Result<AVIROResultDTO, APIError>) -> Void
     ) {
         guard let url = postAPI.bookmarkPost().url else {
             completionHandler(.failure(.urlError))

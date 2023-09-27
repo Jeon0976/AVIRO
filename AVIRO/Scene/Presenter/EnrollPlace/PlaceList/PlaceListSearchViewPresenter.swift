@@ -15,6 +15,7 @@ protocol PlaceListProtocol: NSObject {
     func noResultData()
     func popViewController()
     func pushAlertController()
+    func showErrorAlert(with error: String, title: String?)
 }
 
 final class PlaceListSearchViewPresenter: NSObject {
@@ -53,38 +54,54 @@ final class PlaceListSearchViewPresenter: NSObject {
     
     // MARK: 검색 후 KakaoMap Place Search API 호출
     func searchData(_ query: String) {
+        if isLoading {
+            return
+        }
+        
+        isLoading = true
         currentPage = 1
+        
         let query = query
         let longitude = MyCoordinate.shared.longitudeString
         let latitude = MyCoordinate.shared.latitudeString
         
-        KakaoAPIManager().kakaoMapKeywordSearch(query: query,
-                                      longitude: longitude,
-                                      latitude: latitude,
-                                      page: "\(currentPage)") { [weak self] model in
-            let placeList = model.documents.map { location in
-                let placeListCellModel = PlaceListModel(
-                    title: location.name,
-                    distance: location.distance,
-                    address: location.address,
-                    phone: location.phone,
-                    x: Double(location.xToLongitude)!,
-                    y: Double(location.yToLatitude)!
-                )
-                return placeListCellModel
-            }
-            
-            PageEndingCheck.shared.isend = model.meta.isEnd
-
-            DispatchQueue.main.async {
-                self?.placeList = placeList
+        let model = KakaoKeywordSearchDTO(
+            query: query,
+            lng: longitude,
+            lat: latitude,
+            page: "\(currentPage)",
+            isAccuracy: nil
+        )
+        
+        KakaoAPIManager().keywordSearchPlace(with: model) { [weak self] result in
+            switch result {
+            case .success(let listModel):
+                let placeList = listModel.documents.map { location in
+                    let placeListCellModel = PlaceListModel(
+                        title: location.name,
+                        distance: location.distance,
+                        address: location.address,
+                        phone: location.phone,
+                        x: Double(location.xToLongitude)!,
+                        y: Double(location.yToLatitude)!
+                    )
+                    return placeListCellModel
+                }
+                
+                self?.isEnd = listModel.meta.isEnd
                 
                 if placeList.count == 0 {
                     self?.viewController?.noResultData()
                 } else {
+                    self?.placeList = placeList
                     self?.viewController?.reloadTableView()
                 }
+                
                 self?.isLoading = false
+
+            case .failure(let error):
+                self?.isLoading = false
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
     }
@@ -92,44 +109,48 @@ final class PlaceListSearchViewPresenter: NSObject {
     // MARK: 스크롤 할 때 데이터 load 함수
     func loadData(_ query: String) {
         // loding 일 때 api 호출 x
-        if isLoading {
+        if isLoading || isEnd {
             return
         }
         
         isLoading = true
         currentPage += 1
         
-        if PageEndingCheck.shared.isend == true {
-            return
-        }
         let query = query
         let longitude = MyCoordinate.shared.longitudeString
         let latitude = MyCoordinate.shared.latitudeString
         
-        KakaoAPIManager().kakaoMapKeywordSearch(
+        let model = KakaoKeywordSearchDTO(
             query: query,
-            longitude: longitude,
-            latitude: latitude,
-            page: "\(currentPage)"
-        ) { [weak self] model in
-            let placeList = model.documents.map { location in
-                let placeListCellModel = PlaceListModel(
-                    title: location.name,
-                    distance: location.distance,
-                    address: location.address,
-                    phone: location.phone,
-                    x: Double(location.xToLongitude)!,
-                    y: Double(location.yToLatitude)!
-                )
-                return placeListCellModel
-            }
-            
-            PageEndingCheck.shared.isend = model.meta.isEnd
-            
-            DispatchQueue.main.async {
+            lng: longitude,
+            lat: latitude,
+            page: "\(currentPage)",
+            isAccuracy: nil
+        )
+        
+        KakaoAPIManager().keywordSearchPlace(with: model) { [weak self] result in
+            switch result {
+            case .success(let listModel):
+                let placeList = listModel.documents.map { location in
+                    let placeListCellModel = PlaceListModel(
+                        title: location.name,
+                        distance: location.distance,
+                        address: location.address,
+                        phone: location.phone,
+                        x: Double(location.xToLongitude)!,
+                        y: Double(location.yToLatitude)!
+                    )
+                    return placeListCellModel
+                }
+                
+                self?.isEnd = listModel.meta.isEnd
+                self?.isLoading = false
                 self?.placeList.append(contentsOf: placeList)
                 self?.viewController?.reloadTableView()
+                
+            case .failure(let error):
                 self?.isLoading = false
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
     }
@@ -144,26 +165,37 @@ final class PlaceListSearchViewPresenter: NSObject {
             y: String(selectedItem.y)
         )
         
-        AVIROAPIManager().getCheckPlace(placeModel: placeModel) { [weak self] checkedPlace in
-            DispatchQueue.main.async {
-                if checkedPlace.registered {
-                    self?.viewController?.pushAlertController()
+        AVIROAPIManager().checkPlaceOne(with: placeModel) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.statusCode == 200 {
+                    if success.registered {
+                        self?.viewController?.pushAlertController()
+                    } else {
+                        self?.savePlaceModel(selectedItem)
+                        self?.viewController?.popViewController()
+                    }
                 } else {
-                    self?.savePlaceModel(selectedItem)
-                    self?.viewController?.popViewController()
+                    if let message = success.message {
+                        self?.viewController?.showErrorAlert(with: message, title: nil)
+                    }
                 }
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
     }
     
     // MARK: Place Model 저장
     func savePlaceModel(_ selectedPlace: PlaceListModel) {
-        let userInfo: [String: Any] = ["selectedPlace": selectedPlace]
-        
-        NotificationCenter.default.post(
-            name: NSNotification.Name("selectedPlace"),
-            object: nil,
-            userInfo: userInfo
-        )
+        DispatchQueue.main.async {
+            let userInfo: [String: Any] = ["selectedPlace": selectedPlace]
+            
+            NotificationCenter.default.post(
+                name: NSNotification.Name("selectedPlace"),
+                object: nil,
+                userInfo: userInfo
+            )
+        }
     }
 }

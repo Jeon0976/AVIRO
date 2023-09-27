@@ -7,6 +7,10 @@
 
 import UIKit
 
+private enum Text: String {
+    case error = "에러"
+}
+
 final class PlaceListSearchViewController: UIViewController {
     lazy var presenter = PlaceListSearchViewPresenter(viewController: self)
     
@@ -141,32 +145,50 @@ extension PlaceListSearchViewController: PlaceListProtocol {
     
     // MARK: reloadData
     func reloadTableView() {
-        listTableView.isHidden = false
-        noResultImageView.isHidden = true
-        noResultTitle.isHidden = true
-        
-        listTableView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            self?.listTableView.isHidden = false
+            self?.noResultImageView.isHidden = true
+            self?.noResultTitle.isHidden = true
+            
+            self?.listTableView.reloadData()
+        }
     }
     
     func noResultData() {
-        listTableView.isHidden = true
-        noResultImageView.isHidden = false
-        noResultTitle.isHidden = false
-        
-        listTableView.reloadData()
-        searchField.activeHshakeEffect()
+        DispatchQueue.main.async { [weak self] in
+            self?.listTableView.isHidden = true
+            self?.noResultImageView.isHidden = false
+            self?.noResultTitle.isHidden = false
+            
+            self?.listTableView.reloadData()
+            self?.searchField.activeHshakeEffect()
+        }
     }
     
     // MARK: Pop View Controller
     func popViewController() {
-        self.navigationController?.popViewController(animated: true)
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+        }
     }
     
     // MARK: Push Alert Controller
     func pushAlertController() {
-        let title = "이미 등록된 가게입니다"
-        let message = "다른 유저가 이미 등록한 가게예요.\n홈 화면에서 검색해보세요."
-        showAlert(title: title, message: message)
+        DispatchQueue.main.async { [weak self] in
+            let title = "이미 등록된 가게입니다"
+            let message = "다른 유저가 이미 등록한 가게예요.\n홈 화면에서 검색해보세요."
+            self?.showAlert(title: title, message: message)
+        }
+    }
+    
+    func showErrorAlert(with error: String, title: String? = nil) {
+        DispatchQueue.main.async { [weak self] in
+            if let title = title {
+                self?.showAlert(title: title, message: error)
+            } else {
+                self?.showAlert(title: Text.error.rawValue, message: error)
+            }
+        }
     }
 }
 
@@ -256,14 +278,16 @@ extension PlaceListSearchViewController: UITextFieldDelegate {
         
         let task = DispatchWorkItem { [weak self] in
             if let text = textField.text {
-                self?.presenter.inrolledData = text
-                self?.presenter.searchData(text)
+                if text != "" {
+                    self?.presenter.inrolledData = text
+                    self?.presenter.searchData(text)
+                }
             }
         }
     
         searchTimer = task
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35, execute: task)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15, execute: task)
     }
 }
 

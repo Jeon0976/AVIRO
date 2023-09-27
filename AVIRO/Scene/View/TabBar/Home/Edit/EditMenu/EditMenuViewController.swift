@@ -7,6 +7,10 @@
 
 import UIKit
 
+private enum Text: String {
+    case error = "에러"
+}
+
 final class EditMenuViewController: UIViewController {
     lazy var presenter = EditMenuPresenter(viewController: self)
     
@@ -164,9 +168,21 @@ extension EditMenuViewController: EditMenuProtocol {
     }
     
     func popViewController() {
-        navigationController?.popViewController(animated: false)
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.popViewController(animated: false)
+        }
     }
     
+    func showErrorAlert(with error: String, title: String? = nil) {
+        DispatchQueue.main.async { [weak self] in
+            if let title = title {
+                self?.showAlert(title: title, message: error)
+            } else {
+                self?.showAlert(title: Text.error.rawValue, message: error)
+            }
+        }
+    }
+
 }
 
 extension EditMenuViewController: UITableViewDataSource {

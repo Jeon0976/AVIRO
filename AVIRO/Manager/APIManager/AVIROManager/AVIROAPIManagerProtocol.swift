@@ -19,7 +19,7 @@ protocol AVIROAPIMangerProtocol: APIManagerProtocol {
     )
     func createBookmarkModel(
         with bookmarkModel: AVIROUpdateBookmarkDTO,
-        completionHandler: @escaping(Result<AVIROBookmarkModelResultDTO, APIError>) -> Void
+        completionHandler: @escaping(Result<AVIROResultDTO, APIError>) -> Void
     )
     
     // MARK: Check Refer

@@ -9,26 +9,59 @@ import Foundation
 
 final class BookmarkFacadeManager {
     private let bookmarkArray = LocalBookmarkData.shared
+    
+    private var isUpdate = false
+    private var isDelete = false
         
-    func fetchAllData() {
-//        AVIROAPIManager().getBookmarkModels(userId: MyData.my.id) { [weak self] bookmarkModel in
-//            let dataArray = bookmarkModel.bookmarks
-//            self?.bookmarkArray.updateAllData(dataArray)
-//        }
+    func fetchAllData(completionHandler: @escaping ((String) -> Void)) {
+        AVIROAPIManager().loadBookmarkModels(with: MyData.my.id) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.statusCode == 200 {
+                    let dataArray = success.bookmarks
+                    self?.bookmarkArray.updateAllData(dataArray)
+                } else {
+                    completionHandler(APIError.badRequest.localizedDescription)
+                }
+            case .failure(let error):
+                completionHandler(error.localizedDescription)
+            }
+        }
     }
     
     func loadAllData() -> [String] {
         bookmarkArray.loadAllData()
     }
     
-    func updateAllData() {
+    func updateBookmark(_ placeId: String, completionHandler: @escaping ((String) -> Void)) {
         let bookmarks = bookmarkArray.loadAllData()
         
         let postModel = AVIROUpdateBookmarkDTO(placeList: bookmarks, userId: MyData.my.id)
         
-        // MARK: Error 처리
-        AVIROAPIManager().postBookmarkModel(bookmarkModel: postModel) { statusCode in
-            
+        AVIROAPIManager().createBookmarkModel(with: postModel) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.statusCode == 200 {
+                    if let isUpdate = self?.isUpdate,
+                       let isDelete = self?.isDelete {
+                        if isUpdate {
+                            self?.bookmarkArray.updateData(placeId)
+                            self?.isUpdate = false
+                            return
+                        }
+                        
+                        if isDelete {
+                            self?.bookmarkArray.deleteData(placeId)
+                            self?.isDelete = false
+                            return
+                        }
+                    }
+                } else {
+                    completionHandler("북마크 기능 에러발생했습니다.")
+                }
+            case .failure(_):
+                completionHandler("북마크 기능 에러발생했습니다.")
+            }
         }
     }
     
@@ -36,15 +69,13 @@ final class BookmarkFacadeManager {
         bookmarkArray.checkData(placeId)
     }
     
-    func updateData(_ placeId: String) {
-        bookmarkArray.updateData(placeId)
-        
-        self.updateAllData()
+    func updateData(_ placeId: String, completionHandler: @escaping ((String) -> Void)) {
+        isUpdate = true
+        self.updateBookmark(placeId, completionHandler: completionHandler)
     }
     
-    func deleteData(_ placeId: String) {
-        bookmarkArray.deleteData(placeId)
-        
-        self.updateAllData()
+    func deleteData(_ placeId: String, completionHandler: @escaping ((String) -> Void)) {
+        isDelete = true
+        self.updateBookmark(placeId, completionHandler: completionHandler)
     }
 }

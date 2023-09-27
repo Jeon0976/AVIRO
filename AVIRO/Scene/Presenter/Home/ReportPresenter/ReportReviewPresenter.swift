@@ -15,6 +15,7 @@ protocol ReportReviewProtocol: NSObject {
     func keyboardWillShow(height: CGFloat)
     func keyboardWillHide()
     func dismissViewController()
+    func showErrorAlert(with error: String, title: String?)
 }
 
 final class ReportReviewPresenter {
@@ -158,16 +159,22 @@ final class ReportReviewPresenter {
             code: type,
             content: typeString
         )
-                
-        AVIROAPIManager().postCommentReportModel(reportModel) { [weak self] resultModel in
-            print(resultModel)
-
-            if resultModel.statusCode == 200 {
-                DispatchQueue.main.async {
-                    let message = resultModel.message ?? ""
+         
+        AVIROAPIManager().reportReview(with: reportModel) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.statusCode == 200 {
+                    let message = success.message ?? ""
                     self?.afterReportPopView?(message)
                     self?.viewController?.dismissViewController()
+                } else {
+                    if let message = success.message {
+                        self?.viewController?.showErrorAlert(with: message, title: nil)
+                    }
                 }
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+
             }
         }
     }

@@ -23,6 +23,7 @@ protocol EnrollPlaceProtocol: NSObject {
     func enableRightButton(_ bool: Bool)
     func popViewController()
     func pushAlertController()
+    func showErrorAlert(with error: String, title: String?)
 }
 
 final class EnrollPlacePresenter {
@@ -112,18 +113,26 @@ final class EnrollPlacePresenter {
         guard let veganModel = veganModel else {
             return
         }
-         
-        AVIROAPIManager().postPlaceModel(veganModel) { [weak self] responseModel in
-            DispatchQueue.main.async {
-                if responseModel.statusCode == 200 {
+        
+        AVIROAPIManager().createPlaceModel(with: veganModel) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.statusCode == 200 {
                     CenterCoordinate.shared.longitude = veganModel.x
                     CenterCoordinate.shared.latitude = veganModel.y
                     CenterCoordinate.shared.isChangedFromEnrollView = true
-                    
+
                     self?.viewController?.popViewController()
-                } else {
+                } else if success.statusCode == 400 {
                     self?.viewController?.pushAlertController()
+                } else {
+                    if let message = success.message {
+                        self?.viewController?.showErrorAlert(with: message, title: nil)
+                    }
                 }
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+
             }
         }
     }

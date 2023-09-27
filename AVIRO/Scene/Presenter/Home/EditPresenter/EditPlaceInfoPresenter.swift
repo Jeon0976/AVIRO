@@ -39,6 +39,7 @@ protocol EditPlaceInfoProtocol: NSObject {
     func updateNaverMap(_ latLng: NMGLatLng)
     func editStoreButtonChangeableState(_ state: Bool)
     func popViewController()
+    func showErrorAlert(with error: String, title: String?)
 }
 
 final class EditPlaceInfoPresenter {
@@ -52,6 +53,8 @@ final class EditPlaceInfoPresenter {
     private var placeOperationModels: [EditOperationHoursModel]?
     
     private var newMarker = NMFMarker()
+    
+    private var canChange = false
     
     var afterChangedTitle = "" {
         didSet {
@@ -282,16 +285,23 @@ final class EditPlaceInfoPresenter {
         
         self.placeOperationModels = [EditOperationHoursModel]()
         
-        AVIROAPIManager().getOperationHour(placeId: placeId
-        ) { [weak self] model in
-            DispatchQueue.main.async {
-                let modelArray = model.data.toEditOperationHoursModels()
-                
-                self?.viewController?.dataBindingOperatingHours(
-                    operatingHourModels: modelArray
-                )
-                
-                self?.placeOperationModels = modelArray
+        AVIROAPIManager().loadOperationHours(with: placeId) { [weak self] result in
+            switch result {
+            case .success(let model):
+                if model.statusCode == 200 {
+                    if let data = model.data {
+                        let modelArray = data.toEditOperationHoursModels()
+                        
+                        self?.placeOperationModels = modelArray
+                        self?.viewController?.dataBindingOperatingHours(operatingHourModels: modelArray)
+                    }
+                } else {
+                    if let message = model.message {
+                        self?.viewController?.showErrorAlert(with: message, title: nil)
+                    }
+                }
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
     }
@@ -313,25 +323,28 @@ final class EditPlaceInfoPresenter {
     }
 
     private func changedMarkerLocation() {
-        KakaoAPIManager().kakaoMapAddressSearch(
-            address: afterChangedAddress
-        ) { [weak self] addressModel in
-            guard let documents = addressModel.documents, documents.count > 0 else { return }
-            
-            let firstCoordinate = documents[0]
-            
-            if let x = firstCoordinate.x, let y = firstCoordinate.y {
-                DispatchQueue.main.async {
-                    
+        KakaoAPIManager().addressSearch(with: afterChangedAddress) { [weak self] result in
+            switch result {
+            case .success(let model):
+                guard let documents = model.documents,
+                      documents.count > 0 else { return }
+                
+                let firstCoordinate = documents[0]
+                
+                if let x = firstCoordinate.x,
+                   let y = firstCoordinate.y {
                     self?.afterChangedXLng = x
                     self?.afterChangedYLat = y
                     
                     self?.changedMarker(lat: y, lng: x)
                 }
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
     }
     
+    // MARK: 버그 확인 main.async 해야 하나?
     private func changedMarker(
         lat: String,
         lng: String
@@ -514,8 +527,10 @@ extension EditPlaceInfoPresenter {
         
         dispatchGroup.notify(queue: .main
         ) { [weak self] in
-            self?.viewController?.popViewController()
-            self?.afterReportShowAlert?()
+            if self?.canChange ?? false {
+                self?.viewController?.popViewController()
+                self?.afterReportShowAlert?()
+            }
         }
     }
     
@@ -570,12 +585,22 @@ extension EditPlaceInfoPresenter {
                 y: whenRequestAndLoadYLatitude(beforeAddress: beforeAddress)
             )
 
-            AVIROAPIManager().postEditPlaceLocation(model
-            ) { resultModel in
-                print(resultModel.statusCode)
-                print(resultModel.message ?? "")
-
-                dispatchGroup.leave()
+            AVIROAPIManager().editPlaceLocation(with: model) { [weak self] result in
+                defer { dispatchGroup.leave() }
+                switch result {
+                case .success(let success):
+                    if success.statusCode != 200 {
+                        self?.canChange = false
+                        if let message = success.message {
+                            self?.viewController?.showErrorAlert(with: message, title: "가게정보 에러")
+                        }
+                    } else {
+                        self?.canChange = true
+                    }
+                case .failure(let error):
+                    self?.canChange = false
+                    self?.viewController?.showErrorAlert(with: error.localizedDescription, title: "가게정보 에러")
+                }
             }
         }
     }
@@ -682,12 +707,22 @@ extension EditPlaceInfoPresenter {
                 )
             )
             
-            AVIROAPIManager().postEditPlacePhone(model
-            ) { resultModel in
-                print(resultModel.statusCode)
-                print(resultModel.message ?? "")
-                
-                dispatchGroup.leave()
+            AVIROAPIManager().editPlacePhone(with: model) { [weak self] result in
+                defer { dispatchGroup.leave() }
+                switch result {
+                case .success(let success):
+                    if success.statusCode != 200 {
+                        self?.canChange = false
+                        if let message = success.message {
+                            self?.viewController?.showErrorAlert(with: message, title: "전화번호 에러")
+                        }
+                    } else {
+                        self?.canChange = true
+                    }
+                case .failure(let error):
+                    self?.canChange = false
+                    self?.viewController?.showErrorAlert(with: error.localizedDescription, title: "전화번호 에러")
+                }
             }
         }
     }
@@ -781,15 +816,23 @@ extension EditPlaceInfoPresenter {
                 sun: sun?.operatingHours,
                 sunBreak: sun?.breakTime
             )
-            
-            print(model)
-                        
-            AVIROAPIManager().postEditPlaceOperation(model
-            ) { resultModel in
-                print(resultModel.statusCode)
-                print(resultModel.message ?? "")
-                
-                dispatchGroup.leave()
+                                    
+            AVIROAPIManager().editPlaceOperation(with: model) { [weak self] result in
+                defer { dispatchGroup.leave() }
+                switch result {
+                case .success(let success):
+                    if success.statusCode != 200 {
+                        self?.canChange = false
+                        if let message = success.message {
+                            self?.viewController?.showErrorAlert(with: message, title: "영업시간 에러")
+                        }
+                    } else {
+                        self?.canChange = true
+                    }
+                case .failure(let error):
+                    self?.canChange = false
+                    self?.viewController?.showErrorAlert(with: error.localizedDescription, title: "영업시간 에러")
+                }
             }
         }
     }
@@ -817,12 +860,22 @@ extension EditPlaceInfoPresenter {
                 )
             )
             
-            AVIROAPIManager().postEditPlaceURL(model
-            ) { resultModel in
-                print(resultModel.statusCode)
-                print(resultModel.message ?? "")
-                
-                dispatchGroup.leave()
+            AVIROAPIManager().editPlaceURL(with: model) { [weak self] result in
+                defer { dispatchGroup.leave() }
+                switch result {
+                case .success(let success):
+                    if success.statusCode != 200 {
+                        self?.canChange = false
+                        if let message = success.message {
+                            self?.viewController?.showErrorAlert(with: message, title: "홈페이지 에러")
+                        }
+                    } else {
+                        self?.canChange = true
+                    }
+                case .failure(let error):
+                    self?.canChange = false
+                    self?.viewController?.showErrorAlert(with: error.localizedDescription, title: "홈페이지 에러")
+                }
             }
         }
     }

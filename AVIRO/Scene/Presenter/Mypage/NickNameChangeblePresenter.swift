@@ -14,6 +14,7 @@ protocol NickNameChangebleProtocol: NSObject {
     func changeSubInfo(subInfo: String, isVaild: Bool)
     func initSubInfo()
     func popViewController()
+    func showErrorAlert(with error: String, title: String?)
 }
 
 final class NickNameChangeblePresenter {
@@ -42,19 +43,19 @@ final class NickNameChangeblePresenter {
         let nickname = AVIRONicknameIsDuplicatedCheckDTO(nickname: userNickname)
         
         if userNickname != initNickName {
-            AVIROAPIManager().postCheckNickname(nickname) { result in
-                
-                let result = AVIRONicknameIsDuplicatedCheckResultDTO(
-                    statusCode: result.statusCode,
-                    isValid: result.isValid,
-                    message: result.message
-                )
-                
-                DispatchQueue.main.async { [weak self] in
-                    self?.viewController?.changeSubInfo(
-                        subInfo: result.message,
-                        isVaild: result.isValid ?? false
-                    )
+            AVIROAPIManager().checkNickname(with: nickname) { [weak self] result in
+                switch result {
+                case .success(let model):
+                    if model.statusCode == 200 {
+                        self?.viewController?.changeSubInfo(
+                            subInfo: model.message,
+                            isVaild: model.isValid ?? false
+                        )
+                    } else {
+                        self?.viewController?.showErrorAlert(with: model.message, title: nil)
+                    }
+                case .failure(let error):
+                    self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
                 }
             }
         } else {
@@ -70,15 +71,19 @@ final class NickNameChangeblePresenter {
             nickname: userNickname
         )
         
-        AVIROAPIManager().postChangeNickname(model) { [weak self] resultModel in
-            if resultModel.statusCode == 200 {
-                DispatchQueue.main.async {
+        AVIROAPIManager().editNickname(with: model) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.statusCode == 200 {
                     MyData.my.nickname = userNickname
-                    print("성공!")
                     self?.viewController?.popViewController()
+                } else {
+                    if let message = success.message {
+                        self?.viewController?.showErrorAlert(with: message, title: nil)
+                    }
                 }
-            } else {
-                print(resultModel)
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
     }

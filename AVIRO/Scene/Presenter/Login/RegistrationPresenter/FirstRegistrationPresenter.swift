@@ -13,13 +13,12 @@ protocol FirstRegistrationProtocol: NSObject {
     func setupGesture()
     func changeSubInfo(subInfo: String, isVaild: Bool)
     func pushSecondRegistrationView(_ signupModel: AVIROUserSignUpDTO)
+    func showErrorAlert(with error: String, title: String?)
 }
 
 final class FirstRegistrationPresenter {
     weak var viewController: FirstRegistrationProtocol?
     
-    private let aviroManager = AVIROAPIManager()
-
     var userModel: CommonUserModel!
     var signupModel: AVIROUserSignUpDTO!
     
@@ -80,18 +79,19 @@ final class FirstRegistrationPresenter {
         
         let nickname = AVIRONicknameIsDuplicatedCheckDTO(nickname: userNickname)
         
-        aviroManager.postCheckNickname(nickname) { result in
-            let result = AVIRONicknameIsDuplicatedCheckResultDTO(
-                statusCode: result.statusCode,
-                isValid: result.isValid,
-                message: result.message
-            )
-            
-            DispatchQueue.main.async { [weak self] in
-                self?.viewController?.changeSubInfo(
-                    subInfo: result.message,
-                    isVaild: result.isValid ?? false
-                )
+        AVIROAPIManager().checkNickname(with: nickname) { [weak self] result in
+            switch result {
+            case .success(let model):
+                if model.statusCode == 200 {
+                    self?.viewController?.changeSubInfo(
+                        subInfo: model.message,
+                        isVaild: model.isValid ?? false
+                    )
+                } else {
+                    self?.viewController?.showErrorAlert(with: model.message, title: nil)
+                }
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
     }

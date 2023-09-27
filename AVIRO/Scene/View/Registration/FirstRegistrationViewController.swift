@@ -14,6 +14,8 @@ private enum Text: String {
     case subInfo = "이모지, 특수문자(-, _ 제외)를 사용할 수 없습니다."
     case subInfo2 = "(0/8)"
     case next = "다음으로"
+    
+    case error = "에러"
 }
 
 private enum Layout {
@@ -218,17 +220,19 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
         subInfo: String,
         isVaild: Bool
     ) {
-        self.subInfo.text = subInfo
-        
-        if isVaild {
-            nextButton.isEnabled = true
-            nicknameField.isPossible = true
-            self.subInfo.textColor = .gray2
-        } else {
-            nextButton.isEnabled = false
-            nicknameField.isPossible = false
-            self.subInfo.textColor = .warning
-            nicknameField.activeHshakeEffect()
+        DispatchQueue.main.async { [weak self] in
+            self?.subInfo.text = subInfo
+            
+            if isVaild {
+                self?.nextButton.isEnabled = true
+                self?.nicknameField.isPossible = true
+                self?.subInfo.textColor = .gray2
+            } else {
+                self?.nextButton.isEnabled = false
+                self?.nicknameField.isPossible = false
+                self?.subInfo.textColor = .warning
+                self?.nicknameField.activeHshakeEffect()
+            }
         }
     }
     
@@ -249,6 +253,16 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
     
     @objc private func tappedNextButton() {
         presenter.pushUserInfo()
+    }
+    
+    func showErrorAlert(with error: String, title: String? = nil) {
+        DispatchQueue.main.async { [weak self] in
+            if let title = title {
+                self?.showAlert(title: title, message: error)
+            } else {
+                self?.showAlert(title: Text.error.rawValue, message: error)
+            }
+        }
     }
 }
 

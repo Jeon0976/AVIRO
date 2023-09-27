@@ -12,6 +12,8 @@ private enum Text: String {
     case logoutToast = "로그아웃이 완료되었습니다."
     case withdrawalTitle = "회원탈퇴가 완료되었어요."
     case withdrawalMessage = "함께한 시간이 아쉽지만,\n언제든지 돌아오는 문을 열어둘게요.\n어비로의 비건 여정은 계속될 거에요!"
+    
+    case error = "에러"
 }
 
 private enum Layout {
@@ -197,23 +199,27 @@ extension LoginViewController: LoginViewProtocol {
     
     // MARK: Push TabBar Viewcontroller
     func pushTabBar() {
-        let viewController = TabBarViewController()
-        
-        navigationController?.pushViewController(viewController, animated: true)
+        DispatchQueue.main.async { [weak self] in
+            let viewController = TabBarViewController()
+            
+            self?.navigationController?.pushViewController(viewController, animated: true)
+        }
     }
     
     // MARK: Push Registration ViewController
     func pushRegistration(_ userModel: CommonUserModel) {
-        let viewController = FirstRegistrationViewController()
-        
-        let presenter = FirstRegistrationPresenter(
-            viewController: viewController,
-            userModel: userModel
-        )
-        
-        viewController.presenter = presenter
+        DispatchQueue.main.async { [weak self] in
+            let viewController = FirstRegistrationViewController()
+            
+            let presenter = FirstRegistrationPresenter(
+                viewController: viewController,
+                userModel: userModel
+            )
+            
+            viewController.presenter = presenter
 
-        navigationController?.pushViewController(viewController, animated: true)
+            self?.navigationController?.pushViewController(viewController, animated: true)
+        }
     }
     
     func afterLogoutAndMakeToastButton() {
@@ -237,11 +243,14 @@ extension LoginViewController: LoginViewProtocol {
         present(alertController, animated: true)
     }
     
-    func showErrorAlert(_ error: Error) {
-        showAlert(
-            title: "에러",
-            message: error.localizedDescription
-        )
+    func showErrorAlert(with error: String, title: String? = nil) {
+        DispatchQueue.main.async { [weak self] in
+            if let title = title {
+                self?.showAlert(title: title, message: error)
+            } else {
+                self?.showAlert(title: Text.error.rawValue, message: error)
+            }
+        }
     }
 }
 

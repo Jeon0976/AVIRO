@@ -22,6 +22,7 @@ protocol LocalMarkerDataProtocol {
     func updateWhenStarButton(_ markerModel: [MarkerModel])
     func updateMarkerModel(_ markerModel: MarkerModel)
     func getUpdatedMarkers() -> [NMFMarker]
+    func deleteMarkerModel(with placeId: String)
     func deleteAllMarkerModel()
 }
 
@@ -96,7 +97,7 @@ final class LocalMarkerData: LocalMarkerDataProtocol {
 
         return (nil, nil)
     }
-    
+
     func setMarkerModel(_ markerModels: [MarkerModel]) {
         markers = markerModels
     }
@@ -135,10 +136,6 @@ final class LocalMarkerData: LocalMarkerDataProtocol {
         
     }
     
-    private func markerDataRefresh() {
-        
-    }
-
     func getUpdatedMarkers() -> [NMFMarker] {
         let markers = updatedMarkers
         
@@ -147,7 +144,19 @@ final class LocalMarkerData: LocalMarkerDataProtocol {
         return markers
     }
     
+    func deleteMarkerModel(with placeId: String) {
+        guard let markerModel = markers.first(where: { $0.placeId == placeId })  else { return }
+        
+        markerModel.marker.mapView = nil
+        
+        markers.removeAll { $0 == markerModel }
+    }
+
     func deleteAllMarkerModel() {
+        markers.forEach {
+            $0.marker.mapView = nil
+        }
+        
         markers.removeAll()
     }
 }

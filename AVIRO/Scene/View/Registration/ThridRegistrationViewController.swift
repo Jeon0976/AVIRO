@@ -12,6 +12,8 @@ private enum Text: String {
     case subtitle = "정책 및 약관을 클릭해 모든 내용을 확인해주세요."
     case next = "다음으로"
     case allAccept = "전체 동의"
+    
+    case error = "에러"
 }
 
 private enum Layout {
@@ -178,9 +180,11 @@ extension ThridRegistrationViewController: ThridRegistrationProtocol {
     }
     
     func pushFinalRegistrationView() {
-        let viewController = FinalRegistrationViewController()
-        
-        navigationController?.pushViewController(viewController, animated: true)
+        DispatchQueue.main.async { [weak self] in
+            let viewController = FinalRegistrationViewController()
+            
+            self?.navigationController?.pushViewController(viewController, animated: true)
+        }
     }
     
     @objc private func tappedNextButton() {
@@ -195,6 +199,16 @@ extension ThridRegistrationViewController: ThridRegistrationProtocol {
 
         checkAllRequiredTerms()
         termsTableView.reloadData()
+    }
+    
+    func showErrorAlert(with error: String, title: String? = nil) {
+        DispatchQueue.main.async { [weak self] in
+            if let title = title {
+                self?.showAlert(title: title, message: error)
+            } else {
+                self?.showAlert(title: Text.error.rawValue, message: error)
+            }
+        }
     }
 }
 

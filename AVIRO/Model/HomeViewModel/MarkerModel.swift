@@ -10,7 +10,7 @@ import UIKit
 import NMapsMap
 
 // MARK: Map Place didSet 수정 확인
-struct MarkerModel {
+struct MarkerModel: Equatable {
     let placeId: String
     var marker: NMFMarker
     // MARK: 수정 중 일때만 Map Place 변경 가능 

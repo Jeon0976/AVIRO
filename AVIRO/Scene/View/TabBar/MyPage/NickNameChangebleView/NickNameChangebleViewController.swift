@@ -7,6 +7,10 @@
 
 import UIKit
 
+private enum Text: String {
+    case error = "에러"
+}
+
 final class NickNameChangebleViewController: UIViewController {
     lazy var presenter = NickNameChangeblePresenter(viewController: self)
     
@@ -151,17 +155,20 @@ extension NickNameChangebleViewController: NickNameChangebleProtocol {
     }
     
     func changeSubInfo(subInfo: String, isVaild: Bool) {
-        self.subInfo.text = subInfo
-        
-        if isVaild {
-            editNickNameButton.isEnabled = true
-            nicNameField.isPossible = true
-            self.subInfo.textColor = .gray2
-        } else {
-            editNickNameButton.isEnabled = false
-            nicNameField.isPossible = false
-            self.subInfo.textColor = .red
-            nicNameField.activeHshakeEffect()
+        DispatchQueue.main.async { [weak self] in
+            self?.subInfo.text = subInfo
+            
+            if isVaild {
+                self?.editNickNameButton.isEnabled = true
+                self?.nicNameField.isPossible = true
+                self?.subInfo.textColor = .gray2
+            } else {
+                self?.editNickNameButton.isEnabled = false
+                self?.nicNameField.isPossible = false
+                self?.subInfo.textColor = .red
+                self?.nicNameField.activeHshakeEffect()
+            }
+
         }
     }
     
@@ -174,7 +181,19 @@ extension NickNameChangebleViewController: NickNameChangebleProtocol {
     }
     
     func popViewController() {
-        navigationController?.popViewController(animated: true)
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    func showErrorAlert(with error: String, title: String? = nil) {
+        DispatchQueue.main.async { [weak self] in
+            if let title = title {
+                self?.showAlert(title: title, message: error)
+            } else {
+                self?.showAlert(title: Text.error.rawValue, message: error)
+            }
+        }
     }
 }
 
@@ -222,7 +241,7 @@ extension NickNameChangebleViewController: UITextFieldDelegate {
     private func checkNicknameDuplicationAfterDelay() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(
-            timeInterval: 0.5,
+            timeInterval: 0.2,
             target: self,
             selector: #selector(checkDuplication),
             userInfo: nil,

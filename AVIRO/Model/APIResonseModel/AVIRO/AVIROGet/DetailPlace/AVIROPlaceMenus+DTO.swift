@@ -9,7 +9,8 @@ import Foundation
 
 struct AVIROMenusResultDTO: Decodable {
     let statusCode: Int
-    let data: AVIROPlaceMenus
+    let data: AVIROPlaceMenus?
+    let message: String?
 }
 
 struct AVIROPlaceMenus: Decodable {

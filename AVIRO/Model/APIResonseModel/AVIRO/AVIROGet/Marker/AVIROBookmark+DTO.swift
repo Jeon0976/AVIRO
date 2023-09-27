@@ -10,4 +10,5 @@ import Foundation
 struct AVIROBookmarkModelResultDTO: Decodable {
     let statusCode: Int
     let bookmarks: [String]
+    let message: String?
 }

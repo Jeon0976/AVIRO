@@ -7,14 +7,14 @@
 
 import Foundation
 
-protocol PublicAPIRequestManagerProtocol {
+protocol PublicAPIManagerProtocol {
     func publicAddressSearch(
         currentPage: String,
         keyword: String,
         completion: @escaping (Result<PublicAddressDTO, Error>) -> Void)
 }
 
-final class PublicAPIRequestManager: PublicAPIRequestManagerProtocol {
+final class PublicAPIManager: PublicAPIManagerProtocol {
     private let session: URLSession
     let api = PublicAPIRequestComponents()
     

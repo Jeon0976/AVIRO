@@ -9,7 +9,8 @@ import Foundation
 
 struct AVIROMyContributionCountDTO: Decodable {
     let statusCode: Int
-    let data: AVIROMyActivityCounts
+    let data: AVIROMyActivityCounts?
+    let message: String?
 }
 
 struct AVIROMyActivityCounts: Decodable {

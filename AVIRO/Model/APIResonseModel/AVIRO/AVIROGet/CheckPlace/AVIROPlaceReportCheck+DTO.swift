@@ -15,4 +15,5 @@ struct AVIROPlaceReportCheckDTO {
 struct AVIROPlaceReportCheckResultDTO: Decodable {
     let statusCode: Int
     let reported: Bool
+    let message: String?
 }

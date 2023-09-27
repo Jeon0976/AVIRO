@@ -9,7 +9,8 @@ import Foundation
 
 struct AVIROReviewsResultDTO: Decodable {
     let statusCode: Int
-    let data: AVIROReviewsArray
+    let data: AVIROReviewsArray?
+    let message: String?
 }
 
 struct AVIROReviewsArray: Decodable {

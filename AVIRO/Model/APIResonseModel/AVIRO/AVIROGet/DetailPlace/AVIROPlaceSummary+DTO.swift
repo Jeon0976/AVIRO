@@ -7,7 +7,8 @@
 
 struct AVIROSummaryResultDTO: Decodable {
     let statusCode: Int
-    let data: AVIROPlaceSummary
+    let data: AVIROPlaceSummary?
+    let message: String?
 }
 
 struct AVIROPlaceSummary: Decodable {

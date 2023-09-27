@@ -7,6 +7,10 @@
 
 import UIKit
 
+private enum Text: String {
+    case error = "에러"
+}
+
 final class ReportReviewViewController: UIViewController {
     lazy var presenter = ReportReviewPresenter(viewController: self)
     
@@ -246,7 +250,19 @@ extension ReportReviewViewController: ReportReviewProtocol {
     }
     
     func dismissViewController() {
-        self.dismiss(animated: true)
+        DispatchQueue.main.async { [weak self] in
+            self?.dismiss(animated: true)
+        }
+    }
+    
+    func showErrorAlert(with error: String, title: String? = nil) {
+        DispatchQueue.main.async { [weak self] in
+            if let title = title {
+                self?.showAlert(title: title, message: error)
+            } else {
+                self?.showAlert(title: Text.error.rawValue, message: error)
+            }
+        }
     }
 }
 

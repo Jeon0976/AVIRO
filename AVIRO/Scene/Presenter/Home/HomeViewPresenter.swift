@@ -25,39 +25,19 @@ protocol HomeViewProtocol: NSObject {
     func moveToCameraWhenHasAVIRO(_ markerModel: MarkerModel)
     func loadMarkers(_ markers: [NMFMarker])
     func afterLoadStarButton(noMarkers: [NMFMarker])
-    func afterClickedMarker(
-        placeModel: PlaceTopModel,
-        placeId: String,
-        isStar: Bool
-    )
-    func afterSlideupPlaceView(
-        infoModel: AVIROPlaceInfo?,
-        menuModel: AVIROPlaceMenus?,
-        reviewsModel: AVIROReviewsArray?
-    )
+    func afterClickedMarker(placeModel: PlaceTopModel, placeId: String, isStar: Bool)
+    func afterSlideupPlaceView(infoModel: AVIROPlaceInfo?, menuModel: AVIROPlaceMenus?,reviewsModel: AVIROReviewsArray?)
     func showReportPlaceAlert()
     func isDuplicatedReport()
     func isSuccessReportPlaceActionSheet()
     func pushPlaceInfoOpreationHoursViewController(_ models: [EditOperationHoursModel])
-    func pushEditPlaceInfoViewController(
-        placeMarkerModel: MarkerModel,
-        placeId: String,
-        placeSummary: AVIROPlaceSummary,
-        placeInfo: AVIROPlaceInfo,
-        editSegmentedIndex: Int
-    )
-    func pushEditMenuViewController(
-        placeId: String,
-        isAll: Bool,
-        isSome: Bool,
-        isRequest: Bool,
-        menuArray: [AVIROMenu]
-    )
+    func pushEditPlaceInfoViewController(placeMarkerModel: MarkerModel, placeId: String, placeSummary: AVIROPlaceSummary, placeInfo: AVIROPlaceInfo, editSegmentedIndex: Int)
+    func pushEditMenuViewController(placeId: String, isAll: Bool, isSome: Bool, isRequest: Bool, menuArray: [AVIROMenu])
     func refreshMenuView(_ menuData: AVIROPlaceMenus?)
     func refreshMapPlace(_ mapPlace: MapPlace)
     func deleteMyReviewInView(_ commentId: String)
     func showToastAlert(_ title: String)
-    func showErrorAlert(_ error: String)
+    func showErrorAlert(with error: String, title: String?)
     func showErrorAlertWhenLoadMarker()
 }
 
@@ -203,15 +183,14 @@ final class HomeViewPresenter: NSObject {
     
     // MARK: vegan Data 불러오기
     func loadVeganData() {
-        
-        let getMarkerModel = AVIROMapModelDTO(
+        let mapModel = AVIROMapModelDTO(
             longitude: MyCoordinate.shared.longitudeString,
             latitude: MyCoordinate.shared.latitudeString,
             wide: "0.0",
             time: nil
         )
         
-        AVIROAPIManager().getNerbyPlaceModels(mapModel: getMarkerModel) { [weak self] result in
+        AVIROAPIManager().loadNerbyPlaceModels(with: mapModel) { [weak self] result in
             switch result {
             case .success(let mapDatas):
                 if mapDatas.statusCode == 200 {
@@ -221,24 +200,24 @@ final class HomeViewPresenter: NSObject {
                 }
                 
             case .failure(_):
-                DispatchQueue.main.async {
-                    self?.viewController?.showErrorAlertWhenLoadMarker()
-                }
+                self?.viewController?.showErrorAlertWhenLoadMarker()
             }
         }
         
-        bookmarkManager.fetchAllData()
+        bookmarkManager.fetchAllData { [weak self] error in
+            self?.viewController?.showErrorAlert(with: error, title: nil)
+        }
     }
     
     private func updateMarkerDataFromServer() {
-        let getMarkerModel = AVIROMapModelDTO(
+        let mapModel = AVIROMapModelDTO(
             longitude: MyCoordinate.shared.longitudeString,
             latitude: MyCoordinate.shared.latitudeString,
             wide: "0.0",
             time: nowDateTime
         )
-              
-        AVIROAPIManager().getNerbyPlaceModels(mapModel: getMarkerModel) { [weak self] result in
+        
+        AVIROAPIManager().loadNerbyPlaceModels(with: mapModel) { [weak self] result in
             switch result {
             case .success(let mapDatas):
                 if mapDatas.data.amount != 0 {
@@ -247,13 +226,11 @@ final class HomeViewPresenter: NSObject {
                 
                 // MARK: Delete map 처리
                 if let deletedPlace = mapDatas.data.deletedPlace {
-                    
+                    self?.deleteMarkers(deletedPlace)
                 }
                 
             case .failure(let error):
-                DispatchQueue.main.async {
-                    self?.viewController?.showErrorAlert(error.localizedDescription)
-                }
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
     }
@@ -300,6 +277,14 @@ final class HomeViewPresenter: NSObject {
         }
     }
     
+    private func deleteMarkers(_ placeId: [String]) {
+        DispatchQueue.main.async {
+            placeId.forEach {
+                LocalMarkerData.shared.deleteMarkerModel(with: $0)
+            }
+        }
+    }
+    
     private func whenAfterEnrollPlace() {
         guard let lat = CenterCoordinate.shared.latitude,
               let lng = CenterCoordinate.shared.longitude
@@ -327,6 +312,7 @@ final class HomeViewPresenter: NSObject {
         CenterCoordinate.shared.isChangedFromEnrollView = false
     }
     
+    // MARK: Create Marker
     private func createMarkerModel(from data: AVIROMarkerModel) -> MarkerModel {
         let latLng = NMGLatLng(lat: data.y, lng: data.x)
         let marker = NMFMarker(position: latLng)
@@ -411,7 +397,7 @@ final class HomeViewPresenter: NSObject {
         viewController?.moveToCameraWhenHasAVIRO(validMarkerModel)
     }
     
-    /// 클릭 된 마커 데이터 받기 위한 api 호출
+    // MARK: Load Place Sumamry
     private func getPlaceSummaryModel(_ markerModel: MarkerModel) {
         let mapPlace = markerModel.mapPlace
         let placeX = markerModel.marker.position.lng
@@ -419,33 +405,47 @@ final class HomeViewPresenter: NSObject {
         let placeId = markerModel.placeId
 
         selectedPlaceId = placeId
-                
-        AVIROAPIManager().getPlaceSummary(placeId: placeId) { summary in
-            let place = summary.data
-
-            let distanceValue = LocationUtility.distanceMyLocation(x_lng: placeX, y_lat: placeY)
-
-            let distanceString = String(distanceValue).convertDistanceUnit()
-            let reviewsCount = String(place.commentCount)
-            
-            self.selectedSummaryModel = place
-            
-            let placeTopModel = PlaceTopModel(
-                placeState: mapPlace,
-                placeTitle: place.title,
-                placeCategory: place.category,
-                distance: distanceString,
-                reviewsCount: reviewsCount,
-                address: place.address)
-            
-            DispatchQueue.main.async { [weak self] in
-                let isStar = self?.bookmarkManager.checkData(placeId)
-                
-                self?.viewController?.afterClickedMarker(
-                    placeModel: placeTopModel,
-                    placeId: placeId,
-                    isStar: isStar ?? false
-                )
+        
+        AVIROAPIManager().loadPlaceSummary(with: placeId) { [weak self] result in
+            switch result {
+            case .success(let summary):
+                if summary.statusCode == 200 {
+                    if let place = summary.data {
+                        let distanceValue = LocationUtility.distanceMyLocation(
+                            x_lng: placeX,
+                            y_lat: placeY
+                        )
+                        let distanceString = String(distanceValue).convertDistanceUnit()
+                        let reviewsCount = String(place.commentCount)
+                        
+                        self?.selectedSummaryModel = place
+                        
+                        let placeTopModel = PlaceTopModel(
+                            placeState: mapPlace,
+                            placeTitle: place.title,
+                            placeCategory: place.category,
+                            distance: distanceString,
+                            reviewsCount: reviewsCount,
+                            address: place.address
+                        )
+                        
+                        DispatchQueue.main.async {
+                            let isStar = self?.bookmarkManager.checkData(placeId)
+                            
+                            self?.viewController?.afterClickedMarker(
+                                placeModel: placeTopModel,
+                                placeId: placeId,
+                                isStar: isStar ?? false
+                            )
+                        }
+                    }
+                } else {
+                    if let message = summary.message {
+                        self?.viewController?.showErrorAlert(with: message, title: nil)
+                    }
+                }
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
     }
@@ -555,9 +555,13 @@ final class HomeViewPresenter: NSObject {
         guard let placeId = selectedPlaceId else { return }
         
         if isSelected {
-            bookmarkManager.updateData(placeId)
+            bookmarkManager.updateData(placeId) { [weak self] error in
+                self?.viewController?.showToastAlert(error)
+            }
         } else {
-            bookmarkManager.deleteData(placeId)
+            bookmarkManager.deleteData(placeId) { [weak self] error in
+                self?.viewController?.showToastAlert(error)
+            }
         }
     }
     
@@ -568,25 +572,57 @@ final class HomeViewPresenter: NSObject {
         let dispatchGroup = DispatchGroup()
         
         dispatchGroup.enter()
-        AVIROAPIManager().getPlaceInfo(placeId: placeId) { [weak self] placeInfoModel in
+        AVIROAPIManager().loadPlaceInfo(with: placeId) { [weak self] result in
+            defer { dispatchGroup.leave() }
             
-            self?.selectedInfoModel = placeInfoModel.data
-            
-            dispatchGroup.leave()
+            switch result {
+            case .success(let model):
+                if model.statusCode == 200 {
+                    self?.selectedInfoModel = model.data 
+                } else {
+                    if let message = model.message {
+                        self?.viewController?.showErrorAlert(with: message, title: "가게 에러")
+                    }
+                }
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: "가게 에러")
+            }
         }
         
         dispatchGroup.enter()
-        AVIROAPIManager().getMenuInfo(placeId: placeId) { [weak self] placeMenuModel in
-            self?.selectedMenuModel = placeMenuModel.data
+        AVIROAPIManager().loadMenus(with: placeId) { [weak self] result in
+            defer { dispatchGroup.leave() }
             
-            dispatchGroup.leave()
+            switch result {
+            case .success(let model):
+                if model.statusCode == 200 {
+                    self?.selectedMenuModel = model.data
+                } else {
+                    if let message = model.message {
+                        self?.viewController?.showErrorAlert(with: message, title: "메뉴 에러")
+                    }
+                }
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: "메뉴 에러")
+            }
         }
         
         dispatchGroup.enter()
-        AVIROAPIManager().getCommentInfo(placeId: placeId) { [weak self] placeReviewsModel in
-            self?.selectedReviewsModel = placeReviewsModel.data
+        AVIROAPIManager().loadReviews(with: placeId) { [weak self] result in
+            defer { dispatchGroup.leave() }
             
-            dispatchGroup.leave()
+            switch result {
+            case .success(let model):
+                if model.statusCode == 200 {
+                    self?.selectedReviewsModel = model.data
+                } else {
+                    if let message = model.message {
+                        self?.viewController?.showErrorAlert(with: message, title: "후기 에러")
+                    }
+                }
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: "후기 에러")
+            }
         }
         
         dispatchGroup.notify(queue: .main) { [weak self] in
@@ -607,13 +643,22 @@ final class HomeViewPresenter: NSObject {
             userId: MyData.my.id
         )
         
-        AVIROAPIManager().getPlaceReportIsDuplicated(model) { [weak self] resultModel in
-            DispatchQueue.main.async {
-                if resultModel.reported {
+        AVIROAPIManager().checkPlaceReportIsDuplicated(with: model) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.statusCode == 200 {
+                    success.reported ?
                     self?.viewController?.isDuplicatedReport()
-                } else {
+                    :
                     self?.viewController?.showReportPlaceAlert()
+                    
+                } else {
+                    if let message = success.message {
+                        self?.viewController?.showErrorAlert(with: message, title: nil)
+                    }
                 }
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
     }
@@ -628,11 +673,18 @@ final class HomeViewPresenter: NSObject {
             code: type.code
         )
 
-        AVIROAPIManager().postPlaceReport(model) { [weak self] result in
-            if result.statusCode == 200 {
-                DispatchQueue.main.async {
+        AVIROAPIManager().reportPlace(with: model) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.statusCode == 200 {
                     self?.viewController?.isSuccessReportPlaceActionSheet()
+                } else {
+                    if let message = success.message {
+                        self?.viewController?.showErrorAlert(with: message, title: nil)
+                    }
                 }
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
     }
@@ -643,11 +695,22 @@ final class HomeViewPresenter: NSObject {
     }
     
     func loadPlaceOperationHours() {
-        guard let selectedPlaceId = selectedPlaceId else { return }
+        guard let placeId = selectedPlaceId else { return }
         
-        AVIROAPIManager().getOperationHour(placeId: selectedPlaceId) { [weak self] model in
-            DispatchQueue.main.async {
-                self?.viewController?.pushPlaceInfoOpreationHoursViewController(model.data.toEditOperationHoursModels())
+        AVIROAPIManager().loadOperationHours(with: placeId) { [weak self] result in
+            switch result {
+            case .success(let model):
+                if model.statusCode == 200 {
+                    if let model = model.data {
+                        self?.viewController?.pushPlaceInfoOpreationHoursViewController(model.toEditOperationHoursModels())
+                    }
+                } else {
+                    if let message = model.message {
+                        self?.viewController?.showErrorAlert(with: message, title: nil)
+                    }
+                }
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
     }
@@ -694,10 +757,21 @@ final class HomeViewPresenter: NSObject {
     
     func afterEditMenu() {
         guard let placeId = selectedPlaceId else { return }
-        AVIROAPIManager().getMenuInfo(placeId: placeId) { [weak self] placeMenuModel in
-            DispatchQueue.main.async {
-                self?.selectedMenuModel = placeMenuModel.data
-                self?.viewController?.refreshMenuView(placeMenuModel.data)
+        AVIROAPIManager().loadMenus(with: placeId) { [weak self] result in
+            switch result {
+            case .success(let menuModel):
+                if menuModel.statusCode == 200 {
+                    if let model = menuModel.data {
+                        self?.selectedMenuModel = model
+                        self?.viewController?.refreshMenuView(model)
+                    }
+                } else {
+                    if let message = menuModel.message {
+                        self?.viewController?.showErrorAlert(with: message, title: nil)
+                    }
+                }
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
     }
@@ -718,35 +792,46 @@ final class HomeViewPresenter: NSObject {
     }
     
     func uploadReview(_ postReviewModel: AVIROEnrollReviewDTO) {
-        AVIROAPIManager().postCommentModel(postReviewModel) { [weak self] model in
-            if let message = model.message {
-                DispatchQueue.main.async {
+        AVIROAPIManager().createReview(with: postReviewModel) { [weak self] result in
+            switch result {
+            case .success(let model):
+                if let message = model.message {
                     self?.viewController?.showToastAlert(message)
                 }
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
     }
     
     func editMyReview(_ postEditReviewModel: AVIROEditReviewDTO) {
-        AVIROAPIManager().postEditCommentModel(postEditReviewModel) { [weak self] model in
-            if let message = model.message {
-                DispatchQueue.main.async {
+        
+        AVIROAPIManager().editReview(with: postEditReviewModel) { [weak self] result in
+            switch result {
+            case .success(let model):
+                if let message = model.message {
                     self?.viewController?.showToastAlert(message)
                 }
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
     }
     
     // MARK: 수정 요망
     func deleteMyReview(_ postDeleteReviewModel: AVIRODeleteReveiwDTO) {
-        AVIROAPIManager().deleteReviewModel(postDeleteReviewModel) { [weak self] model in
-            DispatchQueue.main.async {
+        AVIROAPIManager().deleteReview(with: postDeleteReviewModel) { [weak self] result in
+            switch result {
+            case .success(let model):
+                if model.statusCode == 200 {
+                    self?.viewController?.deleteMyReviewInView(postDeleteReviewModel.commentId)
+                }
+                
                 if let message = model.message {
                     self?.viewController?.showToastAlert(message)
-                } else {
-                    self?.viewController?.showToastAlert("삭제에 성공했습니다.")
                 }
-                self?.viewController?.deleteMyReviewInView(postDeleteReviewModel.commentId)
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
     }

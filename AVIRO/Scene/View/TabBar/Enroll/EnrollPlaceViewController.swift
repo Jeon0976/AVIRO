@@ -7,6 +7,10 @@
 
 import UIKit
 
+private enum Text: String {
+    case error = "에러"
+}
+
 final class EnrollPlaceViewController: UIViewController {
     lazy var presenter = EnrollPlacePresenter(viewController: self)
     
@@ -237,8 +241,10 @@ extension EnrollPlaceViewController: EnrollPlaceProtocol {
     
     // MARK: Pop View Controller
     func popViewController() {
-        initData()
-        tabBarController?.selectedIndex = 0
+        DispatchQueue.main.async { [weak self] in
+            self?.initData()
+            self?.tabBarController?.selectedIndex = 0
+        }
     }
     
     // MARK: Push Alert Controller
@@ -246,6 +252,16 @@ extension EnrollPlaceViewController: EnrollPlaceProtocol {
         let title = "이미 등록된 가게입니다"
         let message = "다른 유저가 이미 등록한 가게예요.\n홈 화면에서 검색해보세요."
         showAlert(title: title, message: message)
+    }
+    
+    func showErrorAlert(with error: String, title: String? = nil) {
+        DispatchQueue.main.async { [weak self] in
+            if let title = title {
+                self?.showAlert(title: title, message: error)
+            } else {
+                self?.showAlert(title: Text.error.rawValue, message: error)
+            }
+        }
     }
 }
 

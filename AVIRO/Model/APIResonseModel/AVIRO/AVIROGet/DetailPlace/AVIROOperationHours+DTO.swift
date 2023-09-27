@@ -9,7 +9,8 @@ import Foundation
 
 struct AVIROOperationHoursDTO: Decodable {
     let statusCode: Int
-    let data: AVIROOperationWeek
+    let data: AVIROOperationWeek?
+    let message: String?
 }
 
 struct AVIROOperationWeek: Decodable {

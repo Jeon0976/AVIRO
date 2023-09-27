@@ -17,7 +17,7 @@ protocol LoginViewProtocol: NSObject {
     func pushRegistration(_ userModel: CommonUserModel)
     func afterLogoutAndMakeToastButton()
     func afterWithdrawalUserShowAlert()
-    func showErrorAlert(_ error: Error)
+    func showErrorAlert(with error: String, title: String?)
 }
 
 final class LoginViewPresenter: NSObject {
@@ -65,38 +65,38 @@ final class LoginViewPresenter: NSObject {
     func whenCheckAfterAppleLogin(_ appleUserModel: AppleUserModel) {
         let userCheck = AVIROAppleUserCheckMemberDTO(userToken: appleUserModel.userIdentifier)
         
-        AVIROAPIManager().postCheckAppleUserModel(userCheck) { [weak self] userInfo in
-            if userInfo.data != nil {
-                let userId = userInfo.data?.userId ?? ""
-                let userName = userInfo.data?.userName ?? ""
-                let userEmail = userInfo.data?.userEmail ?? ""
-                let userNickname = userInfo.data?.nickname ?? ""
-                let marketingAgree = userInfo.data?.marketingAgree ?? 0
-                
-                MyData.my.whenLogin(
-                    userId: userId,
-                    userName: userName,
-                    userEmail: userEmail,
-                    userNickname: userNickname,
-                    marketingAgree: marketingAgree
-                )
-                
-                DispatchQueue.main.async {
+        AVIROAPIManager().checkAppleToken(with: userCheck) { [weak self] result in
+            switch result {
+            case .success(let model):
+                if model.data != nil {
+                    let userId = model.data?.userId ?? ""
+                    let userName = model.data?.userName ?? ""
+                    let userEmail = model.data?.userEmail ?? ""
+                    let userNickname = model.data?.nickname ?? ""
+                    let marketingAgree = model.data?.marketingAgree ?? 0
+                    
+                    MyData.my.whenLogin(
+                        userId: userId,
+                        userName: userName,
+                        userEmail: userEmail,
+                        userNickname: userNickname,
+                        marketingAgree: marketingAgree
+                    )
+                    
                     self?.keychain.set(userId, forKey: KeychainKey.userId.rawValue)
                     self?.viewController?.pushTabBar()
-                }
-            } else {
-                let userModel = CommonUserModel(
-                    token: appleUserModel.userIdentifier,
-                    name: appleUserModel.name,
-                    email: appleUserModel.email
-                )
-                
-                DispatchQueue.main.async {
+                } else {
+                    let userModel = CommonUserModel(
+                        token: appleUserModel.userIdentifier,
+                        name: appleUserModel.name,
+                        email: appleUserModel.email
+                    )
+                    
                     self?.viewController?.pushRegistration(userModel)
                 }
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
-            
         }
     }
 }
@@ -108,6 +108,12 @@ extension LoginViewPresenter: ASAuthorizationControllerDelegate {
         didCompleteWithAuthorization authorization: ASAuthorization
     ) {
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            guard let authorizationCode = appleIDCredential.authorizationCode,
+                  let identityToken = appleIDCredential.identityToken
+            else { return }
+
+            let code = String(data: authorizationCode, encoding: .utf8)!
+            let token = String(data: identityToken, encoding: .utf8)!
             
             let userIdentifier = appleIDCredential.user
             let fullName = appleIDCredential.fullName?.formatted() ?? ""
@@ -119,7 +125,10 @@ extension LoginViewPresenter: ASAuthorizationControllerDelegate {
                 email: email
             )
             
-            whenCheckAfterAppleLogin(appleUserModel)
+            print(code)
+            print(token)
+            print(appleUserModel)
+//            whenCheckAfterAppleLogin(appleUserModel)
         }
     }
     
@@ -127,6 +136,6 @@ extension LoginViewPresenter: ASAuthorizationControllerDelegate {
         controller: ASAuthorizationController,
         didCompleteWithError error: Error
     ) {
-        viewController?.showErrorAlert(error)
+        viewController?.showErrorAlert(with: error.localizedDescription, title: "애플 로그인 에러")
     }
 }

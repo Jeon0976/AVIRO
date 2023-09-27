@@ -17,6 +17,7 @@ protocol ChangebleAddressProtocol: NSObject {
     func afterChangedAddressWhenMapView(_ address: String)
     func afterResultShowTable(with totalCount: Int)
     func popViewController()
+    func showErrorAlert(with error: String, title: String?)
 }
 
 final class ChangeableAddressPresenter {
@@ -24,10 +25,8 @@ final class ChangeableAddressPresenter {
     
     private var addressModels = [Juso]() {
         didSet {
-            DispatchQueue.main.async { [weak self] in
-                guard let count = self?.totalCount else { return }
-                self?.viewController?.afterResultShowTable(with: count)
-            }
+            let count = self.totalCount
+            viewController?.afterResultShowTable(with: count)
         }
     }
     var changedColorText = ""
@@ -78,7 +77,7 @@ final class ChangeableAddressPresenter {
         pageIndex = 1
         self.changedColorText = text
         
-        PublicAPIRequestManager().publicAddressSearch(currentPage: String(pageIndex), keyword: text) { [weak self] result in
+        PublicAPIManager().publicAddressSearch(currentPage: String(pageIndex), keyword: text) { [weak self] result in
             switch result {
             case .success(let addressTableModel):
                 guard let totalCount = addressTableModel.totalCount else { return }
@@ -86,8 +85,7 @@ final class ChangeableAddressPresenter {
                 self?.totalCount = Int(totalCount)!
                 self?.addressModels = addressTableModel.juso
             case .failure(let error):
-                // TODO: Error 처리
-                print(error.localizedDescription)
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
     }
@@ -95,7 +93,7 @@ final class ChangeableAddressPresenter {
     func whenScrollingTableView() {
         if totalCount > pageIndex * 20 {
             pageIndex += 1
-            PublicAPIRequestManager().publicAddressSearch(
+            PublicAPIManager().publicAddressSearch(
                 currentPage: String(pageIndex),
                 keyword: changedColorText
             ) { [weak self] result in
@@ -103,8 +101,7 @@ final class ChangeableAddressPresenter {
                 case .success(let addressTableModel):
                     self?.addressModels.append(contentsOf: addressTableModel.juso)
                 case .failure(let error):
-                    // TODO: Error 처리
-                    print(error)
+                    self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
                 }
             }
         }
@@ -126,16 +123,21 @@ final class ChangeableAddressPresenter {
     func whenAfterChangedCoordinate(_ coordinate: NMGLatLng) {
         let lat = String(coordinate.lat)
         let lng = String(coordinate.lng)
-        KakaoAPIManager().kakaoMapCoordinateSearch(longtitude: lng, latitude: lat) { [weak self] coordinateModel in
-            
-            guard let firstDocument = coordinateModel.documents?.first,
-                  let address = firstDocument.address?.address else {
-                return
-            }
-            
-            self?.changedAddress = address
-            DispatchQueue.main.async {
+        
+        let model = KakaoCoordinateSearchDTO(lng: lng, lat: lat)
+        
+        KakaoAPIManager().coordinateSearch(with: model) { [weak self] result in
+            switch result {
+            case .success(let model):
+                guard let firstDocument = model.documents?.first,
+                      let address = firstDocument.address?.address else {
+                    return
+                }
+                
+                self?.changedAddress = address
                 self?.viewController?.afterChangedAddressWhenMapView(address)
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
     }
