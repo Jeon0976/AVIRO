@@ -8,6 +8,7 @@
 import UIKit
 
 import KeychainSwift
+import AmplitudeSwift
 
 protocol ThridRegistrationProtocol: NSObject {
     func makeLayout()
@@ -25,6 +26,7 @@ final class ThridRegistrationPresenter {
 
     weak var viewController: ThridRegistrationProtocol?
 
+    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
     private let keyChain = KeychainSwift()
     
     var userInfoModel: AVIROAppleUserSignUpDTO?
@@ -67,10 +69,12 @@ final class ThridRegistrationPresenter {
         userInfoModel.marketingAgree = false
         
         print(userInfoModel)
-
+        
         AVIROAPIManager().createAppleUser(with: userInfoModel) { [weak self] result in
             switch result {
             case .success(let success):
+                print(result)
+                print(success)
                 if success.statusCode == 200 {
                     if let data = success.data {
                         self?.keyChain.set(
@@ -85,6 +89,7 @@ final class ThridRegistrationPresenter {
                             marketingAgree: data.marketingAgree
                         )
                         
+                        self?.setAmplitude()
                         self?.viewController?.pushFinalRegistrationView()
                     }
                 } else {
@@ -93,8 +98,23 @@ final class ThridRegistrationPresenter {
                     }
                 }
             case .failure(let error):
+                print(result)
+                print(error)
                 self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
+    }
+    
+    private func setAmplitude() {
+        appDelegate?.amplitude?.setUserId(userId: MyData.my.id)
+
+        let identify = Identify()
+        identify.set(property: "name", value: MyData.my.name)
+        identify.set(property: "email", value: MyData.my.email)
+        identify.set(property: "nickname", value: MyData.my.nickname)
+        
+        appDelegate?.amplitude?.identify(identify: identify)
+        
+        appDelegate?.amplitude?.track(eventType: "Login")
     }
 }

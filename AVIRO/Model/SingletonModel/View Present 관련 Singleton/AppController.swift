@@ -8,13 +8,15 @@
 import Foundation
 
 import KeychainSwift
+import AmplitudeSwift
 
 // MARK: 처음 켰을 때 자동로그인 확인
 final class AppController {
     static let shared = AppController()
     
     private var userKey: String?
-    
+
+    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
     private let keychain = KeychainSwift()
     
     private var window: UIWindow!
@@ -56,7 +58,6 @@ final class AppController {
         AVIROAPIManager().appleUserCheck(with: userCheck) { [weak self] result in
             switch result {
             case .success(let model):
-                print(model)
                 if model.statusCode == 200 {
                     if let data = model.data {
                         MyData.my.whenLogin(
@@ -66,7 +67,7 @@ final class AppController {
                             userNickname: data.nickname,
                             marketingAgree: data.marketingAgree
                         )
-                        
+                        self?.setAmplitude()
                         self?.setHomeView()
                     }
                 } else {
@@ -78,6 +79,19 @@ final class AppController {
                 self?.setLoginView()
             }
         }
+    }
+    
+    private func setAmplitude() {
+        appDelegate?.amplitude?.setUserId(userId: MyData.my.id)
+
+        let identify = Identify()
+        identify.set(property: "name", value: MyData.my.name)
+        identify.set(property: "email", value: MyData.my.email)
+        identify.set(property: "nickname", value: MyData.my.nickname)
+
+        appDelegate?.amplitude?.identify(identify: identify)
+        
+        appDelegate?.amplitude?.track(eventType: "Login")
     }
     
     // MARK: tutorial View

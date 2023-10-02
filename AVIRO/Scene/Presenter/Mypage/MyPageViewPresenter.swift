@@ -25,6 +25,7 @@ protocol MyPageViewProtocol: NSObject {
 final class MyPageViewPresenter {
     weak var viewController: MyPageViewProtocol?
     
+    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
     private let keychain = KeychainSwift()
     
     private var myDataModel: MyDataModel? {
@@ -84,7 +85,7 @@ final class MyPageViewPresenter {
         LocalMarkerData.shared.deleteAllMarkerModel()
         LocalBookmarkData.shared.deleteAllBookmark()
         MyData.my.whenLogout()
-        
+        trackWhenLogout()
         self.keychain.delete(KeychainKey.appleRefreshToken.rawValue)
         
         viewController?.pushLoginViewController(with: .logout)
@@ -96,11 +97,11 @@ final class MyPageViewPresenter {
         let model = AVIROAutoLoginWhenAppleUserDTO(refreshToken: refreshToken)
         
         print(model)
-        
+                
         AVIROAPIManager().revokeAppleUser(with: model) { [weak self] result in
             switch result {
             case .success(let success):
-                print(success)
+                print(result)
                 if success.statusCode == 200 {
                     LocalBookmarkData.shared.deleteAllBookmark()
                     MyData.my.whenLogout()
@@ -108,7 +109,7 @@ final class MyPageViewPresenter {
                     
                     DispatchQueue.main.async {
                         LocalMarkerData.shared.deleteAllMarkerModel()
-
+                        
                         self?.viewController?.pushLoginViewController(with: .withdrawal)
                     }
                 } else {
@@ -117,8 +118,14 @@ final class MyPageViewPresenter {
                     }
                 }
             case .failure(let error):
+                print(result)
+ 
                 self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
+    }
+    
+    private func trackWhenLogout() {
+        appDelegate?.amplitude?.track(eventType: "Logout")
     }
 }

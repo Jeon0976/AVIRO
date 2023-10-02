@@ -208,8 +208,10 @@ extension LoginViewController: LoginViewProtocol {
     }
     
     func switchIsLoading(with loading: Bool) {
-        indicatorView.isHidden = !loading
-        blurEffectView.isHidden = !loading
+        DispatchQueue.main.async { [weak self] in
+            self?.indicatorView.isHidden = !loading
+            self?.blurEffectView.isHidden = !loading
+        }
     }
     
     func setupAttribute() {

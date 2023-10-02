@@ -9,6 +9,7 @@ import UIKit
 import AuthenticationServices
 
 import KeychainSwift
+import AmplitudeSwift
 
 protocol LoginViewProtocol: NSObject {
     func setupLayout()
@@ -18,11 +19,13 @@ protocol LoginViewProtocol: NSObject {
     func afterLogoutAndMakeToastButton()
     func afterWithdrawalUserShowAlert()
     func showErrorAlert(with error: String, title: String?)
+    func switchIsLoading(with loading: Bool)
 }
 
 final class LoginViewPresenter: NSObject {
     weak var viewController: LoginViewProtocol?
     
+    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
     private let keychain = KeychainSwift()
     
     var whenAfterLogout = false
@@ -38,7 +41,8 @@ final class LoginViewPresenter: NSObject {
     }
     
     func viewWillAppear() {
-        
+        viewController?.switchIsLoading(with: false)
+
         if whenAfterWithdrawal {
             viewController?.afterWithdrawalUserShowAlert()
             whenAfterWithdrawal.toggle()
@@ -63,18 +67,17 @@ final class LoginViewPresenter: NSObject {
     
     // MARK: Login 후 최초인지 아닌지 확인 처리
     func whenCheckAfterAppleLogin(with model: AppleUserLoginModel) {
+        viewController?.switchIsLoading(with: true)
         
         let checkAppleLoginModel = AVIROAppleUserCheckMemberDTO(
             identityToken: model.identityToken,
             authorizationCode: model.authorizationCode
         )
-        
-        print(checkAppleLoginModel)
-        
+                
         AVIROAPIManager().checkWhenAppleLogin(with: checkAppleLoginModel) { [weak self] result in
             switch result {
             case .success(let success):
-                print(success)
+                print(result)
                 if success.statusCode == 200 {
                     if let data = success.data {
                         if data.isMember {
@@ -104,7 +107,8 @@ final class LoginViewPresenter: NSObject {
                     }
                 }
             case .failure(let error):
-                print(error)
+                
+                self?.viewController?.switchIsLoading(with: true)
                 self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
@@ -121,7 +125,7 @@ final class LoginViewPresenter: NSObject {
         AVIROAPIManager().appleUserCheck(with: model) { [weak self] result in
             switch result {
             case .success(let success):
-                print(success)
+                print(result)
                 if success.statusCode == 200 {
                     if let data = success.data {
                         MyData.my.whenLogin(
@@ -132,6 +136,7 @@ final class LoginViewPresenter: NSObject {
                             marketingAgree: data.marketingAgree
                         )
                         
+                        self?.setAmplitude()
                         self?.viewController?.pushTabBar()
                     }
                 } else {
@@ -140,9 +145,23 @@ final class LoginViewPresenter: NSObject {
                     }
                 }
             case .failure(let error):
+                self?.viewController?.switchIsLoading(with: true)
                 self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
+    }
+    
+    private func setAmplitude() {
+        appDelegate?.amplitude?.setUserId(userId: MyData.my.id)
+
+        let identify = Identify()
+        identify.set(property: "name", value: MyData.my.name)
+        identify.set(property: "email", value: MyData.my.email)
+        identify.set(property: "nickname", value: MyData.my.nickname)
+        
+        appDelegate?.amplitude?.identify(identify: identify)
+        
+        appDelegate?.amplitude?.track(eventType: "Login")
     }
 }
 

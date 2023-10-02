@@ -41,9 +41,8 @@ struct AVIROPostAPI {
     
     static let appleUserAutoLoginPath = "/prod/member/apple"
     static let appleUserCheckPath = "/prod/member"
-    // TODO: Header 값ee
     static let appleUserSignUpPath = "/prod/member/sign-up"
-    static let appleUserRevokePath = "/prod/member/withdraw"
+    static let appleUserRevokePath = "/prod/member/revoke"
     
     static let userNicnameCheckPath = "/prod/member/check"
     static let userNicknameChangeablePath = "/prod/member/update/nickname"

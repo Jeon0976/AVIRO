@@ -10,6 +10,7 @@ pod 'KeychainSwift'
 pod 'lottie-ios'
 pod 'RealmSwift'
 pod 'Toast-Swift'
+pod 'AmplitudeSwift', '~> 0.4.14'
 
   # Pods for AVIRO
 

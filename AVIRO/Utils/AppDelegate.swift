@@ -9,20 +9,20 @@ import UIKit
 import AuthenticationServices
 
 import NMapsMap
+import AmplitudeSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    var amplitude: Amplitude?
+    
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        guard let keyUrl = Bundle.main.url(forResource: "API", withExtension: "plist"),
-              let dictionary = NSDictionary(contentsOf: keyUrl) as? [String: Any] else { return true }
-                
-        let key = (dictionary["NMFAuthManager_Authorization_Key"] as? String)!
+
+        setNaverMapAPI()
+        setAmplitude()
         
-        NMFAuthManager.shared().clientId = key
-        sleep(1)
         return true
     }
 
@@ -35,4 +35,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> UISceneConfiguration {
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
+    
+    private func setNaverMapAPI() {
+        guard let keyUrl = Bundle.main.url(forResource: "API", withExtension: "plist"),
+              let dictionary = NSDictionary(contentsOf: keyUrl) as? [String: Any] else { return }
+                
+        let key = (dictionary["NMFAuthManager_Authorization_Key"] as? String)!
+        
+        NMFAuthManager.shared().clientId = key
+    }
+    
+    private func setAmplitude() {
+        guard let keyUrl = Bundle.main.url(forResource: "API", withExtension: "plist"),
+              let dictionary = NSDictionary(contentsOf: keyUrl) as? [String: Any] else { return }
+        
+        let key = (dictionary["Amplitude_Key"] as? String)!
+        
+        amplitude = Amplitude(configuration: Configuration(apiKey: key))
+     }
 }
