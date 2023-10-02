@@ -319,7 +319,7 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
     
     // MARK: Push Thrid RegistrationView
     func pushThridRegistrationView(
-        _ userInfoModel: AVIROUserSignUpDTO
+        _ userInfoModel: AVIROAppleUserSignUpDTO
     ) {
         let viewController = ThridRegistrationViewController()
         

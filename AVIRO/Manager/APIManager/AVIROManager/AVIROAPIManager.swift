@@ -427,11 +427,11 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
     }
     
     // MARK: User Refer
-    func checkUserId(
-        with user: AVIROCheckUserDTO,
-        completionHandler: @escaping (Result<AVIROCheckUserResultDTO, APIError>) -> Void
+    func appleUserCheck(
+        with user: AVIROAutoLoginWhenAppleUserDTO,
+        completionHandler: @escaping (Result<AVIROAutoLoginWhenAppleUserResultDTO, APIError>) -> Void
     ) {
-        guard let url = postAPI.userIdCheck().url else {
+        guard let url = postAPI.appleUserAutoLogin().url else {
             completionHandler(.failure(.urlError))
             return
         }
@@ -450,9 +450,9 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
         )
     }
     
-    func checkAppleToken(
+    func checkWhenAppleLogin(
         with appleToken: AVIROAppleUserCheckMemberDTO,
-        completionHandler: @escaping (Result<AVIROCheckUserResultDTO, APIError>) -> Void
+        completionHandler: @escaping (Result<AVIROAppleUserCheckMemberResultDTO, APIError>) -> Void
     ) {
         guard let url = postAPI.appleUserCheck().url else {
             completionHandler(.failure(.urlError))
@@ -473,11 +473,11 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
         )
     }
     
-    func createUser(
-        with user: AVIROUserSignUpDTO,
-        completionHandler: @escaping (Result<AVIROUserSignUpResultDTO, APIError>) -> Void
+    func createAppleUser(
+        with user: AVIROAppleUserSignUpDTO,
+        completionHandler: @escaping (Result<AVIROAutoLoginWhenAppleUserResultDTO, APIError>) -> Void
     ) {
-        guard let url = postAPI.userSignup().url else {
+        guard let url = postAPI.appleUserSignup().url else {
             completionHandler(.failure(.urlError))
             return
         }
@@ -496,11 +496,11 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
         )
     }
     
-    func withdrawalUser(
-        with user: AVIROUserWithdrawDTO,
+    func revokeAppleUser(
+        with user: AVIROAutoLoginWhenAppleUserDTO,
         completionHandler: @escaping (Result<AVIROResultDTO, APIError>) -> Void
     ) {
-        guard let url = postAPI.userWithdraw().url else {
+        guard let url = postAPI.appleUserRevoke().url else {
             completionHandler(.failure(.urlError))
             return
         }

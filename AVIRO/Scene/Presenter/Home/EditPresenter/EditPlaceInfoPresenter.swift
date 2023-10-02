@@ -176,6 +176,7 @@ final class EditPlaceInfoPresenter {
     }
     
     func viewWillDisappear() {
+        selectedIndex = 0
         removeKeyboardNotification()
     }
     

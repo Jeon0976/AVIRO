@@ -111,21 +111,21 @@ protocol AVIROAPIMangerProtocol: APIManagerProtocol {
     )
 
     // MARK: User Refer
-    func checkUserId(
-        with user: AVIROCheckUserDTO,
-        completionHandler: @escaping(Result<AVIROCheckUserResultDTO, APIError>) -> Void
+    func appleUserCheck(
+        with user: AVIROAutoLoginWhenAppleUserDTO,
+        completionHandler: @escaping(Result<AVIROAutoLoginWhenAppleUserResultDTO, APIError>) -> Void
     )
-    func checkAppleToken(
+    func checkWhenAppleLogin(
         with appleToken: AVIROAppleUserCheckMemberDTO,
-        completionHandler: @escaping(Result<AVIROCheckUserResultDTO, APIError>) -> Void
+        completionHandler: @escaping(Result<AVIROAppleUserCheckMemberResultDTO, APIError>) -> Void
     )
     
-    func createUser(
-        with user: AVIROUserSignUpDTO,
-        completionHandler: @escaping(Result<AVIROUserSignUpResultDTO, APIError>) -> Void
+    func createAppleUser(
+        with user: AVIROAppleUserSignUpDTO,
+        completionHandler: @escaping(Result<AVIROAutoLoginWhenAppleUserResultDTO, APIError>) -> Void
     )
-    func withdrawalUser(
-        with user: AVIROUserWithdrawDTO,
+    func revokeAppleUser(
+        with user: AVIROAutoLoginWhenAppleUserDTO,
         completionHandler: @escaping(Result<AVIROResultDTO, APIError>) -> Void
     )
 

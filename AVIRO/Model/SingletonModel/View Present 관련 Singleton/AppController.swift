@@ -25,7 +25,7 @@ final class AppController {
     }
     
     private init() {
-        self.userKey = keychain.get(KeychainKey.userId.rawValue)
+        self.userKey = keychain.get(KeychainKey.appleRefreshToken.rawValue)
     }
     
     // MARK: 외부랑 소통할 메서드
@@ -39,67 +39,72 @@ final class AppController {
     
     // MARK: 불러올 view 확인 메서드
     private func checkState() {
-        setTutorialView()
-//        // 최초 튜토리얼 화면 안 봤을 때
-//        guard UserDefaults.standard.bool(forKey: UDKey.tutorial.rawValue) else {
-//            setTutorialView()
-//            return
-//        }
-//
-//        // 자동로그인 토큰 없을 때
-//        guard let userKey = userKey else {
-//            setLoginView()
-//            return
-//        }
-//
-//        // MARK: 자동로그인을 userDefaults를 통해서 하면 안되나??
-//        let userCheck = AVIROUserCheckDTO(userId: userKey)
-//
-//        // 회원이 서버에 없을 때
-//        AVIROAPIManager().postUserIdCheck(userCheck) { userInfo in
-//            DispatchQueue.main.async { [weak self] in
-//                if userInfo.statusCode == 200 {
-//                    let userId = userInfo.data?.userId ?? ""
-//                    let userName = userInfo.data?.userName ?? ""
-//                    let userEmail = userInfo.data?.userEmail ?? ""
-//                    let userNickname = userInfo.data?.nickname ?? ""
-//                    let marketingAgree = userInfo.data?.marketingAgree ?? 0
-//
-//                    MyData.my.whenLogin(
-//                        userId: userId,
-//                        userName: userName,
-//                        userEmail: userEmail,
-//                        userNickname: userNickname,
-//                        marketingAgree: marketingAgree
-//                    )
-//                    self?.setHomeView()
-//                    self?.keychain.set(userId, forKey: KeychainKey.userId.rawValue)
-//                } else {
-//                    self?.setLoginView()
-//                }
-//            }
-//        }
+        // 최초 튜토리얼 화면 안 봤을 때
+        guard UserDefaults.standard.bool(forKey: UDKey.tutorial.rawValue) else {
+            setTutorialView()
+            return
+        }
+
+        // 자동로그인 토큰 없을 때
+        guard let userKey = userKey else {
+            setLoginView()
+            return
+        }
+
+        let userCheck = AVIROAutoLoginWhenAppleUserDTO(refreshToken: userKey)
+
+        AVIROAPIManager().appleUserCheck(with: userCheck) { [weak self] result in
+            switch result {
+            case .success(let model):
+                print(model)
+                if model.statusCode == 200 {
+                    if let data = model.data {
+                        MyData.my.whenLogin(
+                            userId: data.userId,
+                            userName: data.userName,
+                            userEmail: data.userEmail,
+                            userNickname: data.nickname,
+                            marketingAgree: data.marketingAgree
+                        )
+                        
+                        self?.setHomeView()
+                    }
+                } else {
+                    self?.keychain.delete(KeychainKey.appleRefreshToken.rawValue)
+                    self?.setLoginView()
+                }
+            case .failure(_):
+                self?.keychain.delete(KeychainKey.appleRefreshToken.rawValue)
+                self?.setLoginView()
+            }
+        }
     }
     
     // MARK: tutorial View
     private func setTutorialView() {
-        let tutorialVC = TutorialViewController()
-        
-        rootViewController = UINavigationController(rootViewController: tutorialVC)
+        DispatchQueue.main.async { [weak self] in
+            let tutorialVC = TutorialViewController()
+            
+            self?.rootViewController = UINavigationController(rootViewController: tutorialVC)
+        }
     }
     
     // MARK: login View
     private func setLoginView() {
-        let loginVC = LoginViewController()
-        
-        rootViewController = UINavigationController(rootViewController: loginVC)
+        DispatchQueue.main.async { [weak self] in
+            let loginVC = LoginViewController()
+            
+            self?.rootViewController = UINavigationController(rootViewController: loginVC)
+        }
     }
     
     // MARK: home View
     private func setHomeView() {
-        let homeVC = TabBarViewController()
+        DispatchQueue.main.async { [weak self] in
+            let homeVC = TabBarViewController()
 
-        rootViewController = homeVC
+            self?.rootViewController = homeVC
+        }
     }
     
 }

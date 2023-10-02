@@ -158,6 +158,7 @@ final class PushCommentView: UIView {
     @objc private func enrollButtonTapped(_ sender: UIButton) {
         if sender.titleLabel?.textColor == .gray0 {
             guard let text = textView.text else { return }
+            print(text)
             enrollReview?(text)
 
             self.endEditing(true)
@@ -255,14 +256,14 @@ final class PushCommentView: UIView {
                 UIResponder.keyboardAnimationDurationUserInfoKey
             ] as? NSNumber)?
                 .doubleValue ?? 0.25
-            
+
             let animationCurveRaw = (userInfo[
                 UIResponder.keyboardAnimationCurveUserInfoKey
             ] as? NSNumber)?
                 .uintValue ?? UIView.AnimationOptions.curveEaseInOut.rawValue
-            
+
             let animationCurve = UIView.AnimationOptions(rawValue: animationCurveRaw)
-            
+
             UIView.animate(
                 withDuration: animationDuration,
                 delay: 0.023,
@@ -281,7 +282,6 @@ final class PushCommentView: UIView {
         UIView.performWithoutAnimation {
             self.transform = .identity
         }
-        
     }
 }
 

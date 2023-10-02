@@ -24,7 +24,7 @@ extension UIViewController {
         message: String?,
         preferredStyle: UIAlertController.Style = .alert,
         actions: [AlertAction] = [("확인", .default, nil)]
-    ) {
+    ) {        
         let alertController = UIAlertController(
             title: title,
             message: message,

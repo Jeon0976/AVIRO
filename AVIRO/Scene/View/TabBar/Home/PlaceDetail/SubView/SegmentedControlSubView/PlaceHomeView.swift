@@ -7,8 +7,8 @@
 
 import UIKit
 
-// TODO: SegmentedControl의 메뉴뷰를 그대로 가져오는 방법은 없을까?
 final class PlaceHomeView: UIView {
+    
     private lazy var placeInfoView = PlaceInfoView()
     private lazy var placeMenuView = PlaceMenuView()
     private lazy var placeReviewWriteView = PlaceReviewWriteView()
@@ -41,7 +41,10 @@ final class PlaceHomeView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        
+        makeLayout()
+        handleClosure()
     }
     
     override func layoutSubviews() {

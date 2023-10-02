@@ -7,6 +7,12 @@
 
 import UIKit
 
+private enum Text: String {
+    case all = "모든 메뉴가 비건"
+    case some = "일부 메뉴가 비건"
+    case request = "비건 메뉴로 요청 가능"
+}
+
 final class PlaceSummaryView: UIView {
     // MARK: When Pop Up
     private lazy var guideBar: UIView = {
@@ -32,8 +38,8 @@ final class PlaceSummaryView: UIView {
         
         label.textColor = .gray0
         label.clipsToBounds = true
-        label.font = .pretendard(size: 24, weight: .heavy)
         label.numberOfLines = 1
+        label.font = CFont.font.heavy24
 
         return label
     }()
@@ -41,10 +47,11 @@ final class PlaceSummaryView: UIView {
     private lazy var placeCategory: UILabel = {
         let label = UILabel()
         
-        label.textColor = .gray2
         label.textAlignment = .left
+        label.textColor = .gray2
         label.clipsToBounds = true
-        label.font = .pretendard(size: 15, weight: .regular)
+        label.numberOfLines = 1
+        label.font = CFont.font.regular15
 
         return label
     }()
@@ -52,7 +59,7 @@ final class PlaceSummaryView: UIView {
     private lazy var distanceIcon: UIImageView = {
         let icon = UIImageView()
         
-        icon.image = UIImage(named: "PlaceViewMap")
+        icon.image = UIImage.placeIcon
         
         return icon
     }()
@@ -70,7 +77,7 @@ final class PlaceSummaryView: UIView {
     private lazy var reviewsIcon: UIImageView = {
         let icon = UIImageView()
         
-        icon.image = UIImage(named: "PlaceReview")
+        icon.image = UIImage.placeReviw
         
         return icon
     }()
@@ -79,7 +86,7 @@ final class PlaceSummaryView: UIView {
         let label = UILabel()
         
         label.textColor = .gray1
-        label.font = .pretendard(size: 14, weight: .regular)
+        label.font = CFont.font.regular14
         label.text = "0개"
         
         return label
@@ -88,20 +95,20 @@ final class PlaceSummaryView: UIView {
     private lazy var addressLabel: UILabel = {
         let label = UILabel()
         
+        label.textAlignment = .left
         label.textColor = .gray1
         label.clipsToBounds = true
-        label.font = .pretendard(size: 15, weight: .regular)
         label.numberOfLines = 1
-        label.textAlignment = .left
-
+        label.font = CFont.font.regular15
+        
         return label
     }()
     
     private lazy var starButton: UIButton = {
         let button = UIButton()
         
-        button.setImage(UIImage(named: "star"), for: .normal)
-        button.setImage(UIImage(named: "selectedStar"), for: .selected)
+        button.setImage(UIImage.starIcon, for: .normal)
+        button.setImage(UIImage.starIconClicked, for: .selected)
         button.addTarget(self, action: #selector(starButtonTapped), for: .touchUpInside)
         
         return button
@@ -110,7 +117,7 @@ final class PlaceSummaryView: UIView {
     lazy var shareButton: UIButton = {
         let button = UIButton()
         
-        button.setImage(UIImage(named: "share")?.withTintColor(.main), for: .normal)
+        button.setImage(UIImage.share.withTintColor(.main), for: .normal)
         button.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
         
         return button
@@ -120,7 +127,7 @@ final class PlaceSummaryView: UIView {
     private lazy var whenSlideTopLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .pretendard(size: 15, weight: .medium)
+        label.font = CFont.font.medium15
         label.numberOfLines = 1
         
         return label
@@ -129,7 +136,7 @@ final class PlaceSummaryView: UIView {
     private lazy var whenSlideMiddleLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .pretendard(size: 24, weight: .heavy)
+        label.font =  CFont.font.heavy24
         label.textColor = .gray0
         label.numberOfLines = 3
         label.lineBreakMode = .byCharWrapping
@@ -141,7 +148,7 @@ final class PlaceSummaryView: UIView {
     private lazy var whenSlideBottomLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .pretendard(size: 14, weight: .regular)
+        label.font = CFont.font.regular14
         label.textColor = .gray2
         
         return label
@@ -151,7 +158,7 @@ final class PlaceSummaryView: UIView {
     private lazy var whenFullBackButton: UIButton = {
         let button = UIButton()
         
-        button.setImage(UIImage(named: "DownBack"), for: .normal)
+        button.setImage(UIImage.downBack, for: .normal)
         button.addTarget(self, action: #selector(fullBackButtonTapped), for: .touchUpInside)
         
         return button
@@ -160,11 +167,11 @@ final class PlaceSummaryView: UIView {
     private lazy var whenFullTitle: UILabel = {
         let label = UILabel()
         
-        label.font = .pretendard(size: 18, weight: .semibold)
+        label.font = CFont.font.semibold18
         label.textAlignment = .center
-        label.numberOfLines = 2
         label.lineBreakMode = .byCharWrapping
-        
+        label.numberOfLines = 2
+
         return label
     }()
     
@@ -304,17 +311,17 @@ final class PlaceSummaryView: UIView {
 
         switch placeModel.placeState {
         case .All:
-            placeIconImage = UIImage(named: "AllBox")
+            placeIconImage = UIImage.allBox
             whenSlideTopLabel.textColor = .all
-            whenSlideTopLabelString = "모든 메뉴가 비건"
+            whenSlideTopLabelString = Text.all.rawValue
         case .Some:
-            placeIconImage = UIImage(named: "SomeBox")
+            placeIconImage = UIImage.someBox
             whenSlideTopLabel.textColor = .some
-            whenSlideTopLabelString = "일부 메뉴만 비건"
+            whenSlideTopLabelString = Text.some.rawValue
         case .Request:
-            placeIconImage = UIImage(named: "RequestBox")
+            placeIconImage = UIImage.requestBox
             whenSlideTopLabel.textColor = .request
-            whenSlideTopLabelString = "비건 메뉴로 요청 가능"
+            whenSlideTopLabelString = Text.request.rawValue
         }
                 
         placeIcon.image = placeIconImage
@@ -344,15 +351,15 @@ final class PlaceSummaryView: UIView {
         case .All:
             placeIconImage = UIImage.allBox
             whenSlideTopLabel.textColor = .all
-            whenSlideTopLabelString = "모든 메뉴가 비건"
+            whenSlideTopLabelString = Text.all.rawValue
         case .Some:
             placeIconImage = UIImage.someBox
             whenSlideTopLabel.textColor = .some
-            whenSlideTopLabelString = "일부 메뉴만 비건"
+            whenSlideTopLabelString = Text.some.rawValue
         case .Request:
             placeIconImage = UIImage.requestBox
             whenSlideTopLabel.textColor = .request
-            whenSlideTopLabelString = "비건 메뉴로 요청 가능"
+            whenSlideTopLabelString = Text.request.rawValue
         }
         
         placeIcon.image = placeIconImage
@@ -478,7 +485,7 @@ extension PlaceSummaryView {
         let guideBarHeight = guideBar.frame.height
         let placeIconHeight = placeIcon.frame.height
         let addressHeight = addressLabel.frame.height == 0.0 ? CGFloat(18) : addressLabel.frame.height
-        // 5 + 20 + 7 + 7 + 30 +
+        // 5 + 20 + 7 + 7 + 30
         let inset: CGFloat = 69
 
         let totalHeight = guideBarHeight + placeIconHeight + addressHeight + inset

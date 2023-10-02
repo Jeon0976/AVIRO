@@ -237,7 +237,7 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
     }
     
     func pushSecondRegistrationView(
-        _ userInfoModel: AVIROUserSignUpDTO
+        _ userInfoModel: AVIROAppleUserSignUpDTO
     ) {
         let viewController = SecondRegistrationViewController()
         

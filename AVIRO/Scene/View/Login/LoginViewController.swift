@@ -89,6 +89,26 @@ final class LoginViewController: UIViewController {
         return button
     }()
     
+    private lazy var indicatorView: UIActivityIndicatorView = {
+        let indicatorView = UIActivityIndicatorView()
+        
+        indicatorView.style = .large
+        indicatorView.startAnimating()
+        indicatorView.isHidden = false
+        indicatorView.color = .gray5
+        
+        return indicatorView
+    }()
+    
+    private lazy var blurEffectView: UIView = {
+        
+        let view = UIView()
+        view.backgroundColor = .gray.withAlphaComponent(0.3)
+        view.frame = self.view.bounds
+        
+        return view
+    }()
+    
     private lazy var noLoginButton: UIButton = {
         let button = UIButton()
         
@@ -99,7 +119,7 @@ final class LoginViewController: UIViewController {
         
         return button
     }()
-            
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -124,7 +144,9 @@ extension LoginViewController: LoginViewProtocol {
             mainImageView,
             shadowImageView,
             appleLoginButton,
-            noLoginButton
+            noLoginButton,
+            blurEffectView,
+            indicatorView
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
@@ -170,6 +192,9 @@ extension LoginViewController: LoginViewProtocol {
                 equalToConstant: Layout.Size.buttonHeight.rawValue
             ),
             
+            indicatorView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            indicatorView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            
             // TODO: 추후 없애기
             noLoginButton.centerXAnchor.constraint(
                 equalTo: view.centerXAnchor
@@ -178,6 +203,13 @@ extension LoginViewController: LoginViewProtocol {
                 equalTo: view.safeAreaLayoutGuide.bottomAnchor
             )
         ])
+        
+        switchIsLoading(with: false)
+    }
+    
+    func switchIsLoading(with loading: Bool) {
+        indicatorView.isHidden = !loading
+        blurEffectView.isHidden = !loading
     }
     
     func setupAttribute() {
@@ -207,13 +239,13 @@ extension LoginViewController: LoginViewProtocol {
     }
     
     // MARK: Push Registration ViewController
-    func pushRegistration(_ userModel: CommonUserModel) {
+    func pushRegistrationWhenAppleLogin(_ userModel: AVIROAppleUserSignUpDTO) {
         DispatchQueue.main.async { [weak self] in
             let viewController = FirstRegistrationViewController()
             
             let presenter = FirstRegistrationPresenter(
                 viewController: viewController,
-                userModel: userModel
+                appleUserSignUpModel: userModel
             )
             
             viewController.presenter = presenter
@@ -253,28 +285,3 @@ extension LoginViewController: LoginViewProtocol {
         }
     }
 }
-
-// MARK: View Preview
-#if DEBUG
-import SwiftUI
-
-struct LoginViewControllerPresentable: UIViewControllerRepresentable {
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        
-    }
-    
-    func makeUIViewController(context: Context) -> some UIViewController {
-        let vc = LoginViewController()
-        let presenter = LoginViewPresenter(viewController: vc)
-        vc.presenter = presenter
-        
-        return vc
-    }
-}
-
-struct LoginViewControllerPresentablePreviewProvider: PreviewProvider {
-    static var previews: some View {
-        LoginViewControllerPresentable()
-    }
-}
-#endif

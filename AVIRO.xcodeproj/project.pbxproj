@@ -25,8 +25,6 @@
 		C50F6AFD2A68FFCB00E942F5 /* EnrollMenuTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6AFC2A68FFCB00E942F5 /* EnrollMenuTableView.swift */; };
 		C50F6B022A6BC8E400E942F5 /* EnrollField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6B012A6BC8E400E942F5 /* EnrollField.swift */; };
 		C50F6B042A6BCD6900E942F5 /* CategoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50F6B032A6BCD6900E942F5 /* CategoryButton.swift */; };
-		C51000282AB5B8FB00F65C1F /* AppleUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51000272AB5B8FB00F65C1F /* AppleUserModel.swift */; };
-		C510002B2AB5BA7A00F65C1F /* CommonUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C510002A2AB5BA7A00F65C1F /* CommonUserModel.swift */; };
 		C51000382AB5F3BD00F65C1F /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51000372AB5F3BD00F65C1F /* UIFont+Extension.swift */; };
 		C510004B2AB5F76600F65C1F /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = C510003F2AB5F59600F65C1F /* Pretendard-Thin.otf */; };
 		C510004C2AB5F76600F65C1F /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = C510003C2AB5F59600F65C1F /* Pretendard-Light.otf */; };
@@ -115,6 +113,7 @@
 		C5803F582A88C1990064A853 /* PlaceTopModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5803F572A88C1990064A853 /* PlaceTopModel.swift */; };
 		C5803F5D2A88C3C00064A853 /* LocationUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5803F5C2A88C3C00064A853 /* LocationUtility.swift */; };
 		C58B9AAE2A5675B9008AEAC3 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58B9AAD2A5675B9008AEAC3 /* TutorialViewController.swift */; };
+		C58C49C82AC9B67600DE04B7 /* AppleUserLoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58C49C72AC9B67600DE04B7 /* AppleUserLoginModel.swift */; };
 		C58EC7CC2AB171C000401FF7 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58EC7CB2AB171C000401FF7 /* UIButton+Extension.swift */; };
 		C58EC7CE2AB1B57100401FF7 /* AVIROEditOperationTime+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58EC7CD2AB1B57100401FF7 /* AVIROEditOperationTime+DTO.swift */; };
 		C58EC7D02AB1B59100401FF7 /* AVIROEditLocation+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58EC7CF2AB1B59100401FF7 /* AVIROEditLocation+DTO.swift */; };
@@ -228,8 +227,6 @@
 		C50F6AFC2A68FFCB00E942F5 /* EnrollMenuTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollMenuTableView.swift; sourceTree = "<group>"; };
 		C50F6B012A6BC8E400E942F5 /* EnrollField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollField.swift; sourceTree = "<group>"; };
 		C50F6B032A6BCD6900E942F5 /* CategoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryButton.swift; sourceTree = "<group>"; };
-		C51000272AB5B8FB00F65C1F /* AppleUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleUserModel.swift; sourceTree = "<group>"; };
-		C510002A2AB5BA7A00F65C1F /* CommonUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonUserModel.swift; sourceTree = "<group>"; };
 		C51000372AB5F3BD00F65C1F /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		C51000392AB5F59600F65C1F /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		C510003A2AB5F59600F65C1F /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
@@ -321,6 +318,7 @@
 		C5803F572A88C1990064A853 /* PlaceTopModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTopModel.swift; sourceTree = "<group>"; };
 		C5803F5C2A88C3C00064A853 /* LocationUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationUtility.swift; sourceTree = "<group>"; };
 		C58B9AAD2A5675B9008AEAC3 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
+		C58C49C72AC9B67600DE04B7 /* AppleUserLoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleUserLoginModel.swift; sourceTree = "<group>"; };
 		C58EC7CB2AB171C000401FF7 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		C58EC7CD2AB1B57100401FF7 /* AVIROEditOperationTime+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROEditOperationTime+DTO.swift"; sourceTree = "<group>"; };
 		C58EC7CF2AB1B59100401FF7 /* AVIROEditLocation+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROEditLocation+DTO.swift"; sourceTree = "<group>"; };
@@ -577,8 +575,7 @@
 		C51000292AB5B90200F65C1F /* UserModel */ = {
 			isa = PBXGroup;
 			children = (
-				C51000272AB5B8FB00F65C1F /* AppleUserModel.swift */,
-				C510002A2AB5BA7A00F65C1F /* CommonUserModel.swift */,
+				C58C49C72AC9B67600DE04B7 /* AppleUserLoginModel.swift */,
 			);
 			path = UserModel;
 			sourceTree = "<group>";
@@ -1620,7 +1617,6 @@
 				C5732C732A41778A00CDC499 /* AVIROPostAPI.swift in Sources */,
 				C5732C7C2A41D41B00CDC499 /* VeganTableFieldModel.swift in Sources */,
 				C50DB7592A9B8E060078B501 /* EditLocationAddressMapView.swift in Sources */,
-				C510002B2AB5BA7A00F65C1F /* CommonUserModel.swift in Sources */,
 				C5ED46932AAEB02F00F2DA04 /* PlaceOperationHoursViewController.swift in Sources */,
 				C5732C752A41962D00CDC499 /* AVIRORequestAPI.swift in Sources */,
 				C513854C2AAB3B52001AB827 /* NickNameChangeblePresenter.swift in Sources */,
@@ -1635,9 +1631,9 @@
 				C52066262A7CC3CE0038ECCD /* NoHistoryLabelView.swift in Sources */,
 				C5803F5D2A88C3C00064A853 /* LocationUtility.swift in Sources */,
 				C5F1014F2A6D19A800C53286 /* VeganOptionButton.swift in Sources */,
-				C51000282AB5B8FB00F65C1F /* AppleUserModel.swift in Sources */,
 				C52066292A7CD5FC0038ECCD /* HistoryTableModel.swift in Sources */,
 				C5FD92EB2A9C786600CF4673 /* PublicAPIRequestComponents.swift in Sources */,
+				C58C49C82AC9B67600DE04B7 /* AppleUserLoginModel.swift in Sources */,
 				C58FBF902AC2B83A00AB6EFC /* AVIROAPIManagerProtocol.swift in Sources */,
 				C50F6AF52A68FD6300E942F5 /* EnrollPlacePresenter.swift in Sources */,
 				C50DB7572A9B8DF80078B501 /* EditLocationAddressTextView.swift in Sources */,
@@ -1945,6 +1941,7 @@
 				DEVELOPMENT_TEAM = C4K2HXA435;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AVIRO/Utils/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "어비로";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "현재 내 위치와 가까운 가게를 찾아드려요. 위치 정보를 저장하지 않으니 안심하세요.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "현재 내 위치와 가까운 가게를 찾아드려요. 위치 정보를 저장하지 않으니 안심하세요.";
@@ -1979,6 +1976,7 @@
 				DEVELOPMENT_TEAM = C4K2HXA435;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AVIRO/Utils/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "어비로";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "현재 내 위치와 가까운 가게를 찾아드려요. 위치 정보를 저장하지 않으니 안심하세요.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "현재 내 위치와 가까운 가게를 찾아드려요. 위치 정보를 저장하지 않으니 안심하세요.";

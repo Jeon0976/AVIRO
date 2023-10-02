@@ -26,12 +26,22 @@ protocol HomeViewProtocol: NSObject {
     func loadMarkers(_ markers: [NMFMarker])
     func afterLoadStarButton(noMarkers: [NMFMarker])
     func afterClickedMarker(placeModel: PlaceTopModel, placeId: String, isStar: Bool)
-    func afterSlideupPlaceView(infoModel: AVIROPlaceInfo?, menuModel: AVIROPlaceMenus?,reviewsModel: AVIROReviewsArray?)
+    func afterSlideupPlaceView(
+        infoModel: AVIROPlaceInfo?,
+        menuModel: AVIROPlaceMenus?,
+        reviewsModel: AVIROReviewsArray?
+    )
     func showReportPlaceAlert()
     func isDuplicatedReport()
     func isSuccessReportPlaceActionSheet()
     func pushPlaceInfoOpreationHoursViewController(_ models: [EditOperationHoursModel])
-    func pushEditPlaceInfoViewController(placeMarkerModel: MarkerModel, placeId: String, placeSummary: AVIROPlaceSummary, placeInfo: AVIROPlaceInfo, editSegmentedIndex: Int)
+    func pushEditPlaceInfoViewController(
+        placeMarkerModel: MarkerModel,
+        placeId: String,
+        placeSummary: AVIROPlaceSummary,
+        placeInfo: AVIROPlaceInfo,
+        editSegmentedIndex: Int
+    )
     func pushEditMenuViewController(placeId: String, isAll: Bool, isSome: Bool, isRequest: Bool, menuArray: [AVIROMenu])
     func refreshMenuView(_ menuData: AVIROPlaceMenus?)
     func refreshMapPlace(_ mapPlace: MapPlace)

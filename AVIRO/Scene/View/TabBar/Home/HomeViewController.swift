@@ -316,10 +316,10 @@ extension HomeViewController: HomeViewProtocol {
         
         if let tabBarController = tabBarController as? TabBarViewController {
             tabBarController.homeTabBarButtonTapped = { [weak self] in
-                print("Test")
                 self?.presenter.initMarkerState()
                 self?.whenViewWillAppearInitPlaceView()
                 self?.afterSearchFieldInit()
+                self?.naverMapView.isHidden = false
             }
         }
     }

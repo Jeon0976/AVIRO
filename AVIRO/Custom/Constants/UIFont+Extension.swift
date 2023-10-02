@@ -12,6 +12,7 @@ final class CFont {
     
     private(set) var regular13: UIFont = .pretendard(size: 13, weight: .regular)
     private(set) var regular14: UIFont = .pretendard(size: 14, weight: .regular)
+    private(set) var regular15: UIFont = .pretendard(size: 15, weight: .regular)
     private(set) var regular17: UIFont = .pretendard(size: 17, weight: .regular)
         
     private(set) var medium11: UIFont = .pretendard(size: 11, weight: .medium)
@@ -35,6 +36,7 @@ final class CFont {
     private(set) var bold24: UIFont = .pretendard(size: 24, weight: .bold)
     
     private(set) var heavy17: UIFont = .pretendard(size: 17, weight: .heavy)
+    private(set) var heavy24: UIFont = .pretendard(size: 24, weight: .heavy)
     private(set) var heavy31: UIFont = .pretendard(size: 31, weight: .heavy)
     
     init() {}

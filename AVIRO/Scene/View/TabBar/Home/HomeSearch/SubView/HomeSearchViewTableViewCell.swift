@@ -68,7 +68,7 @@ final class HomeSearchViewTableViewCell: UITableViewCell {
             $0.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview($0)
         }
-        
+
         NSLayoutConstraint.activate([
             // icon
             icon.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
@@ -78,15 +78,15 @@ final class HomeSearchViewTableViewCell: UITableViewCell {
             
             // title
             title.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 10),
-            title.topAnchor.constraint(equalTo: icon.topAnchor),
             title.trailingAnchor.constraint(equalTo: distance.leadingAnchor, constant: -20),
+            title.topAnchor.constraint(equalTo: icon.topAnchor),
             
             // address
             address.leadingAnchor.constraint(equalTo: title.leadingAnchor),
             address.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 11),
             address.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15),
             address.trailingAnchor.constraint(equalTo: distance.leadingAnchor, constant: -20),
-            
+
             // distance
             distance.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
             distance.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
@@ -97,6 +97,7 @@ final class HomeSearchViewTableViewCell: UITableViewCell {
                       attributedTitle: NSAttributedString?,
                       attributedAddress: NSAttributedString?
     ) {
+        
         icon.image = listData.icon
         title.attributedText = attributedTitle ?? NSAttributedString(string: listData.title)
         address.attributedText = attributedAddress ?? NSAttributedString(string: listData.address)

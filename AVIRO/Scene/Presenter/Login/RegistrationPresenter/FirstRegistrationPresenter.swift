@@ -12,15 +12,14 @@ protocol FirstRegistrationProtocol: NSObject {
     func setupAttribute()
     func setupGesture()
     func changeSubInfo(subInfo: String, isVaild: Bool)
-    func pushSecondRegistrationView(_ signupModel: AVIROUserSignUpDTO)
+    func pushSecondRegistrationView(_ signupModel: AVIROAppleUserSignUpDTO)
     func showErrorAlert(with error: String, title: String?)
 }
 
 final class FirstRegistrationPresenter {
     weak var viewController: FirstRegistrationProtocol?
     
-    var userModel: CommonUserModel!
-    var signupModel: AVIROUserSignUpDTO!
+    var appleSignUpModel: AVIROAppleUserSignUpDTO?
     
     var userNickname: String? {
         didSet {
@@ -39,23 +38,12 @@ final class FirstRegistrationPresenter {
     private var timer: Timer?
         
     init(viewController: FirstRegistrationProtocol,
-         userModel: CommonUserModel? = nil
+         appleUserSignUpModel: AVIROAppleUserSignUpDTO? = nil
     ) {
         self.viewController = viewController
-        self.userModel = userModel
-        
-        bindingSignupModel()
+        self.appleSignUpModel = appleUserSignUpModel
     }
-    
-    private func bindingSignupModel() {
-        self.signupModel = AVIROUserSignUpDTO(
-            userToken: userModel.token,
-            userName: userModel.name,
-            userEmail: userModel.email,
-            marketingAgree: false
-        )
-    }
-    
+
     func viewDidLoad() {
         viewController?.setupLayout()
         viewController?.setupGesture()
@@ -97,9 +85,10 @@ final class FirstRegistrationPresenter {
     }
     
     func pushUserInfo() {
-        guard let userNickname = userNickname else { return }
-        signupModel.nickname = userNickname
+        guard var appleSignUpModel = appleSignUpModel else { return }
         
-        viewController?.pushSecondRegistrationView(self.signupModel)
+        appleSignUpModel.nickname = userNickname
+        
+        viewController?.pushSecondRegistrationView(appleSignUpModel)
     }
 }

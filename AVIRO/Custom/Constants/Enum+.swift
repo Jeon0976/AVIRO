@@ -17,13 +17,12 @@ enum UDKey: String {
 
 // MARK: Keychain
 enum KeychainKey: String {
-    case userId
+    case appleRefreshToken
 }
 
 // MARK: TableViewCell Identifier
 enum TVIdentifier: String {
     case termsTableCell
-    
 }
 
 // MARK: CollectionViewCell Identifier

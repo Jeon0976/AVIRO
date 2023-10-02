@@ -61,7 +61,7 @@ struct SearchHistoryManager: SearchHistoryManagerProtocol {
     }
     
     func deleteHistoryModelAll() {
-        var currentTable = [HistoryTableModel]()
+        let currentTable = [HistoryTableModel]()
         
         UserDefaults.standard.set(
             try? PropertyListEncoder().encode(currentTable),

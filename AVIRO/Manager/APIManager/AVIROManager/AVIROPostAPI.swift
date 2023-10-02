@@ -39,13 +39,14 @@ struct AVIROPostAPI {
     
     static let editMenuPath = "/prod/map/update/menu"
     
-    static let userIdCheckPath = "/prod/member"
-    static let appleUserCheckPath = "/prod/member/apple"
-
-    static let userSignUpPath = "/prod/member/sign-up"
+    static let appleUserAutoLoginPath = "/prod/member/apple"
+    static let appleUserCheckPath = "/prod/member"
+    // TODO: Header 값ee
+    static let appleUserSignUpPath = "/prod/member/sign-up"
+    static let appleUserRevokePath = "/prod/member/withdraw"
+    
     static let userNicnameCheckPath = "/prod/member/check"
     static let userNicknameChangeablePath = "/prod/member/update/nickname"
-    static let userWithdrawPath = "/prod/member/withdraw"
     
     // MARK: Place Enroll
     mutating func placeEnroll() -> URLComponents {
@@ -107,9 +108,9 @@ struct AVIROPostAPI {
         return createURLComponents(path: AVIROPostAPI.editMenuPath)
     }
     
-    // MARK: UserId Check
-    mutating func userIdCheck() -> URLComponents {
-        return createURLComponents(path: AVIROPostAPI.userIdCheckPath)
+    // MARK: appleUserAutoLogin
+    mutating func appleUserAutoLogin() -> URLComponents {
+        return createURLComponents(path: AVIROPostAPI.appleUserAutoLoginPath)
     }
     
     // MARK: AppleUserCheck
@@ -117,9 +118,14 @@ struct AVIROPostAPI {
         return createURLComponents(path: AVIROPostAPI.appleUserCheckPath)
     }
     
-    // MARK: user Sign up 
-    mutating func userSignup() -> URLComponents {
-        return createURLComponents(path: AVIROPostAPI.userSignUpPath)
+    // MARK: appleUserSignup
+    mutating func appleUserSignup() -> URLComponents {
+        return createURLComponents(path: AVIROPostAPI.appleUserSignUpPath)
+    }
+    
+    // MARK: Withdrawal
+    mutating func appleUserRevoke() -> URLComponents {
+        return createURLComponents(path: AVIROPostAPI.appleUserRevokePath)
     }
     
     // MARK: Nickname Check
@@ -130,11 +136,6 @@ struct AVIROPostAPI {
     // MARK: Nickname change
     mutating func nicknameChange() -> URLComponents {
         return createURLComponents(path: AVIROPostAPI.userNicknameChangeablePath)
-    }
-    
-    // MARK: Withdrawal
-    mutating func userWithdraw() -> URLComponents {
-        return createURLComponents(path: AVIROPostAPI.userWithdrawPath)
     }
 }
 

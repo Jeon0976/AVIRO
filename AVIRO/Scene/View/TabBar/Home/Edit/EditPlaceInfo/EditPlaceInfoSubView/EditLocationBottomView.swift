@@ -29,7 +29,7 @@ final class EditLocationBottomView: UIView {
         map.allowsTilting = false
         map.isUserInteractionEnabled = false
         map.logoAlign = .rightBottom
-        
+
         map.contentInset = UIEdgeInsets(top: 100, left: 50, bottom: 0, right: 0)
         
         return map

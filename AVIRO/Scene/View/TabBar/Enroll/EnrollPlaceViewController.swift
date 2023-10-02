@@ -120,16 +120,12 @@ extension EnrollPlaceViewController: EnrollPlaceProtocol {
 
     // MARK: Notification
     func makeNotification() {
-        // after search method
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(selectedPlace(_:)),
             name: NSNotification.Name("selectedPlace"),
             object: nil
         )
-        
-        // keyboard가 보이는 중에 resign해서 view의 높이가 변경되는 버그 수정을 위한 notification
-        NotificationCenter.default.addObserver(self, selector: #selector(appWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
     }
     
     @objc func appWillResignActive() {
@@ -207,7 +203,6 @@ extension EnrollPlaceViewController: EnrollPlaceProtocol {
             changeMenuTable(isPresentingDefaultTable)
                         
             menuTableView.normalTableView.reloadData()
-                        
         } else {
             changeMenuTable(isPresentingDefaultTable)
             
@@ -217,21 +212,22 @@ extension EnrollPlaceViewController: EnrollPlaceProtocol {
     
     // MARK: Keyboard Will Show
     func keyboardWillShow(height: CGFloat) {
-        let tabBarHeight = tabBarController?.tabBar.frame.height ?? 0
-        let result = height - tabBarHeight
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
+        self.scrollView.contentInset = insets
+        self.scrollView.scrollIndicatorInsets = insets
         
-        UIView.animate(
-            withDuration: 0.3,
-            animations: { self.view.transform = CGAffineTransform(
-                translationX: 0,
-                y: -(result))
-            }
+        let bottomOffset = CGPoint(
+            x: 0,
+            y: scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom
         )
+        
+        scrollView.setContentOffset(bottomOffset, animated: true)
     }
     
     // MARK: Keyboard Will Hide
     func keyboardWillHide() {
-        self.view.transform = .identity
+        scrollView.contentInset = .zero
+        scrollView.scrollIndicatorInsets = .zero
     }
     
     // MARK: Enable Right Button
@@ -306,7 +302,7 @@ extension EnrollPlaceViewController {
         view.backgroundColor = .gray7
 
         scrollView.backgroundColor = .gray6
-        
+    
         storeInfoView.backgroundColor = .gray7
         veganDetailView.backgroundColor = .gray7
         menuTableView.backgroundColor = .gray7
@@ -334,16 +330,7 @@ extension EnrollPlaceViewController {
     }
     
     // MARK: TabBar Attribute
-    // TODO: Tab Bar push hidden 처리도 해야함
     private func tabBarAttributed() {
-        let tabBarAppearance = UITabBarAppearance()
-        tabBarAppearance.backgroundColor = UIColor.clear
-        tabBarController?.tabBar.standardAppearance = tabBarAppearance
-        
-        let bar = self.tabBarController?.tabBar
-        bar?.standardAppearance.backgroundEffect = nil
-        bar?.standardAppearance.backgroundImage = nil
-    
         if let tabBarController = self.tabBarController as? TabBarViewController {
             tabBarController.hiddenTabBar(true)
         }
@@ -456,7 +443,6 @@ extension EnrollPlaceViewController: UIGestureRecognizerDelegate {
 
 // MARK: TextField가 선택되었을 때 Method
 extension EnrollPlaceViewController: UITextFieldDelegate {
-
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textField == storeInfoView.titleField {
             let viewController = PlaceListSearchViewController()

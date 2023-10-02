@@ -903,9 +903,9 @@ final class EditMenuPresenter {
             switch result {
             case .success(let success):
                 if success.statusCode == 200 {
+                    self?.viewController?.popViewController()
                     self?.afterEditMenuChangedMenus?()
                     self?.afterEditMenuChangedVeganMarker?(editMenuChangedMarkerModel)
-                    self?.viewController?.popViewController()
                 } else {
                     if let message = success.message {
                         self?.viewController?.showErrorAlert(with: message, title: nil)

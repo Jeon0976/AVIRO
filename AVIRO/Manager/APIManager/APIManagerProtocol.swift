@@ -8,8 +8,6 @@
 import Foundation
 
 protocol APIManagerProtocol {
-    var session: URLSession { get }
-
     func performRequest<T: Decodable>(
         with url: URL,
         httpMethod: HTTPMethodType,
@@ -20,14 +18,6 @@ protocol APIManagerProtocol {
 }
 
 extension APIManagerProtocol {
-    var session: URLSession {
-        let configuration = URLSessionConfiguration.default
-        
-        configuration.timeoutIntervalForRequest = 6
-        
-        return URLSession(configuration: configuration)
-    }
-    
     func performRequest<T: Decodable>(
             with url: URL,
             httpMethod: HTTPMethodType = .get,

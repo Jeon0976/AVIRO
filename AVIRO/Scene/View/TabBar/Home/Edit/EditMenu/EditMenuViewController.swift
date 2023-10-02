@@ -130,21 +130,21 @@ extension EditMenuViewController: EditMenuProtocol {
     }
     
     func keyboardWillShow(height: CGFloat) {
-        self.navigationController?.isNavigationBarHidden = true
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
+        self.scrollView.contentInset = insets
+        self.scrollView.scrollIndicatorInsets = insets
         
-        let navigationHeight = navigationController!.navigationBar.frame.height
+        let bottomOffset = CGPoint(
+            x: 0,
+            y: scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom
+        )
         
-        UIView.animate(withDuration: 0.3) {
-            self.scrollView.transform = CGAffineTransform(
-                translationX: 0,
-                y: -(height - navigationHeight))
-        }
+        scrollView.setContentOffset(bottomOffset, animated: true)
     }
     
     func keyboardWillHide() {
-        self.navigationController?.isNavigationBarHidden = false
-        
-        self.scrollView.transform = .identity
+        scrollView.contentInset = .zero
+        scrollView.scrollIndicatorInsets = .zero
     }
     
     func dataBindingTopView(isAll: Bool, isSome: Bool, isRequest: Bool) {
@@ -275,11 +275,12 @@ extension EditMenuViewController: UITableViewDataSource {
 extension EditMenuViewController: UIGestureRecognizerDelegate {
     // MARK: 키보드 로직
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        if touch.view is MenuField || touch.view is UIButton {
+        if touch.view is EditMenuTopView || touch.view is UINavigationBar {
+            view.endEditing(true)
+            return true
+        } else {
             return false
         }
 
-        view.endEditing(true)
-        return true
     }
 }

@@ -7,13 +7,26 @@
 
 import UIKit
 
+private enum Text: String {
+    case title = "가게 정보"
+    
+    case editInfo = "가게 정보 수정 요청하기"
+    
+    case update = "업데이트 "
+    case timePlus = "영업 시간 추가"
+    case phonePlus = "전화번호 추가"
+    case homepagePlus = "홈페이지 링크 추가"
+    
+    case more = "더보기"
+}
+
 final class PlaceInfoView: UIView {
     private var title: UILabel = {
         let label = UILabel()
         
-        label.font = .pretendard(size: 20, weight: .bold)
+        label.font = CFont.font.bold20
         label.textColor = .gray0
-        label.text = "가게 정보"
+        label.text = Text.title.rawValue
         
         return label
     }()
@@ -21,7 +34,7 @@ final class PlaceInfoView: UIView {
     private lazy var updatedTimeLabel: UILabel = {
         let label = UILabel()
         
-        label.font = .pretendard(size: 13, weight: .regular)
+        label.font = CFont.font.regular13
         label.textAlignment = .right
         label.textColor = .gray2
         
@@ -31,7 +44,7 @@ final class PlaceInfoView: UIView {
     private lazy var addressIcon: UIImageView = {
         let imageView = UIImageView()
         
-        imageView.image = UIImage(named: "MapInfo")
+        imageView.image = .mapIcon
         
         return imageView
     }()
@@ -42,7 +55,7 @@ final class PlaceInfoView: UIView {
         label.textColor = .gray0
         label.numberOfLines = 0
         label.lineBreakMode = .byCharWrapping
-        label.font = .pretendard(size: 16, weight: .medium)
+        label.font = CFont.font.medium16
         
         return label
     }()
@@ -50,7 +63,7 @@ final class PlaceInfoView: UIView {
     private lazy var phoneIcon: UIImageView = {
         let imageView = UIImageView()
         
-        imageView.image = UIImage(named: "PhoneInfo")
+        imageView.image = .phoneInfo
         
         return imageView
     }()
@@ -61,9 +74,14 @@ final class PlaceInfoView: UIView {
         button.setTitleColor(.keywordBlue, for: .normal)
         button.backgroundColor = .gray7
         button.contentHorizontalAlignment = .left
-        button.titleLabel?.font = .pretendard(size: 16, weight: .medium)
+        button.titleLabel?.font = CFont.font.medium16
         button.titleLabel?.numberOfLines = 1
-        button.addTarget(self, action: #selector(phoneButtonTapped(_:)), for: .touchUpInside)
+        
+        button.addTarget(
+            self,
+            action: #selector(phoneButtonTapped(_:)),
+            for: .touchUpInside
+        )
         
         return button
     }()
@@ -71,7 +89,7 @@ final class PlaceInfoView: UIView {
     private lazy var timeIcon: UIImageView = {
         let imageView = UIImageView()
         
-        imageView.image = UIImage(named: "TimeInfo")
+        imageView.image = .timeIcon2
 
         return imageView
     }()
@@ -79,12 +97,17 @@ final class PlaceInfoView: UIView {
     private lazy var timePlusButton: UIButton = {
         let button = UIButton()
         
-        button.setTitle("영업 시간 추가", for: .normal)
+        button.setTitle(Text.timePlus.rawValue, for: .normal)
         button.setTitleColor(.keywordBlue, for: .normal)
         button.backgroundColor = .gray7
-        button.titleLabel?.font = .pretendard(size: 16, weight: .medium)
+        button.titleLabel?.font = CFont.font.medium16
         button.titleLabel?.textAlignment = .left
-        button.addTarget(self, action: #selector(timePlusButtonTapped), for: .touchUpInside)
+        
+        button.addTarget(
+            self,
+            action: #selector(timePlusButtonTapped),
+            for: .touchUpInside
+        )
         
         return button
     }()
@@ -101,10 +124,15 @@ final class PlaceInfoView: UIView {
     private lazy var timeTableShowButton: UIButton = {
         let button = UIButton()
         
-        button.setTitle("더보기", for: .normal)
+        button.setTitle(Text.more.rawValue, for: .normal)
         button.setTitleColor(.gray2, for: .normal)
-        button.titleLabel?.font = .pretendard(size: 14, weight: .regular)
-        button.addTarget(self, action: #selector(timeTableShowButtonTapped), for: .touchUpInside)
+        button.titleLabel?.font = CFont.font.regular14
+        
+        button.addTarget(
+            self,
+            action: #selector(timeTableShowButtonTapped),
+            for: .touchUpInside
+        )
         
         return button
     }()
@@ -112,7 +140,7 @@ final class PlaceInfoView: UIView {
     private lazy var homePageIcon: UIImageView = {
         let imageView = UIImageView()
         
-        imageView.image = UIImage(named: "HomeInfo")
+        imageView.image = .homeInfo
         
         return imageView
     }()
@@ -122,11 +150,17 @@ final class PlaceInfoView: UIView {
         
         button.setTitleColor(.keywordBlue, for: .normal)
         button.backgroundColor = .gray7
-        button.titleLabel?.font = .pretendard(size: 16, weight: .medium)
+        button.titleLabel?.font = CFont.font.medium16
         button.titleLabel?.numberOfLines = 2
         button.titleLabel?.lineBreakMode = .byCharWrapping
         button.contentHorizontalAlignment = .left
-        button.addTarget(self, action: #selector(homePageButtonTapped(_:)), for: .touchUpInside)
+        
+        button.addTarget(
+            self,
+            action: #selector(homePageButtonTapped(_:)),
+            for: .touchUpInside
+        )
+        
         return button
     }()
     
@@ -141,8 +175,13 @@ final class PlaceInfoView: UIView {
     private lazy var editInfoButton: EditInfoButton = {
         let button = EditInfoButton()
         
-        button.setButton("가게 정보 수정 요청하기")
-        button.addTarget(self, action: #selector(editInfoButtonTapped), for: .touchUpInside)
+        button.setButton(Text.editInfo.rawValue)
+        
+        button.addTarget(
+            self,
+            action: #selector(editInfoButtonTapped),
+            for: .touchUpInside
+        )
         
         return button
     }()
@@ -299,10 +338,10 @@ final class PlaceInfoView: UIView {
         guard let infoModel = infoModel else { return }
 
         addressLabel.text = infoModel.address + " " + (infoModel.address2 ?? "")
-        updatedTimeLabel.text = "업데이트 " + infoModel.updatedTime
+        updatedTimeLabel.text = Text.update.rawValue + infoModel.updatedTime
         
         if infoModel.phone == "" {
-            phoneButton.setTitle("전화번호 추가", for: .normal)
+            phoneButton.setTitle(Text.phonePlus.rawValue, for: .normal)
         } else {
             phoneButton.setTitle(infoModel.phone, for: .normal)
         }
@@ -316,7 +355,7 @@ final class PlaceInfoView: UIView {
         if let homePage = infoModel.url {
             homePageButton.setTitle(homePage, for: .normal)
         } else {
-            homePageButton.setTitle("홈페이지 링크 추가", for: .normal)
+            homePageButton.setTitle(Text.homepagePlus.rawValue, for: .normal)
         }
         
         setLayoutForLineCount()
@@ -377,7 +416,7 @@ final class PlaceInfoView: UIView {
     
     @objc private func phoneButtonTapped(_ sender: UIButton) {
         guard let text = sender.titleLabel?.text else { return }
-        if text != "전화번호 추가" {
+        if text != Text.phonePlus.rawValue {
             self.telViewPush(text)
         } else {
             self.afterPhoneButtonTappedWhenNoData?()

@@ -14,7 +14,7 @@ protocol LoginViewProtocol: NSObject {
     func setupLayout()
     func setupAttribute()
     func pushTabBar()
-    func pushRegistration(_ userModel: CommonUserModel)
+    func pushRegistrationWhenAppleLogin(_ userModel: AVIROAppleUserSignUpDTO)
     func afterLogoutAndMakeToastButton()
     func afterWithdrawalUserShowAlert()
     func showErrorAlert(with error: String, title: String?)
@@ -24,7 +24,7 @@ final class LoginViewPresenter: NSObject {
     weak var viewController: LoginViewProtocol?
     
     private let keychain = KeychainSwift()
-        
+    
     var whenAfterLogout = false
     var whenAfterWithdrawal = false
     
@@ -57,42 +57,87 @@ final class LoginViewPresenter: NSObject {
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
-            as? ASAuthorizationControllerPresentationContextProviding
+        as? ASAuthorizationControllerPresentationContextProviding
         authorizationController.performRequests()
     }
     
     // MARK: Login 후 최초인지 아닌지 확인 처리
-    func whenCheckAfterAppleLogin(_ appleUserModel: AppleUserModel) {
-        let userCheck = AVIROAppleUserCheckMemberDTO(userToken: appleUserModel.userIdentifier)
+    func whenCheckAfterAppleLogin(with model: AppleUserLoginModel) {
         
-        AVIROAPIManager().checkAppleToken(with: userCheck) { [weak self] result in
+        let checkAppleLoginModel = AVIROAppleUserCheckMemberDTO(
+            identityToken: model.identityToken,
+            authorizationCode: model.authorizationCode
+        )
+        
+        print(checkAppleLoginModel)
+        
+        AVIROAPIManager().checkWhenAppleLogin(with: checkAppleLoginModel) { [weak self] result in
             switch result {
-            case .success(let model):
-                if model.data != nil {
-                    let userId = model.data?.userId ?? ""
-                    let userName = model.data?.userName ?? ""
-                    let userEmail = model.data?.userEmail ?? ""
-                    let userNickname = model.data?.nickname ?? ""
-                    let marketingAgree = model.data?.marketingAgree ?? 0
-                    
-                    MyData.my.whenLogin(
-                        userId: userId,
-                        userName: userName,
-                        userEmail: userEmail,
-                        userNickname: userNickname,
-                        marketingAgree: marketingAgree
-                    )
-                    
-                    self?.keychain.set(userId, forKey: KeychainKey.userId.rawValue)
-                    self?.viewController?.pushTabBar()
+            case .success(let success):
+                print(success)
+                if success.statusCode == 200 {
+                    if let data = success.data {
+                        if data.isMember {
+                            
+                            self?.keychain.set(
+                                data.refreshToken,
+                                forKey: KeychainKey.appleRefreshToken.rawValue)
+                            
+                            self?.loadUserDataWhenAppleLogin()
+                            
+                        } else {
+                            let model = AVIROAppleUserSignUpDTO(
+                                refreshToken: data.refreshToken,
+                                accessToken: data.accessToken,
+                                userId: data.userId,
+                                userName: model.userName,
+                                userEmail: model.userEmail,
+                                marketingAgree: false
+                            )
+                            
+                            self?.viewController?.pushRegistrationWhenAppleLogin(model)
+                        }
+                    }
                 } else {
-                    let userModel = CommonUserModel(
-                        token: appleUserModel.userIdentifier,
-                        name: appleUserModel.name,
-                        email: appleUserModel.email
-                    )
-                    
-                    self?.viewController?.pushRegistration(userModel)
+                    if let message = success.message {
+                        self?.viewController?.showErrorAlert(with: message, title: nil)
+                    }
+                }
+            case .failure(let error):
+                print(error)
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+            }
+        }
+    }
+    
+    private func loadUserDataWhenAppleLogin() {
+        guard let refreshToken = keychain.get(KeychainKey.appleRefreshToken.rawValue) else {
+            viewController?.showErrorAlert(with: "재시도 해주세요.", title: nil)
+            return
+        }
+        
+        let model = AVIROAutoLoginWhenAppleUserDTO(refreshToken: refreshToken)
+        
+        AVIROAPIManager().appleUserCheck(with: model) { [weak self] result in
+            switch result {
+            case .success(let success):
+                print(success)
+                if success.statusCode == 200 {
+                    if let data = success.data {
+                        MyData.my.whenLogin(
+                            userId: data.userId,
+                            userName: data.userName,
+                            userEmail: data.userEmail,
+                            userNickname: data.nickname,
+                            marketingAgree: data.marketingAgree
+                        )
+                        
+                        self?.viewController?.pushTabBar()
+                    }
+                } else {
+                    if let message = success.message {
+                        self?.viewController?.showErrorAlert(with: message, title: nil)
+                    }
                 }
             case .failure(let error):
                 self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
@@ -115,27 +160,17 @@ extension LoginViewPresenter: ASAuthorizationControllerDelegate {
             let code = String(data: authorizationCode, encoding: .utf8)!
             let token = String(data: identityToken, encoding: .utf8)!
             
-            let userIdentifier = appleIDCredential.user
-            let fullName = appleIDCredential.fullName?.formatted() ?? ""
-            let email = appleIDCredential.email ?? ""
-            
-            let appleUserModel = AppleUserModel(
-                userIdentifier: userIdentifier,
-                name: fullName,
-                email: email
+            let fullName = appleIDCredential.fullName?.formatted() ?? " "
+            let email = appleIDCredential.email ?? " "
+
+            let model = AppleUserLoginModel(
+                identityToken: token,
+                authorizationCode: code,
+                userName: fullName,
+                userEmail: email
             )
             
-            print(code)
-            print(token)
-            print(appleUserModel)
-//            whenCheckAfterAppleLogin(appleUserModel)
+            whenCheckAfterAppleLogin(with: model)
         }
-    }
-    
-    func authorizationController(
-        controller: ASAuthorizationController,
-        didCompleteWithError error: Error
-    ) {
-        viewController?.showErrorAlert(with: error.localizedDescription, title: "애플 로그인 에러")
     }
 }

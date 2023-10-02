@@ -85,21 +85,26 @@ final class MyPageViewPresenter {
         LocalBookmarkData.shared.deleteAllBookmark()
         MyData.my.whenLogout()
         
-        self.keychain.delete(KeychainKey.userId.rawValue)
+        self.keychain.delete(KeychainKey.appleRefreshToken.rawValue)
         
         viewController?.pushLoginViewController(with: .logout)
     }
     
     func whenAfterWithdrawal() {
-        let userModel = AVIROUserWithdrawDTO(userId: MyData.my.id)
+        guard let refreshToken = keychain.get(KeychainKey.appleRefreshToken.rawValue) else { return }
         
-        AVIROAPIManager().withdrawalUser(with: userModel) { [weak self] result in
+        let model = AVIROAutoLoginWhenAppleUserDTO(refreshToken: refreshToken)
+        
+        print(model)
+        
+        AVIROAPIManager().revokeAppleUser(with: model) { [weak self] result in
             switch result {
             case .success(let success):
+                print(success)
                 if success.statusCode == 200 {
                     LocalBookmarkData.shared.deleteAllBookmark()
                     MyData.my.whenLogout()
-                    self?.keychain.delete(KeychainKey.userId.rawValue)
+                    self?.keychain.delete(KeychainKey.appleRefreshToken.rawValue)
                     
                     DispatchQueue.main.async {
                         LocalMarkerData.shared.deleteAllMarkerModel()
@@ -113,7 +118,6 @@ final class MyPageViewPresenter {
                 }
             case .failure(let error):
                 self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
-
             }
         }
     }

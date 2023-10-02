@@ -7,18 +7,14 @@
 
 import Foundation
 
-struct AVIROCheckUserDTO: Encodable {
-    let userId: String
+struct AVIROAutoLoginWhenAppleUserDTO: Encodable {
+    let refreshToken: String
 }
 
-struct AVIROCheckUserResultDTO: Decodable {
+struct AVIROAutoLoginWhenAppleUserResultDTO: Decodable {
     let statusCode: Int
     let data: AVIROUserDataDTO?
     let message: String?
-}
-
-struct AVIROAppleUserCheckMemberDTO: Encodable {
-    let userToken: String
 }
 
 struct AVIROUserDataDTO: Codable {
@@ -29,14 +25,34 @@ struct AVIROUserDataDTO: Codable {
     let marketingAgree: Int
 }
 
-struct AVIROUserSignUpDTO: Codable {
-    var userToken: String
+struct AVIROAppleUserCheckMemberDTO: Encodable {
+    let identityToken: String
+    let authorizationCode: String
+}
+
+struct AVIROAppleUserCheckMemberResultDTO: Decodable {
+    let statusCode: Int
+    let data: AVIROAppleUserRawData?
+    let message: String?
+}
+
+struct AVIROAppleUserRawData: Decodable {
+    let isMember: Bool
+    let refreshToken: String
+    let accessToken: String
+    let userId: String
+}
+
+struct AVIROAppleUserSignUpDTO: Codable {
+    let refreshToken: String
+    let accessToken: String
+    let userId: String
     var userName: String?
     var userEmail: String?
     var nickname: String?
     var birthday: Int?
     var gender: String?
-    var marketingAgree: Bool
+    var marketingAgree: Bool?
 }
 
 struct AVIROUserSignUpResultDTO: Decodable {
@@ -58,8 +74,4 @@ struct AVIRONicknameIsDuplicatedCheckResultDTO: Codable {
 struct AVIRONicknameChagneableDTO: Encodable {
     let userId: String
     let nickname: String
-}
-
-struct AVIROUserWithdrawDTO: Encodable {
-    let userId: String
 }

@@ -197,7 +197,7 @@ final class PlaceReviewsView: UIView {
         isEditedAfter = false
         /// textView 초기화
         reviewInputView.initTextView()
-        
+    
         self.placeId = placeId
         
         self.subTitle.text = "\(reviews.count)개"
@@ -206,7 +206,7 @@ final class PlaceReviewsView: UIView {
         reviewsTable.isScrollEnabled = true
 
         reviewsTable.bottomAnchor.constraint(equalTo: reviewInputView.topAnchor).isActive = true
-        
+                
         if reviews.count > 0 {
             whenHaveReviews(reviews)
         } else {

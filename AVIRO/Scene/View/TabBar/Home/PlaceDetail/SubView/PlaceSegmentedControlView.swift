@@ -371,7 +371,6 @@ final class PlaceSegmentedControlView: UIView {
         }
         
         reviewView.whenUploadReview = { [weak self] postReviewModel in
-            // TODO: HomeView 내부에있는 review view도 layout update 해야할까??
             self?.reviewsCount += 1
             self?.homeView.updateReview(postReviewModel)
             self?.whenUploadReview?(postReviewModel)

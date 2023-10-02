@@ -235,19 +235,39 @@ extension ReportReviewViewController: ReportReviewProtocol {
         reportTextView.isHidden = !show
     }
     
+//    func keyboardWillShow(height: CGFloat) {
+//        UIView.animate(
+//            withDuration: 0.3,
+//            animations: { self.view.transform = CGAffineTransform(
+//                translationX: 0,
+//                y: -(height))
+//            }
+//        )
+//    }
+//
+//    func keyboardWillHide() {
+//        self.view.transform = .identity
+//    }
+    // MARK: Keyboard Will Show
     func keyboardWillShow(height: CGFloat) {
-        UIView.animate(
-            withDuration: 0.3,
-            animations: { self.view.transform = CGAffineTransform(
-                translationX: 0,
-                y: -(height))
-            }
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
+        self.scrollView.contentInset = insets
+        self.scrollView.scrollIndicatorInsets = insets
+        
+        let bottomOffset = CGPoint(
+            x: 0,
+            y: scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom
         )
+        
+        scrollView.setContentOffset(bottomOffset, animated: true)
     }
     
+    // MARK: Keyboard Will Hide
     func keyboardWillHide() {
-        self.view.transform = .identity
+        scrollView.contentInset = .zero
+        scrollView.scrollIndicatorInsets = .zero
     }
+    
     
     func dismissViewController() {
         DispatchQueue.main.async { [weak self] in

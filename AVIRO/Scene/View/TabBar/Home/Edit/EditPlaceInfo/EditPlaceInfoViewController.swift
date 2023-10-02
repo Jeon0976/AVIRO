@@ -252,7 +252,6 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         operationHourChangebleView.isHidden = true
     }
     
-    
     func setupGesture() {
         [
             leftSwipeGesture,
@@ -271,6 +270,7 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     }
     
     func whenViewWillAppearSelectedIndex(_ index: Int) {
+        print("Test")
         segmentedControl.selectedSegmentIndex = index
         whenActiveSegmentedChanged()
     }
@@ -413,23 +413,22 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     }
     
     func keyboardWillShow(height: CGFloat) {
-        self.navigationController?.isNavigationBarHidden = true
-        self.segmentedControl.isHidden = true
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
+        self.scrollView.contentInset = insets
+        self.scrollView.scrollIndicatorInsets = insets
         
-        UIView.animate(
-            withDuration: 0.3,
-            animations: { self.scrollView.transform = CGAffineTransform(
-                translationX: 0,
-                y: -(height))
-            }
+        let bottomOffset = CGPoint(
+            x: 0,
+            y: scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom
         )
+        
+        scrollView.setContentOffset(bottomOffset, animated: true)
     }
     
     func keyboardWillHide() {
-        self.navigationController?.isNavigationBarHidden = false
-        self.segmentedControl.isHidden = false
-        
-        self.scrollView.transform = .identity
+        scrollView.contentInset = .zero
+        scrollView.scrollIndicatorInsets = .zero
+
     }
     
     func dataBindingLocation(title: String,

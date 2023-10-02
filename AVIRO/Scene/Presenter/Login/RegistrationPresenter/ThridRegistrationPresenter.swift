@@ -27,7 +27,7 @@ final class ThridRegistrationPresenter {
 
     private let keyChain = KeychainSwift()
     
-    var userInfoModel: AVIROUserSignUpDTO?
+    var userInfoModel: AVIROAppleUserSignUpDTO?
         
     var terms: [(Term, Bool)] = [
         (.aviroUsage, false),
@@ -35,7 +35,9 @@ final class ThridRegistrationPresenter {
         (.locationService, false)
     ]
     
-    init(viewController: ThridRegistrationProtocol, userInfo: AVIROUserSignUpDTO? = nil) {
+    init(viewController: ThridRegistrationProtocol,
+         userInfo: AVIROAppleUserSignUpDTO? = nil
+    ) {
         self.viewController = viewController
         self.userInfoModel = userInfo
     }
@@ -64,12 +66,25 @@ final class ThridRegistrationPresenter {
         
         userInfoModel.marketingAgree = false
         
-        AVIROAPIManager().createUser(with: userInfoModel) { [weak self] result in
+        print(userInfoModel)
+
+        AVIROAPIManager().createAppleUser(with: userInfoModel) { [weak self] result in
             switch result {
             case .success(let success):
                 if success.statusCode == 200 {
-                    if let id = success.userId {
-                        self?.keyChain.set(id, forKey: KeychainKey.userId.rawValue)
+                    if let data = success.data {
+                        self?.keyChain.set(
+                            userInfoModel.refreshToken,
+                            forKey: KeychainKey.appleRefreshToken.rawValue)
+                        
+                        MyData.my.whenLogin(
+                            userId: data.userId,
+                            userName: data.userName,
+                            userEmail: data.userEmail,
+                            userNickname: data.nickname,
+                            marketingAgree: data.marketingAgree
+                        )
+                        
                         self?.viewController?.pushFinalRegistrationView()
                     }
                 } else {

@@ -92,6 +92,7 @@ extension UIImage {
     static let currentButton = UIImage(named: "current-location")!
     static let currentButtonDisable = UIImage(named: "current-locationDisable")!
     
+    static let mapIcon = UIImage(named: "MapInfo")!
     static let starIcon = UIImage(named: "star")!
     static let starIconDisable = UIImage(named: "starDisable")!
     static let starIconClicked = UIImage(named: "selectedStar")!

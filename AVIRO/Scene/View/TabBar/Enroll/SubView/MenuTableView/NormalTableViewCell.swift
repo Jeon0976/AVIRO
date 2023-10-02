@@ -115,6 +115,7 @@ final class NormalTableViewCell: UITableViewCell {
 extension NormalTableViewCell: UITextFieldDelegate {
     // MARK: price field 로직
     /// 변동일 땐 입력 금지, 숫자 데이터 입력 받을 때 3번째 차리 ',' 추가
+    
     func textField(_ textField: UITextField,
                    shouldChangeCharactersIn range: NSRange,
                    replacementString string: String

@@ -156,6 +156,7 @@ final class PlaceMenuView: UIView {
         menuTable.reloadData()
         menuTable.layoutIfNeeded()
         
+        print(menuModel.menuArray)
         showMoreButton.isHidden = true
     }
         

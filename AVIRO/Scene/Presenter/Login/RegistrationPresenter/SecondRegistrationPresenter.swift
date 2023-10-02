@@ -15,20 +15,20 @@ protocol SecondRegistrationProtocol: NSObject {
     func isInvalidDate()
     func isValidDate()
     func birthInit()
-    func pushThridRegistrationView(_ userInfoModel: AVIROUserSignUpDTO)
+    func pushThridRegistrationView(_ userInfoModel: AVIROAppleUserSignUpDTO)
 }
 
 final class SecondRegistrationPresenter {
     weak var viewController: SecondRegistrationProtocol?
     
-    var userInfoModel: AVIROUserSignUpDTO?
+    var userInfoModel: AVIROAppleUserSignUpDTO?
     
     var birth = ""
     var gender: Gender?
     var isWrongBirth = true
         
     init(viewController: SecondRegistrationProtocol,
-         userInfoModel: AVIROUserSignUpDTO? = nil
+         userInfoModel: AVIROAppleUserSignUpDTO? = nil
     ) {
         self.viewController = viewController
         self.userInfoModel = userInfoModel
