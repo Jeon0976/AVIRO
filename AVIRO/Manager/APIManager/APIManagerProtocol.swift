@@ -22,7 +22,7 @@ protocol APIManagerProtocol {
 extension APIManagerProtocol {
     var session: URLSession {
          let configuration = URLSessionConfiguration.default
-         configuration.timeoutIntervalForRequest = 30.0 // 30초로 타임아웃 설정
+         configuration.timeoutIntervalForRequest = 10.0
          return URLSession(configuration: configuration)
      }
 

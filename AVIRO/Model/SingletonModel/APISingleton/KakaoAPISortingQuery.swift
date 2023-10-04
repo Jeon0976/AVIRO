@@ -7,8 +7,6 @@
 
 import Foundation
 
-// MARK: 존재 유무 다시 확인
-// TODO: 4
 enum KakaoSerachCoordinate {
     case MyCoordinate
     case CenterCoordinate

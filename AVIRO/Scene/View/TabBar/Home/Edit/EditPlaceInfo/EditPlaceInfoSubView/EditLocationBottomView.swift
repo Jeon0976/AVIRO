@@ -135,7 +135,12 @@ final class EditLocationBottomView: UIView {
         // 20 * 2 , 15 * 3
         let inset: CGFloat = 85
         
-        let totalHeight = addressLabelHeight + naverMapHeight + mainAddressFieldHeight + detailAddressFieldHeight + inset
+        let totalHeight =
+            addressLabelHeight +
+            naverMapHeight +
+            mainAddressFieldHeight +
+            detailAddressFieldHeight +
+            inset
         
         viewHeightConstraint?.constant = totalHeight
     }
@@ -194,7 +199,6 @@ extension EditLocationBottomView: UITextFieldDelegate {
         case 1:
             guard let addressDetail = textField.text else { return }
             afterChangedDetailAddress?(addressDetail)
-            print(addressDetail)
         default:
             return
         }

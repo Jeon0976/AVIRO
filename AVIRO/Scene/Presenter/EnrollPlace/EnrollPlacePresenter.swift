@@ -492,7 +492,11 @@ extension EnrollPlacePresenter {
             
             veganModel?.menuArray = menuArray
         } else {
-            let hasEmptyData = requestTableModel.contains { $0.menu == "" || $0.price == ""} || requestTableModel.isEmpty
+            let hasEmptyData =
+            requestTableModel.contains { $0.menu == "" || $0.price == ""}
+            ||
+            requestTableModel.isEmpty
+            
             guard !hasEmptyData else {
                 viewController?.enableRightButton(false)
                 return

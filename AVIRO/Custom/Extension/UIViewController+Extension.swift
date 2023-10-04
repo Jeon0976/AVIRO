@@ -78,14 +78,13 @@ extension UIViewController {
                 }
                 
                 if UIApplication.shared.canOpenURL(settingsUrl) {
-                    UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
-                        print("Settings opened: \(success)")
-                    })
+                    UIApplication.shared.open(settingsUrl)
                 }
             }
         )
         let title = "위치정보 이용에 대한 액세스 권한이 없어요"
         let message = "앱 설정으로 가서 액세스 권한을 수정 할 수 있어요. 이동하시겠어요?"
+        
         showAlert(
             title: title,
             message: message,
@@ -214,10 +213,8 @@ extension UIViewController {
     
     func applyGradientToLoginView() {
         let colors = [
-            UIColor.bgNavy,
-            UIColor(red: 0.968, green: 0.989, blue: 1, alpha: 1),
+            UIColor(red: 0.946, green: 0.981, blue: 1, alpha: 1),
             UIColor(red: 0.973, green: 0.99, blue: 1, alpha: 1),
-            UIColor(red: 0.995, green: 0.998, blue: 1, alpha: 1),
             UIColor(red: 1, green: 1, blue: 1, alpha: 1)
         ]
         

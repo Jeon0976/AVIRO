@@ -28,10 +28,10 @@ final class MyData: MyDataProtocol {
     var marketingAgree = 0
     
     private init(
-        userId: String = "test",
+        userId: String = "",
         userName: String = "",
         userEmail: String = "",
-        userNickName: String = "test",
+        userNickName: String = "",
         marketingAgree: Int = 0
     ) {
         self.id = userId

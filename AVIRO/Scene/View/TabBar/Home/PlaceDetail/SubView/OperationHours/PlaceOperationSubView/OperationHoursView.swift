@@ -113,7 +113,7 @@ final class OperationHoursView: UIView {
             
             sunView.topAnchor.constraint(equalTo: satView.bottomAnchor, constant: 9),
             sunView.leadingAnchor.constraint(equalTo: monView.leadingAnchor),
-            sunView.trailingAnchor.constraint(equalTo: monView.trailingAnchor),
+            sunView.trailingAnchor.constraint(equalTo: monView.trailingAnchor)
         ])
     }
     
@@ -147,7 +147,16 @@ final class OperationHoursView: UIView {
         // 15 15 15 + 9 9 9 9 9 9
         let inset: CGFloat = 99
         
-        let totalHeight = mainTitleHeight + monHeight + tueHeight + wedHeight + thuHeight + friHeight + satHeight + sunHeight + inset
+        let totalHeight =
+            mainTitleHeight +
+            monHeight +
+            tueHeight +
+            wedHeight +
+            thuHeight +
+            friHeight +
+            satHeight +
+            sunHeight +
+            inset
         
         self.viewHeight?.constant = totalHeight
     }

@@ -35,11 +35,9 @@ final class SettingCell: UITableViewCell {
         return button
     }()
     
-    //TODO: 업데이트 후 변경 예정
     private lazy var versionLabel: UILabel = {
         let label = UILabel()
-        
-        label.text = "현재 1.0.0 / 최신 1.0.0"
+
         label.textColor = .gray2
         label.font = .pretendard(size: 15, weight: .regular)
         
@@ -58,6 +56,8 @@ final class SettingCell: UITableViewCell {
         
         setupLayout()
         setupAttribute()
+        
+        loadVersion()
     }
     
     required init?(coder: NSCoder) {
@@ -112,5 +112,44 @@ final class SettingCell: UITableViewCell {
     
     @objc private func buttonTapped() {
         tappedAfterSettingValue?(settingValue)
+    }
+    
+    private func loadVersion() {
+        var currentVersion = ""
+        var latestVersion = ""
+        
+        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            currentVersion = version
+        }
+        
+        let appID = APP.appId.rawValue
+        let url = URL(string: "https://itunes.apple.com/lookup?id=\(appID)")!
+
+        let task = URLSession.shared.dataTask(with: url) { (data, _, _) in
+            defer {
+                DispatchQueue.main.async { [weak self] in
+                    self?.versionLabel.text = "현재 " + currentVersion + " / " + "최신 " + latestVersion
+                }
+            }
+            guard let data = data else {
+                latestVersion = "1.0"
+                return
+            }
+            
+            do {
+                if let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any],
+                   let results = json["results"] as? [[String: Any]],
+                   let appInfo = results.first,
+                   let version = appInfo["version"] as? String {
+                    latestVersion = version
+                } else {
+                    latestVersion = "1.0"
+                }
+            } catch {
+                latestVersion = "1.0"
+            }
+        }
+
+        task.resume()
     }
 }

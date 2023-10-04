@@ -19,9 +19,7 @@ extension UIImage {
     static let screen4 = UIImage(named: "Contents 4")
     
     // MARK: Main
-    static let loginTitle = UIImage(named: "LoginTitle")!
     static let loginCharacter = UIImage(named: "LoginCharacter")!
-    static let loginCharacterEllipse = UIImage(named: "LoginCharacterEllipse")!
     static let enrollCharacter = UIImage(named: "EnrollCharacter")!
     static let noResultCharacter = UIImage(named: "NoResultCharacter")!
     

@@ -209,8 +209,12 @@ extension ReportReviewViewController: ReportReviewProtocol {
         
         NSLayoutConstraint.activate([
             reportTextView.topAnchor.constraint(equalTo: lastView!.bottomAnchor, constant: 15),
-            reportTextView.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 16),
-            reportTextView.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -16),
+            reportTextView.leadingAnchor.constraint(
+                equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 16
+            ),
+            reportTextView.trailingAnchor.constraint(
+                equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -16
+            ),
             reportTextView.heightAnchor.constraint(equalToConstant: 150),
             reportTextView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -15)
         ])
@@ -267,7 +271,6 @@ extension ReportReviewViewController: ReportReviewProtocol {
         scrollView.contentInset = .zero
         scrollView.scrollIndicatorInsets = .zero
     }
-    
     
     func dismissViewController() {
         DispatchQueue.main.async { [weak self] in

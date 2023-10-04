@@ -363,8 +363,6 @@ extension SecondRegistrationViewController: UIGestureRecognizerDelegate {
 }
 
 extension SecondRegistrationViewController: UITextFieldDelegate {
-    // MARK: 리펙토링 필요
-    // TODO: 4
     func textFieldDidChangeSelection(_ textField: UITextField) {
         guard var text = textField.text else { return }
 
@@ -389,7 +387,6 @@ extension SecondRegistrationViewController: UITextFieldDelegate {
             userInfo: nil,
             repeats: false
         )
-
     }
     
     func textField(_ textField: UITextField,

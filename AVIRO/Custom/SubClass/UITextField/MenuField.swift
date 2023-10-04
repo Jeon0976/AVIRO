@@ -7,7 +7,7 @@
 
 import UIKit
 
-fileprivate enum VariablePriceEnum: String {
+private enum VariablePriceEnum: String {
     case variable = "변동가"
     case cancel = "변동취소"
     
@@ -150,7 +150,6 @@ final class MenuField: UITextField {
         button.menu = setButtonMenu()
     }
     
-    // MARK: SetButton Menu 
     private func setButtonMenu() -> UIMenu {
         var variablePrice: UIAction
         

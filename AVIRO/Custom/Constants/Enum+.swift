@@ -9,9 +9,15 @@ import UIKit
 
 import NMapsMap
 
+enum APP: String {
+    case appId = "6449352804"
+}
+
 // MARK: Emplitude
 enum AMType: String {
     case signUp = "Sign Up"
+    case withdrawal = "Withdrawal"
+    
     case login = "Login"
     case logout = "Logout"
     
@@ -135,7 +141,6 @@ enum Gender: String, Codable {
 }
 
 // MARK: Map Marker
-// TODO: Vegan Option과 통일 작업 필요
 enum MapPlace {
     case All
     case Some
@@ -239,7 +244,6 @@ enum VeganOption {
 }
 
 // MARK: Place Category
-// TODO: CaseIterable를 활용해서 enum 갯수만큼 button 만들기로 리펙토링
 enum PlaceCategory: String {
     case restaurant
     case cafe

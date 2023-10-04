@@ -22,6 +22,5 @@ struct AVIROReviewRawData: Codable {
     var userId: String
     var content: String
     var updatedTime: String
-    // TODO: Nickname 수정 후 수정
     var nickname: String?
 }

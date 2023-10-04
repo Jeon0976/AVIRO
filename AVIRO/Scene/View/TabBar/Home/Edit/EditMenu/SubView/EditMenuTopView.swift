@@ -177,7 +177,6 @@ final class EditMenuTopView: UIView {
     private func makeViewHeight() {
         let titleHeight = titleLabel.frame.height
         let buttonStackViewHeight = buttonStackView.frame.height
-        // TODO: Static value 수정할 때 수정 요망
         // 20, 20, 20
         let paddingValues: CGFloat = 60
         

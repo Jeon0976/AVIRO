@@ -111,7 +111,6 @@ final class PlaceView: UIView {
         return summaryView.frame.height
     }
     
-    // TODO: slide up 일때 세부내용 api 호출 후 데이터 바인딩 되는거 만들기
     func summaryDataBinding(placeModel: PlaceTopModel,
                             placeId: String,
                             isStar: Bool

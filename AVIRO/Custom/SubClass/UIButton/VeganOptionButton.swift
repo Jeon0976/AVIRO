@@ -37,7 +37,6 @@ final class VeganOptionButton: UIButton {
         layer.cornerRadius = 10
     }
     
-    // 폰 마다 버튼의 width을 다르게 하기 위한 조치
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -111,7 +110,6 @@ final class VeganOptionButton: UIButton {
     // MARK: Vertical Title -> Image
     private func verticalTitleToImage() {
         let titleHeight = titleLabel?.frame.height ?? 0
-        let titleWidth = titleLabel?.frame.width ?? 0
         
         let imageHeight = imageView?.frame.height ?? 0
         let imageWidth = imageView?.frame.width ?? 0

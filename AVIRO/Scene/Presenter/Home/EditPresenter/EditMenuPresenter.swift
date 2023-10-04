@@ -626,8 +626,12 @@ final class EditMenuPresenter {
     private func checkRequestArrayWhenSomeRequest() -> Bool {
         let count = requestVeganMenuCount >= 2
         
-        guard let checkVegan = requestVeganMenuArray?.contains(where: { $0.howToRequest == "" && !$0.isCheck }) else { return false }
-        guard let checkRequest = requestVeganMenuArray?.contains(where: { $0.howToRequest != "" && $0.isCheck }) else { return false }
+        guard let checkVegan = requestVeganMenuArray?.contains(
+            where: { $0.howToRequest == "" && !$0.isCheck }
+        ) else { return false }
+        guard let checkRequest = requestVeganMenuArray?.contains(
+            where: { $0.howToRequest != "" && $0.isCheck }
+        ) else { return false }
         
         return count && checkVegan && checkRequest
     }
@@ -684,7 +688,8 @@ final class EditMenuPresenter {
     private func whenNotDefaultMenuTableHasEmptyData() -> Bool {
         guard let requestVeganMenuArray = requestVeganMenuArray else { return true }
 
-        let hasEmptyData = requestVeganMenuArray.contains(where: { $0.menu == "" || $0.price == "" }) || requestVeganMenuArray.isEmpty
+        let hasEmptyData = requestVeganMenuArray.contains(
+            where: { $0.menu == "" || $0.price == "" }) || requestVeganMenuArray.isEmpty
         
         let hasEmptyRequest = requestVeganMenuArray.contains(where: {
             $0.isCheck && $0.howToRequest == ""
@@ -770,7 +775,7 @@ final class EditMenuPresenter {
         var menuData: AVIROMenu?
         
         initVeganMenuArray.forEach { initMenu in
-            if initMenu.id == menu.id  {
+            if initMenu.id == menu.id {
                 menuData = AVIROMenu(
                     menuId: menu.id,
                     menuType: MenuType.vegan.rawValue,

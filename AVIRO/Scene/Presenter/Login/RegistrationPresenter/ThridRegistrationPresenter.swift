@@ -67,14 +67,10 @@ final class ThridRegistrationPresenter {
         guard var userInfoModel = userInfoModel else { return }
         
         userInfoModel.marketingAgree = false
-        
-        print(userInfoModel)
-        
+                
         AVIROAPIManager().createAppleUser(with: userInfoModel) { [weak self] result in
             switch result {
             case .success(let success):
-                print(result)
-                print(success)
                 if success.statusCode == 200 {
                     if let data = success.data {
                         self?.keyChain.set(
@@ -98,8 +94,6 @@ final class ThridRegistrationPresenter {
                     }
                 }
             case .failure(let error):
-                print(result)
-                print(error)
                 self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }

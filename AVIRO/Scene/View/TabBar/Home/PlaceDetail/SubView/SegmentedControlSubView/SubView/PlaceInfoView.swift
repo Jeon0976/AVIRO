@@ -316,10 +316,16 @@ final class PlaceInfoView: UIView {
        
     private func setupViewHeight() {
         let titleHeight = title.frame.height
-        let addressHeight = addressLabel.countCurrentLines() == 1 ? addressIcon.frame.height : addressLabel.frame.height
+        let addressHeight = addressLabel.countCurrentLines() == 1 ?
+            addressIcon.frame.height
+            :
+            addressLabel.frame.height
         let phoneHeight = phoneIcon.frame.height
         let timeHeight = timeIcon.frame.height
-        let homePageHeight = homePageButton.countCurrentLines() == 1 ? homePageIcon.frame.height : homePageButton.frame.height
+        let homePageHeight = homePageButton.countCurrentLines() == 1 ?
+            homePageIcon.frame.height
+            :
+            homePageButton.frame.height
         
         let lineHeight = separatorLine.frame.height
         let changeButtonHeight = editInfoButton.frame.height

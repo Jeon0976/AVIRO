@@ -99,12 +99,11 @@ final class MyPageViewPresenter {
         AVIROAPIManager().revokeAppleUser(with: model) { [weak self] result in
             switch result {
             case .success(let success):
-                print(result)
                 if success.statusCode == 200 {
                     LocalBookmarkData.shared.deleteAllBookmark()
                     MyData.my.whenLogout()
                     self?.keychain.delete(KeychainKey.appleRefreshToken.rawValue)
-                    
+                    self?.trackWhenWithdrawal()
                     DispatchQueue.main.async {
                         LocalMarkerData.shared.deleteAllMarkerModel()
                         
@@ -116,8 +115,6 @@ final class MyPageViewPresenter {
                     }
                 }
             case .failure(let error):
-                print(result)
- 
                 self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
@@ -125,5 +122,9 @@ final class MyPageViewPresenter {
     
     private func trackWhenLogout() {
         appDelegate?.amplitude?.track(eventType: AMType.logout.rawValue)
+    }
+    
+    private func trackWhenWithdrawal() {
+        appDelegate?.amplitude?.track(eventType: AMType.withdrawal.rawValue)
     }
 }

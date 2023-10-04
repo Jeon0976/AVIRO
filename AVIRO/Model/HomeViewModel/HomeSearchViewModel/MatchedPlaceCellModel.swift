@@ -13,4 +13,3 @@ struct MatchedPlaceCellModel {
     let address: String
     let distance: String
 }
-

@@ -7,8 +7,6 @@
 
 import Foundation
 
-// TODO: 제너릭 타입으로 변경 요망
-// 일단 구현, 향후 수정 예정
 protocol SearchHistoryManagerProtocol {
     func getHistoryModel() -> [HistoryTableModel]
     func setHistoryModel(_ newValues: HistoryTableModel)

@@ -101,10 +101,14 @@ final class PushCommentView: UIView {
         viewHeight = heightAnchor.constraint(equalToConstant: 0)
         viewHeight?.isActive = true
         
-        textViewLeadingWhenHiddenCancelButton = textView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10)
+        textViewLeadingWhenHiddenCancelButton = textView.leadingAnchor.constraint(
+            equalTo: self.leadingAnchor, constant: 10
+        )
         textViewLeadingWhenHiddenCancelButton?.isActive = true
         
-        textViewLeadingWhenShowCancelButton = textView.leadingAnchor.constraint(equalTo: cancelEditButton.trailingAnchor, constant: 10)
+        textViewLeadingWhenShowCancelButton = textView.leadingAnchor.constraint(
+            equalTo: cancelEditButton.trailingAnchor, constant: 10
+        )
         textViewLeadingWhenShowCancelButton?.isActive = false
         
         temparyTextViewHeightConstraint = textView.heightAnchor.constraint(equalToConstant: 0)
@@ -158,7 +162,6 @@ final class PushCommentView: UIView {
     @objc private func enrollButtonTapped(_ sender: UIButton) {
         if sender.titleLabel?.textColor == .gray0 {
             guard let text = textView.text else { return }
-            print(text)
             enrollReview?(text)
 
             self.endEditing(true)

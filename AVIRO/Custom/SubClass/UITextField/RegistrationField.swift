@@ -22,6 +22,7 @@ class RegistrationField: UITextField {
         bottom: 15,
         right: 20
     )
+    
     private let rightButtonInset = CGFloat(5)
         
     var isPossible: Bool? {
@@ -53,7 +54,6 @@ class RegistrationField: UITextField {
         fatalError()
     }
     
-    // text Inset
     override open func textRect(
         forBounds bounds: CGRect
     ) -> CGRect {

@@ -14,4 +14,3 @@ struct KakaoKeywordSearchDTO {
     var page: String
     let isAccuracy: KakaoSearchHowToSort?
 }
-

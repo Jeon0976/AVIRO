@@ -15,7 +15,6 @@ struct AVIRODeleteAPI {
         guard let path = Bundle.main.url(forResource: "API", withExtension: "plist"),
               let dict = NSDictionary(contentsOf: path) as? [String: Any],
               let host = dict["AVIROHost"] as? String else {
-            print("Failed to load AVIROHost from API.plist")
             return nil
         }
         return host

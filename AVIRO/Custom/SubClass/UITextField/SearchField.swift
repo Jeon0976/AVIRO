@@ -60,7 +60,6 @@ final class SearchField: UITextField {
         return bounds.inset(by: textInset)
     }
     
-    // MARK: Configuration
     private func configuration() {
         textColor = .keywordBlue
         font = CFont.font.medium18
@@ -68,7 +67,6 @@ final class SearchField: UITextField {
         layer.cornerRadius = 10
     }
     
-    // MARK: Make left Button
     private func makeLeftButton() {
         let image = UIImage.searchIcon.withRenderingMode(.alwaysTemplate)
         
@@ -99,7 +97,6 @@ final class SearchField: UITextField {
         leftViewMode = .always
     }
     
-    // MARK: Left button 바꾸기
     func changeLeftButton() {
         let changedImage = UIImage.back.withRenderingMode(.alwaysTemplate)
         leftButton.setImage(changedImage, for: .normal)
@@ -107,13 +104,11 @@ final class SearchField: UITextField {
         changedLeftButton = true
     }
     
-    // MARK: Left Button 원 상태로 돌리기
     func initLeftButton() {
         let initImage = UIImage.searchIcon.withRenderingMode(.alwaysTemplate)
         leftButton.setImage(initImage, for: .normal)
     }
     
-    // MARK: Left Button이 바뀌었을 때만 활성화
     @objc func leftButtonTapped(_ sender: UIButton) {
         guard changedLeftButton == true else {
             return
@@ -123,7 +118,6 @@ final class SearchField: UITextField {
         self.didTappedLeftButton?()
     }
     
-    // MARK: Make Right Button
     private func makeRightButton() {
         let image = UIImage.closeCircle.withRenderingMode(.alwaysTemplate)
         
@@ -154,13 +148,11 @@ final class SearchField: UITextField {
         rightViewMode = .always
     }
     
-    // MARK: Right Button 클릭 시
     @objc func rightButtonTapped(_ sender: UIButton) {
         self.text = ""
         self.rightButtonHidden = true
     }
     
-    // MARK: Place Holder 값 넣기
     func makePlaceHolder(_ placeHolder: String) {
         self.attributedPlaceholder = NSAttributedString(
             string: placeHolder,

@@ -60,7 +60,6 @@ class EnrollField: UITextField {
         self.layer.cornerRadius = 10
     }
     
-    /// Text Edge Inset 값 설정
     private func setTextInset() -> UIEdgeInsets {
         var inset = UIEdgeInsets(
             top: verticalPadding,
@@ -84,7 +83,6 @@ class EnrollField: UITextField {
         return inset
     }
 
-    /// Left Image 넣기
     func addLeftImage() {
         isAddLeftImage = !isAddLeftImage
         
@@ -188,14 +186,11 @@ class EnrollField: UITextField {
         rightViewMode = .always
     }
     
-    // MARK: Right Button 클릭 시
     @objc func rightButtonTapped(_ sender: UIButton) {
         self.text = ""
         self.rightButtonHidden = true
     }
     
-    // MARK: Place Holder 값 넣기
-    /// placeHolder 값 넣기
     func makePlaceHolder(_ placeHolder: String) {
         self.attributedPlaceholder = NSAttributedString(
             string: placeHolder,
@@ -203,7 +198,6 @@ class EnrollField: UITextField {
         )
     }
     
-    // MARK: Make shadow
     func makeShadow(
         color: UIColor = .black,
         radious: CGFloat = 5,

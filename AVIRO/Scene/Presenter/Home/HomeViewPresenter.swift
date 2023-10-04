@@ -588,6 +588,20 @@ final class HomeViewPresenter: NSObject {
 
         let dispatchGroup = DispatchGroup()
         
+        loadPlaceInfo(with: placeId, dispatchGroup: dispatchGroup)
+        loadPlaceMenus(with: placeId, dispatchGroup: dispatchGroup)
+        loadPlaceReviews(with: placeId, dispatchGroup: dispatchGroup)
+        
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            self?.viewController?.afterSlideupPlaceView(
+                infoModel: self?.selectedInfoModel,
+                menuModel: self?.selectedMenuModel,
+                reviewsModel: self?.selectedReviewsModel
+            )
+        }
+    }
+    
+    private func loadPlaceInfo(with placeId: String, dispatchGroup: DispatchGroup) {
         dispatchGroup.enter()
         AVIROAPIManager().loadPlaceInfo(with: placeId) { [weak self] result in
             defer { dispatchGroup.leave() }
@@ -595,7 +609,7 @@ final class HomeViewPresenter: NSObject {
             switch result {
             case .success(let model):
                 if model.statusCode == 200 {
-                    self?.selectedInfoModel = model.data 
+                    self?.selectedInfoModel = model.data
                 } else {
                     if let message = model.message {
                         self?.viewController?.showErrorAlert(with: message, title: "가게 에러")
@@ -605,7 +619,9 @@ final class HomeViewPresenter: NSObject {
                 self?.viewController?.showErrorAlert(with: error.localizedDescription, title: "가게 에러")
             }
         }
-        
+    }
+    
+    private func loadPlaceMenus(with placeId: String, dispatchGroup: DispatchGroup) {
         dispatchGroup.enter()
         AVIROAPIManager().loadMenus(with: placeId) { [weak self] result in
             defer { dispatchGroup.leave() }
@@ -623,7 +639,9 @@ final class HomeViewPresenter: NSObject {
                 self?.viewController?.showErrorAlert(with: error.localizedDescription, title: "메뉴 에러")
             }
         }
-        
+    }
+    
+    private func loadPlaceReviews(with placeId: String, dispatchGroup: DispatchGroup) {
         dispatchGroup.enter()
         AVIROAPIManager().loadReviews(with: placeId) { [weak self] result in
             defer { dispatchGroup.leave() }
@@ -641,14 +659,6 @@ final class HomeViewPresenter: NSObject {
                 self?.viewController?.showErrorAlert(with: error.localizedDescription, title: "후기 에러")
             }
         }
-        
-        dispatchGroup.notify(queue: .main) { [weak self] in
-            self?.viewController?.afterSlideupPlaceView(
-                infoModel: self?.selectedInfoModel,
-                menuModel: self?.selectedMenuModel,
-                reviewsModel: self?.selectedReviewsModel
-            )
-        }
     }
     
     // MARK: Place Id 불러오기
@@ -664,11 +674,11 @@ final class HomeViewPresenter: NSObject {
             switch result {
             case .success(let success):
                 if success.statusCode == 200 {
-                    success.reported ?
-                    self?.viewController?.isDuplicatedReport()
-                    :
-                    self?.viewController?.showReportPlaceAlert()
-                    
+                    if success.reported {
+                        self?.viewController?.isDuplicatedReport()
+                    } else {
+                        self?.viewController?.showReportPlaceAlert()
+                    }
                 } else {
                     if let message = success.message {
                         self?.viewController?.showErrorAlert(with: message, title: nil)
@@ -719,7 +729,9 @@ final class HomeViewPresenter: NSObject {
             case .success(let model):
                 if model.statusCode == 200 {
                     if let model = model.data {
-                        self?.viewController?.pushPlaceInfoOpreationHoursViewController(model.toEditOperationHoursModels())
+                        self?.viewController?.pushPlaceInfoOpreationHoursViewController(
+                            model.toEditOperationHoursModels()
+                        )
                     }
                 } else {
                     if let message = model.message {

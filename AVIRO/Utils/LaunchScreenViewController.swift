@@ -23,14 +23,21 @@ final class LaunchScreenViewController: UIViewController {
         
         let text = "가장 쉬운\n비건 맛집 찾기\n어비로"
         
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 2
+        
         let normalAttributes: [NSAttributedString.Key: Any] = [
-            .font: CFont.font.medium45
+            .font: CFont.font.medium45,
+            .foregroundColor: UIColor.launchTitleColor,
+            .paragraphStyle: paragraphStyle
         ]
         
         let attributedString = NSMutableAttributedString(string: text, attributes: normalAttributes)
         
         let heavyAttributes: [NSAttributedString.Key: Any] = [
-            .font: CFont.font.heavy45
+            .font: CFont.font.heavy45,
+            .foregroundColor: UIColor.gray7,
+            .paragraphStyle: paragraphStyle
         ]
         
         if let range = text.range(of: "어비로") {
@@ -39,7 +46,6 @@ final class LaunchScreenViewController: UIViewController {
         
         label.attributedText = attributedString
         label.textAlignment = .left
-        label.textColor = .gray7
         label.numberOfLines = 3
         
         return label

@@ -91,7 +91,7 @@ final class EnrollStoreInfoView: UIView {
     // MARK: 최초 view Height 설정
     override func layoutSubviews() {
         super.layoutSubviews()
-        // TODO: 데이터 연결된거 구현하면 수정
+
         guard let titleText = titleField.text, titleText.isEmpty else {
             return
         }
@@ -196,7 +196,6 @@ final class EnrollStoreInfoView: UIView {
     
     // MARK: View height 확장 메서드
     func expandStoreInfoView() {
-        // TODO: 데이터 연결된거
         guard let titleText = titleField.text, !titleText.isEmpty else {
             showOtherDetail(false)
             changeCategoryTopConstraint(false)
@@ -236,7 +235,6 @@ final class EnrollStoreInfoView: UIView {
         let titleFieldHeight = titleField.frame.height
         let categoryHeight = categoryLabel.frame.height
         let buttonStackViewHeight = buttonStackView.frame.height
-        // TODO: Static value 수정할 때 수정 요망
         // 20, 20, 20, 15, 20
         let paddingValues: CGFloat = 95
 

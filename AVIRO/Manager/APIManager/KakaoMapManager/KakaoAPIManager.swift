@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class KakaoAPIManager: KakaoAPIManagerProtocol{
+final class KakaoAPIManager: KakaoAPIManagerProtocol {
     let session: URLSession
     
     let api = KakaoMapRequestAPI()
@@ -16,7 +16,6 @@ final class KakaoAPIManager: KakaoAPIManagerProtocol{
         guard let path = Bundle.main.url(forResource: "API", withExtension: "plist"),
               let dict = NSDictionary(contentsOf: path) as? [String: Any],
               let key = dict["KakaoMapAPI_ Authorization _Key"] as? String else {
-            print("Failed to load KakaoMapAPI from API.plist")
             return nil
         }
         return key

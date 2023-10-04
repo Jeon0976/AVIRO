@@ -156,7 +156,6 @@ final class MyInfoView: UIView {
     }
     
     private func makeLayout() {
-        // TODO: 임시
         self.heightAnchor.constraint(equalToConstant: 280).isActive = true
         
         [

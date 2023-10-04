@@ -77,9 +77,7 @@ final class HomeSearchPresenter {
         viewController?.makeLayout()
         viewController?.makeAttribute()
     }
-            
-    // TODO: Index 직접 접근하는거 최대한 버그 안 생기도록 코드 수정 필요
-    
+                
     // MARK: HistoryTable local에서 데이터 불러오기
     func loadHistoryTableArray() {
         let loadedHistory = userDefaultsManager.getHistoryModel()
@@ -98,7 +96,6 @@ final class HomeSearchPresenter {
         }
     }
     
-    // TODO: textfield 데이터 지우고 클릭할 떄
     // MARK: HistoryTable에 데이터 저장하고 불러오기
     func insertHistoryModel(_ indexPath: IndexPath) {
         if isEndCompare {
@@ -132,10 +129,6 @@ final class HomeSearchPresenter {
     func initialSearchDataAndCompareAVIROData(_ query: String) {
         isEndCompare = false
         matchedPlaceModel.removeAll()
-        appDelegate?.amplitude?.track(
-            eventType: AMType.searchHSV.rawValue,
-            eventProperties: ["Query": query]
-        )
         
         initialSearchData(query: query) { [weak self] placeList in
             self?.makeToPlaceFromAVIROData(placeList: placeList)
@@ -153,6 +146,11 @@ final class HomeSearchPresenter {
         query: String,
         completion: @escaping ([PlaceListModel]) -> Void
     ) {
+        appDelegate?.amplitude?.track(
+            eventType: AMType.searchHSV.rawValue,
+            eventProperties: ["Query": query]
+        )
+        
         currentPage = 1
         isEnding = false
         searchPlaceData(query: query, page: currentPage, completion: completion)
@@ -226,7 +224,6 @@ final class HomeSearchPresenter {
     // MARK: AVIRO 데이터와 비교하기 위한 데이터 만들기
     private func makeToPlaceFromAVIROData(placeList: [PlaceListModel]) {
         var beforeMatchedArray = [AVIROForMatchedModel]()
-        var afterMatchedArray = [AVIROAfterMatchedModel]()
         
         placeList.forEach {
             let title = $0.title
@@ -263,7 +260,6 @@ final class HomeSearchPresenter {
     }
     
     // MARK: 비교 기반 데이터로 table 데이터에 바인딩
-    // TODO: 오류 및 API 호출 관련해서 다 입력 끝나면 발동하게 수정??
     private func bindingToTableData(
         afterMatched: [AVIROAfterMatchedModel],
         placeList: [PlaceListModel]

@@ -615,10 +615,15 @@ final class EditOperationHourChangebleView: UIView {
     private func whenAddTimeLabelCheckIsEnabledEditButton() {
         let operationIsInit = operationTimeOpen.loadTimeData() == "시간선택" || operationTimeClosed.loadTimeData() == "시간선택"
         
-        let operationCheck = operationTimeOpen.loadTimeData() != initOperationOpen || operationTimeClosed.loadTimeData() != initOperationClosed
-        
-        
-        let breakTimeCheck = breakTimeOpen.loadTimeData() != initBreakOpen || breakTimeClosed.loadTimeData() != initBreakClosed
+        let operationCheck =
+        operationTimeOpen.loadTimeData() != initOperationOpen
+        ||
+        operationTimeClosed.loadTimeData() != initOperationClosed
+    
+        let breakTimeCheck =
+        breakTimeOpen.loadTimeData() != initBreakOpen
+        ||
+        breakTimeClosed.loadTimeData() != initBreakClosed
         
         if operationIsInit {
             editButtonIsEnabled = false

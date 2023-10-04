@@ -17,7 +17,6 @@ final class EditInfoButton: UIButton {
         fatalError()
     }
     
-
     func setButton(_ title: String) {
         self.setTitle(title, for: .normal)
         self.setTitleColor(.keywordBlue, for: .normal)

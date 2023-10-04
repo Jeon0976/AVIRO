@@ -57,10 +57,14 @@ final class BookmarkFacadeManager {
                         }
                     }
                 } else {
-                    completionHandler("북마크 기능 에러발생했습니다.")
+                    if let message = success.message {
+                        completionHandler(message)
+                    } else {
+                        completionHandler("에러 발생")
+                    }
                 }
-            case .failure(_):
-                completionHandler("북마크 기능 에러발생했습니다.")
+            case .failure(let error):
+                completionHandler(error.localizedDescription)
             }
         }
     }

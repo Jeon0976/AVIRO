@@ -26,8 +26,6 @@ struct AVIROMapModelResultDataDTO: Decodable {
     let updatedPlace: [AVIROMarkerModel]?
 }
 
-// MARK: 관련 로직 확인해보기
-// TODO: 2
 struct AVIROMarkerModel: Codable, Hashable {
     let placeId: String
     let x: Double
@@ -40,7 +38,7 @@ struct AVIROMarkerModel: Codable, Hashable {
         hasher.combine(placeId)
     }
     
-    static func ==(lhs: AVIROMarkerModel, rhs: AVIROMarkerModel) -> Bool {
+    static func == (lhs: AVIROMarkerModel, rhs: AVIROMarkerModel) -> Bool {
         return lhs.placeId == rhs.placeId
     }
 }

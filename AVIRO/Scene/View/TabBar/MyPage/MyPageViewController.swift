@@ -130,6 +130,7 @@ extension MyPageViewController: MyPageViewProtocol {
         myInfoView.updateMyPlace(myDataModel.place)
         myInfoView.updateMyReview(myDataModel.review)
         myInfoView.updateMyStar(myDataModel.star)
+        
     }
     
     private func whenTappedEditNickName() {
@@ -196,7 +197,6 @@ extension MyPageViewController: MyPageViewProtocol {
     }
     
     private func whenTappedWithdrawal() {
-        
         let cancelAction: AlertAction = (
             title: Text.cancel.rawValue,
             style: .default,

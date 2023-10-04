@@ -13,8 +13,6 @@ import AmplitudeSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    var window: UIWindow?
-
     var amplitude: Amplitude?
     
     func application(

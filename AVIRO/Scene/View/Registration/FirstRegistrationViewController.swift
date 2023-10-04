@@ -291,7 +291,6 @@ extension FirstRegistrationViewController: UITextFieldDelegate {
         
         let currentText = textField.text ?? ""
         
-        // TODO: 분기 두 개 들어가서 리펙토링 필요
         if currentText.count > 8 {
             textField.text = currentText.limitedNickname
             textField.activeHshakeEffect()

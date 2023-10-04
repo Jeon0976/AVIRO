@@ -87,7 +87,6 @@
 		C5351B4D2A19223300116D50 /* KakaoMapRequestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B4C2A19223300116D50 /* KakaoMapRequestAPI.swift */; };
 		C5351B502A19225A00116D50 /* KakaoKeywordPlace+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B4F2A19225A00116D50 /* KakaoKeywordPlace+DTO.swift */; };
 		C5351B542A19A7B100116D50 /* MyCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B532A19A7B100116D50 /* MyCoordinate.swift */; };
-		C5351B562A19B67900116D50 /* CustomAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B552A19B67900116D50 /* CustomAlertController.swift */; };
 		C5351B5C2A19F60200116D50 /* PlaceListSearchViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B5B2A19F60200116D50 /* PlaceListSearchViewPresenter.swift */; };
 		C5351B602A19F9A700116D50 /* PlaceListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B5F2A19F9A700116D50 /* PlaceListModel.swift */; };
 		C5351B622A1A083400116D50 /* PlaceListCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B612A1A083400116D50 /* PlaceListCellModel.swift */; };
@@ -293,7 +292,6 @@
 		C5351B4C2A19223300116D50 /* KakaoMapRequestAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapRequestAPI.swift; sourceTree = "<group>"; };
 		C5351B4F2A19225A00116D50 /* KakaoKeywordPlace+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KakaoKeywordPlace+DTO.swift"; sourceTree = "<group>"; };
 		C5351B532A19A7B100116D50 /* MyCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCoordinate.swift; sourceTree = "<group>"; };
-		C5351B552A19B67900116D50 /* CustomAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertController.swift; sourceTree = "<group>"; };
 		C5351B5B2A19F60200116D50 /* PlaceListSearchViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListSearchViewPresenter.swift; sourceTree = "<group>"; };
 		C5351B5F2A19F9A700116D50 /* PlaceListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListModel.swift; sourceTree = "<group>"; };
 		C5351B612A1A083400116D50 /* PlaceListCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListCellModel.swift; sourceTree = "<group>"; };
@@ -525,7 +523,6 @@
 				C5803F5B2A88C3AF0064A853 /* Utility */,
 				C51132BD2A559826006E1EC3 /* Extension */,
 				C5B071E32A59B3CB00AE709A /* SubClass */,
-				C5351B552A19B67900116D50 /* CustomAlertController.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -1684,7 +1681,6 @@
 				C5803F582A88C1990064A853 /* PlaceTopModel.swift in Sources */,
 				C5D36D2E2A76031E003328E8 /* Double+Extension.swift in Sources */,
 				C5EB51082A209F6900B29CC1 /* HomeSearchViewController.swift in Sources */,
-				C5351B562A19B67900116D50 /* CustomAlertController.swift in Sources */,
 				C5538AAF2A1BB81200661DE2 /* AVIROEnrollPlace+DTO.swift in Sources */,
 				C51000552AB8123600F65C1F /* AVIROReportReview+DTO.swift in Sources */,
 				C50F6AF32A68FD0A00E942F5 /* EnrollPlaceViewController.swift in Sources */,
@@ -1956,6 +1952,7 @@
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "현재 내 위치와 가까운 가게를 찾아드려요. 위치 정보를 저장하지 않으니 안심하세요.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "현재 내 위치와 가까운 가게를 찾아드려요. 위치 정보를 저장하지 않으니 안심하세요.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
@@ -1990,6 +1987,7 @@
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "현재 내 위치와 가까운 가게를 찾아드려요. 위치 정보를 저장하지 않으니 안심하세요.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "현재 내 위치와 가까운 가게를 찾아드려요. 위치 정보를 저장하지 않으니 안심하세요.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;

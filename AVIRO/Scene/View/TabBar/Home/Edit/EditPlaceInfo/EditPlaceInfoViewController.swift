@@ -201,18 +201,28 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
             editLocationBottomView.bottomAnchor.constraint(
                 equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -20),
             
-            editPhoneView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 20),
-            editPhoneView.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 16),
-            editPhoneView.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -16),
+            editPhoneView.topAnchor.constraint(
+                equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 20),
+            editPhoneView.leadingAnchor.constraint(
+                equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 16),
+            editPhoneView.trailingAnchor.constraint(
+                equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -16),
             
-            editOperationHoursView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 20),
-            editOperationHoursView.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 16),
-            editOperationHoursView.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -16),
-            editOperationHoursView.bottomAnchor.constraint(equalTo: scrollView.frameLayoutGuide.bottomAnchor),
+            editOperationHoursView.topAnchor.constraint(
+                equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 20),
+            editOperationHoursView.leadingAnchor.constraint(
+                equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 16),
+            editOperationHoursView.trailingAnchor.constraint(
+                equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -16),
+            editOperationHoursView.bottomAnchor.constraint(
+                equalTo: scrollView.frameLayoutGuide.bottomAnchor),
             
-            editHomePageView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 20),
-            editHomePageView.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 16),
-            editHomePageView.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -16)
+            editHomePageView.topAnchor.constraint(
+                equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 20),
+            editHomePageView.leadingAnchor.constraint(
+                equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 16),
+            editHomePageView.trailingAnchor.constraint(
+                equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -16)
         ])
         
     }
@@ -270,7 +280,6 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     }
     
     func whenViewWillAppearSelectedIndex(_ index: Int) {
-        print("Test")
         segmentedControl.selectedSegmentIndex = index
         whenActiveSegmentedChanged()
     }

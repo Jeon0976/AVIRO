@@ -18,8 +18,6 @@ private enum Text: String {
 
 private enum Layout {
     enum Margin: CGFloat {
-        case titleToView = 80
-        case shadowToMain = 15
         case appleToBottom = 40
         case buttonH = 26.5
     }
@@ -32,13 +30,46 @@ private enum Layout {
 final class LoginViewController: UIViewController {
     lazy var presenter = LoginViewPresenter(viewController: self)
         
-    private lazy var titleImageView: UIImageView = {
+    private lazy var topImageView: UIImageView = {
         let imageView = UIImageView()
         
-        imageView.image = UIImage.loginTitle
+        imageView.image = UIImage.launchtitle
         imageView.clipsToBounds = false
         
         return imageView
+    }()
+    
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        
+        let text = "가장 쉬운\n비건 맛집 찾기\n어비로"
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 2
+        
+        let normalAttributes: [NSAttributedString.Key: Any] = [
+            .font: CFont.font.medium45,
+            .foregroundColor: UIColor.loginTitleColor,
+            .paragraphStyle: paragraphStyle
+        ]
+        
+        let attributedString = NSMutableAttributedString(string: text, attributes: normalAttributes)
+        
+        let heavyAttributes: [NSAttributedString.Key: Any] = [
+            .font: CFont.font.heavy45,
+            .foregroundColor: UIColor.main,
+            .paragraphStyle: paragraphStyle
+        ]
+        
+        if let range = text.range(of: "어비로") {
+            attributedString.addAttributes(heavyAttributes, range: NSRange(range, in: text))
+        }
+        
+        label.attributedText = attributedString
+        label.textAlignment = .left
+        label.numberOfLines = 3
+        
+        return label
     }()
     
     private lazy var mainImageView: UIImageView = {
@@ -49,16 +80,7 @@ final class LoginViewController: UIViewController {
         
         return imageView
     }()
-    
-    private lazy var shadowImageView: UIImageView = {
-        let imageView = UIImageView()
         
-        imageView.image = UIImage.loginCharacterEllipse
-        imageView.clipsToBounds = false
-        
-        return imageView
-    }()
-    
     private lazy var appleLoginButton: UIButton = {
         let button = UIButton()
         
@@ -109,17 +131,6 @@ final class LoginViewController: UIViewController {
         return view
     }()
     
-    private lazy var noLoginButton: UIButton = {
-        let button = UIButton()
-        
-        button.setTitle("테스트 아이디 로그인", for: .normal)
-        button.setTitleColor(.gray5, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 14)
-        button.addTarget(self, action: #selector(tapNoLoginButton), for: .touchUpInside)
-        
-        return button
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -140,11 +151,10 @@ final class LoginViewController: UIViewController {
 extension LoginViewController: LoginViewProtocol {
     func setupLayout() {
         [
-            titleImageView,
+            topImageView,
+            titleLabel,
             mainImageView,
-            shadowImageView,
             appleLoginButton,
-            noLoginButton,
             blurEffectView,
             indicatorView
         ].forEach {
@@ -153,28 +163,14 @@ extension LoginViewController: LoginViewProtocol {
         }
         
         NSLayoutConstraint.activate([
-            titleImageView.topAnchor.constraint(
-                equalTo: self.view.safeAreaLayoutGuide.topAnchor,
-                constant: Layout.Margin.titleToView.rawValue
-            ),
-            titleImageView.centerXAnchor.constraint(
-                equalTo: self.view.centerXAnchor
-            ),
+            topImageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 23),
+            topImageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 38),
             
-            mainImageView.centerYAnchor.constraint(
-                equalTo: self.view.centerYAnchor, constant: 60
-            ),
-            mainImageView.centerXAnchor.constraint(
-                equalTo: self.view.centerXAnchor
-            ),
+            titleLabel.topAnchor.constraint(equalTo: topImageView.bottomAnchor, constant: 15),
+            titleLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 37),
             
-            shadowImageView.topAnchor.constraint(
-                equalTo: mainImageView.bottomAnchor,
-                constant: Layout.Margin.shadowToMain.rawValue
-            ),
-            shadowImageView.centerXAnchor.constraint(
-                equalTo: self.view.centerXAnchor
-            ),
+            mainImageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -35),
+            mainImageView.bottomAnchor.constraint(equalTo: appleLoginButton.topAnchor, constant: -20),
             
             appleLoginButton.bottomAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.bottomAnchor,
@@ -193,15 +189,7 @@ extension LoginViewController: LoginViewProtocol {
             ),
             
             indicatorView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            indicatorView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-            
-            // TODO: 추후 없애기
-            noLoginButton.centerXAnchor.constraint(
-                equalTo: view.centerXAnchor
-            ),
-            noLoginButton.bottomAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.bottomAnchor
-            )
+            indicatorView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
         ])
         
         switchIsLoading(with: false)
@@ -221,14 +209,6 @@ extension LoginViewController: LoginViewProtocol {
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
 
         applyGradientToLoginView()
-    }
-    
-    // MARK: No Login Button Tapped
-    @objc func tapNoLoginButton() {
-        MyData.my.id = "test"
-        MyData.my.nickname = "테스트"
-
-        pushTabBar()
     }
     
     // MARK: Push TabBar Viewcontroller

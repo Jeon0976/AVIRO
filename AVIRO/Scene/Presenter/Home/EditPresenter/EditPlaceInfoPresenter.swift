@@ -740,87 +740,36 @@ extension EditPlaceInfoPresenter {
             
             dispatchGroup.enter()
             
-            var mon: EditOperationHoursModel?
-            var tue: EditOperationHoursModel?
-            var wed: EditOperationHoursModel?
-            var thu: EditOperationHoursModel?
-            var fri: EditOperationHoursModel?
-            var sat: EditOperationHoursModel?
-            var sun: EditOperationHoursModel?
+            var operationHours: [Day: EditOperationHoursModel] = [:]
             
             afterChangedOperationHourArray.forEach {
-                switch $0.day {
-                case .mon:
-                    mon = EditOperationHoursModel(
-                        day: $0.day,
-                        operatingHours: $0.operatingHours,
-                        breakTime: $0.breakTime,
-                        isToday: $0.isToday
-                    )
-                case .tue:
-                    tue = EditOperationHoursModel(
-                        day: $0.day,
-                        operatingHours: $0.operatingHours,
-                        breakTime: $0.breakTime,
-                        isToday: $0.isToday
-                    )
-                case .wed:
-                    wed = EditOperationHoursModel(
-                        day: $0.day,
-                        operatingHours: $0.operatingHours,
-                        breakTime: $0.breakTime,
-                        isToday: $0.isToday
-                    )
-                case .thu:
-                    thu = EditOperationHoursModel(
-                        day: $0.day,
-                        operatingHours: $0.operatingHours,
-                        breakTime: $0.breakTime,
-                        isToday: $0.isToday
-                    )
-                case .fri:
-                    fri = EditOperationHoursModel(
-                        day: $0.day,
-                        operatingHours: $0.operatingHours,
-                        breakTime: $0.breakTime,
-                        isToday: $0.isToday
-                    )
-                case .sat:
-                    sat = EditOperationHoursModel(
-                        day: $0.day,
-                        operatingHours: $0.operatingHours,
-                        breakTime: $0.breakTime,
-                        isToday: $0.isToday
-                    )
-                case .sun:
-                    sun = EditOperationHoursModel(
-                        day: $0.day,
-                        operatingHours: $0.operatingHours,
-                        breakTime: $0.breakTime,
-                        isToday: $0.isToday
-                    )
-                }
+                operationHours[$0.day] = EditOperationHoursModel(
+                    day: $0.day,
+                    operatingHours: $0.operatingHours,
+                    breakTime: $0.breakTime,
+                    isToday: $0.isToday
+                )
             }
             
             let model = AVIROEditOperationTimeDTO(
                 placeId: placeId,
                 userId: userId,
-                mon: mon?.operatingHours,
-                monBreak: mon?.breakTime,
-                tue: tue?.operatingHours,
-                tueBreak: tue?.breakTime,
-                wed: wed?.operatingHours,
-                wedBreak: wed?.breakTime,
-                thu: thu?.operatingHours,
-                thuBreak: thu?.breakTime,
-                fri: fri?.operatingHours,
-                friBreak: fri?.breakTime,
-                sat: sat?.operatingHours,
-                satBreak: sat?.breakTime,
-                sun: sun?.operatingHours,
-                sunBreak: sun?.breakTime
+                mon: operationHours[.mon]?.operatingHours,
+                monBreak: operationHours[.mon]?.breakTime,
+                tue: operationHours[.tue]?.operatingHours,
+                tueBreak: operationHours[.tue]?.breakTime,
+                wed: operationHours[.wed]?.operatingHours,
+                wedBreak: operationHours[.wed]?.breakTime,
+                thu: operationHours[.thu]?.operatingHours,
+                thuBreak: operationHours[.thu]?.breakTime,
+                fri: operationHours[.fri]?.operatingHours,
+                friBreak: operationHours[.fri]?.breakTime,
+                sat: operationHours[.sat]?.operatingHours,
+                satBreak: operationHours[.sat]?.breakTime,
+                sun: operationHours[.sun]?.operatingHours,
+                sunBreak: operationHours[.sun]?.breakTime
             )
-                                    
+            
             AVIROAPIManager().editPlaceOperation(with: model) { [weak self] result in
                 defer { dispatchGroup.leave() }
                 switch result {
