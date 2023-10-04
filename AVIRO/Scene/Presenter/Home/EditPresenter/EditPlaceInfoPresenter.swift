@@ -531,7 +531,10 @@ extension EditPlaceInfoPresenter {
         dispatchGroup.notify(queue: .main
         ) { [weak self] in
             if self?.canChange ?? false {
-                self?.appDelegate?.amplitude?.track(eventType: AMType.requestPlaceInfo.rawValue)
+                self?.appDelegate?.amplitude?.track(
+                    eventType: AMType.requestPlaceInfo.rawValue,
+                    eventProperties: ["Place": placeTitle]
+                )
                 self?.viewController?.popViewController()
                 self?.afterReportShowAlert?()
             }

@@ -117,7 +117,7 @@ final class LoginViewController: UIViewController {
         indicatorView.style = .large
         indicatorView.startAnimating()
         indicatorView.isHidden = false
-        indicatorView.color = .gray5
+        indicatorView.color = .gray0
         
         return indicatorView
     }()
@@ -125,7 +125,7 @@ final class LoginViewController: UIViewController {
     private lazy var blurEffectView: UIView = {
         
         let view = UIView()
-        view.backgroundColor = .gray.withAlphaComponent(0.3)
+        view.backgroundColor = .gray6.withAlphaComponent(0.3)
         view.frame = self.view.bounds
         
         return view
@@ -191,8 +191,6 @@ extension LoginViewController: LoginViewProtocol {
             indicatorView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             indicatorView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
         ])
-        
-        switchIsLoading(with: false)
     }
     
     func switchIsLoading(with loading: Bool) {

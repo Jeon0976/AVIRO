@@ -20,6 +20,7 @@ protocol MyPageViewProtocol: NSObject {
     func updateMyData(_ myDataModel: MyDataModel)
     func pushLoginViewController(with: LoginRedirectReason)
     func showErrorAlert(with error: String, title: String?)
+    func switchIsLoading(with loading: Bool)
 }
 
 final class MyPageViewPresenter {
@@ -47,6 +48,8 @@ final class MyPageViewPresenter {
     }
     
     func viewWillAppear() {
+        viewController?.switchIsLoading(with: false)
+
         loadMyData()
     }
     
@@ -93,7 +96,8 @@ final class MyPageViewPresenter {
     
     func whenAfterWithdrawal() {
         guard let refreshToken = keychain.get(KeychainKey.appleRefreshToken.rawValue) else { return }
-        
+        viewController?.switchIsLoading(with: true)
+
         let model = AVIROAutoLoginWhenAppleUserDTO(refreshToken: refreshToken)
                         
         AVIROAPIManager().revokeAppleUser(with: model) { [weak self] result in
@@ -110,11 +114,15 @@ final class MyPageViewPresenter {
                         self?.viewController?.pushLoginViewController(with: .withdrawal)
                     }
                 } else {
+                    self?.viewController?.switchIsLoading(with: false)
+
                     if let message = success.message {
                         self?.viewController?.showErrorAlert(with: message, title: nil)
                     }
                 }
             case .failure(let error):
+                self?.viewController?.switchIsLoading(with: false)
+
                 self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }

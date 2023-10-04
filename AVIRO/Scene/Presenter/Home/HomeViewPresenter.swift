@@ -231,11 +231,12 @@ final class HomeViewPresenter: NSObject {
         AVIROAPIManager().loadNerbyPlaceModels(with: mapModel) { [weak self] result in
             switch result {
             case .success(let mapDatas):
-                if mapDatas.data.amount != 0 {
-                    self?.updateMarkers(mapDatas.data.updatedPlace)
+                // MARK: Update map
+                if let updatePlace = mapDatas.data.updatedPlace {
+                    self?.updateMarkers(updatePlace)
                 }
-                
-                // MARK: Delete map 처리
+               
+                // MARK: Delete map
                 if let deletedPlace = mapDatas.data.deletedPlace {
                     self?.deleteMarkers(deletedPlace)
                 }

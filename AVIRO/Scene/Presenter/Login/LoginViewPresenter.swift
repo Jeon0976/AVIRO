@@ -102,12 +102,12 @@ final class LoginViewPresenter: NSObject {
                     }
                 } else {
                     if let message = success.message {
-                        self?.viewController?.switchIsLoading(with: true)
+                        self?.viewController?.switchIsLoading(with: false)
                         self?.viewController?.showErrorAlert(with: message, title: nil)
                     }
                 }
             case .failure(let error):
-                self?.viewController?.switchIsLoading(with: true)
+                self?.viewController?.switchIsLoading(with: false)
                 self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }

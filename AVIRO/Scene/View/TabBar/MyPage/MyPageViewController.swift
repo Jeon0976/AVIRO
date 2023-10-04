@@ -66,6 +66,26 @@ final class MyPageViewController: UIViewController {
     
     private lazy var scrollView = UIScrollView()
     
+    private lazy var indicatorView: UIActivityIndicatorView = {
+        let indicatorView = UIActivityIndicatorView()
+        
+        indicatorView.style = .large
+        indicatorView.startAnimating()
+        indicatorView.isHidden = false
+        indicatorView.color = .gray0
+        
+        return indicatorView
+    }()
+    
+    private lazy var blurEffectView: UIView = {
+        
+        let view = UIView()
+        view.backgroundColor = .gray6.withAlphaComponent(0.3)
+        view.frame = self.view.bounds
+        
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -101,7 +121,9 @@ extension MyPageViewController: MyPageViewProtocol {
         ])
         
         [
-            scrollView
+            scrollView,
+            blurEffectView,
+            indicatorView
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             self.view.addSubview($0)
@@ -111,8 +133,19 @@ extension MyPageViewController: MyPageViewProtocol {
             scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            
+            indicatorView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            indicatorView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
         ])
+        
+    }
+    
+    func switchIsLoading(with loading: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            self?.indicatorView.isHidden = !loading
+            self?.blurEffectView.isHidden = !loading
+        }
     }
     
     func setupAttribute() {
