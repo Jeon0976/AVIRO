@@ -45,9 +45,6 @@ extension APIManagerProtocol {
         }
         
         URLSession.shared.dataTask(with: request) { data, response, error in
-            print(error)
-            print(response)
-            print(data)
             if let error = error {
                 completionHandler(.failure(.networkError(error)))
                 return

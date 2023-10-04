@@ -77,7 +77,6 @@ final class LoginViewPresenter: NSObject {
         AVIROAPIManager().checkWhenAppleLogin(with: checkAppleLoginModel) { [weak self] result in
             switch result {
             case .success(let success):
-                print(result)
                 if success.statusCode == 200 {
                     if let data = success.data {
                         if data.isMember {
@@ -103,11 +102,11 @@ final class LoginViewPresenter: NSObject {
                     }
                 } else {
                     if let message = success.message {
+                        self?.viewController?.switchIsLoading(with: true)
                         self?.viewController?.showErrorAlert(with: message, title: nil)
                     }
                 }
             case .failure(let error):
-                
                 self?.viewController?.switchIsLoading(with: true)
                 self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
@@ -125,7 +124,6 @@ final class LoginViewPresenter: NSObject {
         AVIROAPIManager().appleUserCheck(with: model) { [weak self] result in
             switch result {
             case .success(let success):
-                print(result)
                 if success.statusCode == 200 {
                     if let data = success.data {
                         MyData.my.whenLogin(
@@ -161,7 +159,7 @@ final class LoginViewPresenter: NSObject {
         
         appDelegate?.amplitude?.identify(identify: identify)
         
-        appDelegate?.amplitude?.track(eventType: "Login")
+        appDelegate?.amplitude?.track(eventType: AMType.login.rawValue)
     }
 }
 

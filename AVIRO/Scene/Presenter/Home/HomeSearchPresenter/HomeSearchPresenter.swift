@@ -22,7 +22,9 @@ protocol HomeSearchProtocol: NSObject {
 final class HomeSearchPresenter {
     weak var viewController: HomeSearchProtocol?
 
+    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
     private let userDefaultsManager = SearchHistoryManager()
+    
     private var historyPlaceModel = [HistoryTableModel]()
     private var matchedPlaceModel = [MatchedPlaceModel]()
     
@@ -130,6 +132,10 @@ final class HomeSearchPresenter {
     func initialSearchDataAndCompareAVIROData(_ query: String) {
         isEndCompare = false
         matchedPlaceModel.removeAll()
+        appDelegate?.amplitude?.track(
+            eventType: AMType.searchHSV.rawValue,
+            eventProperties: ["Query": query]
+        )
         
         initialSearchData(query: query) { [weak self] placeList in
             self?.makeToPlaceFromAVIROData(placeList: placeList)

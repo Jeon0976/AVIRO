@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		A156F24E1DC1F5FA54D44A76 /* Pods_AVIRO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 796022A3066B91147B712BB4 /* Pods_AVIRO.framework */; };
 		C50367F52A1795D10020C6BB /* HomeViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */; };
+		C505EB162ACC048E0057A4F8 /* Berry2.json in Resources */ = {isa = PBXBuildFile; fileRef = C505EB152ACC048E0057A4F8 /* Berry2.json */; };
+		C505EB182ACC5AC50057A4F8 /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C505EB172ACC5AC50057A4F8 /* LaunchScreenViewController.swift */; };
 		C50DB7422A99DCDA0078B501 /* PlaceListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50DB7402A99DCDA0078B501 /* PlaceListCell.swift */; };
 		C50DB7432A99DCDA0078B501 /* PlaceListSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50DB7412A99DCDA0078B501 /* PlaceListSearchViewController.swift */; };
 		C50DB74E2A9B2A8C0078B501 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C50DB74D2A9B2A8C0078B501 /* WebKit.framework */; };
@@ -211,6 +213,8 @@
 		796022A3066B91147B712BB4 /* Pods_AVIRO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AVIRO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B57500A8C1EA6C6CFDED2C4C /* Pods-AVIRO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AVIRO.debug.xcconfig"; path = "Target Support Files/Pods-AVIRO/Pods-AVIRO.debug.xcconfig"; sourceTree = "<group>"; };
 		C50367F42A1795D10020C6BB /* HomeViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewPresenter.swift; sourceTree = "<group>"; };
+		C505EB152ACC048E0057A4F8 /* Berry2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Berry2.json; sourceTree = "<group>"; };
+		C505EB172ACC5AC50057A4F8 /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
 		C50DB7402A99DCDA0078B501 /* PlaceListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceListCell.swift; sourceTree = "<group>"; };
 		C50DB7412A99DCDA0078B501 /* PlaceListSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceListSearchViewController.swift; sourceTree = "<group>"; };
 		C50DB74D2A9B2A8C0078B501 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -448,6 +452,7 @@
 			children = (
 				C510002C2AB5F1E600F65C1F /* Fonts */,
 				C5E430AA2A5D13B600CB67EC /* Lottie */,
+				C505EB172ACC5AC50057A4F8 /* LaunchScreenViewController.swift */,
 				C52FA3422A175B20005E70DC /* AppDelegate.swift */,
 				C52FA3442A175B20005E70DC /* SceneDelegate.swift */,
 				C52FA34B2A175B20005E70DC /* Assets.xcassets */,
@@ -1308,6 +1313,7 @@
 		C5E430AA2A5D13B600CB67EC /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
+				C505EB152ACC048E0057A4F8 /* Berry2.json */,
 			);
 			path = Lottie;
 			sourceTree = "<group>";
@@ -1530,6 +1536,7 @@
 			files = (
 				C52FA34F2A175B20005E70DC /* LaunchScreen.storyboard in Resources */,
 				C510004F2AB5F76600F65C1F /* Pretendard-Bold.otf in Resources */,
+				C505EB162ACC048E0057A4F8 /* Berry2.json in Resources */,
 				C51000512AB5F76600F65C1F /* Pretendard-ExtraBold.otf in Resources */,
 				C51000522AB5F76600F65C1F /* Pretendard-Regular.otf in Resources */,
 				C510004D2AB5F76600F65C1F /* Pretendard-ExtraLight.otf in Resources */,
@@ -1773,6 +1780,7 @@
 				C541521D2AC125E100F39826 /* TutorialTopLabel.swift in Sources */,
 				C5B071E52A59B4AC00AE709A /* RegistrationField.swift in Sources */,
 				C53893162A5EC0C500CB9A54 /* GenderButton.swift in Sources */,
+				C505EB182ACC5AC50057A4F8 /* LaunchScreenViewController.swift in Sources */,
 				C50F6AFD2A68FFCB00E942F5 /* EnrollMenuTableView.swift in Sources */,
 				C5351B602A19F9A700116D50 /* PlaceListModel.swift in Sources */,
 				C5A201C52A98A67900A54381 /* EditPhoneView.swift in Sources */,
@@ -1862,6 +1870,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -1918,6 +1927,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -1946,7 +1956,6 @@
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "현재 내 위치와 가까운 가게를 찾아드려요. 위치 정보를 저장하지 않으니 안심하세요.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "현재 내 위치와 가까운 가게를 찾아드려요. 위치 정보를 저장하지 않으니 안심하세요.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
@@ -1981,7 +1990,6 @@
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "현재 내 위치와 가까운 가게를 찾아드려요. 위치 정보를 저장하지 않으니 안심하세요.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "현재 내 위치와 가까운 가게를 찾아드려요. 위치 정보를 저장하지 않으니 안심하세요.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;

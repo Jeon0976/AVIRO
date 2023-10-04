@@ -8,12 +8,15 @@
 import UIKit
 
 extension UIImage {
+    // MARK: Launch Screen
+    static let launchtitle = UIImage(named: "LaunchTitle")!
+    static let launchBG = UIImage(named: "Launchbg")!
+    
     // MARK: Screen Shot
     static let screen1 = UIImage(named: "Contents 1")
     static let screen2 = UIImage(named: "Contents 2")
     static let screen3 = UIImage(named: "Contents 3")
     static let screen4 = UIImage(named: "Contents 4")
-
     
     // MARK: Main
     static let loginTitle = UIImage(named: "LoginTitle")!

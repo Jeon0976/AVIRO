@@ -38,7 +38,7 @@ final class EditLocationAddressMapView: UIView {
         return label
     }()
     
-    private lazy var enrollButton: UIButton = {
+    private lazy var changedButton: UIButton = {
         let button = UIButton()
         
         button.setTitle("등록", for: .normal)
@@ -47,8 +47,27 @@ final class EditLocationAddressMapView: UIView {
         button.backgroundColor = .gray6
         button.setTitleColor(.gray3, for: .normal)
         button.layer.cornerRadius = 10
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(changedAddressButtonTapped(_:)), for: .touchUpInside)
 
+        return button
+    }()
+    
+    private lazy var loadLocationButton: HomeMapReferButton = {
+        let button = HomeMapReferButton()
+        
+        button.setImage(
+            UIImage.currentButton.withTintColor(.gray1),
+            for: .normal
+        )
+        button.setImage(
+            UIImage.currentButtonDisable.withTintColor(.gray4),
+            for: .disabled
+        )
+        button.addTarget(
+            self,
+            action: #selector(locationButtonTapped(_:)),
+            for: .touchUpInside
+        )
         return button
     }()
     
@@ -73,7 +92,8 @@ final class EditLocationAddressMapView: UIView {
             mapSubTitleLabel,
             naverMap,
             addressLabel,
-            enrollButton
+            loadLocationButton,
+            changedButton
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview($0)
@@ -86,15 +106,18 @@ final class EditLocationAddressMapView: UIView {
             naverMap.topAnchor.constraint(equalTo: mapSubTitleLabel.bottomAnchor, constant: 16),
             naverMap.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             naverMap.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            naverMap.bottomAnchor.constraint(equalTo: enrollButton.topAnchor, constant: -13),
+            naverMap.bottomAnchor.constraint(equalTo: changedButton.topAnchor, constant: -13),
             
-            addressLabel.centerYAnchor.constraint(equalTo: enrollButton.centerYAnchor),
+            addressLabel.centerYAnchor.constraint(equalTo: changedButton.centerYAnchor),
             addressLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-            addressLabel.trailingAnchor.constraint(equalTo: enrollButton.leadingAnchor, constant: -5),
+            addressLabel.trailingAnchor.constraint(equalTo: changedButton.leadingAnchor, constant: -5),
             
-            enrollButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -13),
-            enrollButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
-            enrollButton.widthAnchor.constraint(equalToConstant: 80)
+            loadLocationButton.bottomAnchor.constraint(equalTo: naverMap.bottomAnchor, constant: -20),
+            loadLocationButton.trailingAnchor.constraint(equalTo: naverMap.trailingAnchor, constant: -20),
+            
+            changedButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -13),
+            changedButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+            changedButton.widthAnchor.constraint(equalToConstant: 80)
         ])
     }
     
@@ -119,10 +142,24 @@ final class EditLocationAddressMapView: UIView {
     
     func changedAddress(_ address: String) {
         self.addressLabel.text = address
+        self.addressLabel.textColor = .gray0
+        
+        self.changedButton.setTitleColor(.gray7, for: .normal)
+        self.changedButton.backgroundColor = .main
     }
     
-    @objc private func buttonTapped() {
-        isTappedEditButtonWhemMapView?()
+    func whenNoAddressInMap() {
+        self.addressLabel.text = "주소를 알 수 없는 위치입니다."
+        self.addressLabel.textColor = .gray3
+        
+        self.changedButton.setTitleColor(.gray3, for: .normal)
+        self.changedButton.backgroundColor = .gray6
+    }
+    
+    @objc private func changedAddressButtonTapped(_ sender: UIButton) {
+        if sender.backgroundColor == .main {
+            isTappedEditButtonWhemMapView?()
+        }
     }
 }
 
@@ -134,12 +171,7 @@ extension EditLocationAddressMapView: NMFMapViewCameraDelegate {
             
             let latLng = NMGLatLng(lat: lat, lng: lng)
             
-            newMarker.position = latLng
-            
-            isChangedCoordinate?(latLng)
-            
-            self.enrollButton.setTitleColor(.gray7, for: .normal)
-            self.enrollButton.backgroundColor = .main
+            updateMarkerPosition(with: latLng)
         }
     }
     
@@ -147,12 +179,29 @@ extension EditLocationAddressMapView: NMFMapViewCameraDelegate {
         if !afterMarkingMarked {
             let lat = mapView.latitude
             let lng = mapView.longitude
-
+            
             let latLng = NMGLatLng(lat: lat, lng: lng)
-
+            
             newMarker.position = latLng
             
             afterMarkingMarked = true
         }
+    }
+    
+    @objc private func locationButtonTapped(_ sender: UIButton) {
+        naverMap.positionMode = .direction
+        
+        let lat = naverMap.latitude
+        let lng = naverMap.longitude
+        
+        let latLng = NMGLatLng(lat: lat, lng: lng)
+        
+        updateMarkerPosition(with: latLng)
+    }
+    
+    private func updateMarkerPosition(with latLng: NMGLatLng) {
+        newMarker.position = latLng
+        
+        isChangedCoordinate?(latLng)
     }
 }

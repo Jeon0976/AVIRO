@@ -115,6 +115,6 @@ final class ThridRegistrationPresenter {
         
         appDelegate?.amplitude?.identify(identify: identify)
         
-        appDelegate?.amplitude?.track(eventType: "Login")
+        appDelegate?.amplitude?.track(eventType: AMType.signUp.rawValue)
     }
 }

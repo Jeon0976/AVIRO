@@ -95,9 +95,7 @@ final class MyPageViewPresenter {
         guard let refreshToken = keychain.get(KeychainKey.appleRefreshToken.rawValue) else { return }
         
         let model = AVIROAutoLoginWhenAppleUserDTO(refreshToken: refreshToken)
-        
-        print(model)
-                
+                        
         AVIROAPIManager().revokeAppleUser(with: model) { [weak self] result in
             switch result {
             case .success(let success):
@@ -126,6 +124,6 @@ final class MyPageViewPresenter {
     }
     
     private func trackWhenLogout() {
-        appDelegate?.amplitude?.track(eventType: "Logout")
+        appDelegate?.amplitude?.track(eventType: AMType.logout.rawValue)
     }
 }

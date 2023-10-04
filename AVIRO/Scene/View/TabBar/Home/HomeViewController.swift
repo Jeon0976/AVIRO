@@ -118,7 +118,6 @@ final class HomeViewController: UIViewController {
     private lazy var starButton: HomeMapReferButton = {
         let button = HomeMapReferButton()
         
-        // starButton
         button.setImage(
             UIImage.starIcon.withTintColor(.gray1),
             for: .normal

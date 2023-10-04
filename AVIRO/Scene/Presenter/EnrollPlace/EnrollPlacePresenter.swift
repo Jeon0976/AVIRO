@@ -29,6 +29,8 @@ protocol EnrollPlaceProtocol: NSObject {
 final class EnrollPlacePresenter {
     weak var viewController: EnrollPlaceProtocol?
         
+    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
+    
     private var storeNormalData: PlaceListModel?
     private var category: PlaceCategory?
     
@@ -118,6 +120,11 @@ final class EnrollPlacePresenter {
             switch result {
             case .success(let success):
                 if success.statusCode == 200 {
+                    self?.appDelegate?.amplitude?.track(
+                        eventType: AMType.afterUploadPlace.rawValue,
+                        eventProperties: ["Place": veganModel.title]
+                    )
+                    
                     CenterCoordinate.shared.longitude = veganModel.x
                     CenterCoordinate.shared.latitude = veganModel.y
                     CenterCoordinate.shared.isChangedFromEnrollView = true

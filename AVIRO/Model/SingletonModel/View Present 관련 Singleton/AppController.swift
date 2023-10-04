@@ -91,7 +91,7 @@ final class AppController {
 
         appDelegate?.amplitude?.identify(identify: identify)
         
-        appDelegate?.amplitude?.track(eventType: "Login")
+        appDelegate?.amplitude?.track(eventType: AMType.login.rawValue)
     }
     
     // MARK: tutorial View

@@ -106,8 +106,8 @@ final class PlaceListHeaderView: UIView {
         
         let cancel = UIAlertAction(title: "취소", style: .cancel)
         
-        centerLocation.setValue(isTop ? UIColor.systemBlue : UIColor.gray2, forKey: "titleTextColor")
-        myLocation.setValue(isTop ? UIColor.gray2 : UIColor.systemBlue, forKey: "titleTextColor")
+        centerLocation.setValue(isTop ? UIColor.systemBlue : UIColor.gray0, forKey: "titleTextColor")
+        myLocation.setValue(isTop ? UIColor.gray0 : UIColor.systemBlue, forKey: "titleTextColor")
         cancel.setValue(UIColor.systemBlue, forKey: "titleTextColor")
         
         [
@@ -145,8 +145,8 @@ final class PlaceListHeaderView: UIView {
         
         let cancel = UIAlertAction(title: "취소", style: .cancel)
         
-        accurancy.setValue(isTop ? UIColor.systemBlue : UIColor.gray2, forKey: "titleTextColor")
-        distance.setValue(isTop ? UIColor.gray2 : UIColor.systemBlue, forKey: "titleTextColor")
+        accurancy.setValue(isTop ? UIColor.systemBlue : UIColor.gray0, forKey: "titleTextColor")
+        distance.setValue(isTop ? UIColor.gray0 : UIColor.systemBlue, forKey: "titleTextColor")
         cancel.setValue(UIColor.systemBlue, forKey: "titleTextColor")
         
         [

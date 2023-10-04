@@ -54,6 +54,7 @@ protocol HomeViewProtocol: NSObject {
 final class HomeViewPresenter: NSObject {
     weak var viewController: HomeViewProtocol?
     
+    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
     private let locationManager = CLLocationManager()
     private let bookmarkManager = BookmarkFacadeManager()
     
@@ -393,6 +394,7 @@ final class HomeViewPresenter: NSObject {
         guard let validMarkerModel = markerModel else { return }
         
         guard let validIndex = index else { return }
+        
         getPlaceSummaryModel(validMarkerModel)
         
         selectedMarkerIndex = validIndex
@@ -437,6 +439,11 @@ final class HomeViewPresenter: NSObject {
                             distance: distanceString,
                             reviewsCount: reviewsCount,
                             address: place.address
+                        )
+                        
+                        self?.appDelegate?.amplitude?.track(
+                            eventType: AMType.popupPlace.rawValue,
+                            eventProperties: ["Place": place.title]
                         )
                         
                         DispatchQueue.main.async {
@@ -733,7 +740,7 @@ final class HomeViewPresenter: NSObject {
         else { return }
         
         shouldKeepPlaceInfoView = true
-        
+                
         viewController?.pushEditPlaceInfoViewController(
             placeMarkerModel: placeMarkerModel,
             placeId: placeId,
@@ -755,7 +762,7 @@ final class HomeViewPresenter: NSObject {
         let menuArray = placeMenuModel.menuArray
         
         shouldKeepPlaceInfoView = true
-
+        
         viewController?.pushEditMenuViewController(
             placeId: placeId,
             isAll: isAll,
@@ -772,6 +779,8 @@ final class HomeViewPresenter: NSObject {
             case .success(let menuModel):
                 if menuModel.statusCode == 200 {
                     if let model = menuModel.data {
+                        self?.setAmplitudeWhenEditMenu(with: model.menuArray)
+                        
                         self?.selectedMenuModel = model
                         self?.viewController?.refreshMenuView(model)
                     }
@@ -784,6 +793,33 @@ final class HomeViewPresenter: NSObject {
                 self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
         }
+    }
+    
+    private func setAmplitudeWhenEditMenu(with menuArray: [AVIROMenu]) {
+        guard let beforeMenus = selectedMenuModel?.menuArray else { return }
+        
+        var beforeMenusString = ""
+        
+        for (index, menu) in beforeMenus.enumerated() {
+            let menuString = "\(index + 1): (\(menu.menu) \(menu.price) \(menu.howToRequest))"
+            beforeMenusString += menuString + "\n"
+        }
+        
+        var afterMenusString = ""
+        
+        for (index, menu) in menuArray.enumerated() {
+            let menuString = "\(index + 1): (\(menu.menu) \(menu.price) \(menu.howToRequest))"
+            afterMenusString += menuString + "\n"
+        }
+        
+        appDelegate?.amplitude?.track(
+            eventType: AMType.afterEditMenu.rawValue,
+            eventProperties: [
+                "Place": selectedSummaryModel?.title as Any,
+                "BeforeChangedMenuArray": beforeMenusString,
+                "AfterChangedMenuArray": afterMenusString
+            ]
+        )
     }
     
     func afterEditMenuChangedMarker(_ changedMarkerModel: EditMenuChangedMarkerModel) {
@@ -806,6 +842,13 @@ final class HomeViewPresenter: NSObject {
             switch result {
             case .success(let model):
                 if let message = model.message {
+                    self?.appDelegate?.amplitude?.track(
+                        eventType: AMType.afterUploadReview.rawValue,
+                        eventProperties: [
+                            "Place": self?.selectedSummaryModel?.title as Any,
+                            "Review": postReviewModel.content
+                        ]
+                    )
                     self?.viewController?.showToastAlert(message)
                 }
             case .failure(let error):

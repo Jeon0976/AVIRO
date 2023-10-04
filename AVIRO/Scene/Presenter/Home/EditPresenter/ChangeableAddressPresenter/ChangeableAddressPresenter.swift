@@ -17,6 +17,7 @@ protocol ChangebleAddressProtocol: NSObject {
     func afterChangedAddressWhenMapView(_ address: String)
     func afterResultShowTable(with totalCount: Int)
     func popViewController()
+    func whenNoAddressInMap()
     func showErrorAlert(with error: String, title: String?)
 }
 
@@ -131,6 +132,7 @@ final class ChangeableAddressPresenter {
             case .success(let model):
                 guard let firstDocument = model.documents?.first,
                       let address = firstDocument.address?.address else {
+                    self?.viewController?.whenNoAddressInMap()
                     return
                 }
                 

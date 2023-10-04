@@ -217,6 +217,12 @@ extension ChangeableAddressViewController: ChangebleAddressProtocol {
         navigationController?.popViewController(animated: true)
     }
     
+    func whenNoAddressInMap() {
+        DispatchQueue.main.async { [weak self] in
+            self?.editLocationDetailMapView.whenNoAddressInMap()
+        }
+    }
+    
     func showErrorAlert(with error: String, title: String? = nil) {
         DispatchQueue.main.async { [weak self] in
             if let title = title {
