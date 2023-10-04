@@ -1,45 +1,11 @@
 AVIRO/Utils/API.plist
 
-### Swift ###
-# Xcode
-#
-# gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
-
-## Key, Endpoint
-Endpoint.swift
-
-## User settings
-xcuserdata/
-
-## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
-*.xcscmblueprint
-*.xccheckout
-*.xcconfig
-
-## compatibility with Xcode 3 and earlier (ignoring not required starting Xcode 4)
-build/
-DerivedData/
-*.moved-aside
-*.pbxuser
-!default.pbxuser
-*.mode1v3
-!default.mode1v3
-*.mode2v3
-!default.mode2v3
-*.perspectivev3
-!default.perspectivev3
-
-## Obj-C/Swift specific
-*.hmap
+.DS_Store
 
 ## App packaging
 *.ipa
 *.dSYM.zip
 *.dSYM
-
-## Playgrounds
-timeline.xctimeline
-playground.xcworkspace
 
 # Swift Package Manager
 # Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
@@ -52,11 +18,6 @@ playground.xcworkspace
 # .swiftpm
 
 .build/
-
-# CocoaPods
-Pods/
-*.xcworkspace
-Podfile.lock
 
 # Carthage
 # Add this line if you want to avoid checking in source code from Carthage dependencies.
@@ -87,8 +48,6 @@ iOSInjectionProject/
 
 ### Xcode ###
 
-## Xcode 8 and earlier
-
 ### Xcode Patch ###
 *.xcodeproj/*
 !*.xcodeproj/project.pbxproj
@@ -98,5 +57,3 @@ iOSInjectionProject/
 /*.gcno
 **/xcshareddata/WorkspaceSettings.xcsettings
 
-# mac
-.DS_Store
