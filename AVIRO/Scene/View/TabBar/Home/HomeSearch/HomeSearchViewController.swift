@@ -100,9 +100,9 @@ final class HomeSearchViewController: UIViewController {
         let indicatorView = UIActivityIndicatorView()
         
         indicatorView.style = .large
-        indicatorView.isHidden = true
         indicatorView.color = .gray5
         indicatorView.startAnimating()
+        indicatorView.isHidden = true
 
         return indicatorView
     }()
@@ -273,7 +273,7 @@ extension HomeSearchViewController: HomeSearchProtocol {
     }
     
     func activeIndicatorView() {
-        indicatorView.isHidden = false
+        indicatorView.isHidden = true
     }
     
     func placeListNoResultData() {
@@ -300,6 +300,7 @@ extension HomeSearchViewController: HomeSearchProtocol {
         
         noResultImageView.isHidden = haveDatas
         noResultSubTitle.isHidden = haveDatas
+        
         indicatorView.isHidden = true
     }
     

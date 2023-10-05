@@ -111,11 +111,10 @@ final class PushCommentView: UIView {
         )
         textViewLeadingWhenShowCancelButton?.isActive = false
         
-        temparyTextViewHeightConstraint = textView.heightAnchor.constraint(equalToConstant: 0)
-        temparyTextViewHeightConstraint?.isActive = false
+        temparyTextViewHeightConstraint = textView.heightAnchor.constraint(equalToConstant: 34)
+        temparyTextViewHeightConstraint?.isActive = true
         
         NSLayoutConstraint.activate([
-            // separator
             separator.topAnchor.constraint(
                 equalTo: self.topAnchor),
             separator.leadingAnchor.constraint(
@@ -123,19 +122,16 @@ final class PushCommentView: UIView {
             separator.trailingAnchor.constraint(
                 equalTo: self.trailingAnchor),
             
-            // textView
             textView.topAnchor.constraint(
                 equalTo: separator.bottomAnchor, constant: 12.5),
             textView.trailingAnchor.constraint(
                 equalTo: enrollButton.leadingAnchor, constant: -10),
             
-            // CancelButton
             cancelEditButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             cancelEditButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             cancelEditButton.widthAnchor.constraint(equalToConstant: 15),
             cancelEditButton.heightAnchor.constraint(equalToConstant: 15),
             
-            // EnrollButton
             enrollButton.centerYAnchor.constraint(
                 equalTo: self.centerYAnchor),
             enrollButton.trailingAnchor.constraint(
@@ -164,15 +160,16 @@ final class PushCommentView: UIView {
             guard let text = textView.text else { return }
             enrollReview?(text)
 
+            initTextViewWhenAfterEditReview()
+            
             self.endEditing(true)
-            initTextView()
         } else {
             return
         }
     }
     
     @objc private func cancelEditTapped() {
-        initTextView()
+        initTextViewWhenAfterEditReview()
     }
     
     func autoStartWriteComment() {
@@ -189,13 +186,21 @@ final class PushCommentView: UIView {
         textView.becomeFirstResponder()
     }
     
-    func initTextView() {
+    func initTextViewWhenAfterEditReview() {
+        textView.isScrollEnabled = false
+        textView.resignFirstResponder()
+        
         initAttribute()
         updateTextviewHeight()
         updateViewWhenEditComment(false)
-        textView.resignFirstResponder()
         
         initView?()
+    }
+    
+    private func initTextViewWhenAfterEnrollReview() {
+        initAttribute()
+        temparyTextViewHeightConstraint?.constant = CGFloat(34)
+        textView.resignFirstResponder()
     }
     
     private func initAttribute() {
@@ -232,6 +237,8 @@ final class PushCommentView: UIView {
         if estimatedSize.height <= maxHeight {
             textView.isScrollEnabled = false
         } else {
+            temparyTextViewHeightConstraint?.constant = maxHeight
+            temparyTextViewHeightConstraint?.isActive = true
             textView.isScrollEnabled = true
         }
     }
@@ -299,10 +306,9 @@ extension PushCommentView: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         if textView.text != "" {
             enrollButton.setTitleColor(.gray0, for: .normal)
+            updateTextviewHeight()
         } else {
             enrollButton.setTitleColor(.gray4, for: .normal)
         }
-        
-        updateTextviewHeight()
     }
 }

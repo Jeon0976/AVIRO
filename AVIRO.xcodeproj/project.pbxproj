@@ -90,7 +90,6 @@
 		C5351B5C2A19F60200116D50 /* PlaceListSearchViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B5B2A19F60200116D50 /* PlaceListSearchViewPresenter.swift */; };
 		C5351B602A19F9A700116D50 /* PlaceListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B5F2A19F9A700116D50 /* PlaceListModel.swift */; };
 		C5351B622A1A083400116D50 /* PlaceListCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B612A1A083400116D50 /* PlaceListCellModel.swift */; };
-		C5351B672A1A154C00116D50 /* PageEndingCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B662A1A154C00116D50 /* PageEndingCheck.swift */; };
 		C5351B7A2A1B439000116D50 /* KakaoCoordinateSearchDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B792A1B439000116D50 /* KakaoCoordinateSearchDTO.swift */; };
 		C53856B12ABC13ED00D52DEC /* AVIROMyContributionCount+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53856B02ABC13ED00D52DEC /* AVIROMyContributionCount+DTO.swift */; };
 		C53893162A5EC0C500CB9A54 /* GenderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53893152A5EC0C500CB9A54 /* GenderButton.swift */; };
@@ -247,7 +246,7 @@
 		C510005D2ABAA3C700F65C1F /* Enum+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Enum+.swift"; sourceTree = "<group>"; };
 		C51000602ABAE61F00F65C1F /* ReportReviewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportReviewModel.swift; sourceTree = "<group>"; };
 		C51000622ABAE6A200F65C1F /* MenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuModel.swift; sourceTree = "<group>"; };
-		C51132C02A559BCA006E1EC3 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
+		C51132C02A559BCA006E1EC3 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppController.swift; path = ../ViewLogic/AppController.swift; sourceTree = "<group>"; };
 		C51385412AAADB0E001AB827 /* EditNickNameButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNickNameButton.swift; sourceTree = "<group>"; };
 		C51385442AAAE493001AB827 /* MyDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDataModel.swift; sourceTree = "<group>"; };
 		C51385462AAAF3BB001AB827 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
@@ -295,7 +294,6 @@
 		C5351B5B2A19F60200116D50 /* PlaceListSearchViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListSearchViewPresenter.swift; sourceTree = "<group>"; };
 		C5351B5F2A19F9A700116D50 /* PlaceListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListModel.swift; sourceTree = "<group>"; };
 		C5351B612A1A083400116D50 /* PlaceListCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListCellModel.swift; sourceTree = "<group>"; };
-		C5351B662A1A154C00116D50 /* PageEndingCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageEndingCheck.swift; sourceTree = "<group>"; };
 		C5351B792A1B439000116D50 /* KakaoCoordinateSearchDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoCoordinateSearchDTO.swift; sourceTree = "<group>"; };
 		C53856B02ABC13ED00D52DEC /* AVIROMyContributionCount+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROMyContributionCount+DTO.swift"; sourceTree = "<group>"; };
 		C53893152A5EC0C500CB9A54 /* GenderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderButton.swift; sourceTree = "<group>"; };
@@ -485,7 +483,6 @@
 			isa = PBXGroup;
 			children = (
 				C5D93D9D2A581E9100629C39 /* Tutorial */,
-				C5D93D962A56C6ED00629C39 /* Registration */,
 				C567C14D2A5658C700D4B426 /* Login */,
 				C567C14E2A5658D400D4B426 /* TabBar */,
 			);
@@ -734,8 +731,7 @@
 			children = (
 				C51132C02A559BCA006E1EC3 /* AppController.swift */,
 			);
-			name = ViewLogic;
-			path = "View Present 관련 Singleton";
+			path = ViewLogic;
 			sourceTree = "<group>";
 		};
 		C520663E2A80C6220038ECCD /* CoordinateSingleton */ = {
@@ -750,7 +746,6 @@
 		C520663F2A80C6450038ECCD /* APISingleton */ = {
 			isa = PBXGroup;
 			children = (
-				C5351B662A1A154C00116D50 /* PageEndingCheck.swift */,
 				C52066402A8129510038ECCD /* KakaoAPISortingQuery.swift */,
 			);
 			path = APISingleton;
@@ -894,6 +889,7 @@
 			isa = PBXGroup;
 			children = (
 				C5A3C3C32A39658A0050AB3D /* LoginViewController.swift */,
+				C5D93D962A56C6ED00629C39 /* Registration */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1737,7 +1733,6 @@
 				C595ACCD2A84A1A200D35123 /* PlaceView.swift in Sources */,
 				C51385422AAADB0E001AB827 /* EditNickNameButton.swift in Sources */,
 				C547A8BA2A17D8D4004D1339 /* KakaoAPIManager.swift in Sources */,
-				C5351B672A1A154C00116D50 /* PageEndingCheck.swift in Sources */,
 				C5732C772A41A0A500CDC499 /* AVIROMapMarker+DTO.swift in Sources */,
 				C5FF13532A42C8810026981D /* AVIROPlaceInfo+DTO.swift in Sources */,
 				C5351B5C2A19F60200116D50 /* PlaceListSearchViewPresenter.swift in Sources */,

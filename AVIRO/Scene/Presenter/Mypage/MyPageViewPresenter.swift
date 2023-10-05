@@ -26,6 +26,7 @@ protocol MyPageViewProtocol: NSObject {
 final class MyPageViewPresenter {
     weak var viewController: MyPageViewProtocol?
     
+    private let bookmarkManager = BookmarkFacadeManager()
     private let appDelegate = UIApplication.shared.delegate as? AppDelegate
     private let keychain = KeychainSwift()
     
@@ -85,10 +86,14 @@ final class MyPageViewPresenter {
     }
     
     func whenAfterLogout() {
+        bookmarkManager.deleteAllData()
         LocalMarkerData.shared.deleteAllMarkerModel()
-        LocalBookmarkData.shared.deleteAllBookmark()
+        
         MyData.my.whenLogout()
+        MyCoordinate.shared.isFirstLoadLocation = false
+
         trackWhenLogout()
+        
         self.keychain.delete(KeychainKey.appleRefreshToken.rawValue)
         
         viewController?.pushLoginViewController(with: .logout)
@@ -104,8 +109,10 @@ final class MyPageViewPresenter {
             switch result {
             case .success(let success):
                 if success.statusCode == 200 {
-                    LocalBookmarkData.shared.deleteAllBookmark()
+                    self?.bookmarkManager.deleteAllData()
+                    
                     MyData.my.whenLogout()
+                    MyCoordinate.shared.isFirstLoadLocation = false
                     self?.keychain.delete(KeychainKey.appleRefreshToken.rawValue)
                     self?.trackWhenWithdrawal()
                     DispatchQueue.main.async {

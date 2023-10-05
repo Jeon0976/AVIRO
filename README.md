@@ -1,6 +1,6 @@
 # AVIRO
 ## 설명 
-- 비건 식당, 카페, 술집 등 비건 음식이있거나, 모든 음식이 비건인 식당의 위치를 공유하는 플랫폼입니다. 
+- 비건 식당, 카페, 술집 등 음식점에 비건 음식이있거나, 모든 음식이 비건인 식당을 구분해서 공유하는 플랫폼입니다. 
 - 식당을 직접 추가하거나 삭제할 수 있습니다. 
 - 메뉴의 요청사항을 따로 기입할 수 있습니다. 
 - 식당의 후기를 작성해서 유저들끼리 정보를 공유할 수 있습니다.
@@ -160,14 +160,13 @@
 │   │   └── PlaceListModel.swift
 │   ├── SingletonModel
 │   │   ├── APISingleton
-│   │   │   ├── KakaoAPISortingQuery.swift
-│   │   │   └── PageEndingCheck.swift
+│   │   │   └── KakaoAPISortingQuery.swift
 │   │   ├── CoordinateSingleton
 │   │   │   ├── CenterCoordinate.swift
 │   │   │   └── MyCoordinate.swift
 │   │   ├── MyData
 │   │   │   └── MyData.swift
-│   │   └── View Present 관련 Singleton
+│   │   └── ViewLogic
 │   │       └── AppController.swift
 │   └── UserModel
 │       └── AppleUserLoginModel.swift
@@ -199,13 +198,13 @@
 │   │       └── NickNameChangeblePresenter.swift
 │   └── View
 │       ├── Login
-│       │   └── LoginViewController.swift
-│       ├── Registration
-│       │   ├── FinalRegistrationViewController.swift
-│       │   ├── FirstRegistrationViewController.swift
-│       │   ├── SecondRegistrationViewController.swift
-│       │   ├── TermsTableCell.swift
-│       │   └── ThridRegistrationViewController.swift
+│       │   ├── LoginViewController.swift
+│       │   └── Registration
+│       │       ├── FinalRegistrationViewController.swift
+│       │       ├── FirstRegistrationViewController.swift
+│       │       ├── SecondRegistrationViewController.swift
+│       │       ├── TermsTableCell.swift
+│       │       └── ThridRegistrationViewController.swift
 │       ├── TabBar
 │       │   ├── Enroll
 │       │   │   ├── EnrollPlaceList
@@ -296,4 +295,5 @@
 │           │   ├── BottomCell.swift
 │           │   └── TopCell.swift
 │           └── TutorialViewController.swift
+└── Utils
 ```

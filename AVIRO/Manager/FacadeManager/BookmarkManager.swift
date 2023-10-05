@@ -9,9 +9,6 @@ import Foundation
 
 final class BookmarkFacadeManager {
     private let bookmarkArray = LocalBookmarkData.shared
-    
-    private var isUpdate = false
-    private var isDelete = false
         
     func fetchAllData(completionHandler: @escaping ((String) -> Void)) {
         AVIROAPIManager().loadBookmarkModels(with: MyData.my.id) { [weak self] result in
@@ -38,25 +35,10 @@ final class BookmarkFacadeManager {
         
         let postModel = AVIROUpdateBookmarkDTO(placeList: bookmarks, userId: MyData.my.id)
         
-        AVIROAPIManager().createBookmarkModel(with: postModel) { [weak self] result in
+        AVIROAPIManager().createBookmarkModel(with: postModel) { result in
             switch result {
             case .success(let success):
-                if success.statusCode == 200 {
-                    if let isUpdate = self?.isUpdate,
-                       let isDelete = self?.isDelete {
-                        if isUpdate {
-                            self?.bookmarkArray.updateData(placeId)
-                            self?.isUpdate = false
-                            return
-                        }
-                        
-                        if isDelete {
-                            self?.bookmarkArray.deleteData(placeId)
-                            self?.isDelete = false
-                            return
-                        }
-                    }
-                } else {
+                if success.statusCode != 200 {
                     if let message = success.message {
                         completionHandler(message)
                     } else {
@@ -74,12 +56,16 @@ final class BookmarkFacadeManager {
     }
     
     func updateData(_ placeId: String, completionHandler: @escaping ((String) -> Void)) {
-        isUpdate = true
+        self.bookmarkArray.updateData(placeId)
         self.updateBookmark(placeId, completionHandler: completionHandler)
     }
     
     func deleteData(_ placeId: String, completionHandler: @escaping ((String) -> Void)) {
-        isDelete = true
+        self.bookmarkArray.deleteData(placeId)
         self.updateBookmark(placeId, completionHandler: completionHandler)
+    }
+    
+    func deleteAllData() {
+        bookmarkArray.deleteAllBookmark()
     }
 }

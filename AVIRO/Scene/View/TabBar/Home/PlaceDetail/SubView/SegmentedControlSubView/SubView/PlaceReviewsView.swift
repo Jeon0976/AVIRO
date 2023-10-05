@@ -196,7 +196,7 @@ final class PlaceReviewsView: UIView {
         /// edit중 창을 나갈 경우를 대비한 초기화
         isEditedAfter = false
         /// textView 초기화
-        reviewInputView.initTextView()
+        reviewInputView.initTextViewWhenAfterEditReview()
     
         self.placeId = placeId
         

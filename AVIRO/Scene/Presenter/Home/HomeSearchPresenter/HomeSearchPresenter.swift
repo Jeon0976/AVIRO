@@ -34,7 +34,7 @@ final class HomeSearchPresenter {
     private var historyPlaceModel = [HistoryTableModel]()
     private var matchedPlaceModel = [MatchedPlaceModel]()
     
-    var query = "" {
+    lazy var query = "" {
         didSet {
             timer?.invalidate()
             

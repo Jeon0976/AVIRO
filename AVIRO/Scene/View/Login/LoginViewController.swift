@@ -12,7 +12,7 @@ private enum Text: String {
     case apple = "Apple로 로그인하기"
     case logoutToast = "로그아웃이 완료되었습니다."
     case withdrawalTitle = "회원탈퇴가 완료되었어요."
-    case withdrawalMessage = "함께한 시간이 아쉽지만,\n언제든지 돌아오는 문을 열어둘게요.\n어비로의 비건 여정은 계속될 거에요!"
+    case withdrawalMessage = "함께한 시간이 아쉽지만,\n언제든지 돌아오는 문을 열어둘게요.\n어비로의 비건 여정은 계속될 거예요!"
     
     case error = "에러"
 }
