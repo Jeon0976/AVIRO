@@ -8,15 +8,19 @@
 import UIKit
 
 final class BottomCell: UICollectionViewCell {
-    static let identifier = "BottomCell"
+    private lazy var imageView: UIImageView = {
+        let imageView = UIImageView()
+        
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
 
-    var imageView = UIImageView()
+        return imageView
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         makeLayout()
-        makeAttribute()
     }
     
     required init?(coder: NSCoder) {
@@ -37,11 +41,6 @@ final class BottomCell: UICollectionViewCell {
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         ])
-    }
-    
-    private func makeAttribute() {        
-        imageView.contentMode = .scaleAspectFit
-        imageView.clipsToBounds = true
     }
 
     func setupData(image: UIImage?) {

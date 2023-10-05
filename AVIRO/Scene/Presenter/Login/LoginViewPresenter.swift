@@ -14,12 +14,15 @@ import AmplitudeSwift
 protocol LoginViewProtocol: NSObject {
     func setupLayout()
     func setupAttribute()
+    
+    func switchIsLoading(with loading: Bool)
+
     func pushTabBar()
     func pushRegistrationWhenAppleLogin(_ userModel: AVIROAppleUserSignUpDTO)
+    
     func afterLogoutAndMakeToastButton()
     func afterWithdrawalUserShowAlert()
     func showErrorAlert(with error: String, title: String?)
-    func switchIsLoading(with loading: Bool)
 }
 
 final class LoginViewPresenter: NSObject {
@@ -54,10 +57,11 @@ final class LoginViewPresenter: NSObject {
         }
     }
     
+    // MARK: Clicke Apple Login
     func clickedAppleLogin() {
         let request = ASAuthorizationAppleIDProvider().createRequest()
         request.requestedScopes = [.fullName, .email]
-        
+
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
@@ -113,6 +117,7 @@ final class LoginViewPresenter: NSObject {
         }
     }
     
+    // MARK: Apple Login User Info 불러오기
     private func loadUserDataWhenAppleLogin() {
         guard let refreshToken = keychain.get(KeychainKey.appleRefreshToken.rawValue) else {
             viewController?.showErrorAlert(with: "재시도 해주세요.", title: nil)
@@ -149,6 +154,7 @@ final class LoginViewPresenter: NSObject {
         }
     }
     
+    // MARK: Amplitude Setting
     private func setAmplitude() {
         appDelegate?.amplitude?.setUserId(userId: MyData.my.id)
 

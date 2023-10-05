@@ -14,26 +14,34 @@ protocol HomeViewProtocol: NSObject {
     func setupLayout()
     func setupAttribute()
     func setupGesture()
+    
     func whenViewWillAppear()
     func whenViewWillAppearOffAllCondition()
-    func whenAfterPopEditPage()
+    func whenAfterPopEditViewController()
+
     func keyboardWillShow(notification: NSNotification)
     func keyboardWillHide()
-    func ifDeniedLocation(_ mapCoor: NMGLatLng)
+    
     func isSuccessLocation()
+    func ifDeniedLocation(_ mapCoor: NMGLatLng)
+
+    func loadMarkers(with markers: [NMFMarker])
+    func afterLoadStarButton(with noStars: [NMFMarker])
+
     func moveToCameraWhenNoAVIRO(_ lng: Double, _ lat: Double)
     func moveToCameraWhenHasAVIRO(_ markerModel: MarkerModel)
-    func loadMarkers(_ markers: [NMFMarker])
-    func afterLoadStarButton(noMarkers: [NMFMarker])
+    
     func afterClickedMarker(placeModel: PlaceTopModel, placeId: String, isStar: Bool)
     func afterSlideupPlaceView(
         infoModel: AVIROPlaceInfo?,
         menuModel: AVIROPlaceMenus?,
         reviewsModel: AVIROReviewsArray?
     )
-    func showReportPlaceAlert()
-    func isDuplicatedReport()
-    func isSuccessReportPlaceActionSheet()
+    
+    func updateMenus(_ menuData: AVIROPlaceMenus?)
+    func updateMapPlace(_ mapPlace: MapPlace)
+    func deleteMyReview(_ commentId: String)
+    
     func pushPlaceInfoOpreationHoursViewController(_ models: [EditOperationHoursModel])
     func pushEditPlaceInfoViewController(
         placeMarkerModel: MarkerModel,
@@ -43,10 +51,11 @@ protocol HomeViewProtocol: NSObject {
         editSegmentedIndex: Int
     )
     func pushEditMenuViewController(placeId: String, isAll: Bool, isSome: Bool, isRequest: Bool, menuArray: [AVIROMenu])
-    func refreshMenuView(_ menuData: AVIROPlaceMenus?)
-    func refreshMapPlace(_ mapPlace: MapPlace)
-    func deleteMyReviewInView(_ commentId: String)
+
+    func showActionSheetWhenSuccessReport()
     func showToastAlert(_ title: String)
+    func showAlertWhenReportPlace()
+    func showAlertWhenDuplicatedReport()
     func showErrorAlert(with error: String, title: String?)
     func showErrorAlertWhenLoadMarker()
 }
@@ -61,9 +70,9 @@ final class HomeViewPresenter: NSObject {
     var homeMapData: [AVIROMarkerModel]?
     
     private var hasTouchedMarkerBefore = false
-    private var whenShowPlaceAfterActionOtherViewController = false
+    private var whenShowPlaceAfterActionFromOtherViewController = false
     private var isFirstViewWillappear = true
-    private var shouldKeepPlaceInfoView = false
+    private var whenKeepPlaceInfoView = false
     
     private var selectedMarkerIndex = 0 
     private var selectedMarkerModel: MarkerModel?
@@ -83,23 +92,33 @@ final class HomeViewPresenter: NSObject {
     deinit {
         NotificationCenter.default.removeObserver(
             self,
-            name: NSNotification.Name("checkIsInAVRIO"),
+            name: NSNotification.Name(NotiName.afterMainSearch.rawValue),
             object: nil
         )
     }
     
     func viewDidLoad() {
         locationManager.delegate = self
-        whenFirstLocationauthorization { [weak self] in
+        
+        MyCoordinate.shared.afterFirstLoadLocation = { [weak self] in
             self?.loadVeganData()
         }
             
-        makeNotification()
+        setNotification()
         
         viewController?.setupLayout()
         viewController?.setupAttribute()
         viewController?.setupGesture()
                 
+    }
+    
+    private func setNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(afterMainSearchPlace(_:)),
+            name: NSNotification.Name(NotiName.afterMainSearch.rawValue),
+            object: nil
+        )
     }
     
     func viewWillAppear() {
@@ -110,8 +129,8 @@ final class HomeViewPresenter: NSObject {
     }
     
     private func handleMarkerUpdate() {
-        if !shouldKeepPlaceInfoView && !isFirstViewWillappear {
-            updateMarkerDataFromServer()
+        if !whenKeepPlaceInfoView && !isFirstViewWillappear {
+            refreshMapMarkers()
         }
     }
     
@@ -124,37 +143,37 @@ final class HomeViewPresenter: NSObject {
             return
         }
         
-        if shouldKeepPlaceInfoView { return }
+        if whenKeepPlaceInfoView { return }
 
-        if !whenShowPlaceAfterActionOtherViewController {
+        if !whenShowPlaceAfterActionFromOtherViewController {
             viewController?.whenViewWillAppearOffAllCondition()
         }
     }
     
     func viewDidAppear() {
-        if shouldKeepPlaceInfoView {
-            viewController?.whenAfterPopEditPage()
-            shouldKeepPlaceInfoView.toggle()
+        if whenKeepPlaceInfoView {
+            viewController?.whenAfterPopEditViewController()
+            whenKeepPlaceInfoView.toggle()
         }
     }
     
     func viewWillDisappear() {
-        if whenShowPlaceAfterActionOtherViewController {
-            whenShowPlaceAfterActionOtherViewController.toggle()
+        removeKeyboardNotification()
+
+        if whenShowPlaceAfterActionFromOtherViewController {
+            whenShowPlaceAfterActionFromOtherViewController.toggle()
         }
         
-        if !shouldKeepPlaceInfoView {
+        if !whenKeepPlaceInfoView {
             initMarkerState()
         }
-
-        removeKeyboardNotification()
     }
     
     // MARK: 전화, url 들어가고 난 후에도 계속 place 정보 보여주기 위한 함수
     func shouldKeepPlaceInfoViewState(_ state: Bool) {
-        shouldKeepPlaceInfoView = state
+        whenKeepPlaceInfoView = state
     }
-    
+
     // MARK: Keyboard에 따른 view 높이 변경 Notification
     func addKeyboardNotification() {
         NotificationCenter.default.addObserver(
@@ -200,7 +219,7 @@ final class HomeViewPresenter: NSObject {
             wide: "0.0",
             time: nil
         )
-        
+                
         AVIROAPIManager().loadNerbyPlaceModels(with: mapModel) { [weak self] result in
             switch result {
             case .success(let mapDatas):
@@ -220,34 +239,6 @@ final class HomeViewPresenter: NSObject {
         }
     }
     
-    private func updateMarkerDataFromServer() {
-        let mapModel = AVIROMapModelDTO(
-            longitude: MyCoordinate.shared.longitudeString,
-            latitude: MyCoordinate.shared.latitudeString,
-            wide: "0.0",
-            time: nowDateTime
-        )
-        
-        AVIROAPIManager().loadNerbyPlaceModels(with: mapModel) { [weak self] result in
-            switch result {
-            case .success(let mapDatas):
-                // MARK: Update map
-                if let updatePlace = mapDatas.data.updatedPlace {
-                    self?.updateMarkers(updatePlace)
-                }
-               
-                // MARK: Delete map
-                if let deletedPlace = mapDatas.data.deletedPlace {
-                    self?.deleteMarkers(deletedPlace)
-                }
-                
-            case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
-            }
-        }
-    }
-    
-    // MARK: Marker Data singleton에 저장하기
     private func saveMarkers(_ mapData: [AVIROMarkerModel]?) {
         guard let mapData = mapData else { return }
         
@@ -262,7 +253,33 @@ final class HomeViewPresenter: NSObject {
         
         DispatchQueue.main.async { [weak self] in
             let markers = LocalMarkerData.shared.getMarkers()
-            self?.viewController?.loadMarkers(markers)
+            self?.viewController?.loadMarkers(with: markers)
+        }
+    }
+    
+    // MARK: Refresh Vegan Data
+    private func refreshMapMarkers() {
+        let mapModel = AVIROMapModelDTO(
+            longitude: MyCoordinate.shared.longitudeString,
+            latitude: MyCoordinate.shared.latitudeString,
+            wide: "0.0",
+            time: nowDateTime
+        )
+        
+        AVIROAPIManager().loadNerbyPlaceModels(with: mapModel) { [weak self] result in
+            switch result {
+            case .success(let mapDatas):
+                if let updatePlace = mapDatas.data.updatedPlace {
+                    self?.updateMarkers(updatePlace)
+                }
+               
+                if let deletedPlace = mapDatas.data.deletedPlace {
+                    self?.deleteMarkers(deletedPlace)
+                }
+                
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+            }
         }
     }
     
@@ -278,11 +295,11 @@ final class HomeViewPresenter: NSObject {
         
         DispatchQueue.main.async { [weak self] in
             let markers = LocalMarkerData.shared.getUpdatedMarkers()
-            self?.viewController?.loadMarkers(markers)
+            self?.viewController?.loadMarkers(with: markers)
             self?.nowDateTime = TimeUtility.nowDateAndTime()
             
             if CenterCoordinate.shared.isChangedFromEnrollView {
-                self?.whenShowPlaceAfterActionOtherViewController = true
+                self?.whenShowPlaceAfterActionFromOtherViewController = true
                 
                 self?.whenAfterEnrollPlace()
             }
@@ -357,11 +374,6 @@ final class HomeViewPresenter: NSObject {
         return test
     }
     
-    // MARK: Marker 상태 초기화
-    func initMarkerState() {
-        resetPreviouslyTouchedMarker()
-    }
-    
     // MARK: Marker Touched Method
     private func touchedMarker(_ marker: NMFMarker) {
         resetPreviouslyTouchedMarker()
@@ -369,8 +381,11 @@ final class HomeViewPresenter: NSObject {
         setMarkerToTouchedState(marker)
     }
     
-    // MARK: Reset Previous Marker
-   private func resetPreviouslyTouchedMarker() {
+    func initMarkerState() {
+        resetPreviouslyTouchedMarker()
+    }
+
+    private func resetPreviouslyTouchedMarker() {
        /// 최초 터치 이후 작동을 위한 분기처리
         if hasTouchedMarkerBefore {
             if var selectedMarkerModel = selectedMarkerModel {
@@ -474,19 +489,9 @@ final class HomeViewPresenter: NSObject {
         CenterCoordinate.shared.latitude = coordinate.lat
     }
     
-    // MARK: Make Notification
-    private func makeNotification() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(checkIsInAVRIONotificaiton(_:)),
-            name: NSNotification.Name(UDKey.matchedPlaceModel.rawValue),
-            object: nil
-        )
-    }
-    
     // MARK: Notification Method afterMainSearch
-    @objc func checkIsInAVRIONotificaiton(_ noficiation: Notification) {
-        guard let checkIsInAVIRO = noficiation.userInfo?[UDKey.matchedPlaceModel.rawValue]
+    @objc func afterMainSearchPlace(_ noficiation: Notification) {
+        guard let checkIsInAVIRO = noficiation.userInfo?[NotiName.afterMainSearch.rawValue]
                 as? MatchedPlaceModel else { return }
         
         afterMainSearch(checkIsInAVIRO)
@@ -507,7 +512,7 @@ final class HomeViewPresenter: NSObject {
             guard let markerModel = markerModel else { return }
             guard let index = index else { return }
             
-            whenShowPlaceAfterActionOtherViewController = true
+            whenShowPlaceAfterActionFromOtherViewController = true
             
             getPlaceSummaryModel(markerModel)
                         
@@ -551,7 +556,7 @@ final class HomeViewPresenter: NSObject {
         }
                 
         LocalMarkerData.shared.updateWhenStarButton(starMarkersModel)
-        viewController?.afterLoadStarButton(noMarkers: noMarkers)
+        viewController?.afterLoadStarButton(with: noMarkers)
     }
     
     private func whenAfterLoadNotStarButtonTapped() {
@@ -565,7 +570,7 @@ final class HomeViewPresenter: NSObject {
 
         let markers = LocalMarkerData.shared.getMarkers()
         
-        viewController?.loadMarkers(markers)
+        viewController?.loadMarkers(with: markers)
     }
     
     // MARK: Bookmark Upload & Delete Method
@@ -661,36 +666,7 @@ final class HomeViewPresenter: NSObject {
             }
         }
     }
-    
-    // MARK: Place Id 불러오기
-    func checkReportPlaceDuplecated() {
-        guard let placeId = selectedPlaceId else { return }
         
-        let model = AVIROPlaceReportCheckDTO(
-            placeId: placeId,
-            userId: MyData.my.id
-        )
-        
-        AVIROAPIManager().checkPlaceReportIsDuplicated(with: model) { [weak self] result in
-            switch result {
-            case .success(let success):
-                if success.statusCode == 200 {
-                    if success.reported {
-                        self?.viewController?.isDuplicatedReport()
-                    } else {
-                        self?.viewController?.showReportPlaceAlert()
-                    }
-                } else {
-                    if let message = success.message {
-                        self?.viewController?.showErrorAlert(with: message, title: nil)
-                    }
-                }
-            case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
-            }
-        }
-    }
-    
     func reportPlace(_ type: AVIROReportPlaceType) {
         guard let placeId = selectedPlaceId else { return }
         
@@ -705,7 +681,7 @@ final class HomeViewPresenter: NSObject {
             switch result {
             case .success(let success):
                 if success.statusCode == 200 {
-                    self?.viewController?.isSuccessReportPlaceActionSheet()
+                    self?.viewController?.showActionSheetWhenSuccessReport()
                 } else {
                     if let message = success.message {
                         self?.viewController?.showErrorAlert(with: message, title: nil)
@@ -717,6 +693,34 @@ final class HomeViewPresenter: NSObject {
         }
     }
     
+    func checkReportPlaceDuplecated() {
+        guard let placeId = selectedPlaceId else { return }
+        
+        let model = AVIROPlaceReportCheckDTO(
+            placeId: placeId,
+            userId: MyData.my.id
+        )
+        
+        AVIROAPIManager().checkPlaceReportIsDuplicated(with: model) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.statusCode == 200 {
+                    if success.reported {
+                        self?.viewController?.showAlertWhenDuplicatedReport()
+                    } else {
+                        self?.viewController?.showAlertWhenReportPlace()
+                    }
+                } else {
+                    if let message = success.message {
+                        self?.viewController?.showErrorAlert(with: message, title: nil)
+                    }
+                }
+            case .failure(let error):
+                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+            }
+        }
+    }
+
     func getPlace() -> String {
         guard let place = selectedSummaryModel?.title else { return "" }
         return place
@@ -752,7 +756,7 @@ final class HomeViewPresenter: NSObject {
               let placeInfo = selectedInfoModel
         else { return }
         
-        shouldKeepPlaceInfoView = true
+        whenKeepPlaceInfoView = true
                 
         viewController?.pushEditPlaceInfoViewController(
             placeMarkerModel: placeMarkerModel,
@@ -774,7 +778,7 @@ final class HomeViewPresenter: NSObject {
         let isRequest = placeMarkerModel.isRequest
         let menuArray = placeMenuModel.menuArray
         
-        shouldKeepPlaceInfoView = true
+        whenKeepPlaceInfoView = true
         
         viewController?.pushEditMenuViewController(
             placeId: placeId,
@@ -795,7 +799,7 @@ final class HomeViewPresenter: NSObject {
                         self?.setAmplitudeWhenEditMenu(with: model.menuArray)
                         
                         self?.selectedMenuModel = model
-                        self?.viewController?.refreshMenuView(model)
+                        self?.viewController?.updateMenus(model)
                     }
                 } else {
                     if let message = menuModel.message {
@@ -847,7 +851,7 @@ final class HomeViewPresenter: NSObject {
 
         self.selectedMarkerModel = selectedMarkerModel
         
-        viewController?.refreshMapPlace(changedMarkerModel.mapPlace)
+        viewController?.updateMapPlace(changedMarkerModel.mapPlace)
     }
     
     func uploadReview(_ postReviewModel: AVIROEnrollReviewDTO) {
@@ -884,13 +888,12 @@ final class HomeViewPresenter: NSObject {
         }
     }
     
-    // MARK: 수정 요망
     func deleteMyReview(_ postDeleteReviewModel: AVIRODeleteReveiwDTO) {
         AVIROAPIManager().deleteReview(with: postDeleteReviewModel) { [weak self] result in
             switch result {
             case .success(let model):
                 if model.statusCode == 200 {
-                    self?.viewController?.deleteMyReviewInView(postDeleteReviewModel.commentId)
+                    self?.viewController?.deleteMyReview(postDeleteReviewModel.commentId)
                 }
                 
                 if let message = model.message {
@@ -903,7 +906,7 @@ final class HomeViewPresenter: NSObject {
     }
 }
 
-// MARK: user location 불러오기 관련 작업들
+// MARK: CLLocationManagerDelegate
 extension HomeViewPresenter: CLLocationManagerDelegate {
     func locationUpdate() {
         locationAuthorization()
@@ -913,17 +916,7 @@ extension HomeViewPresenter: CLLocationManagerDelegate {
         locationAuthorization()
     }
     
-    private func whenFirstLocationauthorization(completion: @escaping () -> Void) {
-        handleLocationAuthorization {
-            completion()
-        }
-    }
-
     private func locationAuthorization() {
-        handleLocationAuthorization()
-    }
-    
-    private func handleLocationAuthorization(completion: (() -> Void)? = nil) {
         switch locationManager.authorizationStatus {
         case .notDetermined:
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -939,8 +932,6 @@ extension HomeViewPresenter: CLLocationManagerDelegate {
         default:
             break
         }
-        
-        completion?()
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -948,13 +939,13 @@ extension HomeViewPresenter: CLLocationManagerDelegate {
         
         MyCoordinate.shared.latitude = location.coordinate.latitude
         MyCoordinate.shared.longitude = location.coordinate.longitude
-                
+
+        if !MyCoordinate.shared.isFirstLoadLocation {
+            MyCoordinate.shared.isFirstLoadLocation = true
+        }
+        
         locationManager.stopUpdatingLocation()
         
-        ifSuccessLocation()
-    }
-    
-    private func ifSuccessLocation() {
         viewController?.isSuccessLocation()
     }
     
@@ -962,6 +953,10 @@ extension HomeViewPresenter: CLLocationManagerDelegate {
         MyCoordinate.shared.latitude = DefaultCoordinate.lat.rawValue
         MyCoordinate.shared.longitude = DefaultCoordinate.lng.rawValue
 
+        if !MyCoordinate.shared.isFirstLoadLocation {
+            MyCoordinate.shared.isFirstLoadLocation = true
+        }
+        
         let mapCoor = NMGLatLng(lat: DefaultCoordinate.lat.rawValue, lng: DefaultCoordinate.lng.rawValue)
         
         viewController?.ifDeniedLocation(mapCoor)

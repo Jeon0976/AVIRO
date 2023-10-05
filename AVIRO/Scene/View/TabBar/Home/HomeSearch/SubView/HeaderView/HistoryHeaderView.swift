@@ -7,13 +7,18 @@
 
 import UIKit
 
+private enum Text: String {
+    case title = "최근검색어"
+    case button = "모두 지우기"
+}
+
 final class HistoryHeaderView: UIView {
     private lazy var recentlyLabel: UILabel = {
        let label = UILabel()
         
-        label.text = "최근검색어"
+        label.text = Text.title.rawValue
         label.textColor = .gray0
-        label.font = .pretendard(size: 15, weight: .semibold)
+        label.font = CFont.font.semibold15
         
         return label
     }()
@@ -21,33 +26,44 @@ final class HistoryHeaderView: UIView {
     private lazy var deleteAllButton: UIButton = {
         let button = UIButton()
         
-        button.setTitle("모두 지우기", for: .normal)
-        button.titleLabel?.font = .pretendard(size: 14, weight: .semibold)
+        button.setTitle(Text.button.rawValue, for: .normal)
+        button.titleLabel?.font = CFont.font.semibold14
         button.setTitleColor(.gray1, for: .normal)
         button.backgroundColor = .gray6
 
-        button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+        button.contentEdgeInsets = UIEdgeInsets(
+            top: 8,
+            left: 12,
+            bottom: 8,
+            right: 12
+        )
+        
         button.layer.cornerRadius = 10
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        button.addTarget(
+            self,
+            action: #selector(buttonTapped),
+            for: .touchUpInside
+        )
         
         return button
     }()
     
-    var deleteAllCell: (() -> Void)!
+    var deleteAllCell: (() -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        makeLayout()
+        setupLayout()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
     
-    private func makeLayout() {
+    private func setupLayout() {
         self.backgroundColor = .gray7
         self.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        
         [
             recentlyLabel,
             deleteAllButton
@@ -66,7 +82,7 @@ final class HistoryHeaderView: UIView {
     }
     
     @objc private func buttonTapped() {
-        deleteAllCell()
+        deleteAllCell?()
     }
     
 }

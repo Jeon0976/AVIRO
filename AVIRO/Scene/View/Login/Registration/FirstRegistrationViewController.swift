@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: Text
 private enum Text: String {
     case title = "반가워요!\n닉네임을 정해주세요."
     case subtitle = "어비로에 불릴 닉네임이에요."
@@ -18,6 +19,7 @@ private enum Text: String {
     case error = "에러"
 }
 
+// MARK: Layout
 private enum Layout {
     enum Margin: CGFloat {
         case small = 10
@@ -35,6 +37,7 @@ private enum Layout {
 final class FirstRegistrationViewController: UIViewController {
     lazy var presenter = FirstRegistrationPresenter(viewController: self)
     
+    // MARK: UI Property Definitions
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         
@@ -105,21 +108,16 @@ final class FirstRegistrationViewController: UIViewController {
     
     private var tapGesture = UITapGestureRecognizer()
 
+    // MARK: Override func
     override func viewDidLoad() {
         super.viewDidLoad()
         
         presenter.viewDidLoad()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        presenter.viewWillAppear()
-    }
-    
 }
 
 extension FirstRegistrationViewController: FirstRegistrationProtocol {
+    // MARK: Set up func
     func setupLayout() {
         [
             titleLabel,
@@ -216,6 +214,7 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
         view.addGestureRecognizer(tapGesture)
     }
     
+    // MARK: UI Interactions
     func changeSubInfo(
         subInfo: String,
         isVaild: Bool
@@ -223,19 +222,21 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
         DispatchQueue.main.async { [weak self] in
             self?.subInfo.text = subInfo
             
-            if isVaild {
-                self?.nextButton.isEnabled = true
-                self?.nicknameField.isPossible = true
-                self?.subInfo.textColor = .gray2
-            } else {
-                self?.nextButton.isEnabled = false
-                self?.nicknameField.isPossible = false
-                self?.subInfo.textColor = .warning
+            self?.nextButton.isEnabled = isVaild
+            self?.nicknameField.isPossible = isVaild
+            self?.subInfo.textColor = isVaild ? .gray2 : .warning
+            
+            if !isVaild {
                 self?.nicknameField.activeHshakeEffect()
             }
         }
     }
     
+    @objc private func tappedNextButton() {
+        presenter.pushUserInfo()
+    }
+    
+    // MARK: Push Interactions
     func pushSecondRegistrationView(
         _ userInfoModel: AVIROAppleUserSignUpDTO
     ) {
@@ -251,10 +252,7 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    @objc private func tappedNextButton() {
-        presenter.pushUserInfo()
-    }
-    
+    // MARK: Alert Intercations
     func showErrorAlert(with error: String, title: String? = nil) {
         DispatchQueue.main.async { [weak self] in
             if let title = title {
@@ -266,6 +264,7 @@ extension FirstRegistrationViewController: FirstRegistrationProtocol {
     }
 }
 
+// MARK: UIGestureRecognizerDelegate
 extension FirstRegistrationViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(
         _ gestureRecognizer: UIGestureRecognizer,
@@ -280,13 +279,14 @@ extension FirstRegistrationViewController: UIGestureRecognizerDelegate {
     }
 }
 
+// MARK: UITextFieldDelegate
 extension FirstRegistrationViewController: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        nicknameField.isPossible = nil
-        nextButton.isEnabled = false
+        
+        initFieldAndButtonUI()
         
         if let count = textField.text?.count {
-            changebleNickNameCount(count)
+            changebleNickNameCount(with: count)
         }
         
         let currentText = textField.text ?? ""
@@ -300,7 +300,13 @@ extension FirstRegistrationViewController: UITextFieldDelegate {
         presenter.insertUserNickName(currentText)
     }
     
-    private func changebleNickNameCount(_ count: Int) {
+    private func initFieldAndButtonUI() {
+        nicknameField.isPossible = nil
+        nextButton.isEnabled = false
+    }
+    
+    private func changebleNickNameCount(with count: Int) {
         self.subInfo2.text = "(\(count)/8)"
     }
+    
 }

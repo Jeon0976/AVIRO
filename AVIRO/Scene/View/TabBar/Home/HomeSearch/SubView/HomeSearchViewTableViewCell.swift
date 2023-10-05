@@ -8,8 +8,6 @@
 import UIKit
 
 final class HomeSearchViewTableViewCell: UITableViewCell {
-    static let identifier = "HomeSearchViewTableViewCell"
-    
     private lazy var icon: UIImageView = {
         let imageView = UIImageView()
         
@@ -20,7 +18,7 @@ final class HomeSearchViewTableViewCell: UITableViewCell {
         let label = UILabel()
         
         label.numberOfLines = 1
-        label.font = .pretendard(size: 18, weight: .medium)
+        label.font = CFont.font.medium18
         label.textColor = .gray0
 
         return label
@@ -30,7 +28,7 @@ final class HomeSearchViewTableViewCell: UITableViewCell {
         let label = UILabel()
         
         label.numberOfLines = 1
-        label.font = .pretendard(size: 15, weight: .regular)
+        label.font = CFont.font.regular15
         label.textColor = .gray3
 
         return label
@@ -39,15 +37,14 @@ final class HomeSearchViewTableViewCell: UITableViewCell {
     private lazy var distance: UILabel = {
         let label = UILabel()
         
-        label.font = .pretendard(size: 14, weight: .regular)
-        label.textAlignment = .right
+        label.font = CFont.font.regular14
         label.textColor = .gray2
-        
+        label.textAlignment = .right
+
         return label
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        
         super.init(style: style, reuseIdentifier: reuseIdentifier)
   
         setupLayout()
@@ -70,32 +67,29 @@ final class HomeSearchViewTableViewCell: UITableViewCell {
         }
 
         NSLayoutConstraint.activate([
-            // icon
             icon.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             icon.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
             icon.widthAnchor.constraint(equalToConstant: 24),
             icon.heightAnchor.constraint(equalToConstant: 24),
             
-            // title
             title.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 10),
             title.trailingAnchor.constraint(equalTo: distance.leadingAnchor, constant: -20),
             title.topAnchor.constraint(equalTo: icon.topAnchor),
             
-            // address
             address.leadingAnchor.constraint(equalTo: title.leadingAnchor),
             address.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 11),
             address.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15),
             address.trailingAnchor.constraint(equalTo: distance.leadingAnchor, constant: -20),
 
-            // distance
             distance.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
             distance.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ])
     }
     
-    func makeCellData(_ listData: MatchedPlaceCellModel,
-                      attributedTitle: NSAttributedString?,
-                      attributedAddress: NSAttributedString?
+    func setupCellData(
+        _ listData: MatchedPlaceCellModel,
+        attributedTitle: NSAttributedString?,
+        attributedAddress: NSAttributedString?
     ) {
         
         icon.image = listData.icon

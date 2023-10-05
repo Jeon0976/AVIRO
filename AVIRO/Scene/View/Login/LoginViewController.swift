@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: Text
 private enum Text: String {
     case apple = "Apple로 로그인하기"
     case logoutToast = "로그아웃이 완료되었습니다."
@@ -16,6 +17,7 @@ private enum Text: String {
     case error = "에러"
 }
 
+// MARK: Layout
 private enum Layout {
     enum Margin: CGFloat {
         case appleToBottom = 40
@@ -30,6 +32,7 @@ private enum Layout {
 final class LoginViewController: UIViewController {
     lazy var presenter = LoginViewPresenter(viewController: self)
         
+    // MARK: UI Property Definitions
     private lazy var topImageView: UIImageView = {
         let imageView = UIImageView()
         
@@ -131,6 +134,7 @@ final class LoginViewController: UIViewController {
         return view
     }()
     
+    // MARK: Override func
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -142,13 +146,10 @@ final class LoginViewController: UIViewController {
         
         presenter.viewWillAppear()
     }
-    
-    @objc private func tapAppleLogin() {
-        presenter.clickedAppleLogin()
-    }
 }
 
 extension LoginViewController: LoginViewProtocol {
+    // MARK: Set up func
     func setupLayout() {
         [
             topImageView,
@@ -193,6 +194,19 @@ extension LoginViewController: LoginViewProtocol {
         ])
     }
     
+    func setupAttribute() {
+        view.backgroundColor = .gray7
+        navigationController?.navigationBar.isHidden = true
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+
+        applyGradientToLoginView()
+    }
+    
+    // MARK: UI Interactions
+    @objc private func tapAppleLogin() {
+        presenter.clickedAppleLogin()
+    }
+    
     func switchIsLoading(with loading: Bool) {
         DispatchQueue.main.async { [weak self] in
             self?.indicatorView.isHidden = !loading
@@ -200,16 +214,7 @@ extension LoginViewController: LoginViewProtocol {
         }
     }
     
-    func setupAttribute() {
-        view.backgroundColor = .gray7
-        navigationController?.navigationBar.isHidden = true
-        // 스와이프 뒤로가기 막기
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-
-        applyGradientToLoginView()
-    }
-    
-    // MARK: Push TabBar Viewcontroller
+    // MARK: Push Intercations
     func pushTabBar() {
         DispatchQueue.main.async { [weak self] in
             let viewController = TabBarViewController()
@@ -218,7 +223,6 @@ extension LoginViewController: LoginViewProtocol {
         }
     }
     
-    // MARK: Push Registration ViewController
     func pushRegistrationWhenAppleLogin(_ userModel: AVIROAppleUserSignUpDTO) {
         DispatchQueue.main.async { [weak self] in
             let viewController = FirstRegistrationViewController()
@@ -234,6 +238,7 @@ extension LoginViewController: LoginViewProtocol {
         }
     }
     
+    // MARK: Alert Interactions
     func afterLogoutAndMakeToastButton() {
         showSimpleToast(with: Text.logoutToast.rawValue)
     }
@@ -242,17 +247,7 @@ extension LoginViewController: LoginViewProtocol {
         let alertTitle = Text.withdrawalTitle.rawValue
         let alertMessage = Text.withdrawalMessage.rawValue
         
-        let alertController = UIAlertController(
-            title: alertTitle,
-            message: alertMessage,
-            preferredStyle: .alert
-        )
-        
-        let checkAction = UIAlertAction(title: "확인", style: .default)
-        
-        alertController.addAction(checkAction)
-        
-        present(alertController, animated: true)
+        showAlert(title: alertTitle, message: alertMessage)
     }
     
     func showErrorAlert(with error: String, title: String? = nil) {

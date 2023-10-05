@@ -9,6 +9,7 @@ import UIKit
 
 import NMapsMap
 
+// MARK: Text
 private enum Text: String {
     case yes = "예"
     case no = "아니오"
@@ -49,6 +50,7 @@ private enum Text: String {
     case failLoadMarker = "마커 데이터를 불러오는데 실패 했습니다."
 }
 
+// MARK: Layout
 private enum Layout {
     enum Margin: CGFloat {
         case small = 10
@@ -67,6 +69,7 @@ private enum Layout {
 final class HomeViewController: UIViewController {
     lazy var presenter = HomeViewPresenter(viewController: self)
         
+    // MARK: UI Property Definitions
     private lazy var naverMapView: NMFMapView = {
         let map = NMFMapView()
         
@@ -102,10 +105,6 @@ final class HomeViewController: UIViewController {
             UIImage.currentButton.withTintColor(.gray1),
             for: .normal
         )
-        button.setImage(
-            UIImage.currentButtonDisable.withTintColor(.gray4),
-            for: .disabled
-        )
         button.addTarget(
             self,
             action: #selector(locationButtonTapped(_:)),
@@ -125,10 +124,6 @@ final class HomeViewController: UIViewController {
         button.setImage(
             UIImage.starIconClicked,
             for: .selected
-        )
-        button.setImage(
-            UIImage.starIconDisable.withTintColor(.gray4),
-            for: .disabled
         )
         button.addTarget(
             self,
@@ -184,6 +179,7 @@ final class HomeViewController: UIViewController {
     private lazy var upGesture = UISwipeGestureRecognizer()
     private lazy var downGesture = UISwipeGestureRecognizer()
 
+    // MARK: Override func
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -211,6 +207,7 @@ final class HomeViewController: UIViewController {
 }
 
 extension HomeViewController: HomeViewProtocol {
+    // MARK: Set up func
     func setupLayout() {
         [
             naverMapView,
@@ -314,6 +311,7 @@ extension HomeViewController: HomeViewProtocol {
         view.backgroundColor = .gray7
         
         if let tabBarController = tabBarController as? TabBarViewController {
+            // home 화면 초기화
             tabBarController.homeTabBarButtonTapped = { [weak self] in
                 self?.presenter.initMarkerState()
                 self?.whenViewWillAppearInitPlaceView()
@@ -343,6 +341,29 @@ extension HomeViewController: HomeViewProtocol {
         view.addGestureRecognizer(tapGesture)
     }
     
+    /// 기본 값 view will appear
+    func whenViewWillAppear() {
+        navigationController?.navigationBar.isHidden = true
+        
+        if let tabBarController = self.tabBarController as? TabBarViewController {
+            tabBarController.hiddenTabBar(false)
+        }
+        
+        naverMapView.isHidden = false
+    }
+    
+    /// 모든 조건에 해당 사항 없을 때, place view 초기화
+    func whenViewWillAppearOffAllCondition() {
+        whenViewWillAppearInitPlaceView()
+    }
+    
+    /// Edit 화면에서 돌아올 때
+    func whenAfterPopEditViewController() {
+        naverMapView.isHidden = true
+    }
+    
+    // MARK: UI Interactions
+    /// 댓글 입력할때 keyboard
     func keyboardWillShow(notification: NSNotification) {
         if let userInfo = notification.userInfo {
             let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue ?? .zero
@@ -355,44 +376,42 @@ extension HomeViewController: HomeViewProtocol {
             placeView.keyboardWillShow(notification: notification, height: result)
         }
     }
-    
+ 
     func keyboardWillHide() {
         placeView.keyboardWillHide()
     }
     
-    func whenViewWillAppear() {
-        navigationController?.navigationBar.isHidden = true
-        
-        if let tabBarController = self.tabBarController as? TabBarViewController {
-            tabBarController.hiddenTabBar(false)
-        }
-        
-        naverMapView.isHidden = false
-    }
-
-    func whenAfterPopEditPage() {
-        naverMapView.isHidden = true
-    }
-    
-    func whenViewWillAppearOffAllCondition() {
-        whenViewWillAppearInitPlaceView()
-    }
-
+    /// location button clicked
     func isSuccessLocation() {
         naverMapView.positionMode = .direction
     }
     
+    /// location button clicked
     func ifDeniedLocation(_ mapCoor: NMGLatLng) {
         let cameraUpdate = NMFCameraUpdate(
             scrollTo: mapCoor
         )
         naverMapView.moveCamera(cameraUpdate)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             self?.showDeniedLocationAlert()
         }
     }
 
+    /// 최초 load markers
+    func loadMarkers(with markers: [NMFMarker]) {
+        markers.forEach {
+            $0.mapView = naverMapView
+        }
+    }
+    
+    /// star button clicked
+    func afterLoadStarButton(with noStars: [NMFMarker]) {
+        noStars.forEach {
+            $0.mapView = nil
+        }
+    }
+    
     func moveToCameraWhenNoAVIRO(_ lng: Double, _ lat: Double) {
         let latlng = NMGLatLng(lat: lat, lng: lng)
         let cameraUpdate = NMFCameraUpdate(scrollTo: latlng, zoomTo: 14)
@@ -417,18 +436,6 @@ extension HomeViewController: HomeViewProtocol {
         placeView.isLoadingTopView = true
     }
     
-    func loadMarkers(_ markers: [NMFMarker]) {
-        markers.forEach {
-            $0.mapView = naverMapView
-        }
-    }
-    
-    func afterLoadStarButton(noMarkers: [NMFMarker]) {
-        noMarkers.forEach {
-            $0.mapView = nil
-        }
-    }
-    
     func afterClickedMarker(
         placeModel: PlaceTopModel,
         placeId: String,
@@ -448,7 +455,6 @@ extension HomeViewController: HomeViewProtocol {
         menuModel: AVIROPlaceMenus?,
         reviewsModel: AVIROReviewsArray?
     ) {
-        // MARK: 다 하나씩 쪼겔 필요 있음
         placeView.allDataBinding(
             infoModel: infoModel,
             menuModel: menuModel,
@@ -456,15 +462,107 @@ extension HomeViewController: HomeViewProtocol {
         )
     }
     
-    func isSuccessReportPlaceActionSheet() {
+    func updateMenus(_ menuData: AVIROPlaceMenus?) {
         DispatchQueue.main.async { [weak self] in
-            self?.showAlert(
-                title: Text.successReportPlaceTitle.rawValue,
-                message: Text.reportPlaceMessage.rawValue
-            )
+            self?.placeView.menuModelBinding(menuModel: menuData)
         }
     }
     
+    func updateMapPlace(_ mapPlace: MapPlace) {
+        placeView.updateMapPlace(mapPlace)
+    }
+    
+    func deleteMyReview(_ commentId: String) {
+        DispatchQueue.main.async { [weak self] in
+            self?.placeView.deleteMyReview(commentId)
+        }
+    }
+    
+    private func openWebLink(url: URL) {
+        presenter.shouldKeepPlaceInfoViewState(true)
+        showWebView(with: url)
+    }
+    
+    private func editMyReview(_ commentId: String) {
+        placeView.editMyReview(commentId)
+    }
+    
+    @objc private func downBackButtonTapped(_ sender: UIButton) {
+        placeViewPopUpAfterInitPlacePopViewHeight()
+        isSlideUpView = false
+    }
+    
+    @objc private func flagButtonTapped(_ sender: UIButton) {
+        presenter.checkReportPlaceDuplecated()
+    }
+    
+    @objc private func starButtonTapped(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        presenter.loadBookmark(sender.isSelected)
+    }
+    
+    @objc private func locationButtonTapped(_ sender: UIButton) {
+        presenter.locationUpdate()
+    }
+    
+    @objc private func swipeGestureActived(_ gesture: UISwipeGestureRecognizer) {
+        if gesture.direction == .up {
+            // TopView가 로딩이 다 끝난 후 가능
+            if !placeView.isLoadingTopView {
+                // view가 slideup되고, detail view가 loading이 끝난 후 가능
+                if isSlideUpView && !placeView.isLoadingDetail {
+                    placeViewFullUp()
+                    naverMapView.isHidden = true
+                    isSlideUpView = false
+                // view가 아직 slideup 안 되었고, popup일때 가능
+                } else if !isSlideUpView && placeView.placeViewStated == .popup {
+                    placeViewSlideUp()
+                    presenter.getPlaceModelDetail()
+                    isSlideUpView = true
+                }
+            }
+        } else if gesture.direction == .down {
+            // view가 slideup일때만 down gesture 가능
+            if isSlideUpView {
+                placeViewPopUpAfterInitPlacePopViewHeight()
+                isSlideUpView = false
+            }
+        }
+    }
+    
+    func homeButtonIsHidden(_ hidden: Bool) {
+        loadLocationButton.isHidden = hidden
+        starButton.isHidden = hidden
+    }
+    
+    func viewNaviButtonHidden(_ hidden: Bool) {
+        downBackButton.isHidden = hidden
+        flagButton.isHidden = hidden
+    }
+    
+    func moveToCameraWhenSlideUpView() {
+        let yPosition = naverMapView.frame.height * 1/4
+        let point = CGPoint(x: 0, y: -yPosition)
+        
+        let cameraUpdate = NMFCameraUpdate(scrollBy: point)
+        cameraUpdate.animation = .linear
+        cameraUpdate.animationDuration = 0.2
+        
+        naverMapView.moveCamera(cameraUpdate)
+    }
+    
+    func moveToCameraWhenPopupView() {
+        let yPosition = naverMapView.frame.height * 1/4
+        let point = CGPoint(x: 0, y: yPosition)
+        
+        let cameraUpdate = NMFCameraUpdate(scrollBy: point)
+        cameraUpdate.animation = .linear
+        cameraUpdate.animationDuration = 0.2
+        
+        naverMapView.moveCamera(cameraUpdate)
+    }
+    
+    // MARK: Push Interactions
     func pushPlaceInfoOpreationHoursViewController(_ models: [EditOperationHoursModel]) {
         DispatchQueue.main.async { [weak self] in
             let vc = PlaceOperationHoursViewController(models)
@@ -543,19 +641,29 @@ extension HomeViewController: HomeViewProtocol {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func refreshMenuView(_ menuData: AVIROPlaceMenus?) {
-        DispatchQueue.main.async { [weak self] in
-            self?.placeView.menuModelBinding(menuModel: menuData)
+    private func presentReportReview(_ reportIdModel: AVIROReportReviewModel) {
+        let vc = ReportReviewViewController()
+        let presenter = ReportReviewPresenter(
+            viewController: vc,
+            reportIdModel: reportIdModel
+        )
+        
+        presenter.afterReportPopView = { [weak self] text in
+            self?.showToastAlert(text)
         }
+        
+        vc.presenter = presenter
+        
+        present(vc, animated: true)
     }
     
-    func refreshMapPlace(_ mapPlace: MapPlace) {
-        placeView.updateMapPlace(mapPlace)
-    }
-    
-    func deleteMyReviewInView(_ commentId: String) {
+    // MARK: Alert Interactions
+    func showActionSheetWhenSuccessReport() {
         DispatchQueue.main.async { [weak self] in
-            self?.placeView.deleteMyReview(commentId)
+            self?.showAlert(
+                title: Text.successReportPlaceTitle.rawValue,
+                message: Text.reportPlaceMessage.rawValue
+            )
         }
     }
     
@@ -565,22 +673,13 @@ extension HomeViewController: HomeViewProtocol {
         }
     }
     
-    func isDuplicatedReport() {
-        DispatchQueue.main.async { [weak self] in
-            self?.showAlert(
-                title: Text.alreadyReportPlaceTitle.rawValue,
-                message: Text.reportPlaceMessage.rawValue
-            )
-        }
-    }
-    
-    func showReportPlaceAlert() {
+    func showAlertWhenReportPlace() {
         DispatchQueue.main.async { [weak self] in
             let reportPlace: AlertAction = (
                 title: Text.reportPlace.rawValue,
                 style: .destructive,
                 handler: {
-                    self?.reasonForReportPlaceActionSheet()
+                    self?.showActionSheetHowToReportPlace()
                 }
             )
             
@@ -598,91 +697,181 @@ extension HomeViewController: HomeViewProtocol {
         }
     }
     
-    private func saveCenterCoordinate() {
-        let center = naverMapView.cameraPosition.target
-        
-        presenter.saveCenterCoordinate(center)
-    }
-    
-}
-
-extension HomeViewController {
-    @objc private func downBackButtonTapped(_ sender: UIButton) {
-        placeViewPopUpAfterInitPlacePopViewHeight()
-        isSlideUpView = false
-    }
-    
-    @objc private func flagButtonTapped(_ sender: UIButton) {
-        presenter.checkReportPlaceDuplecated()
-    }
-    
-    @objc private func starButtonTapped(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        presenter.loadBookmark(sender.isSelected)
-    }
-    
-    @objc private func locationButtonTapped(_ sender: UIButton) {
-        self.presenter.locationUpdate()
-    }
-    
-    @objc private func swipeGestureActived(_ gesture: UISwipeGestureRecognizer) {
-        if gesture.direction == .up {
-            // TopView가 로딩이 다 끝난 후 가능
-            if !placeView.isLoadingTopView {
-                // view가 slideup되고, detail view가 loading이 끝난 후 가능
-                if isSlideUpView && !placeView.isLoadingDetail {
-                    placeViewFullUp()
-                    naverMapView.isHidden = true
-                    isSlideUpView = false
-                // view가 아직 slideup 안 되었고, popup일때 가능
-                } else if !isSlideUpView && placeView.placeViewStated == .popup {
-                    placeViewSlideUp()
-                    presenter.getPlaceModelDetail()
-                    isSlideUpView = true
-                }
+    private func showActionSheetHowToReportPlace() {
+        let lostPlace: AlertAction = (
+            title: Text.reasonLost.rawValue,
+            style: .default,
+            handler: {
+                let type = AVIROReportPlaceType.noPlace
+                self.presenter.reportPlace(type)
             }
-        } else if gesture.direction == .down {
-            // view가 slideup일때만 down gesture 가능
-            if isSlideUpView {
-                placeViewPopUpAfterInitPlacePopViewHeight()
-                isSlideUpView = false
+        )
+        
+        let notVeganPlace: AlertAction = (
+            title: Text.reasonNotVegan.rawValue,
+            style: .default,
+            handler: {
+                let type = AVIROReportPlaceType.noVegan
+                self.presenter.reportPlace(type)
+            }
+        )
+        
+        let duplicatedPlace: AlertAction = (
+            title: Text.reasonDuplicated.rawValue,
+            style: .default,
+            handler: {
+                let type = AVIROReportPlaceType.dubplicatedPlace
+                self.presenter.reportPlace(type)
+            }
+        )
+        
+        let cancel: AlertAction = (
+            title: Text.cancel.rawValue,
+            style: .cancel,
+            handler: nil
+        )
+        
+        showAlert(
+            title: Text.reportPlaceReasonTitle.rawValue,
+            message: Text.reportPlaceMessage.rawValue,
+            actions: [
+                lostPlace,
+                notVeganPlace,
+                duplicatedPlace,
+                cancel
+            ]
+        )
+    }
+
+    func showAlertWhenDuplicatedReport() {
+        DispatchQueue.main.async { [weak self] in
+            self?.showAlert(
+                title: Text.alreadyReportPlaceTitle.rawValue,
+                message: Text.reportPlaceMessage.rawValue
+            )
+        }
+    }
+    
+    private func showReportReviewAlert(_ reportCommentModel: AVIROReportReviewModel) {
+        let reportAction: AlertAction = (
+            title: Text.reportReview.rawValue,
+            style: .destructive,
+            handler: {
+                let finalReportCommentModel = AVIROReportReviewModel(
+                    createdTime: reportCommentModel.createdTime,
+                    placeTitle: self.presenter.getPlace(),
+                    id: reportCommentModel.id,
+                    content: reportCommentModel.content,
+                    nickname: reportCommentModel.nickname
+                )
+                self.presentReportReview(finalReportCommentModel)
+            }
+        )
+        
+        let cancelAction: AlertAction = (
+            title: Text.cancel.rawValue,
+            style: .cancel,
+            handler: nil
+        )
+        
+        showActionSheet(
+            title: nil,
+            message: Text.more.rawValue,
+            actions: [reportAction, cancelAction]
+        )
+    }
+    
+    private func showEditMyReviewAlert(_ commentId: String) {
+        let editMyReviewAction: AlertAction = (
+            title: Text.edit.rawValue,
+            style: .default,
+            handler: {
+                self.editMyReview(commentId)
+            }
+        )
+        
+        let deleteMyReviewAction: AlertAction = (
+            title: Text.delete.rawValue,
+            style: .destructive,
+            handler: {
+                self.showDeleteMyReviewAlert(commentId)
+            }
+        )
+        
+        let cancelAction: AlertAction = (
+            title: Text.cancel.rawValue,
+            style: .cancel,
+            handler: nil
+        )
+        showActionSheet(
+            title: nil,
+            message: Text.more.rawValue,
+            actions: [
+                editMyReviewAction,
+                deleteMyReviewAction,
+                cancelAction
+            ]
+        )
+    }
+    
+    private func showDeleteMyReviewAlert(_ commentId: String) {
+        let deleteMyReview: AlertAction = (
+            title: Text.yes.rawValue,
+            style: .destructive,
+            handler: {
+                let deleteCommentModel = AVIRODeleteReveiwDTO(
+                    commentId: commentId,
+                    userId: MyData.my.id
+                )
+                
+                self.presenter.deleteMyReview(deleteCommentModel)
+            }
+        )
+        
+        let cancel: AlertAction = (
+            title: Text.no.rawValue,
+            style: .default,
+            handler: nil
+        )
+        
+        showAlert(
+            title: Text.delete.rawValue,
+            message: Text.deleteMyReviewAlert.rawValue,
+            actions: [deleteMyReview, cancel]
+        )
+    }
+    
+    func showErrorAlert(with error: String, title: String? = nil) {
+        DispatchQueue.main.async { [weak self] in
+            if let title = title {
+                self?.showAlert(title: title, message: error)
+            } else {
+                self?.showAlert(title: Text.error.rawValue, message: error)
             }
         }
     }
     
-    func homeButtonIsHidden(_ hidden: Bool) {
-        loadLocationButton.isHidden = hidden
-        starButton.isHidden = hidden
+    func showErrorAlertWhenLoadMarker() {
+        DispatchQueue.main.async { [weak self] in
+            let action: AlertAction = (
+                title: Text.retry.rawValue,
+                style: .destructive,
+                handler: {
+                    self?.presenter.loadVeganData()
+                }
+            )
+            
+            self?.showAlert(
+                title: Text.error.rawValue,
+                message: Text.failLoadMarker.rawValue,
+                actions: [action]
+            )
+        }
     }
-    
-    func viewNaviButtonHidden(_ hidden: Bool) {
-        downBackButton.isHidden = hidden
-        flagButton.isHidden = hidden
-    }
-    
-    func moveToCameraWhenSlideUpView() {
-        let yPosition = naverMapView.frame.height * 1/4
-        let point = CGPoint(x: 0, y: -yPosition)
-        
-        let cameraUpdate = NMFCameraUpdate(scrollBy: point)
-        cameraUpdate.animation = .linear
-        cameraUpdate.animationDuration = 0.2
-        
-        naverMapView.moveCamera(cameraUpdate)
-    }
-    
-    func moveToCameraWhenPopupView() {
-        let yPosition = naverMapView.frame.height * 1/4
-        let point = CGPoint(x: 0, y: yPosition)
-        
-        let cameraUpdate = NMFCameraUpdate(scrollBy: point)
-        cameraUpdate.animation = .linear
-        cameraUpdate.animationDuration = 0.2
-        
-        naverMapView.moveCamera(cameraUpdate)
-    }
-    
-    // MARK: 클로저 함수 Binding 처리
+}
+
+// MARK: Handle Closure
+extension HomeViewController {
     private func handleClosure() {
         placeView.whenFullBack = { [weak self] in
             self?.naverMapView.isHidden = false
@@ -741,199 +930,27 @@ extension HomeViewController {
         }
         
         placeView.editMyReview = { [weak self] commentId in
-            self?.makeEditMyReviewAlert(commentId)
-        }
-    }
-    
-    private func openWebLink(url: URL) {
-        presenter.shouldKeepPlaceInfoViewState(true)
-        showWebView(with: url)
-    }
-    
-    private func showReportReviewAlert(_ reportCommentModel: AVIROReportReviewModel) {
-        let reportAction: AlertAction = (
-            title: Text.reportReview.rawValue,
-            style: .destructive,
-            handler: {
-                let finalReportCommentModel = AVIROReportReviewModel(
-                    createdTime: reportCommentModel.createdTime,
-                    placeTitle: self.presenter.getPlace(),
-                    id: reportCommentModel.id,
-                    content: reportCommentModel.content,
-                    nickname: reportCommentModel.nickname
-                )
-                self.presentReportReview(finalReportCommentModel)
-            }
-        )
-        
-        let cancelAction: AlertAction = (
-            title: Text.cancel.rawValue,
-            style: .cancel,
-            handler: nil
-        )
-        
-        showActionSheet(
-            title: nil,
-            message: Text.more.rawValue,
-            actions: [reportAction, cancelAction]
-        )
-    }
-    
-    private func makeEditMyReviewAlert(_ commentId: String) {
-        let editMyReviewAction: AlertAction = (
-            title: Text.edit.rawValue,
-            style: .default,
-            handler: {
-                self.editMyReview(commentId)
-            }
-        )
-        
-        let deleteMyReviewAction: AlertAction = (
-            title: Text.delete.rawValue,
-            style: .destructive,
-            handler: {
-                self.showDeleteMyReviewAlert(commentId)
-            }
-        )
-        
-        let cancelAction: AlertAction = (
-            title: Text.cancel.rawValue,
-            style: .cancel,
-            handler: nil
-        )
-        showActionSheet(
-            title: nil,
-            message: Text.more.rawValue,
-            actions: [
-                editMyReviewAction,
-                deleteMyReviewAction,
-                cancelAction
-            ]
-        )
-    }
-    
-    private func editMyReview(_ commentId: String) {
-        placeView.editMyReview(commentId)
-    }
-    
-    private func showDeleteMyReviewAlert(_ commentId: String) {
-        let deleteMyReview: AlertAction = (
-            title: Text.yes.rawValue,
-            style: .destructive,
-            handler: {
-                let deleteCommentModel = AVIRODeleteReveiwDTO(
-                    commentId: commentId,
-                    userId: MyData.my.id
-                )
-                
-                self.presenter.deleteMyReview(deleteCommentModel)
-            }
-        )
-        
-        let cancel: AlertAction = (
-            title: Text.no.rawValue,
-            style: .default,
-            handler: nil
-        )
-        
-        showAlert(
-            title: Text.delete.rawValue,
-            message: Text.deleteMyReviewAlert.rawValue,
-            actions: [deleteMyReview, cancel]
-        )
-    }
-    
-    private func presentReportReview(_ reportIdModel: AVIROReportReviewModel) {
-        let vc = ReportReviewViewController()
-        let presenter = ReportReviewPresenter(
-            viewController: vc,
-            reportIdModel: reportIdModel
-        )
-        
-        presenter.afterReportPopView = { [weak self] text in
-            self?.showToastAlert(text)
-        }
-        
-        vc.presenter = presenter
-        
-        present(vc, animated: true)
-    }
-
-    private func reasonForReportPlaceActionSheet() {
-        let lostPlace: AlertAction = (
-            title: Text.reasonLost.rawValue,
-            style: .default,
-            handler: {
-                let type = AVIROReportPlaceType.noPlace
-                self.presenter.reportPlace(type)
-            }
-        )
-        
-        let notVeganPlace: AlertAction = (
-            title: Text.reasonNotVegan.rawValue,
-            style: .default,
-            handler: {
-                let type = AVIROReportPlaceType.noVegan
-                self.presenter.reportPlace(type)
-            }
-        )
-        
-        let duplicatedPlace: AlertAction = (
-            title: Text.reasonDuplicated.rawValue,
-            style: .default,
-            handler: {
-                let type = AVIROReportPlaceType.dubplicatedPlace
-                self.presenter.reportPlace(type)
-            }
-        )
-        
-        let cancel: AlertAction = (
-            title: Text.cancel.rawValue,
-            style: .cancel,
-            handler: nil
-        )
-        
-        showAlert(
-            title: Text.reportPlaceReasonTitle.rawValue,
-            message: Text.reportPlaceMessage.rawValue,
-            actions: [
-                lostPlace,
-                notVeganPlace,
-                duplicatedPlace,
-                cancel
-            ]
-        )
-    }
-    
-    func showErrorAlert(with error: String, title: String? = nil) {
-        DispatchQueue.main.async { [weak self] in
-            if let title = title {
-                self?.showAlert(title: title, message: error)
-            } else {
-                self?.showAlert(title: Text.error.rawValue, message: error)
-            }
-        }
-    }
-    
-    func showErrorAlertWhenLoadMarker() {
-        DispatchQueue.main.async { [weak self] in
-            let action: AlertAction = (
-                title: Text.retry.rawValue,
-                style: .destructive,
-                handler: {
-                    self?.presenter.loadVeganData()
-                }
-            )
-            
-            self?.showAlert(
-                title: Text.error.rawValue,
-                message: Text.failLoadMarker.rawValue,
-                actions: [action]
-            )
+            self?.showEditMyReviewAlert(commentId)
         }
     }
 }
 
+// MARK: TapGestureDelegate
+extension HomeViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldReceive touch: UITouch
+    ) -> Bool {
+        if touch.view is PushCommentView || touch.view is UITextView || touch.view is UIButton {
+            return false
+        }
+        
+        view.endEditing(true)
+        return true
+    }
+}
+
+// MARK: UITextFieldDelegate
 extension HomeViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         animateTextFieldExpansion(textField: textField)
@@ -974,27 +991,21 @@ extension HomeViewController: UITextFieldDelegate {
     }
 }
 
-// MARK: TapGestureDelegate
-extension HomeViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(
-        _ gestureRecognizer: UIGestureRecognizer,
-        shouldReceive touch: UITouch
-    ) -> Bool {
-        if touch.view is PushCommentView || touch.view is UITextView || touch.view is UIButton {
-            return false
-        }
-        
-        view.endEditing(true)
-        return true
-    }
-}
+// MARK: NMFMapViewCameraDelegate
 extension HomeViewController: NMFMapViewCameraDelegate {
     func mapView(
         _ mapView: NMFMapView,
         cameraDidChangeByReason reason: Int,
         animated: Bool
     ) {
+        /// 검색 기준을 잡기 위한 지도 중심 좌표 저장 메소드
         saveCenterCoordinate()
+    }
+    
+    private func saveCenterCoordinate() {
+        let center = naverMapView.cameraPosition.target
+        
+        presenter.saveCenterCoordinate(center)
     }
     
     func mapView(
@@ -1008,6 +1019,7 @@ extension HomeViewController: NMFMapViewCameraDelegate {
     }
 }
 
+// MARK: NMFMapViewTouchDelegate
 extension HomeViewController: NMFMapViewTouchDelegate {
     func mapView(
         _ mapView: NMFMapView,

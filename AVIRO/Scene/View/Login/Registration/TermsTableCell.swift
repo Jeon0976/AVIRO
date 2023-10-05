@@ -88,7 +88,7 @@ final class TermsTableCell: UITableViewCell {
         ])
     }
     
-    func makeCellData(check: Bool, term: String) {
+    func setupCellData(check: Bool, term: String) {
         let attributedString = NSMutableAttributedString(string: term)
         attributedString.addAttribute(
             .underlineStyle,

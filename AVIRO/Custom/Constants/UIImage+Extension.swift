@@ -122,4 +122,7 @@ extension UIImage {
     static let timeIcon = UIImage(named: "RecentlyTime")!
     /// place 정보 아이콘
     static let timeIcon2 = UIImage(named: "TimeInfo")!
+    
+    static let mainSearchStore = UIImage(named: "MainSearchStore")!
+    static let mainSearchStation = UIImage(named: "MainSearchStation")!
 }

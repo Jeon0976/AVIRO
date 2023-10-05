@@ -13,7 +13,7 @@ enum APP: String {
     case appId = "6449352804"
 }
 
-// MARK: Emplitude
+// MARK: Amplitude
 enum AMType: String {
     case signUp = "Sign Up"
     case withdrawal = "Withdrawal"
@@ -35,7 +35,11 @@ enum AMType: String {
 // MARK: UserDefaults Key
 enum UDKey: String {
     case tutorial
-    case matchedPlaceModel
+}
+
+// MARK: NotificationCenter Name
+enum NotiName: String {
+    case afterMainSearch
 }
 
 // MARK: Keychain
@@ -46,11 +50,14 @@ enum KeychainKey: String {
 // MARK: TableViewCell Identifier
 enum TVIdentifier: String {
     case termsTableCell
+    case homeSearchPlaceTableCell
+    case homeSearchHistoryTableCell
 }
 
 // MARK: CollectionViewCell Identifier
 enum CVIdentifier: String {
-    case test
+    case tutorialTopCell
+    case tutorialBottomCell
 }
 
 // MARK: 이용 약관

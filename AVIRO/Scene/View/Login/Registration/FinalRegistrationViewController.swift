@@ -7,11 +7,13 @@
 
 import UIKit
 
+// MARK: Text
 private enum Text: String {
     case title = "가입 완료\n환영합니다!"
     case next = "어비로 바로 시작하기"
 }
 
+// MARK: Layout
 private enum Layout {
     enum Margin: CGFloat {
         case small = 10
@@ -27,6 +29,7 @@ private enum Layout {
 
 final class FinalRegistrationViewController: UIViewController {
     
+    // MARK: UI Property Definitions
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         
@@ -52,6 +55,7 @@ final class FinalRegistrationViewController: UIViewController {
         return button
     }()
     
+    // MARK: Override func
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,6 +63,7 @@ final class FinalRegistrationViewController: UIViewController {
         setupAttribute()
     }
     
+    // MARK: Set up func
     private func setupLayout() {
         [
             titleLabel,
@@ -100,6 +105,7 @@ final class FinalRegistrationViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
     }
     
+    // MARK: UI Interactions
     @objc func buttonTapped() {
         let viewController = TabBarViewController()
         

@@ -11,8 +11,8 @@ import KeychainSwift
 import AmplitudeSwift
 
 protocol ThridRegistrationProtocol: NSObject {
-    func makeLayout()
-    func makeAttribute()
+    func setupLayout()
+    func setupAttribute()
     func pushFinalRegistrationView()
     func showErrorAlert(with error: String, title: String?)
 }
@@ -29,7 +29,7 @@ final class ThridRegistrationPresenter {
     private let appDelegate = UIApplication.shared.delegate as? AppDelegate
     private let keyChain = KeychainSwift()
     
-    var userInfoModel: AVIROAppleUserSignUpDTO?
+    private var userInfoModel: AVIROAppleUserSignUpDTO?
         
     var terms: [(Term, Bool)] = [
         (.aviroUsage, false),
@@ -45,8 +45,8 @@ final class ThridRegistrationPresenter {
     }
     
     func viewDidLoad() {
-        viewController?.makeLayout()
-        viewController?.makeAttribute()
+        viewController?.setupLayout()
+        viewController?.setupAttribute()
     }
     
     func clickedTerm(at index: Int) {

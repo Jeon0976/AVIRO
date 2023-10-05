@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: Text
 private enum Text: String {
     case title = "이용약관에\n동의해주세요."
     case subtitle = "정책 및 약관을 클릭해 모든 내용을 확인해주세요."
@@ -16,6 +17,7 @@ private enum Text: String {
     case error = "에러"
 }
 
+// MARK: Layout
 private enum Layout {
     enum Margin: CGFloat {
         case small = 10
@@ -35,6 +37,7 @@ final class ThridRegistrationViewController: UIViewController {
 
     lazy var presenter = ThridRegistrationPresenter(viewController: self)
     
+    // MARK: UI Property Definitions
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         
@@ -104,6 +107,7 @@ final class ThridRegistrationViewController: UIViewController {
         return button
     }()
     
+    // MARK: Override func
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -112,7 +116,8 @@ final class ThridRegistrationViewController: UIViewController {
 }
 
 extension ThridRegistrationViewController: ThridRegistrationProtocol {
-    func makeLayout() {
+    // MARK: Set up func
+    func setupLayout() {
         [
             titleLabel,
             subtitleLabel,
@@ -174,19 +179,12 @@ extension ThridRegistrationViewController: ThridRegistrationProtocol {
         ])
     }
     
-    func makeAttribute() {
+    func setupAttribute() {
         view.backgroundColor = .gray7
         setupBack(true)
     }
     
-    func pushFinalRegistrationView() {
-        DispatchQueue.main.async { [weak self] in
-            let viewController = FinalRegistrationViewController()
-            
-            self?.navigationController?.pushViewController(viewController, animated: true)
-        }
-    }
-    
+    // MARK: UI Interactions
     @objc private func tappedNextButton() {
         presenter.pushUserInfo()
     }
@@ -197,10 +195,21 @@ extension ThridRegistrationViewController: ThridRegistrationProtocol {
         sender.tintColor = sender.isSelected ? .main : .gray4
         presenter.allAcceptButtonTapped(sender.isSelected)
 
-        checkAllRequiredTerms()
         termsTableView.reloadData()
+        
+        nextButton.isEnabled = sender.isSelected
     }
     
+    // MARK: Push Interactions
+    func pushFinalRegistrationView() {
+        DispatchQueue.main.async { [weak self] in
+            let viewController = FinalRegistrationViewController()
+            
+            self?.navigationController?.pushViewController(viewController, animated: true)
+        }
+    }
+    
+    // MARK: Alert Interactions
     func showErrorAlert(with error: String, title: String? = nil) {
         DispatchQueue.main.async { [weak self] in
             if let title = title {
@@ -212,6 +221,7 @@ extension ThridRegistrationViewController: ThridRegistrationProtocol {
     }
 }
 
+// MARK: UITableViewDelegate
 extension ThridRegistrationViewController: UITableViewDelegate {
     func tableView(
         _ tableView: UITableView,
@@ -285,6 +295,7 @@ extension ThridRegistrationViewController: UITableViewDelegate {
     }
 }
 
+// MARK: UITableViewDataSource
 extension ThridRegistrationViewController: UITableViewDataSource {
     func tableView(
         _ tableView: UITableView,
@@ -307,7 +318,7 @@ extension ThridRegistrationViewController: UITableViewDataSource {
         cell?.selectionStyle = .none
         cell?.backgroundColor = termsTableView.backgroundColor
         
-        cell?.makeCellData(check: term.1, term: term.0.rawValue)
+        cell?.setupCellData(check: term.1, term: term.0.rawValue)
         
         cell?.checkButtonTapped = { [weak self] in
             self?.presenter.clickedTerm(at: indexPath.row)
@@ -320,12 +331,8 @@ extension ThridRegistrationViewController: UITableViewDataSource {
     private func checkAllRequiredTerms() {
         let result = presenter.checkAllRequiredTerms()
         
-        if result {
-            allAcceptButton.tintColor = .main
-        } else {
-            allAcceptButton.tintColor = .gray4
-        }
-        
+        allAcceptButton.tintColor = result ? .main : .gray4
+
         nextButton.isEnabled = result
     }
 }

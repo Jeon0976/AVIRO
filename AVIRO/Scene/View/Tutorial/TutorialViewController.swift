@@ -43,6 +43,7 @@ final class TutorialViewController: UIViewController {
         )
     ]
     
+    // MARK: UI Property Definitions
     private lazy var topCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         
@@ -60,7 +61,7 @@ final class TutorialViewController: UIViewController {
         collectionView.delegate = self
         collectionView.register(
             TopCell.self,
-            forCellWithReuseIdentifier: TopCell.identifier
+            forCellWithReuseIdentifier: CVIdentifier.tutorialTopCell.rawValue
         )
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.isPagingEnabled = true
@@ -87,7 +88,7 @@ final class TutorialViewController: UIViewController {
         collectionView.delegate = self
         collectionView.register(
             BottomCell.self,
-            forCellWithReuseIdentifier: BottomCell.identifier
+            forCellWithReuseIdentifier: CVIdentifier.tutorialBottomCell.rawValue
         )
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.isPagingEnabled = true
@@ -110,6 +111,7 @@ final class TutorialViewController: UIViewController {
     private lazy var nextButton: NextPageButton = {
         let button = NextPageButton()
         
+        button.setTitle("지금 어비로 시작하기", for: .normal)
         button.addTarget(
             self,
             action: #selector(tappedButton),
@@ -120,14 +122,16 @@ final class TutorialViewController: UIViewController {
         return button
     }()
         
+    // MARK: Override func
     override func viewDidLoad() {
         super.viewDidLoad()
  
-        makeLayout()
-        makeAttribute()
+        setupLayout()
+        setupAttribute()
     }
 
-    private func makeLayout() {
+    // MARK: Set up func
+    private func setupLayout() {
         [
             topCollectionView,
             viewPageControl,
@@ -159,60 +163,45 @@ final class TutorialViewController: UIViewController {
         ])
     }
     
-    private func makeAttribute() {
+    private func setupAttribute() {
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.isHidden = true
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         view.backgroundColor = .tutorialBackgroud
     }
     
-    @objc func tappedButton() {
-        if viewPageControl.currentPage == tutorial.count - 1 {
-            pushLoginView()
-        } else {
-            viewPageControl.currentPage += 1
-            
-            changeButton()
-            
-            let indexPath = IndexPath(item: viewPageControl.currentPage, section: 0)
-        
-            topCollectionView.scrollToItem(
-                at: indexPath,
-                at: .centeredHorizontally,
-                animated: true
-            )
-        }
-    }
-    
-    // MARK: Button 변경 Method
+    // MARK: UI Interactions
     private func changeButton() {
         if viewPageControl.currentPage == tutorial.count - 1 {
             nextButton.isHidden = false
-            nextButton.setTitle("지금 어비로 시작하기", for: .normal)
         } else {
             nextButton.isHidden = true
         }
     }
     
-    // MARK: Login View
+    @objc func tappedButton() {
+        pushLoginView()
+    }
+    
     private func pushLoginView() {
         UserDefaults.standard.set(true, forKey: UDKey.tutorial.rawValue)
+        
         let loginVC = LoginViewController()
         
         self.navigationController?.pushViewController(loginVC, animated: true)
     }
 }
 
+// MARK: Collection View Delegate Flow Layout
 extension TutorialViewController: UICollectionViewDelegateFlowLayout {
-    // MARK: 스크롤이 끝날때 발동 Method
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
         viewPageControl.currentPage = page
         changeButton()
     }
 
-    // MARK: 스크롤 하고있을 때 발동 Method
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        /// 위, 아래 콜렉션뷰 동기화 작업
         if scrollView.tag == 0 {
             bottomCollectionView.contentOffset = scrollView.contentOffset
         } else {
@@ -237,11 +226,12 @@ extension TutorialViewController: UICollectionViewDataSource {
 
         if collectionView.tag == 0 {
             let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: TopCell.identifier,
+                withReuseIdentifier: CVIdentifier.tutorialTopCell.rawValue,
                 for: indexPath
             ) as? TopCell
 
             if indexPath.row >= 2 {
+                /// isTop에 따라 폰트 크기 변겅
                 cell?.setupData(
                     title: data.title,
                     subtitle: data.subtitle,
@@ -260,7 +250,7 @@ extension TutorialViewController: UICollectionViewDataSource {
             return cell ?? UICollectionViewCell()
         } else {
             let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: BottomCell.identifier,
+                withReuseIdentifier: CVIdentifier.tutorialBottomCell.rawValue,
                 for: indexPath
             ) as? BottomCell
 

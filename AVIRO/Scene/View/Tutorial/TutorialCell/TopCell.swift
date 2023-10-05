@@ -8,8 +8,6 @@
 import UIKit
 
 final class TopCell: UICollectionViewCell {
-    static let identifier = "TopCell"
-    
     private lazy var titleLabel: TutorialTopLabel = {
         let label = TutorialTopLabel()
         
@@ -46,11 +44,9 @@ final class TopCell: UICollectionViewCell {
         }
         
         NSLayoutConstraint.activate([
-            // titleLagel
             titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             titleLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0),
             
-            // subTitleLabel
             subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 17),
             subTitleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
         ])

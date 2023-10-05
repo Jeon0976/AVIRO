@@ -8,14 +8,20 @@
 import UIKit
 
 protocol HomeSearchProtocol: NSObject {
-    func makeLayout()
-    func makeAttribute()
-    func howToShowFirstView(_ isShowHistoryTable: Bool)
-    func placeListTableReloadData()
-    func placeListNoResultData()
+    func setupLayout()
+    func setupAttribute()
+    
+    func howToShowViewWhenViewWillAppear(_ isShowHistoryTable: Bool)
+    
     func historyListTableReload()
-    func insertTitleToTextField(_ query: String)
+    func afterDidSelectedHistoryCell(_ query: String)
+
+    func activeIndicatorView()
+    func placeListNoResultData()
+    func placeListTableReloadData()
+
     func popViewController()
+    
     func showErrorAlert(with error: String, title: String?)
 }
 
@@ -28,7 +34,24 @@ final class HomeSearchPresenter {
     private var historyPlaceModel = [HistoryTableModel]()
     private var matchedPlaceModel = [MatchedPlaceModel]()
     
-    var changedColorText = ""
+    var query = "" {
+        didSet {
+            timer?.invalidate()
+            
+            timer = Timer.scheduledTimer(
+                timeInterval: 0.4,
+                target: self,
+                selector: #selector(afterInputData),
+                userInfo: nil,
+                repeats: false
+            )
+        }
+    }
+    
+    @objc private func afterInputData() {
+        self.viewController?.activeIndicatorView()
+        self.initSearchDataAndCompareAVIROData(query)
+    }
     
     var selectedPlace: ((String) -> Void)?
     
@@ -36,6 +59,8 @@ final class HomeSearchPresenter {
     private var isEnding = false
     private var isLoading = false
     private var isEndCompare = false
+    
+    private var timer: Timer?
     
     // MARK: Matched Place List Model 다루기
     var matchedPlaceModelCount: Int {
@@ -61,7 +86,7 @@ final class HomeSearchPresenter {
     // MARK: 데이터 변함에 따라 보여지는 view가 다름
     private (set) var haveHistoryTableValues = false {
         didSet {
-            viewController?.howToShowFirstView(haveHistoryTableValues)
+            viewController?.howToShowViewWhenViewWillAppear(haveHistoryTableValues)
         }
     }
     
@@ -70,16 +95,14 @@ final class HomeSearchPresenter {
     }
     
     func viewDidLoad() {
-        // MARK: 최근 검색어 데이터 불러오면서 데이터 상태에 따른 view 표시
         loadHistoryTableArray()
         checkHistoryTableValues()
         
-        viewController?.makeLayout()
-        viewController?.makeAttribute()
+        viewController?.setupLayout()
+        viewController?.setupAttribute()
     }
                 
-    // MARK: HistoryTable local에서 데이터 불러오기
-    func loadHistoryTableArray() {
+    private func loadHistoryTableArray() {
         let loadedHistory = userDefaultsManager.getHistoryModel()
         
         historyPlaceModel = loadedHistory
@@ -87,7 +110,6 @@ final class HomeSearchPresenter {
         viewController?.historyListTableReload()
     }
     
-    // MARK: Check HistoryTableValues
     func checkHistoryTableValues() {
         if historyPlaceModel.isEmpty {
             haveHistoryTableValues = false
@@ -122,11 +144,11 @@ final class HomeSearchPresenter {
     func historyTableCellTapped(_ indexPath: IndexPath) {
         let title = historyPlaceModel[indexPath.row].title
         
-        viewController?.insertTitleToTextField(title)
+        viewController?.afterDidSelectedHistoryCell(title)
     }
     
     // MARK: 최초 Search 후 KakaoMap Load -> AVIRO 데이터 비교
-    func initialSearchDataAndCompareAVIROData(_ query: String) {
+    func initSearchDataAndCompareAVIROData(_ query: String) {
         isEndCompare = false
         matchedPlaceModel.removeAll()
         
@@ -298,14 +320,14 @@ final class HomeSearchPresenter {
     }
     
     // 선택된 것이 AVIRO에 있는지 확인하는 함수
-    func checkIsInAVIRO(_ indexPath: IndexPath) {
+    func afterMainSearch(_ indexPath: IndexPath) {
         if isEndCompare {
             let model = matchedPlaceModel[indexPath.row]
 
-            let userInfo: [String: Any] = [UDKey.matchedPlaceModel.rawValue: model]
+            let userInfo: [String: Any] = [NotiName.afterMainSearch.rawValue: model]
 
             NotificationCenter.default.post(
-                name: NSNotification.Name(UDKey.matchedPlaceModel.rawValue),
+                name: NSNotification.Name(NotiName.afterMainSearch.rawValue),
                 object: nil,
                 userInfo: userInfo
             )

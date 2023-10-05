@@ -8,12 +8,10 @@
 import UIKit
 
 final class HistoryTableViewCell: UITableViewCell {
-    static let identifier = "HistoryTableViewCell"
-    
     private lazy var icon: UIImageView = {
         let imageView = UIImageView()
        
-        imageView.image = UIImage(named: "RecentlyTime")
+        imageView.image = UIImage.timeIcon
         
         return imageView
     }()
@@ -24,7 +22,7 @@ final class HistoryTableViewCell: UITableViewCell {
         label.numberOfLines = 1
         label.lineBreakMode = .byCharWrapping
         label.textColor = .gray1
-        label.font = .pretendard(size: 16, weight: .semibold)
+        label.font = CFont.font.semibold16
         
         return label
     }()
@@ -32,8 +30,12 @@ final class HistoryTableViewCell: UITableViewCell {
     private lazy var cancelButton: UIButton = {
         let button = UIButton()
         
-        button.setImage(UIImage(named: "X-Circle"), for: .normal)
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        button.setImage(UIImage.closeCircle, for: .normal)
+        button.addTarget(
+            self,
+            action: #selector(buttonTapped),
+            for: .touchUpInside
+        )
         
         return button
     }()
@@ -47,14 +49,14 @@ final class HistoryTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        makeLayout()
+        setupLayout()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
     
-    private func makeLayout() {
+    private func setupLayout() {
         [
             icon,
             titleLabel,
@@ -65,19 +67,16 @@ final class HistoryTableViewCell: UITableViewCell {
         }
         
         NSLayoutConstraint.activate([
-            // icon
             icon.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             icon.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
             icon.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15),
             icon.widthAnchor.constraint(equalToConstant: 24),
             icon.heightAnchor.constraint(equalToConstant: 24),
             
-            // titleLabel
             titleLabel.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 10),
             titleLabel.topAnchor.constraint(equalTo: icon.topAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: cancelButton.leadingAnchor, constant: -10),
             
-            // cancelButton
             cancelButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             cancelButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             cancelButton.widthAnchor.constraint(equalToConstant: 24),
@@ -85,7 +84,7 @@ final class HistoryTableViewCell: UITableViewCell {
         ])
     }
     
-    func makeCellData(_ historyModel: HistoryTableModel) {
+    func setupCellData(_ historyModel: HistoryTableModel) {
         let title = historyModel.title
         titleLabel.text = title
     }

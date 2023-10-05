@@ -8,12 +8,11 @@
 import UIKit
 
 final class NoHistoryLabelView: UIView {
-    
     private lazy var topLabel: UILabel = {
         let label = UILabel()
         
         label.numberOfLines = 2
-        label.font = .pretendard(size: 14, weight: .medium)
+        label.font = CFont.font.medium14
         label.textColor = .gray3
         
         return label
@@ -23,7 +22,7 @@ final class NoHistoryLabelView: UIView {
         let label = UILabel()
         
         label.numberOfLines = 2
-        label.font = .pretendard(size: 16, weight: .bold)
+        label.font = CFont.font.bold16
         label.textColor = .gray1
         
         return label
@@ -40,20 +39,20 @@ final class NoHistoryLabelView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        makeLayout()
+        setupLayout()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        initViewHeight()
+        setupViewHeight()
     }
     
-    private func makeLayout() {
+    private func setupLayout() {
         [
             topLabel,
             bottomLabel,
@@ -67,21 +66,18 @@ final class NoHistoryLabelView: UIView {
         viewHeightConstraint?.isActive = true
         
         NSLayoutConstraint.activate([
-            // iconImage
             iconImage.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             iconImage.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             
-            // topLabel
             topLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
             topLabel.leadingAnchor.constraint(equalTo: iconImage.trailingAnchor, constant: 10),
             
-            // bottomLabel
             bottomLabel.topAnchor.constraint(equalTo: topLabel.bottomAnchor, constant: 6),
             bottomLabel.leadingAnchor.constraint(equalTo: topLabel.leadingAnchor)
         ])
     }
     
-    private func initViewHeight() {
+    private func setupViewHeight() {
         let topHeight = topLabel.frame.height
         let bottomHeight = bottomLabel.frame.height
         // 15 + 15 + 6
@@ -92,7 +88,7 @@ final class NoHistoryLabelView: UIView {
         viewHeightConstraint?.constant = totalHeight
     }
     
-    func dataBinding(
+    func setupData(
         topText: String,
         bottomText: String,
         icon: UIImage

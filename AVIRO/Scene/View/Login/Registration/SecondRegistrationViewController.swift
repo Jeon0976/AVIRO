@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: Text
 private enum Text: String {
     case title = "곧 어비로를\n사용할 수 있어요!"
     case subtitle = "연도와 성별은 선택사항이에요."
@@ -20,6 +21,7 @@ private enum Text: String {
     case next = "다음으로"
 }
 
+// MARK: Layout
 private enum Layout {
     enum Margin: CGFloat {
         case small = 10
@@ -40,6 +42,7 @@ private enum Layout {
 final class SecondRegistrationViewController: UIViewController {
     lazy var presenter = SecondRegistrationPresenter(viewController: self)
     
+    // MARK: UI Property Definitions
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         
@@ -144,22 +147,17 @@ final class SecondRegistrationViewController: UIViewController {
     }()
     
     private lazy var tapGesture = UITapGestureRecognizer()
-    private var timer: Timer?
     
+    // MARK: Override func
     override func viewDidLoad() {
         super.viewDidLoad()
         
         presenter.viewDidLoad()
      }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        presenter.viewWillAppear()
-    }
 }
 
 extension SecondRegistrationViewController: SecondRegistrationProtocol {
+    // MARK: Set up func
     func setupLayout() {
         [
             titleLabel,
@@ -175,7 +173,6 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
         }
         
         NSLayoutConstraint.activate([
-            // titleLabel
             titleLabel.topAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.topAnchor,
                 constant: Layout.Margin.largeToView.rawValue
@@ -185,7 +182,6 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
                 constant: Layout.Margin.large.rawValue
             ),
             
-            // subTitleLabel
             subtitleLabel.topAnchor.constraint(
                 equalTo: titleLabel.bottomAnchor,
                 constant: Layout.Margin.small.rawValue
@@ -194,7 +190,6 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
                 equalTo: titleLabel.leadingAnchor
             ),
             
-            // birthFiled
             birthField.topAnchor.constraint(
                 equalTo: subtitleLabel.bottomAnchor,
                 constant: Layout.Margin.large.rawValue
@@ -208,7 +203,6 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
                 constant: -Layout.Margin.large.rawValue
             ),
             
-            // birthExample
             birthSubLabel.topAnchor.constraint(
                 equalTo: birthField.bottomAnchor,
                 constant: Layout.Margin.small.rawValue
@@ -222,7 +216,6 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
                 constant: -Layout.Margin.largeToView.rawValue
             ),
             
-            // genderStack
             genderStackView.topAnchor.constraint(
                 equalTo: birthSubLabel.bottomAnchor,
                 constant: Layout.Margin.large.rawValue
@@ -236,7 +229,6 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
                 constant: -Layout.Margin.large.rawValue
             ),
             
-            // genderExample
             genderSubLabel.topAnchor.constraint(
                 equalTo: genderStackView.bottomAnchor,
                 constant: Layout.Margin.small.rawValue
@@ -250,7 +242,6 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
                 constant: Layout.Margin.largeToView.rawValue
             ),
             
-            // next Button
             nextButton.bottomAnchor.constraint(
                 equalTo: view.bottomAnchor,
                 constant: -Layout.Margin.largeToView.rawValue
@@ -294,43 +285,17 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
         genderStackView.backgroundColor = .gray7
     }
     
-    // MARK: InvalidDate
-    func isInvalidDate() {
-        birthField.backgroundColor = .bgRed
-        birthSubLabel.textColor = .warning
-        birthSubLabel.text = Text.birthSubWarning.rawValue
-        presenter.isWrongBirth = true
+    // MARK: UI Interactions
+    func isValidDate(with isValid: Bool) {
+        birthField.isPossible = isValid
+        birthSubLabel.textColor = isValid ? .gray2 : .warning
+        birthSubLabel.text = isValid ? Text.birthSub.rawValue : Text.birthSubWarning.rawValue
     }
     
-    func isValidDate() {
-        birthField.backgroundColor = .bgNavy
+    private func birthInit() {
+        birthField.isPossible = nil
         birthSubLabel.textColor = .gray2
         birthSubLabel.text = Text.birthSub.rawValue
-        presenter.isWrongBirth = false
-    }
-    
-    // MARK: Birth Init
-    func birthInit() {
-        birthField.backgroundColor = .bgNavy
-        birthSubLabel.textColor = .gray2
-        birthSubLabel.text = Text.birthSub.rawValue
-        presenter.isWrongBirth = false
-    }
-    
-    // MARK: Push Thrid RegistrationView
-    func pushThridRegistrationView(
-        _ userInfoModel: AVIROAppleUserSignUpDTO
-    ) {
-        let viewController = ThridRegistrationViewController()
-        
-        let presenter = ThridRegistrationPresenter(
-            viewController: viewController,
-            userInfo: userInfoModel
-        )
-        
-        viewController.presenter = presenter
-        
-        navigationController?.pushViewController(viewController, animated: true)
     }
     
     @objc private func genderButtonTapped(_ sender: GenderButton) {
@@ -347,8 +312,25 @@ extension SecondRegistrationViewController: SecondRegistrationProtocol {
     @objc private func tappedNextButton() {
         presenter.pushUserInfo()
     }
+    
+    // MARK: Push Interactions
+    func pushThridRegistrationView(
+        _ userInfoModel: AVIROAppleUserSignUpDTO
+    ) {
+        let viewController = ThridRegistrationViewController()
+        
+        let presenter = ThridRegistrationPresenter(
+            viewController: viewController,
+            userInfo: userInfoModel
+        )
+        
+        viewController.presenter = presenter
+        
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 }
 
+// MARK: UIGestureRecognizerDelegate
 extension SecondRegistrationViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(
         _ gestureRecognizer: UIGestureRecognizer,
@@ -362,6 +344,7 @@ extension SecondRegistrationViewController: UIGestureRecognizerDelegate {
     }
 }
 
+// MARK: UITextFieldDelegate
 extension SecondRegistrationViewController: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         guard var text = textField.text else { return }
@@ -378,17 +361,9 @@ extension SecondRegistrationViewController: UITextFieldDelegate {
 
         textField.text = text
         presenter.birth = text
-
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(
-            timeInterval: 0.5,
-            target: self,
-            selector: #selector(checkInvalidDate),
-            userInfo: nil,
-            repeats: false
-        )
     }
     
+    /// text를 교체할때 발동 메서드
     func textField(_ textField: UITextField,
                    shouldChangeCharactersIn range: NSRange,
                    replacementString string: String
@@ -403,11 +378,11 @@ extension SecondRegistrationViewController: UITextFieldDelegate {
                     newText += String(character)
                 }
             }
-            
+
             textField.text = newText
             presenter.birth = text
 
-            // 최대 개수 넘어가는 것을 방지
+            /// 최대 개수 넘어가는 것을 방지
             let newCursorPosition = min(range.location + 1, newText.count)
             let cursorPosition = textField.position(
                 from: textField.beginningOfDocument,
@@ -417,14 +392,10 @@ extension SecondRegistrationViewController: UITextFieldDelegate {
                 from: cursorPosition!,
                 to: cursorPosition!
             )
-            
+
             return false
         }
-        
-        return true
-    }
 
-    @objc func checkInvalidDate() {
-        presenter.checkInvalidDate()
+        return true
     }
 }

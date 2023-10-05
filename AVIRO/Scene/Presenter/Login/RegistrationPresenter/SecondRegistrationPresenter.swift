@@ -9,24 +9,39 @@ import UIKit
 
 protocol SecondRegistrationProtocol: NSObject {
     func setupLayout()
-    func setupGenderButton()
     func setupGesture()
     func setupAttribute()
-    func isInvalidDate()
-    func isValidDate()
-    func birthInit()
+    func setupGenderButton()
+
+    func isValidDate(with isValid: Bool)
+    
     func pushThridRegistrationView(_ userInfoModel: AVIROAppleUserSignUpDTO)
 }
 
 final class SecondRegistrationPresenter {
     weak var viewController: SecondRegistrationProtocol?
     
-    var userInfoModel: AVIROAppleUserSignUpDTO?
+    private var userInfoModel: AVIROAppleUserSignUpDTO?
     
-    var birth = ""
+    var birth = "" {
+        didSet {
+            timer?.invalidate()
+            
+            timer = Timer.scheduledTimer(
+                timeInterval: 0.5,
+                target: self,
+                selector: #selector(afterEndTimer),
+                userInfo: nil,
+                repeats: false
+            )
+        }
+    }
+    
     var gender: Gender?
-    var isWrongBirth = true
+    private var isWrongBirth = true
         
+    private var timer: Timer?
+    
     init(viewController: SecondRegistrationProtocol,
          userInfoModel: AVIROAppleUserSignUpDTO? = nil
     ) {
@@ -36,12 +51,9 @@ final class SecondRegistrationPresenter {
     
     func viewDidLoad() {
         viewController?.setupLayout()
+        viewController?.setupAttribute()
         viewController?.setupGesture()
         viewController?.setupGenderButton()
-    }
-    
-    func viewWillAppear() {
-        viewController?.setupAttribute()
     }
     
     func pushUserInfo() {
@@ -64,12 +76,12 @@ final class SecondRegistrationPresenter {
         viewController?.pushThridRegistrationView(userInfoModel)
     }
     
-    func checkInvalidDate() {
-        if TimeUtility.isValidDate(birth) {
-            viewController?.isValidDate()
-        } else {
-            birth = "0"
-            viewController?.isInvalidDate()
-        }
+    @objc func afterEndTimer() {
+        checkInvalidDate()
+    }
+    
+    private func checkInvalidDate() {
+        isWrongBirth = !TimeUtility.isValidDate(birth)
+        viewController?.isValidDate(with: !isWrongBirth)
     }
 }

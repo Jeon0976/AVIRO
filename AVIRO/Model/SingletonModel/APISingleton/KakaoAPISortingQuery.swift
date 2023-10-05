@@ -19,6 +19,15 @@ enum KakaoSerachCoordinate {
             return "지도중심"
         }
     }
+    
+    var alertString: String {
+        switch self {
+        case .MyCoordinate:
+            return "내 위치 중심"
+        case .CenterCoordinate:
+            return "지도 중심"
+        }
+    }
 }
 
 enum KakaoSearchHowToSort {

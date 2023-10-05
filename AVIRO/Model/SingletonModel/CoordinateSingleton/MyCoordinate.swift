@@ -15,12 +15,23 @@ final class MyCoordinate {
     var longitude: Double?
     
     var latitudeString: String {
-        return String(format: "%.5f", latitude ?? "")
+        return String(format: "%.8f", latitude ?? "")
     }
     
     var longitudeString: String {
-        return String(format: "%.5f", longitude ?? "")
+        return String(format: "%.8f", longitude ?? "")
     }
+    
+    /// 최초 load data할때 좌표 획득 후 api 호출을 위함
+    var isFirstLoadLocation: Bool = false {
+        didSet {
+            if isFirstLoadLocation {
+                afterFirstLoadLocation?()
+            }
+        }
+    }
+    
+    var afterFirstLoadLocation: (() -> Void)?
     
     private init(latitude: Double? = nil,
                  longitude: Double? = nil

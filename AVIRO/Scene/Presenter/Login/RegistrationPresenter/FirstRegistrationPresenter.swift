@@ -11,8 +11,11 @@ protocol FirstRegistrationProtocol: NSObject {
     func setupLayout()
     func setupAttribute()
     func setupGesture()
+    
     func changeSubInfo(subInfo: String, isVaild: Bool)
+    
     func pushSecondRegistrationView(_ signupModel: AVIROAppleUserSignUpDTO)
+    
     func showErrorAlert(with error: String, title: String?)
 }
 
@@ -46,13 +49,10 @@ final class FirstRegistrationPresenter {
 
     func viewDidLoad() {
         viewController?.setupLayout()
+        viewController?.setupAttribute()
         viewController?.setupGesture()
     }
-    
-    func viewWillAppear() {
-        viewController?.setupAttribute()
-    }
-    
+
     func insertUserNickName(_ userName: String) {
         userNickname = userName
     }
@@ -62,7 +62,7 @@ final class FirstRegistrationPresenter {
     }
     
     @objc private func checkDuplication() {
-        
+
         guard let userNickname = userNickname else { return }
         
         let nickname = AVIRONicknameIsDuplicatedCheckDTO(nickname: userNickname)
