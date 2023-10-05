@@ -1,10 +1,10 @@
 # AVIRO
 
 <div style="display: inline-block;">
-    <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource126/v4/ad/78/8a/ad788a0c-00b4-3859-fca1-310cf17bfb43/0d867ebd-4237-4046-b0d5-61dbb3d2d0de_1290_2796-1.png/1290x2796bb.png" width="300" height="700">
+    <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource126/v4/ad/78/8a/ad788a0c-00b4-3859-fca1-310cf17bfb43/0d867ebd-4237-4046-b0d5-61dbb3d2d0de_1290_2796-1.png/1290x2796bb.png" width="280" height="560">
 </div>
 <div style="display: inline-block;">
-    <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource116/v4/a0/61/45/a061455a-880c-8d21-3c83-9a624a1263b0/ed9198bf-8d10-42b2-ad9b-261381a6abfe_1290_2796-2.png/1290x2796bb.png" width="300" height="700">
+    <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource116/v4/a0/61/45/a061455a-880c-8d21-3c83-9a624a1263b0/ed9198bf-8d10-42b2-ad9b-261381a6abfe_1290_2796-2.png/1290x2796bb.png" width="280" height="560">
 </div>
 
 ## 설명 
