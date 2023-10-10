@@ -111,8 +111,10 @@ final class LoginViewPresenter: NSObject {
                     }
                 }
             case .failure(let error):
-                self?.viewController?.switchIsLoading(with: false)
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+                if let error = error.errorDescription {
+                    self?.viewController?.switchIsLoading(with: false)
+                    self?.viewController?.showErrorAlert(with: error, title: nil)
+                }
             }
         }
     }
@@ -148,8 +150,10 @@ final class LoginViewPresenter: NSObject {
                     }
                 }
             case .failure(let error):
-                self?.viewController?.switchIsLoading(with: true)
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+                if let error = error.errorDescription {
+                    self?.viewController?.switchIsLoading(with: true)
+                    self?.viewController?.showErrorAlert(with: error, title: nil)
+                }
             }
         }
     }
