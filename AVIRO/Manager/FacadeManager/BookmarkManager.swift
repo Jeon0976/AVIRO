@@ -18,10 +18,14 @@ final class BookmarkFacadeManager {
                     let dataArray = success.bookmarks
                     self?.bookmarkArray.updateAllData(dataArray)
                 } else {
-                    completionHandler(APIError.badRequest.localizedDescription)
+                    if let error = APIError.badRequest.errorDescription {
+                        completionHandler(error)
+                    }
                 }
             case .failure(let error):
-                completionHandler(error.localizedDescription)
+                if let error = error.errorDescription {
+                    completionHandler(error)
+                }
             }
         }
     }
@@ -46,7 +50,9 @@ final class BookmarkFacadeManager {
                     }
                 }
             case .failure(let error):
-                completionHandler(error.localizedDescription)
+                if let error = error.errorDescription {
+                    completionHandler(error)
+                }
             }
         }
     }
