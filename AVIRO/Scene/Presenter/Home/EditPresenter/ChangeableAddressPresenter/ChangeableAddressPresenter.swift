@@ -85,8 +85,8 @@ final class ChangeableAddressPresenter {
                 
                 self?.totalCount = Int(totalCount)!
                 self?.addressModels = addressTableModel.juso
-            case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+            case .failure(_):
+                self?.viewController?.showErrorAlert(with: "서버에 접속하는 데 문제가 발생했습니다.\n잠시 후 다시 시도해주세요.", title: nil)
             }
         }
     }
@@ -101,8 +101,8 @@ final class ChangeableAddressPresenter {
                 switch result {
                 case .success(let addressTableModel):
                     self?.addressModels.append(contentsOf: addressTableModel.juso)
-                case .failure(let error):
-                    self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+                case .failure(_):
+                    self?.viewController?.showErrorAlert(with: "서버에 접속하는 데 문제가 발생했습니다.\n잠시 후 다시 시도해주세요.", title: nil)
                 }
             }
         }

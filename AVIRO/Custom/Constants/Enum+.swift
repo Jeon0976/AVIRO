@@ -13,25 +13,6 @@ enum APP: String {
     case appId = "6449352804"
 }
 
-// MARK: Amplitude
-enum AMType: String {
-    case signUp = "Sign Up"
-    case withdrawal = "Withdrawal"
-    
-    case login = "Login"
-    case logout = "Logout"
-    
-    case requestPlaceInfo = "Request to Edit Place Info"
-    
-    case searchHSV = "Search In HomeSearchView"
-    
-    case popupPlace = "Pop Up"
-    
-    case afterUploadPlace = "Upload Place"
-    case afterUploadReview = "Upload Review"
-    case afterEditMenu = "Edit Menu Table"
-}
-
 // MARK: UserDefaults Key
 enum UDKey: String {
     case tutorial

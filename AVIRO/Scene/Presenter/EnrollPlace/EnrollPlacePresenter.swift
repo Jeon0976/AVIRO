@@ -28,9 +28,7 @@ protocol EnrollPlaceProtocol: NSObject {
 
 final class EnrollPlacePresenter {
     weak var viewController: EnrollPlaceProtocol?
-        
-    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
-    
+            
     private var storeNormalData: PlaceListModel?
     private var category: PlaceCategory?
     
@@ -120,10 +118,7 @@ final class EnrollPlacePresenter {
             switch result {
             case .success(let success):
                 if success.statusCode == 200 {
-                    self?.appDelegate?.amplitude?.track(
-                        eventType: AMType.afterUploadPlace.rawValue,
-                        eventProperties: ["Place": veganModel.title]
-                    )
+                    AmplitudeUtility.uploadPlace(with: veganModel.title)
                     
                     CenterCoordinate.shared.longitude = veganModel.x
                     CenterCoordinate.shared.latitude = veganModel.y
@@ -138,8 +133,9 @@ final class EnrollPlacePresenter {
                     }
                 }
             case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
-
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: nil)
+                }
             }
         }
     }

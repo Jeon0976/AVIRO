@@ -101,7 +101,9 @@ final class PlaceListSearchViewPresenter: NSObject {
 
             case .failure(let error):
                 self?.isLoading = false
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: nil)
+                }
             }
         }
     }
@@ -150,7 +152,9 @@ final class PlaceListSearchViewPresenter: NSObject {
                 
             case .failure(let error):
                 self?.isLoading = false
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: nil)
+                }
             }
         }
     }
@@ -181,7 +185,9 @@ final class PlaceListSearchViewPresenter: NSObject {
                     }
                 }
             case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: nil)
+                }
             }
         }
     }
