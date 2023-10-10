@@ -278,7 +278,9 @@ final class HomeViewPresenter: NSObject {
                 }
                 
             case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: nil)
+                }
             }
         }
     }
@@ -478,7 +480,9 @@ final class HomeViewPresenter: NSObject {
                     }
                 }
             case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: nil)
+                }
             }
         }
     }
@@ -622,7 +626,9 @@ final class HomeViewPresenter: NSObject {
                     }
                 }
             case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: "가게 에러")
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: "가게 에러")
+                }
             }
         }
     }
@@ -642,7 +648,9 @@ final class HomeViewPresenter: NSObject {
                     }
                 }
             case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: "메뉴 에러")
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: "메뉴 에러")
+                }
             }
         }
     }
@@ -662,7 +670,9 @@ final class HomeViewPresenter: NSObject {
                     }
                 }
             case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: "후기 에러")
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: "후기 에러")
+                }
             }
         }
     }
@@ -688,7 +698,9 @@ final class HomeViewPresenter: NSObject {
                     }
                 }
             case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: nil)
+                }
             }
         }
     }
@@ -716,7 +728,9 @@ final class HomeViewPresenter: NSObject {
                     }
                 }
             case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: nil)
+                }
             }
         }
     }
@@ -744,7 +758,9 @@ final class HomeViewPresenter: NSObject {
                     }
                 }
             case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: nil)
+                }
             }
         }
     }

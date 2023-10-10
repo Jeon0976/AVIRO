@@ -79,8 +79,9 @@ final class MyPageViewPresenter {
                     self?.viewController?.showErrorAlert(with: "서버 에러", title: nil)
                 }
             case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
-
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: nil)
+                }
             }
         }
     }
@@ -130,7 +131,9 @@ final class MyPageViewPresenter {
             case .failure(let error):
                 self?.viewController?.switchIsLoading(with: false)
 
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: nil)
+                }
             }
         }
     }

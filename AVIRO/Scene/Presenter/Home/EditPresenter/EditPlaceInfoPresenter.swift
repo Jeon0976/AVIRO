@@ -304,7 +304,9 @@ final class EditPlaceInfoPresenter {
                     }
                 }
             case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: nil)
+                }
             }
         }
     }
@@ -342,7 +344,9 @@ final class EditPlaceInfoPresenter {
                     self?.changedMarker(lat: y, lng: x)
                 }
             case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: nil)
+                }
             }
         }
     }
@@ -606,7 +610,9 @@ extension EditPlaceInfoPresenter {
                     }
                 case .failure(let error):
                     self?.canChange = false
-                    self?.viewController?.showErrorAlert(with: error.localizedDescription, title: "가게정보 에러")
+                    if let error = error.errorDescription {
+                        self?.viewController?.showErrorAlert(with: error, title: "가게정보 에러")
+                    }
                 }
             }
         }
@@ -728,7 +734,10 @@ extension EditPlaceInfoPresenter {
                     }
                 case .failure(let error):
                     self?.canChange = false
-                    self?.viewController?.showErrorAlert(with: error.localizedDescription, title: "전화번호 에러")
+                    
+                    if let error = error.errorDescription {
+                        self?.viewController?.showErrorAlert(with: error, title: "전화번호 에러")
+                    }
                 }
             }
         }
@@ -787,7 +796,9 @@ extension EditPlaceInfoPresenter {
                     }
                 case .failure(let error):
                     self?.canChange = false
-                    self?.viewController?.showErrorAlert(with: error.localizedDescription, title: "영업시간 에러")
+                    if let error = error.errorDescription {
+                        self?.viewController?.showErrorAlert(with: error, title: "영업시간 에러")
+                    }
                 }
             }
         }
@@ -830,7 +841,9 @@ extension EditPlaceInfoPresenter {
                     }
                 case .failure(let error):
                     self?.canChange = false
-                    self?.viewController?.showErrorAlert(with: error.localizedDescription, title: "홈페이지 에러")
+                    if let error = error.errorDescription {
+                        self?.viewController?.showErrorAlert(with: error, title: "홈페이지 에러")
+                    }
                 }
             }
         }
