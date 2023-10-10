@@ -918,7 +918,9 @@ final class EditMenuPresenter {
                     }
                 }
             case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: nil)
+                }
             }
         }
     }

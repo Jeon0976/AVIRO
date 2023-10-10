@@ -27,7 +27,6 @@ final class MyPageViewPresenter {
     weak var viewController: MyPageViewProtocol?
     
     private let bookmarkManager = BookmarkFacadeManager()
-    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
     private let keychain = KeychainSwift()
     
     private var myDataModel: MyDataModel? {
@@ -79,8 +78,9 @@ final class MyPageViewPresenter {
                     self?.viewController?.showErrorAlert(with: "서버 에러", title: nil)
                 }
             case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
-
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: nil)
+                }
             }
         }
     }
@@ -92,7 +92,7 @@ final class MyPageViewPresenter {
         MyData.my.whenLogout()
         MyCoordinate.shared.isFirstLoadLocation = false
 
-        trackWhenLogout()
+        AmplitudeUtility.logout()
         
         self.keychain.delete(KeychainKey.appleRefreshToken.rawValue)
         
@@ -114,7 +114,8 @@ final class MyPageViewPresenter {
                     MyData.my.whenLogout()
                     MyCoordinate.shared.isFirstLoadLocation = false
                     self?.keychain.delete(KeychainKey.appleRefreshToken.rawValue)
-                    self?.trackWhenWithdrawal()
+                    AmplitudeUtility.withdrawalUser()
+                    
                     DispatchQueue.main.async {
                         LocalMarkerData.shared.deleteAllMarkerModel()
                         
@@ -130,16 +131,10 @@ final class MyPageViewPresenter {
             case .failure(let error):
                 self?.viewController?.switchIsLoading(with: false)
 
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: nil)
+                }
             }
         }
-    }
-    
-    private func trackWhenLogout() {
-        appDelegate?.amplitude?.track(eventType: AMType.logout.rawValue)
-    }
-    
-    private func trackWhenWithdrawal() {
-        appDelegate?.amplitude?.track(eventType: AMType.withdrawal.rawValue)
     }
 }

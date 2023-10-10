@@ -63,7 +63,6 @@ protocol HomeViewProtocol: NSObject {
 final class HomeViewPresenter: NSObject {
     weak var viewController: HomeViewProtocol?
     
-    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
     private let locationManager = CLLocationManager()
     private let bookmarkManager = BookmarkFacadeManager()
     
@@ -278,7 +277,9 @@ final class HomeViewPresenter: NSObject {
                 }
                 
             case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: nil)
+                }
             }
         }
     }
@@ -457,10 +458,7 @@ final class HomeViewPresenter: NSObject {
                             address: place.address
                         )
                         
-                        self?.appDelegate?.amplitude?.track(
-                            eventType: AMType.popupPlace.rawValue,
-                            eventProperties: ["Place": place.title]
-                        )
+                        AmplitudeUtility.popupPlace(with: place.title)
                         
                         DispatchQueue.main.async {
                             let isStar = self?.bookmarkManager.checkData(placeId)
@@ -478,7 +476,9 @@ final class HomeViewPresenter: NSObject {
                     }
                 }
             case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: nil)
+                }
             }
         }
     }
@@ -622,7 +622,9 @@ final class HomeViewPresenter: NSObject {
                     }
                 }
             case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: "가게 에러")
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: "가게 에러")
+                }
             }
         }
     }
@@ -642,7 +644,9 @@ final class HomeViewPresenter: NSObject {
                     }
                 }
             case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: "메뉴 에러")
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: "메뉴 에러")
+                }
             }
         }
     }
@@ -662,7 +666,9 @@ final class HomeViewPresenter: NSObject {
                     }
                 }
             case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: "후기 에러")
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: "후기 에러")
+                }
             }
         }
     }
@@ -688,7 +694,9 @@ final class HomeViewPresenter: NSObject {
                     }
                 }
             case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: nil)
+                }
             }
         }
     }
@@ -716,7 +724,9 @@ final class HomeViewPresenter: NSObject {
                     }
                 }
             case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: nil)
+                }
             }
         }
     }
@@ -744,7 +754,9 @@ final class HomeViewPresenter: NSObject {
                     }
                 }
             case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: nil)
+                }
             }
         }
     }
@@ -813,30 +825,11 @@ final class HomeViewPresenter: NSObject {
     }
     
     private func setAmplitudeWhenEditMenu(with menuArray: [AVIROMenu]) {
-        guard let beforeMenus = selectedMenuModel?.menuArray else { return }
+        guard let beforeMenus = selectedMenuModel?.menuArray,
+              let place = selectedSummaryModel?.title
+        else { return }
         
-        var beforeMenusString = ""
-        
-        for (index, menu) in beforeMenus.enumerated() {
-            let menuString = "\(index + 1): (\(menu.menu) \(menu.price) \(menu.howToRequest))"
-            beforeMenusString += menuString + "\n"
-        }
-        
-        var afterMenusString = ""
-        
-        for (index, menu) in menuArray.enumerated() {
-            let menuString = "\(index + 1): (\(menu.menu) \(menu.price) \(menu.howToRequest))"
-            afterMenusString += menuString + "\n"
-        }
-        
-        appDelegate?.amplitude?.track(
-            eventType: AMType.afterEditMenu.rawValue,
-            eventProperties: [
-                "Place": selectedSummaryModel?.title as Any,
-                "BeforeChangedMenuArray": beforeMenusString,
-                "AfterChangedMenuArray": afterMenusString
-            ]
-        )
+        AmplitudeUtility.editMenu(with: place, beforeMenus: beforeMenus, afterMenus: menuArray)
     }
     
     func afterEditMenuChangedMarker(_ changedMarkerModel: EditMenuChangedMarkerModel) {
@@ -859,12 +852,9 @@ final class HomeViewPresenter: NSObject {
             switch result {
             case .success(let model):
                 if let message = model.message {
-                    self?.appDelegate?.amplitude?.track(
-                        eventType: AMType.afterUploadReview.rawValue,
-                        eventProperties: [
-                            "Place": self?.selectedSummaryModel?.title as Any,
-                            "Review": postReviewModel.content
-                        ]
+                    AmplitudeUtility.uploadReview(
+                        with: self?.selectedSummaryModel?.title ?? "",
+                        review: postReviewModel.content
                     )
                     self?.viewController?.showToastAlert(message)
                 }

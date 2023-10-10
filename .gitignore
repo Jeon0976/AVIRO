@@ -2,6 +2,7 @@ AVIRO/Utils/API.plist
 
 .DS_Store
 
+AVIRO.xcworkspace/xcuserdata/
 ## App packaging
 *.ipa
 *.dSYM.zip

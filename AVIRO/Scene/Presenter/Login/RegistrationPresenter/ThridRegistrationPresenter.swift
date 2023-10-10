@@ -8,7 +8,6 @@
 import UIKit
 
 import KeychainSwift
-import AmplitudeSwift
 
 protocol ThridRegistrationProtocol: NSObject {
     func setupLayout()
@@ -26,7 +25,6 @@ final class ThridRegistrationPresenter {
 
     weak var viewController: ThridRegistrationProtocol?
 
-    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
     private let keyChain = KeychainSwift()
     
     private var userInfoModel: AVIROAppleUserSignUpDTO?
@@ -76,6 +74,7 @@ final class ThridRegistrationPresenter {
                         self?.keyChain.set(
                             userInfoModel.refreshToken,
                             forKey: KeychainKey.appleRefreshToken.rawValue)
+                        AmplitudeUtility.setupUser(with: data.userId)
                         
                         MyData.my.whenLogin(
                             userId: data.userId,
@@ -84,8 +83,6 @@ final class ThridRegistrationPresenter {
                             userNickname: data.nickname,
                             marketingAgree: data.marketingAgree
                         )
-                        
-                        self?.setAmplitude()
                         self?.viewController?.pushFinalRegistrationView()
                     }
                 } else {
@@ -94,21 +91,10 @@ final class ThridRegistrationPresenter {
                     }
                 }
             case .failure(let error):
-                self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
+                if let error = error.errorDescription {
+                    self?.viewController?.showErrorAlert(with: error, title: nil)
+                }
             }
         }
-    }
-    
-    private func setAmplitude() {
-        appDelegate?.amplitude?.setUserId(userId: MyData.my.id)
-
-        let identify = Identify()
-        identify.set(property: "name", value: MyData.my.name)
-        identify.set(property: "email", value: MyData.my.email)
-        identify.set(property: "nickname", value: MyData.my.nickname)
-        
-        appDelegate?.amplitude?.identify(identify: identify)
-        
-        appDelegate?.amplitude?.track(eventType: AMType.signUp.rawValue)
     }
 }
