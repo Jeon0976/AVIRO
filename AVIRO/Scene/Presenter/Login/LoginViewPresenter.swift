@@ -9,7 +9,6 @@ import UIKit
 import AuthenticationServices
 
 import KeychainSwift
-import AmplitudeSwift
 
 protocol LoginViewProtocol: NSObject {
     func setupLayout()
@@ -140,8 +139,6 @@ final class LoginViewPresenter: NSObject {
                             userNickname: data.nickname,
                             marketingAgree: data.marketingAgree
                         )
-                        
-                        self?.setAmplitude()
                         self?.viewController?.pushTabBar()
                     }
                 } else {
@@ -156,20 +153,6 @@ final class LoginViewPresenter: NSObject {
                 }
             }
         }
-    }
-    
-    // MARK: Amplitude Setting
-    private func setAmplitude() {
-        appDelegate?.amplitude?.setUserId(userId: MyData.my.id)
-
-        let identify = Identify()
-        identify.set(property: "name", value: MyData.my.name)
-        identify.set(property: "email", value: MyData.my.email)
-        identify.set(property: "nickname", value: MyData.my.nickname)
-        
-        appDelegate?.amplitude?.identify(identify: identify)
-        
-        appDelegate?.amplitude?.track(eventType: AMType.login.rawValue)
     }
 }
 

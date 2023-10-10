@@ -44,9 +44,7 @@ protocol EditPlaceInfoProtocol: NSObject {
 
 final class EditPlaceInfoPresenter {
     weak var viewController: EditPlaceInfoProtocol?
-    
-    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
-    
+        
     private var selectedIndex: Int!
     private var placeId: String?
     private var placeMarkerModel: MarkerModel?
@@ -535,10 +533,7 @@ extension EditPlaceInfoPresenter {
         dispatchGroup.notify(queue: .main
         ) { [weak self] in
             if self?.canChange ?? false {
-                self?.appDelegate?.amplitude?.track(
-                    eventType: AMType.requestPlaceInfo.rawValue,
-                    eventProperties: ["Place": placeTitle]
-                )
+                AmplitudeUtility.requestEditPlace(with: placeTitle)
                 self?.viewController?.popViewController()
                 self?.afterReportShowAlert?()
             }

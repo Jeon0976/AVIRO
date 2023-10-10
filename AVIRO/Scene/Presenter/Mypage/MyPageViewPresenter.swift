@@ -27,7 +27,6 @@ final class MyPageViewPresenter {
     weak var viewController: MyPageViewProtocol?
     
     private let bookmarkManager = BookmarkFacadeManager()
-    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
     private let keychain = KeychainSwift()
     
     private var myDataModel: MyDataModel? {
@@ -93,7 +92,7 @@ final class MyPageViewPresenter {
         MyData.my.whenLogout()
         MyCoordinate.shared.isFirstLoadLocation = false
 
-        trackWhenLogout()
+        AmplitudeUtility.logout()
         
         self.keychain.delete(KeychainKey.appleRefreshToken.rawValue)
         
@@ -115,7 +114,8 @@ final class MyPageViewPresenter {
                     MyData.my.whenLogout()
                     MyCoordinate.shared.isFirstLoadLocation = false
                     self?.keychain.delete(KeychainKey.appleRefreshToken.rawValue)
-                    self?.trackWhenWithdrawal()
+                    AmplitudeUtility.withdrawalUser()
+                    
                     DispatchQueue.main.async {
                         LocalMarkerData.shared.deleteAllMarkerModel()
                         
@@ -136,13 +136,5 @@ final class MyPageViewPresenter {
                 }
             }
         }
-    }
-    
-    private func trackWhenLogout() {
-        appDelegate?.amplitude?.track(eventType: AMType.logout.rawValue)
-    }
-    
-    private func trackWhenWithdrawal() {
-        appDelegate?.amplitude?.track(eventType: AMType.withdrawal.rawValue)
     }
 }
