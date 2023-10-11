@@ -70,6 +70,7 @@
 │   │       │   └── ReviewLabel.swift
 │   │       └── TutorialTopLabel.swift
 │   └── Utility
+│       ├── AmplitudeUtility.swift
 │       ├── LocationUtility.swift
 │       └── TimeUtility.swift
 ├── Manager

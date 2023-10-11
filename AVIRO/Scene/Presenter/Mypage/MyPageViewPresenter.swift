@@ -87,7 +87,7 @@ final class MyPageViewPresenter {
     
     func whenAfterLogout() {
         bookmarkManager.deleteAllData()
-        LocalMarkerData.shared.deleteAllMarkerModel()
+        MarkerModelCache.shared.deleteAllMarkerModel()
         
         MyData.my.whenLogout()
         MyCoordinate.shared.isFirstLoadLocation = false
@@ -117,7 +117,7 @@ final class MyPageViewPresenter {
                     AmplitudeUtility.withdrawalUser()
                     
                     DispatchQueue.main.async {
-                        LocalMarkerData.shared.deleteAllMarkerModel()
+                        MarkerModelCache.shared.deleteAllMarkerModel()
                         
                         self?.viewController?.pushLoginViewController(with: .withdrawal)
                     }

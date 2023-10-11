@@ -10,7 +10,7 @@ import UIKit
 import NMapsMap
 
 // MARK: 아래 함수들 존재 유무 확인 필요
-protocol LocalMarkerDataProtocol {
+protocol MarkerModelCacheProtocol {
     func getMarkers() -> [NMFMarker]
     func getMarkerModels() -> [MarkerModel]
     func getOnlyStarMarkerModels() -> [MarkerModel]
@@ -26,8 +26,8 @@ protocol LocalMarkerDataProtocol {
     func deleteAllMarkerModel()
 }
 
-final class LocalMarkerData: LocalMarkerDataProtocol {
-    static let shared = LocalMarkerData()
+final class MarkerModelCache: MarkerModelCacheProtocol {
+    static let shared = MarkerModelCache()
     
     private var markers: [MarkerModel] = []
     
