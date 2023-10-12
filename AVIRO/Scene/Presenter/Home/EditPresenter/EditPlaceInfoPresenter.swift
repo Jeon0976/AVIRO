@@ -536,6 +536,8 @@ extension EditPlaceInfoPresenter {
                 AmplitudeUtility.requestEditPlace(with: placeTitle)
                 self?.viewController?.popViewController()
                 self?.afterReportShowAlert?()
+            } else {
+                
             }
         }
     }

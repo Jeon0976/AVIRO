@@ -63,5 +63,7 @@ final class MyData: MyDataProtocol {
         self.email = ""
         self.nickname = ""
         self.marketingAgree = 0
+        
+        AmplitudeUtility.logout()
     }
 }
