@@ -12,13 +12,12 @@ import NMapsMap
 import RealmSwift
 
 protocol MarkerModelManagerProtocol {
-    func getAllMarkerData() -> [MarkerModel]
-    func getMarkerData()
+    func fetchAllData(completionHandler: @escaping (Result<[AVIROMarkerModel], APIError>) -> Void)
     
 }
 
 // TODO: Time Data HomeViewPresenter에서 옮기기
-final class MarkerModelManager {
+final class MarkerModelManager: MarkerModelManagerProtocol {
     private var didLoadOnce: Bool {
         get {
             return UserDefaults.standard.bool(forKey: UDKey.loadOnce.rawValue)

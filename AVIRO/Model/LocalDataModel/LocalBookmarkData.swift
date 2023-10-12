@@ -7,14 +7,23 @@
 
 import Foundation
 
-final class LocalBookmarkData {
+protocol BookmarkDataProtocol {
+    func updateAllData(with list: [String])
+    func loadAllData() -> [String]
+    func checkData(with placeId: String) -> Bool
+    func updateData(with placeId: String)
+    func deleteData(with placeId: String)
+    func deleteAllBookmark()
+}
+
+final class LocalBookmarkData: BookmarkDataProtocol {
     static let shared = LocalBookmarkData()
     
     private var bookmarkList: [String] = []
     
     private init() { }
     
-    func updateAllData(_ list: [String]) {
+    func updateAllData(with list: [String]) {
         self.bookmarkList = list
     }
     
@@ -22,17 +31,17 @@ final class LocalBookmarkData {
         bookmarkList
     }
     
-    func checkData(_ placeId: String) -> Bool {
+    func checkData(with placeId: String) -> Bool {
         bookmarkList.contains(placeId)
     }
     
-    func updateData(_ placeId: String) {
+    func updateData(with placeId: String) {
         if !bookmarkList.contains(placeId) {
             bookmarkList.append(placeId)
         }
     }
     
-    func deleteData(_ placeId: String) {
+    func deleteData(with placeId: String) {
         if let index = bookmarkList.firstIndex(of: placeId) {
             bookmarkList.remove(at: index)
         }

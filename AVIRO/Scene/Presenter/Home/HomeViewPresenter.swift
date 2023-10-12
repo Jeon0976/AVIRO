@@ -63,9 +63,10 @@ protocol HomeViewProtocol: NSObject {
 final class HomeViewPresenter: NSObject {
     weak var viewController: HomeViewProtocol?
     
-    private let locationManager = CLLocationManager()
+    private let markerModelManager: MarkerModelManagerProtocol
     private let bookmarkManager = BookmarkFacadeManager()
-    
+    private let locationManager = CLLocationManager()
+
     var homeMapData: [AVIROMarkerModel]?
     
     private var hasTouchedMarkerBefore = false
@@ -84,8 +85,11 @@ final class HomeViewPresenter: NSObject {
     
     private var nowDateTime = TimeUtility.nowDateAndTime()
     
-    init(viewController: HomeViewProtocol) {
+    init(viewController: HomeViewProtocol,
+         markerManager: MarkerModelManagerProtocol = MarkerModelManager()
+    ) {
         self.viewController = viewController
+        self.markerModelManager = markerManager
     }
     
     deinit {
@@ -220,34 +224,34 @@ final class HomeViewPresenter: NSObject {
             time: nil
         )
         
-        MarkerModelManager().fetchAllData { resu in
-            switch resu {
-            case .success(let success):
-                return
-            case .failure(let failure):
-                return
-            }
-        }
+//        MarkerModelManager().fetchAllData { resu in
+//            switch resu {
+//            case .success(let success):
+//                return
+//            case .failure(let failure):
+//                return
+//            }
+//        }
         
         
                 
-//        AVIROAPIManager().loadNerbyPlaceModels(with: mapModel) { [weak self] result in
-//            switch result {
-//            case .success(let mapDatas):
-//                if mapDatas.statusCode == 200 {
-//                    self?.saveMarkers(mapDatas.data.updatedPlace)
-//                } else {
-//                    self?.viewController?.showErrorAlertWhenLoadMarker()
-//                }
-//
-//            case .failure(_):
-//                self?.viewController?.showErrorAlertWhenLoadMarker()
-//            }
-//        }
-//
-//        bookmarkManager.fetchAllData { [weak self] error in
-//            self?.viewController?.showErrorAlert(with: error, title: nil)
-//        }
+        AVIROAPIManager().loadNerbyPlaceModels(with: mapModel) { [weak self] result in
+            switch result {
+            case .success(let mapDatas):
+                if mapDatas.statusCode == 200 {
+                    self?.saveMarkers(mapDatas.data.updatedPlace)
+                } else {
+                    self?.viewController?.showErrorAlertWhenLoadMarker()
+                }
+
+            case .failure(_):
+                self?.viewController?.showErrorAlertWhenLoadMarker()
+            }
+        }
+
+        bookmarkManager.fetchAllData { [weak self] error in
+            self?.viewController?.showErrorAlert(with: error, title: nil)
+        }
     }
     
     private func saveMarkers(_ mapData: [AVIROMarkerModel]?) {
@@ -473,7 +477,7 @@ final class HomeViewPresenter: NSObject {
                         AmplitudeUtility.popupPlace(with: place.title)
                         
                         DispatchQueue.main.async {
-                            let isStar = self?.bookmarkManager.checkData(placeId)
+                            let isStar = self?.bookmarkManager.checkData(with: placeId)
                             
                             self?.viewController?.afterClickedMarker(
                                 placeModel: placeTopModel,
@@ -590,11 +594,11 @@ final class HomeViewPresenter: NSObject {
         guard let placeId = selectedPlaceId else { return }
         
         if isSelected {
-            bookmarkManager.updateData(placeId) { [weak self] error in
+            bookmarkManager.updateData(with: placeId) { [weak self] error in
                 self?.viewController?.showToastAlert(error)
             }
         } else {
-            bookmarkManager.deleteData(placeId) { [weak self] error in
+            bookmarkManager.deleteData(with: placeId) { [weak self] error in
                 self?.viewController?.showToastAlert(error)
             }
         }
