@@ -16,6 +16,7 @@ enum APP: String {
 // MARK: UserDefaults Key
 enum UDKey: String {
     case tutorial
+    case loadOnce
 }
 
 // MARK: NotificationCenter Name

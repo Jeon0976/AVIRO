@@ -18,6 +18,7 @@
 - SwiftLint
 - NaverMap SDK 
 - Amplitude SDK
+- Realm
 ## 기타 외부 라이브러리
 - Lottie
 - Toast-Swift
@@ -70,6 +71,7 @@
 │   │       │   └── ReviewLabel.swift
 │   │       └── TutorialTopLabel.swift
 │   └── Utility
+│       ├── AmplitudeUtility.swift
 │       ├── LocationUtility.swift
 │       └── TimeUtility.swift
 ├── Manager

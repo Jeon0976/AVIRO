@@ -16,15 +16,6 @@ final class CenterCoordinate {
     var longitude: Double?
     
     var isChangedFromEnrollView = false
-
-//    var isChangedFromEnrollView = false {
-//        didSet {
-//            if isChangedFromEnrollView {
-//                afterEnrollPlace?()
-//                isChangedFromEnrollView.toggle()
-//            }
-//        }
-//    }
     
     var latitudeString: String {
         return String(format: "%.5f", latitude ?? "")
@@ -33,9 +24,7 @@ final class CenterCoordinate {
     var longitudeString: String {
         return String(format: "%.5f", longitude ?? "")
     }
-    
-//    var afterEnrollPlace: (() -> Void)?
-    
+        
     private init(latitude: Double? = nil,
                  longitude: Double? = nil
     ) {

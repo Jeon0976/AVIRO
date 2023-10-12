@@ -58,7 +58,7 @@
 		C51AED1F2A8B2BC80015FBC2 /* HomeTopButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51AED1E2A8B2BC80015FBC2 /* HomeTopButton.swift */; };
 		C51AED212A8B2BDB0015FBC2 /* HomeMapReferButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51AED202A8B2BDB0015FBC2 /* HomeMapReferButton.swift */; };
 		C51AED232A8B7B000015FBC2 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51AED222A8B7B000015FBC2 /* UIViewController+Extension.swift */; };
-		C51B09B82A82155200916BBD /* LocalMarkerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B09B72A82155200916BBD /* LocalMarkerData.swift */; };
+		C51B09B82A82155200916BBD /* MarkerModelCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B09B72A82155200916BBD /* MarkerModelCache.swift */; };
 		C51B09BA2A8215D800916BBD /* MarkerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B09B92A8215D800916BBD /* MarkerModel.swift */; };
 		C51B09BC2A82397800916BBD /* Marker+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B09BB2A82397800916BBD /* Marker+Extension.swift */; };
 		C51BBAD52A78D53D00BF5B7C /* AVIROCheckPlace+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51BBAD42A78D53D00BF5B7C /* AVIROCheckPlace+DTO.swift */; };
@@ -93,6 +93,7 @@
 		C5351B7A2A1B439000116D50 /* KakaoCoordinateSearchDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B792A1B439000116D50 /* KakaoCoordinateSearchDTO.swift */; };
 		C53856B12ABC13ED00D52DEC /* AVIROMyContributionCount+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53856B02ABC13ED00D52DEC /* AVIROMyContributionCount+DTO.swift */; };
 		C53893162A5EC0C500CB9A54 /* GenderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53893152A5EC0C500CB9A54 /* GenderButton.swift */; };
+		C53C54D22AD67E8800C3662A /* LocalDBMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53C54D12AD67E8800C3662A /* LocalDBMarker.swift */; };
 		C541521D2AC125E100F39826 /* TutorialTopLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C541521C2AC125E100F39826 /* TutorialTopLabel.swift */; };
 		C54657882ABF2DBA003A0BCB /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = C54657872ABF2DBA003A0BCB /* API.plist */; };
 		C547A8BA2A17D8D4004D1339 /* KakaoAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547A8B92A17D8D4004D1339 /* KakaoAPIManager.swift */; };
@@ -261,7 +262,7 @@
 		C51AED1E2A8B2BC80015FBC2 /* HomeTopButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTopButton.swift; sourceTree = "<group>"; };
 		C51AED202A8B2BDB0015FBC2 /* HomeMapReferButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMapReferButton.swift; sourceTree = "<group>"; };
 		C51AED222A8B7B000015FBC2 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
-		C51B09B72A82155200916BBD /* LocalMarkerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalMarkerData.swift; sourceTree = "<group>"; };
+		C51B09B72A82155200916BBD /* MarkerModelCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerModelCache.swift; sourceTree = "<group>"; };
 		C51B09B92A8215D800916BBD /* MarkerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerModel.swift; sourceTree = "<group>"; };
 		C51B09BB2A82397800916BBD /* Marker+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Marker+Extension.swift"; sourceTree = "<group>"; };
 		C51BBAD42A78D53D00BF5B7C /* AVIROCheckPlace+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROCheckPlace+DTO.swift"; sourceTree = "<group>"; };
@@ -298,6 +299,7 @@
 		C5351B792A1B439000116D50 /* KakaoCoordinateSearchDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoCoordinateSearchDTO.swift; sourceTree = "<group>"; };
 		C53856B02ABC13ED00D52DEC /* AVIROMyContributionCount+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROMyContributionCount+DTO.swift"; sourceTree = "<group>"; };
 		C53893152A5EC0C500CB9A54 /* GenderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderButton.swift; sourceTree = "<group>"; };
+		C53C54D12AD67E8800C3662A /* LocalDBMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDBMarker.swift; sourceTree = "<group>"; };
 		C541521C2AC125E100F39826 /* TutorialTopLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialTopLabel.swift; sourceTree = "<group>"; };
 		C54657862ABF2D82003A0BCB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C54657872ABF2DBA003A0BCB /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = API.plist; path = AVIRO/Utils/API.plist; sourceTree = SOURCE_ROOT; };
@@ -691,7 +693,8 @@
 		C51B09B62A82046000916BBD /* LocalDataModel */ = {
 			isa = PBXGroup;
 			children = (
-				C51B09B72A82155200916BBD /* LocalMarkerData.swift */,
+				C51B09B72A82155200916BBD /* MarkerModelCache.swift */,
+				C53C54D12AD67E8800C3662A /* LocalDBMarker.swift */,
 				C5A9899A2A95A6B50021B7C3 /* LocalBookmarkData.swift */,
 			);
 			path = LocalDataModel;
@@ -1114,9 +1117,9 @@
 		C5A9899C2A95A7820021B7C3 /* FacadeManager */ = {
 			isa = PBXGroup;
 			children = (
+				C510005B2AB9C39500F65C1F /* MarkerModelManager.swift */,
 				C520662C2A7CE1CC0038ECCD /* SearchHistoryManager.swift */,
 				C5A9899D2A95A7940021B7C3 /* BookmarkManager.swift */,
-				C510005B2AB9C39500F65C1F /* MarkerModelManager.swift */,
 			);
 			path = FacadeManager;
 			sourceTree = "<group>";
@@ -1717,7 +1720,7 @@
 				C552D5342ABE8CA500933D8A /* AVIRODeleteAPI.swift in Sources */,
 				C510005E2ABAA3C700F65C1F /* Enum+.swift in Sources */,
 				C58FBF942AC2DB6D00AB6EFC /* KakaoKeywordResultDTO.swift in Sources */,
-				C51B09B82A82155200916BBD /* LocalMarkerData.swift in Sources */,
+				C51B09B82A82155200916BBD /* MarkerModelCache.swift in Sources */,
 				C5A9899B2A95A6B50021B7C3 /* LocalBookmarkData.swift in Sources */,
 				C520662D2A7CE1CC0038ECCD /* SearchHistoryManager.swift in Sources */,
 				C51AED232A8B7B000015FBC2 /* UIViewController+Extension.swift in Sources */,
@@ -1751,6 +1754,7 @@
 				C5A201B42A986EC300A54381 /* EditPlaceInfoViewController.swift in Sources */,
 				C51AED1D2A8A192D0015FBC2 /* ChangedViewAction.swift in Sources */,
 				C51B09BC2A82397800916BBD /* Marker+Extension.swift in Sources */,
+				C53C54D22AD67E8800C3662A /* LocalDBMarker.swift in Sources */,
 				C58FBF922AC2D87300AB6EFC /* KakaoAPIManagerProtocol.swift in Sources */,
 				C528E4BE2A5FB816002BD72E /* TermsTableCell.swift in Sources */,
 				C53856B12ABC13ED00D52DEC /* AVIROMyContributionCount+DTO.swift in Sources */,
