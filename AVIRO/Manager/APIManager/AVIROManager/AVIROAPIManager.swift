@@ -316,7 +316,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
     }
     
     func editPlaceURL(
-        with url: AVIROEditURLDTO,
+        with urlData: AVIROEditURLDTO,
         completionHandler: @escaping (Result<AVIROResultDTO, APIError>) -> Void
     ) {
         guard let url = postAPI.editPlaceURL().url else {
@@ -324,7 +324,7 @@ final class AVIROAPIManager: AVIROAPIMangerProtocol {
             return
         }
         
-        guard let jsonData = try? JSONEncoder().encode(url) else {
+        guard let jsonData = try? JSONEncoder().encode(urlData) else {
             completionHandler(.failure(.encodingError))
             return
         }
