@@ -53,6 +53,8 @@ final class MyData: MyDataProtocol {
         self.email = userEmail
         self.nickname = userNickname
         self.marketingAgree = marketingAgree
+        
+        AmplitudeUtility.login()
     }
     
     func whenLogout() {

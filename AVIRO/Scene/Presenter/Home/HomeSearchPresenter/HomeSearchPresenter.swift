@@ -28,7 +28,6 @@ protocol HomeSearchProtocol: NSObject {
 final class HomeSearchPresenter {
     weak var viewController: HomeSearchProtocol?
 
-    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
     private let userDefaultsManager = SearchHistoryManager()
     
     private var historyPlaceModel = [HistoryTableModel]()
@@ -168,10 +167,7 @@ final class HomeSearchPresenter {
         query: String,
         completion: @escaping ([PlaceListModel]) -> Void
     ) {
-        appDelegate?.amplitude?.track(
-            eventType: AMType.searchHSV.rawValue,
-            eventProperties: ["Query": query]
-        )
+        AmplitudeUtility.searchPlace(with: query)
         
         currentPage = 1
         isEnding = false
