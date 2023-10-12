@@ -345,7 +345,6 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     
     @objc private func editStoreButtonTapped() {
         presenter.afterEditButtonTapped()
-        self.view.isUserInteractionEnabled = false
     }
     
     @objc private func swipeGestureActive(_ gesture: UISwipeGestureRecognizer) {
