@@ -490,9 +490,7 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
     }
     
     func updateNaverMap(_ latLng: NMGLatLng) {
-        DispatchQueue.main.async { [weak self] in
-            self?.editLocationBottomView.changedNaverMap(latLng)
-        }
+        editLocationBottomView.changedNaverMap(latLng)
     }
     
     func editStoreButtonChangeableState(_ state: Bool) {

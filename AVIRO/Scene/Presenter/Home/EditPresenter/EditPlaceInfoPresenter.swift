@@ -336,10 +336,13 @@ final class EditPlaceInfoPresenter {
                 
                 if let x = firstCoordinate.x,
                    let y = firstCoordinate.y {
-                    self?.afterChangedXLng = x
-                    self?.afterChangedYLat = y
-                    
-                    self?.changedMarker(lat: y, lng: x)
+                    DispatchQueue.main.async {
+                        self?.afterChangedXLng = x
+                        self?.afterChangedYLat = y
+                        
+                        self?.changedMarker(lat: y, lng: x)
+                    }
+   
                 }
             case .failure(let error):
                 if let error = error.errorDescription {
@@ -358,7 +361,7 @@ final class EditPlaceInfoPresenter {
               let lng = Double(lng) else { return }
         
         let latLng = NMGLatLng(lat: lat, lng: lng)
-        
+   
         newMarker.position = latLng
         
         viewController?.updateNaverMap(latLng)
