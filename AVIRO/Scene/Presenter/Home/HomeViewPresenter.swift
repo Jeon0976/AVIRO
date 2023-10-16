@@ -82,9 +82,9 @@ final class HomeViewPresenter: NSObject {
     private var selectedReviewsModel: AVIROReviewsArray?
         
     private var selectedPlaceId: String?
-    
-    private var nowDateTime = TimeUtility.nowDateAndTime()
-    
+        
+    var nowDateTime = TimeUtility.nowDateAndTime()
+
     init(viewController: HomeViewProtocol,
          markerManager: MarkerModelManagerProtocol = MarkerModelManager()
     ) {
@@ -215,35 +215,11 @@ final class HomeViewPresenter: NSObject {
     }
     
     // MARK: vegan Data 불러오기
-    // TODO: Marker Manager 생성시 코드 수정 요망
     func loadVeganData() {
-        let mapModel = AVIROMapModelDTO(
-            longitude: MyCoordinate.shared.longitudeString,
-            latitude: MyCoordinate.shared.latitudeString,
-            wide: "0.0",
-            time: nil
-        )
-        
-//        MarkerModelManager().fetchAllData { resu in
-//            switch resu {
-//            case .success(let success):
-//                return
-//            case .failure(let failure):
-//                return
-//            }
-//        }
-        
-        
-                
-        AVIROAPIManager().loadNerbyPlaceModels(with: mapModel) { [weak self] result in
+        markerModelManager.fetchAllData { [weak self] result in
             switch result {
             case .success(let mapDatas):
-                if mapDatas.statusCode == 200 {
-                    self?.saveMarkers(mapDatas.data.updatedPlace)
-                } else {
-                    self?.viewController?.showErrorAlertWhenLoadMarker()
-                }
-
+                self?.saveMarkers(mapDatas)
             case .failure(_):
                 self?.viewController?.showErrorAlertWhenLoadMarker()
             }
@@ -254,9 +230,7 @@ final class HomeViewPresenter: NSObject {
         }
     }
     
-    private func saveMarkers(_ mapData: [AVIROMarkerModel]?) {
-        guard let mapData = mapData else { return }
-        
+    private func saveMarkers(_ mapData: [AVIROMarkerModel]) {
         var markerModels = [MarkerModel]()
 
         mapData.forEach { data in
@@ -264,34 +238,22 @@ final class HomeViewPresenter: NSObject {
             markerModels.append(markerModel)
         }
         
-        MarkerModelCache.shared.setMarkerModel(markerModels)
+        markerModelManager.setAllMarkerModels(with: markerModels)
         
         DispatchQueue.main.async { [weak self] in
-            let markers = MarkerModelCache.shared.getMarkers()
-            self?.viewController?.loadMarkers(with: markers)
+            if let markers = self?.markerModelManager.getAllMarkers() {
+                self?.viewController?.loadMarkers(with: markers)
+            }
         }
     }
     
     // MARK: Refresh Vegan Data
     private func refreshMapMarkers() {
-        let mapModel = AVIROMapModelDTO(
-            longitude: MyCoordinate.shared.longitudeString,
-            latitude: MyCoordinate.shared.latitudeString,
-            wide: "0.0",
-            time: nowDateTime
-        )
-        
-        AVIROAPIManager().loadNerbyPlaceModels(with: mapModel) { [weak self] result in
+        markerModelManager.updateMarkerModelsWhenViewWillAppear { [weak self] result in
             switch result {
             case .success(let mapDatas):
-                if let updatePlace = mapDatas.data.updatedPlace {
-                    self?.updateMarkers(updatePlace)
-                }
-               
-                if let deletedPlace = mapDatas.data.deletedPlace {
-                    self?.deleteMarkers(deletedPlace)
-                }
-                
+                self?.updateMarkers(mapDatas.updated)
+                self?.deleteMarkers(mapDatas.deleted)
             case .failure(let error):
                 if let error = error.errorDescription {
                     self?.viewController?.showErrorAlert(with: error, title: nil)
@@ -323,11 +285,11 @@ final class HomeViewPresenter: NSObject {
         }
     }
     
-    private func deleteMarkers(_ placeId: [String]) {
-        DispatchQueue.main.async {
-            placeId.forEach {
-                MarkerModelCache.shared.deleteMarkerModel(with: $0)
-            }
+    private func deleteMarkers(_ placeId: [String]?) {
+        guard let placeId = placeId else { return }
+        
+        placeId.forEach {
+            MarkerModelCache.shared.deleteMarkerModel(with: $0)
         }
     }
     

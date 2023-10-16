@@ -134,17 +134,14 @@ extension EditMenuViewController: EditMenuProtocol {
         self.scrollView.contentInset = insets
         self.scrollView.scrollIndicatorInsets = insets
         
-        let bottomOffset = CGPoint(
-            x: 0,
-            y: scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom
-        )
-        
-        scrollView.setContentOffset(bottomOffset, animated: true)
+        view.layoutIfNeeded()
     }
     
     func keyboardWillHide() {
         scrollView.contentInset = .zero
         scrollView.scrollIndicatorInsets = .zero
+        
+        view.layoutIfNeeded()
     }
     
     func dataBindingTopView(isAll: Bool, isSome: Bool, isRequest: Bool) {
@@ -275,12 +272,11 @@ extension EditMenuViewController: UITableViewDataSource {
 extension EditMenuViewController: UIGestureRecognizerDelegate {
     // MARK: 키보드 로직
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        if touch.view is EditMenuTopView || touch.view is UINavigationBar {
+        if touch.view is UITextField {
+            return false
+        } else {
             view.endEditing(true)
             return true
-        } else {
-            return false
         }
-
     }
 }

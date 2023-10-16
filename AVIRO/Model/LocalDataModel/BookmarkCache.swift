@@ -16,8 +16,8 @@ protocol BookmarkDataProtocol {
     func deleteAllBookmark()
 }
 
-final class LocalBookmarkData: BookmarkDataProtocol {
-    static let shared = LocalBookmarkData()
+final class BookmarkCache: BookmarkDataProtocol {
+    static let shared = BookmarkCache()
     
     private var bookmarkList: [String] = []
     

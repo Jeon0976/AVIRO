@@ -144,16 +144,21 @@ final class MarkerModelCache: MarkerModelCacheProtocol {
     }
     
     private func adjustZPosition(for markerModel: MarkerModel) {
-        let samePositionMarkers = markers.filter { $0.marker.position == markerModel.marker.position }
-
-        for (index, model) in samePositionMarkers.enumerated() {
-            if index >= 1 {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
+            let samePositionMarkers = self.markers.filter { $0.marker.position == markerModel.marker.position }
+            
+            guard samePositionMarkers.count >= 2 else { return }
+            
+            for (index, model) in samePositionMarkers.enumerated() {
                 let changedPositionLat = model.marker.position.lat
                 let changedPositionLng = model.marker.position.lng + (Double(index) * 0.0000100)
-
+                
                 let latLng = NMGLatLng(lat: changedPositionLat, lng: changedPositionLng)
                 
                 model.marker.position = latLng
+                
             }
         }
     }
@@ -167,11 +172,13 @@ final class MarkerModelCache: MarkerModelCacheProtocol {
     }
     
     func deleteMarkerModel(with placeId: String) {
-        guard let markerModel = markers.first(where: { $0.placeId == placeId })  else { return }
-        
-        markerModel.marker.mapView = nil
-        
-        markers.removeAll { $0 == markerModel }
+        DispatchQueue.main.async { [weak self] in
+            guard let markerModel = self?.markers.first(where: { $0.placeId == placeId })  else { return }
+            
+            markerModel.marker.mapView = nil
+            
+            self?.markers.removeAll { $0 == markerModel }
+        }
     }
 
     func deleteAllMarkerModel() {

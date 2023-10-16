@@ -19,7 +19,7 @@ protocol BookmarkFacadeProtocol {
 final class BookmarkFacadeManager: BookmarkFacadeProtocol {
     private let bookmarkArray: BookmarkDataProtocol
         
-    init(bookmarkArray: BookmarkDataProtocol = LocalBookmarkData.shared) {
+    init(bookmarkArray: BookmarkDataProtocol = BookmarkCache.shared) {
         self.bookmarkArray = bookmarkArray
     }
     
