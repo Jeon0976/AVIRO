@@ -29,7 +29,7 @@ protocol HomeViewProtocol: NSObject {
     func afterLoadStarButton(with noStars: [NMFMarker])
 
     func moveToCameraWhenNoAVIRO(_ lng: Double, _ lat: Double)
-    func moveToCameraWhenHasAVIRO(_ markerModel: MarkerModel)
+    func moveToCameraWhenHasAVIRO(_ markerModel: MarkerModel, zoomTo: Double?)
     
     func afterClickedMarker(placeModel: PlaceTopModel, placeId: String, isStar: Bool)
     func afterSlideupPlaceView(
@@ -353,7 +353,7 @@ final class HomeViewPresenter: NSObject {
         
         MarkerModelCache.shared.updateWhenClickedMarker(selectedMarkerModel!)
         
-        viewController?.moveToCameraWhenHasAVIRO(markerModel)
+        viewController?.moveToCameraWhenHasAVIRO(markerModel, zoomTo: nil)
         
         CenterCoordinate.shared.isChangedFromEnrollView = false
     }
@@ -439,7 +439,7 @@ final class HomeViewPresenter: NSObject {
         
         MarkerModelCache.shared.updateWhenClickedMarker(selectedMarkerModel!)
         
-        viewController?.moveToCameraWhenHasAVIRO(validMarkerModel)
+        viewController?.moveToCameraWhenHasAVIRO(validMarkerModel, zoomTo: nil)
     }
     
     // MARK: Load Place Sumamry
@@ -540,7 +540,7 @@ final class HomeViewPresenter: NSObject {
             
             hasTouchedMarkerBefore = true
             
-            viewController?.moveToCameraWhenHasAVIRO(markerModel)
+            viewController?.moveToCameraWhenHasAVIRO(markerModel, zoomTo: 14)
         }
     }
     

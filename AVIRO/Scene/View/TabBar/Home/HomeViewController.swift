@@ -400,6 +400,7 @@ extension HomeViewController: HomeViewProtocol {
 
     /// 최초 load markers
     func loadMarkers(with markers: [NMFMarker]) {
+        
         markers.forEach {
             $0.mapView = naverMapView
         }
@@ -421,9 +422,17 @@ extension HomeViewController: HomeViewProtocol {
         naverMapView.moveCamera(cameraUpdate)
     }
     
-    func moveToCameraWhenHasAVIRO(_ markerModel: MarkerModel) {
+    func moveToCameraWhenHasAVIRO(_ markerModel: MarkerModel, zoomTo: Double? = nil) {
         let latlng = markerModel.marker.position
-        let cameraUpdate = NMFCameraUpdate(scrollTo: latlng, zoomTo: 14)
+        
+        var cameraUpdate = NMFCameraUpdate()
+        
+        if let zoomTo = zoomTo {
+            cameraUpdate = NMFCameraUpdate(scrollTo: latlng, zoomTo: zoomTo)
+        } else {
+            cameraUpdate = NMFCameraUpdate(scrollTo: latlng)
+        }
+        
         cameraUpdate.animation = .easeIn
         cameraUpdate.animationDuration = 0.25
         popupPlaceView()
