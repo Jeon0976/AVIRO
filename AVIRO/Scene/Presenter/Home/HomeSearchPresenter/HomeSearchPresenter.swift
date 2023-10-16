@@ -148,12 +148,16 @@ final class HomeSearchPresenter {
     
     // MARK: 최초 Search 후 KakaoMap Load -> AVIRO 데이터 비교
     func initSearchDataAndCompareAVIROData(_ query: String) {
+        if query == "" {
+            return
+        }
         isEndCompare = false
         matchedPlaceModel.removeAll()
         
         initialSearchData(query: query) { [weak self] placeList in
             self?.makeToPlaceFromAVIROData(placeList: placeList)
         }
+        
     }
     
     // MARK: Paging후 KakaoMap Load -> AVIRO 데이터 비교
@@ -262,6 +266,7 @@ final class HomeSearchPresenter {
                 
         let beforeMatchedRequestModel = AVIROBeforeComparePlaceDTO(placeArray: beforeMatchedArray)
                 
+        print(beforeMatchedRequestModel)
         AVIROAPIManager().checkPlaceList(with: beforeMatchedRequestModel) { [weak self] result in
             switch result {
             case .success(let model):

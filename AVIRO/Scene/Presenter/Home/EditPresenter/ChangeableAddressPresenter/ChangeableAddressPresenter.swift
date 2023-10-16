@@ -145,8 +145,7 @@ final class ChangeableAddressPresenter {
     }
     
     func editAddress() {
-        self.afterChangedAddress?(changedAddress)
-
+        self.afterChangedAddress?(changedAddress)        
         viewController?.popViewController()
     }
     

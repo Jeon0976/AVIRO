@@ -100,6 +100,10 @@ final class MarkerModelCache: MarkerModelCacheProtocol {
 
     func setMarkerModel(_ markerModels: [MarkerModel]) {
         markers = markerModels
+        
+        for model in markers {
+            adjustZPosition(for: model)
+        }
     }
     
     func changeMarkerModel(_ index: Int, _ markerModel: MarkerModel) {
@@ -134,8 +138,26 @@ final class MarkerModelCache: MarkerModelCacheProtocol {
             updatedMarkers.append(markerModel.marker)
         }
         
+        for model in markers {
+            adjustZPosition(for: model)
+        }
     }
     
+    private func adjustZPosition(for markerModel: MarkerModel) {
+        let samePositionMarkers = markers.filter { $0.marker.position == markerModel.marker.position }
+
+        for (index, model) in samePositionMarkers.enumerated() {
+            if index >= 1 {
+                let changedPositionLat = model.marker.position.lat
+                let changedPositionLng = model.marker.position.lng + (Double(index) * 0.0000100)
+
+                let latLng = NMGLatLng(lat: changedPositionLat, lng: changedPositionLng)
+                
+                model.marker.position = latLng
+            }
+        }
+    }
+
     func getUpdatedMarkers() -> [NMFMarker] {
         let markers = updatedMarkers
         
