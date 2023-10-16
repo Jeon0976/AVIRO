@@ -266,7 +266,6 @@ final class HomeSearchPresenter {
                 
         let beforeMatchedRequestModel = AVIROBeforeComparePlaceDTO(placeArray: beforeMatchedArray)
                 
-        print(beforeMatchedRequestModel)
         AVIROAPIManager().checkPlaceList(with: beforeMatchedRequestModel) { [weak self] result in
             switch result {
             case .success(let model):
