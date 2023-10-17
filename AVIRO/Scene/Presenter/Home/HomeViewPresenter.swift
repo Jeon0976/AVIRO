@@ -64,7 +64,7 @@ final class HomeViewPresenter: NSObject {
     weak var viewController: HomeViewProtocol?
     
     private let markerModelManager: MarkerModelManagerProtocol
-    private let bookmarkManager = BookmarkFacadeManager()
+    private let bookmarkManager: BookmarkFacadeProtocol
     private let locationManager = CLLocationManager()
 
     var homeMapData: [AVIROMarkerModel]?
@@ -82,14 +82,14 @@ final class HomeViewPresenter: NSObject {
     private var selectedReviewsModel: AVIROReviewsArray?
         
     private var selectedPlaceId: String?
-    
-    private var nowDateTime = TimeUtility.nowDateAndTime()
-    
+        
     init(viewController: HomeViewProtocol,
-         markerManager: MarkerModelManagerProtocol = MarkerModelManager()
+         markerManager: MarkerModelManagerProtocol = MarkerModelManager(),
+         bookmarkManager: BookmarkFacadeProtocol = BookmarkFacadeManager()
     ) {
         self.viewController = viewController
         self.markerModelManager = markerManager
+        self.bookmarkManager = bookmarkManager
     }
     
     deinit {
@@ -215,35 +215,11 @@ final class HomeViewPresenter: NSObject {
     }
     
     // MARK: vegan Data 불러오기
-    // TODO: Marker Manager 생성시 코드 수정 요망
     func loadVeganData() {
-        let mapModel = AVIROMapModelDTO(
-            longitude: MyCoordinate.shared.longitudeString,
-            latitude: MyCoordinate.shared.latitudeString,
-            wide: "0.0",
-            time: nil
-        )
-        
-//        MarkerModelManager().fetchAllData { resu in
-//            switch resu {
-//            case .success(let success):
-//                return
-//            case .failure(let failure):
-//                return
-//            }
-//        }
-        
-        
-                
-        AVIROAPIManager().loadNerbyPlaceModels(with: mapModel) { [weak self] result in
+        markerModelManager.fetchRawData { [weak self] result in
             switch result {
             case .success(let mapDatas):
-                if mapDatas.statusCode == 200 {
-                    self?.saveMarkers(mapDatas.data.updatedPlace)
-                } else {
-                    self?.viewController?.showErrorAlertWhenLoadMarker()
-                }
-
+                self?.saveMarkers(mapDatas)
             case .failure(_):
                 self?.viewController?.showErrorAlertWhenLoadMarker()
             }
@@ -254,50 +230,36 @@ final class HomeViewPresenter: NSObject {
         }
     }
     
-    private func saveMarkers(_ mapData: [AVIROMarkerModel]?) {
-        guard let mapData = mapData else { return }
-        
+    private func saveMarkers(_ mapData: [AVIROMarkerModel]) {
         var markerModels = [MarkerModel]()
 
         mapData.forEach { data in
-            let markerModel = createMarkerModel(from: data)
+            let markerModel = createMarker(from: data)
             markerModels.append(markerModel)
         }
         
-        MarkerModelCache.shared.setMarkerModel(markerModels)
+        markerModelManager.setAllMarkerModels(with: markerModels)
         
         DispatchQueue.main.async { [weak self] in
-            let markers = MarkerModelCache.shared.getMarkers()
-            self?.viewController?.loadMarkers(with: markers)
+            if let markers = self?.markerModelManager.getAllMarkers() {
+                self?.viewController?.loadMarkers(with: markers)
+            }
         }
     }
     
     // MARK: Refresh Vegan Data
     private func refreshMapMarkers() {
-        let mapModel = AVIROMapModelDTO(
-            longitude: MyCoordinate.shared.longitudeString,
-            latitude: MyCoordinate.shared.latitudeString,
-            wide: "0.0",
-            time: nowDateTime
-        )
-        
-        AVIROAPIManager().loadNerbyPlaceModels(with: mapModel) { [weak self] result in
+        markerModelManager.updateRawDataWhenViewWillAppear { [weak self] result in
             switch result {
-            case .success(let mapDatas):
-                if let updatePlace = mapDatas.data.updatedPlace {
-                    self?.updateMarkers(updatePlace)
-                }
-               
-                if let deletedPlace = mapDatas.data.deletedPlace {
-                    self?.deleteMarkers(deletedPlace)
-                }
-                
+            case .success(let markerRawModels):
+                self?.updateMarkers(markerRawModels)
             case .failure(let error):
                 if let error = error.errorDescription {
                     self?.viewController?.showErrorAlert(with: error, title: nil)
                 }
             }
         }
+
     }
     
     private func updateMarkers(_ mapData: [AVIROMarkerModel]?) {
@@ -306,27 +268,20 @@ final class HomeViewPresenter: NSObject {
         let uniqueMapData = Array(Set(mapData))
 
         uniqueMapData.forEach { data in
-            let markerModel = createMarkerModel(from: data)
-            MarkerModelCache.shared.updateMarkerModel(markerModel)
+            let markerModel = createMarker(from: data)
+            markerModelManager.updateMarkerModels(with: markerModel)
         }
         
         DispatchQueue.main.async { [weak self] in
-            let markers = MarkerModelCache.shared.getUpdatedMarkers()
-            self?.viewController?.loadMarkers(with: markers)
-            self?.nowDateTime = TimeUtility.nowDateAndTime()
+            if let markers = self?.markerModelManager.getUpdatedMarkers() {
+                self?.viewController?.loadMarkers(with: markers)
+            }
             
+            /// 본인이 직접등록한 마커에 대해서 등록 후 -> 바로 표시를 위한 조치
             if CenterCoordinate.shared.isChangedFromEnrollView {
                 self?.whenShowPlaceAfterActionFromOtherViewController = true
                 
                 self?.whenAfterEnrollPlace()
-            }
-        }
-    }
-    
-    private func deleteMarkers(_ placeId: [String]) {
-        DispatchQueue.main.async {
-            placeId.forEach {
-                MarkerModelCache.shared.deleteMarkerModel(with: $0)
             }
         }
     }
@@ -336,13 +291,11 @@ final class HomeViewPresenter: NSObject {
               let lng = CenterCoordinate.shared.longitude
         else { return }
         
-        let (markerModel, index) = MarkerModelCache.shared.getMarkerWhenEnrollAfter(x: lat, y: lng)
+        let (markerModel, index) = markerModelManager.getMarkerModelFromCoordinates(lat: lat, lng: lng)
         
-        guard var markerModel = markerModel else { return }
-        guard let index = index else { return }
-        
-        markerModel.isClicked = true
-                
+        guard let markerModel = markerModel,
+              let index = index else { return }
+
         getPlaceSummaryModel(markerModel)
         
         hasTouchedMarkerBefore = true
@@ -350,16 +303,16 @@ final class HomeViewPresenter: NSObject {
         selectedMarkerIndex = index
         selectedMarkerModel = markerModel
         selectedMarkerModel?.isClicked = true
-        
-        MarkerModelCache.shared.updateWhenClickedMarker(selectedMarkerModel!)
-        
-        viewController?.moveToCameraWhenHasAVIRO(markerModel, zoomTo: nil)
+                
+        markerModelManager.updateMarkerModelWhenClicked(with: selectedMarkerModel!)
+        viewController?.moveToCameraWhenHasAVIRO(markerModel, zoomTo: 14)
         
         CenterCoordinate.shared.isChangedFromEnrollView = false
     }
     
     // MARK: Create Marker
-    private func createMarkerModel(from data: AVIROMarkerModel) -> MarkerModel {
+    /// 마커만들기
+    private func createMarker(from data: AVIROMarkerModel) -> MarkerModel {
         let latLng = NMGLatLng(lat: data.y, lng: data.x)
         let marker = NMFMarker(position: latLng)
         let placeId = data.placeId
@@ -407,7 +360,7 @@ final class HomeViewPresenter: NSObject {
         if hasTouchedMarkerBefore {
             if var selectedMarkerModel = selectedMarkerModel {
                 selectedMarkerModel.isClicked = false
-                MarkerModelCache.shared.updateWhenClickedMarker(selectedMarkerModel)
+                markerModelManager.updateMarkerModelWhenClicked(with: selectedMarkerModel)
             }
             
             selectedMarkerModel = nil
@@ -422,7 +375,7 @@ final class HomeViewPresenter: NSObject {
     
     /// 클릭한 마커 저장 후 viewController에 알리기
     private func setMarkerToTouchedState(_ marker: NMFMarker) {
-        let (markerModel, index) = MarkerModelCache.shared.getMarkerFromMarker(marker)
+        let (markerModel, index) = markerModelManager.getMarkerModelFromMarker(with: marker)
                 
         guard let validMarkerModel = markerModel else { return }
         
@@ -434,11 +387,10 @@ final class HomeViewPresenter: NSObject {
         selectedMarkerModel = validMarkerModel
         
         selectedMarkerModel?.isClicked = true
-        
+
         hasTouchedMarkerBefore = true
-        
-        MarkerModelCache.shared.updateWhenClickedMarker(selectedMarkerModel!)
-        
+                
+        markerModelManager.updateMarkerModelWhenClicked(with: selectedMarkerModel!)
         viewController?.moveToCameraWhenHasAVIRO(validMarkerModel, zoomTo: nil)
     }
     
@@ -523,23 +475,21 @@ final class HomeViewPresenter: NSObject {
             )
         } else {
         // AVIRO에 데이터가 있을 때
-            let (markerModel, index) = MarkerModelCache.shared.getMarkerWhenSearchAfter(afterSearchModel)
+            let (markerModel, index) = markerModelManager.getMarkerModelFromSerachModel(with: afterSearchModel)
             
             guard let markerModel = markerModel else { return }
             guard let index = index else { return }
             
             whenShowPlaceAfterActionFromOtherViewController = true
-            
-            getPlaceSummaryModel(markerModel)
-                        
+                                    
             selectedMarkerIndex = index
             selectedMarkerModel = markerModel
             selectedMarkerModel?.isClicked = true
-            
-            MarkerModelCache.shared.updateWhenClickedMarker(selectedMarkerModel!)
-            
+                        
             hasTouchedMarkerBefore = true
             
+            getPlaceSummaryModel(markerModel)
+
             viewController?.moveToCameraWhenHasAVIRO(markerModel, zoomTo: 14)
         }
     }
@@ -554,38 +504,39 @@ final class HomeViewPresenter: NSObject {
     }
     
     private func whenAfterLoadStarButtonTapped() {
-        let markersModel = MarkerModelCache.shared.getMarkerModels()
-
-        let bookmarks = bookmarkManager.loadAllData()
+        let markersModel = self.markerModelManager.getAllMarkerModel()
+        let bookmarks = self.bookmarkManager.loadAllData()
         
         var starMarkersModel: [MarkerModel] = []
         var noMarkers: [NMFMarker] = []
         
-        markersModel.forEach { model in
-            if bookmarks.contains(model.placeId) {
-                var model = model
-                model.isStar = true
-                starMarkersModel.append(model)
-            } else {
-                noMarkers.append(model.marker)
+        DispatchQueue.global().async {
+            markersModel.forEach { model in
+                if bookmarks.contains(model.placeId) {
+                    starMarkersModel.append(model)
+                } else {
+                    noMarkers.append(model.marker)
+                }
+            }
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.markerModelManager.updateMarkerModelWhenOnStarButton(
+                    isTapped: true,
+                    markerModel: starMarkersModel
+                )
+                self?.viewController?.afterLoadStarButton(with: noMarkers)
             }
         }
-                
-        MarkerModelCache.shared.updateWhenStarButton(starMarkersModel)
-        viewController?.afterLoadStarButton(with: noMarkers)
     }
     
     private func whenAfterLoadNotStarButtonTapped() {
-        var starMarkersModel = MarkerModelCache.shared.getOnlyStarMarkerModels()
-                
-        for index in 0..<starMarkersModel.count {
-            starMarkersModel[index].isStar = false
-        }
-        
-        MarkerModelCache.shared.updateWhenStarButton(starMarkersModel)
 
-        let markers = MarkerModelCache.shared.getMarkers()
-        
+        markerModelManager.updateMarkerModelWhenOnStarButton(
+            isTapped: false,
+            markerModel: nil
+        )
+        let markers = markerModelManager.getAllMarkers()
+
         viewController?.loadMarkers(with: markers)
     }
     
@@ -848,17 +799,19 @@ final class HomeViewPresenter: NSObject {
         AmplitudeUtility.editMenu(with: place, beforeMenus: beforeMenus, afterMenus: menuArray)
     }
     
+    // MARK: Menu변경 후 Marker Update
+    /// 메뉴 변경시 비건 메뉴 구성 변경으로 인한 업데이트 조치
     func afterEditMenuChangedMarker(_ changedMarkerModel: EditMenuChangedMarkerModel) {
         guard var selectedMarkerModel = selectedMarkerModel else { return }
-        
+
         selectedMarkerModel.mapPlace = changedMarkerModel.mapPlace
         selectedMarkerModel.isAll = changedMarkerModel.isAll
         selectedMarkerModel.isSome = changedMarkerModel.isSome
         selectedMarkerModel.isRequest = changedMarkerModel.isRequest
 
-        MarkerModelCache.shared.changeMarkerModel(selectedMarkerIndex, selectedMarkerModel)
-
         self.selectedMarkerModel = selectedMarkerModel
+
+        markerModelManager.updateSelectedMarkerModel(index: selectedMarkerIndex, model: selectedMarkerModel)
         
         viewController?.updateMapPlace(changedMarkerModel.mapPlace)
     }

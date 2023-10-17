@@ -216,18 +216,15 @@ extension EnrollPlaceViewController: EnrollPlaceProtocol {
         self.scrollView.contentInset = insets
         self.scrollView.scrollIndicatorInsets = insets
         
-        let bottomOffset = CGPoint(
-            x: 0,
-            y: scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom
-        )
-        
-        scrollView.setContentOffset(bottomOffset, animated: true)
+        view.layoutIfNeeded()
     }
     
     // MARK: Keyboard Will Hide
     func keyboardWillHide() {
         scrollView.contentInset = .zero
         scrollView.scrollIndicatorInsets = .zero
+        
+        view.layoutIfNeeded()
     }
     
     // MARK: Enable Right Button
