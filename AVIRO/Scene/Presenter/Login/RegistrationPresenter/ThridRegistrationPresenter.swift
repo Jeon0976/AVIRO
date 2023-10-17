@@ -26,6 +26,7 @@ final class ThridRegistrationPresenter {
     weak var viewController: ThridRegistrationProtocol?
 
     private let keyChain = KeychainSwift()
+    private let amplitude: AmplitudeProtocol
     
     private var userInfoModel: AVIROAppleUserSignUpDTO?
         
@@ -36,10 +37,12 @@ final class ThridRegistrationPresenter {
     ]
     
     init(viewController: ThridRegistrationProtocol,
-         userInfo: AVIROAppleUserSignUpDTO? = nil
+         userInfo: AVIROAppleUserSignUpDTO? = nil,
+         amplitude: AmplitudeProtocol = AmplitudeUtility()
     ) {
         self.viewController = viewController
         self.userInfoModel = userInfo
+        self.amplitude = amplitude
     }
     
     func viewDidLoad() {
@@ -74,7 +77,7 @@ final class ThridRegistrationPresenter {
                         self?.keyChain.set(
                             userInfoModel.refreshToken,
                             forKey: KeychainKey.appleRefreshToken.rawValue)
-                        AmplitudeUtility.setupUser(with: data.userId)
+                        self?.amplitude.setupUser(with: data.userId)
                         
                         MyData.my.whenLogin(
                             userId: data.userId,

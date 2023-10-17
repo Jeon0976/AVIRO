@@ -27,13 +27,13 @@ protocol LoginViewProtocol: NSObject {
 final class LoginViewPresenter: NSObject {
     weak var viewController: LoginViewProtocol?
     
-    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
     private let keychain = KeychainSwift()
     
     var whenAfterLogout = false
     var whenAfterWithdrawal = false
     
-    init(viewController: LoginViewProtocol) {
+    init(viewController: LoginViewProtocol
+    ) {
         self.viewController = viewController
     }
     

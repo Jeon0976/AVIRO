@@ -65,6 +65,7 @@ final class HomeViewPresenter: NSObject {
     
     private let markerModelManager: MarkerModelManagerProtocol
     private let bookmarkManager: BookmarkFacadeProtocol
+    private let amplitude: AmplitudeProtocol
     private let locationManager = CLLocationManager()
 
     var homeMapData: [AVIROMarkerModel]?
@@ -85,11 +86,14 @@ final class HomeViewPresenter: NSObject {
         
     init(viewController: HomeViewProtocol,
          markerManager: MarkerModelManagerProtocol = MarkerModelManager(),
-         bookmarkManager: BookmarkFacadeProtocol = BookmarkFacadeManager()
+         bookmarkManager: BookmarkFacadeProtocol = BookmarkFacadeManager(),
+         amplitude: AmplitudeProtocol = AmplitudeUtility()
     ) {
         self.viewController = viewController
+        
         self.markerModelManager = markerManager
         self.bookmarkManager = bookmarkManager
+        self.amplitude = amplitude
     }
     
     deinit {
@@ -426,7 +430,7 @@ final class HomeViewPresenter: NSObject {
                             address: place.address
                         )
                         
-                        AmplitudeUtility.popupPlace(with: place.title)
+                        self?.amplitude.popupPlace(with: place.title)
                         
                         DispatchQueue.main.async {
                             let isStar = self?.bookmarkManager.checkData(with: placeId)
@@ -796,7 +800,11 @@ final class HomeViewPresenter: NSObject {
               let place = selectedSummaryModel?.title
         else { return }
         
-        AmplitudeUtility.editMenu(with: place, beforeMenus: beforeMenus, afterMenus: menuArray)
+        amplitude.editMenu(
+            with: place,
+            beforeMenus: beforeMenus,
+            afterMenus: menuArray
+        )
     }
     
     // MARK: Menu변경 후 Marker Update
@@ -821,7 +829,7 @@ final class HomeViewPresenter: NSObject {
             switch result {
             case .success(let model):
                 if let message = model.message {
-                    AmplitudeUtility.uploadReview(
+                    self?.amplitude.uploadReview(
                         with: self?.selectedSummaryModel?.title ?? "",
                         review: postReviewModel.content
                     )

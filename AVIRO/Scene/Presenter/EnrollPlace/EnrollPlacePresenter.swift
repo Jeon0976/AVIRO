@@ -18,7 +18,7 @@ protocol EnrollPlaceProtocol: NSObject {
     func someVeganTapped()
     func requestVeganTapped()
     func menuTableReload(isPresentingDefaultTable: Bool)
-    func keyboardWillShow(height: CGFloat)
+    func keyboardWillShow(height: CGFloat, isFirst: Bool)
     func keyboardWillHide()
     func enableRightButton(_ bool: Bool)
     func popViewController()
@@ -29,6 +29,8 @@ protocol EnrollPlaceProtocol: NSObject {
 final class EnrollPlacePresenter {
     weak var viewController: EnrollPlaceProtocol?
             
+    private let amplitude: AmplitudeProtocol
+    
     private var storeNormalData: PlaceListModel?
     private var category: PlaceCategory?
     
@@ -85,8 +87,14 @@ final class EnrollPlacePresenter {
     // MARK: 최종 데이터
     private var veganModel: AVIROEnrollPlaceDTO?
     
-    init(viewController: EnrollPlaceProtocol) {
+    private var isFirstPopupKeyBoard = true
+    
+    init(viewController: EnrollPlaceProtocol,
+         amplitude: AmplitudeProtocol = AmplitudeUtility()
+    ) {
         self.viewController = viewController
+        
+        self.amplitude = amplitude
     }
     
     // MARK: View Did Load
@@ -99,6 +107,8 @@ final class EnrollPlacePresenter {
     
     // MARK: View Will Appear
     func viewWillAppear() {
+        isFirstPopupKeyBoard = true
+        
         viewController?.makeAttributeWhenViewWillAppear()
         addKeyboardNotification()
     }
@@ -107,7 +117,7 @@ final class EnrollPlacePresenter {
     func viewWillDisappear() {
         removeKeyboardNotification()
     }
-
+    
     // MARK: Report Store
     func uploadStore() {
         guard let veganModel = veganModel else {
@@ -118,7 +128,7 @@ final class EnrollPlacePresenter {
             switch result {
             case .success(let success):
                 if success.statusCode == 200 {
-                    AmplitudeUtility.uploadPlace(with: veganModel.title)
+                    self?.amplitude.uploadPlace(with: veganModel.title)
                     
                     CenterCoordinate.shared.longitude = veganModel.x
                     CenterCoordinate.shared.latitude = veganModel.y
@@ -207,8 +217,15 @@ final class EnrollPlacePresenter {
     
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-           let keyboardRectangle = keyboardFrame.cgRectValue
-            viewController?.keyboardWillShow(height: keyboardRectangle.height)
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            viewController?.keyboardWillShow(
+                height: keyboardRectangle.height,
+                isFirst: isFirstPopupKeyBoard
+            )
+            
+            if isFirstPopupKeyBoard {
+                isFirstPopupKeyBoard.toggle()
+            }
         }
     }
     
@@ -281,12 +298,9 @@ final class EnrollPlacePresenter {
     
     // MARK: Menu Plus Button 클릭 시
     func menuPlusButtonTapped() {
-        if isPresentingDefaultTable {
-            plusNormalTable()
-        } else {
-            plusRequestTable()
-        }
-        
+        plusNormalTable()
+        plusRequestTable()
+
         viewController?.menuTableReload(isPresentingDefaultTable: isPresentingDefaultTable)
     }
     
@@ -487,7 +501,40 @@ extension EnrollPlacePresenter {
             }
             
             veganModel?.menuArray = menuArray
+            
+            viewController?.enableRightButton(true)
+        } else if !isPresentingDefaultTable && someVegan && requestVegan {
+            let hasEmptyData =
+            requestTableModel.contains { $0.menu == "" || $0.price == ""}
+            ||
+            requestTableModel.isEmpty
+            
+            guard !hasEmptyData else {
+                viewController?.enableRightButton(false)
+                return
+            }
+            
+            if checkRequestArrayWhenSomeRequest() {
+                requestTableModel.forEach {
+                    let menu = AVIROMenu(
+                        menuType: $0.isCheck ? MenuType.needToRequset.rawValue : MenuType.vegan.rawValue,
+                        menu: $0.menu,
+                        price: $0.price,
+                        howToRequest: $0.howToRequest,
+                        isCheck: $0.isCheck
+                    )
+                    
+                    menuArray.append(menu)
+                }
+                
+                veganModel?.menuArray = menuArray
+                viewController?.enableRightButton(true)
+            } else {
+                viewController?.enableRightButton(false)
+                return
+            }
         } else {
+
             let hasEmptyData =
             requestTableModel.contains { $0.menu == "" || $0.price == ""}
             ||
@@ -520,25 +567,42 @@ extension EnrollPlacePresenter {
             }
             
             veganModel?.menuArray = menuArray
+            viewController?.enableRightButton(true)
+
         }
+    }
+    
+    private func checkRequestArrayWhenSomeRequest() -> Bool {
+        let count = requestTableCount >= 2
         
-        viewController?.enableRightButton(true)
+        let checkVegan = requestTableModel.contains(
+            where: { $0.howToRequest == "" && !$0.isCheck }
+        )
+        
+        let checkRequest = requestTableModel.contains(
+            where: { $0.howToRequest != "" && $0.isCheck }
+        )
+        
+        return count && checkVegan && checkRequest
     }
     
     // MARK: Binding Normal Data
     private func bindingNormalMenuData(_ menu: String, _ indexPath: IndexPath) {
         normalTableModel[indexPath.row].menu = menu
+        requestTableModel[indexPath.row].menu = menu
         updateData(key: "normalTableModel", value: self.normalTableModel)
     }
     
     private func bindingNormalPriceData(_ price: String, _ indexPath: IndexPath) {
         normalTableModel[indexPath.row].price = price
+        requestTableModel[indexPath.row].price = price
         updateData(key: "normalTableModel", value: self.normalTableModel)
     }
     
     private func deleteNormalData(_ indexPath: IndexPath) {
         if normalTableModel.count > 1 {
             normalTableModel.remove(at: indexPath.row)
+            requestTableModel.remove(at: indexPath.row)
             viewController?.menuTableReload(isPresentingDefaultTable: isPresentingDefaultTable)
             updateData(key: "normalTableModel", value: self.normalTableModel)
         } else {
@@ -549,11 +613,13 @@ extension EnrollPlacePresenter {
     // MARK: Binding Request Data
     private func bindingRequestMenu(_ menu: String, _ indexPath: IndexPath) {
         requestTableModel[indexPath.row].menu = menu
+        normalTableModel[indexPath.row].menu = menu
         updateData(key: "requestTableModel", value: self.requestTableModel)
     }
     
     private func bindingRequestPrice(_ price: String, _ indexPath: IndexPath) {
         requestTableModel[indexPath.row].price = price
+        normalTableModel[indexPath.row].price = price
         updateData(key: "requestTableModel", value: self.requestTableModel)
     }
     
@@ -575,6 +641,7 @@ extension EnrollPlacePresenter {
     private func deleteRequestCell(_ indexPath: IndexPath) {
         if requestTableModel.count > 1 {
             requestTableModel.remove(at: indexPath.row)
+            normalTableModel.remove(at: indexPath.row)
             viewController?.menuTableReload(isPresentingDefaultTable: isPresentingDefaultTable)
             updateData(key: "requestTableModel", value: self.requestTableModel)
         } else {
