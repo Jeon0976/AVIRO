@@ -28,7 +28,8 @@ protocol HomeSearchProtocol: NSObject {
 final class HomeSearchPresenter {
     weak var viewController: HomeSearchProtocol?
 
-    private let userDefaultsManager = SearchHistoryManager()
+    private let searchHistoryManager = SearchHistoryManager()
+    private let amplitude: AmplitudeProtocol
     
     private var historyPlaceModel = [HistoryTableModel]()
     private var matchedPlaceModel = [MatchedPlaceModel]()
@@ -89,8 +90,12 @@ final class HomeSearchPresenter {
         }
     }
     
-    init(viewController: HomeSearchProtocol) {
+    init(viewController: HomeSearchProtocol,
+         amplitude: AmplitudeProtocol = AmplitudeUtility()
+    ) {
         self.viewController = viewController
+        
+        self.amplitude = amplitude
     }
     
     func viewDidLoad() {
@@ -102,7 +107,7 @@ final class HomeSearchPresenter {
     }
                 
     private func loadHistoryTableArray() {
-        let loadedHistory = userDefaultsManager.getHistoryModel()
+        let loadedHistory = searchHistoryManager.getHistoryModel()
         
         historyPlaceModel = loadedHistory
         
@@ -122,7 +127,7 @@ final class HomeSearchPresenter {
         if isEndCompare {
             let title = matchedPlaceModel[indexPath.row].title
             let historyModel = HistoryTableModel(title: title)
-            userDefaultsManager.setHistoryModel(historyModel)
+            searchHistoryManager.setHistoryModel(historyModel)
         }
     }
     
@@ -130,13 +135,13 @@ final class HomeSearchPresenter {
     func deleteHistoryModel(_ indexPath: IndexPath) {
         let historyModel = historyPlaceModel[indexPath.row]
         
-        userDefaultsManager.deleteHistoryModel(historyModel)
+        searchHistoryManager.deleteHistoryModel(historyModel)
         loadHistoryTableArray()
     }
     
     // MARK: HistoryTable 전체 삭제하기
     func deleteHistoryModelAll() {
-        userDefaultsManager.deleteHistoryModelAll()
+        searchHistoryManager.deleteHistoryModelAll()
         loadHistoryTableArray()
     }
     
@@ -148,12 +153,16 @@ final class HomeSearchPresenter {
     
     // MARK: 최초 Search 후 KakaoMap Load -> AVIRO 데이터 비교
     func initSearchDataAndCompareAVIROData(_ query: String) {
+        if query == "" {
+            return
+        }
         isEndCompare = false
         matchedPlaceModel.removeAll()
         
         initialSearchData(query: query) { [weak self] placeList in
             self?.makeToPlaceFromAVIROData(placeList: placeList)
         }
+        
     }
     
     // MARK: Paging후 KakaoMap Load -> AVIRO 데이터 비교
@@ -167,7 +176,7 @@ final class HomeSearchPresenter {
         query: String,
         completion: @escaping ([PlaceListModel]) -> Void
     ) {
-        AmplitudeUtility.searchPlace(with: query)
+        amplitude.searchPlace(with: query)
         
         currentPage = 1
         isEnding = false

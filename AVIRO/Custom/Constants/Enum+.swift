@@ -17,6 +17,7 @@ enum APP: String {
 enum UDKey: String {
     case tutorial
     case loadOnce
+    case timeForUpdate
 }
 
 // MARK: NotificationCenter Name

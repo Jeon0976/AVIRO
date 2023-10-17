@@ -39,6 +39,7 @@ final class AppController {
     
     // MARK: 불러올 view 확인 메서드
     private func checkState() {
+//        self.setHomeView()
         // 최초 튜토리얼 화면 안 봤을 때
         guard UserDefaults.standard.bool(forKey: UDKey.tutorial.rawValue) else {
             setTutorialView()

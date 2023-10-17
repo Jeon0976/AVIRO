@@ -93,7 +93,7 @@
 		C5351B7A2A1B439000116D50 /* KakaoCoordinateSearchDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5351B792A1B439000116D50 /* KakaoCoordinateSearchDTO.swift */; };
 		C53856B12ABC13ED00D52DEC /* AVIROMyContributionCount+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53856B02ABC13ED00D52DEC /* AVIROMyContributionCount+DTO.swift */; };
 		C53893162A5EC0C500CB9A54 /* GenderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53893152A5EC0C500CB9A54 /* GenderButton.swift */; };
-		C53C54D22AD67E8800C3662A /* LocalDBMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53C54D12AD67E8800C3662A /* LocalDBMarker.swift */; };
+		C53C54D22AD67E8800C3662A /* MarkerModelLocalDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53C54D12AD67E8800C3662A /* MarkerModelLocalDB.swift */; };
 		C541521D2AC125E100F39826 /* TutorialTopLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C541521C2AC125E100F39826 /* TutorialTopLabel.swift */; };
 		C54657882ABF2DBA003A0BCB /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = C54657872ABF2DBA003A0BCB /* API.plist */; };
 		C547A8BA2A17D8D4004D1339 /* KakaoAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547A8B92A17D8D4004D1339 /* KakaoAPIManager.swift */; };
@@ -146,7 +146,7 @@
 		C5A3C3C62A39659B0050AB3D /* LoginViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A3C3C52A39659B0050AB3D /* LoginViewPresenter.swift */; };
 		C5A989972A959D920021B7C3 /* AVIROUpdateBookmark+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A989962A959D920021B7C3 /* AVIROUpdateBookmark+DTO.swift */; };
 		C5A989992A959E040021B7C3 /* AVIROBookmark+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A989982A959E040021B7C3 /* AVIROBookmark+DTO.swift */; };
-		C5A9899B2A95A6B50021B7C3 /* LocalBookmarkData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A9899A2A95A6B50021B7C3 /* LocalBookmarkData.swift */; };
+		C5A9899B2A95A6B50021B7C3 /* BookmarkCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A9899A2A95A6B50021B7C3 /* BookmarkCache.swift */; };
 		C5A9899E2A95A7940021B7C3 /* BookmarkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A9899D2A95A7940021B7C3 /* BookmarkManager.swift */; };
 		C5B071E12A59454300AE709A /* BottomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B071E02A59454300AE709A /* BottomCell.swift */; };
 		C5B071E52A59B4AC00AE709A /* RegistrationField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B071E42A59B4AC00AE709A /* RegistrationField.swift */; };
@@ -299,7 +299,7 @@
 		C5351B792A1B439000116D50 /* KakaoCoordinateSearchDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoCoordinateSearchDTO.swift; sourceTree = "<group>"; };
 		C53856B02ABC13ED00D52DEC /* AVIROMyContributionCount+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROMyContributionCount+DTO.swift"; sourceTree = "<group>"; };
 		C53893152A5EC0C500CB9A54 /* GenderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderButton.swift; sourceTree = "<group>"; };
-		C53C54D12AD67E8800C3662A /* LocalDBMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDBMarker.swift; sourceTree = "<group>"; };
+		C53C54D12AD67E8800C3662A /* MarkerModelLocalDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerModelLocalDB.swift; sourceTree = "<group>"; };
 		C541521C2AC125E100F39826 /* TutorialTopLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialTopLabel.swift; sourceTree = "<group>"; };
 		C54657862ABF2D82003A0BCB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C54657872ABF2DBA003A0BCB /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = API.plist; path = AVIRO/Utils/API.plist; sourceTree = SOURCE_ROOT; };
@@ -354,7 +354,7 @@
 		C5A3C3C52A39659B0050AB3D /* LoginViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewPresenter.swift; sourceTree = "<group>"; };
 		C5A989962A959D920021B7C3 /* AVIROUpdateBookmark+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROUpdateBookmark+DTO.swift"; sourceTree = "<group>"; };
 		C5A989982A959E040021B7C3 /* AVIROBookmark+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVIROBookmark+DTO.swift"; sourceTree = "<group>"; };
-		C5A9899A2A95A6B50021B7C3 /* LocalBookmarkData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalBookmarkData.swift; sourceTree = "<group>"; };
+		C5A9899A2A95A6B50021B7C3 /* BookmarkCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCache.swift; sourceTree = "<group>"; };
 		C5A9899D2A95A7940021B7C3 /* BookmarkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkManager.swift; sourceTree = "<group>"; };
 		C5B071E02A59454300AE709A /* BottomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomCell.swift; sourceTree = "<group>"; };
 		C5B071E42A59B4AC00AE709A /* RegistrationField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationField.swift; sourceTree = "<group>"; };
@@ -694,8 +694,8 @@
 			isa = PBXGroup;
 			children = (
 				C51B09B72A82155200916BBD /* MarkerModelCache.swift */,
-				C53C54D12AD67E8800C3662A /* LocalDBMarker.swift */,
-				C5A9899A2A95A6B50021B7C3 /* LocalBookmarkData.swift */,
+				C53C54D12AD67E8800C3662A /* MarkerModelLocalDB.swift */,
+				C5A9899A2A95A6B50021B7C3 /* BookmarkCache.swift */,
 			);
 			path = LocalDataModel;
 			sourceTree = "<group>";
@@ -1721,7 +1721,7 @@
 				C510005E2ABAA3C700F65C1F /* Enum+.swift in Sources */,
 				C58FBF942AC2DB6D00AB6EFC /* KakaoKeywordResultDTO.swift in Sources */,
 				C51B09B82A82155200916BBD /* MarkerModelCache.swift in Sources */,
-				C5A9899B2A95A6B50021B7C3 /* LocalBookmarkData.swift in Sources */,
+				C5A9899B2A95A6B50021B7C3 /* BookmarkCache.swift in Sources */,
 				C520662D2A7CE1CC0038ECCD /* SearchHistoryManager.swift in Sources */,
 				C51AED232A8B7B000015FBC2 /* UIViewController+Extension.swift in Sources */,
 				C51000632ABAE6A200F65C1F /* MenuModel.swift in Sources */,
@@ -1754,7 +1754,7 @@
 				C5A201B42A986EC300A54381 /* EditPlaceInfoViewController.swift in Sources */,
 				C51AED1D2A8A192D0015FBC2 /* ChangedViewAction.swift in Sources */,
 				C51B09BC2A82397800916BBD /* Marker+Extension.swift in Sources */,
-				C53C54D22AD67E8800C3662A /* LocalDBMarker.swift in Sources */,
+				C53C54D22AD67E8800C3662A /* MarkerModelLocalDB.swift in Sources */,
 				C58FBF922AC2D87300AB6EFC /* KakaoAPIManagerProtocol.swift in Sources */,
 				C528E4BE2A5FB816002BD72E /* TermsTableCell.swift in Sources */,
 				C53856B12ABC13ED00D52DEC /* AVIROMyContributionCount+DTO.swift in Sources */,

@@ -214,7 +214,9 @@ extension ChangeableAddressViewController: ChangebleAddressProtocol {
     }
     
     func popViewController() {
-        navigationController?.popViewController(animated: true)
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+        }
     }
     
     func whenNoAddressInMap() {

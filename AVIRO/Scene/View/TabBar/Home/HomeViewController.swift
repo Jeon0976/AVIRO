@@ -72,10 +72,11 @@ final class HomeViewController: UIViewController {
     // MARK: UI Property Definitions
     private lazy var naverMapView: NMFMapView = {
         let map = NMFMapView()
-        
+            
         map.addCameraDelegate(delegate: self)
-        map.mapType = .basic
         map.touchDelegate = self
+
+        map.mapType = .basic
         map.isIndoorMapEnabled = true
         map.minZoomLevel = 5.0
         map.extent = NMGLatLngBounds(
@@ -203,6 +204,12 @@ final class HomeViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         presenter.viewWillDisappear()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        
+        naverMapView.liteModeEnabled = true
     }
 }
 
@@ -383,6 +390,7 @@ extension HomeViewController: HomeViewProtocol {
     
     /// location button clicked
     func isSuccessLocation() {
+        
         naverMapView.positionMode = .direction
     }
     
@@ -400,6 +408,7 @@ extension HomeViewController: HomeViewProtocol {
 
     /// 최초 load markers
     func loadMarkers(with markers: [NMFMarker]) {
+        
         markers.forEach {
             $0.mapView = naverMapView
         }
@@ -421,9 +430,21 @@ extension HomeViewController: HomeViewProtocol {
         naverMapView.moveCamera(cameraUpdate)
     }
     
-    func moveToCameraWhenHasAVIRO(_ markerModel: MarkerModel) {
+    func moveToCameraWhenHasAVIRO(_ markerModel: MarkerModel, zoomTo: Double? = nil) {
         let latlng = markerModel.marker.position
-        let cameraUpdate = NMFCameraUpdate(scrollTo: latlng, zoomTo: 14)
+        
+        var cameraUpdate = NMFCameraUpdate()
+        
+        let currentZoomLevel = naverMapView.zoomLevel
+        
+        if let zoomTo = zoomTo {
+            cameraUpdate = NMFCameraUpdate(scrollTo: latlng, zoomTo: zoomTo)
+        } else if currentZoomLevel <= 10 {
+            cameraUpdate = NMFCameraUpdate(scrollTo: latlng, zoomTo: 10.5)
+        } else {
+            cameraUpdate = NMFCameraUpdate(scrollTo: latlng)
+        }
+        
         cameraUpdate.animation = .easeIn
         cameraUpdate.animationDuration = 0.25
         popupPlaceView()
@@ -1017,6 +1038,7 @@ extension HomeViewController: NMFMapViewCameraDelegate {
             afterSearchFieldInit()
         }
     }
+    
 }
 
 // MARK: NMFMapViewTouchDelegate

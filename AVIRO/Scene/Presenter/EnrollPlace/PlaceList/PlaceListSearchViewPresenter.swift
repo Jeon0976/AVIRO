@@ -54,6 +54,10 @@ final class PlaceListSearchViewPresenter: NSObject {
     
     // MARK: 검색 후 KakaoMap Place Search API 호출
     func searchData(_ query: String) {
+        if query == "" {
+            return
+        }
+        
         if isLoading {
             return
         }
@@ -110,6 +114,10 @@ final class PlaceListSearchViewPresenter: NSObject {
     
     // MARK: 스크롤 할 때 데이터 load 함수
     func loadData(_ query: String) {
+        if query == "" {
+            return
+        }
+        
         // loding 일 때 api 호출 x
         if isLoading || isEnd {
             return

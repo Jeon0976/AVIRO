@@ -44,6 +44,8 @@ protocol EditPlaceInfoProtocol: NSObject {
 
 final class EditPlaceInfoPresenter {
     weak var viewController: EditPlaceInfoProtocol?
+    
+    private let amplitude: AmplitudeProtocol
         
     private var selectedIndex: Int!
     private var placeId: String?
@@ -145,6 +147,7 @@ final class EditPlaceInfoPresenter {
     var afterReportShowAlert: (() -> Void)?
     
     init(viewController: EditPlaceInfoProtocol,
+         amplitude: AmplitudeProtocol = AmplitudeUtility(),
          placeMarkerModel: MarkerModel? = nil,
          placeId: String? = nil,
          placeSummary: AVIROPlaceSummary? = nil,
@@ -152,6 +155,8 @@ final class EditPlaceInfoPresenter {
          selectedIndex: Int = 0
     ) {
         self.viewController = viewController
+        self.amplitude = amplitude
+        
         self.selectedIndex = selectedIndex
         self.placeMarkerModel = placeMarkerModel
         self.placeId = placeId
@@ -336,10 +341,13 @@ final class EditPlaceInfoPresenter {
                 
                 if let x = firstCoordinate.x,
                    let y = firstCoordinate.y {
-                    self?.afterChangedXLng = x
-                    self?.afterChangedYLat = y
-                    
-                    self?.changedMarker(lat: y, lng: x)
+                    DispatchQueue.main.async {
+                        self?.afterChangedXLng = x
+                        self?.afterChangedYLat = y
+                        
+                        self?.changedMarker(lat: y, lng: x)
+                    }
+   
                 }
             case .failure(let error):
                 if let error = error.errorDescription {
@@ -358,7 +366,7 @@ final class EditPlaceInfoPresenter {
               let lng = Double(lng) else { return }
         
         let latLng = NMGLatLng(lat: lat, lng: lng)
-        
+   
         newMarker.position = latLng
         
         viewController?.updateNaverMap(latLng)
@@ -533,7 +541,7 @@ extension EditPlaceInfoPresenter {
         dispatchGroup.notify(queue: .main
         ) { [weak self] in
             if self?.canChange ?? false {
-                AmplitudeUtility.requestEditPlace(with: placeTitle)
+                self?.amplitude.requestEditPlace(with: placeTitle)
                 self?.viewController?.popViewController()
                 self?.afterReportShowAlert?()
             } else {
