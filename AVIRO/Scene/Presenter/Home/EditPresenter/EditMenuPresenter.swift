@@ -47,17 +47,14 @@ final class EditMenuPresenter {
             if isSome && !isRequest {
                 viewController?.updateMenuTableView(true)
                 allUpdateMenuArrayId()
-
             } else if !isSome && isRequest {
                 isDefaultMenuTable = false
                 isEnabledWhenRequestTable = false
                 allUpdateMenuArrayId()
-
             } else if isSome && isRequest {
                 isDefaultMenuTable = false
                 isEnabledWhenRequestTable = true
                 allUpdateMenuArrayId()
-
             }
         }
     }
@@ -160,6 +157,8 @@ final class EditMenuPresenter {
     var afterEditMenuChangedMenus: (() -> Void)?
     var afterEditMenuChangedVeganMarker: ( (EditMenuChangedMarkerModel) -> Void)?
     
+    private var isFirstPopupKeyBoard = true
+    
     init(viewController: EditMenuProtocol,
          placeId: String? = nil,
          isAll: Bool? = nil,
@@ -228,8 +227,11 @@ final class EditMenuPresenter {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             viewController?.keyboardWillShow(height: keyboardRectangle.height)
+            
+            if isFirstPopupKeyBoard {
+                isFirstPopupKeyBoard.toggle()
+            }
         }
-        
     }
     
     @objc private func keyboardWillHide(notification: NSNotification) {

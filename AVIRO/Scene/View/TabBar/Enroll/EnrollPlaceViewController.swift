@@ -211,10 +211,19 @@ extension EnrollPlaceViewController: EnrollPlaceProtocol {
     }
     
     // MARK: Keyboard Will Show
-    func keyboardWillShow(height: CGFloat) {
+    func keyboardWillShow(height: CGFloat, isFirst: Bool) {
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
         self.scrollView.contentInset = insets
         self.scrollView.scrollIndicatorInsets = insets
+        
+        if isFirst {
+            let bottomOffset = CGPoint(
+                x: 0,
+                y: scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom
+            )
+            
+            scrollView.setContentOffset(bottomOffset, animated: true)
+        }
         
         view.layoutIfNeeded()
     }

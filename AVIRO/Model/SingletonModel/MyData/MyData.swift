@@ -21,6 +21,8 @@ protocol MyDataProtocol {
 final class MyData: MyDataProtocol {
     static let my = MyData()
     
+    private let amplitude: AmplitudeProtocol
+    
     var id = ""
     var name = ""
     var email = ""
@@ -32,13 +34,15 @@ final class MyData: MyDataProtocol {
         userName: String = "",
         userEmail: String = "",
         userNickName: String = "",
-        marketingAgree: Int = 0
+        marketingAgree: Int = 0,
+        amplitude: AmplitudeProtocol = AmplitudeUtility()
     ) {
         self.id = userId
         self.name = userName
         self.email = userEmail
         self.nickname = userNickName
         self.marketingAgree = marketingAgree
+        self.amplitude = amplitude
     }
     
     func whenLogin(
@@ -54,7 +58,7 @@ final class MyData: MyDataProtocol {
         self.nickname = userNickname
         self.marketingAgree = marketingAgree
         
-        AmplitudeUtility.login()
+        self.amplitude.login()
     }
     
     func whenLogout() {
@@ -64,6 +68,6 @@ final class MyData: MyDataProtocol {
         self.nickname = ""
         self.marketingAgree = 0
         
-        AmplitudeUtility.logout()
+        self.amplitude.logout()
     }
 }

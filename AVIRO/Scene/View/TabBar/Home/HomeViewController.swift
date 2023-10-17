@@ -72,7 +72,7 @@ final class HomeViewController: UIViewController {
     // MARK: UI Property Definitions
     private lazy var naverMapView: NMFMapView = {
         let map = NMFMapView()
-        
+            
         map.addCameraDelegate(delegate: self)
         map.touchDelegate = self
 
@@ -204,6 +204,12 @@ final class HomeViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         presenter.viewWillDisappear()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        
+        naverMapView.liteModeEnabled = true
     }
 }
 
