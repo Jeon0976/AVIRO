@@ -27,6 +27,7 @@ final class MyPageViewPresenter {
     weak var viewController: MyPageViewProtocol?
     
     private let bookmarkManager: BookmarkFacadeManager
+    private let markerManager: MarkerModelManagerProtocol
     private let keychain = KeychainSwift()
     
     private var myDataModel: MyDataModel? {
@@ -39,10 +40,12 @@ final class MyPageViewPresenter {
     }
     
     init(viewController: MyPageViewProtocol,
-         bookmarkManager: BookmarkFacadeManager = BookmarkFacadeManager()
+         bookmarkManager: BookmarkFacadeManager = BookmarkFacadeManager(),
+         markerManager: MarkerModelManagerProtocol = MarkerModelManager()
     ) {
         self.viewController = viewController
         self.bookmarkManager = bookmarkManager
+        self.markerManager = markerManager
     }
     
     func viewDidLoad() {
@@ -90,7 +93,7 @@ final class MyPageViewPresenter {
     
     func whenAfterLogout() {
         bookmarkManager.deleteAllData()
-        MarkerModelCache.shared.deleteAllMarkerModel()
+        markerManager.deleteAllMarker()
         
         MyData.my.whenLogout()
         MyCoordinate.shared.isFirstLoadLocation = false
@@ -118,7 +121,7 @@ final class MyPageViewPresenter {
                     AmplitudeUtility.withdrawalUser()
                     
                     DispatchQueue.main.async {
-                        MarkerModelCache.shared.deleteAllMarkerModel()
+                        self?.markerManager.deleteAllMarker()
                         
                         self?.viewController?.pushLoginViewController(with: .withdrawal)
                     }

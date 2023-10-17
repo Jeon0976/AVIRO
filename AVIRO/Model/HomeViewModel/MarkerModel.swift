@@ -18,31 +18,19 @@ struct MarkerModel: Equatable {
     // 해당 변수는 지도에 표시될 마커 구분을 위한 변수
     var mapPlace: MapPlace {
         didSet {
-            if isStar {
-                marker.changeStarIcon(mapPlace, true)
-            } else {
-                marker.changeIcon(mapPlace, true)
-            }
+            updateMarkerIcon()
         }
     }
     
     var isStar = false {
         didSet {
-            if isStar {
-                marker.changeStarIcon(mapPlace, isClicked)
-            } else {
-                marker.changeIcon(mapPlace, isClicked)
-            }
+            updateMarkerIcon()
         }
     }
     
     var isClicked = false {
         didSet {
-            if isStar {
-                marker.changeStarIcon(mapPlace, isClicked)
-            } else {
-                marker.changeIcon(mapPlace, isClicked)
-            }
+            updateMarkerIcon()
         }
     }
     
@@ -50,4 +38,12 @@ struct MarkerModel: Equatable {
     var isAll = false
     var isSome = false
     var isRequest = false
+    
+    private func updateMarkerIcon() {
+        if isStar {
+            marker.changeStarIcon(mapPlace, isClicked)
+        } else {
+            marker.changeIcon(mapPlace, isClicked)
+        }
+    }
 }

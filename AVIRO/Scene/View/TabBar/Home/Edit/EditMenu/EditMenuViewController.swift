@@ -272,11 +272,11 @@ extension EditMenuViewController: UITableViewDataSource {
 extension EditMenuViewController: UIGestureRecognizerDelegate {
     // MARK: 키보드 로직
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        if touch.view is UITextField {
-            return false
-        } else {
-            view.endEditing(true)
-            return true
-        }
+        if touch.view is EditMenuTopView || touch.view is UINavigationBar {
+               view.endEditing(true)
+               return true
+           } else {
+               return false
+           }
     }
 }

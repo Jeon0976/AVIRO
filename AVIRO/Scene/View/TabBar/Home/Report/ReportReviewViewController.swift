@@ -239,19 +239,6 @@ extension ReportReviewViewController: ReportReviewProtocol {
         reportTextView.isHidden = !show
     }
     
-//    func keyboardWillShow(height: CGFloat) {
-//        UIView.animate(
-//            withDuration: 0.3,
-//            animations: { self.view.transform = CGAffineTransform(
-//                translationX: 0,
-//                y: -(height))
-//            }
-//        )
-//    }
-//
-//    func keyboardWillHide() {
-//        self.view.transform = .identity
-//    }
     // MARK: Keyboard Will Show
     func keyboardWillShow(height: CGFloat) {
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)

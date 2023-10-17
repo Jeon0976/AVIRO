@@ -74,8 +74,9 @@ final class HomeViewController: UIViewController {
         let map = NMFMapView()
         
         map.addCameraDelegate(delegate: self)
-        map.mapType = .basic
         map.touchDelegate = self
+
+        map.mapType = .basic
         map.isIndoorMapEnabled = true
         map.minZoomLevel = 5.0
         map.extent = NMGLatLngBounds(
@@ -383,6 +384,7 @@ extension HomeViewController: HomeViewProtocol {
     
     /// location button clicked
     func isSuccessLocation() {
+        
         naverMapView.positionMode = .direction
     }
     
@@ -427,8 +429,12 @@ extension HomeViewController: HomeViewProtocol {
         
         var cameraUpdate = NMFCameraUpdate()
         
+        let currentZoomLevel = naverMapView.zoomLevel
+        
         if let zoomTo = zoomTo {
             cameraUpdate = NMFCameraUpdate(scrollTo: latlng, zoomTo: zoomTo)
+        } else if currentZoomLevel <= 10 {
+            cameraUpdate = NMFCameraUpdate(scrollTo: latlng, zoomTo: 10.5)
         } else {
             cameraUpdate = NMFCameraUpdate(scrollTo: latlng)
         }
@@ -1026,6 +1032,7 @@ extension HomeViewController: NMFMapViewCameraDelegate {
             afterSearchFieldInit()
         }
     }
+    
 }
 
 // MARK: NMFMapViewTouchDelegate

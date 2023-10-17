@@ -193,7 +193,6 @@
 		C5ED46952AAEB3F300F2DA04 /* OperationHourView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ED46942AAEB3F300F2DA04 /* OperationHourView.swift */; };
 		C5ED46982AAEEFB600F2DA04 /* OperationHoursView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ED46972AAEEFB600F2DA04 /* OperationHoursView.swift */; };
 		C5F1014F2A6D19A800C53286 /* VeganOptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F1014E2A6D19A800C53286 /* VeganOptionButton.swift */; };
-		C5F33DFB2ADD292200A29FB9 /* MarkerModelResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F33DFA2ADD292200A29FB9 /* MarkerModelResult.swift */; };
 		C5FA0EAA2A94DB3E004AD8B4 /* ReportReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FA0EA92A94DB3E004AD8B4 /* ReportReviewViewController.swift */; };
 		C5FA0EAC2A94DF39004AD8B4 /* ReportReviewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FA0EAB2A94DF39004AD8B4 /* ReportReviewPresenter.swift */; };
 		C5FD92E32A9C6C1E00CF4673 /* EditLocationAddressTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92E22A9C6C1E00CF4673 /* EditLocationAddressTextTableViewCell.swift */; };
@@ -402,7 +401,6 @@
 		C5ED46942AAEB3F300F2DA04 /* OperationHourView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationHourView.swift; sourceTree = "<group>"; };
 		C5ED46972AAEEFB600F2DA04 /* OperationHoursView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationHoursView.swift; sourceTree = "<group>"; };
 		C5F1014E2A6D19A800C53286 /* VeganOptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganOptionButton.swift; sourceTree = "<group>"; };
-		C5F33DFA2ADD292200A29FB9 /* MarkerModelResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerModelResult.swift; sourceTree = "<group>"; };
 		C5FA0EA92A94DB3E004AD8B4 /* ReportReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportReviewViewController.swift; sourceTree = "<group>"; };
 		C5FA0EAB2A94DF39004AD8B4 /* ReportReviewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportReviewPresenter.swift; sourceTree = "<group>"; };
 		C5FD92E22A9C6C1E00CF4673 /* EditLocationAddressTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocationAddressTextTableViewCell.swift; sourceTree = "<group>"; };
@@ -696,7 +694,6 @@
 			isa = PBXGroup;
 			children = (
 				C51B09B72A82155200916BBD /* MarkerModelCache.swift */,
-				C5F33DFA2ADD292200A29FB9 /* MarkerModelResult.swift */,
 				C53C54D12AD67E8800C3662A /* MarkerModelLocalDB.swift */,
 				C5A9899A2A95A6B50021B7C3 /* BookmarkCache.swift */,
 			);
@@ -1750,7 +1747,6 @@
 				C50E6F6F2A8F10B500703B9E /* UILabel+Extension.swift in Sources */,
 				C52066352A7F3FAE0038ECCD /* HistoryTableViewCell.swift in Sources */,
 				C5C90EB72AA7078300AB3668 /* EditOperationHoursModel.swift in Sources */,
-				C5F33DFB2ADD292200A29FB9 /* MarkerModelResult.swift in Sources */,
 				C528E4BA2A5F9A3E002BD72E /* ThridRegistrationViewController.swift in Sources */,
 				C528E4BC2A5F9AB6002BD72E /* ThridRegistrationPresenter.swift in Sources */,
 				C51000612ABAE61F00F65C1F /* ReportReviewModel.swift in Sources */,

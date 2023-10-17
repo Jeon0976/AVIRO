@@ -39,44 +39,44 @@ final class AppController {
     
     // MARK: 불러올 view 확인 메서드
     private func checkState() {
-        self.setHomeView()
-//        // 최초 튜토리얼 화면 안 봤을 때
-//        guard UserDefaults.standard.bool(forKey: UDKey.tutorial.rawValue) else {
-//            setTutorialView()
-//            return
-//        }
-//
-//        // 자동로그인 토큰 없을 때
-//        guard let userKey = userKey else {
-//            setLoginView()
-//            return
-//        }
-//
-//        let userCheck = AVIROAutoLoginWhenAppleUserDTO(refreshToken: userKey)
-//
-//        AVIROAPIManager().appleUserCheck(with: userCheck) { [weak self] result in
-//            switch result {
-//            case .success(let model):
-//                if model.statusCode == 200 {
-//                    if let data = model.data {
-//                        MyData.my.whenLogin(
-//                            userId: data.userId,
-//                            userName: data.userName,
-//                            userEmail: data.userEmail,
-//                            userNickname: data.nickname,
-//                            marketingAgree: data.marketingAgree
-//                        )
-//                        self?.setHomeView()
-//                    }
-//                } else {
-//                    self?.keychain.delete(KeychainKey.appleRefreshToken.rawValue)
-//                    self?.setLoginView()
-//                }
-//            case .failure(_):
-//                self?.keychain.delete(KeychainKey.appleRefreshToken.rawValue)
-//                self?.setLoginView()
-//            }
-//        }
+//        self.setHomeView()
+        // 최초 튜토리얼 화면 안 봤을 때
+        guard UserDefaults.standard.bool(forKey: UDKey.tutorial.rawValue) else {
+            setTutorialView()
+            return
+        }
+
+        // 자동로그인 토큰 없을 때
+        guard let userKey = userKey else {
+            setLoginView()
+            return
+        }
+
+        let userCheck = AVIROAutoLoginWhenAppleUserDTO(refreshToken: userKey)
+
+        AVIROAPIManager().appleUserCheck(with: userCheck) { [weak self] result in
+            switch result {
+            case .success(let model):
+                if model.statusCode == 200 {
+                    if let data = model.data {
+                        MyData.my.whenLogin(
+                            userId: data.userId,
+                            userName: data.userName,
+                            userEmail: data.userEmail,
+                            userNickname: data.nickname,
+                            marketingAgree: data.marketingAgree
+                        )
+                        self?.setHomeView()
+                    }
+                } else {
+                    self?.keychain.delete(KeychainKey.appleRefreshToken.rawValue)
+                    self?.setLoginView()
+                }
+            case .failure(_):
+                self?.keychain.delete(KeychainKey.appleRefreshToken.rawValue)
+                self?.setLoginView()
+            }
+        }
     }
     
     // MARK: tutorial View
