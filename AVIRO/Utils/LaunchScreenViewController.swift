@@ -60,13 +60,15 @@ final class LaunchScreenViewController: UIViewController {
     }()
     
     private lazy var animationView: LottieAnimationView = {
-        let test = LottieAnimationView(name: "Berry2")
+        let lottie = LottieAnimationView(name: "Berry2")
         
-        test.play()
-        test.loopMode = .loop
+        lottie.play()
+        lottie.loopMode = .loop
         
-        return test
+        return lottie
     }()
+    
+    var isUpdateAlertShown: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,14 +100,50 @@ final class LaunchScreenViewController: UIViewController {
         ])
         
         if UIScreen.main.bounds.height < 812.0 {
-                NSLayoutConstraint.activate([
-                    bgImageView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 100)
-                ])
-            } else {
-                // 그 외 모델일 때의 제약 조건 설정
-                NSLayoutConstraint.activate([
-                    bgImageView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
-                ])
+            NSLayoutConstraint.activate([
+                bgImageView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 100)
+            ])
+        } else {
+            // 그 외 모델일 때의 제약 조건 설정
+            NSLayoutConstraint.activate([
+                bgImageView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            ])
+        }
+        
+        checkVersion()
+    }
+    
+    private func checkVersion() {
+        DispatchQueue.global().async { [weak self] in
+            let latestVersion = System().latestVersion() ?? "0.0"
+            let currentVersion = System.appVersion ?? "0.0"
+            
+            let splitLatestVersion = latestVersion.split(separator: ".").map { $0 }
+            let splitCurrentVersion = currentVersion.split(separator: ".").map { $0 }
+                
+            DispatchQueue.main.async {
+                if splitCurrentVersion[0] < splitLatestVersion[0] {
+                    self?.showUpdateAlert(latestVersion)
+                } else {
+                    if splitCurrentVersion[1] < splitLatestVersion[1] {
+                        self?.showUpdateAlert(latestVersion)
+                    }
+                }
             }
+        }
+    }
+    
+    private func showUpdateAlert(_ latestVersion: String) {
+        isUpdateAlertShown = true
+        
+        let action: AlertAction = (title: "업데이트", style: .default, handler: {
+            System().openAppStore()
+        })
+        
+        showAlert(
+            title: "업데이트 알림",
+            message: "어비로의 새로운 버전이 있습니다! \(latestVersion) 버전으로 업데이트 해주세요.",
+            actions: [action]
+        )
     }
 }

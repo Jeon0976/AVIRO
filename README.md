@@ -73,6 +73,7 @@
 │   └── Utility
 │       ├── AmplitudeUtility.swift
 │       ├── LocationUtility.swift
+│       ├── System.swift
 │       └── TimeUtility.swift
 ├── Manager
 │   ├── APIManager
@@ -160,8 +161,9 @@
 │   │   └── ReportModel
 │   │       └── ReportReviewModel.swift
 │   ├── LocalDataModel
-│   │   ├── LocalBookmarkData.swift
-│   │   └── LocalMarkerData.swift
+│   │   ├── BookmarkCache.swift
+│   │   ├── MarkerModelCache.swift
+│   │   └── MarkerModelLocalDB.swift
 │   ├── MyPageModel
 │   │   └── MyDataModel.swift
 │   ├── PlaceListModel

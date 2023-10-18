@@ -80,12 +80,16 @@ final class EditPlaceInfoPresenter {
         }
     }
     
+    var isChangedFromPublicAddress = true
+    var locationFromMapView = NMGLatLng()
+    
     var afterChangedAddress = "" {
         didSet {
             changedMarkerLocation()
             checkIsChangedAddress()
         }
     }
+    
     private var isChangedAddress = false {
         didSet {
             changeEditButtonState()
@@ -138,6 +142,7 @@ final class EditPlaceInfoPresenter {
             checkIsChangedURL()
         }
     }
+    
     private var isChangedURL = false {
         didSet {
             changeEditButtonState()
@@ -162,6 +167,9 @@ final class EditPlaceInfoPresenter {
         self.placeId = placeId
         self.placeSummary = placeSummary
         self.placeInfo = placeInfo
+        
+        self.afterChangedXLng = String(placeMarkerModel?.marker.position.lng ?? 0.0)
+        self.afterChangedYLat = String(placeMarkerModel?.marker.position.lat ?? 0.0)
     }
     
     func viewDidLoad() {
@@ -331,6 +339,14 @@ final class EditPlaceInfoPresenter {
     }
 
     private func changedMarkerLocation() {
+        if isChangedFromPublicAddress {
+            changeLocationFromKakaoAPI()
+        } else {
+            changeLocationFromMapView()
+        }
+    }
+    
+    private func changeLocationFromKakaoAPI() {
         KakaoAPIManager().addressSearch(with: afterChangedAddress) { [weak self] result in
             switch result {
             case .success(let model):
@@ -355,6 +371,16 @@ final class EditPlaceInfoPresenter {
                 }
             }
         }
+    }
+    
+    private func changeLocationFromMapView() {
+        afterChangedXLng = locationFromMapView.lng.description
+        afterChangedYLat = locationFromMapView.lat.description
+        
+        changedMarker(
+            lat: locationFromMapView.lat.description,
+            lng: locationFromMapView.lng.description
+        )
     }
     
     // MARK: 버그 확인 main.async 해야 하나?
@@ -412,10 +438,21 @@ extension EditPlaceInfoPresenter {
     }
     
     private func checkIsChangedAddress() {
-        if afterChangedAddress != placeInfo?.address {
+        if afterChangedAddress != placeInfo?.address || checkCoordinate() {
             isChangedAddress = true
         } else {
             isChangedCategory = false
+        }
+    }
+    
+    private func checkCoordinate() -> Bool {
+        let beforeX = String(placeMarkerModel?.marker.position.lng ?? 0.0)
+        let beforeY = String(placeMarkerModel?.marker.position.lat ?? 0.0)
+        
+        if beforeX != afterChangedXLng || beforeY != afterChangedYLat {
+            return true
+        } else {
+            return false
         }
     }
     

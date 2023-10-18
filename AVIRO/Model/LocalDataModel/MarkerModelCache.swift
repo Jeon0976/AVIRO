@@ -64,15 +64,17 @@ final class MarkerModelCache: MarkerModelCacheProtocol {
             var updateMarker = markerModel
             
             DispatchQueue.main.async { [weak self] in
+                self?.markers[index].marker.position = updateMarker.marker.position
+                
                 self?.markers[index].marker.changeIcon(
                     updateMarker.mapPlace,
                     updateMarker.isClicked
                 )
+                                
+                updateMarker.marker = (self?.markers[index].marker)!
+                
+                self?.markers[index] = updateMarker
             }
-            
-            updateMarker.marker = markers[index].marker
-            
-            markers[index] = updateMarker
         } else {
             markers.append(markerModel)
             updatedMarkers.append(markerModel.marker)

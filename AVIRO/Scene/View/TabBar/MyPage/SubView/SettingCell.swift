@@ -97,7 +97,7 @@ final class SettingCell: UITableViewCell {
 //        if settingsRow == .displayMode {
 //            pushButton.isHidden = false
 //        }
-//        
+        
         if settingsRow == .versionInfo {
             versionLabel.isHidden = false
         }
@@ -115,41 +115,13 @@ final class SettingCell: UITableViewCell {
     }
     
     private func loadVersion() {
-        var currentVersion = ""
-        var latestVersion = ""
-        
-        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-            currentVersion = version
-        }
-        
-        let appID = APP.appId.rawValue
-        let url = URL(string: "https://itunes.apple.com/lookup?id=\(appID)")!
-
-        let task = URLSession.shared.dataTask(with: url) { (data, _, _) in
-            defer {
-                DispatchQueue.main.async { [weak self] in
-                    self?.versionLabel.text = "현재 " + currentVersion + " / " + "최신 " + latestVersion
-                }
-            }
-            guard let data = data else {
-                latestVersion = "1.0"
-                return
-            }
+        DispatchQueue.global().async { [weak self] in
+            let latestVersion = System().latestVersion() ?? "0.0"
+            let currentVersion = System.appVersion ?? "0.0"
             
-            do {
-                if let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any],
-                   let results = json["results"] as? [[String: Any]],
-                   let appInfo = results.first,
-                   let version = appInfo["version"] as? String {
-                    latestVersion = version
-                } else {
-                    latestVersion = "1.0"
-                }
-            } catch {
-                latestVersion = "1.0"
+            DispatchQueue.main.async {
+                self?.versionLabel.text = "현재" + currentVersion + " / " + "최신 " + latestVersion
             }
         }
-
-        task.resume()
     }
 }

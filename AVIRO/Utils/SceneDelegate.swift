@@ -8,9 +8,9 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+    
     var window: UIWindow?
-
+    
     func scene(_ scene: UIScene,
                willConnectTo session: UISceneSession,
                options connectionOptions: UIScene.ConnectionOptions
@@ -23,9 +23,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         self.window?.rootViewController = LaunchScreenViewController()
         self.window?.makeKeyAndVisible()
-         
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-             AppController.shared.show(in: window)
-         }
+            if let vc = self.window?.rootViewController as? LaunchScreenViewController, !vc.isUpdateAlertShown {
+                AppController.shared.show(in: window)
+            }
+        }
     }
 }
