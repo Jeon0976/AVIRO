@@ -481,6 +481,15 @@ extension EditPlaceInfoViewController: EditPlaceInfoProtocol {
         presenter.afterChangedAddress = { [weak self] address in
             guard let address = address else { return }
             
+            self?.presenter.isChangedFromPublicAddress = true
+            self?.editLocationBottomView.changedAddressLabel(address)
+        }
+        
+        presenter.afterChangedAddressWhenMapView = { [weak self] (address, coordinate) in
+            guard let address = address else { return }
+            
+            self?.presenter.isChangedFromPublicAddress = false
+            self?.presenter.locationFromMapView = coordinate
             self?.editLocationBottomView.changedAddressLabel(address)
         }
         

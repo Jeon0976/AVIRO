@@ -153,7 +153,7 @@ final class EditLocationBottomView: UIView {
         marker.mapView = naverMap
         
         let latLng = marker.position
-        let position = NMFCameraPosition(latLng, zoom: 17)
+        let position = NMFCameraPosition(latLng, zoom: 18)
         let cameraUpdate = NMFCameraUpdate(position: position)
         
         naverMap.moveCamera(cameraUpdate)
@@ -173,7 +173,7 @@ final class EditLocationBottomView: UIView {
     }
     
     func changedNaverMap(_ latLng: NMGLatLng) {
-        let position = NMFCameraPosition(latLng, zoom: 17)
+        let position = NMFCameraPosition(latLng, zoom: 18)
         let cameraUpdate = NMFCameraUpdate(position: position)
         
         naverMap.moveCamera(cameraUpdate)

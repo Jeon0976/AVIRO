@@ -37,8 +37,10 @@ final class ChangeableAddressPresenter {
     private var placeMarkerModel: MarkerModel?
     
     private var changedAddress: String?
+    private var changedLocation = NMGLatLng()
         
     var afterChangedAddress: ((String?) -> Void)?
+    var afterChangedAddressWhenMapView: ((String?, NMGLatLng) -> Void)?
     
     var addressModelCount: Int {
         return addressModels.count
@@ -122,6 +124,8 @@ final class ChangeableAddressPresenter {
     }
     
     func whenAfterChangedCoordinate(_ coordinate: NMGLatLng) {
+        self.changedLocation = coordinate
+        
         let lat = String(coordinate.lat)
         let lng = String(coordinate.lng)
         
@@ -146,6 +150,11 @@ final class ChangeableAddressPresenter {
     
     func editAddress() {
         self.afterChangedAddress?(changedAddress)        
+        viewController?.popViewController()
+    }
+    
+    func editAddressWhenMapView() {
+        self.afterChangedAddressWhenMapView?(changedAddress, changedLocation)
         viewController?.popViewController()
     }
     

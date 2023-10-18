@@ -63,7 +63,7 @@ final class ChangeableAddressViewController: UIViewController {
         }
         
         view.isTappedEditButtonWhemMapView = { [weak self] in
-            self?.presenter.editAddress()
+            self?.presenter.editAddressWhenMapView()
         }
         
         return view
