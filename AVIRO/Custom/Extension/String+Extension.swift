@@ -61,4 +61,10 @@ extension String {
         }
         return nil
     }
+    
+    // MARK: URL Check
+    var isValidURL: Bool {
+         guard let url = URL(string: self) else { return false }
+         return UIApplication.shared.canOpenURL(url)
+     }
 }

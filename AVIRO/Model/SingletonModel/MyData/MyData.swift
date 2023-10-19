@@ -35,7 +35,7 @@ final class MyData: MyDataProtocol {
         userEmail: String = "",
         userNickName: String = "",
         marketingAgree: Int = 0,
-        amplitude: AmplitudeProtocol = AmplitudeUtility()
+        amplitude: AmplitudeProtocol = AmplitudeUtilityDummy()
     ) {
         self.id = userId
         self.name = userName

@@ -71,7 +71,9 @@ extension EnrollPlaceViewController: EnrollPlaceProtocol {
             
             // veganDetailView
             veganDetailView.topAnchor.constraint(equalTo: storeInfoView.bottomAnchor, constant: 15),
-            veganDetailView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor, constant: 16),
+            veganDetailView.leadingAnchor.constraint(
+                equalTo: scrollView.contentLayoutGuide.leadingAnchor,
+                constant: 16),
             veganDetailView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor, constant: -32),
             
             // menuTableView

@@ -71,6 +71,7 @@ final class AmplitudeUtility: AmplitudeProtocol {
         identify.set(property: "name", value: MyData.my.name)
         identify.set(property: "email", value: MyData.my.email)
         identify.set(property: "nickname", value: MyData.my.nickname)
+        identify.set(property: "version", value: SystemUtility.appVersion ?? "")
         
         amplitude?.identify(identify: identify)
         amplitude?.track(eventType: AMType.login.rawValue)
