@@ -38,7 +38,7 @@ final class ThridRegistrationPresenter {
     
     init(viewController: ThridRegistrationProtocol,
          userInfo: AVIROAppleUserSignUpDTO? = nil,
-         amplitude: AmplitudeProtocol = AmplitudeUtility()
+         amplitude: AmplitudeProtocol = AmplitudeUtilityDummy()
     ) {
         self.viewController = viewController
         self.userInfoModel = userInfo

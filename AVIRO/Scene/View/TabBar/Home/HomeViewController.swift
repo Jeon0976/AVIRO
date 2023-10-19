@@ -499,7 +499,7 @@ extension HomeViewController: HomeViewProtocol {
         }
     }
     
-    private func openWebLink(url: URL) {
+    func openWebLink(url: URL) {
         presenter.shouldKeepPlaceInfoViewState(true)
         showWebView(with: url)
     }
@@ -922,12 +922,8 @@ extension HomeViewController {
             self?.presenter.loadPlaceOperationHours()
         }
         
-        placeView.afterHomePageButtonTapped = { [weak self] url in
-            if let url = URL(string: url) {
-                self?.openWebLink(url: url)
-            } else {
-                self?.presenter.editPlaceInfo(withSelectedSegmentedControl: 3)
-            }
+        placeView.afterHomePageButtonTapped = { [weak self] urlString in
+            self?.presenter.openHomepageURL(with: urlString)
         }
         
         placeView.afterEditInfoButtonTapped = { [weak self] in

@@ -115,9 +115,9 @@ final class LaunchScreenViewController: UIViewController {
     
     private func checkVersion() {
         DispatchQueue.global().async { [weak self] in
-            let latestVersion = System().latestVersion() ?? "0.0"
-            let currentVersion = System.appVersion ?? "0.0"
-            
+            let latestVersion = SystemUtility().latestVersion() ?? "0.0"
+            let currentVersion = SystemUtility.appVersion ?? "0.0"
+
             let splitLatestVersion = latestVersion.split(separator: ".").map { $0 }
             let splitCurrentVersion = currentVersion.split(separator: ".").map { $0 }
                 
@@ -137,7 +137,7 @@ final class LaunchScreenViewController: UIViewController {
         isUpdateAlertShown = true
         
         let action: AlertAction = (title: "업데이트", style: .default, handler: {
-            System().openAppStore()
+            SystemUtility().openAppStore()
         })
         
         showAlert(

@@ -52,6 +52,7 @@ protocol HomeViewProtocol: NSObject {
     )
     func pushEditMenuViewController(placeId: String, isAll: Bool, isSome: Bool, isRequest: Bool, menuArray: [AVIROMenu])
 
+    func openWebLink(url: URL)
     func showActionSheetWhenSuccessReport()
     func showToastAlert(_ title: String)
     func showAlertWhenReportPlace()
@@ -87,7 +88,7 @@ final class HomeViewPresenter: NSObject {
     init(viewController: HomeViewProtocol,
          markerManager: MarkerModelManagerProtocol = MarkerModelManager(),
          bookmarkManager: BookmarkFacadeProtocol = BookmarkFacadeManager(),
-         amplitude: AmplitudeProtocol = AmplitudeUtility()
+         amplitude: AmplitudeProtocol = AmplitudeUtilityDummy()
     ) {
         self.viewController = viewController
         
@@ -869,6 +870,29 @@ final class HomeViewPresenter: NSObject {
             case .failure(let error):
                 self?.viewController?.showErrorAlert(with: error.localizedDescription, title: nil)
             }
+        }
+    }
+    
+    // MARK: URL Condition
+    func openHomepageURL(with urlString: String) {
+        let instagram = "instagram"
+        
+        if urlString.contains(instagram) {
+            if let instagramURL = NSURL(string: urlString) {
+                if UIApplication.shared.canOpenURL(instagramURL as URL) {
+                    UIApplication.shared.open(
+                        instagramURL as URL,
+                        options: [:],
+                        completionHandler: nil
+                    )
+                }
+            }
+        } else if urlString.isValidURL {
+            if let webURL = URL(string: urlString) {
+                viewController?.openWebLink(url: webURL)
+            }
+        } else {
+            editPlaceInfo(withSelectedSegmentedControl: 3)
         }
     }
 }

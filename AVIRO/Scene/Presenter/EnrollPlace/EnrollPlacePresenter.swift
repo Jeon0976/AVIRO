@@ -90,7 +90,7 @@ final class EnrollPlacePresenter {
     private var isFirstPopupKeyBoard = true
     
     init(viewController: EnrollPlaceProtocol,
-         amplitude: AmplitudeProtocol = AmplitudeUtility()
+         amplitude: AmplitudeProtocol = AmplitudeUtilityDummy()
     ) {
         self.viewController = viewController
         

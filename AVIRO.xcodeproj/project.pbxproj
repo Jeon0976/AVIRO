@@ -193,7 +193,7 @@
 		C5ED46952AAEB3F300F2DA04 /* OperationHourView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ED46942AAEB3F300F2DA04 /* OperationHourView.swift */; };
 		C5ED46982AAEEFB600F2DA04 /* OperationHoursView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ED46972AAEEFB600F2DA04 /* OperationHoursView.swift */; };
 		C5F1014F2A6D19A800C53286 /* VeganOptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F1014E2A6D19A800C53286 /* VeganOptionButton.swift */; };
-		C5F33DFD2ADED19000A29FB9 /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F33DFC2ADED19000A29FB9 /* System.swift */; };
+		C5F33DFD2ADED19000A29FB9 /* SystemUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F33DFC2ADED19000A29FB9 /* SystemUtility.swift */; };
 		C5FA0EAA2A94DB3E004AD8B4 /* ReportReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FA0EA92A94DB3E004AD8B4 /* ReportReviewViewController.swift */; };
 		C5FA0EAC2A94DF39004AD8B4 /* ReportReviewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FA0EAB2A94DF39004AD8B4 /* ReportReviewPresenter.swift */; };
 		C5FD92E32A9C6C1E00CF4673 /* EditLocationAddressTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD92E22A9C6C1E00CF4673 /* EditLocationAddressTextTableViewCell.swift */; };
@@ -402,7 +402,8 @@
 		C5ED46942AAEB3F300F2DA04 /* OperationHourView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationHourView.swift; sourceTree = "<group>"; };
 		C5ED46972AAEEFB600F2DA04 /* OperationHoursView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationHoursView.swift; sourceTree = "<group>"; };
 		C5F1014E2A6D19A800C53286 /* VeganOptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeganOptionButton.swift; sourceTree = "<group>"; };
-		C5F33DFC2ADED19000A29FB9 /* System.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = System.swift; sourceTree = "<group>"; };
+		C5F33DFC2ADED19000A29FB9 /* SystemUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemUtility.swift; sourceTree = "<group>"; };
+		C5F33DFE2ADFC5B600A29FB9 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		C5FA0EA92A94DB3E004AD8B4 /* ReportReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportReviewViewController.swift; sourceTree = "<group>"; };
 		C5FA0EAB2A94DF39004AD8B4 /* ReportReviewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportReviewPresenter.swift; sourceTree = "<group>"; };
 		C5FD92E22A9C6C1E00CF4673 /* EditLocationAddressTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocationAddressTextTableViewCell.swift; sourceTree = "<group>"; };
@@ -957,7 +958,7 @@
 				C5803F5C2A88C3C00064A853 /* LocationUtility.swift */,
 				C5A201B12A98502500A54381 /* TimeUtility.swift */,
 				C5C20BAB2AD504D500855BBB /* AmplitudeUtility.swift */,
-				C5F33DFC2ADED19000A29FB9 /* System.swift */,
+				C5F33DFC2ADED19000A29FB9 /* SystemUtility.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -1515,11 +1516,12 @@
 			};
 			buildConfigurationList = C52FA33A2A175B20005E70DC /* Build configuration list for PBXProject "AVIRO" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = C52FA3362A175B20005E70DC;
 			productRefGroup = C52FA3402A175B20005E70DC /* Products */;
@@ -1660,7 +1662,7 @@
 				C51000382AB5F3BD00F65C1F /* UIFont+Extension.swift in Sources */,
 				C5FA0EAA2A94DB3E004AD8B4 /* ReportReviewViewController.swift in Sources */,
 				C5C90EBD2AA85E7000AB3668 /* AVIROOperationHours+DTO.swift in Sources */,
-				C5F33DFD2ADED19000A29FB9 /* System.swift in Sources */,
+				C5F33DFD2ADED19000A29FB9 /* SystemUtility.swift in Sources */,
 				C513854E2AAD8E9F001AB827 /* AVIROReportPlace+DTO.swift in Sources */,
 				C520663C2A80C0450038ECCD /* CenterCoordinate.swift in Sources */,
 				C58EC7D22AB1B5AD00401FF7 /* AVIROEditPhone+DTO.swift in Sources */,
@@ -1815,6 +1817,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				C54657862ABF2D82003A0BCB /* Base */,
+				C5F33DFE2ADFC5B600A29FB9 /* ko */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
