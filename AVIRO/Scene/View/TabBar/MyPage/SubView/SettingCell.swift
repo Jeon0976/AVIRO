@@ -116,8 +116,8 @@ final class SettingCell: UITableViewCell {
     
     private func loadVersion() {
         DispatchQueue.global().async { [weak self] in
-            let latestVersion = System().latestVersion() ?? "0.0"
-            let currentVersion = System.appVersion ?? "0.0"
+            let latestVersion = SystemUtility().latestVersion() ?? "0.0"
+            let currentVersion = SystemUtility.appVersion ?? "0.0"
             
             DispatchQueue.main.async {
                 self?.versionLabel.text = "현재" + currentVersion + " / " + "최신 " + latestVersion

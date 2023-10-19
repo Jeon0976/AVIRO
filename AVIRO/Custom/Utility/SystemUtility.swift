@@ -7,14 +7,14 @@
 
 import UIKit
 
-struct System {
+struct SystemUtility {
     static let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
     static let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
     
     static let appStoreOpenUrlString = "itms-apps://itunes.apple.com/app/apple-store/\(APP.appId.rawValue)"
     
     func latestVersion() -> String? {
-        guard let url = URL(string: "http://itunes.apple.com/lookup?id=\(APP.appId.rawValue)"),
+        guard let url = URL(string: "http://itunes.apple.com/lookup?id=\(APP.appId.rawValue)&t=\(Date().timeIntervalSince1970)"),
               let data = try? Data(contentsOf: url),
               let json = try? JSONSerialization.jsonObject(
                 with: data,
@@ -29,7 +29,7 @@ struct System {
     }
     
     func openAppStore() {
-        guard let url = URL(string: System.appStoreOpenUrlString) else { return }
+        guard let url = URL(string: SystemUtility.appStoreOpenUrlString) else { return }
         if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
