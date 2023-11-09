@@ -303,7 +303,7 @@
 		C53C54D12AD67E8800C3662A /* MarkerModelLocalDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerModelLocalDB.swift; sourceTree = "<group>"; };
 		C541521C2AC125E100F39826 /* TutorialTopLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialTopLabel.swift; sourceTree = "<group>"; };
 		C54657862ABF2D82003A0BCB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		C54657872ABF2DBA003A0BCB /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = API.plist; path = AVIRO/Utils/API.plist; sourceTree = SOURCE_ROOT; };
+		C54657872ABF2DBA003A0BCB /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = API.plist; path = AVIRO/App/API.plist; sourceTree = SOURCE_ROOT; };
 		C547A8B92A17D8D4004D1339 /* KakaoAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoAPIManager.swift; sourceTree = "<group>"; };
 		C54BC0DA2A2C2D0D00B65439 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		C552D5332ABE8CA500933D8A /* AVIRODeleteAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVIRODeleteAPI.swift; sourceTree = "<group>"; };
@@ -450,7 +450,7 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		C50367EC2A1791620020C6BB /* Utils */ = {
+		C50367EC2A1791620020C6BB /* App */ = {
 			isa = PBXGroup;
 			children = (
 				C510002C2AB5F1E600F65C1F /* Fonts */,
@@ -463,7 +463,7 @@
 				C52FA3502A175B20005E70DC /* Info.plist */,
 				C54657872ABF2DBA003A0BCB /* API.plist */,
 			);
-			path = Utils;
+			path = App;
 			sourceTree = "<group>";
 		};
 		C50367ED2A1791840020C6BB /* Scene */ = {
@@ -782,7 +782,7 @@
 			isa = PBXGroup;
 			children = (
 				C593B64C2A4BFD9A00D224CE /* AVIRO.entitlements */,
-				C50367EC2A1791620020C6BB /* Utils */,
+				C50367EC2A1791620020C6BB /* App */,
 				C50367F62A179D6E0020C6BB /* Custom */,
 				C50367F32A1795BE0020C6BB /* Model */,
 				C50367F22A1795B90020C6BB /* Manager */,
