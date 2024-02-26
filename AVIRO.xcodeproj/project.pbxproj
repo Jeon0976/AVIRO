@@ -1956,7 +1956,7 @@
 				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = C4K2HXA435;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = AVIRO/Utils/Info.plist;
+				INFOPLIST_FILE = AVIRO/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "어비로";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "현재 내 위치와 가까운 가게를 찾아드려요. 위치 정보를 저장하지 않으니 안심하세요.";
@@ -1991,7 +1991,7 @@
 				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = C4K2HXA435;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = AVIRO/Utils/Info.plist;
+				INFOPLIST_FILE = AVIRO/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "어비로";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "현재 내 위치와 가까운 가게를 찾아드려요. 위치 정보를 저장하지 않으니 안심하세요.";

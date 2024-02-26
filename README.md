@@ -1,3 +1,5 @@
+# 레포지토리 변경: 
+https://github.com/AVIRO-official/AVIRO-iOS
 # AVIRO 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FJeon0976%2FAVIRO&count_bg=%233DC8AC&title_bg=%231173B4&icon=github.svg&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
